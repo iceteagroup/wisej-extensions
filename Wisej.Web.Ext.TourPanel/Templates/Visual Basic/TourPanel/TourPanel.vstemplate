@@ -1,0 +1,26 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <Name>TourPanel</Name>
+    <DefaultName>TourPanel.vb</DefaultName>
+    <Description>A template panel that can be used to create a visual tour of a page or a window.</Description>
+    <ProjectType>VisualBasic</ProjectType>
+    <SortOrder>10</SortOrder>
+    <Icon>__TemplateIcon.png</Icon>
+    <RequiredFrameworkVersion>4.5</RequiredFrameworkVersion>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>Wisej.Core</Assembly>
+      </Reference>
+      <Reference>
+        <Assembly>Wisej.Web</Assembly>
+      </Reference>
+      <Reference>
+        <Assembly>Wisej.Web.Ext.TourPanel</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem SubType="UserControl" TargetFileName="$fileinputname$.vb" ReplaceParameters="true" OpenInEditor="false">TourPanel.vb</ProjectItem>
+    <ProjectItem SubType="" TargetFileName="$fileinputname$.Designer.vb" ReplaceParameters="true">TourPanel.Designer.vb</ProjectItem>
+  </TemplateContent>
+</VSTemplate>
