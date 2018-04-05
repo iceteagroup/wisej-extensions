@@ -46,10 +46,10 @@ namespace Wisej.Web.Ext.Speech
 		#region Properties
 
 		/// <summary>
-		/// Returns and sets the voice that will be used to speak the utterance.
+		/// Returns or sets the voice that will be used to speak the utterance.
 		/// </summary>
 		[DefaultValue("native")]
-		[Description("Gets and sets the voice that will be used to speak the utterance.")]
+		[Description("Gets or sets the voice that will be used to speak the utterance.")]
 		public string Voice
 		{
 			get { return this._voice; }
@@ -68,17 +68,16 @@ namespace Wisej.Web.Ext.Speech
 		private string _voice = "native";
 
 		/// <summary>
-		/// Returns and sets the language of the utterance.
+		/// Returns or sets the language of the utterance.
 		/// </summary>
-		[DefaultValue(null)]
-		[Description("Gets and sets the language of the utterance.")]
+		[DefaultValue("")]
+		[Description("Gets or sets the language of the utterance.")]
 		public string Language
 		{
 			get { return this._language; }
 			set
 			{
-				if (value == string.Empty)
-					value = null;
+				value = value ?? string.Empty;
 
 				if (this._language != value)
 				{
@@ -87,13 +86,13 @@ namespace Wisej.Web.Ext.Speech
 				}
 			}
 		}
-		private string _language = null;
+		private string _language = string.Empty;
 
 		/// <summary>
-		/// Returns and sets the volume that the utterance will be spoken at. The default is 1 (maximum).
+		/// Returns or sets the volume that the utterance will be spoken at. The default is 1 (maximum).
 		/// </summary>
 		[DefaultValue(1f)]
-		[Description("Gets and sets the volume that the utterance will be spoken at. The default is 1 (maximum).")]
+		[Description("Gets or sets the volume that the utterance will be spoken at. The default is 1 (maximum).")]
 		public float Volume
 		{
 			get { return this._volume; }

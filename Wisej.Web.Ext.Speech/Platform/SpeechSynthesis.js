@@ -72,7 +72,7 @@ qx.Class.define("wisej.web.extender.speech.SpeechSynthesis", {
 		 *
 		 * Gets and sets the language of the utterance.
 		 */
-		lang: { init: null, check: "String" },
+		lang: { init: "", check: "String" },
 
 		/**
 		 * Rate property.
