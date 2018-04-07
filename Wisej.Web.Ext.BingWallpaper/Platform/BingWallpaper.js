@@ -61,6 +61,13 @@ qx.Class.define("wisej.web.ext.BingWallpaper", {
 		rotationInterval: { init: 60000, check: "PositiveInteger", apply: "_applyRotationInterval" },
 
 		/**
+		 * EnableAnimation property.
+		 *
+		 * Enables or disables a simple zoom animation when rotating images.
+		 */
+		enableAnimation: { init: true, check: "Boolean" },
+
+		/**
 		 * Control property.
 		 *
 		 * Determines the control that will receive the background images.
@@ -74,6 +81,9 @@ qx.Class.define("wisej.web.ext.BingWallpaper", {
 
 		__rotationTimer: 0,
 		__currentImageIndex: -1,
+		__stylesheet: null,
+		__stylesheetAfterStyle: null,
+		__stylesheetBeforeStyle: null,
 
 		/**
 		 * Shows the first image immediately after the image list is updated.
@@ -89,48 +99,109 @@ qx.Class.define("wisej.web.ext.BingWallpaper", {
 
 			var images = this.getImages();
 			if (images && images.length > 0) {
+
+				var me = this;
 				var target = this.__getTargetControl();
-				if (target) {
+				if (!target) {
 
-					//  update the fade transition on the desktop widget.
-					target.getContentElement().setStyle("transition", "background-image " + this.getFadeTime() + "ms", true);
-
-					// get the next image index.
-					this.__currentImageIndex++;
-					if (this.__currentImageIndex >= images.length)
-						this.__currentImageIndex = 0;
-
-					// preload the image and fadein/out
-					qx.io.ImageLoader.load(images[this.__currentImageIndex], function (url, entry) {
-
-						if (entry.loaded) {
-
-							if (target.isDesktop) {
-								target.setWallpaper(url);
-							}
-							else {
-								target.setBackgroundImages([{
-									image: url,
-									layout: "cover"
-								}]);
-							}
-						}
-					});
-				}
-				else {
-					// if we don't have a desktop yet, reschedule.
-					var me = this;
+					// if we don't have a target yet, the desktop may have not been created in time.
+					// delay and retry.
 					setTimeout(function () {
 						me.__setNextImage();
 					}, 100);
+
+					return;
 				}
+
+				// if the target is not visible, wait.
+				if (!target.getBounds()) {
+					target.addListenerOnce("appear", function () {
+						me.__setNextImage();
+					}, this);
+					return;
+				}
+
+				// get the next image index.
+				this.__currentImageIndex++;
+				if (this.__currentImageIndex >= images.length)
+					this.__currentImageIndex = 0;
+
+				var fadeTime = this.getFadeTime();
+				var nextImageUrl = images[this.__currentImageIndex];
+
+				// load the image, but it may be preloaded already and return immediately.
+				// check for the fading animation to be terminated before fading in the new image.
+				qx.io.ImageLoader.load(nextImageUrl, function (url, entry) {
+
+					if (entry.loaded) {
+
+						me.__assignImage(target, url);
+					}
+				});
 			}
+		},
+
+		// assign the image to the target.
+		__assignImage: function (target, url) {
+			
+			this.__createStylesheet(target);
+
+			var fadeTime = this.getFadeTime();
+
+			var next = this.__stylesheetAfterStyle.opacity == 1
+				? this.__stylesheetBeforeStyle
+				: this.__stylesheetAfterStyle;
+
+			var prev = this.__stylesheetAfterStyle.opacity == 0
+				? this.__stylesheetBeforeStyle
+				: this.__stylesheetAfterStyle;
+
+			next.backgroundImage = "url(" + url + ")";
+			prev.transition = next.transition = "opacity " + fadeTime + "ms, transform " + (fadeTime * 5) + "ms";
+
+			if (this.getEnableAnimation()) {
+				prev.transform = "scale(1)";
+				next.transform = "scale(1.05)";
+			}
+
+			prev.opacity = 0;
+			next.opacity = 1;
+		},
+
+		// creates the stylesheet and pseudo elements
+		// used to swap images and fading.
+		__createStylesheet: function (target) {
+
+			if (this.__stylesheet)
+				return;
+
+			var fadeTime = this.getFadeTime();
+
+			var className = "wisej-bingwallpaper-" + this.$$hash;
+			var css = "content:\"\";display:block;position:absolute;top:0px;left:0px;right:0px;bottom:0px;background-size:cover;" +
+					  "opacity:0;transition:opacity " + fadeTime + "ms, transform " + (fadeTime * 5) + "ms";
+			this.__stylesheet = qx.bom.Stylesheet.createElement("");
+			qx.bom.Stylesheet.addRule(this.__stylesheet, "." + className + "::after", css); // __stylesheetAfterStyle
+			qx.bom.Stylesheet.addRule(this.__stylesheet, "." + className + "::before", css); // __stylesheetBeforeStyle
+
+			var rules = this.__stylesheet.cssRules;
+			this.__stylesheetAfterStyle = rules[rules.length - 2].style;
+			this.__stylesheetBeforeStyle = rules[rules.length - 1].style;
+
+			target.getContentElement().addClass(className);
+			qx.html.Element.flush();
 		},
 
 		// returns the control that will receive the background image.
 		__getTargetControl: function () {
 
-			return this.getControl() || Wisej.Platform.getDesktop();
+			var target = this.getControl();
+			if (target && target.__getTarget)
+				target = target.__getTarget();
+			else
+				target = Wisej.Platform.getDesktop() || Wisej.Platform.getMainPage();
+
+			return target;
 		},
 
 		/**
@@ -150,5 +221,14 @@ qx.Class.define("wisej.web.ext.BingWallpaper", {
 			}
 		},
 	},
+
+	destruct: function () {
+
+
+		if (this.__stylesheet) {
+			qx.bom.Stylesheet.removeSheet(this.__stylesheet);
+		}
+	}
+
 
 });

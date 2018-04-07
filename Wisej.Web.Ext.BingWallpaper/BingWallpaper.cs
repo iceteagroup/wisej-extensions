@@ -65,6 +65,26 @@ namespace Wisej.Web.Ext.BingWallpaper
 		#region Properties
 
 		/// <summary>
+		/// Enables or disables a simple zoom animation when rotating images.
+		/// </summary>
+		[DefaultValue(true)]
+		[SRCategory("CatBehavior")]
+		[Description("Enables or disables a simple zoom animation when rotating images.")]
+		public bool EnableAnimation
+		{
+			get { return this._enableAnimation; }
+			set
+			{
+				if (this._enableAnimation != value)
+				{
+					this._enableAnimation = value;
+					Update();
+				}
+			}
+		}
+		private bool _enableAnimation = true;
+
+		/// <summary>
 		/// Returns or sets the fade in/out time in milliseconds.
 		/// </summary>
 		[DefaultValue(1000)]
@@ -249,6 +269,7 @@ namespace Wisej.Web.Ext.BingWallpaper
 			config.images = LoadImages(this.MaxImages);
 			config.fadeTime = this.FadeTime;
 			config.rotationInterval = this.RotationInterval;
+			config.enableAnimation = this.EnableAnimation;
 
 		}
 
