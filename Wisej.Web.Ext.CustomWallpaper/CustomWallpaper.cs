@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 //
-// (C) 2015 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
+// (C) 2018 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
 //
 // 
 //
@@ -19,39 +19,38 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
-using System.Net;
+using System.Drawing.Imaging;
+using System.Web;
 using Wisej.Base;
 using Wisej.Core;
 
-namespace Wisej.Web.Ext.BingWallpaper
+namespace Wisej.Web.Ext.CustomWallpaper
 {
 	/// <summary>
-	/// Changes the background image of the <see cref="T:Wisej.Web.Desktop"/> or any target 
-	/// <see cref="Control"/> Bing's images of the day.
+	/// Changes the background image of the <see cref="T:Wisej.Web.Desktop"/> or any
+	/// target <see cref="Control"/>  to use a custom list of images.
 	/// </summary>
 	[ToolboxItem(true)]
-	[ToolboxBitmap(typeof(BingWallpaper))]
-	[SRDescription("Changes the background image of the Desktop or any Control to use Bing's images of the day.")]
-	public class BingWallpaper : Wisej.Web.Component
+	[ToolboxBitmap(typeof(CustomWallpaper))]
+	[SRDescription("Changes the background image of the Desktop or any Control to use a custom list of images.")]
+	public class CustomWallpaper : Wisej.Web.Component, IWisejHandler
 	{
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.BingWallpaper" /> class.
+		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.CustomWallpaper" /> class.
 		/// </summary>
-		public BingWallpaper()
+		public CustomWallpaper()
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.BingWallpaper" /> class together with the specified container.
+		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.CustomWallpaper" /> class together with the specified container.
 		/// </summary>
 		/// <param name="container">A <see cref="T:System.ComponentModel.IContainer" /> that represents the container for the component. </param>
-		public BingWallpaper(IContainer container)
+		public CustomWallpaper(IContainer container)
 			: this()
 		{
 			if (container == null)
@@ -131,30 +130,6 @@ namespace Wisej.Web.Ext.BingWallpaper
 		private int _rotationInterval = 60000;
 
 		/// <summary>
-		/// Returns or sets the number of images to rotate.
-		/// </summary>
-		[DefaultValue(10)]
-		[SRCategory("CatBehavior")]
-		[Description("Returns or sets the number of images to rotate.")]
-		public int MaxImages
-		{
-			get { return this._maxImages; }
-			set
-			{
-				if (value < 0 || value > 100)
-					throw new ArgumentOutOfRangeException("MaxImages", SR.GetString("InvalidBoundArgument", "MaxImages", value, 0, 100));
-
-				if (this._maxImages != value)
-				{
-					this._maxImages = value;
-					this._images = null;
-					Update();
-				}
-			}
-		}
-		private int _maxImages = 10;
-
-		/// <summary>
 		/// Returns or sets the control that will receive the background images. If left to null it will
 		/// automatically use the current Desktop.
 		/// </summary>
@@ -188,9 +163,89 @@ namespace Wisej.Web.Ext.BingWallpaper
 			this.Control = null;
 		}
 
+		/// <summary>
+		/// List of images to rotate.
+		/// </summary>
+		/// <returns>The collection of images.</returns>
+		[DefaultValue(null)]
+		[MergableProperty(false)]
+		[SRCategory("CatAppearance")]
+		[Description("List of images to rotate.")]
+		public ImageListEntry[] Images
+		{
+			get { return this._images; }
+			set
+			{
+				if (this._images != value)
+				{
+					this._images = value;
+					Update();
+				}
+			}
+		}
+		private ImageListEntry[] _images;
+
 		#endregion
 
 		#region Methods
+
+		// Returns an array of image URLs to the widget for rendering on the client.
+		private string[] GetImageList()
+		{
+			if (this._images == null || this._images.Length == 0)
+				return null;
+
+			string[] list = new string[this._images.Length];
+			for (int i = 0; i < list.Length; i++)
+			{
+				var entry = this._images[i];
+				if (entry.Image != null)
+					list[i] = this.GetPostbackURL() + "&ix=" + i;
+				else
+					list[i] = entry.ImageSource;
+
+			}
+
+			return list;
+		}
+
+		// Returns the normalized image media type. Defaults to image/png if the format is not recognized.
+		internal static string GetImageMediaType(Image image)
+		{
+			var format = image.RawFormat;
+			if (format.Equals(ImageFormat.Png))
+				return "image/png";
+			if (format.Equals(ImageFormat.Gif))
+				return "image/gif";
+			if (format.Equals(ImageFormat.Jpeg))
+				return "image/jpeg";
+
+			// convert bmp to png.
+			// bmp needs a seekable stream and is not compressed.
+			if (format.Equals(ImageFormat.Bmp))
+				return "image/png";
+
+			return "image/png";
+		}
+
+		// Returns the normalized image format: gif, png, bmp, jpeg. If not recognized it returns png.
+		private static ImageFormat GetImageFormat(Image image)
+		{
+			var format = image.RawFormat;
+			if (format.Equals(ImageFormat.Png))
+				return ImageFormat.Png;
+			if (format.Equals(ImageFormat.Gif))
+				return ImageFormat.Gif;
+			if (format.Equals(ImageFormat.Jpeg))
+				return ImageFormat.Jpeg;
+
+			// convert bmp to png.
+			// bmp needs a seekable stream and is not compressed.
+			if (format.Equals(ImageFormat.Bmp))
+				return ImageFormat.Png;
+
+			return ImageFormat.Png;
+		}
 
 		/// <summary>
 		/// When the reference count goes down to zero, kill also the static timer.
@@ -201,44 +256,57 @@ namespace Wisej.Web.Ext.BingWallpaper
 			base.Dispose(disposing);
 		}
 
-		// Retrieves the list of images from Bing.
-		private string[] LoadImages(int count)
+		#endregion
+
+		#region IWisejHandler
+
+		/// <summary>
+		/// Don't compress the output. Images are already compressed.
+		/// </summary>
+		bool IWisejHandler.Compress { get { return false; } }
+
+		/// <summary>
+		/// Process the http request.
+		/// </summary>
+		/// <param name="context">The current <see cref="T:System.Web.HttpContext"/>.</param>
+		void IWisejHandler.ProcessRequest(HttpContext context)
 		{
-			if (this._images != null)
-				return this._images;
+			var request = context.Request;
+			var response = context.Response;
 
-			string url = String.Format("https://www.bing.com/HPImageArchive.aspx?format=js&n={0}&mkt=en-US", Math.Max(count, 1));
+			int index = -1;
+			if (!int.TryParse(request["ix"], out index))
+				return;
 
-			try
+			if (this._images == null || index < 0 || index >= this._images.Length)
+				return;
+
+			ImageListEntry entry = this._images[index];
+			if (entry.Image != null)
 			{
-				using (WebClient client = new WebClient())
+				try
 				{
-					var json = client.DownloadString(url);
-					if (!String.IsNullOrEmpty(json))
+					Image image = entry.Image;
+					lock (image)
 					{
-						dynamic response = WisejSerializer.Parse(json);
-						if (response != null)
-						{
-							List<string> list = new List<string>();
-							foreach (dynamic img in response.images)
-							{
-								list.Add("https://www.bing.com" + img.url);
-							}
-							_images = list.ToArray();
-						}
+						var format = GetImageFormat(image);
+						var mediaType = GetImageMediaType(image);
+
+						response.ContentType = mediaType;
+						response.Cache.SetSlidingExpiration(true);
+						response.Cache.SetMaxAge(TimeSpan.FromDays(1));
+						response.Cache.SetCacheability(HttpCacheability.Private);
+
+						image.Save(response.OutputStream, format);
 					}
 				}
+				catch (Exception ex)
+				{
+					LogManager.Log(ex);
+				}
+				response.Flush();
 			}
-			catch (Exception ex)
-			{
-				Trace.TraceError("{0}: {1}", ex.GetType().FullName, ex.Message);
-			}
-
-			return this._images;
 		}
-
-		// list of image.
-		private string[] _images = null;
 
 		#endregion
 
@@ -264,9 +332,9 @@ namespace Wisej.Web.Ext.BingWallpaper
 		{
 			base.OnWebRender((object)config);
 
-			config.className = "wisej.web.ext.BingWallpaper";
+			config.className = "wisej.web.ext.CustomWallpaper";
 			config.control = ((IWisejControl)this._control)?.Id;
-			config.images = LoadImages(this.MaxImages);
+			config.images = GetImageList();
 			config.fadeTime = this.FadeTime;
 			config.rotationInterval = this.RotationInterval;
 			config.enableAnimation = this.EnableAnimation;

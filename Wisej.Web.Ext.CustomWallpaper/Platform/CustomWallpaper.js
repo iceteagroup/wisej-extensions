@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 //
-// (C) 2015 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
+// (C) 2018 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
 //
 // 
 //
@@ -18,11 +18,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * wisej.web.ext.BingWallpaper
+ * wisej.web.ext.CustomWallpaper
  *
- * Loads bing's image of the day and rotates them over the target control's background.
+ * Loads a list of custom images and rotates them over the target control's background.
  */
-qx.Class.define("wisej.web.ext.BingWallpaper", {
+qx.Class.define("wisej.web.ext.CustomWallpaper", {
 
 	extend: qx.core.Object,
 
@@ -177,7 +177,7 @@ qx.Class.define("wisej.web.ext.BingWallpaper", {
 
 			var fadeTime = this.getFadeTime();
 
-			var className = "wisej-bingwallpaper-" + this.$$hash;
+			var className = "wisej-customwallpaper-" + this.$$hash;
 			var css = "content:\"\";display:block;position:absolute;top:0px;left:0px;right:0px;bottom:0px;background-size:cover;" +
 					  "opacity:0;transition:opacity " + fadeTime + "ms, transform " + (fadeTime * 5) + "ms";
 			this.__stylesheet = qx.bom.Stylesheet.createElement("");
