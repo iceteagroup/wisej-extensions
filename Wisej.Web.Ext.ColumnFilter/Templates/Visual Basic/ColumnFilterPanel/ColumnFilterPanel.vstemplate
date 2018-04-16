@@ -1,0 +1,29 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <Name>ColumnFilterPanel</Name>
+    <DefaultName>ColumnFilterPanel.vb</DefaultName>
+    <Description>
+      A template panel that can be used to create a custom ColumnFilterPanel to associated
+      to an instance of the ColumnFilter extender.
+    </Description>
+    <ProjectType>VisualBasic</ProjectType>
+    <SortOrder>10</SortOrder>
+    <Icon>__TemplateIcon.png</Icon>
+    <RequiredFrameworkVersion>4.5</RequiredFrameworkVersion>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>Wisej.Core</Assembly>
+      </Reference>
+      <Reference>
+        <Assembly>Wisej.Web</Assembly>
+      </Reference>
+      <Reference>
+        <Assembly>Wisej.Web.Ext.ColumnFilterPanel</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem SubType="UserControl" TargetFileName="$fileinputname$.vb" ReplaceParameters="true" OpenInEditor="false">ColumnFilterPanel.vb</ProjectItem>
+    <ProjectItem SubType="" TargetFileName="$fileinputname$.Designer.vb" ReplaceParameters="true">ColumnFilterPanel.Designer.vb</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

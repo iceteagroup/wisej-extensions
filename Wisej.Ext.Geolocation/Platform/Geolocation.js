@@ -80,7 +80,7 @@ qx.Class.define("wisej.ext.Geolocation", {
 
 			var geo = navigator.geolocation;
 			if (!geo) {
-				// if geolocation is not supported but the server called this method anyway, we response
+				// if geolocation is not supported but the server called this method anyway, we respond
 				// immediately with error PERMISSION_DENIED.
 				this.fireDataEvent("callback", { id: id, errorCode: 1 });
 				return;

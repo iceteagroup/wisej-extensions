@@ -117,6 +117,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.CognitiveServices
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.CustomWallpaper", "Wisej.Web.Ext.CustomWallpaper\Wisej.Web.Ext.CustomWallpaper.csproj", "{E98F1592-9E30-4002-B8AD-9D4DF27A055B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.ColumnFilter", "Wisej.Web.Ext.ColumnFilter\Wisej.Web.Ext.ColumnFilter.csproj", "{25594D69-8943-47F2-BF2F-428B2387D125}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -539,6 +541,14 @@ Global
 		{E98F1592-9E30-4002-B8AD-9D4DF27A055B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E98F1592-9E30-4002-B8AD-9D4DF27A055B}.Release|x64.ActiveCfg = Release|Any CPU
 		{E98F1592-9E30-4002-B8AD-9D4DF27A055B}.Release|x64.Build.0 = Release|Any CPU
+		{25594D69-8943-47F2-BF2F-428B2387D125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25594D69-8943-47F2-BF2F-428B2387D125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25594D69-8943-47F2-BF2F-428B2387D125}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{25594D69-8943-47F2-BF2F-428B2387D125}.Debug|x64.Build.0 = Debug|Any CPU
+		{25594D69-8943-47F2-BF2F-428B2387D125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25594D69-8943-47F2-BF2F-428B2387D125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25594D69-8943-47F2-BF2F-428B2387D125}.Release|x64.ActiveCfg = Release|Any CPU
+		{25594D69-8943-47F2-BF2F-428B2387D125}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -596,5 +606,6 @@ Global
 		{F8AAE3FC-E5BE-4DEE-BF04-CA3E0CD5E842} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
 		{63B9B87B-1474-4EEB-A3E9-CE32983F9582} = {D7DCF4CA-F508-4C1C-8199-5D865DA943FD}
 		{E98F1592-9E30-4002-B8AD-9D4DF27A055B} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
+		{25594D69-8943-47F2-BF2F-428B2387D125} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
 	EndGlobalSection
 EndGlobal
