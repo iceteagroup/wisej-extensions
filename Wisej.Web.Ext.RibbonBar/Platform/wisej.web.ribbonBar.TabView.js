@@ -27,11 +27,9 @@ qx.Class.define("wisej.web.ribbonBar.TabView", {
 
 	extend: qx.ui.tabview.TabView,
 
-	// All Wisej components must include this mixin
+	// All Wisej controls must include this mixin
 	// to provide services to the Wisej core.
-	include: [
-		  wisej.mixin.MWisejControl
-	],
+	include: [wisej.mixin.MWisejControl],
 
 	construct: function () {
 

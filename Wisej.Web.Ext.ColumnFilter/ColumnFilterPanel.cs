@@ -188,6 +188,10 @@ namespace Wisej.Web.Ext.ColumnFilter
 			Close();
 		}
 
+		/// <summary>
+		/// Processes the event from the client.
+		/// </summary>
+		/// <param name="e">Event arguments.</param>
 		protected override void OnWebEvent(WisejEventArgs e)
 		{
 			switch (e.Type)
@@ -203,6 +207,10 @@ namespace Wisej.Web.Ext.ColumnFilter
 			}
 		}
 
+		/// <summary>
+		/// Renders the client component.
+		/// </summary>
+		/// <param name="config">Dynamic configuration object</param>
 		protected override void OnWebRender(dynamic config)
 		{
 			base.OnWebRender((object)config);

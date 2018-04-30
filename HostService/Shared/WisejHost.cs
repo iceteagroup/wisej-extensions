@@ -83,9 +83,42 @@ namespace Wisej.HostService.Owin
 		}
 
 		/// <summary>
+		/// Occurs when the <see cref="WisejHost"/> instance is terminated. The reason
+		/// for the termination is enumerate in the <see cref="ShutdownReason"/> property.
+		/// </summary>
+		public event EventHandler Shutdown;
+
+		/// <summary>
 		/// Returns the URL (with port) to the hosted application.
 		/// </summary>
 		public string Url
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Returns the domain name that this host is listening to.
+		/// </summary>
+		public string Domain
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Returns the port number that this host is listening to.
+		/// </summary>
+		public int Port
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Returns the reason why this instance of <see cref="WisejHost"/> was terminated.
+		/// </summary>
+		public ApplicationShutdownReason ShutdownReason
 		{
 			get;
 			private set;
@@ -97,9 +130,17 @@ namespace Wisej.HostService.Owin
 		/// <param name="immediate"></param>
 		public void Stop(bool immediate)
 		{
+			try
+			{
+				HostingEnvironment.UnregisterObject(this);
+			}
+			catch { };
+
 			this.webApp?.Dispose();
-			var me = Process.GetCurrentProcess();
-			me.Kill();
+
+			this.ShutdownReason = HostingEnvironment.ShutdownReason;
+
+			this.Shutdown?.Invoke(null, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -127,6 +168,8 @@ namespace Wisej.HostService.Owin
 				port = GetAvailablePort();
 
 			// save the domain we are listening to.
+			this.Port = port;
+			this.Domain = domain;
 			this.Url = "http://" + domain + ":" + port;
 
 			// register with the .NET hosting system.

@@ -98,7 +98,11 @@
             "<",
             ">",
             "<=",
-            ">="});
+            ">=",
+			"is true",
+			"is false",
+			"is null",
+			"is not null"});
 			this.cmbOperator.Location = new System.Drawing.Point(3, 32);
 			this.cmbOperator.Name = "cmbOperator";
 			this.cmbOperator.Size = new System.Drawing.Size(128, 22);
@@ -143,6 +147,7 @@
 			this.dateTimePicker1.Name = "dateTimePicker1";
 			this.dateTimePicker1.Size = new System.Drawing.Size(36, 22);
 			this.dateTimePicker1.TabIndex = 31;
+			this.dateTimePicker1.Format = DateTimePickerFormat.Short;
 			this.dateTimePicker1.Value = new System.DateTime(2018, 1, 10, 0, 6, 28, 837);
 			// 
 			// WhereColumnFilterPanel

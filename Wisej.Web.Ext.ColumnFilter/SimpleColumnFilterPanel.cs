@@ -34,11 +34,18 @@ namespace Wisej.Web.Ext.ColumnFilter
 	/// </summary>
 	public partial class SimpleColumnFilterPanel : ColumnFilterPanel
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SimpleColumnFilterPanel"/> class.
+		/// </summary>
 		public SimpleColumnFilterPanel()
 		{
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// Performs initialization tasks when the panel is created.
+		/// </summary>
+		/// <param name="e">Event arguments</param>
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
@@ -98,27 +105,57 @@ namespace Wisej.Web.Ext.ColumnFilter
 			// if the list is empty, fill it with all the visible rows.
 			if (filterItems.Count == 0)
 			{
-				foreach (string v in visibleValues)
+				if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
 				{
-					this.items.SetItemChecked(
-						this.items.Items.Add(v), true);
+					foreach (bool b in visibleValues)
+					{
+						this.items.Items.Add(b ? "true" : "false", true);
+					}
+				}
+				else
+				{
+					foreach (string v in visibleValues)
+					{
+						this.items.SetItemChecked(
+							this.items.Items.Add(v), true);
+					}
 				}
 			}
 			else
 			{
 				// otherwise add only the values that are visible now but
-				// missing from the checked listBox.
-				foreach (string v in visibleValues)
+				// missing from the checked listBox.				
+				if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
 				{
-					var index = filterItems.IndexOf(v);
-					if (index == -1)
+					foreach (bool b in visibleValues)
 					{
-						this.items.SetItemChecked(
-							this.items.Items.Add(v), true);
+						string v = b ? "true" : "false";
+						var index = filterItems.IndexOf(v);
+						if (index == -1)
+						{
+							this.items.SetItemChecked(
+								this.items.Items.Add(v), true);
+						}
+						else
+						{
+							this.items.SetItemChecked(index, true);
+						}
 					}
-					else
+				}
+				else
+				{
+					foreach (string v in visibleValues)
 					{
-						this.items.SetItemChecked(index, true);
+						var index = filterItems.IndexOf(v);
+						if (index == -1)
+						{
+							this.items.SetItemChecked(
+								this.items.Items.Add(v), true);
+						}
+						else
+						{
+							this.items.SetItemChecked(index, true);
+						}
 					}
 				}
 			}
@@ -173,7 +210,10 @@ namespace Wisej.Web.Ext.ColumnFilter
 			var dataGrid = column.DataGridView;
 			foreach (var row in dataGrid.Rows)
 			{
-				cellText = row[index].FormattedValue?.ToString() ?? string.Empty;
+				if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
+					cellText = (bool) row[index].Value ? "true" : "false";
+				else
+					cellText = row[index].FormattedValue?.ToString() ?? string.Empty;
 
 				if (!checkedItems.Contains(cellText))
 					row.Visible = false;

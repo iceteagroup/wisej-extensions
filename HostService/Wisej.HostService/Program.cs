@@ -100,6 +100,7 @@ namespace Wisej.HostService
 			me = Process.GetCurrentProcess();
 			new Service.Service().Start();
 			me.WaitForExit();
+
 			return true;
 		}
 

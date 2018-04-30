@@ -27,9 +27,9 @@ qx.Class.define("wisej.web.ribbonBar.Item", {
 	type: "abstract",
 	extend: qx.ui.core.Widget,
 
-	// All Wisej components must include this mixin
+	// All Wisej controls must include this mixin
 	// to provide services to the Wisej core.
-	include: [wisej.mixin.MWisejComponent],
+	include: [wisej.mixin.MWisejControl],
 
 	/**
 	 * @param layout {qx.ui.layout.Abstract} A layout instance to use to

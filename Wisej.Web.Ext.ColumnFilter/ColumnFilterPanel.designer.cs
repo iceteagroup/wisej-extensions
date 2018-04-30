@@ -61,7 +61,14 @@
 
 		#endregion
 
+		/// <summary>
+		/// Reference to the OK button.
+		/// </summary>
 		protected Web.Button ok;
+
+		/// <summary>
+		/// Reference to the Cancel button.
+		/// </summary>
 		protected Web.Button cancel;
 	}
 }

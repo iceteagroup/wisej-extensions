@@ -134,7 +134,7 @@ namespace Wisej.Web.Ext.Html2Canvas
 		/// The <see cref="Control"/> to render to an <see cref="Image"/>
 		/// </param>
 		/// <param name="callback">Callback method that receives the <see cref="Image"/> object.</param>
-		/// <param name="callback">Callback method that receives the <see cref="Image"/> object.</param>
+		/// <param name="options">The <see cref="Html2CanvasOptions"/> to pass to the html2canvas call.</param>
 		/// <exception cref="ArgumentNullException">If any of the arguments is null.</exception>
 		public static void Screenshot(Control target, Html2CanvasOptions options, Action<Image> callback)
 		{
@@ -158,8 +158,8 @@ namespace Wisej.Web.Ext.Html2Canvas
 		/// <summary>
 		/// Returns the Image encoded in a base64 string.
 		/// </summary>
-		/// <param name="base64"></param>
-		/// <returns></returns>
+		/// <param name="base64">The base64 string representation of the screenshot from the client.</param>
+		/// <returns>An <see cref="Image"/> created from the <paramref name="base64"/> string.</returns>
 		internal static Image ImageFromBase64(string base64)
 		{
 			// data:image/gif;base64,R0lGODlhCQAJAIABAAAAAAAAACH5BAEAAAEALAAAAAAJAAkAAAILjI+py+0NojxyhgIAOw==

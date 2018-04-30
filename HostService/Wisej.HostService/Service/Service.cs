@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.ServiceProcess;
 using WinForms = System.Windows.Forms;
 using Wisej.HostService.Owin;
+using System.Web;
 
 namespace Wisej.HostService.Service
 {
@@ -63,6 +64,7 @@ namespace Wisej.HostService.Service
 				string[] args = Environment.GetCommandLineArgs();
 
 				this.host = WisejHost.Create();
+				this.host.Shutdown += Host_Shutdown;
 				this.host.Start(GetDomainName(args), GetPortNumber(args));
 			}
 			catch (Exception ex)
@@ -74,6 +76,25 @@ namespace Wisej.HostService.Service
 					WinForms.MessageBox.Show(ex.Message, ex.GetType().Name, WinForms.MessageBoxButtons.OK, WinForms.MessageBoxIcon.Error);
 
 				throw;
+			}
+		}
+
+		private void Host_Shutdown(object sender, EventArgs e)
+		{
+			switch (this.host.ShutdownReason)
+			{
+				case ApplicationShutdownReason.ChangeInGlobalAsax:
+				case ApplicationShutdownReason.ConfigurationChange:
+				case ApplicationShutdownReason.BinDirChangeOrDirectoryRename:
+					{
+						// restart the process when there is a configuration or bin change.
+						Start();
+					}
+					break;
+
+				default:
+					Process.GetCurrentProcess().Kill();
+					break;
 			}
 		}
 

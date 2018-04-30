@@ -26,9 +26,9 @@ qx.Class.define("wisej.web.ribbonBar.AppButton", {
 
 	extend: qx.ui.form.Button,
 
-	// All Wisej components must include this mixin
+	// All Wisej control must include this mixin
 	// to provide services to the Wisej core.
-	include: [wisej.mixin.MWisejComponent],
+	include: [wisej.mixin.MWisejControl],
 
 	construct: function () {
 

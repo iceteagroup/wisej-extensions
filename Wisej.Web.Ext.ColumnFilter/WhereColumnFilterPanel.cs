@@ -32,13 +32,15 @@ namespace Wisej.Web.Ext.ColumnFilter
 	[ToolboxItem(true)]
 	public partial class WhereColumnFilterPanel : ColumnFilterPanel
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="WhereColumnFilterPanel"/> class.
+		/// </summary>
 		public WhereColumnFilterPanel()
 		{
 			InitializeComponent();
 		}
 
 		private List<string> lstOperators = new List<string>();
-		private static string combinedWhere = "";
 
 		/// <summary>
 		/// Show hide controls based on the ValueType
@@ -53,6 +55,13 @@ namespace Wisej.Web.Ext.ColumnFilter
 						c.Hide();
 					else if (c is DateTimePicker)
 						c.Show();
+				}
+				else if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
+				{
+					if (c is TextBox)
+						c.Hide();
+					else if (c is DateTimePicker)
+						c.Hide();
 				}
 				else
 				{
@@ -83,12 +92,15 @@ namespace Wisej.Web.Ext.ColumnFilter
 				{
 					row.Visible = true;
 				}
+				
 				// reset Combined where
-				combinedWhere = "";
+				dataGrid.UserData.columFiltercombinedWhere = "";
+
 				// apply all the filters.
 				base.ApplyFilters();
 
 				// do the actual filtering
+				string combinedWhere = dataGrid.UserData.columFiltercombinedWhere;
 				if (combinedWhere.Length > 0)
 				{
 					var indexes = dataGrid.Rows.Where(combinedWhere).Select(r => r.Index).ToArray();
@@ -106,6 +118,11 @@ namespace Wisej.Web.Ext.ColumnFilter
 			}
 		}
 
+		/// <summary>
+		/// Invoked when the <see cref="ColumnFilterPanel"/>
+		/// should apply the filter criteria selected by the user.
+		/// </summary>
+		/// <returns>True to indicate that the filter has been applied. False if the filter has been cleared.</returns>
 		protected override bool OnApplyFilter()
 		{
 			string where = "";
@@ -123,21 +140,26 @@ namespace Wisej.Web.Ext.ColumnFilter
 					 this.DataGridViewColumn.ValueType == typeof(System.Double))
 			{
 				where = GetWhereForNumber();
-			}
+			}			
 			else if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
 			{
-				// TODO.
+				where = GetWhereForBool();
 			}
 
 			// Combine where clauses, always connected with " AND "
 			if (where.Length > 0)
 			{
+				var dataGrid = this.DataGridViewColumn.DataGridView;
+				string combinedWhere = dataGrid.UserData.columFiltercombinedWhere ?? "";
+
 				if (combinedWhere.Length > 0)
 					combinedWhere += " AND ";
+
 				combinedWhere += where;
+				dataGrid.UserData.columFiltercombinedWhere = combinedWhere;
 			}
 
-			return true;
+			return where.Length > 0;
 		}
 
 		private string GetWhereForNumber()
@@ -153,12 +175,13 @@ namespace Wisej.Web.Ext.ColumnFilter
 				Condition = Value1 + cmbOperator.SelectedItem.ToString() + "Convert.To" + Type + "(\"" + txtValue.Text + "\")";
 				where = AppendCondition(Condition, "", where);
 			}
-			string LogicalOperator = labelLogicalOperator.GetOperator();
+
 			// only check cloned fields when the first condition is valid.
+			string LogicalOperator = labelLogicalOperator.GetOperator();
 			if (where.Length > 0)
 			{
+				TextBox txt = null;
 				ComboBox cmb = null;
-				TextBox txt;
 
 				// iterate clones
 				foreach (Control c in this.flowLayoutPanel.Controls)
@@ -167,7 +190,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 					{
 						cmb = c as ComboBox;
 					}
-					else if (c is TextBox && c != txtValue)
+					else if (c is TextBox && c != txtValue && cmb != null)
 					{
 						txt = c as TextBox;
 						if (cmb.SelectedIndex > -1 && txt.Text != null)
@@ -187,17 +210,59 @@ namespace Wisej.Web.Ext.ColumnFilter
 			return where;
 		}
 
-		private string GetWhereForDateTime()
+		private string GetWhereForBool()
 		{
 			string where = "";
 			string Condition = "";
 
-			string Value1 = "Convert.ToDateTime(Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value)";
+			string Type = "Boolean";
+			string Value1 = Value1 = "Convert.To" + Type + "(Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value)";
 
 			if (cmbOperator.SelectedIndex > -1)
 			{
-				Condition = Value1 + cmbOperator.SelectedItem.ToString() + "Convert.ToDateTime(\"" + dateTimePicker1.Value + "\")";
+				Condition = GetBoolCondition(Value1, cmbOperator.SelectedItem.ToString());
 				where = AppendCondition(Condition, "", where);
+			}
+			string LogicalOperator = labelLogicalOperator.GetOperator();
+			// only check cloned fields when the first condition is valid.
+			if (where.Length > 0)
+			{
+				ComboBox cmb = null;				
+
+				// iterate clones
+				foreach (Control c in this.flowLayoutPanel.Controls)
+				{
+					if (c is ComboBox && c != cmbOperator)
+					{
+						cmb = c as ComboBox;
+						if (cmb.SelectedIndex > -1)
+						{
+							Condition = GetBoolCondition(Value1, cmb.SelectedItem.ToString());
+							where = AppendCondition(Condition, LogicalOperator, where);
+						}
+					}					
+					else if (c is lblANDOR && c != labelLogicalOperator)
+					{
+						// save logical operator for next condition
+						var lbl = c as lblANDOR;
+						LogicalOperator = lbl.GetOperator();
+					}
+				}
+			}
+			return where;
+		}
+
+		private string GetWhereForDateTime()
+		{
+			string where = "";
+			string condition = "";
+
+			string Value1 = "Convert.ToDateTime(Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value).Date";
+
+			if (cmbOperator.SelectedIndex > -1)
+			{
+				condition = Value1 + cmbOperator.SelectedItem.ToString() + "Convert.ToDateTime(\"" + dateTimePicker1.Value + "\").Date";
+				where = AppendCondition(condition, "", where);
 			}
 			string LogicalOperator = this.labelLogicalOperator.GetOperator();
 			// only check cloned fields when the first condition is valid.
@@ -218,8 +283,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 						dtp = c as DateTimePicker;
 						if (cmb.SelectedIndex > -1 && dtp.Value != null)
 						{
-							Condition = Value1 + cmb.SelectedItem.ToString() + "Convert.ToDateTime(\"" + dtp.Value + "\")";
-							where = AppendCondition(Condition, LogicalOperator, where);
+							condition = Value1 + cmb.SelectedItem.ToString() + "Convert.ToDateTime(\"" + dtp.Value + "\").Date";
+							where = AppendCondition(condition, LogicalOperator, where);
 						}
 					}
 					else if (c is lblANDOR && c != labelLogicalOperator)
@@ -236,27 +301,27 @@ namespace Wisej.Web.Ext.ColumnFilter
 		private string GetWhereForString()
 		{
 			string where = "";
-			string Condition = "";
-			string Value1 = "Cells[" + this.DataGridViewColumn.Index.ToString() + "].FormattedValue.ToString()";
+			string condition = "";
+			string value = "Cells[" + this.DataGridViewColumn.Index.ToString() + "].FormattedValue.ToString()";
 			if (!cbMatchCase.Checked)
-				Value1 += ".ToUpper()";
+				value += ".ToUpper()";
 
 			if (cmbOperator.SelectedIndex > -1)
 			{
 				if (cbMatchCase.Checked)
-					Condition = GetStrCondition(Value1, "(\"" + this.txtValue.Text + "\")", cmbOperator.SelectedItem.ToString());
+					condition = GetStrCondition(value, "(\"" + this.txtValue.Text + "\")", cmbOperator.SelectedItem.ToString());
 				else
-					Condition = GetStrCondition(Value1, "(\"" + this.txtValue.Text.ToUpper() + "\")", cmbOperator.SelectedItem.ToString());
+					condition = GetStrCondition(value, "(\"" + this.txtValue.Text.ToUpper() + "\")", cmbOperator.SelectedItem.ToString());
 
-				where = AppendCondition(Condition, "", where);
+				where = AppendCondition(condition, "", where);
 			}
 			string LogicalOperator = this.labelLogicalOperator.GetOperator();
 
 			// only check cloned fields when the first condition is valid.
 			if (where.Length > 0)
 			{
+				TextBox txt = null;
 				ComboBox cmb = null;
-				TextBox txt;
 
 				// iterate clones
 				foreach (Control c in this.flowLayoutPanel.Controls)
@@ -265,17 +330,18 @@ namespace Wisej.Web.Ext.ColumnFilter
 					{
 						cmb = c as ComboBox;
 					}
-					else if (c is TextBox && c != txtValue)
+					else if (c is TextBox && c != txtValue && cmb != null)
 					{
 						txt = c as TextBox;
+
 						// an operator is required, TextBox can be empty for some operators
 						if (cmb.SelectedIndex > -1)
 						{
 							if (cbMatchCase.Checked)
-								Condition = GetStrCondition(Value1, "(\"" + txt.Text + "\")", cmb.SelectedItem.ToString());
+								condition = GetStrCondition(value, "(\"" + txt.Text + "\")", cmb.SelectedItem.ToString());
 							else
-								Condition = GetStrCondition(Value1, "(\"" + txt.Text.ToUpper() + "\")", cmb.SelectedItem.ToString());
-							where = AppendCondition(Condition, LogicalOperator, where);
+								condition = GetStrCondition(value, "(\"" + txt.Text.ToUpper() + "\")", cmb.SelectedItem.ToString());
+							where = AppendCondition(condition, LogicalOperator, where);
 						}
 					}
 					else if (c is Label && c != labelLogicalOperator)
@@ -303,27 +369,49 @@ namespace Wisej.Web.Ext.ColumnFilter
 			}
 			return ret;
 		}
-		private string GetStrCondition(string Value1, string Value2, string Operator)
-		{
-			if (Operator == "equal to")
-				return Value2.Length == 0 ? "" : Value1 + " == " + Value2;
-			else if (Operator == "not equal to")
-				return Value2.Length == 0 ? "" : Value1 + " != " + Value2;
-			else if (Operator == "contains")
-				return Value2.Length == 0 ? "" : Value1 + ".Contains " + Value2;
-			else if (Operator == "starts with")
-				return Value2.Length == 0 ? "" : Value1 + ".StartsWith " + Value2;
-			else if (Operator == "ends with")
-				return Value2.Length == 0 ? "" : Value1 + ".EndsWith " + Value2;
-			else if (Operator == "is empty")
-				return Value1 + " == \"\"";
-			else if (Operator == "is not empty")
-				return Value1 + " != \"\"";
-			else if (Operator == "is null")
-				return Value1 + " == null";
-			else if (Operator == "is not null")
-				return Value1 + " != null";
 
+		private string GetStrCondition(string value1, string value2, string operation)
+		{
+			if (operation == "equal to")
+				return value2.Length == 0 ? "" : value1 + " == " + value2;
+			else if (operation == "not equal to")
+				return value2.Length == 0 ? "" : value1 + " != " + value2;
+			else if (operation == "contains")
+				return value2.Length == 0 ? "" : value1 + ".Contains " + value2;
+			else if (operation == "starts with")
+				return value2.Length == 0 ? "" : value1 + ".StartsWith " + value2;
+			else if (operation == "ends with")
+				return value2.Length == 0 ? "" : value1 + ".EndsWith " + value2;
+			else if (operation == "is empty")
+				return value1 + " == \"\"";
+			else if (operation == "is not empty")
+				return value1 + " != \"\"";
+			else if (operation == "is null")
+				return value1 + " == null";
+			else if (operation == "is not null")
+				return value1 + " != null";
+
+			return "";
+		}
+
+		private string GetBoolCondition(string value1, string operation)
+		{
+			if (operation == "is true")
+			{
+				return value1 + " == true";
+			}
+			else if (operation == "is false")
+			{
+				return value1 + " == false";
+			}
+			else if (operation == "is null")
+			{
+				return value1 + " == null";
+			}
+			else if (operation == "is not null")
+			{
+				return value1 + " != null";
+			}
 			return "";
 		}
 
@@ -362,12 +450,18 @@ namespace Wisej.Web.Ext.ColumnFilter
 			int count = 0;
 			// String =  0-9
 			// Number/Date = 10-15
+			// Bool = 16-19
 			if (this.DataGridViewColumn.ValueType == typeof(string))
 			{
 				startIndex = 0;
 				count = 10;
 			}
-			else
+			else if (this.DataGridViewColumn.ValueType == typeof(bool))
+			{
+				startIndex = 16;
+				count = 4;
+			}
+			else 
 			{
 				startIndex = 10;
 				count = 6;
@@ -405,14 +499,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 				this.flowLayoutPanel.Controls.Add(dtp);
 				this.flowLayoutPanel.SetFillWeight(dtp, 1);
 
-				lbl = CloneLabel(this.labelLogicalOperator);
-				// lbl.Click += lblANDOR.LblANDOR_Click();
-				this.flowLayoutPanel.Controls.Add(lbl);
-
-				// TODO: Check - screws up the layout, leave it in for now...
-				// hide last label, it´s not needed
-				//if (i == count - 1)
-				//	lbl.Visible = false;
+				lbl = CloneLabel(this.labelLogicalOperator);				
+				this.flowLayoutPanel.Controls.Add(lbl);				
 			}
 		}
 
@@ -434,18 +522,21 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		private Label CloneLabel(Label lblOriginal)
 		{
-			var NewLabel = (Label)Activator.CreateInstance(lblOriginal.GetType());
-			NewLabel.Width = lblOriginal.Width;
-			NewLabel.Text = lblOriginal.Text;
-			NewLabel.TextAlign = lblOriginal.TextAlign;
-			NewLabel.AllowHtml = lblOriginal.AllowHtml;
-			return NewLabel;
+			var newLabel = (Label)Activator.CreateInstance(lblOriginal.GetType());
+			newLabel.Width = lblOriginal.Width;
+			newLabel.Text = lblOriginal.Text;
+			newLabel.TextAlign = lblOriginal.TextAlign;
+			newLabel.AllowHtml = lblOriginal.AllowHtml;
+			return newLabel;
 		}
 
 		private DateTimePicker CloneDateTimePicker(DateTimePicker dtpOriginal)
 		{
-			var Newdtp = (DateTimePicker)Activator.CreateInstance(dtpOriginal.GetType());
-			return Newdtp;
+			var newdtp = (DateTimePicker)Activator.CreateInstance(dtpOriginal.GetType());
+			newdtp.AutoSize = dtpOriginal.AutoSize;
+			newdtp.Format = dtpOriginal.Format;
+			this.flowLayoutPanel.SetFillWeight(newdtp, 1);
+			return newdtp;
 		}
 
 		#endregion

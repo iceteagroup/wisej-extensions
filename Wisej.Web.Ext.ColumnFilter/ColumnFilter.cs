@@ -22,6 +22,7 @@ using System.Drawing;
 using System.Drawing.Design;
 using System.ComponentModel;
 using Wisej.Core;
+using System.Collections.Generic;
 
 namespace Wisej.Web.Ext.ColumnFilter
 {
@@ -33,9 +34,12 @@ namespace Wisej.Web.Ext.ColumnFilter
 	[ToolboxBitmap(typeof(ColumnFilter))]
 	[ProvideProperty("ShowFilter", typeof(DataGridViewColumn))]
 	[Description("Adds a filter button to DataGridViewColumn to display a custom filter panel.")]
-	public class ColumnFilter : Wisej.Web.Component, IWisejExtenderProvider
+	public class ColumnFilter : Wisej.Web.Component, IWisejExtenderProvider, ISupportInitialize
 	{
 		#region Constructors
+
+		// keeps the list of columns using this filter panel.
+		private List<DataGridViewColumn> columns = new List<DataGridViewColumn>();
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="ColumnFilter"/>
@@ -225,7 +229,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			if (column == null)
 				throw new ArgumentNullException(nameof(column));
 
-			return column.UserData.ColumnFilter == GetHashCode();
+			return this.columns.Contains(column);
 		}
 
 		/// <summary>
@@ -238,30 +242,39 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			if (column == null)
 				throw new ArgumentNullException(nameof(column));
-			if (column.DataGridView == null)
-				throw new ArgumentNullException(nameof(column));
+
+			// detach from the previous ColumnFilter, if any.
+			if (column.UserData.ColumnFilter != this)
+				column.UserData.ColumnFilter?.SetShowFilter(column, false);
 
 			if (show)
 			{
-				column.Disposed += Column_Disposed;
-				column.UserData.ColumnFilter = GetHashCode();
-				column.HeaderCell.Control = CreateFilterButton(column);
+				if (!GetShowFilter(column))
+				{
+					this.columns.Add(column);
+					column.Disposed -= Column_Disposed;
+					column.Disposed += Column_Disposed;
+					column.UserData.ColumnFilter = this;
+					column.HeaderCell.Control = CreateFilterButton(column);
+				}
 			}
 			else
 			{
+				this.columns.Remove(column);
 				column.Disposed -= Column_Disposed;
 				column.UserData.ColumnFilter = null;
 				column.HeaderCell.Control?.Dispose();
 				column.HeaderCell.Control = null;
 			}
+
+			if (column.Site?.DesignMode ?? false)
+				column.DataGridView?.Invalidate();
 		}
 
 		private void Column_Disposed(object sender, EventArgs e)
 		{
 			var column = (DataGridViewColumn)sender;
-			column.UserData.ColumnFilter = null;
-			column.HeaderCell.Control?.Dispose();
-			column.HeaderCell.Control = null;
+			column.UserData.ColumnFilter?.SetShowFilter(column, false);
 		}
 
 		// Creates the filter button to add to the target
@@ -278,11 +291,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 			var me = this;
 			search.Click += FilterButton_Click;
 			search.UserData.FilterColumn = column;
-
-			column.DataGridView.ControlCreated += (s, e) => {
-				search.Image = me.Image;
-				search.ImageSource = me.ImageSource;
-			};
+			search.Image = me.Image;
+			search.ImageSource = me.ImageSource;
 
 			return search;
 		}
@@ -321,6 +331,46 @@ namespace Wisej.Web.Ext.ColumnFilter
 		bool IExtenderProvider.CanExtend(object extendee)
 		{
 			return extendee is DataGridViewColumn;
+		}
+
+		#endregion
+
+		#region ISupportInitialize
+
+		private int _initCount;
+
+		void ISupportInitialize.BeginInit()
+		{
+			this._initCount++;
+		}
+
+		void ISupportInitialize.EndInit()
+		{
+			this._initCount--;
+
+			if (this.IsInitialized)
+			{
+				// update the icons in all bound columns.
+				// the icon of the ColumnFilter component 
+				// is set in the InitializeComponent method
+				// and it may change *after* the creation of the
+				// filter button in the column header, ending
+				// up using the wrong icon.
+				foreach (var col in this.columns)
+				{
+					var icon = col.HeaderCell.Control as PictureBox;
+					if (icon != null)
+					{
+						icon.Image = this.Image;
+						icon.ImageSource = this.ImageSource;
+					}
+				}
+			}
+		}
+
+		private bool IsInitialized
+		{
+			get { return this._initCount == 0; }
 		}
 
 		#endregion

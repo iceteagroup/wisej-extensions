@@ -70,7 +70,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		public double Lng { get; set; }
 
 		/// <summary>
-		/// Returns a string reprsentation of a <see cref="T:Wisej.Web.Ext.GoogleMaps.LatLng"/> object.
+		/// Returns a string representation of a <see cref="T:Wisej.Web.Ext.GoogleMaps.LatLng"/> object.
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
