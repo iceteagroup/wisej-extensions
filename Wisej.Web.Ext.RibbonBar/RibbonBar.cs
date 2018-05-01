@@ -323,22 +323,25 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// </summary>
 		[SRCategory("CatAction")]
 		[Description("Fired when the user clicks one of the drop down menu items.")]
-		public event MenuButtonItemClickedEventHandler MenuButtonItemClick
+		public event RibbonBarMenuItemEventHandler MenuButtonItemClick
 		{
 			add { base.AddHandler(nameof(MenuButtonItemClick), value); }
 			remove { base.RemoveHandler(nameof(MenuButtonItemClick), value); }
 		}
 
 		/// <summary>
-		/// Fires the <see cref="ItemClicked" /> event.
+		/// Fires the <see cref="MenuButtonItemClick" /> event.
 		/// </summary>
 		/// <param name="e">A <see cref="MenuButtonItemClickedEventArgs" /> that contains the event data. </param>
-		protected internal virtual void OnMenuButtonItemClick(MenuButtonItemClickedEventArgs e)
+		protected internal virtual void OnMenuButtonItemClick(RibbonBarMenuItemEventArgs e)
 		{
 			if (this.CausesValidation && !ValidateActiveControl())
 				return;
 
-			((MenuButtonItemClickedEventHandler)base.Events[nameof(MenuButtonItemClick)])?.Invoke(this, e);
+			// dispatch to the child item as well.
+			e.Item?.OnItemClick(e);
+
+			((RibbonBarMenuItemEventHandler)base.Events[nameof(MenuButtonItemClick)])?.Invoke(this, e);
 		}
 
 		/// <summary>

@@ -40,7 +40,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// </summary>
 		[SRCategory("CatAction")]
 		[SRDescription("Fired when the user clicks one of the drop down menu items.")]
-		public event MenuButtonItemClickedEventHandler ItemClicked
+		public event RibbonBarMenuItemEventHandler ItemClicked
 		{
 			add { base.AddHandler(nameof(ItemClicked), value); }
 			remove { base.RemoveHandler(nameof(ItemClicked), value); }
@@ -49,10 +49,10 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Fires the <see cref="ItemClicked" /> event.
 		/// </summary>
-		/// <param name="e">A <see cref="MenuButtonItemClickedEventArgs" /> that contains the event data. </param>
-		protected internal virtual void OnItemClick(MenuButtonItemClickedEventArgs e)
+		/// <param name="e">A <see cref="RibbonBarMenuItemEventArgs" /> that contains the event data. </param>
+		protected internal virtual void OnItemClick(RibbonBarMenuItemEventArgs e)
 		{
-			((MenuButtonItemClickedEventHandler)base.Events[nameof(ItemClicked)])?.Invoke(this, e);
+			((RibbonBarMenuItemEventHandler)base.Events[nameof(ItemClicked)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -212,7 +212,7 @@ namespace Wisej.Web.Ext.RibbonBar
 			// determine if the button can be clicked.
 			if (this.Enabled && this.Visible)
 			{
-				this.RibbonBar?.OnMenuButtonItemClick(new MenuButtonItemClickedEventArgs(e.Parameters.Item));
+				this.RibbonBar?.OnMenuButtonItemClick(new RibbonBarMenuItemEventArgs(this, e.Parameters.Item));
 			}
 		}
 

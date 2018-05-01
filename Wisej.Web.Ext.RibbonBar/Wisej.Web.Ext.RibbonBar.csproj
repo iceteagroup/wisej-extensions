@@ -69,8 +69,10 @@
     <Compile Include="RibbonBarItemComboBox.cs" />
     <Compile Include="RibbonBarItemControl.cs" />
     <Compile Include="RibbonBarGroupEventArgs.cs" />
+    <Compile Include="RibbonBarMenuItemEventArgs.cs" />
     <Compile Include="RibbonBarItemEventArgs.cs" />
     <Compile Include="RibbonBarGroupEventHandler.cs" />
+    <Compile Include="RibbonBarMenuItemEventHandler.cs" />
     <Compile Include="RibbonBarItemEventHandler.cs" />
     <Compile Include="RibbonBarItemRadioButton.cs" />
     <Compile Include="RibbonBarItemSeparator.cs" />
