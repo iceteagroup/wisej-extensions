@@ -61,7 +61,7 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <param name="e"></param>
 		protected virtual void OnChartClick(ChartClickEventArgs e)
 		{
-			((ChartClickEventHandler)base.Events[nameof (ChartClick)])?.Invoke(this,e);			
+			((ChartClickEventHandler)base.Events[nameof(ChartClick)])?.Invoke(this, e);
 		}
 
 		#endregion
@@ -125,10 +125,9 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Returns or sets the data sets to plot the chart.
 		/// </summary>
-		[DesignerActionList]
 		[MergableProperty(false)]
 		[Description("Returns or sets the data sets to plot the chart.")]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public DataSetCollection DataSets
 		{
 			get
@@ -143,7 +142,11 @@ namespace Wisej.Web.Ext.ChartJS
 
 		private bool ShouldSerializeDataSets()
 		{
-			return this._dataSets != null && this._dataSets.Count > 0;
+			return
+				this._dataSets != null
+				&& this._dataSets.Count > 0
+				&& this._dataSets[0].Data != null
+				&& this._dataSets[0].Data.Length > 0;
 		}
 		private void ResetDataSets()
 		{
@@ -198,7 +201,7 @@ namespace Wisej.Web.Ext.ChartJS
 			get
 			{
 				// create or re-create the design data set. we'll create only 1 at index 0.
-				if (this._designDataSets == null 
+				if (this._designDataSets == null
 					|| this._designDataSets[0].Data.Length != this.Labels.Length
 					|| this._designDataSets[0].Type != this.ChartType)
 				{
@@ -258,6 +261,10 @@ namespace Wisej.Web.Ext.ChartJS
 					return new DoughnutOptions(this, this._options);
 				case ChartType.Radar:
 					return new RadarOptions(this, this._options);
+				case ChartType.Bubble:
+					return new BubbleOptions(this, this._options);
+				case ChartType.Scatter:
+					return new ScatterOptions(this, this._options);
 
 				default:
 					throw new InvalidOperationException("Unknown chart type.");
@@ -335,11 +342,18 @@ namespace Wisej.Web.Ext.ChartJS
 			// options and data are complex objects, with nested objects, arrays and
 			// enumerations. we simply assign them to config and they will be picked
 			// up by the javascript widget without any complex transformations.
+
 			config.options = this.Options;
+
 			config.data = new
 			{
 				labels = this.Labels,
-				datasets = ShouldSerializeDataSets() ? this.DataSets : this.DesignDataSets
+				datasets =
+					ShouldSerializeDataSets()
+						? this.DataSets
+						: this.DesignMode
+							? this.DesignDataSets
+							: null
 			};
 
 			script = script.Replace("$config", WisejSerializer.Serialize(config, WisejSerializerOptions.IgnoreNulls | WisejSerializerOptions.CamelCase));

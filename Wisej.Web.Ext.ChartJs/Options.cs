@@ -483,26 +483,50 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 	}
 
-    /// <summary>
-    /// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Bubble"/> chart.
-    /// </summary>
-    public class BubbleOptions : Options
-    {
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public BubbleOptions()
-        {
-        }
+	/// <summary>
+	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Bubble"/> chart.
+	/// </summary>
+	public class BubbleOptions : Options
+	{
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public BubbleOptions()
+		{
+		}
 
-        /// <summary>
-        /// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.BubbleOptions"/> set.
-        /// </summary>
-        /// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
-        /// <param name="defaults">Default options to copy from.</param>
-        public BubbleOptions(ChartJS chart, Options defaults)
-            : base(chart, defaults)
-        {
-        }
-    }
+		/// <summary>
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.BubbleOptions"/> set.
+		/// </summary>
+		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="defaults">Default options to copy from.</param>
+		public BubbleOptions(ChartJS chart, Options defaults)
+			: base(chart, defaults)
+		{
+		}
+	}
+
+	/// <summary>
+	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Scatter"/> chart.
+	/// </summary>
+	public class ScatterOptions : Options
+	{
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public ScatterOptions()
+		{
+		}
+
+		/// <summary>
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.ScatterOptions"/> set.
+		/// </summary>
+		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="defaults">Default options to copy from.</param>
+		public ScatterOptions(ChartJS chart, Options defaults)
+			: base(chart, defaults)
+		{
+		}
+	}
+
 }

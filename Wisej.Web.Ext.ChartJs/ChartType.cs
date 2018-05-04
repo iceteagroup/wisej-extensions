@@ -58,7 +58,19 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Pie and doughnut charts are probably the most commonly used chart there are. They are divided into segments, the arc of each segment shows the proportional value of each piece of data.
 		/// </summary>
-		Doughnut
+		Doughnut,
 
+		/// <summary>
+		/// A bubble chart is used to display three dimensions of data at the same time. 
+		/// The location of the bubble is determined by the first two dimensions and the corresponding 
+		/// horizontal and vertical axes. The third dimension is represented by the size of the individual bubbles.
+		/// </summary>
+		Bubble,
+
+		/// <summary>
+		/// Scatter charts are based on basic line charts with the x axis changed to a linear axis. 
+		/// To use a scatter chart, data must be passed as objects containing X and Y properties. 
+		/// </summary>
+		Scatter
 	}
 }
