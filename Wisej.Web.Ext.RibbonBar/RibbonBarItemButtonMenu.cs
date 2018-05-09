@@ -58,25 +58,4 @@ namespace Wisej.Web.Ext.RibbonBar
 			base.Dispose(disposing);
 		}
 	}
-
-	/// <summary>
-	/// Extends the <see cref="MenuItem"/> class to support
-	/// retrieving the <see cref="RibbonBarItemButton"/> that owns the
-	/// context menu.
-	/// </summary>
-	/// <exclude/>
-	public static class MenuItemExtensions
-	{
-		/// <summary>
-		/// Returns the <see cref="RibbonBarItemButton"/> or <see cref="RibbonBarItemSplitButton"/>
-		/// that are related to the <see cref="MenuItem"/>.
-		/// </summary>
-		/// <param name="item">The <see cref="MenuItem"/> to extend.</param>
-		/// <returns></returns>
-		public static RibbonBarItemButton GetRibbonBarItem(this MenuItem item)
-		{
-			var contextMenu = (RibbonBarItemButtonMenu)item.GetContextMenu();
-			return contextMenu?.Button;
-		}
-	}
 }

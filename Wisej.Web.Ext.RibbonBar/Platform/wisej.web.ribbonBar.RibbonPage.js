@@ -30,8 +30,9 @@ qx.Class.define("wisej.web.ribbonBar.RibbonPage", {
 	// All Wisej components must include this mixin
 	// to provide services to the Wisej core.
 	include: [
-		  wisej.mixin.MWisejControl,
-		  wisej.mixin.MShortcutTarget
+		wisej.mixin.MWisejControl,
+		wisej.mixin.MShortcutTarget,
+		qx.ui.core.MRightToLeftLayout
 	],
 
 	construct: function () {
@@ -44,6 +45,8 @@ qx.Class.define("wisej.web.ribbonBar.RibbonPage", {
 		// the correct sequence.
 		this.setReverseControls(false);
 
+		// RightToLeft support.
+		this.setRtlLayout(true);
 	},
 
 	properties: {

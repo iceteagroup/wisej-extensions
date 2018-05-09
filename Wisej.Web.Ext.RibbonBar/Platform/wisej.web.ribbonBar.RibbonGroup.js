@@ -30,7 +30,8 @@ qx.Class.define("wisej.web.ribbonBar.RibbonGroup", {
 	// to provide services to the Wisej core.
 	include: [
 		wisej.mixin.MWisejControl,
-		qx.ui.core.MRemoteChildrenHandling
+		qx.ui.core.MRemoteChildrenHandling,
+		qx.ui.core.MRightToLeftLayout
 	],
 
 	construct: function (label) {
@@ -51,6 +52,10 @@ qx.Class.define("wisej.web.ribbonBar.RibbonGroup", {
 		// order they are declared to display the items in 
 		// the correct sequence.
 		this.setReverseControls(false);
+
+		// RightToLeft support.
+		this.setRtlLayout(true);
+		this.addListener("changeRtl", this._onRtlChange, this);
 	},
 
 	properties: {
@@ -186,6 +191,18 @@ qx.Class.define("wisej.web.ribbonBar.RibbonGroup", {
 		// fires the "buttonClick" even when clicking on the group "advanced" button.
 		_onButtonClick: function (e) {
 			this.fireEvent("buttonClick");
+		},
+
+		// Listens to "changeRtl" to mirror the label and icon position.
+		_onRtlChange: function (e) {
+
+			if (e.getData() === e.getOldData())
+				return;
+
+			var rtl = e.getData();
+			if (rtl != null) {
+				this._mirrorChildren(rtl);
+			}
 		},
 	}
 

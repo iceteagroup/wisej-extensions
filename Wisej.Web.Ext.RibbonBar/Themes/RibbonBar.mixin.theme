@@ -208,6 +208,11 @@
 							"properties": {
 								"cursor": "pointer"
 							}
+						},
+						"rightToLeft": {
+							"styles": {
+								"transform": "rotateZ(90deg)"
+							}
 						}
 					},
 					"components": {

@@ -39,6 +39,9 @@ qx.Class.define("wisej.web.ribbonBar.TabView", {
 		// order they are declared to display the tabs in 
 		// the correct sequence.
 		this.setReverseControls(false);
+
+		// RightToLeft support.
+		this.addListener("changeRtl", this._onRtlChange, this);
 	},
 
 	properties: {
@@ -75,6 +78,18 @@ qx.Class.define("wisej.web.ribbonBar.TabView", {
 						this.setSelection([pages[index]]);
 					}
 				}
+			}
+		},
+
+		// Listens to "changeRtl" to mirror the widgets in the tabview bar.
+		_onRtlChange: function (e) {
+
+			if (e.getData() === e.getOldData())
+				return;
+
+			var rtl = e.getData();
+			if (rtl != null) {
+				this.getChildControl("bar")._mirrorChildren(rtl);
 			}
 		},
 
