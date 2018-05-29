@@ -61,7 +61,10 @@ qx.Class.define("wisej.web.ext.CountUp", {
 		 */
 		numerals: { init: null, check: "Array", nullable: true, apply: "_applyOption" },
 
-        align: { init: "left", check: "String", apply: "_applyOption" }
+		/**
+		 * Align property.
+		 */
+		align: { init: "left", check: ["left", "center", "right"], apply: "_applyOption" }
 	},
 
 	construct: function () {
@@ -85,18 +88,18 @@ qx.Class.define("wisej.web.ext.CountUp", {
 		 */
 		__createCountUpElement: function () {
 
-            var dom = this.getContentElement().getDomElement();
+			var dom = this.getContentElement().getDomElement();
 
 
 			var options = {
 				useEasing: this.getUseEasing(),
 				useGrouping: this.getUseGrouping(),
 				separator: this.getSeparator(),
-                decimal: this.getDecimal(),
-                align: this.getAlign()
+				decimal: this.getDecimal(),
+				align: this.getAlign()
 			};
 
-            dom.align = options.align;
+			dom.align = options.align;
 
 			var value = this.getValue();
 			var duration = this.getDuration() / 1000;

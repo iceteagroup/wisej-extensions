@@ -187,6 +187,31 @@ namespace Wisej.Web.Ext.CountUp
 			this.Numerals = null;
 		}
 
+		/// Returns or sets the alignment of the label. The default is <see cref="HorizontalAlignment.Left"/>.
+		/// </summary>
+		/// <returns>On of the <see cref="HorizontalAlignment"/> values. </returns>
+		[DefaultValue(HorizontalAlignment.Left)]
+		[Localizable(true)]
+		[ResponsiveProperty]
+		[SRCategory("CatAppearance")]
+		[SRDescription("LabelTextAlignDescr")]
+		public virtual HorizontalAlignment TextAlign
+		{
+			get
+			{
+				return _textAlign;
+			}
+			set
+			{
+				if (this._textAlign != value)
+				{
+					this._textAlign = value;
+					Update();
+				}
+			}
+		}
+		private HorizontalAlignment _textAlign = HorizontalAlignment.Left;
+
 		#endregion
 
 		#region Wisej Implementation
@@ -227,26 +252,11 @@ namespace Wisej.Web.Ext.CountUp
 
 			config.className = "wisej.web.ext.CountUp";
 			config.value = this.Value;
+			config.align = this.TextAlign;
 			config.duration = this.Duration;
 			config.numerals = this.Numerals;
 			config.useEasing = this.UseEasing;
 			config.useGrouping = this.UseGrouping;
-            switch(this.TextAlign)
-            {
-                case ContentAlignment.MiddleLeft:
-                case ContentAlignment.BottomLeft:
-                case ContentAlignment.TopLeft:
-                    config.align = "left";
-                    break;
-                case ContentAlignment.MiddleRight:
-                case ContentAlignment.BottomRight:
-                case ContentAlignment.TopRight:
-                    config.align = "right";
-                    break;
-                default:
-                    config.align = "center";
-                    break;
-            }
 
 			var numberFormat = Application.CurrentCulture.NumberFormat;
 			config.separator = numberFormat.NumberGroupSeparator;
@@ -255,37 +265,7 @@ namespace Wisej.Web.Ext.CountUp
 			config.wiredEvents.Add("countTerminated");
 		}
 
-        //
-        // Summary:
-        //     Returns or sets the alignment of text in the label.
-        //
-        // Returns:
-        //     One of the System.Drawing.ContentAlignment values. The default is System.Drawing.ContentAlignment.TopLeft.
-        [DefaultValue(ContentAlignment.TopLeft)]
-        [Localizable(true)]
-        [ResponsiveProperty]
-        [SRCategory("CatAppearance")]
-        [SRDescription("LabelTextAlignDescr")]
-        public virtual ContentAlignment TextAlign
-        {
-            get
-            {
-                return mTextAlign;
-            }
-            set
-            {
-                if (this.mTextAlign != value)
-                {
-                    this.mTextAlign = value;
-                    Update();
-                }
-            }
-        }
+		#endregion
 
-        private ContentAlignment mTextAlign = ContentAlignment.TopLeft;
-
-
-        #endregion
-
-    }
+	}
 }
