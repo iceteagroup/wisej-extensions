@@ -231,6 +231,22 @@ namespace Wisej.Web.Ext.CountUp
 			config.numerals = this.Numerals;
 			config.useEasing = this.UseEasing;
 			config.useGrouping = this.UseGrouping;
+            switch(this.TextAlign)
+            {
+                case ContentAlignment.MiddleLeft:
+                case ContentAlignment.BottomLeft:
+                case ContentAlignment.TopLeft:
+                    config.align = "left";
+                    break;
+                case ContentAlignment.MiddleRight:
+                case ContentAlignment.BottomRight:
+                case ContentAlignment.TopRight:
+                    config.align = "right";
+                    break;
+                default:
+                    config.align = "center";
+                    break;
+            }
 
 			var numberFormat = Application.CurrentCulture.NumberFormat;
 			config.separator = numberFormat.NumberGroupSeparator;
@@ -239,7 +255,37 @@ namespace Wisej.Web.Ext.CountUp
 			config.wiredEvents.Add("countTerminated");
 		}
 
-		#endregion
+        //
+        // Summary:
+        //     Returns or sets the alignment of text in the label.
+        //
+        // Returns:
+        //     One of the System.Drawing.ContentAlignment values. The default is System.Drawing.ContentAlignment.TopLeft.
+        [DefaultValue(ContentAlignment.TopLeft)]
+        [Localizable(true)]
+        [ResponsiveProperty]
+        [SRCategory("CatAppearance")]
+        [SRDescription("LabelTextAlignDescr")]
+        public virtual ContentAlignment TextAlign
+        {
+            get
+            {
+                return mTextAlign;
+            }
+            set
+            {
+                if (this.mTextAlign != value)
+                {
+                    this.mTextAlign = value;
+                    Update();
+                }
+            }
+        }
 
-	}
+        private ContentAlignment mTextAlign = ContentAlignment.TopLeft;
+
+
+        #endregion
+
+    }
 }
