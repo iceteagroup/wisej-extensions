@@ -109,7 +109,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 				{
 					foreach (bool b in visibleValues)
 					{
-						this.items.Items.Add(b ? "true" : "false", true);
+						this.items.Items.Add(Convert.ToString(b), true);
 					}
 				}
 				else
@@ -129,7 +129,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 				{
 					foreach (bool b in visibleValues)
 					{
-						string v = b ? "true" : "false";
+						string v = Convert.ToString(b);
 						var index = filterItems.IndexOf(v);
 						if (index == -1)
 						{
@@ -211,7 +211,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			foreach (var row in dataGrid.Rows)
 			{
 				if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
-					cellText = (bool) row[index].Value ? "true" : "false";
+					cellText = Convert.ToString(row[index].Value);						
 				else
 					cellText = row[index].FormattedValue?.ToString() ?? string.Empty;
 

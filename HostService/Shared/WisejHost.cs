@@ -130,6 +130,8 @@ namespace Wisej.HostService.Owin
 		/// <param name="immediate"></param>
 		public void Stop(bool immediate)
 		{
+			Trace.TraceInformation("Stopping Wisej.Host: Domain={0}, Port={1}, Reason={2}", this.Domain, this.Port, HostingEnvironment.ShutdownReason);
+
 			try
 			{
 				HostingEnvironment.UnregisterObject(this);
@@ -172,6 +174,8 @@ namespace Wisej.HostService.Owin
 			this.Domain = domain;
 			this.Url = "http://" + domain + ":" + port;
 
+			Trace.TraceInformation("Starting Wisej.Host: Domain={0}, Port={1}, Reason={2}", this.Domain, this.Port, HostingEnvironment.ShutdownReason);
+
 			// register with the .NET hosting system.
 			HostingEnvironment.RegisterObject(this);
 
@@ -185,6 +189,7 @@ namespace Wisej.HostService.Owin
 
 			if (Type.GetType(mergedFactoryType, false) != null)
 				options.ServerFactory = mergedFactoryType;
+
 
 			this.webApp = WebApp.Start(options, (builder) =>
 			{

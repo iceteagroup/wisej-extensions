@@ -244,8 +244,12 @@ namespace Wisej.Web.Ext.ColumnFilter
 				throw new ArgumentNullException(nameof(column));
 
 			// detach from the previous ColumnFilter, if any.
-			if (column.UserData.ColumnFilter != this)
-				column.UserData.ColumnFilter?.SetShowFilter(column, false);
+			var userData = column.UserData;
+			if (userData.ColumnFilter != this)
+			{
+				userData.FilterPanel?.Dispose();
+				userData.ColumnFilter?.SetShowFilter(column, false);
+			}
 
 			if (show)
 			{

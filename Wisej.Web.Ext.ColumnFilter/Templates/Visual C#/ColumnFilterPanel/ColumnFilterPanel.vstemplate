@@ -23,7 +23,7 @@
         <Assembly>Wisej.Web.Ext.ColumnFilter</Assembly>
       </Reference>
     </References>
-    <ProjectItem SubType="UserControl" TargetFileName="$fileinputname$.cs" ReplaceParameters="true" OpenInEditor="false">ColumnFilter.cs</ProjectItem>
-    <ProjectItem SubType="" TargetFileName="$fileinputname$.Designer.cs" ReplaceParameters="true">ColumnFilter.Designer.cs</ProjectItem>
+    <ProjectItem SubType="UserControl" TargetFileName="$fileinputname$.cs" ReplaceParameters="true" OpenInEditor="false">ColumnFilterPanel.cs</ProjectItem>
+    <ProjectItem SubType="" TargetFileName="$fileinputname$.Designer.cs" ReplaceParameters="true">ColumnFilterPanel.Designer.cs</ProjectItem>
   </TemplateContent>
 </VSTemplate>

@@ -112,7 +112,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)..\Shared\ILMerge.exe" /copyattrs /targetplatform:4.0 /out:"$(ProjectDir)..\bin\$(TargetName).exe" "$(TargetPath)" "$(TargetDir)Microsoft.Owin.Host.HttpListener.dll" "$(TargetDir)Microsoft.Owin.Hosting.dll" "$(TargetDir)Microsoft.Owin.StaticFiles.dll" "$(TargetDir)Microsoft.Owin.dll" "$(TargetDir)Microsoft.Owin.FileSystems.dll" "$(TargetDir)Owin.dll"</PostBuildEvent>
+    <PostBuildEvent>$(ProjectDir)..\Shared\ILMerge.exe" /ndebug /copyattrs /targetplatform:4.0 /out:"$(TargetPath)" "$(TargetPath)" "$(TargetDir)Microsoft.Owin.Host.HttpListener.dll" "$(TargetDir)Microsoft.Owin.Hosting.dll" "$(TargetDir)Microsoft.Owin.StaticFiles.dll" "$(TargetDir)Microsoft.Owin.dll" "$(TargetDir)Microsoft.Owin.FileSystems.dll" "$(TargetDir)Owin.dll"
+copy "$(TargetPath)" "$(ProjectDir)..\bin" /y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

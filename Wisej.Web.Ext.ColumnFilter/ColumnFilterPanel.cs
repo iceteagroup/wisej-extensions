@@ -235,7 +235,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 				var column = this.DataGridViewColumn;
 				if (column != null)
 				{
-					column.UserData.ColumnFilter = null;
 					column.HeaderCell.Control?.Dispose();
 					column.HeaderCell.Control = null;
 					column.UserData.FilterPanel = null;

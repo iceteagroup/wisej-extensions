@@ -78,7 +78,7 @@ namespace Wisej.Application
 
 			// extract CefSharp resources and modules into the temp directory
 			// not to clog the hosting Wisej application folder.
-			CefSharpPath = Path.Combine(Path.GetTempPath(), "CefSharp");
+			CefSharpPath = Path.Combine(Path.GetTempPath(), "Wisej", "CefSharp");
 			Directory.CreateDirectory(CefSharpPath);
 			Directory.SetCurrentDirectory(CefSharpPath);
 

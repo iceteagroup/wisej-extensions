@@ -884,12 +884,7 @@ namespace Wisej.Web.Ext.RibbonBar
 				// WM_LBUTTONDOWN
 				case 0x0201:
 					var lParam = (int)m.LParam.ToInt64();
-					if (!SelectClickedTab(lParam) && !SelectClickedItem(lParam))
-						this.DesignItem = null;
-					else
-						return true;
-
-					break;
+					return SelectClickedTab(lParam) || SelectClickedItem(lParam);
 			}
 
 			return false;
@@ -955,6 +950,7 @@ namespace Wisej.Web.Ext.RibbonBar
 					return true;
 				}
 			}
+			this.DesignItem = null;
 			return false;
 		}
 
