@@ -102,7 +102,7 @@ namespace Wisej.HostService.Owin
 				}
 			}
 
-			return this.Next.Invoke(context);
+			return ProcessAspNetRequest(context);
 		}
 
 		/// <summary>
