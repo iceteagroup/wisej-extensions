@@ -4,3 +4,8 @@ bin
 obj
 packages
 /Wisej.Ext.Geolocation/.vs/config/applicationhost.config
+*.pdb
+/Wisej.Ext.ClearScript/ClearScript/*.tt
+*.tt
+Debug
+Release

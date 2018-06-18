@@ -340,14 +340,10 @@ namespace Wisej.Web.Ext.AspNetControl
 				// Wisej wrapper control. the page code will use the id to call back this control
 				// during the page life cycle.
 
-				if (Application.Configuration.Cookieless)
-				{
-					return "Wisej.AspNetHost.aspx?sid=" + Application.SessionId + "&_cid=" + ((IWisejComponent)this).Id + "&_sc=" + this._version;
-				}
-				else
-				{
-					return "Wisej.AspNetHost.aspx?_cid=" + ((IWisejComponent)this).Id + "&_sc=" + this._version;
-				}
+				return "Wisej.AspNetHost.aspx"
+					+ "?sid=" + Application.SessionId
+					+ "&_cid=" + ((IWisejComponent)this).Id
+					+ "&_sc=" + this._version;
 			}
 		}
 
