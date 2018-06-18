@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B4A2D752-8D5D-48D5-A368-45A5A9F72E7F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wisej.Ext.ClearScript</RootNamespace>
+    <AssemblyName>Wisej.Ext.ClearScript</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\Wisej.Ext.ClearScript.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Wisej.Ext.ClearScript.XML</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Wisej.Core">
+      <HintPath>..\..\..\Development\1.4\Wisej\bin\Wisej.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClearScript.cs" />
+    <Compile Include="ClearScript\BindSignature.cs" />
+    <Compile Include="ClearScript\ByRefArg.cs" />
+    <Compile Include="ClearScript\CanonicalRefTable.cs" />
+    <Compile Include="ClearScript\ContinuationCallback.cs" />
+    <Compile Include="ClearScript\DefaultScriptUsageAttribute.cs" />
+    <Compile Include="ClearScript\DelegateFactory.cs" />
+    <Compile Include="ClearScript\DelegateFactory.Generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DelegateFactory.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClearScript\ExtensionMethods.cs" />
+    <Compile Include="ClearScript\HostEvent.cs" />
+    <Compile Include="ClearScript\HostFunctions.cs" />
+    <Compile Include="ClearScript\HostIndexedProperty.cs" />
+    <Compile Include="ClearScript\HostItem.cs" />
+    <Compile Include="ClearScript\HostItem.InvokeMethod.cs" />
+    <Compile Include="ClearScript\HostItemCollateral.cs" />
+    <Compile Include="ClearScript\HostItemFlags.cs" />
+    <Compile Include="ClearScript\HostList.cs" />
+    <Compile Include="ClearScript\HostMethod.cs" />
+    <Compile Include="ClearScript\HostObject.cs" />
+    <Compile Include="ClearScript\HostTarget.cs" />
+    <Compile Include="ClearScript\HostTargetFlags.cs" />
+    <Compile Include="ClearScript\HostTargetMemberData.cs" />
+    <Compile Include="ClearScript\HostType.cs" />
+    <Compile Include="ClearScript\HostTypeCollection.cs" />
+    <Compile Include="ClearScript\HostVariable.cs" />
+    <Compile Include="ClearScript\ImmutableValueAttribute.cs" />
+    <Compile Include="ClearScript\IScriptableObject.cs" />
+    <Compile Include="ClearScript\IScriptEngineException.cs" />
+    <Compile Include="ClearScript\JavaScript\IArrayBuffer.cs" />
+    <Compile Include="ClearScript\JavaScript\IArrayBufferView.cs" />
+    <Compile Include="ClearScript\JavaScript\IDataView.cs" />
+    <Compile Include="ClearScript\JavaScript\ITypedArray.cs" />
+    <Compile Include="ClearScript\NoDefaultScriptAccessAttribute.cs" />
+    <Compile Include="ClearScript\NoScriptAccessAttribute.cs" />
+    <Compile Include="ClearScript\PropertyBag.cs" />
+    <Compile Include="ClearScript\ScriptAccess.cs" />
+    <Compile Include="ClearScript\ScriptEngine.cs" />
+    <Compile Include="ClearScript\ScriptEngineException.cs" />
+    <Compile Include="ClearScript\ScriptInterruptedException.cs" />
+    <Compile Include="ClearScript\ScriptItem.cs" />
+    <Compile Include="ClearScript\ScriptMemberAttribute.cs" />
+    <Compile Include="ClearScript\ScriptMemberFlags.cs" />
+    <Compile Include="ClearScript\ScriptMethod.cs" />
+    <Compile Include="ClearScript\ScriptObject.cs" />
+    <Compile Include="ClearScript\ScriptUsageAttribute.cs" />
+    <Compile Include="ClearScript\Undefined.cs" />
+    <Compile Include="ClearScript\Util\ArrayHelpers.cs" />
+    <Compile Include="ClearScript\Util\AssemblyHelpers.cs" />
+    <Compile Include="ClearScript\Util\AssemblyTable.cs" />
+    <Compile Include="ClearScript\Util\BitwiseHelpers.cs" />
+    <Compile Include="ClearScript\Util\Collateral.cs" />
+    <Compile Include="ClearScript\Util\COMDispatch.cs" />
+    <Compile Include="ClearScript\Util\COMDispatchHelpers.cs" />
+    <Compile Include="ClearScript\Util\ConcurrentWeakSet.cs" />
+    <Compile Include="ClearScript\Util\CoTaskMemBlock.cs" />
+    <Compile Include="ClearScript\Util\DynamicHelpers.cs" />
+    <Compile Include="ClearScript\Util\EnumerableHelpers.cs" />
+    <Compile Include="ClearScript\Util\IDynamic.cs" />
+    <Compile Include="ClearScript\Util\IHostInvokeContext.cs" />
+    <Compile Include="ClearScript\Util\INativeCallback.cs" />
+    <Compile Include="ClearScript\Util\InvokeHelpers.cs" />
+    <Compile Include="ClearScript\Util\IScriptMarshalWrapper.cs" />
+    <Compile Include="ClearScript\Util\MemberComparer.cs" />
+    <Compile Include="ClearScript\Util\MemberHelpers.cs" />
+    <Compile Include="ClearScript\Util\MemberMap.cs" />
+    <Compile Include="ClearScript\Util\MiscHelpers.cs" />
+    <Compile Include="ClearScript\Util\NativeCallbackTimer.cs" />
+    <Compile Include="ClearScript\Util\NativeMethods.cs" />
+    <Compile Include="ClearScript\Util\Nonexistent.cs" />
+    <Compile Include="ClearScript\Util\ObjectHelpers.cs" />
+    <Compile Include="ClearScript\Util\OneWayFlag.cs" />
+    <Compile Include="ClearScript\Util\RawCOMHelpers.cs" />
+    <Compile Include="ClearScript\Util\Scope.cs" />
+    <Compile Include="ClearScript\Util\SocketHelpers.cs" />
+    <Compile Include="ClearScript\Util\SpecialDispIDs.cs" />
+    <Compile Include="ClearScript\Util\SpecialMemberNames.cs" />
+    <Compile Include="ClearScript\Util\SpecialParamNames.cs" />
+    <Compile Include="ClearScript\Util\TypeHelpers.cs" />
+    <Compile Include="ClearScript\Util\UniqueNameManager.cs" />
+    <Compile Include="ClearScript\Util\UnmanagedMemoryHelpers.cs" />
+    <Compile Include="ClearScript\Util\VTablePatcher.cs" />
+    <Compile Include="ClearScript\Util\Web\WebContext.cs" />
+    <Compile Include="ClearScript\Util\Web\WebRequest.cs" />
+    <Compile Include="ClearScript\Util\Web\WebResponse.cs" />
+    <Compile Include="ClearScript\Util\Web\WebSocket.cs" />
+    <Compile Include="ClearScript\V8\IV8DebugListener.cs" />
+    <Compile Include="ClearScript\V8\IV8Object.cs" />
+    <Compile Include="ClearScript\V8\V8ArrayBufferOrViewInfo.cs" />
+    <Compile Include="ClearScript\V8\V8ArrayBufferOrViewKind.cs" />
+    <Compile Include="ClearScript\V8\V8CacheKind.cs" />
+    <Compile Include="ClearScript\V8\V8ContextProxy.cs" />
+    <Compile Include="ClearScript\V8\V8DebugAgent.cs" />
+    <Compile Include="ClearScript\V8\V8DebugClient.cs" />
+    <Compile Include="ClearScript\V8\V8IsolateProxy.cs" />
+    <Compile Include="ClearScript\V8\V8Proxy.cs" />
+    <Compile Include="ClearScript\V8\V8ProxyHelpers.cs" />
+    <Compile Include="ClearScript\V8\V8Runtime.cs" />
+    <Compile Include="ClearScript\V8\V8RuntimeConstraints.cs" />
+    <Compile Include="ClearScript\V8\V8RuntimeFlags.cs" />
+    <Compile Include="ClearScript\V8\V8RuntimeHeapInfo.cs" />
+    <Compile Include="ClearScript\V8\V8Script.cs" />
+    <Compile Include="ClearScript\V8\V8ScriptEngine.cs" />
+    <Compile Include="ClearScript\V8\V8ScriptEngineFlags.cs" />
+    <Compile Include="ClearScript\V8\V8ScriptItem.cs" />
+    <Compile Include="ClearScript\V8\V8TestProxy.cs" />
+    <Compile Include="ClearScript\VoidResult.cs" />
+    <Compile Include="ClearScript\Windows\ActiveXDebugging.cs" />
+    <Compile Include="ClearScript\Windows\ActiveXScripting.cs" />
+    <Compile Include="ClearScript\Windows\ActiveXWrappers.cs" />
+    <Compile Include="ClearScript\Windows\IHostWindow.cs" />
+    <Compile Include="ClearScript\Windows\JScriptEngine.cs" />
+    <Compile Include="ClearScript\Windows\VBScriptEngine.cs" />
+    <Compile Include="ClearScript\Windows\WindowsScriptEngine.cs" />
+    <Compile Include="ClearScript\Windows\WindowsScriptEngine.Debug.cs" />
+    <Compile Include="ClearScript\Windows\WindowsScriptEngine.Site.cs" />
+    <Compile Include="ClearScript\Windows\WindowsScriptEngineFlags.cs" />
+    <Compile Include="ClearScript\Windows\WindowsScriptItem.cs" />
+    <Compile Include="EngineType.cs" />
+    <Compile Include="JScriptEngine.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="V8JavaScriptEngine.cs" />
+    <Compile Include="VBScriptEngine.cs" />
+    <Compile Include="Version.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Version.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClearScript\V8\V8\lib\v8-ia32.lib" />
+    <None Include="ClearScript\V8\V8\lib\v8-x64.lib" />
+    <None Include="extension.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClearScript\DelegateFactory.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DelegateFactory.Generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="ClearScript\Exports\CallbackManager.h">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CallbackManager.tt</DependentUpon>
+    </Content>
+    <None Include="Version.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Version.cs</LastGenOutput>
+    </None>
+    <None Include="ClearScript\Exports\CallbackManager.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CallbackManager.h</LastGenOutput>
+    </None>
+    <Content Include="ClearScript\Exports\VersionSymbols.h">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VersionSymbols.tt</DependentUpon>
+    </Content>
+    <None Include="ClearScript\Exports\VersionSymbols.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>VersionSymbols.h</LastGenOutput>
+    </None>
+    <None Include="ClearScript\V8\ClearScriptV8\ClearScriptV8Managed.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\ClearScriptV8Native.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\CommonPlatform.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\HighResolutionClock.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\HighResolutionClock.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\HostException.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\HostObjectHelpers.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\HostObjectHelpers.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\HostObjectHolder.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\HostObjectHolderImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\HostObjectHolderImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\ManagedPlatform.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\Mutex.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\Mutex.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\NativeCallbackImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\NativeCallbackImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\NativePlatform.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\RefCount.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\RefCount.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\SharedPtr.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\StdString.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\StdString.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\Timer.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8CacheType.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8Context.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8Context.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ContextImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ContextImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ContextProxyImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ContextProxyImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8DebugListenerImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8DebugListenerImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8Exception.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8Exception.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8Isolate.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8Isolate.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8IsolateConstraints.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8IsolateHeapInfo.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8IsolateImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8IsolateImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8IsolateProxyImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8IsolateProxyImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ObjectHelpers.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ObjectHelpers.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ObjectHolder.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ObjectHolderImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ObjectHolderImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ObjectImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ObjectImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8Platform.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ScriptHolder.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ScriptHolderImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ScriptHolderImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ScriptImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8ScriptImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8TestProxyImpl.cpp" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8TestProxyImpl.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8Value.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\V8WeakContextBinding.h" />
+    <None Include="ClearScript\V8\ClearScriptV8\WeakRef.h" />
+    <None Include="ClearScript\V8\V8\include\v8-debug.h" />
+    <None Include="ClearScript\V8\V8\include\v8-inspector-protocol.h" />
+    <None Include="ClearScript\V8\V8\include\v8-inspector.h" />
+    <None Include="ClearScript\V8\V8\include\v8-platform.h" />
+    <None Include="ClearScript\V8\V8\include\v8-profiler.h" />
+    <None Include="ClearScript\V8\V8\include\v8-testing.h" />
+    <None Include="ClearScript\V8\V8\include\v8-util.h" />
+    <None Include="ClearScript\V8\V8\include\v8-value-serializer-version.h" />
+    <None Include="ClearScript\V8\V8\include\v8-version-string.h" />
+    <None Include="ClearScript\V8\V8\include\v8-version.h" />
+    <None Include="ClearScript\V8\V8\include\v8.h" />
+    <None Include="ClearScript\V8\V8\include\v8config.h" />
+    <EmbeddedResource Include="ClearScript\V8\V8\x64\ClearScriptV8-64.dll" />
+    <EmbeddedResource Include="ClearScript\V8\V8\x64\v8-base-x64.dll" />
+    <EmbeddedResource Include="ClearScript\V8\V8\x64\v8-x64.dll" />
+    <EmbeddedResource Include="ClearScript\V8\V8\x86\ClearScriptV8-32.dll" />
+    <EmbeddedResource Include="ClearScript\V8\V8\x86\v8-base-ia32.dll" />
+    <EmbeddedResource Include="ClearScript\V8\V8\x86\v8-ia32.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\bin" /y
+copy "$(TargetDir)$(TargetName).xml" "$(ProjectDir)..\bin" /y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
