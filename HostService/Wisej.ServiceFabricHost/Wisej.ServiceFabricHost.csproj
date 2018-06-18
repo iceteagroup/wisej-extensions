@@ -40,67 +40,67 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Owin">
-      <HintPath>..\..\Assemblies\Microsoft.Owin.dll</HintPath>
+      <HintPath>..\Assemblies\Microsoft.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.FileSystems">
-      <HintPath>..\..\Assemblies\Microsoft.Owin.FileSystems.dll</HintPath>
+      <HintPath>..\Assemblies\Microsoft.Owin.FileSystems.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Host.HttpListener">
-      <HintPath>..\..\Assemblies\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+      <HintPath>..\Assemblies\Microsoft.Owin.Host.HttpListener.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Hosting">
-      <HintPath>..\..\Assemblies\Microsoft.Owin.Hosting.dll</HintPath>
+      <HintPath>..\Assemblies\Microsoft.Owin.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.StaticFiles">
-      <HintPath>..\..\Assemblies\Microsoft.Owin.StaticFiles.dll</HintPath>
+      <HintPath>..\Assemblies\Microsoft.Owin.StaticFiles.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>packages\Microsoft.ServiceFabric.Data.3.0.472\lib\net45\Microsoft.ServiceFabric.Data.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Data.3.0.472\lib\net45\Microsoft.ServiceFabric.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Data.Interfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>packages\Microsoft.ServiceFabric.Data.3.0.472\lib\net45\Microsoft.ServiceFabric.Data.Interfaces.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Data.3.0.472\lib\net45\Microsoft.ServiceFabric.Data.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Diagnostics, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>packages\Microsoft.ServiceFabric.Diagnostics.Internal.3.0.472\lib\net45\Microsoft.ServiceFabric.Diagnostics.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Diagnostics.Internal.3.0.472\lib\net45\Microsoft.ServiceFabric.Diagnostics.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Internal, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>packages\Microsoft.ServiceFabric.6.1.472\lib\net45\Microsoft.ServiceFabric.Internal.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.1.472\lib\net45\Microsoft.ServiceFabric.Internal.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Internal.Strings, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>packages\Microsoft.ServiceFabric.6.1.472\lib\net45\Microsoft.ServiceFabric.Internal.Strings.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.1.472\lib\net45\Microsoft.ServiceFabric.Internal.Strings.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Preview, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>packages\Microsoft.ServiceFabric.6.1.472\lib\net45\Microsoft.ServiceFabric.Preview.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.1.472\lib\net45\Microsoft.ServiceFabric.Preview.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ServiceFabric.Services, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>packages\Microsoft.ServiceFabric.Services.3.0.472\lib\net45\Microsoft.ServiceFabric.Services.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.Services.3.0.472\lib\net45\Microsoft.ServiceFabric.Services.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
-      <HintPath>..\..\Assemblies\Owin.dll</HintPath>
+      <HintPath>..\Assemblies\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Fabric, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>packages\Microsoft.ServiceFabric.6.1.472\lib\net45\System.Fabric.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.1.472\lib\net45\System.Fabric.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Fabric.Management.ServiceModel, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>packages\Microsoft.ServiceFabric.6.1.472\lib\net45\System.Fabric.Management.ServiceModel.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.1.472\lib\net45\System.Fabric.Management.ServiceModel.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Fabric.Management.ServiceModel.XmlSerializers, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ServiceFabric.6.1.472\lib\net45\System.Fabric.Management.ServiceModel.XmlSerializers.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.1.472\lib\net45\System.Fabric.Management.ServiceModel.XmlSerializers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Fabric.Strings, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
-      <HintPath>packages\Microsoft.ServiceFabric.6.1.472\lib\net45\System.Fabric.Strings.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.ServiceFabric.6.1.472\lib\net45\System.Fabric.Strings.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
@@ -111,19 +111,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Shared\WisejExtensions.cs">
+    <Compile Include="..\Shared\WisejExtensions.cs">
       <Link>Owin\WisejExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\..\Shared\WisejHost.cs">
+    <Compile Include="..\Shared\WisejHost.cs">
       <Link>Owin\WisejHost.cs</Link>
     </Compile>
-    <Compile Include="..\..\Shared\WisejMiddleware.cs">
+    <Compile Include="..\Shared\WisejMiddleware.cs">
       <Link>Owin\WisejMiddleware.cs</Link>
     </Compile>
-    <Compile Include="..\..\Shared\WisejWebSocketContext.cs">
+    <Compile Include="..\Shared\WisejWebSocketContext.cs">
       <Link>Owin\WisejWebSocketContext.cs</Link>
     </Compile>
-    <Compile Include="..\..\Shared\WisejWorkerRequest.cs">
+    <Compile Include="..\Shared\WisejWorkerRequest.cs">
       <Link>Owin\WisejWorkerRequest.cs</Link>
     </Compile>
     <Compile Include="Owin\WisejCommunicationListener.cs" />
@@ -140,7 +140,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\bin" /y</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\..\bin" /y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

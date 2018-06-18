@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Widgets", "Widgets", "{D895
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InProgress", "InProgress", "{D7DCF4CA-F508-4C1C-8199-5D865DA943FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.ServiceFabricHost", "HostService\Wisej.ServiceFabricHost\Wisej.ServiceFabricHost\Wisej.ServiceFabricHost.csproj", "{AAFF10BA-8664-46C6-AC7B-9220E978015B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.HostService", "HostService\Wisej.HostService\Wisej.HostService.csproj", "{E47306BE-A02F-4963-875C-B26E3D73BCE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Application.IE", "HostService\Wisej.Application.IE\Wisej.Application.IE.csproj", "{BC93ABE3-9949-4BCA-BCA4-22A5B2F3A5F6}"
@@ -129,6 +127,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ClearScriptV8-32", "Wisej.E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Navigator", "Wisej.Web.Ext.Navigator\Wisej.Web.Ext.Navigator.csproj", "{AB9A1C37-61CB-4886-B9D0-F986300E6322}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.ServiceFabricHost", "HostService\Wisej.ServiceFabricHost\Wisej.ServiceFabricHost.csproj", "{AAFF10BA-8664-46C6-AC7B-9220E978015B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,14 +139,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Debug|x64.ActiveCfg = Debug|x64
-		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Debug|x64.Build.0 = Debug|x64
-		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Debug|x86.ActiveCfg = Debug|x64
-		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Release|Any CPU.ActiveCfg = Release|x64
-		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Release|x64.ActiveCfg = Release|x64
-		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Release|x64.Build.0 = Release|x64
-		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Release|x86.ActiveCfg = Release|x64
 		{E47306BE-A02F-4963-875C-B26E3D73BCE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E47306BE-A02F-4963-875C-B26E3D73BCE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E47306BE-A02F-4963-875C-B26E3D73BCE5}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -811,12 +803,19 @@ Global
 		{AB9A1C37-61CB-4886-B9D0-F986300E6322}.Release|x64.Build.0 = Release|Any CPU
 		{AB9A1C37-61CB-4886-B9D0-F986300E6322}.Release|x86.ActiveCfg = Release|Any CPU
 		{AB9A1C37-61CB-4886-B9D0-F986300E6322}.Release|x86.Build.0 = Release|Any CPU
+		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Debug|x64.ActiveCfg = Debug|x64
+		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Debug|x64.Build.0 = Debug|x64
+		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Debug|x86.ActiveCfg = Debug|x64
+		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Release|Any CPU.ActiveCfg = Release|x64
+		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Release|x64.ActiveCfg = Release|x64
+		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Release|x64.Build.0 = Release|x64
+		{AAFF10BA-8664-46C6-AC7B-9220E978015B}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{AAFF10BA-8664-46C6-AC7B-9220E978015B} = {4BBA9A17-4996-4573-A88A-1F7EA485BD57}
 		{E47306BE-A02F-4963-875C-B26E3D73BCE5} = {4BBA9A17-4996-4573-A88A-1F7EA485BD57}
 		{BC93ABE3-9949-4BCA-BCA4-22A5B2F3A5F6} = {4BBA9A17-4996-4573-A88A-1F7EA485BD57}
 		{0B41A11F-6EF8-4DFC-9363-1EF4281D93CF} = {4BBA9A17-4996-4573-A88A-1F7EA485BD57}
@@ -874,5 +873,6 @@ Global
 		{CDCF4EEA-1CA4-412E-8C77-78893A67A577} = {D88E9EF7-A426-412E-92CD-63C2E415FA2C}
 		{2D63EA35-BA9C-4E77-B5A4-4938DBBFEFA6} = {D88E9EF7-A426-412E-92CD-63C2E415FA2C}
 		{AB9A1C37-61CB-4886-B9D0-F986300E6322} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
+		{AAFF10BA-8664-46C6-AC7B-9220E978015B} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
 	EndGlobalSection
 EndGlobal

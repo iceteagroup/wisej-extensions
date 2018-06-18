@@ -1,7 +1,12 @@
 *.suo
 *.user
 bin
-obj
+*.sln.docstates
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+.vs
 packages
 /Wisej.Ext.Geolocation/.vs/config/applicationhost.config
 *.pdb
