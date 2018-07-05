@@ -1,0 +1,485 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{13EFDB0B-493C-4DA2-8D44-0CE37CA7D610}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wisej.Ext.MaterialDesign</RootNamespace>
+    <AssemblyName>Wisej.Ext.MaterialDesign</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="MaterialDesign.cs" />
+    <Compile Include="NamespaceDoc.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="extension.snk" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\add-alarm-button.svg" />
+    <EmbeddedResource Include="Resources\add-button-inside-black-circle.svg" />
+    <EmbeddedResource Include="Resources\add-comment-button.svg" />
+    <EmbeddedResource Include="Resources\add-label-button.svg" />
+    <EmbeddedResource Include="Resources\add-plus-button.svg" />
+    <EmbeddedResource Include="Resources\add-to-queue-button.svg" />
+    <EmbeddedResource Include="Resources\add-user-button.svg" />
+    <EmbeddedResource Include="Resources\adjust-button-with-plus-and-minus.svg" />
+    <EmbeddedResource Include="Resources\airplane-mode-on-symbol.svg" />
+    <EmbeddedResource Include="Resources\android-logo-1.svg" />
+    <EmbeddedResource Include="Resources\android-logo.svg" />
+    <EmbeddedResource Include="Resources\apple-accessibility.svg" />
+    <EmbeddedResource Include="Resources\attachment-clip.svg" />
+    <EmbeddedResource Include="Resources\auto-white-balance.svg" />
+    <EmbeddedResource Include="Resources\automatic-brightness.svg" />
+    <EmbeddedResource Include="Resources\automatic-flash-symbol.svg" />
+    <EmbeddedResource Include="Resources\back-arrow.svg" />
+    <EmbeddedResource Include="Resources\backspace-arrow.svg" />
+    <EmbeddedResource Include="Resources\bed-quilt.svg" />
+    <EmbeddedResource Include="Resources\been-here-marker.svg" />
+    <EmbeddedResource Include="Resources\birthday-cake.svg" />
+    <EmbeddedResource Include="Resources\black-bubble-speech.svg" />
+    <EmbeddedResource Include="Resources\black-check-box-with-white-check.svg" />
+    <EmbeddedResource Include="Resources\black-check-box.svg" />
+    <EmbeddedResource Include="Resources\black-envelope-email-symbol.svg" />
+    <EmbeddedResource Include="Resources\black-keyboard-with-white-keys.svg" />
+    <EmbeddedResource Include="Resources\black-plane.svg" />
+    <EmbeddedResource Include="Resources\blank-check-box.svg" />
+    <EmbeddedResource Include="Resources\blank-frame.svg" />
+    <EmbeddedResource Include="Resources\blank-square.svg" />
+    <EmbeddedResource Include="Resources\blogger-logo.svg" />
+    <EmbeddedResource Include="Resources\blueetooth-logo.svg" />
+    <EmbeddedResource Include="Resources\bluetooth-connected.svg" />
+    <EmbeddedResource Include="Resources\bluetooth-disabled-button.svg" />
+    <EmbeddedResource Include="Resources\bluetooth-searching-signal-indicator.svg" />
+    <EmbeddedResource Include="Resources\bluetooth-settings.svg" />
+    <EmbeddedResource Include="Resources\bluetooth-signal-indicator.svg" />
+    <EmbeddedResource Include="Resources\bookmark-button-1.svg" />
+    <EmbeddedResource Include="Resources\bookmark-button.svg" />
+    <EmbeddedResource Include="Resources\bookmark-outline.svg" />
+    <EmbeddedResource Include="Resources\bookmark-ribbon.svg" />
+    <EmbeddedResource Include="Resources\briefcase-download-button-with-downwards-arrow.svg" />
+    <EmbeddedResource Include="Resources\briefcase-with-tick-inside.svg" />
+    <EmbeddedResource Include="Resources\brightness-control.svg" />
+    <EmbeddedResource Include="Resources\brochure-with-three-sections.svg" />
+    <EmbeddedResource Include="Resources\bubble-speech-with-three-lines.svg" />
+    <EmbeddedResource Include="Resources\bug-report-button.svg" />
+    <EmbeddedResource Include="Resources\burn-button.svg" />
+    <EmbeddedResource Include="Resources\button-on.svg" />
+    <EmbeddedResource Include="Resources\call-forwarding.svg" />
+    <EmbeddedResource Include="Resources\call-made-right-arrow.svg" />
+    <EmbeddedResource Include="Resources\call-received-arrow.svg" />
+    <EmbeddedResource Include="Resources\camera-diaphragm.svg" />
+    <EmbeddedResource Include="Resources\camera.svg" />
+    <EmbeddedResource Include="Resources\cancel-button.svg" />
+    <EmbeddedResource Include="Resources\caps-lock-button-1.svg" />
+    <EmbeddedResource Include="Resources\caps-lock-button.svg" />
+    <EmbeddedResource Include="Resources\car-changing-lanes.svg" />
+    <EmbeddedResource Include="Resources\car-directions.svg" />
+    <EmbeddedResource Include="Resources\car-front.svg" />
+    <EmbeddedResource Include="Resources\cell-phone-high-signal-indicator.svg" />
+    <EmbeddedResource Include="Resources\cell-phone-vibration.svg" />
+    <EmbeddedResource Include="Resources\cell-phone-with-blank-screen.svg" />
+    <EmbeddedResource Include="Resources\change-power-options.svg" />
+    <EmbeddedResource Include="Resources\chat-bubble.svg" />
+    <EmbeddedResource Include="Resources\chat-bubbles.svg" />
+    <EmbeddedResource Include="Resources\check-box.svg" />
+    <EmbeddedResource Include="Resources\check-symbol.svg" />
+    <EmbeddedResource Include="Resources\chemistry-polymer.svg" />
+    <EmbeddedResource Include="Resources\circle-outline.svg" />
+    <EmbeddedResource Include="Resources\circle-with-check-symbol.svg" />
+    <EmbeddedResource Include="Resources\circles-extend-button.svg" />
+    <EmbeddedResource Include="Resources\circumference.svg" />
+    <EmbeddedResource Include="Resources\city-buildings-silhouette.svg" />
+    <EmbeddedResource Include="Resources\clapperboard-1.svg" />
+    <EmbeddedResource Include="Resources\clapperboard.svg" />
+    <EmbeddedResource Include="Resources\clear-button.svg" />
+    <EmbeddedResource Include="Resources\clipboard-paste-button.svg" />
+    <EmbeddedResource Include="Resources\clock-with-white-face.svg" />
+    <EmbeddedResource Include="Resources\close-button.svg" />
+    <EmbeddedResource Include="Resources\closed-caption-logo.svg" />
+    <EmbeddedResource Include="Resources\cloud-backup-up-arrow.svg" />
+    <EmbeddedResource Include="Resources\cloud-done-symbol.svg" />
+    <EmbeddedResource Include="Resources\cloud-download.svg" />
+    <EmbeddedResource Include="Resources\cloud-off.svg" />
+    <EmbeddedResource Include="Resources\cloud-outline.svg" />
+    <EmbeddedResource Include="Resources\cloud-symbol-inside-a-circle.svg" />
+    <EmbeddedResource Include="Resources\compass-with-white-needles.svg" />
+    <EmbeddedResource Include="Resources\connection-indicator.svg" />
+    <EmbeddedResource Include="Resources\copy-content.svg" />
+    <EmbeddedResource Include="Resources\create-group-button.svg" />
+    <EmbeddedResource Include="Resources\create-new-pencil-button.svg" />
+    <EmbeddedResource Include="Resources\credit-card.svg" />
+    <EmbeddedResource Include="Resources\crop-button.svg" />
+    <EmbeddedResource Include="Resources\crop-tool-button.svg" />
+    <EmbeddedResource Include="Resources\cut-content-button.svg" />
+    <EmbeddedResource Include="Resources\dark-cloud.svg" />
+    <EmbeddedResource Include="Resources\developer-mode-for-smartphones-and-tablets.svg" />
+    <EmbeddedResource Include="Resources\device-connected-1.svg" />
+    <EmbeddedResource Include="Resources\device-connected.svg" />
+    <EmbeddedResource Include="Resources\disc-is-full.svg" />
+    <EmbeddedResource Include="Resources\do-not-disturb-rounded-sign.svg" />
+    <EmbeddedResource Include="Resources\double-tick-indicator.svg" />
+    <EmbeddedResource Include="Resources\download-button-1.svg" />
+    <EmbeddedResource Include="Resources\download-button.svg" />
+    <EmbeddedResource Include="Resources\download-to-smartphone.svg" />
+    <EmbeddedResource Include="Resources\downwards-arrow-key.svg" />
+    <EmbeddedResource Include="Resources\drafts-evelope-button.svg" />
+    <EmbeddedResource Include="Resources\drop-down-arrow.svg" />
+    <EmbeddedResource Include="Resources\drop-down-round-button.svg" />
+    <EmbeddedResource Include="Resources\drop-up-arrow.svg" />
+    <EmbeddedResource Include="Resources\earth-grid-select-language-button.svg" />
+    <EmbeddedResource Include="Resources\ellipsis.svg" />
+    <EmbeddedResource Include="Resources\email-inbox.svg" />
+    <EmbeddedResource Include="Resources\emoticon-with-happy-face.svg" />
+    <EmbeddedResource Include="Resources\end-call-button.svg" />
+    <EmbeddedResource Include="Resources\enter-arrow.svg" />
+    <EmbeddedResource Include="Resources\exit-to-app-button.svg" />
+    <EmbeddedResource Include="Resources\expand-arrow.svg" />
+    <EmbeddedResource Include="Resources\expand-button.svg" />
+    <EmbeddedResource Include="Resources\facebook-logo.svg" />
+    <EmbeddedResource Include="Resources\failed-sms.svg" />
+    <EmbeddedResource Include="Resources\fast-forward-button.svg" />
+    <EmbeddedResource Include="Resources\favorite-heart-button.svg" />
+    <EmbeddedResource Include="Resources\favorite-heart-outline-button.svg" />
+    <EmbeddedResource Include="Resources\filled-circle.svg" />
+    <EmbeddedResource Include="Resources\filled-cloud.svg" />
+    <EmbeddedResource Include="Resources\filled-speaker-with-white-details.svg" />
+    <EmbeddedResource Include="Resources\film-roll.svg" />
+    <EmbeddedResource Include="Resources\filter-results-button.svg" />
+    <EmbeddedResource Include="Resources\flash-off.svg" />
+    <EmbeddedResource Include="Resources\flash-on-indicator.svg" />
+    <EmbeddedResource Include="Resources\folder-symbol.svg" />
+    <EmbeddedResource Include="Resources\forward-arrow.svg" />
+    <EmbeddedResource Include="Resources\forward-right-arrow-button.svg" />
+    <EmbeddedResource Include="Resources\framed-portrait.svg" />
+    <EmbeddedResource Include="Resources\front-bus.svg" />
+    <EmbeddedResource Include="Resources\front-car.svg" />
+    <EmbeddedResource Include="Resources\front-store.svg" />
+    <EmbeddedResource Include="Resources\full-screen-exit.svg" />
+    <EmbeddedResource Include="Resources\gamepad-1.svg" />
+    <EmbeddedResource Include="Resources\gamepad.svg" />
+    <EmbeddedResource Include="Resources\get-directions-button.svg" />
+    <EmbeddedResource Include="Resources\gmail-logo.svg" />
+    <EmbeddedResource Include="Resources\go-back-left-arrow.svg" />
+    <EmbeddedResource Include="Resources\good-mood-emoticon.svg" />
+    <EmbeddedResource Include="Resources\good-wifi-signal-with-three-bars.svg" />
+    <EmbeddedResource Include="Resources\google-apps-script-logo.svg" />
+    <EmbeddedResource Include="Resources\google-cast-logo.svg" />
+    <EmbeddedResource Include="Resources\google-chrome-logo-filled-with-white-colour.svg" />
+    <EmbeddedResource Include="Resources\google-drive-document.svg" />
+    <EmbeddedResource Include="Resources\google-drive-file.svg" />
+    <EmbeddedResource Include="Resources\google-drive-folder-symbol.svg" />
+    <EmbeddedResource Include="Resources\google-drive-fusion-tables-logo.svg" />
+    <EmbeddedResource Include="Resources\google-drive-image.svg" />
+    <EmbeddedResource Include="Resources\google-drive-logo.svg" />
+    <EmbeddedResource Include="Resources\google-drive-pdf-file.svg" />
+    <EmbeddedResource Include="Resources\google-drive-presentation.svg" />
+    <EmbeddedResource Include="Resources\google-drive-spreadsheet.svg" />
+    <EmbeddedResource Include="Resources\google-glass-logo.svg" />
+    <EmbeddedResource Include="Resources\google-hangouts-logo.svg" />
+    <EmbeddedResource Include="Resources\google-hangouts-turn-video-off.svg" />
+    <EmbeddedResource Include="Resources\google-plus-logo-on-black-background.svg" />
+    <EmbeddedResource Include="Resources\google-plus-logo.svg" />
+    <EmbeddedResource Include="Resources\google-plus-party-mode.svg" />
+    <EmbeddedResource Include="Resources\google-symbol.svg" />
+    <EmbeddedResource Include="Resources\gps-fixed-indicator.svg" />
+    <EmbeddedResource Include="Resources\gps-location-disabled.svg" />
+    <EmbeddedResource Include="Resources\gps-location-symbol.svg" />
+    <EmbeddedResource Include="Resources\gps-off.svg" />
+    <EmbeddedResource Include="Resources\graduate-cap.svg" />
+    <EmbeddedResource Include="Resources\half-filled-rating-star.svg" />
+    <EmbeddedResource Include="Resources\hangouts-videocall-button.svg" />
+    <EmbeddedResource Include="Resources\headset-with-microphone.svg" />
+    <EmbeddedResource Include="Resources\headset.svg" />
+    <EmbeddedResource Include="Resources\help-button-speech-bubble-with-question-mark.svg" />
+    <EmbeddedResource Include="Resources\help-round-button.svg" />
+    <EmbeddedResource Include="Resources\hide-keyboard-button.svg" />
+    <EmbeddedResource Include="Resources\high-quality-button.svg" />
+    <EmbeddedResource Include="Resources\high-signal-indicator.svg" />
+    <EmbeddedResource Include="Resources\high-wifi-signal-indicator.svg" />
+    <EmbeddedResource Include="Resources\history-clock-button.svg" />
+    <EmbeddedResource Include="Resources\home-button.svg" />
+    <EmbeddedResource Include="Resources\horizontal-line-remove-button.svg" />
+    <EmbeddedResource Include="Resources\hotel-with-three-floors.svg" />
+    <EmbeddedResource Include="Resources\https-symbol.svg" />
+    <EmbeddedResource Include="Resources\import-export-arrows.svg" />
+    <EmbeddedResource Include="Resources\insert-picture-button.svg" />
+    <EmbeddedResource Include="Resources\instagram-logo.svg" />
+    <EmbeddedResource Include="Resources\invert-colors-button.svg" />
+    <EmbeddedResource Include="Resources\keyboard-left-arrow-button.svg" />
+    <EmbeddedResource Include="Resources\keyboard-right-arrow-button-1.svg" />
+    <EmbeddedResource Include="Resources\keyboard-right-arrow-button.svg" />
+    <EmbeddedResource Include="Resources\label-right-arrow-outline.svg" />
+    <EmbeddedResource Include="Resources\landscape-with-mountains.svg" />
+    <EmbeddedResource Include="Resources\laptop-outline.svg" />
+    <EmbeddedResource Include="Resources\left-arrow-key-1.svg" />
+    <EmbeddedResource Include="Resources\left-arrow-key.svg" />
+    <EmbeddedResource Include="Resources\left-arrow-missed-call.svg" />
+    <EmbeddedResource Include="Resources\light-bulb-on.svg" />
+    <EmbeddedResource Include="Resources\link-button.svg" />
+    <EmbeddedResource Include="Resources\linkedin-logo.svg" />
+    <EmbeddedResource Include="Resources\list-button-with-3-elements.svg" />
+    <EmbeddedResource Include="Resources\list-of-three-elements-on-black-background.svg" />
+    <EmbeddedResource Include="Resources\location-arrow.svg" />
+    <EmbeddedResource Include="Resources\locked-padlock-outline.svg" />
+    <EmbeddedResource Include="Resources\locked-padlock.svg" />
+    <EmbeddedResource Include="Resources\low-signal-indicator.svg" />
+    <EmbeddedResource Include="Resources\magic-wand-auto-fix-button.svg" />
+    <EmbeddedResource Include="Resources\man-cycling.svg" />
+    <EmbeddedResource Include="Resources\man-walking-directions-button.svg" />
+    <EmbeddedResource Include="Resources\map-placeholder.svg" />
+    <EmbeddedResource Include="Resources\map-symbol.svg" />
+    <EmbeddedResource Include="Resources\mark-as-favorite-star.svg" />
+    <EmbeddedResource Include="Resources\mark-as-unread-envelope-button.svg" />
+    <EmbeddedResource Include="Resources\medium-brightness-cogwheel.svg" />
+    <EmbeddedResource Include="Resources\medium-signal.svg" />
+    <EmbeddedResource Include="Resources\medium-wifi-signal-with-two-bars.svg" />
+    <EmbeddedResource Include="Resources\memory-chip.svg" />
+    <EmbeddedResource Include="Resources\menu-button.svg" />
+    <EmbeddedResource Include="Resources\merge-calls-arrow.svg" />
+    <EmbeddedResource Include="Resources\microphone-of-voice.svg" />
+    <EmbeddedResource Include="Resources\microphone-voice-button.svg" />
+    <EmbeddedResource Include="Resources\microsoft-excel-logo.svg" />
+    <EmbeddedResource Include="Resources\microsoft-word-logo.svg" />
+    <EmbeddedResource Include="Resources\missed-call-phone-receiver-with-left-arrow.svg" />
+    <EmbeddedResource Include="Resources\mountain-range-on-black-background.svg" />
+    <EmbeddedResource Include="Resources\mountain-range.svg" />
+    <EmbeddedResource Include="Resources\mountains-inside-a-circle.svg" />
+    <EmbeddedResource Include="Resources\mouse-filled-tool.svg" />
+    <EmbeddedResource Include="Resources\move-window.svg" />
+    <EmbeddedResource Include="Resources\new-tab-button.svg" />
+    <EmbeddedResource Include="Resources\new-tab.svg" />
+    <EmbeddedResource Include="Resources\nfc-near-field-communication.svg" />
+    <EmbeddedResource Include="Resources\notifications-bell-button.svg" />
+    <EmbeddedResource Include="Resources\notifications-button.svg" />
+    <EmbeddedResource Include="Resources\notifications-silenced.svg" />
+    <EmbeddedResource Include="Resources\pages-of-google-plus.svg" />
+    <EmbeddedResource Include="Resources\painter-palette.svg" />
+    <EmbeddedResource Include="Resources\panoramic-mountain-photography.svg" />
+    <EmbeddedResource Include="Resources\parking-sign.svg" />
+    <EmbeddedResource Include="Resources\pause-button.svg" />
+    <EmbeddedResource Include="Resources\phone-call-button.svg" />
+    <EmbeddedResource Include="Resources\phone-locked.svg" />
+    <EmbeddedResource Include="Resources\phone-paused-indicator.svg" />
+    <EmbeddedResource Include="Resources\phone-receiver-with-bluetooth-sign.svg" />
+    <EmbeddedResource Include="Resources\phone-settings.svg" />
+    <EmbeddedResource Include="Resources\phone-working-indicator.svg" />
+    <EmbeddedResource Include="Resources\photo-album.svg" />
+    <EmbeddedResource Include="Resources\photo-frame.svg" />
+    <EmbeddedResource Include="Resources\photo-library.svg" />
+    <EmbeddedResource Include="Resources\photographic-film-roll.svg" />
+    <EmbeddedResource Include="Resources\pinterest-logo.svg" />
+    <EmbeddedResource Include="Resources\planet-earth.svg" />
+    <EmbeddedResource Include="Resources\play-arrow.svg" />
+    <EmbeddedResource Include="Resources\play-button-inside-a-circle.svg" />
+    <EmbeddedResource Include="Resources\play-next-button.svg" />
+    <EmbeddedResource Include="Resources\play-rounded-button.svg" />
+    <EmbeddedResource Include="Resources\play-slideshow-button.svg" />
+    <EmbeddedResource Include="Resources\plus-one.svg" />
+    <EmbeddedResource Include="Resources\poll-symbol-on-black-square-with-rounded-corners.svg" />
+    <EmbeddedResource Include="Resources\power-connection-indicator.svg" />
+    <EmbeddedResource Include="Resources\previous-track.svg" />
+    <EmbeddedResource Include="Resources\printer-printing-document.svg" />
+    <EmbeddedResource Include="Resources\problems-with-synchronization.svg" />
+    <EmbeddedResource Include="Resources\progress-indicator.svg" />
+    <EmbeddedResource Include="Resources\public-transport-subway.svg" />
+    <EmbeddedResource Include="Resources\public-transport-train-directions.svg" />
+    <EmbeddedResource Include="Resources\puzzle-piece-plugin.svg" />
+    <EmbeddedResource Include="Resources\radio-on-button.svg" />
+    <EmbeddedResource Include="Resources\random-line.svg" />
+    <EmbeddedResource Include="Resources\rate-star-button.svg" />
+    <EmbeddedResource Include="Resources\read-more-left-arrow-button.svg" />
+    <EmbeddedResource Include="Resources\receipt.svg" />
+    <EmbeddedResource Include="Resources\record-voice-microphone-button.svg" />
+    <EmbeddedResource Include="Resources\refresh-button-1.svg" />
+    <EmbeddedResource Include="Resources\refresh-button.svg" />
+    <EmbeddedResource Include="Resources\reminder-bow.svg" />
+    <EmbeddedResource Include="Resources\replay-arrow.svg" />
+    <EmbeddedResource Include="Resources\reply-all-button.svg" />
+    <EmbeddedResource Include="Resources\report-symbol.svg" />
+    <EmbeddedResource Include="Resources\rewind-button.svg" />
+    <EmbeddedResource Include="Resources\right-arrow-forward.svg" />
+    <EmbeddedResource Include="Resources\ring-volume-control-button.svg" />
+    <EmbeddedResource Include="Resources\rotate-to-left-button.svg" />
+    <EmbeddedResource Include="Resources\rotate-to-right-button.svg" />
+    <EmbeddedResource Include="Resources\round-account-button-with-user-inside.svg" />
+    <EmbeddedResource Include="Resources\round-add-button.svg" />
+    <EmbeddedResource Include="Resources\round-data-usage-symbol.svg" />
+    <EmbeddedResource Include="Resources\round-delete-button.svg" />
+    <EmbeddedResource Include="Resources\round-error-symbol.svg" />
+    <EmbeddedResource Include="Resources\round-info-button.svg" />
+    <EmbeddedResource Include="Resources\round-pause-button.svg" />
+    <EmbeddedResource Include="Resources\round-remove-button.svg" />
+    <EmbeddedResource Include="Resources\round-rgb-button.svg" />
+    <EmbeddedResource Include="Resources\rounded-add-button-1.svg" />
+    <EmbeddedResource Include="Resources\rounded-add-button.svg" />
+    <EmbeddedResource Include="Resources\rounded-adjust-button-with-plus-and-minus.svg" />
+    <EmbeddedResource Include="Resources\rounded-block-sign.svg" />
+    <EmbeddedResource Include="Resources\rounded-info-button.svg" />
+    <EmbeddedResource Include="Resources\rounded-pause-button.svg" />
+    <EmbeddedResource Include="Resources\rounded-remove-button.svg" />
+    <EmbeddedResource Include="Resources\rubbish-bin-delete-button.svg" />
+    <EmbeddedResource Include="Resources\save-button.svg" />
+    <EmbeddedResource Include="Resources\schedule-button.svg" />
+    <EmbeddedResource Include="Resources\screen-locked-1.svg" />
+    <EmbeddedResource Include="Resources\screen-locked.svg" />
+    <EmbeddedResource Include="Resources\screen-rotation-button.svg" />
+    <EmbeddedResource Include="Resources\screen-rotation-lock-button.svg" />
+    <EmbeddedResource Include="Resources\screen-with-news-sections.svg" />
+    <EmbeddedResource Include="Resources\screen-with-rounded-corners.svg" />
+    <EmbeddedResource Include="Resources\sd-card-1.svg" />
+    <EmbeddedResource Include="Resources\sd-card.svg" />
+    <EmbeddedResource Include="Resources\searching-location-gps-indicator.svg" />
+    <EmbeddedResource Include="Resources\searching-magnifying-glass.svg" />
+    <EmbeddedResource Include="Resources\select-all.svg" />
+    <EmbeddedResource Include="Resources\select-brightness-button.svg" />
+    <EmbeddedResource Include="Resources\send-button.svg" />
+    <EmbeddedResource Include="Resources\send-to-back-button.svg" />
+    <EmbeddedResource Include="Resources\send-to-front-button.svg" />
+    <EmbeddedResource Include="Resources\server-rack-with-three-levels.svg" />
+    <EmbeddedResource Include="Resources\set-alarm.svg" />
+    <EmbeddedResource Include="Resources\set-timer-button.svg" />
+    <EmbeddedResource Include="Resources\settings-cogwheel-button.svg" />
+    <EmbeddedResource Include="Resources\settings-cogwheel-inside-black-square.svg" />
+    <EmbeddedResource Include="Resources\share-button.svg" />
+    <EmbeddedResource Include="Resources\shared-folder.svg" />
+    <EmbeddedResource Include="Resources\shining-rectangular-object.svg" />
+    <EmbeddedResource Include="Resources\shining-sun.svg" />
+    <EmbeddedResource Include="Resources\shopping-basket-button.svg" />
+    <EmbeddedResource Include="Resources\shopping-cart.svg" />
+    <EmbeddedResource Include="Resources\show-apps-button.svg" />
+    <EmbeddedResource Include="Resources\show-less-fold-button.svg" />
+    <EmbeddedResource Include="Resources\show-menu-button.svg" />
+    <EmbeddedResource Include="Resources\show-more-button-with-three-dots.svg" />
+    <EmbeddedResource Include="Resources\show-more-button.svg" />
+    <EmbeddedResource Include="Resources\shuffle-mode-arrows.svg" />
+    <EmbeddedResource Include="Resources\sim-card-problem.svg" />
+    <EmbeddedResource Include="Resources\smartphone-dock.svg" />
+    <EmbeddedResource Include="Resources\smartphone-with-three-buttons.svg" />
+    <EmbeddedResource Include="Resources\sms-bubble-speech.svg" />
+    <EmbeddedResource Include="Resources\sms-speech-bubble.svg" />
+    <EmbeddedResource Include="Resources\snake-game.svg" />
+    <EmbeddedResource Include="Resources\sort-button-with-three-lines.svg" />
+    <EmbeddedResource Include="Resources\speech-bubble-with-mountains-inside.svg" />
+    <EmbeddedResource Include="Resources\split-call-arrows.svg" />
+    <EmbeddedResource Include="Resources\square-add-button.svg" />
+    <EmbeddedResource Include="Resources\stop-button.svg" />
+    <EmbeddedResource Include="Resources\swap-horizontal-orientation-arrows.svg" />
+    <EmbeddedResource Include="Resources\swap-vertical-orientation-arrows.svg" />
+    <EmbeddedResource Include="Resources\switch-camera-button.svg" />
+    <EmbeddedResource Include="Resources\switch-to-full-screen-button.svg" />
+    <EmbeddedResource Include="Resources\switch-vertical-orientation-arrows.svg" />
+    <EmbeddedResource Include="Resources\switch-video-on.svg" />
+    <EmbeddedResource Include="Resources\synchronization-arrows.svg" />
+    <EmbeddedResource Include="Resources\synchronization-button-with-two-arrows.svg" />
+    <EmbeddedResource Include="Resources\synchronization-problem.svg" />
+    <EmbeddedResource Include="Resources\tab-symbol.svg" />
+    <EmbeddedResource Include="Resources\tablet-with-blank-screen.svg" />
+    <EmbeddedResource Include="Resources\tack-save-button.svg" />
+    <EmbeddedResource Include="Resources\tag-button-with-happy-face.svg" />
+    <EmbeddedResource Include="Resources\telephone-keypad-with-ten-keys.svg" />
+    <EmbeddedResource Include="Resources\thermostat-temperature-wheel.svg" />
+    <EmbeddedResource Include="Resources\three-columns-layout.svg" />
+    <EmbeddedResource Include="Resources\three-dots-more-indicator.svg" />
+    <EmbeddedResource Include="Resources\thumb-down-button.svg" />
+    <EmbeddedResource Include="Resources\thumb-up-button.svg" />
+    <EmbeddedResource Include="Resources\tick-inside-circle.svg" />
+    <EmbeddedResource Include="Resources\time-lapse.svg" />
+    <EmbeddedResource Include="Resources\traffic-light.svg" />
+    <EmbeddedResource Include="Resources\train-public-transport.svg" />
+    <EmbeddedResource Include="Resources\tumblr-logo.svg" />
+    <EmbeddedResource Include="Resources\turn-airplane-mode-off.svg" />
+    <EmbeddedResource Include="Resources\turn-microphone-off-button.svg" />
+    <EmbeddedResource Include="Resources\turn-notifications-off-button.svg" />
+    <EmbeddedResource Include="Resources\turn-notifications-on-button.svg" />
+    <EmbeddedResource Include="Resources\turn-synchronization-off.svg" />
+    <EmbeddedResource Include="Resources\turn-video-off-button.svg" />
+    <EmbeddedResource Include="Resources\turn-visibility-off-button.svg" />
+    <EmbeddedResource Include="Resources\twitter-logo-on-black-background.svg" />
+    <EmbeddedResource Include="Resources\two-circles-one-inside-the-other.svg" />
+    <EmbeddedResource Include="Resources\two-men.svg" />
+    <EmbeddedResource Include="Resources\two-rows-and-three-columns-layout.svg" />
+    <EmbeddedResource Include="Resources\underline-button.svg" />
+    <EmbeddedResource Include="Resources\underline-text-button.svg" />
+    <EmbeddedResource Include="Resources\undo-button.svg" />
+    <EmbeddedResource Include="Resources\unlocked-padlock.svg" />
+    <EmbeddedResource Include="Resources\up-arrow-key.svg" />
+    <EmbeddedResource Include="Resources\upload-button.svg" />
+    <EmbeddedResource Include="Resources\upload-to-cloud-button.svg" />
+    <EmbeddedResource Include="Resources\usb-symbol.svg" />
+    <EmbeddedResource Include="Resources\user-account-box-1.svg" />
+    <EmbeddedResource Include="Resources\user-account-box.svg" />
+    <EmbeddedResource Include="Resources\user-inside-bubble-speech.svg" />
+    <EmbeddedResource Include="Resources\user-outline.svg" />
+    <EmbeddedResource Include="Resources\user-shape.svg" />
+    <EmbeddedResource Include="Resources\users-social-symbol.svg" />
+    <EmbeddedResource Include="Resources\verification-mark.svg" />
+    <EmbeddedResource Include="Resources\videocall-button.svg" />
+    <EmbeddedResource Include="Resources\videocam-filled-tool.svg" />
+    <EmbeddedResource Include="Resources\view-list-button.svg" />
+    <EmbeddedResource Include="Resources\virtual-private-network-vpn-symbol.svg" />
+    <EmbeddedResource Include="Resources\visibility-button.svg" />
+    <EmbeddedResource Include="Resources\voice-message-microphone-button.svg" />
+    <EmbeddedResource Include="Resources\voicemail.svg" />
+    <EmbeddedResource Include="Resources\volume-down-indicator.svg" />
+    <EmbeddedResource Include="Resources\volume-muted.svg" />
+    <EmbeddedResource Include="Resources\volume-off-indicator.svg" />
+    <EmbeddedResource Include="Resources\volume-up-indicator.svg" />
+    <EmbeddedResource Include="Resources\warning-sign.svg" />
+    <EmbeddedResource Include="Resources\watch-with-blank-face.svg" />
+    <EmbeddedResource Include="Resources\waving-flag.svg" />
+    <EmbeddedResource Include="Resources\web-server.svg" />
+    <EmbeddedResource Include="Resources\website-with-different-sections.svg" />
+    <EmbeddedResource Include="Resources\wifi-high-signal.svg" />
+    <EmbeddedResource Include="Resources\wifi-low-signal-with-one-bar.svg" />
+    <EmbeddedResource Include="Resources\wifi-signal-waves.svg" />
+    <EmbeddedResource Include="Resources\window-with-different-sections.svg" />
+    <EmbeddedResource Include="Resources\work-briefcase.svg" />
+    <EmbeddedResource Include="Resources\workspace-with-two-horizontal-windows.svg" />
+    <EmbeddedResource Include="Resources\world-shape-public-symbol.svg" />
+    <EmbeddedResource Include="Resources\write-email-envelope-button.svg" />
+    <EmbeddedResource Include="Resources\youtube-logo.svg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir "$(ProjectDir)..\bin"
+copy "$(TargetPath)" "$(ProjectDir)..\bin\"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

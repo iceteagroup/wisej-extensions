@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2D7E23B4-4D1E-4A30-9598-D042620C6A7D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wisej.Web.Ext.XTerm</RootNamespace>
+    <AssemblyName>Wisej.Web.Ext.XTerm</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Wisej.Web.Ext.XTerm.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Wisej.Web.Ext.XTerm.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Wisej.Core"/>
+    <Reference Include="Wisej.Web"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="XTerm.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="extension.snk" />
+    <None Include="JavaScript\addons\attach\attach.js.map" />
+    <None Include="JavaScript\addons\attach\attach.test.js.map" />
+    <None Include="JavaScript\addons\attach\package.json" />
+    <None Include="JavaScript\addons\attach\tsconfig.json" />
+    <None Include="JavaScript\addons\fit\fit.js.map" />
+    <None Include="JavaScript\addons\fit\fit.test.js.map" />
+    <None Include="JavaScript\addons\fit\package.json" />
+    <None Include="JavaScript\addons\fit\tsconfig.json" />
+    <None Include="JavaScript\addons\fullscreen\fullscreen.js.map" />
+    <None Include="JavaScript\addons\fullscreen\fullscreen.test.js.map" />
+    <None Include="JavaScript\addons\fullscreen\package.json" />
+    <None Include="JavaScript\addons\fullscreen\tsconfig.json" />
+    <None Include="JavaScript\addons\search\package.json" />
+    <None Include="JavaScript\addons\search\search.js.map" />
+    <None Include="JavaScript\addons\search\SearchHelper.js.map" />
+    <None Include="JavaScript\addons\search\tsconfig.json" />
+    <None Include="JavaScript\addons\terminado\package.json" />
+    <None Include="JavaScript\addons\terminado\terminado.js.map" />
+    <None Include="JavaScript\addons\terminado\terminado.test.js.map" />
+    <None Include="JavaScript\addons\terminado\tsconfig.json" />
+    <None Include="JavaScript\addons\webLinks\webLinks.js.map" />
+    <None Include="JavaScript\addons\winptyCompat\package.json" />
+    <None Include="JavaScript\addons\winptyCompat\tsconfig.json" />
+    <None Include="JavaScript\addons\winptyCompat\winptyCompat.js.map" />
+    <None Include="JavaScript\addons\winptyCompat\winptyCompat.test.js.map" />
+    <None Include="JavaScript\addons\zmodem\package.json" />
+    <None Include="JavaScript\addons\zmodem\tsconfig.json" />
+    <None Include="JavaScript\addons\zmodem\zmodem.js.map" />
+    <None Include="JavaScript\addons\zmodem\zmodem.test.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JavaScript\startup.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="XTerm.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JavaScript\xterm.css" />
+    <EmbeddedResource Include="JavaScript\xterm.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JavaScript\addons\attach\attach.js" />
+    <Content Include="JavaScript\addons\attach\attach.test.js" />
+    <EmbeddedResource Include="JavaScript\addons\fit\fit.js" />
+    <Content Include="JavaScript\addons\fit\fit.test.js" />
+    <EmbeddedResource Include="JavaScript\addons\fullscreen\fullscreen.css" />
+    <EmbeddedResource Include="JavaScript\addons\fullscreen\fullscreen.js" />
+    <Content Include="JavaScript\addons\fullscreen\fullscreen.test.js" />
+    <EmbeddedResource Include="JavaScript\addons\search\search.js" />
+    <Content Include="JavaScript\addons\search\SearchHelper.js" />
+    <Content Include="JavaScript\addons\terminado\terminado.js" />
+    <Content Include="JavaScript\addons\terminado\terminado.test.js" />
+    <EmbeddedResource Include="JavaScript\addons\webLinks\webLinks.js" />
+    <EmbeddedResource Include="JavaScript\addons\winptyCompat\winptyCompat.js" />
+    <Content Include="JavaScript\addons\winptyCompat\winptyCompat.test.js" />
+    <Content Include="JavaScript\addons\zmodem\demo\app.js" />
+    <Content Include="JavaScript\addons\zmodem\demo\main.js" />
+    <Content Include="JavaScript\addons\zmodem\zmodem.js" />
+    <Content Include="JavaScript\addons\zmodem\zmodem.test.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir "$(ProjectDir)..\bin"
+copy "$(TargetPath)" "$(ProjectDir)..\bin\"
+copy "$(TargetDir)$(TargetName).xml" "$(ProjectDir)..\bin\"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

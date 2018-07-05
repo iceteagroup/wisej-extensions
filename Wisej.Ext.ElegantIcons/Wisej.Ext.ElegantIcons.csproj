@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{617179EE-51D7-4878-AED8-A81CC4071D50}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wisej.Ext.ElegantIcons</RootNamespace>
+    <AssemblyName>Wisej.Ext.ElegantIcons</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ElegantIcons.cs" />
+    <Compile Include="NamespaceDoc.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="extension.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\social-buttons-skype.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\3x3-grid.svg" />
+    <EmbeddedResource Include="Resources\access-denied.svg" />
+    <EmbeddedResource Include="Resources\add-circular-mini-button.svg" />
+    <EmbeddedResource Include="Resources\add-folder-silhouette.svg" />
+    <EmbeddedResource Include="Resources\archive-box.svg" />
+    <EmbeddedResource Include="Resources\arrow-in-circle-point-to-up.svg" />
+    <EmbeddedResource Include="Resources\arrow-left-and-right.svg" />
+    <EmbeddedResource Include="Resources\arrow-left-in-circle.svg" />
+    <EmbeddedResource Include="Resources\arrow-pointing-to-up.svg" />
+    <EmbeddedResource Include="Resources\arrow-right-circle.svg" />
+    <EmbeddedResource Include="Resources\arrow-right-down.svg" />
+    <EmbeddedResource Include="Resources\arrow-up-1.svg" />
+    <EmbeddedResource Include="Resources\arrow-up.svg" />
+    <EmbeddedResource Include="Resources\arrows-inside-a-circle-pointing-up.svg" />
+    <EmbeddedResource Include="Resources\arrows-pointing-down.svg" />
+    <EmbeddedResource Include="Resources\atomic-symbol-outline.svg" />
+    <EmbeddedResource Include="Resources\attention-sign-outline.svg" />
+    <EmbeddedResource Include="Resources\back-arrow-button.svg" />
+    <EmbeddedResource Include="Resources\backward-arrow-1.svg" />
+    <EmbeddedResource Include="Resources\backward-arrow.svg" />
+    <EmbeddedResource Include="Resources\basket-ball-dribbble-logo.svg" />
+    <EmbeddedResource Include="Resources\black-arrow.svg" />
+    <EmbeddedResource Include="Resources\black-cart.svg" />
+    <EmbeddedResource Include="Resources\black-gallon.svg" />
+    <EmbeddedResource Include="Resources\blogger-botton.svg" />
+    <EmbeddedResource Include="Resources\blogger-logo-silhouette.svg" />
+    <EmbeddedResource Include="Resources\blogger-logo.svg" />
+    <EmbeddedResource Include="Resources\boat-lifesaver.svg" />
+    <EmbeddedResource Include="Resources\bolt-silhouette.svg" />
+    <EmbeddedResource Include="Resources\book-information.svg" />
+    <EmbeddedResource Include="Resources\box-outline.svg" />
+    <EmbeddedResource Include="Resources\calendar.svg" />
+    <EmbeddedResource Include="Resources\caution-sign.svg" />
+    <EmbeddedResource Include="Resources\chat-conversation.svg" />
+    <EmbeddedResource Include="Resources\check-button.svg" />
+    <EmbeddedResource Include="Resources\check-sign-1.svg" />
+    <EmbeddedResource Include="Resources\check-sign.svg" />
+    <EmbeddedResource Include="Resources\checked-box.svg" />
+    <EmbeddedResource Include="Resources\circle-with-a-down-arrow.svg" />
+    <EmbeddedResource Include="Resources\circle.svg" />
+    <EmbeddedResource Include="Resources\circular-clock.svg" />
+    <EmbeddedResource Include="Resources\circular-light-bulb.svg" />
+    <EmbeddedResource Include="Resources\circular-menu-button.svg" />
+    <EmbeddedResource Include="Resources\circular-pie-chart.svg" />
+    <EmbeddedResource Include="Resources\close-button-1.svg" />
+    <EmbeddedResource Include="Resources\close-button.svg" />
+    <EmbeddedResource Include="Resources\closed-lock.svg" />
+    <EmbeddedResource Include="Resources\cloud-arrow-donwload.svg" />
+    <EmbeddedResource Include="Resources\compass-east.svg" />
+    <EmbeddedResource Include="Resources\computer-mouse-cursor.svg" />
+    <EmbeddedResource Include="Resources\computer-screen.svg" />
+    <EmbeddedResource Include="Resources\condense-button-arrows-in-a-square.svg" />
+    <EmbeddedResource Include="Resources\condensing-arrows.svg" />
+    <EmbeddedResource Include="Resources\contacts-agenda.svg" />
+    <EmbeddedResource Include="Resources\dark-black-lightbulb.svg" />
+    <EmbeddedResource Include="Resources\delicious-logo-button.svg" />
+    <EmbeddedResource Include="Resources\delicious-logo-in-a-circle.svg" />
+    <EmbeddedResource Include="Resources\delicious-social-button.svg" />
+    <EmbeddedResource Include="Resources\deviantart-logo-square.svg" />
+    <EmbeddedResource Include="Resources\deviantart-logo.svg" />
+    <EmbeddedResource Include="Resources\deviantart-social-buttton.svg" />
+    <EmbeddedResource Include="Resources\document-page-with-text-lines.svg" />
+    <EmbeddedResource Include="Resources\documents-button.svg" />
+    <EmbeddedResource Include="Resources\double-arrow-left.svg" />
+    <EmbeddedResource Include="Resources\double-chat.svg" />
+    <EmbeddedResource Include="Resources\down-arrow-1.svg" />
+    <EmbeddedResource Include="Resources\down-arrow-button.svg" />
+    <EmbeddedResource Include="Resources\down-arrow-directional.svg" />
+    <EmbeddedResource Include="Resources\down-arrow-in-small-circle.svg" />
+    <EmbeddedResource Include="Resources\down-arrow-outline-1.svg" />
+    <EmbeddedResource Include="Resources\down-arrow-outline.svg" />
+    <EmbeddedResource Include="Resources\down-arrow.svg" />
+    <EmbeddedResource Include="Resources\download-archive-tray.svg" />
+    <EmbeddedResource Include="Resources\download-folder.svg" />
+    <EmbeddedResource Include="Resources\download-from-the-cloud.svg" />
+    <EmbeddedResource Include="Resources\downloading-drawer.svg" />
+    <EmbeddedResource Include="Resources\dribble-logo-1.svg" />
+    <EmbeddedResource Include="Resources\dribble-logo.svg" />
+    <EmbeddedResource Include="Resources\earphones.svg" />
+    <EmbeddedResource Include="Resources\edition-box.svg" />
+    <EmbeddedResource Include="Resources\edition-pencil.svg" />
+    <EmbeddedResource Include="Resources\email-envelope.svg" />
+    <EmbeddedResource Include="Resources\error-advice-sign.svg" />
+    <EmbeddedResource Include="Resources\error-advise.svg" />
+    <EmbeddedResource Include="Resources\error-triangle.svg" />
+    <EmbeddedResource Include="Resources\exclamation-button.svg" />
+    <EmbeddedResource Include="Resources\expand-arrows.svg" />
+    <EmbeddedResource Include="Resources\expand-interface.svg" />
+    <EmbeddedResource Include="Resources\expand.svg" />
+    <EmbeddedResource Include="Resources\extent-option-arrows.svg" />
+    <EmbeddedResource Include="Resources\facebook-logo-button.svg" />
+    <EmbeddedResource Include="Resources\facebook-logotype-button.svg" />
+    <EmbeddedResource Include="Resources\facebook-social-symbol.svg" />
+    <EmbeddedResource Include="Resources\fast-forward-button-1.svg" />
+    <EmbeddedResource Include="Resources\fast-forward-button-outline.svg" />
+    <EmbeddedResource Include="Resources\fast-forward-button.svg" />
+    <EmbeddedResource Include="Resources\film-strip-silhouette.svg" />
+    <EmbeddedResource Include="Resources\flickr-circle-logo.svg" />
+    <EmbeddedResource Include="Resources\flickr.svg" />
+    <EmbeddedResource Include="Resources\folded-map.svg" />
+    <EmbeddedResource Include="Resources\four-squares.svg" />
+    <EmbeddedResource Include="Resources\gear-settings.svg" />
+    <EmbeddedResource Include="Resources\gift-box.svg" />
+    <EmbeddedResource Include="Resources\gift.svg" />
+    <EmbeddedResource Include="Resources\go-back-arrow.svg" />
+    <EmbeddedResource Include="Resources\go-to-back-track-button.svg" />
+    <EmbeddedResource Include="Resources\google-drive-logo-1.svg" />
+    <EmbeddedResource Include="Resources\google-drive-logo.svg" />
+    <EmbeddedResource Include="Resources\google-plus-symbol.svg" />
+    <EmbeddedResource Include="Resources\googleplus-logo.svg" />
+    <EmbeddedResource Include="Resources\half-black-and-half-white-star-shape.svg" />
+    <EmbeddedResource Include="Resources\half-star.svg" />
+    <EmbeddedResource Include="Resources\hard-cover-book.svg" />
+    <EmbeddedResource Include="Resources\high-volume-outline.svg" />
+    <EmbeddedResource Include="Resources\high-volume.svg" />
+    <EmbeddedResource Include="Resources\home-interface.svg" />
+    <EmbeddedResource Include="Resources\house-outline.svg" />
+    <EmbeddedResource Include="Resources\inbox.svg" />
+    <EmbeddedResource Include="Resources\information-button.svg" />
+    <EmbeddedResource Include="Resources\instagram-logo.svg" />
+    <EmbeddedResource Include="Resources\key-outline.svg" />
+    <EmbeddedResource Include="Resources\laptop-silhouette.svg" />
+    <EmbeddedResource Include="Resources\left-arrow.svg" />
+    <EmbeddedResource Include="Resources\left-up-arrow-in-a-circle.svg" />
+    <EmbeddedResource Include="Resources\levels-adjust.svg" />
+    <EmbeddedResource Include="Resources\levels-adjustment.svg" />
+    <EmbeddedResource Include="Resources\line-button.svg" />
+    <EmbeddedResource Include="Resources\link-chain.svg" />
+    <EmbeddedResource Include="Resources\linkedin-button.svg" />
+    <EmbeddedResource Include="Resources\linkedin-logotype-button.svg" />
+    <EmbeddedResource Include="Resources\linkedin.svg" />
+    <EmbeddedResource Include="Resources\links.svg" />
+    <EmbeddedResource Include="Resources\list-button.svg" />
+    <EmbeddedResource Include="Resources\list.svg" />
+    <EmbeddedResource Include="Resources\little-black-folder.svg" />
+    <EmbeddedResource Include="Resources\little-black-star.svg" />
+    <EmbeddedResource Include="Resources\little-circular-button-with-up-arrow-triangle.svg" />
+    <EmbeddedResource Include="Resources\little-down-triangular-arrow.svg" />
+    <EmbeddedResource Include="Resources\little-envelope.svg" />
+    <EmbeddedResource Include="Resources\little-folder.svg" />
+    <EmbeddedResource Include="Resources\little-mobile.svg" />
+    <EmbeddedResource Include="Resources\little-pushpin.svg" />
+    <EmbeddedResource Include="Resources\little-table-grid.svg" />
+    <EmbeddedResource Include="Resources\little-thin-expand-arrows.svg" />
+    <EmbeddedResource Include="Resources\little-thin-left-arrow.svg" />
+    <EmbeddedResource Include="Resources\little-toolbox.svg" />
+    <EmbeddedResource Include="Resources\loud-shape.svg" />
+    <EmbeddedResource Include="Resources\lovers-heart.svg" />
+    <EmbeddedResource Include="Resources\loving-heart-shape.svg" />
+    <EmbeddedResource Include="Resources\low-volume-1.svg" />
+    <EmbeddedResource Include="Resources\low-volume.svg" />
+    <EmbeddedResource Include="Resources\magnifying-glass-searcher.svg" />
+    <EmbeddedResource Include="Resources\magnifying-glass-zoom-in.svg" />
+    <EmbeddedResource Include="Resources\magnifying-glass-zoom-out.svg" />
+    <EmbeddedResource Include="Resources\map-pin-silhouette.svg" />
+    <EmbeddedResource Include="Resources\mathematical-addition-sign.svg" />
+    <EmbeddedResource Include="Resources\menu-button.svg" />
+    <EmbeddedResource Include="Resources\menu-lines.svg" />
+    <EmbeddedResource Include="Resources\menu-square-button.svg" />
+    <EmbeddedResource Include="Resources\menu-square.svg" />
+    <EmbeddedResource Include="Resources\microphone-outline.svg" />
+    <EmbeddedResource Include="Resources\mini-creditcard.svg" />
+    <EmbeddedResource Include="Resources\minus-button.svg" />
+    <EmbeddedResource Include="Resources\minus-key.svg" />
+    <EmbeddedResource Include="Resources\minus-symbol.svg" />
+    <EmbeddedResource Include="Resources\move-arrows.svg" />
+    <EmbeddedResource Include="Resources\msn-user-profile.svg" />
+    <EmbeddedResource Include="Resources\multimedia-down-arrow.svg" />
+    <EmbeddedResource Include="Resources\multimedia-play-key.svg" />
+    <EmbeddedResource Include="Resources\mute-volume-interface-symbol.svg" />
+    <EmbeddedResource Include="Resources\mute-volume.svg" />
+    <EmbeddedResource Include="Resources\myspace-logo-1.svg" />
+    <EmbeddedResource Include="Resources\myspace-logo-silhouette.svg" />
+    <EmbeddedResource Include="Resources\myspace-logo.svg" />
+    <EmbeddedResource Include="Resources\new-add-folder.svg" />
+    <EmbeddedResource Include="Resources\north-south-pointing-arrows.svg" />
+    <EmbeddedResource Include="Resources\old-camera.svg" />
+    <EmbeddedResource Include="Resources\open-folder.svg" />
+    <EmbeddedResource Include="Resources\open-lock.svg" />
+    <EmbeddedResource Include="Resources\padlock.svg" />
+    <EmbeddedResource Include="Resources\paper-bin.svg" />
+    <EmbeddedResource Include="Resources\paperclip-document-outline.svg" />
+    <EmbeddedResource Include="Resources\pause-button-1.svg" />
+    <EmbeddedResource Include="Resources\pause-button-outline.svg" />
+    <EmbeddedResource Include="Resources\pause-button.svg" />
+    <EmbeddedResource Include="Resources\pencil-edit-square.svg" />
+    <EmbeddedResource Include="Resources\pencil.svg" />
+    <EmbeddedResource Include="Resources\picasa-logo-1.svg" />
+    <EmbeddedResource Include="Resources\picasa-logo.svg" />
+    <EmbeddedResource Include="Resources\picassa-symbol.svg" />
+    <EmbeddedResource Include="Resources\pinterest-logo-button.svg" />
+    <EmbeddedResource Include="Resources\pinterest-logo.svg" />
+    <EmbeddedResource Include="Resources\pinterest.svg" />
+    <EmbeddedResource Include="Resources\play-button-silhouette-1.svg" />
+    <EmbeddedResource Include="Resources\play-button-silhouette.svg" />
+    <EmbeddedResource Include="Resources\play-button.svg" />
+    <EmbeddedResource Include="Resources\plus-button-1.svg" />
+    <EmbeddedResource Include="Resources\plus-button.svg" />
+    <EmbeddedResource Include="Resources\previous-tracl.svg" />
+    <EmbeddedResource Include="Resources\price-tag.svg" />
+    <EmbeddedResource Include="Resources\prior-track.svg" />
+    <EmbeddedResource Include="Resources\prohibited.svg" />
+    <EmbeddedResource Include="Resources\push-pin-pointing-down.svg" />
+    <EmbeddedResource Include="Resources\question-mark-button.svg" />
+    <EmbeddedResource Include="Resources\quotations-button-1.svg" />
+    <EmbeddedResource Include="Resources\quotations-button.svg" />
+    <EmbeddedResource Include="Resources\quotations.svg" />
+    <EmbeddedResource Include="Resources\refresh-circular-arrow.svg" />
+    <EmbeddedResource Include="Resources\rewind-button.svg" />
+    <EmbeddedResource Include="Resources\right-arrow-button.svg" />
+    <EmbeddedResource Include="Resources\right-chevron.svg" />
+    <EmbeddedResource Include="Resources\road-cone-silhoette.svg" />
+    <EmbeddedResource Include="Resources\road-map.svg" />
+    <EmbeddedResource Include="Resources\rss.svg" />
+    <EmbeddedResource Include="Resources\screwdriver-and-wrench-crossed.svg" />
+    <EmbeddedResource Include="Resources\selected-box.svg" />
+    <EmbeddedResource Include="Resources\share-button.svg" />
+    <EmbeddedResource Include="Resources\share-circle.svg" />
+    <EmbeddedResource Include="Resources\shopping-paper-bag.svg" />
+    <EmbeddedResource Include="Resources\shopping-store-price-tag.svg" />
+    <EmbeddedResource Include="Resources\single-folder.svg" />
+    <EmbeddedResource Include="Resources\skype-logo-square.svg" />
+    <EmbeddedResource Include="Resources\skype-logo.svg" />
+    <EmbeddedResource Include="Resources\small-ascending-thin-arrow.svg" />
+    <EmbeddedResource Include="Resources\small-black-cloud.svg" />
+    <EmbeddedResource Include="Resources\small-black-key.svg" />
+    <EmbeddedResource Include="Resources\small-circular-compass.svg" />
+    <EmbeddedResource Include="Resources\small-circular-dark-button-with-down-thinny-arrow.svg" />
+    <EmbeddedResource Include="Resources\small-cloud-upload-symbol.svg" />
+    <EmbeddedResource Include="Resources\small-document-button.svg" />
+    <EmbeddedResource Include="Resources\small-google-drive-social-button.svg" />
+    <EmbeddedResource Include="Resources\small-pin-shape.svg" />
+    <EmbeddedResource Include="Resources\small-ribbon.svg" />
+    <EmbeddedResource Include="Resources\small-up-arrows-in-a-circle.svg" />
+    <EmbeddedResource Include="Resources\small-upload-button-with-an-arrow.svg" />
+    <EmbeddedResource Include="Resources\social-google-plus-square-button.svg" />
+    <EmbeddedResource Include="Resources\social-instagram-circle.svg" />
+    <EmbeddedResource Include="Resources\social-network-group.svg" />
+    <EmbeddedResource Include="Resources\social-rss-circle-internet.svg" />
+    <EmbeddedResource Include="Resources\social-rss.svg" />
+    <EmbeddedResource Include="Resources\social-share-symbol.svg" />
+    <EmbeddedResource Include="Resources\social-vimeo-in-a-circle-logo.svg" />
+    <EmbeddedResource Include="Resources\speech-balloon-note.svg" />
+    <EmbeddedResource Include="Resources\speech-bubble-outline.svg" />
+    <EmbeddedResource Include="Resources\spotify-logo-button-1.svg" />
+    <EmbeddedResource Include="Resources\spotify-logo-button.svg" />
+    <EmbeddedResource Include="Resources\spotify-logo.svg" />
+    <EmbeddedResource Include="Resources\star-sign.svg" />
+    <EmbeddedResource Include="Resources\stop-button-1.svg" />
+    <EmbeddedResource Include="Resources\stop-button-2.svg" />
+    <EmbeddedResource Include="Resources\stop-button.svg" />
+    <EmbeddedResource Include="Resources\stumbleupon-logo-button.svg" />
+    <EmbeddedResource Include="Resources\stumbleupon-logo.svg" />
+    <EmbeddedResource Include="Resources\stumbleupon.svg" />
+    <EmbeddedResource Include="Resources\tablet-outline.svg" />
+    <EmbeddedResource Include="Resources\tags-outline-1.svg" />
+    <EmbeddedResource Include="Resources\tags-outline.svg" />
+    <EmbeddedResource Include="Resources\telephone-handset.svg" />
+    <EmbeddedResource Include="Resources\text-lines-file.svg" />
+    <EmbeddedResource Include="Resources\thin-left-down-arrow.svg" />
+    <EmbeddedResource Include="Resources\thin-left-up-arrow.svg" />
+    <EmbeddedResource Include="Resources\thin-little-up-arrow-in-a-circle.svg" />
+    <EmbeddedResource Include="Resources\thin-right-arrow.svg" />
+    <EmbeddedResource Include="Resources\time-watch.svg" />
+    <EmbeddedResource Include="Resources\toolbox.svg" />
+    <EmbeddedResource Include="Resources\trash-container.svg" />
+    <EmbeddedResource Include="Resources\tumblr-logo.svg" />
+    <EmbeddedResource Include="Resources\tumblr-quadrate.svg" />
+    <EmbeddedResource Include="Resources\tumblr-symbol.svg" />
+    <EmbeddedResource Include="Resources\twitter-logo-silhouette.svg" />
+    <EmbeddedResource Include="Resources\twitter-logo.svg" />
+    <EmbeddedResource Include="Resources\twitter.svg" />
+    <EmbeddedResource Include="Resources\two-down-chevron.svg" />
+    <EmbeddedResource Include="Resources\two-small-arrows-to-right-in-a-little-circle.svg" />
+    <EmbeddedResource Include="Resources\unlocked-lock.svg" />
+    <EmbeddedResource Include="Resources\up-and-down-arrow.svg" />
+    <EmbeddedResource Include="Resources\up-and-right-arrow-button.svg" />
+    <EmbeddedResource Include="Resources\up-arrow-1.svg" />
+    <EmbeddedResource Include="Resources\up-arrow.svg" />
+    <EmbeddedResource Include="Resources\up-sign.svg" />
+    <EmbeddedResource Include="Resources\upload-folder.svg" />
+    <EmbeddedResource Include="Resources\upload-to-the-cloud.svg" />
+    <EmbeddedResource Include="Resources\video-play-button.svg" />
+    <EmbeddedResource Include="Resources\vimeo-logo-square.svg" />
+    <EmbeddedResource Include="Resources\vimeo.svg" />
+    <EmbeddedResource Include="Resources\voice-mic.svg" />
+    <EmbeddedResource Include="Resources\wordpress-logo.svg" />
+    <EmbeddedResource Include="Resources\wordpress-square-logo.svg" />
+    <EmbeddedResource Include="Resources\working-cone.svg" />
+    <EmbeddedResource Include="Resources\wrench-tool.svg" />
+    <EmbeddedResource Include="Resources\youtube-logo.svg" />
+    <EmbeddedResource Include="Resources\zoom-interface.svg" />
+    <EmbeddedResource Include="Resources\zoom-out-symbol.svg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir "$(ProjectDir)..\bin"
+copy "$(TargetPath)" "$(ProjectDir)..\bin\"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

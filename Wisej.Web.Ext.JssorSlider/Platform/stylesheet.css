@@ -1,0 +1,40 @@
+﻿
+/**
+ * jssor slider stylesheet.
+ */
+
+.jssor-slider {
+}
+
+    /* arrows */
+    .jssor-slider .arrow-left {
+    }
+
+    .jssor-slider .arrow-right {
+    }
+
+    /* bullet navigator */
+    .jssor-slider .bullets {
+    }
+
+        .jssor-slider .bullets .prototype {
+        }
+
+    /* thumbnail navigator */
+    .jssor-slider .thumbnails {
+    }
+
+    .jssor-slider .thumbnail {
+    }
+
+        .jssor-slider .thumbnail .prototype {
+        }
+
+            .jssor-slider .thumbnail .prototype .w {
+            }
+
+            .jssor-slider .thumbnail .prototype .t {
+            }
+
+            .jssor-slider .thumbnail .prototype .c {
+            }
