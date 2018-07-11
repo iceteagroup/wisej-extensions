@@ -130,6 +130,7 @@ namespace Wisej.Application
 			Cef.Initialize(settings);
 
 			this.browser = new Browser(this.host.Url + "?standalone=true");
+			this.browser.DownloadHandler = new DownloadHandler();
 			this.browser.Dock = DockStyle.Fill;
 			this.browser.TitleChanged += this.Browser_TitleChanged;
 
