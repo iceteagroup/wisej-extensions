@@ -19,13 +19,12 @@
 
 using Microsoft.Owin;
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web;
-using System.Linq.Expressions;
-using System.Reflection;
 
 namespace Wisej.HostService.Owin
 {
@@ -42,12 +41,18 @@ namespace Wisej.HostService.Owin
 	internal class WisejMiddleware : OwinMiddleware
 	{
 
+		// reusable Wisej HttpHandler.
+		private Wisej.Core.HttpHandler _httpHandler;
+
 		/// <summary>
 		/// Process all requests.
 		/// </summary>
 		/// <param name="next"></param>
 		public WisejMiddleware(OwinMiddleware next) : base(next)
 		{
+			this._httpHandler = new Wisej.Core.HttpHandler();
+			if (!this._httpHandler.IsReusable)
+				this._httpHandler = null;
 		}
 
 		/// <summary>
@@ -123,7 +128,8 @@ namespace Wisej.HostService.Owin
 
 			// process the wisej http request and return the async task
 			// pegged to the async wisej handler EndProcessRequest.
-			var handler = new Wisej.Core.HttpHandler();
+			var handler = this._httpHandler ?? new Wisej.Core.HttpHandler();
+
 			var async = handler.BeginProcessRequest(
 				httpContext,
 				r =>

@@ -66,12 +66,6 @@ this.init = function () {
 			this.__resizeEditor();
 		}, this);
 
-		// focus the editor when his widget is focused.
-		this.addListener("focusin", function (e) {
-			if (this.editor)
-				this.editor.focus();
-		});
-
 		// add the text property to the state variables returned to the server with any event.
 		this.setStateProperties(this.getStateProperties().concat(["text"]));
 	}
@@ -105,6 +99,7 @@ this.init = function () {
 	});
 
 	// focus the wrapper wisej widget.
+	// IFrame editors cannot propagate pointer events to their container.
 	me.editor.on('focus', function (e) {
 		me.fireWidgetEvent("focus");
 	});
@@ -246,4 +241,24 @@ this.enableCommand = function (name, enable) {
 			enable ? command.enable() : command.disable();
 		}
 	}
+}
+
+/**
+ * Focus this widget when using the keyboard. This is
+ * mainly thought for the advanced qooxdoo keyboard handling
+ * and should not be used by the application developer.
+ *
+ * @internal
+ */
+this.tabFocus = function () {
+	if (this.editor)
+		this.editor.focus();
+}
+
+/**
+ * Focus this widget.
+ */
+this.focus = function () {
+	if (this.editor)
+		this.editor.focus();
 }

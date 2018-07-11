@@ -459,10 +459,23 @@ namespace Wisej.Web.Ext.TinyMCE
 					break;
 
 				case "focus":
-					FindForm()?.Activate();
+					ProcessFocusWebEvent(e);
 					break;
 			}
 			base.OnWidgetEvent(e);
+		}
+
+		// Handles the "focus" event from the client.
+		private void ProcessFocusWebEvent(WidgetEventArgs e)
+		{
+			// HTML editors focus a child IFrame which causes the
+			// container widget to lose the focus.
+			Focus();
+
+			// activate and bring to top the parent form.
+			var form = FindForm();
+			if (form != null && !form.Active)
+				form.Activate();
 		}
 
 		// Handles the "command" event from the client.

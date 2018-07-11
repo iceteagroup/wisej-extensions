@@ -22,6 +22,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net.WebSockets;
+using System.Security.Principal;
 using System.Web;
 using System.Web.WebSockets;
 
@@ -39,6 +40,36 @@ namespace Wisej.HostService.Owin
 			this.context = HttpContext.Current;
 			this.request = this.context.Request;
 			this.webSocketContext = (WebSocketContext)environment["System.Net.WebSockets.WebSocketContext"];
+		}
+
+		public override IPrincipal User
+		{
+			get { return this.context.User; }
+		}
+
+		public override WindowsIdentity LogonUserIdentity
+		{
+			get { return this.request.LogonUserIdentity; }
+		}
+
+		public override bool IsAuthenticated
+		{
+			get { return this.request.IsAuthenticated; }
+		}
+
+		public override bool IsLocal
+		{
+			get { return this.request.IsLocal; }
+		}
+
+		public override bool IsSecureConnection
+		{
+			get { return this.request.IsSecureConnection; }
+		}
+
+		public override bool IsDebuggingEnabled
+		{
+			get { return this.context.IsDebuggingEnabled; }
 		}
 
 		public override Uri RequestUri
@@ -65,6 +96,21 @@ namespace Wisej.HostService.Owin
 		public override bool IsClientConnected
 		{
 			get { return this.WebSocket.State == WebSocketState.Open; }
+		}
+
+		public override NameValueCollection ServerVariables
+		{
+			get { return this.request.ServerVariables; }
+		}
+
+		public override HttpClientCertificate ClientCertificate
+		{
+			get { return this.request.ClientCertificate; }
+		}
+
+		public override HttpApplicationStateBase Application
+		{
+			get { return new HttpApplicationStateWrapper(this.context.Application); }
 		}
 
 		public override HttpServerUtilityBase Server

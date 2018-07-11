@@ -353,7 +353,7 @@ namespace Wisej.Web.Ext.Barcode
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override bool TabStop
 		{
-			get { return base.TabStop; }
+			get { return false; }
 			set { }
 		}
 
@@ -367,7 +367,7 @@ namespace Wisej.Web.Ext.Barcode
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override bool Focusable
 		{
-			get { return base.Focusable; }
+			get { return false; }
 			set { }
 		}
 
@@ -381,7 +381,7 @@ namespace Wisej.Web.Ext.Barcode
 		public override int TabIndex
 		{
 			get { return base.TabIndex; }
-			set { }
+			set { base.TabIndex = value; }
 		}
 
 		/// <summary>

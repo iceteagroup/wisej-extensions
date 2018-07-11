@@ -40,8 +40,7 @@ this.init = function () {
 	options.toggle = { cssclass: 'toggle' };
 
 	// if the tinyEditor has not been created, perform stuff that has to be done only once.
-	if (!this.editor)
-	{
+	if (!this.editor) {
 
 		// resize the tinyeditor when the widget is resized.
 		this.addListener("resize", function (e) {
@@ -54,12 +53,6 @@ this.init = function () {
 			}
 
 		}, this);
-
-		// focus the editor when his widget is focused.
-		this.addListener("focusin", function (e) {
-			if (this.editor)
-				this.editor.e.body.focus();
-		});
 
 		// preload the editor's images to display them in the designer.
 		qx.io.ImageLoader.load("resource.wx/Wisej.Web.Ext.TinyEditor/icons.png");
@@ -144,4 +137,24 @@ this.execCommand = function (command, showDefaultUI, argument) {
 		}, 10);
 
 	} catch (e) { }
+}
+
+/**
+ * Focus this widget when using the keyboard. This is
+ * mainly thought for the advanced qooxdoo keyboard handling
+ * and should not be used by the application developer.
+ *
+ * @internal
+ */
+this.tabFocus = function () {
+	if (this.editor)
+		this.editor.e.body.focus();
+}
+
+/**
+ * Focus this widget.
+ */
+this.focus = function () {
+	if (this.editor)
+		this.editor.e.body.focus();
 }

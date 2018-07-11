@@ -43,6 +43,45 @@ namespace Wisej.Web.Ext.CoolClock
 		#region Properties
 
 		/// <summary>
+		/// This property is not relevant to this class.
+		/// </summary>
+		/// <exclude/>
+		[Browsable(false)]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public override bool TabStop
+		{
+			get { return false; }
+			set { }
+		}
+
+		/// <summary>
+		/// This property is not relevant to this class.
+		/// </summary>
+		/// <exclude/>
+		[Browsable(false)]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public override bool Focusable
+		{
+			get { return false; }
+			set { }
+		}
+
+		/// <summary>
+		/// This property is not relevant for this class.
+		/// </summary>
+		/// <exclude/>
+		[Browsable(false)]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public override int TabIndex
+		{
+			get { return base.TabIndex; }
+			set { base.TabIndex = value; }
+		}
+
+		/// <summary>
 		/// Returns or sets the tick delay.
 		/// </summary>
 		[DefaultValue(1000)]

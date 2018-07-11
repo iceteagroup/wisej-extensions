@@ -41,12 +41,12 @@ namespace Wisej.Ext.ClearScript
 	/// it must always run within the thread that created it.
 	/// </para>
 	/// <para>
-	/// When <see cref="ClearScript.Create(EngineType)"/> is called passing <see cref="EngineType.VBScript"/> or
+	/// When <see cref="ClearScript.Create"/> is called passing <see cref="EngineType.VBScript"/> or
 	/// <see cref="EngineType.JScript"/>, it creates the new scripting engine on a new dedicated thread and
 	/// marshals all calls to the thread the engine is bound to.
 	/// </para>
 	/// <para>
-	/// When <see cref="ClearScript.Create(EngineType)"/> is called passing <see cref="EngineType.V8"/>
+	/// When <see cref="ClearScript.Create"/> is called passing <see cref="EngineType.V8"/>
 	/// if creates the new scripting engine without a dedicated thread since the VB engine can process
 	/// requests from any thread.
 	/// </para>
