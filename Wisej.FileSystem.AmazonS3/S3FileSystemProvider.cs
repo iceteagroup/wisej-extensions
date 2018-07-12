@@ -509,13 +509,13 @@ namespace Wisej.Ext.FileSystem
 
 			if (path != "")
 			{
+				if (Contains(path))
+					path = path.Substring(this.Name.Length + 1);
+
 				path = path.Replace("\\", "/");
 
 				if (path.StartsWith(this.Root))
 					return path;
-
-				if (Contains(path))
-					path = path.Substring(this.Name.Length + 1);
 
 				if (path.StartsWith("/"))
 					path = path.Substring(1);
