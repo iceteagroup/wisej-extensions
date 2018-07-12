@@ -120,6 +120,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="CefSharpLoader.cs" />
+    <Compile Include="DownloadHandler.cs" />
     <Compile Include="MainView.cs">
       <SubType>Form</SubType>
     </Compile>
