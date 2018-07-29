@@ -498,6 +498,17 @@ namespace Wisej.Ext.FileSystem
 		}
 
 		/// <summary>
+		/// Maps the virtual path to the corresponding physical path
+		/// on the specific <see cref="IFileSystemProvider"/> implementation.
+		/// </summary>
+		/// <param name="path">Virtual path to map to the corresponding physical path.</param>
+		/// <returns>The physical path for the <see cref="IFileSystemProvider"/> implementation.</returns>
+		public string MapPath(string path)
+		{
+			return FixPath(path);
+		}
+
+		/// <summary>
 		/// Ensures the path is rooted using the Root
 		/// specified in this FileSystemProvider.
 		/// </summary>
