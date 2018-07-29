@@ -1409,7 +1409,7 @@ namespace Wisej.Web.Ext.TourPanel
 
 			if (this.AutoSize && !this.DesignMode)
 			{
-				TextUtils.MeasureTextAsync(step.Text, true, this.HtmlText.Font, (size) =>
+				TextUtils.MeasureText(step.Text, true, this.HtmlText.Font, (size) =>
 				{
 					Update(step);
 					AdjustSize(size);
