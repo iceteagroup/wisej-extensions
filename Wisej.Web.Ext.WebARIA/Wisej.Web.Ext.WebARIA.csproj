@@ -43,10 +43,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Wisej.Core">
-      <HintPath>..\..\..\Development\1.4\Wisej\bin\Wisej.Core.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\Wisej\bin\Wisej.Core.dll</HintPath>
     </Reference>
     <Reference Include="Wisej.Web">
-      <HintPath>..\..\..\Development\1.4\Wisej\bin\Wisej.Web.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\Wisej\bin\Wisej.Web.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

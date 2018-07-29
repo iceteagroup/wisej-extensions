@@ -35,8 +35,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Wisej.Core">
+      <HintPath>..\..\..\Development\1.5\Wisej\bin\Wisej.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Wisej.Web">
-      <HintPath>..\..\..\Development\1.4\Wisej\bin\Wisej.Web.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\Wisej\bin\Wisej.Web.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -45,12 +48,6 @@
     <Compile Include="RecorderBase.cs" />
     <Compile Include="ScreenRecorder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Wisej.Core\Wisej.Core.csproj">
-      <Project>{981223d5-396e-4df0-8121-46666fce7a8d}</Project>
-      <Name>Wisej.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -72,8 +72,7 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="Wisej.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Wisej.Core">
       <HintPath>..\..\..\..\Development\1.5\Wisej\bin\Wisej.Core.dll</HintPath>
     </Reference>
   </ItemGroup>

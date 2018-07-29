@@ -40,7 +40,7 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="Wisej.Core">
-      <HintPath>..\..\..\Development\1.4\Wisej\bin\Wisej.Core.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\Wisej\bin\Wisej.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
