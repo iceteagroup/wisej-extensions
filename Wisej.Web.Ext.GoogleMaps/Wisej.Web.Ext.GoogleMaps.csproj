@@ -52,10 +52,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeocoderLocationType.cs" />
+    <Compile Include="GeocoderResult.cs" />
     <Compile Include="GoogleMap.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="LatLng.cs" />
+    <Compile Include="LatLngBounds.cs" />
     <Compile Include="MarkerDragEventHandler.cs" />
     <Compile Include="MapPropertyChangedEventHandler.cs" />
     <Compile Include="MapMouseEventHandler.cs" />
