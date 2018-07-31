@@ -173,8 +173,6 @@ namespace Wisej.Web.Ext.GoogleMaps
             {
                 Location = new LatLng(data.lat, data.lng);
                 LocationType = Parse(data.location_type);
-                //Viewport = data.viewport;
-                //Bounds = data.bounds;
             }
 
             /// <summary>
@@ -192,23 +190,6 @@ namespace Wisej.Web.Ext.GoogleMaps
             /// The additional data about the specified location.
             /// </value>
             public GeocoderLocationType? LocationType { get; private set; }
-
-            /// <summary>
-            /// Gets the recommended viewport for the returned result.
-            /// </summary>
-            /// <value>
-            /// The recommended viewport for the returned result.
-            /// </value>
-            public LatLngBounds Viewport { get; private set; }
-
-            /// <summary>
-            /// Gets the bounds which can fully contain the returned result.
-            /// </summary>
-            /// <value>
-            /// The bounds which can fully contain the returned result.
-            /// </value>
-            /// <remarks>These bounds may not match the recommended viewport.</remarks>
-            public LatLngBounds Bounds { get; private set; }
 
             internal GeocoderLocationType? Parse(string locationType)
             {

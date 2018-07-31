@@ -58,7 +58,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="LatLng.cs" />
-    <Compile Include="LatLngBounds.cs" />
     <Compile Include="MarkerDragEventHandler.cs" />
     <Compile Include="MapPropertyChangedEventHandler.cs" />
     <Compile Include="MapMouseEventHandler.cs" />

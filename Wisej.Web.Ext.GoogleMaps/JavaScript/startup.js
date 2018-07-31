@@ -12,66 +12,66 @@
  * be used referring to this.container.
  *
  */
-this.init = function() {
+this.init = function () {
 
-    var me = this;
+	var me = this;
 
-    // prepare the configuration map.
-    // [$]options is a placeholder that is replaced with the options map.
-    var options = $options;
+	// prepare the configuration map.
+	// [$]options is a placeholder that is replaced with the options map.
+	var options = $options;
 
-    // error placeholder.
-    var error = "$error";
-    if (error)
-        throw new Error(error);
+	// error placeholder.
+	var error = "$error";
+	if (error)
+		throw new Error(error);
 
-    // create the Google map widget.
-    if (this.map == null) {
+	// create the Google map widget.
+	if (this.map == null) {
 
-        this.map = new google.maps.Map(this.container, options);
+		this.map = new google.maps.Map(this.container, options);
 
-        // dynamically resize the map.
-        this.addListener("resize",
-            function() {
-                google.maps.event.trigger(this.map, "resize");
-            });
+		// dynamically resize the map.
+		this.addListener("resize", function () {
+			google.maps.event.trigger(this.map, "resize");
+		});
 
-        // hook the events that we want to redirect to the server component.
-        this.map.addListener("click", this._onMapClick.bind(this, "click", null));
-        this.map.addListener("dblclick", this._onMapClick.bind(this, "dblclick", null));
-        this.map.addListener("rightclick", this._onMapClick.bind(this, "rightclick", null));
-        this.map.addListener("zoom_changed", this._onMapPropertyChanged.bind(this, "zoom"));
-        this.map.addListener("tilt_changed", this._onMapPropertyChanged.bind(this, "tilt"));
-        this.map.addListener("maptypeid_changed", this._onMapPropertyChanged.bind(this, "mapTypeId"));
+		// hook the events that we want to redirect to the server component.
+		this.map.addListener("click", this._onMapClick.bind(this, "click", null));
+		this.map.addListener("dblclick", this._onMapClick.bind(this, "dblclick", null));
+		this.map.addListener("rightclick", this._onMapClick.bind(this, "rightclick", null));
+		this.map.addListener("zoom_changed", this._onMapPropertyChanged.bind(this, "zoom"));
+		this.map.addListener("tilt_changed", this._onMapPropertyChanged.bind(this, "tilt"));
+		this.map.addListener("maptypeid_changed", this._onMapPropertyChanged.bind(this, "mapTypeId"));
 
-        // collection of markers.
-        this.__markers = {};
-    } else {
-        // or update the existing map object.
-        this.map.setValues(options);
-    }
+		// collection of markers.
+		this.__markers = {};
+	}
+	else {
+		// or update the existing map object.
+		this.map.setValues(options);
+	}
 }
 
 /**
  * Replace the default implementation to fire "render"
  * after the Google Map has been rendered.
  */
-this._onInitialized = function() {
+this._onInitialized = function () {
 
-    if (wisej.web.DesignMode) {
+	if (wisej.web.DesignMode) {
 
-        if (this.map) {
-            var me = this;
-            this.map.addListener("tilesloaded",
-                function() {
-                    setTimeout(function() { me.fireEvent("render"); }, 100);
-                });
-        } else {
-            this.fireEvent("render");
-        }
-    }
+		if (this.map) {
+			var me = this;
+			this.map.addListener("tilesloaded", function () {
+				setTimeout(function () { me.fireEvent("render"); }, 100);
+			});
+		}
+		else {
+			this.fireEvent("render");
+		}
+	}
 
-    this.fireEvent("initialized");
+	this.fireEvent("initialized");
 }
 
 
@@ -79,32 +79,32 @@ this._onInitialized = function() {
  * Redirects map click events from the google.maps.Map widget.
  * to the wisej GoogleMap component.
  */
-this._onMapClick = function(type, marker, e) {
+this._onMapClick = function (type, marker, e) {
 
-    var lat = e.latLng ? e.latLng.lat() : 0;
-    var lng = e.latLng ? e.latLng.lng() : 0;
-    this.fireWidgetEvent(type, { marker: marker, lat: lat, lng: lng });
+	var lat = e.latLng ? e.latLng.lat() : 0;
+	var lng = e.latLng ? e.latLng.lng() : 0;
+	this.fireWidgetEvent(type, { marker: marker, lat: lat, lng: lng });
 }
 
 /**
  * Forwards marker drag events to the sever.
  */
-this._onMapMarkerDrag = function(type, marker, e) {
+this._onMapMarkerDrag = function (type, marker, e) {
 
-    var x = e.pixel.x | 0;
-    var y = e.pixel.y | 0;
-    var lat = e.latLng ? e.latLng.lat() : 0;
-    var lng = e.latLng ? e.latLng.lng() : 0;
-    this.fireWidgetEvent(type, { marker: marker, lat: lat, lng: lng, x: x, y: y });
+	var x = e.pixel.x | 0;
+	var y = e.pixel.y | 0;
+	var lat = e.latLng ? e.latLng.lat() : 0;
+	var lng = e.latLng ? e.latLng.lng() : 0;
+	this.fireWidgetEvent(type, { marker: marker, lat: lat, lng: lng, x: x, y: y });
 }
 
 /**
  * Redirects property change events from the google.maps.Map widget
  * to the wisej GoogleMap component.
  */
-this._onMapPropertyChanged = function(name) {
+this._onMapPropertyChanged = function (name) {
 
-    this.fireWidgetEvent("propertychanged", { name: name, value: this.map[name] });
+	this.fireWidgetEvent("propertychanged", { name: name, value: this.map[name] });
 }
 
 /*
@@ -121,59 +121,58 @@ Google Maps Markers
  * @param options {google.maps.MarkerOptions} marker specification.
  * @param center {Boolean} true to center the map at the marker's location.
  */
-this.addMarker = function(id, location, options, center) {
+this.addMarker = function (id, location, options, center) {
 
-    if (!id)
-        return;
+	if (!id)
+		return;
 
-    if (!location)
-        return;
+	if (!location)
+		return;
 
-    if (!this.map) {
-        this.addListenerOnce("initialized",
-            function(e) {
-                this.addMarker(id, location, options, center);
-            });
-        return;
-    }
+	if (!this.map) {
+		this.addListenerOnce("initialized", function (e) {
+			this.addMarker(id, location, options, center);
+		});
+		return;
+	}
 
-    // geocode an address.
-    if (typeof location == "string") {
-        var me = this;
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ 'address': location },
-            function(results, status) {
+	// geocode an address.
+	if (typeof location == "string") {
+		var me = this;
+		var geocoder = new google.maps.Geocoder();
+		geocoder.geocode({ 'address': location }, function (results, status) {
 
-                if (status == 'OK') {
+			if (status == 'OK') {
 
-                    me.addMarker(id, results[0].geometry.location, options, center);
+				me.addMarker(id, results[0].geometry.location, options, center);
 
-                } else {
+			}
+			else {
 
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
+				alert('Geocode was not successful for the following reason: ' + status);
+			}
+		});
 
-        return;
-    }
+		return;
+	}
 
-    options = options || {};
-    options.map = this.map;
-    options.position = location;
+	options = options || {};
+	options.map = this.map;
+	options.position = location;
 
-    this.removeMarker(id);
-    var marker = this.__markers[id] = new google.maps.Marker(options);
-    marker.addListener("click", this._onMapClick.bind(this, "click", id));
-    marker.addListener("dblclick", this._onMapClick.bind(this, "dblclick", id));
-    marker.addListener("rightclick", this._onMapClick.bind(this, "rightclick", id));
+	this.removeMarker(id);
+	var marker = this.__markers[id] = new google.maps.Marker(options);
+	marker.addListener("click", this._onMapClick.bind(this, "click", id));
+	marker.addListener("dblclick", this._onMapClick.bind(this, "dblclick", id));
+	marker.addListener("rightclick", this._onMapClick.bind(this, "rightclick", id));
 
-    if (options.draggable) {
-        marker.addListener("dragend", this._onMapMarkerDrag.bind(this, "dragend", id));
-        marker.addListener("dragstart", this._onMapMarkerDrag.bind(this, "dragstart", id));
-    }
+	if (options.draggable) {
+		marker.addListener("dragend", this._onMapMarkerDrag.bind(this, "dragend", id));
+		marker.addListener("dragstart", this._onMapMarkerDrag.bind(this, "dragstart", id));
+	}
 
-    if (center === true)
-        this.map.setCenter(location);
+	if (center === true)
+		this.map.setCenter(location);
 }
 
 /**
@@ -181,29 +180,29 @@ this.addMarker = function(id, location, options, center) {
  *
  * @param id {String} unique marker identifier.
  */
-this.removeMarker = function(id) {
+this.removeMarker = function (id) {
 
-    if (!id || !this.__markers)
-        return;
+	if (!id || !this.__markers)
+		return;
 
-    var marker = this.__markers[id];
-    if (marker) {
-        marker.setMap(null);
-        delete this.__markers[id];
-    }
+	var marker = this.__markers[id];
+	if (marker) {
+		marker.setMap(null);
+		delete this.__markers[id];
+	}
 }
 
 /**
  * Removes all markers.
  */
-this.clearMarkers = function() {
+this.clearMarkers = function () {
 
-    if (!this.__markers)
-        return;
+	if (!this.__markers)
+		return;
 
-    for (var id in this.__markers) {
-        this.removeMarker(id);
-    }
+	for (var id in this.__markers) {
+		this.removeMarker(id);
+	}
 }
 
 /*
@@ -217,40 +216,39 @@ Google Maps  Methods
  *
  * @param location {google.maps.LatLng | google.maps.LatLngLiteral | String} marker location or address to geocode.
  */
-this.centerMap = function(location) {
+this.centerMap = function (location) {
 
-    if (!location)
-        return;
+	if (!location)
+		return;
 
-    if (!this.map) {
-        this.addListenerOnce("initialized",
-            function(e) {
-                this.centerMap(location);
-            });
-        return;
-    }
+	if (!this.map) {
+		this.addListenerOnce("initialized", function (e) {
+			this.centerMap(location);
+		});
+		return;
+	}
 
-    // geocode an address.
-    if (typeof location == "string") {
-        var me = this;
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ 'address': location },
-            function(results, status) {
+	// geocode an address.
+	if (typeof location == "string") {
+		var me = this;
+		var geocoder = new google.maps.Geocoder();
+		geocoder.geocode({ 'address': location }, function (results, status) {
 
-                if (status == 'OK') {
+			if (status == 'OK') {
 
-                    me.centerMap(results[0].geometry.location);
+				me.centerMap(results[0].geometry.location);
 
-                } else {
+			}
+			else {
 
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
+				alert('Geocode was not successful for the following reason: ' + status);
+			}
+		});
 
-        return;
-    }
+		return;
+	}
 
-    this.map.setCenter(location);
+	this.map.setCenter(location);
 }
 
 /**
@@ -259,29 +257,28 @@ this.centerMap = function(location) {
  * @param id {String} the marker unique id.
  * @param options {Map} the options for the initialization of the InfoWindow.
  */
-this.showInfoWindow = function(id, options) {
+this.showInfoWindow = function (id, options) {
 
-    if (!id)
-        return;
+	if (!id)
+		return;
 
-    if (!this.map) {
-        this.addListenerOnce("initialized",
-            function(e) {
-                this.showInfoWindow(id, content);
-            });
-        return;
-    }
+	if (!this.map) {
+		this.addListenerOnce("initialized", function (e) {
+			this.showInfoWindow(id, content);
+		});
+		return;
+	}
 
-    if (!this.__markers)
-        return;
+	if (!this.__markers)
+		return;
 
-    var marker = this.__markers[id];
-    if (marker) {
+	var marker = this.__markers[id];
+	if (marker) {
 
-        options = options || {};
-        marker.infoWindow = marker.infoWindow || new google.maps.InfoWindow(options);
-        marker.infoWindow.open(this.map, marker);
-    }
+		options = options || {};
+		marker.infoWindow = marker.infoWindow || new google.maps.InfoWindow(options);
+		marker.infoWindow.open(this.map, marker);
+	}
 }
 
 /**
@@ -289,17 +286,17 @@ this.showInfoWindow = function(id, options) {
  *
  * @param id {String} the marker unique id.
  */
-this.closeInfoWindow = function(id) {
+this.closeInfoWindow = function (id) {
 
-    if (!id || !this.map || !this.__markers)
-        return;
+	if (!id || !this.map || !this.__markers)
+		return;
 
-    var marker = this.__markers[id];
-    if (marker) {
+	var marker = this.__markers[id];
+	if (marker) {
 
-        if (marker.infoWindow)
-            marker.infoWindow.close();
-    }
+		if (marker.infoWindow)
+			marker.infoWindow.close();
+	}
 }
 
 /*
@@ -312,99 +309,58 @@ Google Maps Reverse Geocode
  * Retrieves geocode information.
  *
  * @param callbackId {Integer} The id of the request. It should be returned with the response.
- * @param markerId {String} unique marker identifier.
  * @param location {google.maps.LatLng | google.maps.LatLngLiteral | String} address to geocode.
- * @param options {google.maps.MarkerOptions} marker specification.
  */
-this.getGeocode = function(callbackId, markerId, location, bounds) {
+this.getGeocode = function (callbackId, location) {
 
-    if (!markerId && !location)
-        return;
+	if (!callbackId)
+		return;
 
-    if (!location)
-        return;
+	if (!location)
+		return;
 
-    if (!this.map) {
-        this.addListenerOnce("initialized",
-            function(e) {
-                this.getGeocode(markerId, location, bounds);
-            });
-        return;
-    }
+	var me = this;
+	var geocoder = new google.maps.Geocoder();
 
-    var me = this;
-    var geocoder = new google.maps.Geocoder();
+	// geocode an address.
+	if (typeof location == "string") {
 
-    if (markerId) {
-        if (!this.__markers)
-            return;
+		geocoder.geocode({ 'address': location }, function (results, status) {
 
-        var marker = this.__markers[markerId];
+			if (status == 'OK') {
 
-        // geocode a marker.
-        geocoder.geocode({ 'placeId': marker },
-            function(results, status) {
+				// convert lat/lng functions to geometry properties
+				for (i = 0; i < results.length; i++) {
+					results[i].geometry.lat = results[i].geometry.location.lat();
+					results[i].geometry.lng = results[i].geometry.location.lng();
+				}
 
-                if (status == 'OK') {
+				me.fireWidgetEvent("callback", { id: callbackId, geocode: results, statusCode: status });
+			} else {
+				me.fireWidgetEvent("callback", { id: callbackId, statusCode: status });
+			}
 
-                    // convert lat lng functions to geometry properties
-                    for (i = 0; i < results.length; i++) {
-                        results[0].geometry.lat = results[i].geometry.location.lat();
-                        results[0].geometry.lng = results[i].geometry.location.lng();
-                    }
+		});
 
-                    me.fireWidgetEvent("callback", { id: callbackId, geocode: results, statusCode: status });
-                } else {
-                    me.fireWidgetEvent("callback", { id: callbackId, statusCode: status });
-                }
-            });
+		return;
+	}
 
-        return;
+	// geocode a location
+	geocoder.geocode({ 'location': location }, function (results, status) {
 
-    } else {
+		if (status == 'OK') {
 
-        // geocode an address.
-        if (typeof location == "string") {
+			// convert lat/lng functions to geometry properties
+			for (i = 0; i < results.length; i++) {
+				results[i].geometry.lat = results[i].geometry.location.lat();
+				results[i].geometry.lng = results[i].geometry.location.lng();
+			}
 
-            geocoder.geocode({ 'address': location },
-                function(results, status) {
+			me.fireWidgetEvent("callback", { id: callbackId, geocode: results, statusCode: status });
+		}
+		else {
+			me.fireWidgetEvent("callback", { id: callbackId, statusCode: status });
+		}
 
-                    if (status == 'OK') {
-
-                        // convert lat lng functions to geometry properties
-                        for (i = 0; i < results.length; i++) {
-                            results[0].geometry.lat = results[i].geometry.location.lat();
-                            results[0].geometry.lng = results[i].geometry.location.lng();
-                        }
-
-                        me.fireWidgetEvent("callback", { id: callbackId, geocode: results, statusCode: status });
-                    } else {
-                        me.fireWidgetEvent("callback", { id: callbackId, statusCode: status });
-                    }
-
-                });
-
-            return;
-
-        }
-
-        // geocode a location
-        geocoder.geocode({ 'location': location },
-            function(results, status) {
-
-                if (status == 'OK') {
-
-                    // convert lat lng functions to geometry properties
-                    for (i = 0; i < results.length; i++) {
-                        results[0].geometry.lat = results[i].geometry.location.lat();
-                        results[0].geometry.lng = results[i].geometry.location.lng();
-                    }
-
-                    me.fireWidgetEvent("callback", { id: callbackId, geocode: results, statusCode: status });
-                } else {
-                    me.fireWidgetEvent("callback", { id: callbackId, statusCode: status });
-                }
-
-            });
-    }
+	});
 }
