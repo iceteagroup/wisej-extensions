@@ -13,8 +13,6 @@ Developers new to Wisej should install [Wisej trial version](https://wisej.com/#
 
 Wisej was designed to be extensible and open to all sorts of technologies from the start. The extensions published are a fraction of what is possible and what will be available during the product’s lifetime.
 
-This short document outlines the different extension types, how to use the published projects, and how to build new extensions.
-
 Note that most published extensions are also already precompiled and included in the installer and are automatically added to Visual Studio’s toolbox.
 
 ## News
