@@ -20,9 +20,9 @@ Note that most published extensions are also already precompiled and included in
 ## News
 
 * Wisej.Web.Ext.GoogleMaps - Added Reverse Geocode support including awaitable methods. - 31 Jul 2018
-* Wisej.Ext.Geolocation - Added awaitable method. - 29 Jul 2018
-* Wisej.Web.Ext.Html2Canvas - Added awaitable method. - 29 Jul 2018
-* Wisej.Web.Ext.SmoothieChart - Added awaitable method. - 29 Jul 2018
+* Wisej.Ext.Geolocation - Added awaitable methods. - 29 Jul 2018
+* Wisej.Web.Ext.Html2Canvas - Added awaitable methods. - 29 Jul 2018
+* Wisej.Web.Ext.SmoothieChart - Added awaitable methods. - 29 Jul 2018
 
 License
 -------
