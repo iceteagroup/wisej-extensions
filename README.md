@@ -5,7 +5,7 @@ Repository for __Wisej - Full Stack Web Development__ extensions.
 
 __Wisej__ is designed to build, debug, deploy and manage web applications of any complexity in Visual Studio or SharpDevelop. It’s a highly specialized framework for Real Time Web Applications. Developers can focus on their projects and don’t worry about HTML, state management, backend services, callbacks, ajax panels, synchronization, DOM, CSS, JavaScript, security, authentication, concurrency...
 
-This repository groups the content of all extensions found on [Wisej site](https://wisej.com/extensions/). This repository is updated more frequently than the source code at Wisej site.
+This repository groups the content of all extensions found on [Wisej site](https://wisej.com/extensions/) and some new extensions. This repository is updated more frequently than the source code at Wisej site.
 
 Developers new to Wisej should install [Wisej trial version](https://wisej.com/#buy).
 
