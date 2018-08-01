@@ -85,6 +85,7 @@ namespace Wisej.HostService.Service
 			{
 				case ApplicationShutdownReason.ChangeInGlobalAsax:
 				case ApplicationShutdownReason.ConfigurationChange:
+				case ApplicationShutdownReason.UnloadAppDomainCalled:
 				case ApplicationShutdownReason.BinDirChangeOrDirectoryRename:
 					{
 						// restart the process when there is a configuration or bin change.
