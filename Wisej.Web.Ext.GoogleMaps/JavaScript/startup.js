@@ -241,7 +241,7 @@ this.centerMap = function (location) {
 			}
 			else {
 
-				alert('Geocode was not successful for the following reason: ' + status);
+				alert('Geocode failed for the following reason: ' + status);
 			}
 		});
 
@@ -325,7 +325,7 @@ this.getGeocode = function (callbackId, location) {
 	// geocode an address.
 	if (typeof location == "string") {
 
-		geocoder.geocode({ 'address': location }, function (results, status) {
+		geocoder.geocode({ address: location }, function (results, status) {
 
 			if (status == 'OK') {
 
@@ -346,7 +346,7 @@ this.getGeocode = function (callbackId, location) {
 	}
 
 	// geocode a location
-	geocoder.geocode({ 'location': location }, function (results, status) {
+	geocoder.geocode({ location: location }, function (results, status) {
 
 		if (status == 'OK') {
 

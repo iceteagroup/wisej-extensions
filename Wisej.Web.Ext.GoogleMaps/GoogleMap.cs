@@ -383,7 +383,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="address">The address.</param>
 		public void GetGeocode(Action<GeocoderResult[]> callback, string address)
 		{
-			GetGeocodenCore(callback, null, address);
+			GetGeocodeCore(callback, null, address);
 		}
 
 		/// <summary>
@@ -393,7 +393,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="location">The location (latitude/longitude)/.</param>
 		public void GetGeocode(Action<GeocoderResult[]> callback, LatLng location)
 		{
-			GetGeocodenCore(callback, location, null);
+			GetGeocodeCore(callback, location, null);
 		}
 
 
@@ -405,7 +405,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="lng">The longitude.</param>
 		public void GetGeocode(Action<GeocoderResult[]> callback, double lat, double lng)
 		{
-			GetGeocodenCore(callback, new LatLng(lat, lng), null);
+			GetGeocodeCore(callback, new LatLng(lat, lng), null);
 		}
 
 		/// <summary>
@@ -416,7 +416,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		{
 			var tcs = new TaskCompletionSource<GeocoderResult[]>();
 
-			GetGeocodenCore((geocoderResults) =>
+			GetGeocodeCore((geocoderResults) =>
 			{
 				tcs.SetResult(geocoderResults);
 			}, null, address);
@@ -432,7 +432,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		{
 			var tcs = new TaskCompletionSource<GeocoderResult[]>();
 
-			GetGeocodenCore((geocoderResults) =>
+			GetGeocodeCore((geocoderResults) =>
 			{
 				tcs.SetResult(geocoderResults);
 			}, location, null);
@@ -450,7 +450,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		{
 			var tcs = new TaskCompletionSource<GeocoderResult[]>();
 
-			GetGeocodenCore((geocoderResults) =>
+			GetGeocodeCore((geocoderResults) =>
 			{
 				tcs.SetResult(geocoderResults);
 			}, new LatLng(lat, lng), null);
@@ -459,7 +459,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		}
 
 		// Implementation
-		private void GetGeocodenCore(Action<GeocoderResult[]> callback, LatLng location,
+		private void GetGeocodeCore(Action<GeocoderResult[]> callback, LatLng location,
 			string address)
 		{
 			// save the callback in the dictionary and issue a getGeocode request
