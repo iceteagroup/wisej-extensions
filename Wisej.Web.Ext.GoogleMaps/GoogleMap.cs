@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
+using System.Threading.Tasks;
 using System.Web.Configuration;
 using Wisej.Base;
 using Wisej.Core;
@@ -63,7 +64,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="e"></param>
 		protected virtual void OnMapClick(MapMouseEventArgs e)
 		{
-			((MapMouseEventHandler)base.Events[nameof(MapClick)])?.Invoke(this, e);
+			((MapMouseEventHandler) base.Events[nameof(MapClick)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -81,7 +82,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="e"></param>
 		protected virtual void OnMapDoubleClick(MapMouseEventArgs e)
 		{
-			((MapMouseEventHandler)base.Events[nameof(MapDoubleClick)])?.Invoke(this, e);
+			((MapMouseEventHandler) base.Events[nameof(MapDoubleClick)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -99,7 +100,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="e"></param>
 		protected virtual void OnMapPropertyChanged(MapPropertyChangedEventArgs e)
 		{
-			((MapPropertyChangedEventHandler)base.Events[nameof(MapPropertyChanged)])?.Invoke(this, e);
+			((MapPropertyChangedEventHandler) base.Events[nameof(MapPropertyChanged)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -117,7 +118,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="e"></param>
 		protected virtual void OnMarkerDragStart(MarkerDragEventArgs e)
 		{
-			((MarkerDragEventHandler)base.Events[nameof(MarkerDragStart)])?.Invoke(this, e);
+			((MarkerDragEventHandler) base.Events[nameof(MarkerDragStart)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -130,12 +131,48 @@ namespace Wisej.Web.Ext.GoogleMaps
 		}
 
 		/// <summary>
-		/// Fires the MarkerDragStart event.
+		/// Fires the MarkerDragEnd event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected virtual void OnMarkerDragEnd(MarkerDragEventArgs e)
 		{
-			((MarkerDragEventHandler)base.Events[nameof(MarkerDragEnd)])?.Invoke(this, e);
+			((MarkerDragEventHandler) base.Events[nameof(MarkerDragEnd)])?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Fired when the user drags the map.
+		/// </summary>
+		public event EventHandler MapDragEnd
+		{
+			add { base.AddHandler(nameof(MapDragEnd), value); }
+			remove { base.RemoveHandler(nameof(MapDragEnd), value); }
+		}
+
+		/// <summary>
+		/// Fires the MapDragEnd event.
+		/// </summary>
+		/// <param name="e"></param>
+		protected virtual void OnMapDragEnd(EventArgs e)
+		{
+			((EventHandler)base.Events[nameof(MapDragEnd)])?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Fired when the user starts dragging the map.
+		/// </summary>
+		public event EventHandler MapDragStart
+		{
+			add { base.AddHandler(nameof(MapDragStart), value); }
+			remove { base.RemoveHandler(nameof(MapDragStart), value); }
+		}
+
+		/// <summary>
+		/// Fires the MapDragStart event.
+		/// </summary>
+		/// <param name="e"></param>
+		protected virtual void OnMapDragStart(EventArgs e)
+		{
+			((EventHandler)base.Events[nameof(MapDragStart)])?.Invoke(this, e);
 		}
 
 		#endregion
@@ -155,6 +192,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 				Update();
 			}
 		}
+
 		private string _apiKey;
 
 		/// <summary>
@@ -178,6 +216,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 				Update();
 			}
 		}
+
 		private dynamic _options;
 
 		/// <summary>
@@ -188,7 +227,6 @@ namespace Wisej.Web.Ext.GoogleMaps
 		public override string InitScript
 		{
 			get { return BuildInitScript(); }
-			set { }
 		}
 
 		/// <summary>
@@ -247,12 +285,11 @@ namespace Wisej.Web.Ext.GoogleMaps
 				_GoogleMapsURL = value;
 			}
 		}
+
 		private static string _GoogleMapsURL;
 
 		private string BuildInitScript()
 		{
-			IWisejControl me = this;
-
 			string script = GetResourceString("Wisej.Web.Ext.GoogleMaps.JavaScript.startup.js");
 			script = script.Replace("$options", WisejSerializer.Serialize(this.Options));
 			script = script.Replace("$error", String.IsNullOrEmpty(this.ApiKey) ? "Missing Google Maps API Key" : "");
@@ -353,7 +390,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="html">HTML content to display in the info window.</param>
 		public void ShowInfoWindow(string markerId, string html)
 		{
-			Call("showInfoWindow", markerId, new { content = TextUtils.EscapeText(html, true) });
+			Call("showInfoWindow", markerId, new {content = TextUtils.EscapeText(html, true)});
 		}
 
 		/// <summary>
@@ -375,6 +412,149 @@ namespace Wisej.Web.Ext.GoogleMaps
 			Call("closeInfoWindow", markerId);
 		}
 
+		/// <summary>
+		/// Retrieves geocode information.
+		/// </summary>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="address">The address.</param>
+		public void GetGeocode(Action<GeocoderResult[]> callback, string address)
+		{
+			GetGeocodeCore(callback, null, address);
+		}
+
+		/// <summary>
+		/// Retrieves geocode information.
+		/// </summary>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="location">The location (latitude/longitude)/.</param>
+		public void GetGeocode(Action<GeocoderResult[]> callback, LatLng location)
+		{
+			GetGeocodeCore(callback, location, null);
+		}
+
+
+		/// <summary>
+		/// Retrieves geocode information.
+		/// </summary>
+		/// <param name="callback">The callback method.</param>
+		/// <param name="lat">The latitude.</param>
+		/// <param name="lng">The longitude.</param>
+		public void GetGeocode(Action<GeocoderResult[]> callback, double lat, double lng)
+		{
+			GetGeocodeCore(callback, new LatLng(lat, lng), null);
+		}
+
+		/// <summary>
+		/// Asynchronously retrieves geocode information.
+		/// </summary>
+		/// <param name="address">The address.</param>
+		public Task<GeocoderResult[]> GetGeocodeAsync(string address)
+		{
+			var tcs = new TaskCompletionSource<GeocoderResult[]>();
+
+			GetGeocodeCore((geocoderResults) =>
+			{
+				tcs.SetResult(geocoderResults);
+			}, null, address);
+
+			return tcs.Task;
+		}
+
+		/// <summary>
+		/// Asynchronously retrieves geocode information.
+		/// </summary>
+		/// <param name="location">The location (latitude/longitude)/.</param>
+		public Task<GeocoderResult[]> GetGeocodeAsync(LatLng location)
+		{
+			var tcs = new TaskCompletionSource<GeocoderResult[]>();
+
+			GetGeocodeCore((geocoderResults) =>
+			{
+				tcs.SetResult(geocoderResults);
+			}, location, null);
+
+			return tcs.Task;
+		}
+
+
+		/// <summary>
+		/// Asynchronously retrieves geocode information.
+		/// </summary>
+		/// <param name="lat">The latitude.</param>
+		/// <param name="lng">The longitude.</param>
+		public Task<GeocoderResult[]> GetGeocodeAsync(double lat, double lng)
+		{
+			var tcs = new TaskCompletionSource<GeocoderResult[]>();
+
+			GetGeocodeCore((geocoderResults) =>
+			{
+				tcs.SetResult(geocoderResults);
+			}, new LatLng(lat, lng), null);
+
+			return tcs.Task;
+		}
+
+		// Implementation
+		private void GetGeocodeCore(Action<GeocoderResult[]> callback, LatLng location,
+			string address)
+		{
+			// save the callback in the dictionary and issue a getGeocode request
+			// using the hash of the callback object to identify the async response.
+			if (this._callbacks == null)
+				this._callbacks = new Dictionary<int, Action<GeocoderResult[]>>();
+
+			int id = callback.GetHashCode();
+			this._callbacks[id] = callback;
+
+			if (!string.IsNullOrWhiteSpace(address))
+				Call("getGeocode", id, address);
+			else
+				Call("getGeocode", id, location);
+		}
+
+		private Dictionary<int, Action<GeocoderResult[]>> _callbacks = null;
+
+		/// <summary>
+		/// Process the getCurrentPosition response from the client.
+		/// </summary>
+		/// <param name="e"></param>
+		private void ProcessCallbackWidgetEvent(WidgetEventArgs e)
+		{
+			dynamic data = e.Data;
+
+			// find the corresponding request.
+			if (this._callbacks != null)
+			{
+				int id = data.id ?? 0;
+				dynamic[] geocodes = data.geocode;
+
+				List<GeocoderResult> geocoderResults = new List<GeocoderResult>();
+
+				if (!string.IsNullOrWhiteSpace(data.statusCode) && data.statusCode != "OK")
+				{
+					GeocoderResult geocoderResult = new GeocoderResult(data.statusCode);
+					geocoderResults.Add(geocoderResult);
+				}
+				else
+				{
+					foreach (var geocode in geocodes)
+					{
+						GeocoderResult geocoderResult = new GeocoderResult(geocode);
+						geocoderResults.Add(geocoderResult);
+					}
+				}
+
+				var geocoderResultArray = geocoderResults.ToArray();
+
+				Action<GeocoderResult[]> callback = null;
+				if (this._callbacks.TryGetValue(id, out callback))
+				{
+					this._callbacks.Remove(id);
+					callback(geocoderResultArray);
+				}
+			}
+		}
+
 		#endregion
 
 		#region Wisej Implementation
@@ -387,6 +567,10 @@ namespace Wisej.Web.Ext.GoogleMaps
 		{
 			switch (e.Type)
 			{
+				case "callback":
+					ProcessCallbackWidgetEvent(e);
+					break;
+
 				case "click":
 				case "rightclick":
 					OnMapClick(new MapMouseEventArgs(e));
@@ -400,12 +584,20 @@ namespace Wisej.Web.Ext.GoogleMaps
 					OnMapPropertyChanged(new MapPropertyChangedEventArgs(e));
 					break;
 
-				case "dragend":
+				case "markerdragstart":
+					OnMarkerDragStart(new MarkerDragEventArgs(e));
+					break;
+
+				case "markerdragend":
 					OnMarkerDragEnd(new MarkerDragEventArgs(e));
 					break;
 
-				case "dragstart":
-					OnMarkerDragStart(new MarkerDragEventArgs(e));
+				case "mapdragstart":
+					OnMapDragStart(EventArgs.Empty);
+					break;
+
+				case "mapdragend":
+					OnMapDragEnd(EventArgs.Empty);
 					break;
 
 				default:

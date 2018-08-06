@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using Wisej.Core;
 
 namespace Wisej.Web.Ext.GoogleMaps
 {
@@ -46,6 +47,17 @@ namespace Wisej.Web.Ext.GoogleMaps
 			dynamic data = e.Data;
 			this.Name = data.name;
 			this.Value = data.value;
+
+			// detect LatLng values.
+			if (this.Value != null && this.Value is DynamicObject)
+			{
+				dynamic latlng = this.Value;
+				if (latlng != null && latlng.lat != null && latlng.lng != null)
+					this.Value = new LatLng(latlng.lat, latlng.lng);
+
+				if (latlng != null && latlng.east != null && latlng.north != null && latlng.south != null && latlng.west != null)
+					this.Value = new LatLngBounds(latlng.east, latlng.north, latlng.south, latlng.west);
+			}
 		}
 
 		/// <summary>

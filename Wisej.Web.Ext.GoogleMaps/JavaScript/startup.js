@@ -39,9 +39,15 @@ this.init = function () {
 		this.map.addListener("click", this._onMapClick.bind(this, "click", null));
 		this.map.addListener("dblclick", this._onMapClick.bind(this, "dblclick", null));
 		this.map.addListener("rightclick", this._onMapClick.bind(this, "rightclick", null));
+		this.map.addListener("dragstart", this._onMapDragEvent.bind(this, "mapdragstart"));
+		this.map.addListener("dragend", this._onMapDragEvent.bind(this, "mapdragend"));
 		this.map.addListener("zoom_changed", this._onMapPropertyChanged.bind(this, "zoom"));
 		this.map.addListener("tilt_changed", this._onMapPropertyChanged.bind(this, "tilt"));
 		this.map.addListener("maptypeid_changed", this._onMapPropertyChanged.bind(this, "mapTypeId"));
+		this.map.addListener("center_changed", this._onMapPropertyChanged.bind(this, "center"));
+		this.map.addListener("bounds_changed", this._onMapPropertyChanged.bind(this, "bounds"));
+		this.map.addListener("heading_changed", this._onMapPropertyChanged.bind(this, "heading"));
+		this.map.addListener("projection_changed", this._onMapPropertyChanged.bind(this, "projection"));
 
 		// collection of markers.
 		this.__markers = {};
@@ -104,7 +110,24 @@ this._onMapMarkerDrag = function (type, marker, e) {
  */
 this._onMapPropertyChanged = function (name) {
 
-	this.fireWidgetEvent("propertychanged", { name: name, value: this.map[name] });
+	var value = null;
+	try {
+		var getter = this.map["get" + qx.lang.String.firstUp(name)];
+		if (getter) {
+			value = JSON.parse(JSON.stringify(getter.call(this.map)));
+		}
+	}
+	catch (ex) { }
+
+	this.fireWidgetEvent("propertychanged", { name: name, value: value });
+}
+
+/**
+ * Fires map drag events.
+ */
+this._onMapDragEvent = function (type) {
+
+	this.fireWidgetEvent(type);
 }
 
 /*
@@ -146,7 +169,8 @@ this.addMarker = function (id, location, options, center) {
 
 				me.addMarker(id, results[0].geometry.location, options, center);
 
-			} else {
+			}
+			else {
 
 				alert('Geocode was not successful for the following reason: ' + status);
 			}
@@ -166,8 +190,8 @@ this.addMarker = function (id, location, options, center) {
 	marker.addListener("rightclick", this._onMapClick.bind(this, "rightclick", id));
 
 	if (options.draggable) {
-		marker.addListener("dragend", this._onMapMarkerDrag.bind(this, "dragend", id));
-		marker.addListener("dragstart", this._onMapMarkerDrag.bind(this, "dragstart", id));
+		marker.addListener("dragend", this._onMapMarkerDrag.bind(this, "markerdragend", id));
+		marker.addListener("dragstart", this._onMapMarkerDrag.bind(this, "markerdragstart", id));
 	}
 
 	if (center === true)
@@ -237,9 +261,10 @@ this.centerMap = function (location) {
 
 				me.centerMap(results[0].geometry.location);
 
-			} else {
+			}
+			else {
 
-				alert('Geocode was not successful for the following reason: ' + status);
+				alert('Geocode failed for the following reason: ' + status);
 			}
 		});
 
@@ -295,4 +320,70 @@ this.closeInfoWindow = function (id) {
 		if (marker.infoWindow)
 			marker.infoWindow.close();
 	}
+}
+
+/*
+====================================================================
+Google Maps Reverse Geocode
+====================================================================
+*/
+
+/**
+ * Retrieves geocode information.
+ *
+ * @param callbackId {Integer} The id of the request. It should be returned with the response.
+ * @param location {google.maps.LatLng | google.maps.LatLngLiteral | String} address to geocode.
+ */
+this.getGeocode = function (callbackId, location) {
+
+	if (!callbackId)
+		return;
+
+	if (!location)
+		return;
+
+	var me = this;
+	var geocoder = new google.maps.Geocoder();
+
+	// geocode an address.
+	if (typeof location == "string") {
+
+		geocoder.geocode({ address: location }, function (results, status) {
+
+			if (status == 'OK') {
+
+				// convert lat/lng functions to geometry properties
+				for (i = 0; i < results.length; i++) {
+					results[i].geometry.lat = results[i].geometry.location.lat();
+					results[i].geometry.lng = results[i].geometry.location.lng();
+				}
+
+				me.fireWidgetEvent("callback", { id: callbackId, geocode: results, statusCode: status });
+			} else {
+				me.fireWidgetEvent("callback", { id: callbackId, statusCode: status });
+			}
+
+		});
+
+		return;
+	}
+
+	// geocode a location
+	geocoder.geocode({ location: location }, function (results, status) {
+
+		if (status == 'OK') {
+
+			// convert lat/lng functions to geometry properties
+			for (i = 0; i < results.length; i++) {
+				results[i].geometry.lat = results[i].geometry.location.lat();
+				results[i].geometry.lng = results[i].geometry.location.lng();
+			}
+
+			me.fireWidgetEvent("callback", { id: callbackId, geocode: results, statusCode: status });
+		}
+		else {
+			me.fireWidgetEvent("callback", { id: callbackId, statusCode: status });
+		}
+
+	});
 }

@@ -51,7 +51,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.GoogleMaps.LatLng"/> class.
 		/// </summary>
-		/// <param name="lat">The latitute.</param>
+		/// <param name="lat">The latitude.</param>
 		/// <param name="lng">The longitude.</param>
 		internal LatLng(double lat, double lng)
 		{
