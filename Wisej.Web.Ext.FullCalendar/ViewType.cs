@@ -68,5 +68,29 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// Displays all the events in a day in a flat list. If there are no events during a specific interval of time, the <see cref="P:Wisej.Web.Ext.FullCalendar.NoEventsMessage"/> string is displayed.
 		/// </summary>
 		ListDay,
+
+		/// <summary>
+		/// Shows a customizable horizontal time-axis and resources as rows.
+		/// This is part of the scheduler commercial plug-in.
+		/// </summary>
+		TimelineDay,
+
+		/// <summary>
+		/// Shows a customizable horizontal time-axis and resources as rows.
+		/// This is part of the scheduler commercial plug-in.
+		/// </summary>
+		TimelineWeek,
+
+		/// <summary>
+		/// Shows a customizable horizontal time-axis and resources as rows.
+		/// This is part of the scheduler commercial plug-in.
+		/// </summary>
+		TimelineMonth,
+
+		/// <summary>
+		/// Shows a customizable horizontal time-axis and resources as rows.
+		/// This is part of the scheduler commercial plug-in.
+		/// </summary>
+		TimelineYear
 	}
 }

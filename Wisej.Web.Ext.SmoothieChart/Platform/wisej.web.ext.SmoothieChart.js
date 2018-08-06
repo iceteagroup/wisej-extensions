@@ -98,6 +98,11 @@ qx.Class.define("wisej.web.ext.SmoothieChart", {
 		 */
 		timeSeries: { init: null, nullable: true, check: "Array", apply: "_applyTimeSeries" },
 
+	    /**
+		 * FontSize
+		 */
+		fontSize: { init: null, nullable: true, check: "Integer", apply: "_applyFontSize" },
+
 	},
 
 	members: {
@@ -244,6 +249,15 @@ qx.Class.define("wisej.web.ext.SmoothieChart", {
 				this.smoothie.options.maxValue = value;
 		},
 
+	    /**
+		 * Applies the FontSize property.
+		 */
+		_applyFontSize: function (value, old) {
+
+		    if (this.smoothie)
+		        this.smoothie.options.labels.fontSize = value;
+		},
+
 		/**
 		 * Applies the GridLineColor property.
 		 */
@@ -368,6 +382,7 @@ qx.Class.define("wisej.web.ext.SmoothieChart", {
 			this.smoothie.options.minValue = this.getMinValue();
 			this.smoothie.options.maxValue = this.getMaxValue();			
 			this.smoothie.options.timestampFormatter = this.getShowTimeStamps() ? SmoothieChart.timeFormatter : null;
+			this.smoothie.options.fontSize = this.getFontSize();
 
 			// initialize the time series lines after the smoothie has been created.
 			this._applyTimeSeries(this.getTimeSeries());

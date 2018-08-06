@@ -261,6 +261,26 @@ namespace Wisej.Web.Ext.FullCalendar
 		private ViewType _view = ViewType.Month;
 
 		/// <summary>
+		/// License key for the scheduler plug-in.<br/>
+		/// See <see href="https://fullcalendar.io/scheduler"/>.
+		/// </summary>
+		[DefaultValue("")]
+		[Description("License key for the scheduler plug-in.")]
+		public string SchedulerLicenseKey
+		{
+			get { return this._schedulerLicenseKey; }
+			set
+			{
+				if (this._schedulerLicenseKey != value)
+				{
+					this._schedulerLicenseKey = value;
+					Update();
+				}
+			}
+		}
+		private string _schedulerLicenseKey = "";
+
+		/// <summary>
 		/// Determines the theme system used by the calendar.
 		/// </summary>
 		/// <remarks>
@@ -1321,13 +1341,20 @@ namespace Wisej.Web.Ext.FullCalendar
 						},
 						new Package() {
 							Name = "fullcalendar.js",
-							Source = GetResourceURL("Wisej.Web.Ext.FullCalendar.JavaScript.fullcalendar-3.7.0.js")
+							Source = GetResourceURL("Wisej.Web.Ext.FullCalendar.JavaScript.fullcalendar-3.9.0.js")
 						},
 						new Package() {
 							Name = "fullcalendar.css",
-							Source = GetResourceURL("Wisej.Web.Ext.FullCalendar.JavaScript.fullcalendar-3.7.0.css")
-						}
-
+							Source = GetResourceURL("Wisej.Web.Ext.FullCalendar.JavaScript.fullcalendar-3.9.0.css")
+						},
+						new Package() {
+							Name = "scheduler.js",
+							Source = GetResourceURL("Wisej.Web.Ext.FullCalendar.JavaScript.scheduler-1.9.4.js")
+						},
+						new Package() {
+							Name = "scheduler.css",
+							Source = GetResourceURL("Wisej.Web.Ext.FullCalendar.JavaScript.scheduler-1.9.4.css")
+						},
 					});
 				}
 
@@ -1361,6 +1388,7 @@ namespace Wisej.Web.Ext.FullCalendar
 			options.scrollTime = this.ScrollTime.ToString();
 			options.defaultView = this.View;
 			options.themeSystem = TranslateThemeSystem(this.ThemeSystem);
+			options.schedulerLicenseKey = this.SchedulerLicenseKey;
 
 			if (this.ShouldSerializeSlotLabelFormat())
 				options.slotLabelFormat = this.SlotLabelFormat;

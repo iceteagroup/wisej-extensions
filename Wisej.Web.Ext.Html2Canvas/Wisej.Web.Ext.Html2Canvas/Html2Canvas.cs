@@ -24,6 +24,7 @@ using System.Runtime.InteropServices;
 using Wisej.Base;
 using System.ComponentModel;
 using Wisej.Core;
+using System.Threading.Tasks;
 
 namespace Wisej.Web.Ext.Html2Canvas
 {
@@ -148,10 +149,54 @@ namespace Wisej.Web.Ext.Html2Canvas
 			Instance.ScreenshotCore(target, options, callback);
 		}
 
+		/// <summary>
+		/// Asynchronously returns an <see cref="Image"/> that represents a screenshot
+		/// of the browser.
+		/// </summary>
+		/// <param name="options">The <see cref="Html2CanvasOptions"/> to pass to the html2canvas call.</param>
+		/// <returns>An awaitable <see cref="Task"/> that contains the screenshot.</returns>
+		public static Task<Image> ScreenshotAsync(Html2CanvasOptions options = null)
+		{
+			var tcs = new TaskCompletionSource<Image>();
+
+			Instance.ScreenshotCore(null, options, (image) => {
+
+				tcs.SetResult(image);
+
+			});
+
+			return tcs.Task;
+		}
+
+		/// <summary>
+		/// Asynchronously returns an <see cref="Image"/> that represents a screenshot
+		/// of the specified <see cref="Control"/> as it appears on the browser.
+		/// </summary>
+		/// <param name="target">
+		/// The <see cref="Control"/> to render to an <see cref="Image"/>
+		/// </param>
+		/// <param name="options">The <see cref="Html2CanvasOptions"/> to pass to the html2canvas call.</param>
+		/// <returns>An awaitable <see cref="Task"/> that contains the screenshot.</returns>
+		public static Task<Image> ScreenshotAsync(Control target, Html2CanvasOptions options = null)
+		{
+			if (target == null)
+				throw new ArgumentNullException(nameof(target));
+
+			var tcs = new TaskCompletionSource<Image>();
+
+			Instance.ScreenshotCore(target, options, (image)=> {
+
+				tcs.SetResult(image);
+
+			});
+
+			return tcs.Task;
+		}
+
 		// Implementation
 		private void ScreenshotCore(Control target, Html2CanvasOptions options, Action<Image> callback)
 		{
-			var handle = (IntPtr)GCHandle.Alloc(callback);
+			var handle = (IntPtr)GCHandle.Alloc(callback, GCHandleType.Weak);
 			Call("screenshot", target, options, handle.ToInt64());
 		}
 

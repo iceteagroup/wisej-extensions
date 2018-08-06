@@ -493,7 +493,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 				}
 			}
 		}
-		public int _timeLineSpacing = 1000;
+		public int _timeLineSpacing = 1000;	
 
 		/// <summary>
 		/// Returns or sets the minimum value. Leave null to let the chart dynamically adjust the minimum value.
@@ -829,7 +829,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 			config.gridLineColor = this.GridLineColor;
 			config.gridLineSize = this.GidLineSize;
 			config.minValue = this.MinValue.HasValue ? (object)this.MinValue.Value : null;
-			config.maxValue = this.MaxValue.HasValue ? (object)this.MaxValue.Value : null;
+			config.maxValue = this.MaxValue.HasValue ? (object)this.MaxValue.Value : null;			
 
 			if (me.IsNew || this.TimeSeries.IsDirty)
 				config.timeSeries = this.TimeSeries.Render();

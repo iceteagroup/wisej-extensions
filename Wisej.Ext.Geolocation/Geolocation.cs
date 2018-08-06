@@ -21,6 +21,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Wisej.Base;
 using Wisej.Core;
 
@@ -50,8 +52,8 @@ namespace Wisej.Ext.Geolocation
 		/// </summary>
 		/// <param name="container">A <see cref="T:System.ComponentModel.IContainer" /> that represents the container for the component. </param>
 		public Geolocation(IContainer container)
-            : this()
-        {
+			: this()
+		{
 			if (container == null)
 				throw new ArgumentNullException("container");
 
@@ -191,6 +193,28 @@ namespace Wisej.Ext.Geolocation
 			if (callback == null)
 				throw new ArgumentNullException("callback");
 
+			GetCurrentPositionCore(callback);
+		}
+
+		/// <summary>
+		/// Asynchronously returns the current position of the device.
+		/// </summary>
+		public Task<Position> GetCurrentPositionAsync()
+		{
+			var tcs = new TaskCompletionSource<Position>();
+
+			GetCurrentPositionCore((position) => {
+
+				tcs.SetResult(position);
+
+			});
+
+			return tcs.Task;
+		}
+
+		// Implementation
+		private void GetCurrentPositionCore(Action<Position> callback)
+		{
 			// save the callback in the dictionary and issue a geCurrentPosition request
 			// using the hash of the callback object to identify the async response.
 			if (this._callbacks == null)
@@ -201,6 +225,7 @@ namespace Wisej.Ext.Geolocation
 
 			Call("getPosition", id);
 		}
+
 		private Dictionary<int, Action<Position>> _callbacks = null;
 
 		/// <summary>
