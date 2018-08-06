@@ -85,7 +85,6 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets a value indicating whether a new column starts after
 		/// this <see cref="RibbonBarItem"/>.
 		/// </summary>
-		[DefaultValue(false)]
 		[SRCategory("CatLayout")]
 		[Description("Returns or sets a value indicating whether a new column starts after this RibbonBarItem.")]
 		public virtual bool ColumnBreak
@@ -101,6 +100,16 @@ namespace Wisej.Web.Ext.RibbonBar
 			}
 		}
 		private bool _columnBreak = false;
+
+		private bool ShouldSerializeColumnBreak()
+		{
+			return this._columnBreak;
+		}
+
+		private void ResetColumnBreak()
+		{
+			this.ColumnBreak = false;
+		}
 
 		/// <summary>
 		/// Returns or sets whether the <see cref="RibbonBarItem"/> can respond to user interaction.
@@ -323,6 +332,19 @@ namespace Wisej.Web.Ext.RibbonBar
 		#endregion
 
 		#region Methods
+
+		/// <summary>
+		/// Disposes of the resources (other than memory) used by the <see cref="RibbonBarGroup" />.
+		/// </summary>
+		/// <param name="disposing">true when this method is called by the application rather than a finalizer.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				this.Parent?.Items.Remove(this);
+			}
+			base.Dispose(disposing);
+		}
 
 		/// <summary>
 		/// Validates the current control.

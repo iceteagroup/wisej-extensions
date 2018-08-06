@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Linq;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
@@ -630,7 +631,16 @@ namespace Wisej.Web.Ext.RibbonBar
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public RibbonBarPage SelectedPage
 		{
-			get { return this._selectedPage; }
+			get
+			{
+
+				if (this._selectedPage == null)
+				{
+					if (this.Pages.Count > 0)
+						this._selectedPage = this.Pages.FirstOrDefault(p => p.Visible);
+				}
+				return this._selectedPage;
+			}
 			set
 			{
 				if (value == null)
@@ -677,12 +687,33 @@ namespace Wisej.Web.Ext.RibbonBar
 			get
 			{
 				if (this._pages == null)
+				{
 					this._pages = new RibbonBarPageCollection(this);
+					this._pages.CollectionChanged += this.Pages_CollectionChanged;
+				}
 
 				return this._pages;
 			}
 		}
 		private RibbonBarPageCollection _pages;
+
+		private void Pages_CollectionChanged(object sender, CollectionChangeEventArgs e)
+		{
+			switch (e.Action)
+			{
+				case CollectionChangeAction.Remove:
+					if (e.Element == this.SelectedPage)
+					{
+						if (this.Pages.Count > 0)
+							this.SelectedPage = this.Pages.FirstOrDefault(p => p.Visible);
+						else
+							this.SelectedPage = null;
+
+						Update("selectedIndex");
+					}
+					break;
+			}
+		}
 
 		/// <summary>
 		/// Returns or sets the collection of images available to the RibbonBar items.
@@ -787,7 +818,6 @@ namespace Wisej.Web.Ext.RibbonBar
 		// Handles changePage event coming from the client.
 		private void ProcessChangePageWebEvent(WisejEventArgs e)
 		{
-
 			RibbonBarPage page = e.Parameters.Page;
 			if (page != null)
 			{
@@ -891,7 +921,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Processes Windows mouse messages forwarded by the designer.
 		/// </summary>
-		/// <param name="m">The <see cref="WinForms.Message"/> forwarded by the designer.</param>
+		/// <param name="m">The <see cref="System.Windows.Forms.Message"/> forwarded by the designer.</param>
 		/// <returns>Returns true to prevent the base class from processing the message.</returns>
 		bool IWisejDesignTarget.DesignerWndProc(ref System.Windows.Forms.Message m)
 		{
@@ -1070,7 +1100,8 @@ namespace Wisej.Web.Ext.RibbonBar
 		{
 			IWisejComponent target = null;
 
-			foreach (var page in this.Pages)
+			var page = this.SelectedPage;
+			if (page != null)
 			{
 				foreach (IWisejComponent group in page.Groups)
 				{

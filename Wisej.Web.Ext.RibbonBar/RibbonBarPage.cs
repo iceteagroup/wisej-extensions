@@ -244,6 +244,7 @@ namespace Wisej.Web.Ext.RibbonBar
 					this._groups.Clear(true);
 					this._groups = null;
 				}
+				this.RibbonBar?.Pages.Remove(this);
 			}
 			base.Dispose(disposing);
 		}

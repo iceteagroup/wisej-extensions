@@ -206,6 +206,7 @@ namespace Wisej.Web.Ext.RibbonBar
 					this._items.Clear(true);
 					this._items = null;
 				}
+				this.Parent?.Groups.Remove(this);
 			}
 			base.Dispose(disposing);
 		}
