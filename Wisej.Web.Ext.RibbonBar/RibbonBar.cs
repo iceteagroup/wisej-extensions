@@ -804,6 +804,18 @@ namespace Wisej.Web.Ext.RibbonBar
 				OnToolClick(new ToolClickEventArgs(tool));
 		}
 
+		// Handles resize events from the client.
+		private void ProcessResizeWebEvent(WisejEventArgs e)
+		{
+			dynamic size = e.Parameters.Size;
+			if (size != null)
+			{
+				this.Size = new Size(
+					Convert.ToInt32(size.width),
+					Convert.ToInt32(size.height));
+			}
+		}
+
 		/// <summary>
 		/// Processes the event from the client.
 		/// </summary>
@@ -818,6 +830,10 @@ namespace Wisej.Web.Ext.RibbonBar
 
 				case "toolClick":
 					ProcessToolClickWebEvent(e);
+					break;
+
+				case "resize":
+					ProcessResizeWebEvent(e);
 					break;
 
 				default:
@@ -863,7 +879,7 @@ namespace Wisej.Web.Ext.RibbonBar
 				if (me.IsNew || this.Pages.IsDirty)
 					config.pages = this.Pages.Render();
 
-				config.wiredEvents.Add("changePage(Page)", "toolClick(Tool)");
+				config.wiredEvents.Add("changePage(Page)", "toolClick(Tool)", "resize(Size)");
 			}
 
 		}
