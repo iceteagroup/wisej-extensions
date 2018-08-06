@@ -87,6 +87,12 @@ this._onInitialized = function () {
  */
 this._onMapClick = function (type, marker, e) {
 
+	// HACK: Prevent pointer events from getting through
+	// an overlay. Apparently, when on mobile, Google maps
+	// tracks events both ways (capture and bubble).
+	if (e.va && window.event && (e.va.timeStamp - window.event.timeStamp) > 50)
+		return;
+
 	var lat = e.latLng ? e.latLng.lat() : 0;
 	var lng = e.latLng ? e.latLng.lng() : 0;
 	this.fireWidgetEvent(type, { marker: marker, lat: lat, lng: lng });
