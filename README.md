@@ -17,7 +17,8 @@ Note that most published extensions are also already precompiled and included in
 
 ## News
 
-* Wisej.Web.Ext.GoogleMaps - Prevent pointer events from getting through overlay. - 07 Aug 2018
+* Wisej.Web.Ext.RibbonBar - Items are removed when disposed. - 07 Aug 2018
+* Wisej.Web.Ext.GoogleMaps - Prevent capturing clicks on overlays on mobile. - 07 Aug 2018
 * Wisej.Web.Ext.GoogleMaps - Added Reverse Geocode support including awaitable methods. - 31 Jul 2018
 * Wisej.Ext.Geolocation - Added awaitable methods. - 29 Jul 2018
 * Wisej.Web.Ext.Html2Canvas - Added awaitable methods. - 29 Jul 2018
