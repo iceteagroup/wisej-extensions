@@ -16,3 +16,4 @@ Thumbs.db
 
 /Wisej.Ext.Geolocation/.vs/config/applicationhost.config
 *.pdb
+/*.db
