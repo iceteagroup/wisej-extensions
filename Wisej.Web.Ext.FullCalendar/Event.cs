@@ -147,6 +147,30 @@ namespace Wisej.Web.Ext.FullCalendar
 		private string _id = null;
 
 		/// <summary>
+		/// Returns or sets the <see cref="Resource"/> associated to this event.
+		/// </summary>
+		public string ResourceId
+		{
+			get { return this._resourceId; }
+			set
+			{
+				value = value == "" ? null : value;
+				if (this._resourceId != value)
+				{
+					this._resourceId = value;
+					OnEventChanged(this.Start, this.End);
+				}
+			}
+		}
+		private string _resourceId = null;
+
+		internal string ResourceIdInternal
+		{
+			get { return this._resourceId; }
+			set { this._resourceId = value; }
+		}
+
+		/// <summary>
 		/// Returns or sets the title of this event.
 		/// </summary>
 		public string Title
@@ -239,7 +263,7 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
-		/// Determines whether the events on the calendar can be modified.
+		/// Determines whether the event can be modified.
 		/// </summary>
 		public bool Editable
 		{
@@ -256,7 +280,7 @@ namespace Wisej.Web.Ext.FullCalendar
 		private bool _editable = true;
 
 		/// <summary>
-		/// Sets the background color for all events on the calendar.
+		/// Sets the background color for this event.
 		/// </summary>
 		public Color BackgroundColor
 		{
@@ -273,7 +297,7 @@ namespace Wisej.Web.Ext.FullCalendar
 		private Color _backgroundColor = Color.Empty;
 
 		/// <summary>
-		/// Sets the border color for all events on the calendar.
+		/// Sets the border color for this event.
 		/// </summary>
 		public Color BorderColor
 		{
@@ -290,7 +314,7 @@ namespace Wisej.Web.Ext.FullCalendar
 		private Color _borderColor = Color.Empty;
 
 		/// <summary>
-		/// Sets the border color for all events on the calendar.
+		/// Sets the text color for this event.
 		/// </summary>
 		public Color TextColor
 		{

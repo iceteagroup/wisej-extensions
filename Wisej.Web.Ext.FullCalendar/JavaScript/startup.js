@@ -26,10 +26,6 @@ this.init = function (options) {
 	if (qx.core.Environment.get("qx.rtl.supported"))
 		options.isRTL = this.getRtl() == true;
 
-	// add scheduler license key.
-	// if (wisej.web.DesignMode)
-	options.schedulerLicenseKey = "CC-Attribution-NonCommercial-NoDerivatives";
-
 	//  translate our themed colors.
 	this.__colorMgr = qx.theme.manager.Color.getInstance();
 	this.__resolveColors(options);
@@ -263,7 +259,8 @@ this.onEventDrop = function (event, delta) {
 		id: event.id,
 		start: start,
 		end: end,
-		allDay: allDay
+		allDay: allDay,
+		resourceId: event.resourceId
 	});
 }
 

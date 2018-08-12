@@ -148,6 +148,16 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
+		/// Triggered when the a <see cref="Resource"/> object changes.
+		/// </summary>
+		[Description("Triggered when the a Resource object changes.")]
+		public event ResourceEventHandler ResourceChanged
+		{
+			add { base.Events.AddHandler(nameof(ResourceChanged), value); }
+			remove { base.Events.RemoveHandler(nameof(ResourceChanged), value); }
+		}
+
+		/// <summary>
 		/// Fires the <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.DayClick"/> event.
 		/// </summary>
 		/// <param name="e"></param>
@@ -220,6 +230,15 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
+		/// Fires the <see cref="E:Wisej.Web.Ext.FullCalendar.ResourceChanged" /> event.
+		/// </summary>
+		/// <param name="e">A <see cref="T:Wisej.Web.Ext.ResourceEventArgs" /> that contains the event data. </param>
+		protected virtual void OnResourceChanged(ResourceEventArgs e)
+		{
+			((ResourceEventHandler)base.Events[nameof(ResourceChanged)])?.Invoke(this, e);
+		}
+
+		/// <summary>
 		/// Fires the <see cref="E:Wisej.Web.Ext.FullCalendar.CurrentDateChanged" /> event.
 		/// </summary>
 		/// <param name="e">A <see cref="T:System.EventArgs" /> instance that contains the event data. </param>
@@ -244,6 +263,17 @@ namespace Wisej.Web.Ext.FullCalendar
 			{
 				if (this._view != value)
 				{
+					switch (value)
+					{
+						case ViewType.TimelineDay:
+						case ViewType.TimelineMonth:
+						case ViewType.TimelineWeek:
+						case ViewType.TimelineYear:
+							if (String.IsNullOrEmpty(this.SchedulerLicenseKey))
+								throw new Exception("SchedulerLicenseKey is empty.");
+							break;
+					}
+
 					this._view = value;
 
 					IWisejControl me = this;
@@ -264,6 +294,10 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// License key for the scheduler plug-in.<br/>
 		/// See <see href="https://fullcalendar.io/scheduler"/>.
 		/// </summary>
+		/// <remarks>
+		/// Use "GPL-My-Project-Is-Open-Source" for GPL projects, or "CC-Attribution-NonCommercial-NoDerivatives"
+		/// for non commercial projects.
+		/// </remarks>
 		[DefaultValue("")]
 		[Description("License key for the scheduler plug-in.")]
 		public string SchedulerLicenseKey
@@ -662,7 +696,7 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// <returns>One of the <see cref="T:Wisej.Web.Day" /> values. The default is <see cref="F:Wisej.Web.Day.Default" />.</returns>
 		[Localizable(true)]
 		[DefaultValue(Day.Default)]
-		[Description("Returns or sets the first day of the week as displayed in the FullCalendar.")]
+		[Description("Returns or sets the first day of the week as displayed in the calendar.")]
 		public Day FirstDayOfWeek
 		{
 			get
@@ -680,6 +714,27 @@ namespace Wisej.Web.Ext.FullCalendar
 			}
 		}
 		private Day _firstDayOfWeek = Day.Default;
+
+		/// <summary>
+		/// Emphasizes certain time slots on the calendar. By default, Monday-Friday, 9am-5pm.
+		/// </summary>
+		[Localizable(true)]
+		[DefaultValue(null)]
+		[Description("Returns or sets the business hours to emphasizes on the calendar.")]
+		public BusinessHours[] BusinessHours
+		{
+			get { return this._businessHours; }
+			set
+			{
+				if (this._businessHours != value)
+				{
+					this._businessHours = value;
+
+					Update();
+				}
+			}
+		}
+		private BusinessHours[] _businessHours;
 
 		/// <summary>
 		/// Limits the number of events displayed on a day.
@@ -1017,6 +1072,69 @@ namespace Wisej.Web.Ext.FullCalendar
 		private EventCollection _events;
 
 		/// <summary>
+		/// Returns or sets the scheduler resources.
+		/// Requires the <see cref="SchedulerLicenseKey"/> to be set to a valid license
+		/// or to a GPL or CC license.
+		/// </summary>
+		[DefaultValue(null)]
+		[Description("Returns or sets the scheduler resources.")]
+		public Resource[] Resources
+		{
+			get { return this._resources; }
+			set
+			{
+				if (this._resources != value)
+				{
+					this._resources = value;
+					Update();
+				}
+			}
+		}
+		private Resource[] _resources;
+
+		/// <summary>
+		/// Returns or sets the text that will appear above the list of resources.
+		/// Requires the <see cref="SchedulerLicenseKey"/> to be set to a valid license
+		/// or to a GPL or CC license.
+		/// </summary>
+		[DefaultValue("Resources")]
+		[Description("Returns or sets the text that will appear above the list of resources.")]
+		public string ResourceLabelText
+		{
+			get { return this._resourceLabelText; }
+			set
+			{
+				if (this._resourceLabelText != value)
+				{
+					this._resourceLabelText = value;
+					Update();
+				}
+			}
+		}
+		private string _resourceLabelText = "Resources";
+
+		/// <summary>
+		/// Determines the width of the area that contains the list of resources.
+		/// Requires the <see cref="SchedulerLicenseKey"/> to be set to a valid license
+		/// or to a GPL or CC license.
+		/// </summary>
+		[DefaultValue("30%")]
+		[Description("Determines the width of the area that contains the list of resources.")]
+		public string ResourceAreaWidth
+		{
+			get { return this._resourceAreaWidth; }
+			set
+			{
+				if (this._resourceAreaWidth != value)
+				{
+					this._resourceAreaWidth = value;
+					Update();
+				}
+			}
+		}
+		private string _resourceAreaWidth = "30%";
+
+		/// <summary>
 		/// Overridden to create our initialization script.
 		/// </summary>
 		[Browsable(false)]
@@ -1122,6 +1240,11 @@ namespace Wisej.Web.Ext.FullCalendar
 			ClientRefetchEvents();
 		}
 
+		internal void OnResourceChanged(Resource resource)
+		{
+			OnResourceChanged(new ResourceEventArgs(resource));
+		}
+
 		#endregion
 
 		#region Wisej Implementation
@@ -1180,10 +1303,12 @@ namespace Wisej.Web.Ext.FullCalendar
 		// Processes the "eventDrop" event from the web client.
 		private void ProcessDropWebEvent(WidgetEventArgs e)
 		{
-			string id = e.Data.id as string;
-			bool allDay = e.Data.allDay ?? false;
-			DateTime end = e.Data.end ?? DateTime.MinValue;
-			DateTime start = e.Data.start ?? DateTime.MinValue;
+			var data = e.Data;
+			string id = data.id as string;
+			bool allDay = data.allDay ?? false;
+			DateTime end = data.end ?? DateTime.MinValue;
+			DateTime start = data.start ?? DateTime.MinValue;
+			string resourceId = data.resourceId;
 
 			var ev = this.Events[id];
 			if (ev != null)
@@ -1193,6 +1318,7 @@ namespace Wisej.Web.Ext.FullCalendar
 				ev.StartInternal = start;
 				ev.EndInternal = end;
 				ev.AllDayInternal = allDay;
+				ev.ResourceIdInternal = resourceId;
 
 				OnEventChanged(new EventValueEventArgs(ev, oldStart, oldEnd));
 			}
@@ -1319,6 +1445,17 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
+		/// Overridden, not used.
+		/// </summary>
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public override dynamic Options
+		{
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
 		/// Overridden to return our list of script resources.
 		/// </summary>
 		[Browsable(false)]
@@ -1346,16 +1483,22 @@ namespace Wisej.Web.Ext.FullCalendar
 						new Package() {
 							Name = "fullcalendar.css",
 							Source = GetResourceURL("Wisej.Web.Ext.FullCalendar.JavaScript.fullcalendar-3.9.0.css")
-						},
-						new Package() {
-							Name = "scheduler.js",
-							Source = GetResourceURL("Wisej.Web.Ext.FullCalendar.JavaScript.scheduler-1.9.4.js")
-						},
-						new Package() {
-							Name = "scheduler.css",
-							Source = GetResourceURL("Wisej.Web.Ext.FullCalendar.JavaScript.scheduler-1.9.4.css")
-						},
+						}
 					});
+
+					if (!String.IsNullOrEmpty(this.SchedulerLicenseKey))
+					{
+						base.Packages.AddRange(new Package[] {
+							new Package() {
+								Name = "scheduler.js",
+								Source = GetResourceURL("Wisej.Web.Ext.FullCalendar.JavaScript.scheduler-1.9.4.js")
+							},
+							new Package() {
+								Name = "scheduler.css",
+								Source = GetResourceURL("Wisej.Web.Ext.FullCalendar.JavaScript.scheduler-1.9.4.css")
+							},
+						});
+					}
 				}
 
 				return base.Packages;
@@ -1388,7 +1531,7 @@ namespace Wisej.Web.Ext.FullCalendar
 			options.scrollTime = this.ScrollTime.ToString();
 			options.defaultView = this.View;
 			options.themeSystem = TranslateThemeSystem(this.ThemeSystem);
-			options.schedulerLicenseKey = this.SchedulerLicenseKey;
+			options.businessHours = this.BusinessHours;
 
 			if (this.ShouldSerializeSlotLabelFormat())
 				options.slotLabelFormat = this.SlotLabelFormat;
@@ -1398,6 +1541,15 @@ namespace Wisej.Web.Ext.FullCalendar
 			options.firstDay = Math.Max(0, (int)this.FirstDayOfWeek);
 			options.isRTL = this.RightToLeft == RightToLeft.Yes;
 			options.eventLimit = this.EventLimit == 0 ? (object)false : (object)this.EventLimit;
+
+			// scheduler properties.
+			if (!String.IsNullOrEmpty(this.SchedulerLicenseKey))
+			{
+				options.resources = this.Resources;
+				options.resourceLabelText = this.ResourceLabelText;
+				options.resourceAreaWidth = this.ResourceAreaWidth;
+				options.schedulerLicenseKey = this.SchedulerLicenseKey;
+			}
 
 			script = script.Replace("$options", options.ToString());
 			return script;
@@ -1498,7 +1650,7 @@ namespace Wisej.Web.Ext.FullCalendar
 				}
 				else
 				{
-					var list = this.Events.Where(o => 
+					var list = this.Events.Where(o =>
 						(o.Start >= start && o.Start <= end) || (o.End >= start && o.End <= end)
 					);
 
