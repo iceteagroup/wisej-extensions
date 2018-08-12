@@ -33,7 +33,6 @@
 		"ribbonGroupText": "#5F5F5F",
 		"ribbonBar": "#f5f6f7",
 		"ribbonBarText": "#3F3F3F"
-
 	},
 	"appearances": {
 		"ribbonbar": {
@@ -53,6 +52,76 @@
 						}
 					},
 					"components": {
+						"bar": {
+							"components": {
+								"button-backward": {
+									"text": "Button Backward",
+									"states": {
+										"default": {
+											"properties": {
+												"cursor": "pointer",
+												"width": 16,
+												"height": 16,
+												"opacity": 1,
+												"center": true,
+												"icon": "icon-left"
+											}
+										},
+										"disabled": {
+											"properties": {
+												"opacity": 0.5,
+												"cursor": "default"
+											}
+										}
+									},
+									"components": {
+										"icon": {
+											"states": {
+												"default": {
+													"properties": {
+														"width": 16,
+														"height": 16
+													}
+												}
+											}
+										}
+									}
+								},
+								"button-forward": {
+									"text": "Button Forward",
+									"states": {
+										"default": {
+											"properties": {
+												"cursor": "pointer",
+												"width": 16,
+												"height": 16,
+												"opacity": 1,
+												"center": true,
+												"icon": "icon-right"
+											}
+										},
+										"disabled": {
+											"properties": {
+												"opacity": 0.5,
+												"cursor": "default"
+											}
+										}
+									},
+									"components": {
+										"icon": {
+											"states": {
+												"default": {
+													"properties": {
+														"width": 16,
+														"height": 16
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						},
 						"pane": {
 							"states": {
 								"default": {
@@ -71,6 +140,7 @@
 								"default": {
 									"properties": {
 										"backgroundColor": "ribbonPage",
+										"textColor": "ribbonItemText",
 										"padding": [ 3, 0, 3, 0 ],
 										"opacity": 1
 									}
@@ -131,6 +201,76 @@
 														"margin": [ 0, 5, 0, 5 ],
 														"alignX": "left",
 														"alignY": "middle"
+													}
+												}
+											}
+										}
+									}
+								},
+								"slider": {
+									"components": {
+										"button-backward": {
+											"text": "Button Backward",
+											"states": {
+												"default": {
+													"properties": {
+														"cursor": "pointer",
+														"width": 16,
+														"height": 16,
+														"opacity": 1,
+														"center": true,
+														"icon": "icon-left"
+													}
+												},
+												"disabled": {
+													"properties": {
+														"opacity": 0.5,
+														"cursor": "default"
+													}
+												}
+											},
+											"components": {
+												"icon": {
+													"states": {
+														"default": {
+															"properties": {
+																"width": 16,
+																"height": 16
+															}
+														}
+													}
+												}
+											}
+										},
+										"button-forward": {
+											"text": "Button Forward",
+											"states": {
+												"default": {
+													"properties": {
+														"cursor": "pointer",
+														"width": 16,
+														"height": 16,
+														"opacity": 1,
+														"center": true,
+														"icon": "icon-right"
+													}
+												},
+												"disabled": {
+													"properties": {
+														"opacity": 0.5,
+														"cursor": "default"
+													}
+												}
+											},
+											"components": {
+												"icon": {
+													"states": {
+														"default": {
+															"properties": {
+																"width": 16,
+																"height": 16
+															}
+														}
 													}
 												}
 											}
@@ -267,13 +407,9 @@
 				"button": {
 					"states": {
 						"default": {
-							"styles": {
-								"backgroundColor": null
-							},
 							"properties": {
 								"maxWidth": null,
-								"padding": [ 1, 4, 1, 4 ],
-								"textColor": null
+								"padding": [ 1, 4, 1, 4 ]
 							}
 						},
 						"vertical": {
@@ -342,12 +478,6 @@
 				"splitbutton": {
 					"states": {
 						"default": {
-							"styles": {
-								"backgroundColor": null
-							},
-							"properties": {
-								"textColor": null
-							}
 						},
 						"pushed": {
 							"styles": {

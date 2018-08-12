@@ -32,13 +32,14 @@ qx.Class.define("wisej.web.ribbonBar.RibbonPage", {
 	include: [
 		wisej.mixin.MWisejControl,
 		wisej.mixin.MShortcutTarget,
-		qx.ui.core.MRightToLeftLayout
+		qx.ui.core.MRightToLeftLayout,
+		qx.ui.core.MRemoteChildrenHandling
 	],
 
 	construct: function () {
 
 		this.base(arguments);
-		this.setLayout(new qx.ui.layout.HBox());
+		this.setLayout(new qx.ui.layout.Grow());
 
 		// the page control needs the controls in the
 		// order they are declared to display the groups in 
@@ -78,6 +79,11 @@ qx.Class.define("wisej.web.ribbonBar.RibbonPage", {
 	},
 
 	members: {
+
+		// overridden
+		getChildrenContainer: function () {
+			return this.getChildControl("slider");
+		},
 
 		/**
 		 * applies the Hidden property.
@@ -130,6 +136,11 @@ qx.Class.define("wisej.web.ribbonBar.RibbonPage", {
 			var control;
 
 			switch (id) {
+
+				case "slider":
+					control = new qx.ui.container.SlideBar();
+					this._add(control);
+					break;
 
 				case "button":
 					control = this.base(arguments, id, hash);

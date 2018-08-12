@@ -81,14 +81,6 @@
     <None Include="JavaScript\fullcalendar-3.7.0.css" />
     <None Include="JavaScript\fullcalendar-3.7.0.js" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JavaScript\scheduler-1.9.4.css" />
-    <EmbeddedResource Include="JavaScript\scheduler-1.9.4.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JavaScript\fullcalendar-3.9.0.css" />
-    <EmbeddedResource Include="JavaScript\fullcalendar-3.9.0.js" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(ProjectDir)..\bin"
