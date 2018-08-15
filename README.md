@@ -17,6 +17,8 @@ Note that most published extensions are also already precompiled and included in
 
 ## News
 
+* Wisej.Web.Ext.RibbonBar - Added support for the Scheduler plug in, timeline views and BusinessHours. Upgraded to fullcalendar 3.9.0. - 12 Aug 2018
+* Wisej.Web.Ext.RibbonBar - Added a slidebar to scroll tab buttons and tab pages that exceed the width of the container. - 12 Aug 2018
 * Wisej.Web.Ext.RibbonBar - Items are removed when disposed. - 07 Aug 2018
 * Wisej.Web.Ext.GoogleMaps - Prevent capturing clicks on overlays on mobile. - 07 Aug 2018
 * Wisej.Web.Ext.GoogleMaps - Added Reverse Geocode support including awaitable methods. - 31 Jul 2018
