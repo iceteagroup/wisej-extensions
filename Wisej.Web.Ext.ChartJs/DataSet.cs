@@ -168,12 +168,15 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.LineDataSet"/>.
 		/// </summary>
-		public LineDataSet() :base()
+		public LineDataSet() : base()
 		{
 			this.Fill = false;
-			this.PointStyle = PointStyle.Circle;
-			this.PointRadius = 5;
-			this.PointHoverRadius = 5;
+			this.ShowLine = true;
+			this.SteppedLine = SteppedLine.False;
+			this.SpanGaps = false;
+			this.PointStyle = new PointStyle[] { Wisej.Web.Ext.ChartJS.PointStyle.Circle };
+			this.PointRadius = new int[] { 5 };
+			this.PointHoverRadius = new int[] { 5 };
 			this.Type = ChartType.Line;
 		}
 
@@ -200,33 +203,100 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
-		/// The style of a point on the line.
+		/// If false lines between points are not drawn.
 		/// </summary>
-		[DefaultValue(PointStyle.Circle)]
-		[Description("The style of a point on the line.")]
-		public PointStyle PointStyle
+		[DefaultValue(true)]
+		[Description("If false lines between points are not drawn.")]
+		public bool ShowLine
 		{
 			get;
 			set;
 		}
 
 		/// <summary>
-		/// The radius of the point shape. If set to 0, nothing is rendered.
+		/// If true, lines will be drawn between points with no or null data. If false, points with NaN data will create a break in the line
 		/// </summary>
-		[DefaultValue(5)]
-		[Description("The radius of the point shape. If set to 0, nothing is rendered.")]
-		public int PointRadius
+		[DefaultValue(false)]
+		[Description("If true, lines will be drawn between points with no or null data. If false, points with NaN data will create a break in the line.")]
+		public bool SpanGaps
 		{
 			get;
 			set;
 		}
 
 		/// <summary>
-		/// The radius of the point when hovered.
+		/// If true, show the line.
 		/// </summary>
-		[DefaultValue(5)]
+		[DefaultValue(SteppedLine.False)]
+		[Description("Show a stepped line rather than a curve.")]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		public SteppedLine SteppedLine
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// The style of a point on the line.One entry is the default for all points, otherwise each point can define a style.
+		/// </summary>
+		[DefaultValue(new PointStyle[] { Wisej.Web.Ext.ChartJS.PointStyle.Circle })]
+		[MergableProperty(false)]
+		[Description("The style of a point on the line. One entry is the default for all points, otherwise each point can define a style.")]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		public PointStyle[] PointStyle
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// The radius of the point shape. If set to 0, nothing is rendered.One entry is the default radius for all points, otherwise each point can define a radius.
+		/// </summary>
+		[DefaultValue(new int[] { 5 })]
+		[MergableProperty(false)]
+		[Description("The radius of the point shape. If set to 0, nothing is rendered. One entry is the default radius for all points, otherwise each point can define a radius.")]
+		public int[] PointRadius
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// The radius of the point when hovered. One entry is the default hover radius for all points, otherwise each point can define a hover radius.
+		/// </summary>
+		[DefaultValue(new int[] { 5 })]
+		[MergableProperty(false)]
 		[Description("The radius of the point when hovered")]
-		public int PointHoverRadius
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		public int[] PointHoverRadius
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// The fill colors of the points in the data set. One entry is the default color for all the points, otherwise
+		/// each point can be defined as a different color.
+		/// </summary>
+		[MergableProperty(false)]
+		[TypeConverter(typeof(ArrayConverter))]
+		[Description("The fill colors of the points for the data set. One entry is the default color for all the points, otherwise each point can define a background color.")]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		public Color[] PointBackgroundColor
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// The border colors of the points in the data set. One entry is the default color for all the points, otherwise
+		/// each point can be defined as a different color.
+		/// </summary>
+		[MergableProperty(false)]
+		[TypeConverter(typeof(ArrayConverter))]
+		[Description("The border colors of the points for the data set. One entry is the default color for all the points, otherwise each point can define a border color.")]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		public Color[] PointBorderColor
 		{
 			get;
 			set;
