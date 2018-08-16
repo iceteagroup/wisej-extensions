@@ -17,12 +17,17 @@ Note that most published extensions are also already precompiled and included in
 
 ## News
 
-* Wisej.Web.Ext.RibbonBar - Items are removed when disposed. - 07 Aug 2018
-* Wisej.Web.Ext.GoogleMaps - Prevent capturing clicks on overlays on mobile. - 07 Aug 2018
-* Wisej.Web.Ext.GoogleMaps - Added Reverse Geocode support including awaitable methods. - 31 Jul 2018
-* Wisej.Ext.Geolocation - Added awaitable methods. - 29 Jul 2018
-* Wisej.Web.Ext.Html2Canvas - Added awaitable methods. - 29 Jul 2018
-* Wisej.Web.Ext.SmoothieChart - Added awaitable methods. - 29 Jul 2018
+| Extension | Change&nbsp;Date | Description |
+| :--- | :---: | :--- |
+| Wisej.Web.Ext.ChartJs | 16 Aug 2018 | Added support for SteppedLine. Set colours and style on each individual point. Upgraded to chartjs 2.7.2. |
+| Wisej.Web.Ext.FullCalendar | 12 Aug 2018 | Added support for the Scheduler plug in, timeline views and BusinessHours. Upgraded to fullcalendar 3.9.0. |
+| Wisej.Web.Ext.RibbonBar | 12 Aug 2018 | Added a slidebar to scroll tab buttons and tab pages that exceed the width of the container. |
+| Wisej.Web.Ext.RibbonBar | 07 Aug 2018 | Items are removed when disposed. |
+| Wisej.Web.Ext.GoogleMaps | 07 Aug 2018 | Prevent capturing clicks on overlays on mobile. |
+| Wisej.Web.Ext.GoogleMaps | 31 Jul 2018 | Added Reverse Geocode support including awaitable methods. |
+| Wisej.Ext.Geolocation | 29 Jul 2018 | Added awaitable methods. |
+| Wisej.Web.Ext.Html2Canvas | 29 Jul 2018 | Added awaitable methods. |
+| Wisej.Web.Ext.SmoothieChart | 29 Jul 2018 | Added awaitable methods. |
 
 License
 -------

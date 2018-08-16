@@ -46,10 +46,10 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Wisej.Core">
-      <HintPath>..\..\..\Development\1.4\Wisej\bin\Wisej.Core.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\Wisej\bin\Wisej.Core.dll</HintPath>
     </Reference>
     <Reference Include="Wisej.Web">
-      <HintPath>..\..\..\Development\1.4\Wisej\bin\Wisej.Web.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\Wisej\bin\Wisej.Web.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +76,7 @@
     <Compile Include="PointStyle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scale.cs" />
+    <Compile Include="SteppedLine.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="JavaScript\startup.js" />
@@ -90,7 +91,7 @@
     <None Include="extension.snk" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="JavaScript\chart-2.7.1.js" />
+    <EmbeddedResource Include="JavaScript\chart-2.7.2.js" />
     <EmbeddedResource Include="JavaScript\moment-with-locales-2.17.1.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
