@@ -19,6 +19,7 @@ Note that most published extensions are also already precompiled and included in
 
 | Extension | Change&nbsp;Date | Description |
 | :--- | :---: | :--- |
+| Wisej.Web.Ext.ChartJs | 16 Aug 2018 | Added support for SteppedLine. Set colours and style on each individual point. Upgraded to chartjs 2.7.2. |
 | Wisej.Web.Ext.FullCalendar | 12 Aug 2018 | Added support for the Scheduler plug in, timeline views and BusinessHours. Upgraded to fullcalendar 3.9.0. |
 | Wisej.Web.Ext.RibbonBar | 12 Aug 2018 | Added a slidebar to scroll tab buttons and tab pages that exceed the width of the container. |
 | Wisej.Web.Ext.RibbonBar | 07 Aug 2018 | Items are removed when disposed. |

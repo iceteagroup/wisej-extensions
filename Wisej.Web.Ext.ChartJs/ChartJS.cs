@@ -320,7 +320,7 @@ namespace Wisej.Web.Ext.ChartJS
 						new Package()
 						{
 							Name = "chart.js",
-							Source = GetResourceURL("WiseJ.Web.Ext.ChartJs.JavaScript.chart-2.7.1.js")
+							Source = GetResourceURL("WiseJ.Web.Ext.ChartJs.JavaScript.chart-2.7.2.js")
 						}
 					});
 				}

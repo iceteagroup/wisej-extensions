@@ -28,7 +28,10 @@ this.init = function () {
 	this.__setFontAndColors(config.options);
 
 	// convert color arrays with 1 element to single values.
-	this.__normalizeColorArrays(config.data.datasets);
+    this.__normalizeColorArrays(config.data.datasets);
+
+    // convert point style and colour arrays in line chart datasets into single values
+    this.__normalizeLineChartDataSetArrays(config.data.datasets);
 
 	// Design Mode Only:
 	// Turn off animation and attach the animationComplete callback to fire "render" to the designer.
@@ -180,7 +183,7 @@ this.__setFontAndColors = function (options) {
 
 			options.fontColor = colorMgr.resolve(options.fontColor);
 			continue;
-		}
+        }
 
 		// it's an array, go through all elements.
 		var array = options[name];
@@ -222,4 +225,34 @@ this.__normalizeColorArrays = function (datasets) {
 			}
 		}
 	}
+}
+
+
+/**
+ * Various fix ups for line datasets
+ */
+this.__normalizeLineChartDataSetArrays = function (datasets) {
+
+    if (datasets == null || datasets.length == 0)
+        return;
+
+    for (var i = 0; i < datasets.length; i++) {
+
+        if (datasets[i].type == 'line') {
+
+            var ds = datasets[i];
+
+            if (ds.pointStyle.length == 1)
+                ds.pointStyle = ds.pointStyle[0];
+
+            if (ds.pointRadius.length == 1)
+                ds.pointRadius = ds.pointRadius[0];
+
+            if (ds.pointHoverRadius.length == 1)
+                ds.pointHoverRadius = ds.pointHoverRadius[0];
+
+            if (ds.steppedLine == 'false')
+                ds.steppedLine = false;
+        }
+    }
 }
