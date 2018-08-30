@@ -345,6 +345,26 @@ namespace Wisej.Web.Ext.SmoothieChart
 		}
 
 		/// <summary>
+		/// Returns or sets the text color for the control.
+		/// </summary>
+		[SRCategory("CatAppearance")]
+		[Description("The font size used to display the labels.")]
+		[DefaultValue(10)]
+		public int FontSize
+		{
+			get { return this._fontSize; }
+			set
+			{
+				if (this._fontSize != value)
+				{
+					this._fontSize = value;
+					Update();
+				}
+			}
+		}
+		private int _fontSize = 10;
+
+		/// <summary>
 		/// Returns or sets the color of the grid lines.
 		/// </summary>
 		[DefaultValue(typeof(Color), "White")]
@@ -403,7 +423,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 				}
 			}
 		}
-		public bool _showMinMaxLabels = true;
+		private bool _showMinMaxLabels = true;
 
 		/// <summary>
 		/// Returns or sets whether the control displays the time stamp labels.
@@ -424,7 +444,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 				}
 			}
 		}
-		public bool _showTimeStamps = true;
+		private bool _showTimeStamps = true;
 
 		/// <summary>
 		/// Indicates the border style for the control.
@@ -472,7 +492,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 				}
 			}
 		}
-		public int _verticalSections = 2;
+		private int _verticalSections = 2;
 
 		/// <summary>
 		/// Returns or sets the distance between the vertical grid lines in milliseconds/line.
@@ -493,7 +513,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 				}
 			}
 		}
-		public int _timeLineSpacing = 1000;	
+		private int _timeLineSpacing = 1000;	
 
 		/// <summary>
 		/// Returns or sets the minimum value. Leave null to let the chart dynamically adjust the minimum value.
@@ -760,6 +780,14 @@ namespace Wisej.Web.Ext.SmoothieChart
 			set { }
 		}
 
+		/// <summary>
+		/// This member is not meaningful for this control.
+		/// </summary>
+		[Browsable(false)]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public new Font Font { get; set; }
+
 		#endregion
 
 		#region Methods
@@ -817,6 +845,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 			config.className = "wisej.web.ext.SmoothieChart";
 
 			// render our new properties.
+			config.fontSize = this.FontSize;
 			config.borderStyle = this.BorderStyle;
 			config.updateDelay = this.UpdateDelay;
 			config.dataFrequency = this.DataFrequency;
