@@ -285,6 +285,31 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 		private OptionsScales _scales;
 
+		/// <summary>
+		/// Options for the data label.
+		/// </summary>
+		[Description("Options for the data label.")]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public OptionsDataLabel DataLabel
+		{
+			get
+			{
+				if (this._dataLabel == null)
+					this._dataLabel = new OptionsDataLabel(this);
+
+				return this._dataLabel;
+			}
+			set
+			{
+				if (value == null)
+					throw new ArgumentNullException("value");
+
+				value.Owner = this;
+				this._dataLabel = value;
+			}
+		}
+		private OptionsDataLabel _dataLabel;
+
 		#endregion
 	}
 
