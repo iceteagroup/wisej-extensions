@@ -70,6 +70,7 @@
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Design\OptionsEditor.cs" />
+    <Compile Include="OptionsDataLabel.cs" />
     <Compile Include="OptionsScales.cs" />
     <Compile Include="OptionsLegend.cs" />
     <Compile Include="OptionsTitle.cs" />
@@ -93,6 +94,9 @@
   <ItemGroup>
     <EmbeddedResource Include="JavaScript\chart-2.7.2.js" />
     <EmbeddedResource Include="JavaScript\moment-with-locales-2.17.1.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JavaScript\dataLabelPlugin.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
