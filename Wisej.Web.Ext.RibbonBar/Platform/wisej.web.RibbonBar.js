@@ -28,7 +28,7 @@ qx.Class.define("wisej.web.RibbonBar", {
 
 	construct: function () {
 
-		this.base(arguments, new qx.ui.layout.Grow());
+		this.base(arguments, new qx.ui.layout.VBox());
 
 		this.tabview = this._createChildControl("tabview");
 		this.tabview.addListener("changeSelection", this._onChangeSelection, this);
