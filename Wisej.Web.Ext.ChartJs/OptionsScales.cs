@@ -240,49 +240,49 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 		private OptionsScalesTicks _ticks;
 
-        /// <summary>
-        /// Options for the chart ticks on the axes.
-        /// </summary>
-        [Description("Options for the title on the axes.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public OptionsScaleTitle ScaleLabel
-        {
-            get
-            {
-                if (this._scaleLabel == null)
-                    this._scaleLabel = new OptionsScaleTitle(this);
+		/// <summary>
+		/// Options for the chart ticks on the axes.
+		/// </summary>
+		[Description("Options for the title on the axes.")]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public OptionsScaleTitle ScaleLabel
+		{
+			get
+			{
+				if (this._scaleLabel == null)
+					this._scaleLabel = new OptionsScaleTitle(this);
 
-                return this._scaleLabel;
-            }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("value");
+				return this._scaleLabel;
+			}
+			set
+			{
+				if (value == null)
+					throw new ArgumentNullException("value");
 
-                value.Owner = this;
-                this._scaleLabel = value;
-            }
-        }
-        private OptionsScaleTitle _scaleLabel;
+				value.Owner = this;
+				this._scaleLabel = value;
+			}
+		}
+		private OptionsScaleTitle _scaleLabel;
 
 		/// <summary>
 		/// Type of scale being employed.
 		/// </summary>
 		[DefaultValue(ScaleType.Linear)]
-        [Description("Type of scale being employed")]
-        public ScaleType Type
-        {
-            get { return this._type; }
-            set
-            {
-                if (this._type != value)
-                {
-                    this._type = value;
-                    Update();
-                }
-            }
-        }
-        private ScaleType _type = ScaleType.Linear;
+		[Description("Type of scale being employed")]
+		public ScaleType Type
+		{
+			get { return this._type; }
+			set
+			{
+				if (this._type != value)
+				{
+					this._type = value;
+					Update();
+				}
+			}
+		}
+		private ScaleType _type = ScaleType.Linear;
 
 		/// <summary>
 		/// When true, the bars are stacked.
@@ -307,31 +307,31 @@ namespace Wisej.Web.Ext.ChartJS
 		/// Options for the time scale type - ignored if not a time scale type
 		/// </summary>
 		[Description("Options for the time scale type - ignored if not a time scale type")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public ScaleTime Time
-        {
-            get
-            {
-                if (this._time == null)
-                    this._time = new ScaleTime(this);
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public ScaleTime Time
+		{
+			get
+			{
+				if (this._time == null)
+					this._time = new ScaleTime(this);
 
-                return this._time;
-            }
-            set
-            {
-                if (this._time != value)
-                {
-                    this._time = value;
-                    Update();
-                }
-            }
-        }
-        private ScaleTime _time = null;
+				return this._time;
+			}
+			set
+			{
+				if (this._time != value)
+				{
+					this._time = value;
+					Update();
+				}
+			}
+		}
+		private ScaleTime _time = null;
 
-        private bool ShouldSerializeTime()
-        {
-            return this.Type == ScaleType.Time && this._time != null;
-        }
+		private bool ShouldSerializeTime()
+		{
+			return this.Type == ScaleType.Time && this._time != null;
+		}
 	}
 
 	/// <summary>
@@ -452,46 +452,46 @@ namespace Wisej.Web.Ext.ChartJS
 
 		/// <summary>
 		/// User defined maximum number for the scale, overrides maximum value from data.
-		/// </summary>                
+		/// </summary>				
 		[DefaultValue(null)]
 		[Description("User defined maximum number for the scale, overrides maximum value from data.")]
-        public int? Max
-        {
-            get { return this._max; }
-            set
-            {
-                if (this._max != value)
-                {
-                    this._max = value;
-                    Update();
-                }
-            }
-        }
-        private int? _max;
+		public int? Max
+		{
+			get { return this._max; }
+			set
+			{
+				if (this._max != value)
+				{
+					this._max = value;
+					Update();
+				}
+			}
+		}
+		private int? _max;
 
 		/// <summary>
 		/// User defined minimum number for the scale, overrides minimum value from data.
 		/// </summary>
 		[DefaultValue(null)]
 		[Description("User defined minimum number for the scale, overrides minimum value from data.")]
-        public int? Min
-        {
-            get { return this._min; }
-            set
-            {
-                if (this._min != value)
-                {
-                    this._min = value;
-                    Update();
-                }
-            }
-        }
-        private int? _min;
-           
-        /// <summary>
-        /// Padding between the tick label and the axis. Only applicable to horizontal scales.
-        /// </summary>
-        [DefaultValue(10)]
+		public int? Min
+		{
+			get { return this._min; }
+			set
+			{
+				if (this._min != value)
+				{
+					this._min = value;
+					Update();
+				}
+			}
+		}
+		private int? _min;
+		   
+		/// <summary>
+		/// Padding between the tick label and the axis. Only applicable to horizontal scales.
+		/// </summary>
+		[DefaultValue(10)]
 		[Description("Padding between the tick label and the axis. Only applicable to horizontal scales.")]
 		public int Padding
 		{
@@ -527,25 +527,25 @@ namespace Wisej.Web.Ext.ChartJS
 		private bool _mirror = false;
 
 		/// <summary>
-        /// Reverses order of tick labels.
-        /// </summary>
-        [DefaultValue(false)]
-        [Description("Reverses order of tick labels.")]
-        public bool Reverse
-        {
-            get { return this._reverse; }
-            set
-            {
-                if (this._reverse != value)
-                {
-                    this._reverse = value;
-                    Update();
-                }
-            }
-        }
-        private bool _reverse = false;
+		/// Reverses order of tick labels.
+		/// </summary>
+		[DefaultValue(false)]
+		[Description("Reverses order of tick labels.")]
+		public bool Reverse
+		{
+			get { return this._reverse; }
+			set
+			{
+				if (this._reverse != value)
+				{
+					this._reverse = value;
+					Update();
+				}
+			}
+		}
+		private bool _reverse = false;
 
-        /// <summary>
+		/// <summary>
 		/// Font of the tick labels.
 		/// </summary>
 		public Font Font
@@ -638,75 +638,75 @@ namespace Wisej.Web.Ext.ChartJS
 	/// Represents the options for the chart title.
 	/// </summary>
 	public class OptionsScaleTitle : OptionsBase
-    {
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public OptionsScaleTitle()
-        {
-        }
+	{
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public OptionsScaleTitle()
+		{
+		}
 
-        /// <summary>
-        /// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionsScaleTitle"/> set.
-        /// </summary>
-        /// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
-        public OptionsScaleTitle(OptionsBase owner)
-        {
-            this.Owner = owner;
-        }
+		/// <summary>
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionsScaleTitle"/> set.
+		/// </summary>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		public OptionsScaleTitle(OptionsBase owner)
+		{
+			this.Owner = owner;
+		}
 
-        /// <summary>
-        /// Font of the title.
-        /// </summary>
-        [Description("Scale label font.")]
-        public Font Font
-        {
-            get
-            {
-                var chart = this.Chart;
-                if (this._font == null && chart != null)
-                    return chart.Font;
+		/// <summary>
+		/// Font of the title.
+		/// </summary>
+		[Description("Scale label font.")]
+		public Font Font
+		{
+			get
+			{
+				var chart = this.Chart;
+				if (this._font == null && chart != null)
+					return chart.Font;
 
-                return this._font;
-            }
-            set
-            {
-                if (this._font != value)
-                {
-                    this._font = value;
-                    Update();
-                }
-            }
-        }
-        private Font _font;
+				return this._font;
+			}
+			set
+			{
+				if (this._font != value)
+				{
+					this._font = value;
+					Update();
+				}
+			}
+		}
+		private Font _font;
 
-        private bool ShouldSerializeFont()
-        {
-            return this._font != null;
-        }
+		private bool ShouldSerializeFont()
+		{
+			return this._font != null;
+		}
 
-        private void ResetFont()
-        {
-            this.Font = null;
-        }
+		private void ResetFont()
+		{
+			this.Font = null;
+		}
 
-        /// <summary>
-        /// Show the title block.
-        /// </summary>
-        [Description("Show the scale label block.")]
-        public bool Display
-        {
-            get { return this._display && !String.IsNullOrEmpty(this._labelString); }
-            set
-            {
-                if (this._display != value)
-                {
-                    this._display = value;
-                    Update();
-                }
-            }
-        }
-        private bool _display = true;
+		/// <summary>
+		/// Show the title block.
+		/// </summary>
+		[Description("Show the scale label block.")]
+		public bool Display
+		{
+			get { return this._display && !String.IsNullOrEmpty(this._labelString); }
+			set
+			{
+				if (this._display != value)
+				{
+					this._display = value;
+					Update();
+				}
+			}
+		}
+		private bool _display = true;
 
 		private bool ShouldSerializeDisplay()
 		{
@@ -723,49 +723,49 @@ namespace Wisej.Web.Ext.ChartJS
 		/// </summary>
 		[DefaultValue("")]
 		[Description("Label text.")]
-        public string LabelString
-        {
-            get
-            {
-                return this._labelString;
-            }
-            set
-            {
-                value = value ?? string.Empty;
+		public string LabelString
+		{
+			get
+			{
+				return this._labelString;
+			}
+			set
+			{
+				value = value ?? string.Empty;
 
-                if (this._labelString != value)
-                {
-                    this._labelString = value;
-                    Update();
-                }
-            }
-        }
-        private string _labelString = string.Empty;
+				if (this._labelString != value)
+				{
+					this._labelString = value;
+					Update();
+				}
+			}
+		}
+		private string _labelString = string.Empty;
 
 		/// <summary>
 		/// Title color.
 		/// </summary>
 		[Description("Scale label font color.")]
-        public Color FontColor
-        {
-            get
-            {
-                var chart = this.Chart;
-                if (this._fontColor.IsEmpty && chart != null)
-                    return chart.ForeColor;
+		public Color FontColor
+		{
+			get
+			{
+				var chart = this.Chart;
+				if (this._fontColor.IsEmpty && chart != null)
+					return chart.ForeColor;
 
-                return this._fontColor;
-            }
-            set
-            {
-                if (this._fontColor != value)
-                {
-                    this._fontColor = value;
-                    Update();
-                }
-            }
-        }
-        private Color _fontColor = Color.Empty;
+				return this._fontColor;
+			}
+			set
+			{
+				if (this._fontColor != value)
+				{
+					this._fontColor = value;
+					Update();
+				}
+			}
+		}
+		private Color _fontColor = Color.Empty;
 
 		private bool ShouldSerializeFontColor()
 		{

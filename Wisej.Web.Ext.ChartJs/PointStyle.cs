@@ -24,45 +24,45 @@ namespace Wisej.Web.Ext.ChartJS
 	/// </summary>
 	public enum PointStyle
 	{
-        /// <summary>
-        /// Circle
-        /// </summary>
+		/// <summary>
+		/// Circle
+		/// </summary>
 		Circle,
-        /// <summary>
-        /// Trianglle
-        /// </summary>
+		/// <summary>
+		/// Trianglle
+		/// </summary>
 		Triangle,
-        /// <summary>
-        /// Rectange
-        /// </summary>
+		/// <summary>
+		/// Rectange
+		/// </summary>
 		Rect,
-        /// <summary>
-        /// Rotated recrangle
-        /// </summary>
+		/// <summary>
+		/// Rotated recrangle
+		/// </summary>
 		RectRot,
-        /// <summary>
-        /// Rounded rectangle
-        /// </summary>
-        RectRounded,
-        /// <summary>
-        /// Cross
-        /// </summary>
+		/// <summary>
+		/// Rounded rectangle
+		/// </summary>
+		RectRounded,
+		/// <summary>
+		/// Cross
+		/// </summary>
 		Cross,
-        /// <summary>
-        /// Rotated cross
-        /// </summary>
+		/// <summary>
+		/// Rotated cross
+		/// </summary>
 		CrossRot,
-        /// <summary>
-        /// Star
-        /// </summary>
+		/// <summary>
+		/// Star
+		/// </summary>
 		Star,
-        /// <summary>
-        /// Line
-        /// </summary>
+		/// <summary>
+		/// Line
+		/// </summary>
 		Line,
-        /// <summary>
-        /// Dash
-        /// </summary>
+		/// <summary>
+		/// Dash
+		/// </summary>
 		Dash
 	}
 }
