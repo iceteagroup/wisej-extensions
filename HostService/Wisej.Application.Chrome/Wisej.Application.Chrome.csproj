@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wisej.Application</RootNamespace>
     <AssemblyName>Wisej.Application</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -145,67 +145,68 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
-    <None Include="CefSharp\locales\am.pak" />
-    <None Include="CefSharp\locales\ar.pak" />
-    <None Include="CefSharp\locales\bg.pak" />
-    <None Include="CefSharp\locales\bn.pak" />
-    <None Include="CefSharp\locales\ca.pak" />
-    <None Include="CefSharp\locales\cs.pak" />
-    <None Include="CefSharp\locales\da.pak" />
-    <None Include="CefSharp\locales\de.pak" />
-    <None Include="CefSharp\locales\el.pak" />
-    <None Include="CefSharp\locales\en-GB.pak" />
+    <EmbeddedResource Include="CefSharp\locales\am.pak" />
+    <EmbeddedResource Include="CefSharp\locales\ar.pak" />
+    <EmbeddedResource Include="CefSharp\locales\bg.pak" />
+    <EmbeddedResource Include="CefSharp\locales\bn.pak" />
+    <EmbeddedResource Include="CefSharp\locales\ca.pak" />
+    <EmbeddedResource Include="CefSharp\locales\cs.pak" />
+    <EmbeddedResource Include="CefSharp\locales\da.pak" />
+    <EmbeddedResource Include="CefSharp\locales\de.pak" />
+    <EmbeddedResource Include="CefSharp\locales\el.pak" />
+    <EmbeddedResource Include="CefSharp\locales\en-GB.pak" />
     <EmbeddedResource Include="CefSharp\locales\en-US.pak" />
-    <None Include="CefSharp\locales\es-419.pak" />
-    <None Include="CefSharp\locales\es.pak" />
-    <None Include="CefSharp\locales\et.pak" />
-    <None Include="CefSharp\locales\fa.pak" />
-    <None Include="CefSharp\locales\fi.pak" />
-    <None Include="CefSharp\locales\fil.pak" />
-    <None Include="CefSharp\locales\fr.pak" />
-    <None Include="CefSharp\locales\gu.pak" />
-    <None Include="CefSharp\locales\he.pak" />
-    <None Include="CefSharp\locales\hi.pak" />
-    <None Include="CefSharp\locales\hr.pak" />
-    <None Include="CefSharp\locales\hu.pak" />
-    <None Include="CefSharp\locales\id.pak" />
-    <None Include="CefSharp\locales\it.pak" />
-    <None Include="CefSharp\locales\ja.pak" />
-    <None Include="CefSharp\locales\kn.pak" />
-    <None Include="CefSharp\locales\ko.pak" />
-    <None Include="CefSharp\locales\lt.pak" />
-    <None Include="CefSharp\locales\lv.pak" />
-    <None Include="CefSharp\locales\ml.pak" />
-    <None Include="CefSharp\locales\mr.pak" />
-    <None Include="CefSharp\locales\ms.pak" />
-    <None Include="CefSharp\locales\nb.pak" />
-    <None Include="CefSharp\locales\nl.pak" />
-    <None Include="CefSharp\locales\pl.pak" />
-    <None Include="CefSharp\locales\pt-BR.pak" />
-    <None Include="CefSharp\locales\pt-PT.pak" />
-    <None Include="CefSharp\locales\ro.pak" />
-    <None Include="CefSharp\locales\ru.pak" />
-    <None Include="CefSharp\locales\sk.pak" />
-    <None Include="CefSharp\locales\sl.pak" />
-    <None Include="CefSharp\locales\sr.pak" />
-    <None Include="CefSharp\locales\sv.pak" />
-    <None Include="CefSharp\locales\sw.pak" />
-    <None Include="CefSharp\locales\ta.pak" />
-    <None Include="CefSharp\locales\te.pak" />
-    <None Include="CefSharp\locales\th.pak" />
-    <None Include="CefSharp\locales\tr.pak" />
-    <None Include="CefSharp\locales\uk.pak" />
-    <None Include="CefSharp\locales\vi.pak" />
-    <None Include="CefSharp\locales\zh-CN.pak" />
-    <None Include="CefSharp\locales\zh-TW.pak" />
+    <EmbeddedResource Include="CefSharp\locales\es-419.pak" />
+    <EmbeddedResource Include="CefSharp\locales\es.pak" />
+    <EmbeddedResource Include="CefSharp\locales\et.pak" />
+    <EmbeddedResource Include="CefSharp\locales\fa.pak" />
+    <EmbeddedResource Include="CefSharp\locales\fi.pak" />
+    <EmbeddedResource Include="CefSharp\locales\fil.pak" />
+    <EmbeddedResource Include="CefSharp\locales\fr.pak" />
+    <EmbeddedResource Include="CefSharp\locales\gu.pak" />
+    <EmbeddedResource Include="CefSharp\locales\he.pak" />
+    <EmbeddedResource Include="CefSharp\locales\hi.pak" />
+    <EmbeddedResource Include="CefSharp\locales\hr.pak" />
+    <EmbeddedResource Include="CefSharp\locales\hu.pak" />
+    <EmbeddedResource Include="CefSharp\locales\id.pak" />
+    <EmbeddedResource Include="CefSharp\locales\it.pak" />
+    <EmbeddedResource Include="CefSharp\locales\ja.pak" />
+    <EmbeddedResource Include="CefSharp\locales\kn.pak" />
+    <EmbeddedResource Include="CefSharp\locales\ko.pak" />
+    <EmbeddedResource Include="CefSharp\locales\lt.pak" />
+    <EmbeddedResource Include="CefSharp\locales\lv.pak" />
+    <EmbeddedResource Include="CefSharp\locales\ml.pak" />
+    <EmbeddedResource Include="CefSharp\locales\mr.pak" />
+    <EmbeddedResource Include="CefSharp\locales\ms.pak" />
+    <EmbeddedResource Include="CefSharp\locales\nb.pak" />
+    <EmbeddedResource Include="CefSharp\locales\nl.pak" />
+    <EmbeddedResource Include="CefSharp\locales\pl.pak" />
+    <EmbeddedResource Include="CefSharp\locales\pt-BR.pak" />
+    <EmbeddedResource Include="CefSharp\locales\pt-PT.pak" />
+    <EmbeddedResource Include="CefSharp\locales\ro.pak" />
+    <EmbeddedResource Include="CefSharp\locales\ru.pak" />
+    <EmbeddedResource Include="CefSharp\locales\sk.pak" />
+    <EmbeddedResource Include="CefSharp\locales\sl.pak" />
+    <EmbeddedResource Include="CefSharp\locales\sr.pak" />
+    <EmbeddedResource Include="CefSharp\locales\sv.pak" />
+    <EmbeddedResource Include="CefSharp\locales\sw.pak" />
+    <EmbeddedResource Include="CefSharp\locales\ta.pak" />
+    <EmbeddedResource Include="CefSharp\locales\te.pak" />
+    <EmbeddedResource Include="CefSharp\locales\th.pak" />
+    <EmbeddedResource Include="CefSharp\locales\tr.pak" />
+    <EmbeddedResource Include="CefSharp\locales\uk.pak" />
+    <EmbeddedResource Include="CefSharp\locales\vi.pak" />
+    <EmbeddedResource Include="CefSharp\locales\zh-CN.pak" />
+    <EmbeddedResource Include="CefSharp\locales\zh-TW.pak" />
     <EmbeddedResource Include="CefSharp\x64\cef.pak" />
     <EmbeddedResource Include="CefSharp\x64\cef_100_percent.pak" />
     <EmbeddedResource Include="CefSharp\x64\cef_200_percent.pak" />
-    <None Include="CefSharp\x64\cef_extensions.pak" />
+    <EmbeddedResource Include="CefSharp\x64\cef_extensions.pak" />
     <None Include="CefSharp\x64\devtools_resources.pak" />
     <EmbeddedResource Include="CefSharp\x64\icudtl.dat" />
     <EmbeddedResource Include="CefSharp\x64\natives_blob.bin" />
     <EmbeddedResource Include="CefSharp\x64\snapshot_blob.bin" />
+    <EmbeddedResource Include="CefSharp\x64\v8_context_snapshot.bin" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -230,8 +231,8 @@
     <EmbeddedResource Include="CefSharp\x64\libcef.dll" />
     <EmbeddedResource Include="CefSharp\x64\libEGL.dll" />
     <EmbeddedResource Include="CefSharp\x64\libGLESv2.dll" />
-    <EmbeddedResource Include="CefSharp\x64\widevinecdmadapter.dll" />
     <None Include="Resources\Wisej-Logo.png" />
+    <EmbeddedResource Include="CefSharp\version.txt" />
     <Content Include="Wisej-Black.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

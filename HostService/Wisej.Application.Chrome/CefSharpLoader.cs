@@ -47,8 +47,20 @@ namespace Wisej.Application
 		/// </summary>
 		private static void ExtractCefSharp()
 		{
-			ExtractCefSharpResources("Wisej.Application.CefSharp.x64.", "");
-			ExtractCefSharpResources("Wisej.Application.CefSharp.locales.", "locales");
+			// extract CefSharp resources and modules into the temp directory
+			// not to clog the hosting Wisej application folder.
+			CefSharpPath = Path.Combine(Path.GetTempPath(), "Wisej", "CefSharp");
+			Directory.CreateDirectory(CefSharpPath);
+			Directory.SetCurrentDirectory(CefSharpPath);
+
+			var assembly = Assembly.GetEntryAssembly();
+			var resources = assembly.GetManifestResourceNames();
+
+			// verify the version of the CefSharp library.
+			var update = UpdateCefSharp(assembly);
+
+			ExtractCefSharpResources("Wisej.Application.CefSharp.x64.", "", update, assembly, resources);
+			ExtractCefSharpResources("Wisej.Application.CefSharp.locales.", "locales", update, assembly, resources);
 
 			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 		}
@@ -68,19 +80,10 @@ namespace Wisej.Application
 		/// </summary>
 		/// <param name="prefix">Namespace prefix filter.</param>
 		/// <param name="target">Target sub folder, can be empty.</param>
-		private static void ExtractCefSharpResources(string prefix, string target)
+		private static void ExtractCefSharpResources(string prefix, string target, bool update, Assembly assembly, string[] resources)
 		{
 			Debug.Assert(prefix != null);
 			Debug.Assert(target != null);
-
-			var assembly = Assembly.GetEntryAssembly();
-			var resources = assembly.GetManifestResourceNames();
-
-			// extract CefSharp resources and modules into the temp directory
-			// not to clog the hosting Wisej application folder.
-			CefSharpPath = Path.Combine(Path.GetTempPath(), "Wisej", "CefSharp");
-			Directory.CreateDirectory(CefSharpPath);
-			Directory.SetCurrentDirectory(CefSharpPath);
 
 			// create the target sub-directory.
 			if (target != "" && !Directory.Exists(target))
@@ -91,7 +94,7 @@ namespace Wisej.Application
 				if (r.StartsWith(prefix))
 				{
 					var name = Path.Combine(target, r.Substring(prefix.Length));
-					if (!File.Exists(name))
+					if (update || !File.Exists(name))
 					{
 						using (var stream = assembly.GetManifestResourceStream(r))
 						using (var file = new FileStream(name, FileMode.Create, FileAccess.ReadWrite))
@@ -101,6 +104,33 @@ namespace Wisej.Application
 					}
 				}
 			}
+		}
+
+		private static bool UpdateCefSharp(Assembly assembly)
+		{
+			var versionFile = Path.Combine(CefSharpPath, "version.txt");
+			var versionStream = assembly.GetManifestResourceStream("Wisej.Application.CefSharp.version.txt");
+
+			if (versionStream != null)
+			{
+				if (File.Exists(versionFile))
+				{
+					using (var reader1 = new StreamReader(versionFile))
+					using (var reader2 = new StreamReader(versionStream))
+					{
+						if (reader1.ReadToEnd() == reader2.ReadToEnd())
+							return false;
+					}
+				}
+
+				using (var file = new FileStream(versionFile, FileMode.Create, FileAccess.ReadWrite))
+				{
+					versionStream.Position = 0;
+					versionStream.CopyTo(file);
+				}
+			}
+
+			return true;
 		}
 	}
 }

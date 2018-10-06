@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ice Tea Group")]
 [assembly: AssemblyProduct("Wisej")]
-[assembly: AssemblyCopyright("Copyright ©2017 Ice Tea Group LLC")]
+[assembly: AssemblyCopyright("Copyright ©2018 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

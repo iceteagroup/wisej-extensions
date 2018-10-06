@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using CefSharp;
+using CefSharp.WinForms;
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
@@ -124,11 +125,10 @@ namespace Wisej.Application
 			Control.CheckForIllegalCrossThreadCalls = false;
 
 			CefSettings settings = new CefSettings()
-			{
+			{			
 				/** TODO: Add custom settings here. */
 			};
 			Cef.Initialize(settings);
-
 			this.browser = new Browser(this.host.Url + "?standalone=true");
 			this.browser.DownloadHandler = new DownloadHandler();
 			this.browser.Dock = DockStyle.Fill;
@@ -338,12 +338,6 @@ namespace Wisej.Application
 						location = null;
 				}
 
-				if (windowState != null)
-				{
-					TypeConverter converter = TypeDescriptor.GetConverter(typeof(FormWindowState));
-					this.WindowState = (FormWindowState)converter.ConvertFromString(null, CultureInfo.InvariantCulture, windowState);
-				}
-
 				if (size == null || location == null)
 				{
 					CenterToScreen();
@@ -360,6 +354,13 @@ namespace Wisej.Application
 						}
 					}
 				}
+
+				if (windowState != null)
+				{
+					TypeConverter converter = TypeDescriptor.GetConverter(typeof(FormWindowState));
+					this.WindowState = (FormWindowState)converter.ConvertFromString(null, CultureInfo.InvariantCulture, windowState);
+				}
+
 			}
 			catch
 			{
