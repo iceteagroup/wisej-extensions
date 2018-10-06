@@ -1284,9 +1284,11 @@ namespace Wisej.Web.Ext.FullCalendar
 		// Processes the "eventResize" event from the web client.
 		private void ProcessResizeWebEvent(WidgetEventArgs e)
 		{
-			string id = e.Data.id;
-			DateTime end = e.Data.end;
-			DateTime start = e.Data.start;
+			var data = e.Data;
+			string id = data.id;
+			bool allDay = data.allDay ?? false;
+			DateTime end = data.end ?? DateTime.MinValue;
+			DateTime start = data.start ?? DateTime.MinValue;
 
 			var ev = this.Events[id];
 			if (ev != null)
@@ -1295,6 +1297,7 @@ namespace Wisej.Web.Ext.FullCalendar
 				var oldEnd = ev.End;
 				ev.StartInternal = start;
 				ev.EndInternal = end;
+				ev.AllDayInternal = allDay;
 
 				OnEventChanged(new EventValueEventArgs(ev, oldStart, oldEnd));
 			}

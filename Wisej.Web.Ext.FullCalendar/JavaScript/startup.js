@@ -248,12 +248,15 @@ this.onEventDrop = function (event, delta) {
 	var allDay = !event.start.hasTime();
 
 	if (!allDay && !event.end) {
-		var duration = moment.duration(this.calendar.options.defaultTimedEventDuration);
+		var duration = moment.duration(this.calendar.option("defaultTimedEventDuration"));
 		event.end = event.start.clone().add(duration);
+	}
+	else if (allDay && !event.end) {
+		event.end = event.start.clone();
 	}
 
 	var start = event.start.local().toDate();
-	var end = allDay ? null : event.end.local().toDate();
+	var end = event.end.local().toDate();
 
 	this.fireWidgetEvent("eventDrop", {
 		id: event.id,
@@ -271,15 +274,19 @@ this.onEventResize = function (event) {
 
 	var allDay = !event.start.hasTime();
 
+	if (allDay && !event.end) {
+		event.end = event.start.clone();
+	}
+
 	var start = event.start.local().toDate();
-	var end = allDay ? null : event.end.local().toDate();
+	var end = event.end.local().toDate();
 
 	this.fireWidgetEvent("eventResize", {
 		id: event.id,
 		start: start,
 		end: end,
+		allDay: allDay
 	});
-
 }
 
 // timer to detect single or double clicks.
