@@ -1,0 +1,51 @@
+﻿/**
+ * EditBox mixin theme.
+ * Should be compatible with all themes.
+ */
+{
+	"name": "EditBox",
+
+	"appearances": {
+		"editbox": {
+			"inherit": "widget",
+
+			"states": {
+				"default": {
+
+				},
+				"required": {
+				},
+				"error": {
+
+				}
+			},
+
+			"components": {
+				"label": {
+					"states": {
+						"default": {
+
+						},
+						"focused": {
+
+						}
+					}
+				},
+				"editor": {
+					"states": {
+						"default": {
+
+						}
+					}
+				},
+				"error": {
+					"states": {
+						"default": {
+
+						}
+					}
+				}
+			}
+		}
+	}
+}
