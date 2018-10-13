@@ -19,6 +19,9 @@ Note that most published extensions are also already precompiled and included in
 
 | Extension | Change&nbsp;Date | Description |
 | :--- | :---: | :--- |
+| Wisej.Web.Ext.FullCalendar | 06 Oct 2018 | Fixed dragging and extending all-day events. |
+| Wisej.Application.Chrome | 06 Oct 2018 | Updated CefSharp to 67.0.0.0 and CefLib to 3.3396.1786. |
+| Wisej.Web.Ext.RibbonBar | 05 Sep 2018 | Fixed RibbobBar auto height. |
 | Wisej.Web.Ext.SmoothieChart | 30 Aug 2018 | Added FontSize property. |
 | Wisej.Web.Ext.ChartJs | 30 Aug 2018 | Added DataLabel plugin. |
 | Wisej.Web.Ext.ChartJs | 16 Aug 2018 | Added support for SteppedLine. Set colours and style on each individual point. Upgraded to chartjs 2.7.2. |
