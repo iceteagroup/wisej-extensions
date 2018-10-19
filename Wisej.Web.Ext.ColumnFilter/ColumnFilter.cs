@@ -323,6 +323,29 @@ namespace Wisej.Web.Ext.ColumnFilter
 				filterPanel.ShowPopup(column);
 		}
 
+		/// <summary>
+		/// Applies all the filters on the specified <see cref="DataGridView"/>.
+		/// </summary>
+		/// <param name="dataGrid">The <see cref="DataGridView"/> with the filters to apply.</param>
+		public void ApplyFilters(DataGridView dataGrid)
+		{
+			if (dataGrid == null)
+				throw new ArgumentNullException(nameof(dataGrid));
+
+			foreach (DataGridViewColumn column in dataGrid.Columns)
+			{
+				if (column.UserData.ColumnFilter == this)
+				{
+					var panel = column.UserData.FilterPanel as ColumnFilterPanel;
+					if (panel != null)
+					{
+						panel.ApplyFiltersInternal();
+						break;
+					}
+				}
+			}
+		}
+
 		#endregion
 
 		#region IExtenderProvider

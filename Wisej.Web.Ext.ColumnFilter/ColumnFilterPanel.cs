@@ -130,6 +130,14 @@ namespace Wisej.Web.Ext.ColumnFilter
 		}
 
 		/// <summary>
+		/// Applies the filter.
+		/// </summary>
+		internal void ApplyFiltersInternal()
+		{
+			ApplyFilters();
+		}
+
+		/// <summary>
 		/// Invoked when the <see cref="ColumnFilterPanel"/> is shown
 		/// but before it is visible on the client.
 		/// </summary>

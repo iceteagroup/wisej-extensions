@@ -45,7 +45,7 @@
 			this.items.Location = new System.Drawing.Point(10, 43);
 			this.items.Name = "items";
 			this.items.Size = new System.Drawing.Size(219, 175);
-			this.items.Sorted = true;
+			this.items.Sorted = false;
 			this.items.TabIndex = 2;
 			// 
 			// selectAll

@@ -51,15 +51,29 @@ namespace Wisej.Web.Ext.ColumnFilter
 			base.OnLoad(e);
 
 			this.items.Items.Clear();
+			this.Disposed += SimpleColumnFilterPanel_Disposed;
+			this.DataGridViewColumn.DataGridView.Sorted += Rows_Sorted;
 			this.DataGridViewColumn.DataGridView.Rows.CollectionChanged += Rows_CollectionChanged;
+		}
+
+		private void SimpleColumnFilterPanel_Disposed(object sender, EventArgs e)
+		{
+			this.DataGridViewColumn.DataGridView.Sorted -= Rows_Sorted;
+			this.DataGridViewColumn.DataGridView.Rows.CollectionChanged -= Rows_CollectionChanged;
+		}
+
+		private void Rows_Sorted(object sender, EventArgs e)
+		{
+			// refresh the list when the row collection changes.
+			this.reloadItems = true;
 		}
 
 		private void Rows_CollectionChanged(object sender, CollectionChangeEventArgs e)
 		{
-			// clear the list when the row collection changes.
-			if (e.Action == CollectionChangeAction.Refresh)
-				this.items.Items.Clear();
+			// refresh the list when the row collection changes.
+			this.reloadItems = true;
 		}
+		private bool reloadItems = false;
 
 		/// <summary>
 		/// Invoked when the <see cref="ColumnFilterPanel"/> is shown
@@ -67,8 +81,13 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// </summary>
 		protected override void OnBeforeShow()
 		{
-			// show the loader if we are about to populate the list
-			// of values.
+			// show the loader if we are about to populate the list of values.
+			if (this.reloadItems)
+			{
+				this.items.Items.Clear();
+				this.reloadItems = false;
+			}
+
 			if (this.items.Items.Count == 0 && this.DataGridViewColumn.DataGridView.RowCount > 0)
 				this.items.ShowLoader = true;
 		}
@@ -95,66 +114,40 @@ namespace Wisej.Web.Ext.ColumnFilter
 			var colIndex = column.Index;
 			var dataGrid = column.DataGridView;
 
-			var visibleValues = dataGrid.Rows
-				.Where(r => r.Visible)
-				.Select(r => r[colIndex].FormattedValue ?? string.Empty)
-				.Distinct();
-
+			var rows = dataGrid.Rows;
 			var filterItems = this.items.Items;
 
-			// if the list is empty, fill it with all the visible rows.
 			if (filterItems.Count == 0)
 			{
-				if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
-				{
-					foreach (bool b in visibleValues)
+				string text = string.Empty;
+				foreach (var r in rows)
 					{
-						this.items.Items.Add(Convert.ToString(b), true);
-					}
-				}
-				else
+					text = Convert.ToString(r[colIndex].FormattedValue);
+					if (text != string.Empty)
 				{
-					foreach (string v in visibleValues)
+						if (!filterItems.Contains(text))
 					{
-						this.items.SetItemChecked(
-							this.items.Items.Add(v), true);
+							filterItems.Add(text, r.Visible);
 					}
 				}
 			}
-			else
-			{
-				// otherwise add only the values that are visible now but
-				// missing from the checked listBox.				
-				if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
-				{
-					foreach (bool b in visibleValues)
-					{
-						string v = Convert.ToString(b);
-						var index = filterItems.IndexOf(v);
-						if (index == -1)
-						{
-							this.items.SetItemChecked(
-								this.items.Items.Add(v), true);
 						}
 						else
 						{
-							this.items.SetItemChecked(index, true);
-						}
-					}
-				}
-				else
+				string text = string.Empty;
+				foreach (var r in rows)
 				{
-					foreach (string v in visibleValues)
+					text = Convert.ToString(r[colIndex].FormattedValue);
+					if (text != string.Empty)
 					{
-						var index = filterItems.IndexOf(v);
-						if (index == -1)
+						var index = filterItems.IndexOf(text);
+						if (index > -1)
 						{
-							this.items.SetItemChecked(
-								this.items.Items.Add(v), true);
+							this.items.SetItemChecked(index, r.Visible);
 						}
 						else
 						{
-							this.items.SetItemChecked(index, true);
+							filterItems.Add(text, r.Visible);
 						}
 					}
 				}
