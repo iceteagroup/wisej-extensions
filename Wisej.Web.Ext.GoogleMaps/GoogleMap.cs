@@ -192,7 +192,6 @@ namespace Wisej.Web.Ext.GoogleMaps
 				Update();
 			}
 		}
-
 		private string _apiKey;
 
 		/// <summary>
