@@ -3,7 +3,7 @@ Panorama Viewer
 
 <img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/Pannellum.png" width="358" height="252">
 
-Wisej implementation, with source code, of the Pannellum library. Pannellum is a lightweight, free, and open source panorama viewer for the web.
+Source code for the Wisej.Web.Ext.Pannellum. Wisej implementation, with source code, of the Pannellum library. Pannellum is a lightweight, free, and open source panorama viewer for the web.
 
 Uses 3rd party JavaScript library [Pannellum](https://pannellum.org/)
 
