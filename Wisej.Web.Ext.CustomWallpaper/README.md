@@ -1,7 +1,7 @@
 CustomWallpaper
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/CustomWallpaper.jpg" width="358" height="252">
+<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/CustomWallpaper.jpg" width="358">
 
 Source code for the Wisej.Web.Ext.CustomWallpaper extender. This component enhances the Desktop, the MainPage or any Control control by rotating a list of custom images over the control’s background.
 
