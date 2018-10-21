@@ -5,7 +5,7 @@ OfficeViewer
 
 The OfficeViewer extension control uses Microsoft’s Office 365 Live Viewers to show Word, Excel or PowerPoint documents embedded in a Wisej application. You can view a file or a stream.
 
-Uses 3rd party JavaScript library [DUMMY](https://products.office.com/en-us/office-online/view-office-documents-online)
+Uses 3rd party JavaScript library [Office 365 Live Viewers](https://products.office.com/en-us/office-online/view-office-documents-online)
 
 ## [Try it on Online](http://demo.wisej.com/OfficeViewer)
 
