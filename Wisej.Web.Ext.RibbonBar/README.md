@@ -1,4 +1,4 @@
-RIbbonBar (V1)
+RibbonBar (V1)
 ====
 
 <img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/RibbonBar.png" width="358" height="252">
