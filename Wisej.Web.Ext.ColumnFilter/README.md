@@ -5,7 +5,7 @@ ColumnFilter
 
 The ColumnFilter extender component allows you to add row filtering to your DataGridViews. It includes 2 ready made FilterPanels.
 
-## [How to blog](https://wisej.com/blog/columnfilter/)
+## ["How to" blog](https://wisej.com/blog/columnfilter/)
 
 ## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/ColumnFilter)
 
