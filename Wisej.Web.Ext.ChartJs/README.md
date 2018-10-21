@@ -1,4 +1,4 @@
-DUMMY
+ChartJS
 ====
 
 <img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/ChartJS.png" width="358" height="252">
