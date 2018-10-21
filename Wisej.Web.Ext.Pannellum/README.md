@@ -7,6 +7,8 @@ The Pannellum extension component uses the Pannellum library. Pannellum is a lig
 
 Uses 3rd party JavaScript library [Pannellum](https://pannellum.org/)
 
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/PannellumExample)
+
 ## [Try it on Online](http://demo.wisej.com/Pannellum)
 
 License
