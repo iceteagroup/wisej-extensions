@@ -1,7 +1,7 @@
 OnlyOffice<sup>TM</sup>
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/OnlyOffice.png" width="358" height="252">
+<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/OnlyOffice.png" width="358">
 
 Work in progress.
 
