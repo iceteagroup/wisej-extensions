@@ -1,7 +1,7 @@
 SmoothieChart
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/DUMMY.png" width="358" height="252">
+<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/SmoothieChart.png" width="358" height="252">
 
 The SmoothieChart extension uses a cool JavaScript charting widget for streaming data in a scrolling chart.
 

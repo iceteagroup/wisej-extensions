@@ -1,9 +1,9 @@
-YouTube
+Camera
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/YouTube.png" width="358" height="252">
-
 Work in progress.
+
+The Camera extension component makes it possible to take pictures with the device's camera and upload them to the server
 
 License
 -------

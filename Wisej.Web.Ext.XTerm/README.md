@@ -3,7 +3,7 @@ XTerm
 
 <img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/XTerm.png" width="358">
 
-Xterm.js is a terminal front-end component written in JavaScript that works in the browser. It enables applications to provide fully featured terminals to their users and create great development experiences.
+The CountUp extension component uses the excellent Xterm.js widget that is a terminal front-end component written in JavaScript that enables applications to provide fully featured terminals to their users.
 
 Uses 3rd party JavaScript library [XTerm](https://xtermjs.org/)
 
