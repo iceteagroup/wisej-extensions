@@ -3,7 +3,13 @@ ColumnFilter
 
 <img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/ColumnFilter.png" width="358">
 
-Source code for the Wisej.Web.Ext.ColumnFilter extender. With this component you can add row filtering to your DataGridViews. It includes 2 ready made FilterPanels.
+The ColumnFilter extender component allows you to add row filtering to your DataGridViews. It includes 2 ready made FilterPanels.
+
+## ["How to" blog](https://wisej.com/blog/columnfilter/)
+
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/ColumnFilter)
+
+## [Try it on Online](http://demo.wisej.com/ColumnFilter)
 
 License
 -------

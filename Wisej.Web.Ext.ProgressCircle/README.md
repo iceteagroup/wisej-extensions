@@ -3,7 +3,7 @@ ProgressCircle
 
 <img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/ProgressCircle.png" width="358" height="252">
 
-Source code for the Wisej.Web.Ext.ProgressCircle component. This component is entirely implemented on the server side as a derived class of Wisej.Web.Canvas. It draws on a HTML5 canvas element on the client directly from the server in real time. The component lets you set value, line style and thickness, fill color, font, etc.
+The ProgressCircle component is entirely implemented on the server side as a derived class of Wisej.Web.Canvas. It draws on a HTML5 canvas element on the client directly from the server in real time. The component lets you set value, line style and thickness, fill color, font, etc.
 
 License
 -------
