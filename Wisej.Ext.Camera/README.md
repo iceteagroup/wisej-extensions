@@ -1,7 +1,7 @@
 Camera
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/wip.png" height="252">
+<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/wip.jpg" height="252">
 
 Work in progress.
 
