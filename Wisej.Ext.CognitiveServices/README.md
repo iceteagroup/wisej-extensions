@@ -1,6 +1,8 @@
 CognitiveServices
 ====
 
+<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/wip.jpg" height="252">
+
 Work in progress.
 
 The CognitiveServices component represents an object able to programmatically analyse images.
