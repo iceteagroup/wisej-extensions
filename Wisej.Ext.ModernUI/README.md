@@ -3,7 +3,7 @@ ModernUI IconPack
 
 <img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/ModernUI.png" width="358" height="252">
 
-The complete [ModernUI](http://modernuiicons.com/) icon pack – (1,259 icons!). All icons are packed as individual svg resources in a single assembly. Use it by adding the Wisej.Ext.ModernUI to the references and select the icon using the image editor at design time. The URL is resource.wx/Wisej.Ext.ModernUI /{icon-name}.
+The complete [ModernUI](http://modernuiicons.com/) icon pack – (1,259 icons!). All icons are packed as individual `svg` resources in a single assembly. Use it by adding the `Wisej.Ext.ModernUI` to the references and select the icon using the image editor at design time. The URL is `resource.wx/Wisej.Ext.ModernUI /{icon-name}`.
 
 License
 -------
