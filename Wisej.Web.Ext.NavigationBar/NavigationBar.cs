@@ -25,38 +25,55 @@ using System.Drawing.Design;
 using System.Security.Cryptography;
 using System.Text;
 using Wisej.Base;
-using Wisej.Web;
-using Wisej.Web.Layout;
 
 namespace Wisej.Web.Ext.NavigationBar
 {
+	/// <summary>
+	/// Represents a responsive vertical navigation bar that displays
+	/// an application header with logo, child items, and a user panel
+	/// with gravatar and other user information.
+	/// </summary>
+	[ToolboxItem(true)]
+	[ToolboxBitmap(typeof(NavigationBar))]
+	[Description("Responsive vertical navigation bar.")]
 	public partial class NavigationBar : Wisej.Web.FlexLayoutPanel
 	{
+		#region Constructor
+
+		/// <summary>
+		/// Initializes a new instance of <see cref="NavigationBar"/>.
+		/// </summary>
 		public NavigationBar()
 		{
 			InitializeComponent();
 		}
+
+		#endregion
 
 		#region Events
 
 		/// <summary>
 		/// Fired when the user clicks the title header.
 		/// </summary>
+		[Description("Fired when the user clicks the title header.")]
 		public event EventHandler TitleClick;
 
 		/// <summary>
 		/// Fired when the user clicks the user information panel.
 		/// </summary>
+		[Description("Fired when the user clicks the user information panel.")]
 		public event EventHandler UserClick;
 
 		/// <summary>
 		/// Fired when the user clicks an item in the <see cref="NavigationBar"/>.
 		/// </summary>
+		[Description("Fired when the user clicks an item in the NavigationBar.")]
 		public event NavigationBarItemClickEventHandler ItemClick;
 
 		/// <summary>
 		/// Fireds when the value of the property <see cref="CompactView"/> changes.
 		/// </summary>
+		[Description("Fireds when the value of the property CompactView changes.")]
 		public event EventHandler CompactViewChanged;
 
 		/// <summary>
