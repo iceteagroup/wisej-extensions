@@ -35,7 +35,7 @@ namespace Wisej.Web.Ext.Bubbles
 	[ToolboxBitmap(typeof(BubbleNotification))]
 	[ProvideProperty("BubbleValue", typeof(Control))]
 	[ProvideProperty("BubbleStyle", typeof(Control))]
-	[SRDescription("DescriptionBubble")]
+	[Description("Represents a numeric notification bubble that can be displayed next to any control.")]
 	public class BubbleNotification : Wisej.Web.Component, IExtenderProvider
 	{
 		// collection of controls with the related bubble notification value.
@@ -154,7 +154,7 @@ namespace Wisej.Web.Ext.Bubbles
 		/// <param name="control">The <see cref="T:Wisej.Web.Control" /> for which to retrieve the <see cref="T:Wisej.Web.Ext.Bubbles.BubbleNotification" /> value. </param>
 		[DefaultValue(0)]
 		[DisplayName("BubbleValue")]
-		[SRDescription("BubbleValueDescr")]
+		[Description("Gets or sets the notification value associated with the specified control.")]
 		public int GetBubbleValue(Control control)
 		{
 			if (!HasBubbleEntry(control))
@@ -184,7 +184,7 @@ namespace Wisej.Web.Ext.Bubbles
 		/// <param name="control">The <see cref="T:Wisej.Web.Control" /> for which to retrieve the <see cref="T:Wisej.Web.Ext.Bubbles.BubbleNotification" /> value. </param>
 		[DefaultValue(BubbleStyle.Alert)]
 		[DisplayName("BubbleStyle")]
-		[SRDescription("BubbleStyleDescr")]
+		[Description("Gets or sets the notification style associated with the specified control.")]
 		public BubbleStyle GetBubbleStyle(Control control)
 		{
 			if (!HasBubbleEntry(control))
