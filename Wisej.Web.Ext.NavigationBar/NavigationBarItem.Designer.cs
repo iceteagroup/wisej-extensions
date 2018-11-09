@@ -49,6 +49,7 @@
 			this.header.Controls.Add(this.shortcut);
 			this.header.Controls.Add(this.info);
 			this.header.Controls.Add(this.open);
+			this.header.BackColor = System.Drawing.Color.Transparent;
 			this.header.Cursor = Wisej.Web.Cursors.Hand;
 			this.header.LayoutStyle = Wisej.Web.FlexLayoutStyle.Horizontal;
 			this.header.Location = new System.Drawing.Point(0, 0);
