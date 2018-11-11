@@ -17,6 +17,8 @@ Note that most published extensions are also already precompiled and included in
 
 ## News
 
+### Improvements
+
 | Extension | Change&nbsp;Date | Description |
 | :--- | :---: | :--- |
 | Wisej.Web.Ext.FullCalendar | 06 Oct 2018 | Fixed dragging and extending all-day events. |
@@ -33,6 +35,13 @@ Note that most published extensions are also already precompiled and included in
 | Wisej.Ext.Geolocation | 29 Jul 2018 | Added awaitable methods. |
 | Wisej.Web.Ext.Html2Canvas | 29 Jul 2018 | Added awaitable methods. |
 | Wisej.Web.Ext.SmoothieChart | 29 Jul 2018 | Added awaitable methods. |
+
+### New extensions
+
+| Project | Project&nbsp;Date | Description |
+| :--- | :---: | :--- |
+| Wisej.Web.Ext.NavigationBar | 01 Nov 2018 | A responsive vertical navigation bar that displays an application header with logo, child items, and a user panel with gravatar and other user information. |
+| Wisej.Web.Ext.SideButton | 01 Nov 2018 | Retractable animated button that can be used to expand or collapse other panels. |
 
 License
 -------
