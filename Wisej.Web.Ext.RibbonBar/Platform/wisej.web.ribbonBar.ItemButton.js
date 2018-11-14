@@ -85,7 +85,7 @@ qx.Class.define("wisej.web.ribbonBar.ItemButton", {
 		_createItem: function () {
 
 			var item = new qx.ui.toolbar.MenuButton().set({
-				center: true,
+				center: false,
 				label: this.getLabel(),
 				icon: this.getIcon(),
 				rich: true,
@@ -97,10 +97,8 @@ qx.Class.define("wisej.web.ribbonBar.ItemButton", {
 			item._forwardStates.vertical = true;
 			item._forwardStates.horizontal = true;
 
-			// always create the arrow to occupy the space and
-			// keep the vertical buttons aligned.
 			item.getChildControl("label").exclude();
-			item.getChildControl("arrow").hide();
+			item.getChildControl("arrow").exclude();
 
 			if (!wisej.web.DesignMode)
 				item.addListener("execute", this._onItemExecute, this);
@@ -115,7 +113,6 @@ qx.Class.define("wisej.web.ribbonBar.ItemButton", {
 
 			if (value == "vertical") {
 				this.control.set({
-					center: true,
 					iconPosition: "top"
 				});
 				this.addState("vertical");
@@ -125,7 +122,6 @@ qx.Class.define("wisej.web.ribbonBar.ItemButton", {
 			}
 			else {
 				this.control.set({
-					center: false,
 					iconPosition: "left"
 				});
 				this.addState("horizontal");
@@ -154,16 +150,9 @@ qx.Class.define("wisej.web.ribbonBar.ItemButton", {
 
 			var arrow = this.control.getChildControl("arrow");
 
-			if (this.getOrientation() == "vertical") {
-				value
-					? arrow.show()
-					: arrow.hide();
-			}
-			else {
 				value
 					? arrow.show()
 					: arrow.exclude();
-			}
 		},
 
 		/**

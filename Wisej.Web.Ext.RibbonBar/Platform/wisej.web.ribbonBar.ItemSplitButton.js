@@ -87,6 +87,7 @@ qx.Class.define("wisej.web.ribbonBar.ItemSplitButton", {
 				focusable: false,
 			});
 			item.getChildControl("button").set({
+				center: false,
 				rich: true,
 			});
 			item.getChildControl("arrow").set({
@@ -117,7 +118,6 @@ qx.Class.define("wisej.web.ribbonBar.ItemSplitButton", {
 
 			if (value == "vertical") {
 				button.set({
-					center: true,
 					iconPosition: "top"
 				});
 				this.addState("vertical");
@@ -129,7 +129,6 @@ qx.Class.define("wisej.web.ribbonBar.ItemSplitButton", {
 			}
 			else {
 				button.set({
-					center: false,
 					iconPosition: "left"
 				});
 				this.addState("horizontal");
