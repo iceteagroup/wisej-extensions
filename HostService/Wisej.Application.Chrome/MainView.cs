@@ -125,10 +125,11 @@ namespace Wisej.Application
 			Control.CheckForIllegalCrossThreadCalls = false;
 
 			CefSettings settings = new CefSettings()
-			{			
+			{
 				/** TODO: Add custom settings here. */
 			};
 			Cef.Initialize(settings);
+
 			this.browser = new Browser(this.host.Url + "?standalone=true");
 			this.browser.DownloadHandler = new DownloadHandler();
 			this.browser.Dock = DockStyle.Fill;
