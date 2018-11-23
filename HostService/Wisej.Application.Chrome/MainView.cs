@@ -91,7 +91,7 @@ namespace Wisej.Application
 			}
 			catch (Exception ex)
 			{
-				this.Text = "Wisej - " + ex.Message;
+				MessageBox.Show(ex.GetBaseException().Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 
 			base.OnShown(e);

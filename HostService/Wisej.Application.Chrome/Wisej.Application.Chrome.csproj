@@ -234,6 +234,10 @@
     <EmbeddedResource Include="CefSharp\x64\libGLESv2.dll" />
     <None Include="Resources\Wisej-Logo.png" />
     <EmbeddedResource Include="CefSharp\version.txt" />
+    <EmbeddedResource Include="CefSharp\x64\concrt140.dll" />
+    <EmbeddedResource Include="CefSharp\x64\msvcp140.dll" />
+    <EmbeddedResource Include="CefSharp\x64\vccorlib140.dll" />
+    <EmbeddedResource Include="CefSharp\x64\vcruntime140.dll" />
     <Content Include="Wisej-Black.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
