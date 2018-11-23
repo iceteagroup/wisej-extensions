@@ -40,7 +40,7 @@ namespace Wisej.Application
 		/// <summary>
 		/// Returns the path where the CefSharp files have been extracted to.
 		/// </summary>
-		private static string CefSharpPath { get; set; }
+		public static string CefSharpPath { get; set; }
 
 		/// <summary>
 		/// Extract all the CefSharp modules and resources.

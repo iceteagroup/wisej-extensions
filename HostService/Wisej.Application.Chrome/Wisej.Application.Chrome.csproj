@@ -14,7 +14,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,13 +25,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Wisej-Black.ico</ApplicationIcon>
@@ -93,11 +94,13 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="Wisej.Core">
-      <HintPath>..\..\..\..\Development\1.4\Wisej\bin\Wisej.Core.dll</HintPath>
+    <Reference Include="Wisej.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Development\1.5\Wisej\bin\Wisej.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Wisej.Web">
-      <HintPath>..\..\..\..\Development\1.4\Wisej\bin\Wisej.Web.dll</HintPath>
+    <Reference Include="Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Development\1.5\Wisej\bin\Wisej.Web.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -199,11 +202,12 @@
     <EmbeddedResource Include="CefSharp\x64\cef.pak" />
     <EmbeddedResource Include="CefSharp\x64\cef_100_percent.pak" />
     <EmbeddedResource Include="CefSharp\x64\cef_200_percent.pak" />
-    <None Include="CefSharp\x64\cef_extensions.pak" />
+    <EmbeddedResource Include="CefSharp\x64\cef_extensions.pak" />
     <None Include="CefSharp\x64\devtools_resources.pak" />
     <EmbeddedResource Include="CefSharp\x64\icudtl.dat" />
     <EmbeddedResource Include="CefSharp\x64\natives_blob.bin" />
     <EmbeddedResource Include="CefSharp\x64\snapshot_blob.bin" />
+    <EmbeddedResource Include="CefSharp\x64\v8_context_snapshot.bin" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -229,7 +233,7 @@
     <EmbeddedResource Include="CefSharp\x64\libEGL.dll" />
     <EmbeddedResource Include="CefSharp\x64\libGLESv2.dll" />
     <None Include="Resources\Wisej-Logo.png" />
-    <Content Include="CefSharp\version.txt" />
+    <EmbeddedResource Include="CefSharp\version.txt" />
     <Content Include="Wisej-Black.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -84,8 +84,15 @@ namespace Wisej.Application
 			FullScreenMode();
 			WinForms.Application.DoEvents();
 
-			StartServer();
-			CreateBrowser();
+			try
+			{
+				StartServer();
+				CreateBrowser();
+			}
+			catch (Exception ex)
+			{
+				this.Text = "Wisej - " + ex.Message;
+			}
 
 			base.OnShown(e);
 		}
@@ -97,7 +104,11 @@ namespace Wisej.Application
 			if (!e.Cancel)
 			{
 				SaveUserBounds();
-				Cef.Shutdown();
+				try
+				{
+					Cef.Shutdown();
+				}
+				catch { }
 			}
 		}
 
@@ -126,6 +137,9 @@ namespace Wisej.Application
 
 			CefSettings settings = new CefSettings()
 			{
+				LogSeverity = LogSeverity.Disable,
+				BrowserSubprocessPath = Path.Combine(CefSharpLoader.CefSharpPath, "CefSharp.BrowserSubprocess.exe")
+
 				/** TODO: Add custom settings here. */
 			};
 			Cef.Initialize(settings);
