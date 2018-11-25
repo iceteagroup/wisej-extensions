@@ -59,5 +59,14 @@ namespace Wisej.Application.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4.0.3.85.
+        /// </summary>
+        internal static string EdgeVersion {
+            get {
+                return ResourceManager.GetString("EdgeVersion", resourceCulture);
+            }
+        }
     }
 }

@@ -28,12 +28,18 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Wisej.Application.Properties;
 
 namespace Wisej.Application
 {
 	/// <summary>
 	/// Browser wrapper control. Works either as IE or Edge if supported.
 	/// </summary>
+	/// <remarks>
+	/// NOTE: When updating the embedded Microsoft.Toolkit.Win32.UI.Controls.dll you also
+	/// must update the version string in Resources.resx other it will not extract and update
+	/// systems where this executable has already been used.
+	/// </remarks>
 	internal class Browser : Control
 	{
 		private string url;
@@ -56,6 +62,10 @@ namespace Wisej.Application
 			try
 			{
 				// get ready to load Microsoft.Toolkit.Win32.UI.Controls.dll
+				//
+				// NOTE: When updating the embedded Microsoft.Toolkit.Win32.UI.Controls.dll you also
+				// must update the version string in Resources.resx other it will not extract and update
+				// systems where this executable has already been used.
 				AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
 				// allow Win32WebViewHost to use localhost.
@@ -116,16 +126,37 @@ namespace Wisej.Application
 		{
 			if (e.Name.StartsWith("Microsoft.Toolkit.Win32.UI.Controls"))
 			{
-				var path = Path.Combine(Path.GetTempPath(), "Microsoft.Toolkit.Win32.UI.Controls.dll");
-				using (var file = new FileStream(path, FileMode.Create, FileAccess.Write))
-				using (var stream = typeof(Browser).Assembly.GetManifestResourceStream("Wisej.Application.Edge.Microsoft.Toolkit.Win32.UI.Controls.dll"))
-				{
-					stream.CopyTo(file);
-				}
-				return Assembly.LoadFrom(path);
+				var filePath = ExtractEdgeAssembly();
+				return Assembly.LoadFrom(filePath);
 			}
 
 			return null;
+		}
+
+		private string ExtractEdgeAssembly()
+		{
+			var tempPath = Path.Combine(Path.GetTempPath(), "Wisej", "Edge");
+			var filePath = Path.Combine(tempPath, "Microsoft.Toolkit.Win32.UI.Controls.dll");
+
+			// check if already extracted and up to date.
+			if (File.Exists(filePath))
+			{
+				var version = new Version(Resources.EdgeVersion).ToString();
+				var fileVersion = FileVersionInfo.GetVersionInfo(filePath).FileVersion;
+
+				// don't extract again.
+				if (version == fileVersion)
+					return filePath;
+			}
+
+			Directory.CreateDirectory(tempPath);
+			using (var file = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+			using (var stream = typeof(Browser).Assembly.GetManifestResourceStream("Wisej.Application.Edge.Microsoft.Toolkit.Win32.UI.Controls.dll"))
+			{
+				stream.CopyTo(file);
+			}
+
+			return filePath;
 		}
 
 		private void Edge_AcceleratorKeyPressed(object sender, WebViewControlAcceleratorKeyPressedEventArgs e)
