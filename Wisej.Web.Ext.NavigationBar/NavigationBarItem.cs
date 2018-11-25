@@ -510,7 +510,8 @@ namespace Wisej.Web.Ext.NavigationBar
 			this.info.Visible = !compactView && !String.IsNullOrEmpty(this.InfoText);
 			this.shortcut.Visible = !compactView && !String.IsNullOrEmpty(this.shortcut.Text);
 
-			this.header.ToolTipText = compactView ? this.title.Text : null;
+			if (String.IsNullOrEmpty (this.ToolTipText))
+				this.header.ToolTipText = compactView ? this.title.Text : null;
 		}
 
 		private void shortcut_Click(object sender, EventArgs e)
