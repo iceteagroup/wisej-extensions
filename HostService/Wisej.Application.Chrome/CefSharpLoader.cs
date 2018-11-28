@@ -108,6 +108,8 @@ namespace Wisej.Application
 
 		private static bool UpdateCefSharp(Assembly assembly)
 		{
+			string currentVersion = null;
+			string embeddedVersion = null;
 			var versionFile = Path.Combine(CefSharpPath, "version.txt");
 			var versionStream = assembly.GetManifestResourceStream("Wisej.Application.CefSharp.version.txt");
 
@@ -118,15 +120,16 @@ namespace Wisej.Application
 					using (var reader1 = new StreamReader(versionFile))
 					using (var reader2 = new StreamReader(versionStream))
 					{
-						if (reader1.ReadToEnd() == reader2.ReadToEnd())
+						currentVersion = reader1.ReadToEnd();
+						embeddedVersion = reader2.ReadToEnd();
+						if (currentVersion == embeddedVersion)
 							return false;
 					}
 				}
 
-				using (var file = new FileStream(versionFile, FileMode.Create, FileAccess.ReadWrite))
+				using (var file = new StreamWriter(versionFile))
 				{
-					versionStream.Position = 0;
-					versionStream.CopyTo(file);
+					file.Write(embeddedVersion);
 				}
 			}
 

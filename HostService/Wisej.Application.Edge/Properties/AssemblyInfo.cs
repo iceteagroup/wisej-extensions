@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Wisej.Application")]
-[assembly: AssemblyDescription("Wisej StandAlone Application")]
+[assembly: AssemblyDescription("Wisej Edge/IE Desktop Application")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ice Tea Group")]
+[assembly: AssemblyCompany("Ice Tea Group LLC")]
 [assembly: AssemblyProduct("Wisej")]
-[assembly: AssemblyCopyright("Copyright ©2017 Ice Tea Group LLC")]
+[assembly: AssemblyCopyright("Copyright ©2018 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
