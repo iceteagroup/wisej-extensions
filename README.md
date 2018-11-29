@@ -40,6 +40,7 @@ Note that most published extensions are also already precompiled and included in
 
 | Project | Project&nbsp;Date | Description |
 | :--- | :---: | :--- |
+| Wisej Host Service | 28 Nov 2018 | Add Edge and Firefox applications. |
 | Wisej.Web.Ext.NavigationBar | 01 Nov 2018 | A responsive vertical navigation bar that displays an application header with logo, child items, and a user panel with gravatar and other user information. |
 | Wisej.Web.Ext.SideButton | 01 Nov 2018 | Retractable animated button that can be used to expand or collapse other panels. |
 
