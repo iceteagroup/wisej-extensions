@@ -21,14 +21,19 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
+using Wisej.Core;
 
 namespace Wisej.Web.Ext.NavigationBar
 {
 	/// <summary>
 	/// Represents a navigation item in the <see cref="NavigationBar"/> control.
 	/// </summary>
+	[ToolboxItem(false)]
 	public partial class NavigationBarItem : Wisej.Web.FlexLayoutPanel
 	{
+		/// <summary>
+		/// Initializes a new instance of <see cref="NavigationBarItem"/>.
+		/// </summary>
 		public NavigationBarItem()
 		{
 			InitializeComponent();
@@ -528,13 +533,13 @@ namespace Wisej.Web.Ext.NavigationBar
 		{
 			if (this.items.Visible)
 			{
-				this.open.ImageSource = "icon-up";
 				OnExpand(e);
+				this.open.Call("addState", "open");
 			}
 			else
 			{
-				this.open.ImageSource = "icon-down";
 				OnCollapse(e);
+				this.open.Call("removeState", "open");
 			}
 		}
 
@@ -555,6 +560,17 @@ namespace Wisej.Web.Ext.NavigationBar
 			this.open.Visible =
 				!this.CompactView
 				&& this.items.Controls.Count > 0;
+		}
+
+		public override void Update()
+		{
+			base.Update();
+
+			if (((IWisejComponent)this).IsNew)
+			{
+				if (this.items.Visible)
+					this.open.Call("addState", "open");
+			}
 		}
 
 		#endregion

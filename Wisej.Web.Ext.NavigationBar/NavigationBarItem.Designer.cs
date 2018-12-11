@@ -44,18 +44,18 @@
 			// header
 			// 
 			this.header.AppearanceKey = "navbar-item/header";
+			this.header.BackColor = System.Drawing.Color.Transparent;
 			this.header.Controls.Add(this.icon);
 			this.header.Controls.Add(this.title);
 			this.header.Controls.Add(this.shortcut);
 			this.header.Controls.Add(this.info);
 			this.header.Controls.Add(this.open);
-			this.header.BackColor = System.Drawing.Color.Transparent;
 			this.header.Cursor = Wisej.Web.Cursors.Hand;
 			this.header.LayoutStyle = Wisej.Web.FlexLayoutStyle.Horizontal;
 			this.header.Location = new System.Drawing.Point(0, 0);
 			this.header.Margin = new Wisej.Web.Padding(0);
 			this.header.Name = "header";
-			this.header.Padding = new Wisej.Web.Padding(20, 0, 20, 0);
+			this.header.Padding = new Wisej.Web.Padding(25, 0, 20, 0);
 			this.header.Size = new System.Drawing.Size(502, 45);
 			this.header.Spacing = 12;
 			this.header.TabIndex = 1;
@@ -65,7 +65,7 @@
 			// 
 			this.header.SetAlignY(this.icon, Wisej.Web.VerticalAlignment.Middle);
 			this.icon.Anonymous = true;
-			this.icon.Location = new System.Drawing.Point(20, 12);
+			this.icon.Location = new System.Drawing.Point(25, 12);
 			this.icon.Margin = new Wisej.Web.Padding(0);
 			this.icon.MaximumSize = new System.Drawing.Size(20, 20);
 			this.icon.Name = "icon";
@@ -78,10 +78,10 @@
 			this.title.Anonymous = true;
 			this.title.AutoEllipsis = true;
 			this.header.SetFillWeight(this.title, 1);
-			this.title.Location = new System.Drawing.Point(52, 0);
+			this.title.Location = new System.Drawing.Point(57, 0);
 			this.title.Margin = new Wisej.Web.Padding(0);
 			this.title.Name = "title";
-			this.title.Size = new System.Drawing.Size(356, 45);
+			this.title.Size = new System.Drawing.Size(351, 45);
 			this.title.TabIndex = 1;
 			this.title.Text = "label1";
 			this.title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -118,7 +118,7 @@
 			// 
 			this.header.SetAlignY(this.open, Wisej.Web.VerticalAlignment.Middle);
 			this.open.Anonymous = true;
-			this.open.ImageSource = "icon-down";
+			this.open.AppearanceKey = "navbar-item/open";
 			this.open.Location = new System.Drawing.Point(466, 12);
 			this.open.Margin = new Wisej.Web.Padding(0);
 			this.open.MaximumSize = new System.Drawing.Size(20, 20);
