@@ -7,8 +7,6 @@ The CountUp extension component uses the excellent CountUp.js widget that can be
 
 Uses 3rd party JavaScript library [CountUp.js](http://inorganik.github.io/countUp.js/)
 
-Wisej 2.0 extension.
-
 License
 -------
 <img src="http://iceteagroup.com/wp-content/uploads/2017/01/Square-64x64-trasp.png" height="20" align="top"> Copyright (C) ICE TEA GROUP LLC, All rights reserved.
