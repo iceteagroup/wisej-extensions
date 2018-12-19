@@ -23,7 +23,7 @@ using System.Drawing;
 using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
-using Wisej.Design;
+using Wisej.Core.Design;
 
 namespace Wisej.Web.Ext.CountUp
 {
@@ -212,7 +212,6 @@ namespace Wisej.Web.Ext.CountUp
 		/// <returns>On of the <see cref="HorizontalAlignment"/> values. </returns>
 		[DefaultValue(HorizontalAlignment.Left)]
 		[Localizable(true)]
-		[ResponsiveProperty]
 		[SRCategory("CatAppearance")]
 		[SRDescription("LabelTextAlignDescr")]
 		public virtual HorizontalAlignment TextAlign
