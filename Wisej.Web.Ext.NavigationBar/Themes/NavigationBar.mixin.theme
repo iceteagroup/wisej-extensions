@@ -83,6 +83,24 @@
               }
             }
           }
+        },
+        "open": {
+          "states": {
+            "default": {
+              "styles": {
+                "transform": "rotateZ(0deg)",
+                "transition": "transform 250ms"
+              },
+              "properties": {
+                "source": "icon-down"
+              }
+            },
+            "open": {
+              "styles": {
+                "transform": "rotateZ(180deg)"
+              }
+            }
+          }
         }
       }
     }

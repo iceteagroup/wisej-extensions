@@ -119,7 +119,6 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the compact view mode.
 		/// </summary>
-		[ResponsiveProperty]
 		[DefaultValue(false)]
 		public bool CompactView
 		{
