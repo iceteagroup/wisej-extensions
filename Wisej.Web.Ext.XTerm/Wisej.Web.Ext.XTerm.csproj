@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2D7E23B4-4D1E-4A30-9598-D042620C6A7D}</ProjectGuid>
+    <ProjectGuid>{5A8DD6E0-D003-45E8-BD46-82678602AFFB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wisej.Web.Ext.XTerm</RootNamespace>
@@ -44,8 +44,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Wisej.Core"/>
-    <Reference Include="Wisej.Web"/>
+    <Reference Include="Wisej.Core" />
+    <Reference Include="Wisej.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="XTerm.cs">

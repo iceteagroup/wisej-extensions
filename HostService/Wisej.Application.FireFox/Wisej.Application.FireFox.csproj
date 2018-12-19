@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BC93ABE3-9949-4BCA-BCA4-22A5B2F3A5F6}</ProjectGuid>
+    <ProjectGuid>{3DDDF7B8-AD7C-434C-ADED-6CCFBF5A8335}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wisej.Application</RootNamespace>
