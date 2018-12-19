@@ -23,7 +23,7 @@ using System.Drawing;
 using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
-using Wisej.Core.Design;
+using Wisej.Design;
 
 namespace Wisej.Web.Ext.CountUp
 {
@@ -206,6 +206,7 @@ namespace Wisej.Web.Ext.CountUp
 			this.Numerals = null;
 		}
 
+		/// <summary>
 		/// Returns or sets the alignment of the label. The default is <see cref="HorizontalAlignment.Left"/>.
 		/// </summary>
 		/// <returns>On of the <see cref="HorizontalAlignment"/> values. </returns>
