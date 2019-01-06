@@ -37,7 +37,7 @@ namespace Wisej.Ext.WebWorker
 	[ToolboxItemFilter("Wisej.Web", ToolboxItemFilterType.Require)]
 	[ToolboxItemFilter("Wisej.Mobile", ToolboxItemFilterType.Require)]
 	[Description("The WebWorker component represents a JavaScript WebWorker instance that can run on the client and fire sever events and receive updates from the server.")]
-	public class WebWorker : Wisej.Base.Component, IComponent, IWisejHandler
+	public class WebWorker : Wisej.Web.Component, IWisejHandler
 	{
 		// version counter, used to update the source code when it changes.
 		private int version = 0;
@@ -172,39 +172,6 @@ namespace Wisej.Ext.WebWorker
 				this.version = 0;
 
 			base.Update();
-		}
-
-		#endregion
-
-		#region IComponent
-
-		/// <summary>
-		/// Returns or sets the <see cref="T:System.ComponentModel.ISite" /> associated with 
-		/// the <see cref="T:System.ComponentModel.IComponent" />.
-		/// </summary>
-		/// <returns>The <see cref="T:System.ComponentModel.ISite" /> object associated with the component; or null, if the component does not have a site.</returns>
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public virtual ISite Site
-		{
-			get { return this._site; }
-			set
-			{
-				this._site = value;
-				((IWisejComponent)this).DesignMode = value == null ? false : value.DesignMode;
-			}
-		}
-		private ISite _site;
-
-		/// <summary>
-		/// Returns a value that indicates whether the <see cref="T:System.ComponentModel.IComponent" /> is currently in design mode.
-		/// </summary>
-		/// <returns>true if the <see cref="T:System.ComponentModel.IComponent" /> is in design mode; otherwise, false.</returns>
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		protected bool DesignMode
-		{
-			get { return this._site != null && this._site.DesignMode; }
 		}
 
 		#endregion

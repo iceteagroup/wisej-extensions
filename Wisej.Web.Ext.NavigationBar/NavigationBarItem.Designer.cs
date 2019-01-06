@@ -138,9 +138,9 @@
 			this.items.Size = new System.Drawing.Size(0, 0);
 			this.items.TabIndex = 0;
 			this.items.Visible = false;
+			this.items.VisibleChanged += new System.EventHandler(this.items_VisibleChanged);
 			this.items.ControlAdded += new Wisej.Web.ControlEventHandler(this.items_ControlAdded);
 			this.items.ControlRemoved += new Wisej.Web.ControlEventHandler(this.items_ControlRemoved);
-			this.items.VisibleChanged += new System.EventHandler(this.items_VisibleChanged);
 			// 
 			// NavigationBarItem
 			// 

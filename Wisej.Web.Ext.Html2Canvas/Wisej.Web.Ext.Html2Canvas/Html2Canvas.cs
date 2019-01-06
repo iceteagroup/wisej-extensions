@@ -39,13 +39,19 @@ namespace Wisej.Web.Ext.Html2Canvas
 	/// Usage is quite easy:
 	/// </para>
 	/// <code language="cs">
-	///  Wisej.Web.Ext.Html2Canvas.Html2Canvas.Screenshot(this, (image) => {
+	///		Html2Canvas.Screenshot(this, (image) => {
 	///		image.Save(@"\images\screen.png");
 	/// });
+	///		
+	///		// or using asynchronous code:
+	///		
+	///		var image = await Html2Canvas.Screenshot(this.panel1);
+	///		image.Save(@"\images\screen.png");
+	///		
 	/// </code>
 	/// </remarks>
 	[ToolboxItem(false)]
-	[Description("Implementation of the html2canvas (https://html2canvas.hertzen.com/).")]
+	[Description("Implementation of the html2canvas library (https://html2canvas.hertzen.com/).")]
 	public class Html2Canvas : Component
 	{
 		#region Constructor

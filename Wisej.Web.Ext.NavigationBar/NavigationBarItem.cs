@@ -32,8 +32,9 @@ namespace Wisej.Web.Ext.NavigationBar
 	public partial class NavigationBarItem : Wisej.Web.FlexLayoutPanel
 	{
 		/// <summary>
-		/// Initializes a new instance of <see cref="NavigationBarItem"/>.
+		/// Initializes a new instance of the <see cref="NavigationBarItem"/> class.
 		/// </summary>
+		[ToolboxItem(false)]
 		public NavigationBarItem()
 		{
 			InitializeComponent();
