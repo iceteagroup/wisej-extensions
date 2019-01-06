@@ -26,7 +26,7 @@ using System.Diagnostics;
 using System.Drawing;
 using Wisej.Base;
 using Wisej.Core;
-using Wisej.Core.Design;
+using Wisej.Design;
 
 namespace Wisej.Web.Ext.RibbonBar
 {

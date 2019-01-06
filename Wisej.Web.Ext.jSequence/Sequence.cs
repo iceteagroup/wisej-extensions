@@ -24,7 +24,7 @@ using System.Drawing;
 using System.Drawing.Design;
 using System.Web.Configuration;
 using Wisej.Core;
-using Wisej.Core.Design;
+using Wisej.Design;
 
 namespace Wisej.Web.Ext.jSequence
 {
@@ -73,7 +73,7 @@ namespace Wisej.Web.Ext.jSequence
 		/// </summary>
 		[DefaultValue("")]
 		[DesignerActionList]
-		[Editor("Wisej.Web.Design.HtmlEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public string UML
 		{
 			get { return this._uml; }

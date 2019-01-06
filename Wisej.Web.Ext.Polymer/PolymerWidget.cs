@@ -23,7 +23,7 @@ using System.Drawing;
 using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
-using Wisej.Core.Design;
+using Wisej.Design;
 
 namespace Wisej.Web.Ext.Polymer
 {
@@ -103,7 +103,7 @@ namespace Wisej.Web.Ext.Polymer
 		/// Returns or sets the HTML content associated with this polymer widget.
 		/// </summary>
 		/// <returns>The inner HTML content of the polymer widget.</returns>
-		[Editor("Wisej.Web.Design.MultilineStringEditorWithAllowHtml, Wisej.Web.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.MultilineStringEditorWithAllowHtml, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public override string Text
 		{
 			get { return base.Text; }
@@ -180,7 +180,7 @@ namespace Wisej.Web.Ext.Polymer
 		[DesignerActionList]
 		[Category("Polymer")]
 		[MergableProperty(false)]
-		[Editor("Wisej.Web.Design.CodeEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public virtual dynamic Properties
 		{
 			get

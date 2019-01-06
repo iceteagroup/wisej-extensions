@@ -24,7 +24,7 @@ using System.Drawing;
 using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
-using Wisej.Core.Design;
+using Wisej.Design;
 
 namespace Wisej.Web.Ext.JustGage
 {

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E74A8C2A-877E-41A8-814E-4F576B1D41A2}</ProjectGuid>
+    <ProjectGuid>{176267C2-21D5-4741-B774-4E722BC8BFF5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wisej.Web.Ext.XTerm</RootNamespace>

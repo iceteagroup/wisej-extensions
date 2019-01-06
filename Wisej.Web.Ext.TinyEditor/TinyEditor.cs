@@ -24,7 +24,7 @@ using System.Drawing;
 using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
-using Wisej.Core.Design;
+using Wisej.Design;
 using WinForms = System.Windows.Forms;
 
 namespace Wisej.Web.Ext.TinyEditor
@@ -250,7 +250,7 @@ namespace Wisej.Web.Ext.TinyEditor
 		/// </summary>
 		[DefaultValue("")]
 		[Description("Returns or sets the custom css file used by the editor.")]
-		[Editor("Wisej.Web.Design.CssFileSourceEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CssFileSourceEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public string StyleSheetSource
 		{
 			get { return this._styleSheetSource ?? string.Empty; }

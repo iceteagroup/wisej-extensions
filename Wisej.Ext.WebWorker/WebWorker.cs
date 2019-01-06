@@ -25,6 +25,7 @@ using System.IO;
 using System.Reflection;
 using Wisej.Base;
 using Wisej.Core;
+using Wisej.Web;
 
 namespace Wisej.Ext.WebWorker
 {
@@ -37,7 +38,7 @@ namespace Wisej.Ext.WebWorker
 	[ToolboxItemFilter("Wisej.Web", ToolboxItemFilterType.Require)]
 	[ToolboxItemFilter("Wisej.Mobile", ToolboxItemFilterType.Require)]
 	[Description("The WebWorker component represents a JavaScript WebWorker instance that can run on the client and fire sever events and receive updates from the server.")]
-	public class WebWorker : Wisej.Base.Component, IComponent, IWisejHandler
+	public class WebWorker : Web.Component, IWisejHandler
 	{
 		// version counter, used to update the source code when it changes.
 		private int version = 0;
@@ -94,7 +95,7 @@ namespace Wisej.Ext.WebWorker
 		{
 			get
 			{
-				bool? supported = ApplicationBase.Browser?.Features?.worker;
+				bool? supported = Wisej.Web.Application.Browser?.Features?.worker;
 				return supported == null || supported.Value == true;
 			}
 		}
@@ -103,7 +104,7 @@ namespace Wisej.Ext.WebWorker
 		/// Returns or sets the JavaScript code to execute in the WebWorker process.
 		/// </summary>
 		[DefaultValue("")]
-		[Editor("Wisej.Web.Design.CodeEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public string JavaScript
 		{
 			get { return this._javaScript; }
@@ -124,7 +125,7 @@ namespace Wisej.Ext.WebWorker
 		/// Returns or sets the JavaScript file with the source code to execute in the WebWorker process.
 		/// </summary>
 		[DefaultValue("")]
-		[Editor("Wisej.Web.Design.JsFileSourceEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.JsFileSourceEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public string JavaScriptSource
 		{
 			get { return this._javaScriptSource; }
@@ -172,39 +173,6 @@ namespace Wisej.Ext.WebWorker
 				this.version = 0;
 
 			base.Update();
-		}
-
-		#endregion
-
-		#region IComponent
-
-		/// <summary>
-		/// Returns or sets the <see cref="T:System.ComponentModel.ISite" /> associated with 
-		/// the <see cref="T:System.ComponentModel.IComponent" />.
-		/// </summary>
-		/// <returns>The <see cref="T:System.ComponentModel.ISite" /> object associated with the component; or null, if the component does not have a site.</returns>
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public virtual ISite Site
-		{
-			get { return this._site; }
-			set
-			{
-				this._site = value;
-				((IWisejComponent)this).DesignMode = value == null ? false : value.DesignMode;
-			}
-		}
-		private ISite _site;
-
-		/// <summary>
-		/// Returns a value that indicates whether the <see cref="T:System.ComponentModel.IComponent" /> is currently in design mode.
-		/// </summary>
-		/// <returns>true if the <see cref="T:System.ComponentModel.IComponent" /> is in design mode; otherwise, false.</returns>
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		protected bool DesignMode
-		{
-			get { return this._site != null && this._site.DesignMode; }
 		}
 
 		#endregion
@@ -281,7 +249,7 @@ namespace Wisej.Ext.WebWorker
 					return null;
 
 				// return the file in the application's directory, if present.
-				var filePath = Path.Combine(ApplicationBase.StartupPath, fileName);
+				var filePath = Path.Combine(Wisej.Web.Application.StartupPath, fileName);
 				if (File.Exists(filePath))
 				{
 					using (StreamReader reader = new StreamReader(filePath))

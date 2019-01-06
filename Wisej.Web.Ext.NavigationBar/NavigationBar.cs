@@ -119,6 +119,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the compact view mode.
 		/// </summary>
+		[ResponsiveProperty]
 		[DefaultValue(false)]
 		public bool CompactView
 		{
@@ -159,8 +160,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns or sets the logo to display in the <see cref="NavigationBar"/>.
 		/// </summary>
 		[DefaultValue("")]
-		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design")]
-		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public string Logo
 		{
 			get => this.logo.ImageSource;
@@ -189,8 +190,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the user avatar to display in the <see cref="NavigationBar"/>.
 		/// </summary>
-		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design")]
-		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public string UserAvatar
 		{
 			get => this.avatar.ImageSource;

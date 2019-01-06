@@ -109,7 +109,7 @@ namespace Wisej.Web.Ext.TourPanel
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
 		[SRDescription("Returns or sets the HTML text to display in the TourPanel,")]
-		[Editor("Wisej.Web.Design.HtmlEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public string Text
 		{
 			get { return this._text; }
@@ -212,7 +212,7 @@ namespace Wisej.Web.Ext.TourPanel
 
 		/// <summary>
 		/// Returns or sets the target for the step. The object can be a reference to a control, a component, or
-		/// a string with the numeric ID (the <see cref="Wisej.Base.ControlBase.Handle"/>) of the target.
+		/// a string with the numeric ID (the <see cref="Wisej.Web.Control.Handle"/>) of the target.
 		/// </summary>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

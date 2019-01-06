@@ -287,6 +287,7 @@ this.onEventResize = function (event) {
 		end: end,
 		allDay: allDay
 	});
+
 }
 
 // timer to detect single or double clicks.

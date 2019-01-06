@@ -25,7 +25,7 @@ using System.Drawing.Design;
 using System.Linq;
 using Wisej.Base;
 using Wisej.Core;
-using Wisej.Core.Design;
+using Wisej.Design;
 using WinForms = System.Windows.Forms;
 
 namespace Wisej.Web.Ext.TinyMCE
@@ -165,7 +165,7 @@ namespace Wisej.Web.Ext.TinyMCE
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
-		[Editor("Wisej.Web.Design.CodeEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public new virtual dynamic Options
 		{
 			get

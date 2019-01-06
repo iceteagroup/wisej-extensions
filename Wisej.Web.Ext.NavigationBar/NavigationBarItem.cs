@@ -28,12 +28,12 @@ namespace Wisej.Web.Ext.NavigationBar
 	/// <summary>
 	/// Represents a navigation item in the <see cref="NavigationBar"/> control.
 	/// </summary>
-	[ToolboxItem(false)]
 	public partial class NavigationBarItem : Wisej.Web.FlexLayoutPanel
 	{
 		/// <summary>
-		/// Initializes a new instance of <see cref="NavigationBarItem"/>.
+		/// Initializes a new instance of the <see cref="NavigationBarItem"/> class.
 		/// </summary>
+		[ToolboxItem(false)]
 		public NavigationBarItem()
 		{
 			InitializeComponent();
@@ -133,8 +133,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns or sets the icon of the <see cref="NavigationBarItem"/>.
 		/// </summary>
 		[DefaultValue(null)]
-		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design")]
-		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public string Icon
 		{
 			get => this.icon.ImageSource;
@@ -231,8 +231,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns or sets the shortcut icon.
 		/// </summary>
 		[DefaultValue("spinner-plus")]
-		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design")]
-		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public string ShortcutIcon
 		{
 			get => this.shortcut.ImageSource;

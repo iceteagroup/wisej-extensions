@@ -335,7 +335,7 @@ namespace Wisej.HostService.Owin
 			if (this.restoreWisejSession)
 			{
 				this.restoreWisejSession = false;
-				Wisej.Base.ApplicationBase.RestoreSession(HttpContext.Current);
+				Wisej.Web.Application.RestoreSession(HttpContext.Current);
 			}
 
 			switch (name)

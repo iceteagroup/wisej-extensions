@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 using System.Web.Configuration;
 using Wisej.Base;
 using Wisej.Core;
-using Wisej.Core.Design;
+using Wisej.Design;
 
 namespace Wisej.Web.Ext.GoogleMaps
 {
@@ -192,6 +192,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 				Update();
 			}
 		}
+
 		private string _apiKey;
 
 		/// <summary>
@@ -199,7 +200,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
-		[Editor("Wisej.Web.Design.CodeEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public new virtual dynamic Options
 		{
 			get

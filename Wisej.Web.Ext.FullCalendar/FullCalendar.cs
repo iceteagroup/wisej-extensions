@@ -23,7 +23,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using Wisej.Core;
-using Wisej.Core.Design;
+using Wisej.Design;
 
 namespace Wisej.Web.Ext.FullCalendar
 {

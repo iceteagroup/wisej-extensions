@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D0889FF0-2FC6-4E53-976C-C6BA560EB1FD}</ProjectGuid>
+    <ProjectGuid>{1AF46CD0-AFC7-41CA-B936-AEDDEFB30305}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wisej.Application</RootNamespace>
@@ -70,9 +70,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="Wisej.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Development\1.5\Wisej\bin\Wisej.Core.dll</HintPath>
+    <Reference Include="Wisej.Framework">
+      <HintPath>..\..\..\..\Development\2.0\bin\Wisej.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

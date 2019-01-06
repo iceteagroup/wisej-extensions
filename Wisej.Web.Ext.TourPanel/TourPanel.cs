@@ -27,7 +27,7 @@ using System.Drawing;
 using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
-using Wisej.Core.Design;
+using Wisej.Design;
 
 namespace Wisej.Web.Ext.TourPanel
 {
@@ -38,7 +38,7 @@ namespace Wisej.Web.Ext.TourPanel
 	[ToolboxItem(false)]
 	[DefaultEvent("Load")]
 	[DesignerCategory("UserControl")]
-	[Designer("Wisej.Web.Design.UserControlDocumentDesigner, Wisej.Web.Design", typeof(IRootDesigner))]
+	[Designer("Wisej.Design.UserControlDocumentDesigner, Wisej.Framework.Design", typeof(IRootDesigner))]
 	public class TourPanel : ContainerControl, IWisejControl
 	{
 

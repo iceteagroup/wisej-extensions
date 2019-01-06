@@ -121,19 +121,19 @@ namespace Wisej.Web.Ext.ColumnFilter
 			{
 				string text = string.Empty;
 				foreach (var r in rows)
-					{
+				{
 					text = Convert.ToString(r[colIndex].FormattedValue);
 					if (text != string.Empty)
-				{
-						if (!filterItems.Contains(text))
 					{
+						if (!filterItems.Contains(text))
+						{
 							filterItems.Add(text, r.Visible);
+						}
 					}
 				}
 			}
-						}
-						else
-						{
+			else
+			{
 				string text = string.Empty;
 				foreach (var r in rows)
 				{
@@ -204,7 +204,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			foreach (var row in dataGrid.Rows)
 			{
 				if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
-					cellText = Convert.ToString(row[index].Value);						
+					cellText = Convert.ToString(row[index].Value);
 				else
 					cellText = row[index].FormattedValue?.ToString() ?? string.Empty;
 

@@ -26,8 +26,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Threading;
-using Wisej.Base;
-using Wisej.Core;
+using Wisej.Web;
 
 namespace Wisej.Ext.ClearScript
 {
@@ -152,7 +151,7 @@ namespace Wisej.Ext.ClearScript
 		{
 			ScriptEngine engine = null;
 			var checkPoint = new ManualResetEventSlim();
-			ApplicationBase.StartTask(() => {
+			Application.StartTask(() => {
 
 				switch (type)
 				{

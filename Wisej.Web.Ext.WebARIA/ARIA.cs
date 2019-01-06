@@ -19,7 +19,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using Wisej.Base;
+using Wisej.Web;
 using Wisej.Core;
 
 namespace Wisej.Web.Ext.WebARIA
@@ -139,7 +139,7 @@ namespace Wisej.Web.Ext.WebARIA
 		/// </summary>
 		[DefaultValue(null)]
 		[Description("Returns or sets the label that the element is labeled by.")]
-		public ControlBase LabeledBy
+		public Control LabeledBy
 		{
 			get { return this._labeledBy; }
 			set
@@ -151,14 +151,14 @@ namespace Wisej.Web.Ext.WebARIA
 				}
 			}
 		}
-		private ControlBase _labeledBy;
+		private Control _labeledBy;
 
 		/// <summary>
 		/// Returns or sets the control that the element is described by.
 		/// </summary>
 		[DefaultValue(null)]
 		[Description("Returns or sets the control that the element is described by.")]
-		public ControlBase DescribedBy
+		public Control DescribedBy
 		{
 			get { return this._describedBy; }
 			set
@@ -170,7 +170,7 @@ namespace Wisej.Web.Ext.WebARIA
 				}
 			}
 		}
-		private ControlBase _describedBy;
+		private Control _describedBy;
 
 		/// <summary>
 		/// Returns or sets the current value.

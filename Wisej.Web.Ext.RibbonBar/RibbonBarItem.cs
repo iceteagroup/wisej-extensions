@@ -228,8 +228,8 @@ namespace Wisej.Web.Ext.RibbonBar
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the theme name or URL for the image to display next to a RibbonBarItem.")]
-		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design")]
-		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public string ImageSource
 		{
 			get { return this._imageSettings == null ? null : this._imageSettings.ImageSource; }
@@ -263,7 +263,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the index value of the image assigned to the RibbonBarItem.")]
 		[TypeConverter(typeof(ImageIndexConverter))]
-		[Editor("Wisej.Web.Design.ImageIndexEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.ImageIndexEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public int ImageIndex
 		{
 			get { return this._imageSettings == null ? -1 : this._imageSettings.ImageIndex; }
@@ -279,7 +279,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the name of the image assigned to the RibbonBarItem.")]
 		[TypeConverter(typeof(ImageKeyConverter))]
-		[Editor("Wisej.Web.Design.ImageIndexEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.ImageIndexEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
 		public string ImageKey
 		{
 			get { return this._imageSettings == null ? string.Empty : this._imageSettings.ImageKey; }
