@@ -212,6 +212,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		///</summary>
 		/// <returns>The <see cref="T:System.Drawing.Image" /> displayed next to the <see cref="RibbonBarItem" />. The default value is null.</returns>
 		[Localizable(true)]
+		[PostbackProperty]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the image that is displayed next to a RibbonBarItem.")]
 		public Image Image

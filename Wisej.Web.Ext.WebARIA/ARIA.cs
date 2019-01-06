@@ -43,7 +43,7 @@ namespace Wisej.Web.Ext.WebARIA
 		/// Returns or sets whether the element is visible.
 		/// </summary>
 		[DefaultValue(TriState.NotSet)]
-		[SRDescription("ARIAHiddenDescr")]
+		[Description("Returns or sets whether the element is visible.")]
 		public TriState Hidden
 		{
 			get { return this._hidden; }
@@ -62,7 +62,7 @@ namespace Wisej.Web.Ext.WebARIA
 		/// Returns or set whether a value is required.
 		/// </summary>
 		[DefaultValue(TriState.NotSet)]
-		[SRDescription("ARIARequiredDescr")]
+		[Description("Returns or set whether a value is required.")]
 		public TriState Required
 		{
 			get { return this._required; }
@@ -81,7 +81,7 @@ namespace Wisej.Web.Ext.WebARIA
 		/// Returns or sets whether the element is read only.
 		/// </summary>
 		[DefaultValue(TriState.NotSet)]
-		[SRDescription("ARIAReadOnlyDescr")]
+		[Description("Returns or sets whether the element is read only.")]
 		public TriState ReadOnly
 		{
 			get { return this._readOnly; }
@@ -100,7 +100,7 @@ namespace Wisej.Web.Ext.WebARIA
 		/// Returns or sets whether the element is selected.
 		/// </summary>
 		[DefaultValue(TriState.NotSet)]
-		[SRDescription("ARIASelectedDescr")]
+		[Description("Returns or sets whether the element is selected.")]
 		public TriState Selected
 		{
 			get { return this._selected; }
@@ -119,7 +119,7 @@ namespace Wisej.Web.Ext.WebARIA
 		/// Returns or sets whether the element is expanded.
 		/// </summary>
 		[DefaultValue(TriState.NotSet)]
-		[SRDescription("ARIAExpandedDescr")]
+		[Description("Returns or sets whether the element is expanded.")]
 		public TriState Expanded
 		{
 			get { return this._expanded; }
@@ -138,7 +138,7 @@ namespace Wisej.Web.Ext.WebARIA
 		/// Returns or sets the label that the element is labeled by.
 		/// </summary>
 		[DefaultValue(null)]
-		[SRDescription("ARIALabeledByDescr")]
+		[Description("Returns or sets the label that the element is labeled by.")]
 		public ControlBase LabeledBy
 		{
 			get { return this._labeledBy; }
@@ -157,7 +157,7 @@ namespace Wisej.Web.Ext.WebARIA
 		/// Returns or sets the control that the element is described by.
 		/// </summary>
 		[DefaultValue(null)]
-		[SRDescription("ARIADescribedByDescr")]
+		[Description("Returns or sets the control that the element is described by.")]
 		public ControlBase DescribedBy
 		{
 			get { return this._describedBy; }
@@ -175,9 +175,9 @@ namespace Wisej.Web.Ext.WebARIA
 		/// <summary>
 		/// Returns or sets the current value.
 		/// </summary>
-		[DefaultValue(0)]
-		[SRDescription("ARIAValueNowDescr")]
-		public int ValueNow
+		[DefaultValue(null)]
+		[Description("Returns or sets the current value.")]
+		public int? ValueNow
 		{
 			get { return this._valueNow; }
 			set
@@ -189,14 +189,14 @@ namespace Wisej.Web.Ext.WebARIA
 				}
 			}
 		}
-		private int _valueNow;
+		private int? _valueNow;
 
 		/// <summary>
 		/// Returns or sets the minimum value.
 		/// </summary>
-		[DefaultValue(0)]
-		[SRDescription("ARIAValueMinDescr")]
-		public int ValueMin
+		[DefaultValue(null)]
+		[Description("Returns or sets the minimum value.")]
+		public int? ValueMin
 		{
 			get { return this._valueMin; }
 			set
@@ -208,14 +208,14 @@ namespace Wisej.Web.Ext.WebARIA
 				}
 			}
 		}
-		private int _valueMin;
+		private int? _valueMin;
 
 		/// <summary>
 		/// Returns or sets the maximum value.
 		/// </summary>
-		[DefaultValue(0)]
-		[SRDescription("ARIAValueMaxDescr")]
-		public int ValueMax
+		[DefaultValue(null)]
+		[Description("Returns or sets the maximum value.")]
+		public int? ValueMax
 		{
 			get { return this._valueMax; }
 			set
@@ -227,13 +227,13 @@ namespace Wisej.Web.Ext.WebARIA
 				}
 			}
 		}
-		private int _valueMax;
+		private int? _valueMax;
 
 		/// <summary>
 		/// Returns or sets the label.
 		/// </summary>
 		[DefaultValue("")]
-		[SRDescription("ARIALabelDescr")]
+		[Description("Returns or sets the label.")]
 		public string Label
 		{
 			get { return this._label; }
@@ -252,7 +252,7 @@ namespace Wisej.Web.Ext.WebARIA
 		/// Returns or sets the value text.
 		/// </summary>
 		[DefaultValue("")]
-		[SRDescription("ARIAValueTextDescr")]
+		[Description("Returns or sets the value text.")]
 		public string ValueText
 		{
 			get { return this._valueText; }
@@ -271,7 +271,7 @@ namespace Wisej.Web.Ext.WebARIA
 		/// Returns or sets whether the control validates ok or not.
 		/// </summary>
 		[DefaultValue(Invalid.NotSet)]
-		[SRDescription("ARIAInvalidDescr")]
+		[Description("Returns or sets whether the control validates ok or not.")]
 		Invalid Invalid
 		{
 			get { return this._invalid; }
@@ -299,11 +299,69 @@ namespace Wisej.Web.Ext.WebARIA
 		{
 			if (this.owner is TextBoxBase)
 				SetAutoValues((TextBoxBase)this.owner);
-			// else if
+			else if (this.owner is NumericUpDown)
+				SetAutoValues((NumericUpDown)this.owner);
+			else if (this.owner is CheckBox)
+				SetAutoValues((CheckBox)this.owner);
+			else if (this.owner is RadioButton)
+				SetAutoValues((RadioButton)this.owner);
+			else if (this.owner is Button)
+				SetAutoValues((Button)this.owner);
+			// DataGridViewCell ??
+			// TreeNode ??
+
+			_hidden = owner.Visible ? TriState.False : TriState.True;
+
+			// determine label
+			Control prevControl = this.owner.Parent?.GetNextControl(this.owner, false);
+			if (prevControl != null && prevControl is Label)
+				_labeledBy = prevControl;
+
 		}
 
 		private void SetAutoValues(TextBoxBase owner)
 		{
+			this._valueText = owner.Text;			
+			this._readOnly = owner.ReadOnly ? TriState.True : TriState.False;
+		}
+
+		private void SetAutoValues(NumericUpDown owner)
+		{
+			this._valueMin = Convert.ToInt32(owner.Minimum);
+			this._valueMax = Convert.ToInt32(owner.Maximum);
+			this._valueNow = Convert.ToInt32 (owner.Value);
+		}
+
+		private void SetAutoValues(CheckBox owner)
+		{
+			switch (owner.CheckState)
+			{
+				case CheckState.Checked:
+				{
+					this._selected = TriState.True;
+					break;
+				}
+				case CheckState.Unchecked:
+				{
+					this._selected = TriState.False;
+					break;
+				}
+				case CheckState.Indeterminate:
+				{
+					this._selected = TriState.Undefined;
+					break;
+				}
+			}
+		}
+		private void SetAutoValues(RadioButton owner)
+		{
+			this._selected = owner.Checked ? TriState.True : TriState.False;
+		}
+
+		private void SetAutoValues(Button owner)
+		{
+			this._valueText = owner.Text;
+			this._readOnly = owner.Enabled ? TriState.True : TriState.False;
 		}
 
 		#endregion
@@ -314,8 +372,32 @@ namespace Wisej.Web.Ext.WebARIA
 		{
 			var config = new DynamicObject();
 
+			if (this._hidden != TriState.NotSet)
+				config["aria-hidden"] = this._hidden;
 			if (this._required != TriState.NotSet)
 				config["aria-required"] = this._required;
+			if (this._readOnly != TriState.NotSet)
+				config["aria-readonly"] = this._readOnly;
+			if (this.Selected != TriState.NotSet)
+				config["aria-selected"] = this._selected;
+			if (this._expanded != TriState.NotSet)
+				config["aria-expanded"] = this._expanded;
+			if (this._label != string.Empty)
+				config["aria-label"] = this._label;
+			if (this._valueText != string.Empty)
+				config["aria-valuetext"] = this._valueText;			
+			if (this._valueMin != null)
+				config["valuemin"] = this._valueMin;
+			if (this._valueMax != null)
+				config["valueMax"] = this._valueMax;
+			if (this._valueNow != null)
+				config["valueNow"] = this._valueNow;
+			if (this._describedBy != null)
+				config["aria-describedby"] = this._describedBy;
+			if (this._labeledBy != null)
+				config["aria-labeledby"] = this._labeledBy;
+			if (this._invalid != Invalid.NotSet)
+				config["aria-invalid"] = this._invalid;
 
 			return config;
 		}

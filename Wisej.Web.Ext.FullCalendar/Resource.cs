@@ -30,7 +30,6 @@ namespace Wisej.Web.Ext.FullCalendar
 	/// </summary>
 	public class Resource
 	{
-		internal FullCalendar owner;
 
 		/// <summary>
 		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.FullCalendar.Resource"/>.
@@ -50,6 +49,16 @@ namespace Wisej.Web.Ext.FullCalendar
 
 			this._id = id;
 		}
+
+		/// <summary>
+		/// Returns the <see cref="FullCalendar"/> that owns this resource.
+		/// </summary>
+		public FullCalendar Owner
+		{
+			get { return this._owner; }
+			internal set { this._owner = value; }
+		}
+		private FullCalendar _owner;
 
 		/// <summary>
 		/// Returns or sets the unique ID for this resource. It's used
@@ -188,7 +197,7 @@ namespace Wisej.Web.Ext.FullCalendar
 
 		private void OnResourceChanged()
 		{
-			this.owner?.OnResourceChanged(this);
+			this._owner?.OnResourceChanged(this);
 		}
 
 		/// <summary>
@@ -202,6 +211,10 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 		private dynamic _userData = null;
 
+		/// <summary>
+		/// Returns a string represenation of this object.
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return String.Concat(

@@ -34,7 +34,7 @@ namespace Wisej.Web.Ext.WebARIA
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(WebARIA))]
 	[ProvideProperty("Aria", typeof(Control))]
-	[SRDescription("ARIADescription")]
+	[Description("Represents the set of ARIA properties associated to a control.")]
 	public class WebARIA : Wisej.Web.Component, IExtenderProvider
 	{
 		// collection of controls with the related ARIA properties.

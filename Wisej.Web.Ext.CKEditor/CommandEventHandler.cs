@@ -39,7 +39,7 @@ namespace Wisej.Web.Ext.CKEditor
 		/// <summary>
 		/// Initializes an instance of the <see cref="T:Wisej.Web.Ext.CKEditor.CommandEventArgs" /> class.
 		/// </summary>
-		/// <param name="e">The event data from the client.</param>
+		/// <param name="command">The event data from the client.</param>
 		public CommandEventArgs(string command)
 		{
 			this.Command = command;

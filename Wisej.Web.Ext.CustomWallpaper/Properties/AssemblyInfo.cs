@@ -11,7 +11,7 @@ using Wisej.Core;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ice Tea Group")]
-[assembly: AssemblyProduct("Wisej Web")]
+[assembly: AssemblyProduct("Wisej")]
 [assembly: AssemblyCopyright("Copyright © 2018 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,4 +32,4 @@ using Wisej.Core;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.5.36.0")]
+[assembly: AssemblyFileVersion("1.5.42.0")]

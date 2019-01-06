@@ -146,7 +146,7 @@ namespace Wisej.Web.Ext.CKEditor
 		[DesignerActionList]
 		[MergableProperty(false)]
 		[Editor("Wisej.Web.Design.CodeEditor, Wisej.Web.Design", typeof(UITypeEditor))]
-		public virtual dynamic Options
+		public new virtual dynamic Options
 		{
 			get
 			{

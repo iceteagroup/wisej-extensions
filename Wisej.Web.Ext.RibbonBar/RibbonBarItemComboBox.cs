@@ -124,7 +124,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns the array of items displayed in this <see cref="RibbonBarItemComboBox" />.
 		/// </summary>
-		/// <returns>A <see cref="" /> containing the items in the <see cref="RibbonBarItemComboBox" />.</returns>
+		/// <returns>A an array containing the items in the <see cref="RibbonBarItemComboBox" />.</returns>
 		[Localizable(true)]
 		[MergableProperty(false)]
 		[SRCategory("CatData")]

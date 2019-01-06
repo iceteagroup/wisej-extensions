@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wisej.Web.Ext.CountUp</RootNamespace>
     <AssemblyName>Wisej.Web.Ext.CountUp</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -49,11 +49,11 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Wisej.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\WISEJ\Development\1.5\bin\Wisej.Core.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\bin\Wisej.Core.dll</HintPath>
     </Reference>
     <Reference Include="Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\WISEJ\Development\1.5\bin\Wisej.Web.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\bin\Wisej.Web.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

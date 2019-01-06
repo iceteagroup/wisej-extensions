@@ -162,7 +162,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// <summary>
 		/// Removes the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> from the collection and updates the chart.
 		/// </summary>
-		/// <param name="dataSet">The <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> to remove.</param>
+		/// <param name="series">The <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> to remove.</param>
 		/// <returns></returns>
 		public bool Remove(TimeSeries series)
 		{

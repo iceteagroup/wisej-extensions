@@ -249,7 +249,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		#endregion
 
 		/// <summary>
-		/// Fired when the <see cref="ApplicationButton"/> is clicked.
+		/// Fired when the <see cref="AppButton"/> is clicked.
 		/// </summary>
 		[SRCategory("CatAction")]
 		[Description("Fired when the ApplicationButton is clicked.")]
@@ -604,7 +604,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		private RibbonBarAppButton _appButton;
 
 		/// <summary>
-		/// Returns the instance of <see cref="Wisej.Web.ComponentToolCollection/> associated with this control.
+		/// Returns the instance of <see cref="Wisej.Web.ComponentToolCollection"/> associated with this control.
 		/// </summary>
 		[Browsable(true)]
 		[MergableProperty(false)]

@@ -44,7 +44,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="Wisej.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Development\1.4\Wisej\bin\Wisej.Core.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\Wisej\bin\Wisej.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

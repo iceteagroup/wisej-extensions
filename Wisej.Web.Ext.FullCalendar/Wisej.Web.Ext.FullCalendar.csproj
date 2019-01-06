@@ -31,12 +31,6 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Wisej.Web.Ext.FullCalendar.XML</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,10 +40,10 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Wisej.Core">
-      <HintPath>..\..\..\Development\1.4\Wisej\bin\Wisej.Core.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\Wisej\bin\Wisej.Core.dll</HintPath>
     </Reference>
     <Reference Include="Wisej.Web">
-      <HintPath>..\..\..\Development\1.4\Wisej\bin\Wisej.Web.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\Wisej\bin\Wisej.Web.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -93,9 +87,6 @@
   <ItemGroup>
     <EmbeddedResource Include="JavaScript\scheduler-1.9.4.css" />
     <EmbeddedResource Include="JavaScript\scheduler-1.9.4.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="extension.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

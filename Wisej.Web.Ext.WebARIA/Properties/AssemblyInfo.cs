@@ -1,5 +1,8 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+using Wisej.Core;
+
+[assembly: WisejResources()]
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -9,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ice Tea Group")]
 [assembly: AssemblyProduct("Wisej")]
-[assembly: AssemblyCopyright("Copyright ©  2015 Ice Tea Group LLC")]
+[assembly: AssemblyCopyright("Copyright ©  2018 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -28,4 +31,4 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.5.36.0")]
+[assembly: AssemblyFileVersion("1.5.42.0")]

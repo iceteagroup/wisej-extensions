@@ -34,6 +34,9 @@ namespace Wisej.Web.Ext.SmoothieChart
 	[Description("SmoothieChart is a JavaScript charting library for streaming data.")]
 	public class SmoothieChart : Control
 	{
+		/// <summary>
+		/// constructor
+		/// </summary>
 		public SmoothieChart()
 		{
 			this.TabStop = false;
@@ -390,7 +393,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 		[DefaultValue(1)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the size of the grid lines.")]
-		public int GridLineSize
+		public int GidLineSize
 		{
 			get { return this._gridLineSize; }
 			set
@@ -856,7 +859,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 			config.showTimeStamps = this.ShowTimeStamps;
 			config.interpolation = this.Interpolation;
 			config.gridLineColor = this.GridLineColor;
-			config.gridLineSize = this.GridLineSize;
+			config.gridLineSize = this.GidLineSize;
 			config.minValue = this.MinValue.HasValue ? (object)this.MinValue.Value : null;
 			config.maxValue = this.MaxValue.HasValue ? (object)this.MaxValue.Value : null;			
 

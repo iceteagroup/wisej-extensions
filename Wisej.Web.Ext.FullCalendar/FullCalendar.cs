@@ -932,6 +932,33 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
+		/// Determines the time-text that will be displayed on each event
+		/// using momentjs format patterns: http://momentjs.com/docs/#/displaying/format/.
+		/// </summary>
+		/// <remarks>
+		/// Sets time format to display on the events.
+		/// <code lang="cs">
+		///		this.TimeFormat = "h:mm"; // shows 5:00
+		///		this.TimeFormat = "h(:mm)t"; // shows 5p
+		/// </code>
+		/// </remarks>
+		[DefaultValue(null)]
+		[Description("Determines the time-text that will be displayed on each event.")]
+		public string TimeFormat
+		{
+			get { return this._timeFormat; }
+			set
+			{
+				if (this._timeFormat != value)
+				{
+					this._timeFormat = value;
+					Update();
+				}
+			}
+		}
+		private string _timeFormat;
+
+		/// <summary>
 		/// Determines whether or not to display a marker indicating the current time.
 		/// </summary>
 		[DefaultValue(true)]
@@ -1085,7 +1112,24 @@ namespace Wisej.Web.Ext.FullCalendar
 			{
 				if (this._resources != value)
 				{
+					if (this._resources != null)
+					{
+						foreach (var r in this._resources)
+						{
+							r.Owner = null;
+						}
+					}
+
 					this._resources = value;
+
+					if (this._resources != null)
+					{
+						foreach (var r in this._resources)
+						{
+							r.Owner = this;
+						}
+					}
+
 					Update();
 				}
 			}
@@ -1535,6 +1579,7 @@ namespace Wisej.Web.Ext.FullCalendar
 			options.defaultView = this.View;
 			options.themeSystem = TranslateThemeSystem(this.ThemeSystem);
 			options.businessHours = this.BusinessHours;
+			options.timeFormat = this.TimeFormat;
 
 			if (this.ShouldSerializeSlotLabelFormat())
 				options.slotLabelFormat = this.SlotLabelFormat;
