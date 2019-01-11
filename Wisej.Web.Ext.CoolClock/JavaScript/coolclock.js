@@ -460,7 +460,7 @@ CoolClock.prototype = {
 	// Main tick handler. Refresh the clock then setup the next tick
 	tick: function () {
 		if (this.stillHere()) {
-			this.refreshDisplay()
+			this.refreshDisplay();
 			this.nextTick();
 		}
 	}

@@ -25,5 +25,8 @@ this.init = function () {
 	// create the canvas dom child.
 	this.container.innerHTML = "<canvas id=\"" + id + "\"/>";
 
+	// center the inner canvas.
+	this.container.style.textAlign = "center";
+
 	this.coolClock = new CoolClock(options);
 }
