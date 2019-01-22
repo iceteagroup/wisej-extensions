@@ -43,6 +43,16 @@ namespace Wisej.Web.Ext.Speech
 		// collection of controls using the extender provider.
 		private Dictionary<Control, Properties> utterances;
 
+		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Speech"/> class.
+		/// </summary>
+		public SpeechSynthesis()
+		{
+			this.utterances = new Dictionary<Control, Properties>();
+		}
+		#endregion
+
 		#region Properties
 
 		/// <summary>
@@ -226,8 +236,7 @@ namespace Wisej.Web.Ext.Speech
 		{
 			if (disposing)
 			{
-				if (this.utterances != null)
-					this.utterances.Clear();
+				this.utterances.Clear();
 			}
 
 			base.Dispose(disposing);
@@ -257,8 +266,11 @@ namespace Wisej.Web.Ext.Speech
 
 		private void ResetSpeechSynthesis(Control control)
 		{
-			if (this.utterances != null)
+			lock (this.utterances)
+			{
 				this.utterances.Remove(control);
+				control.Disposed -= this.Control_Disposed;
+			}
 
 			Update(control);
 		}
@@ -268,8 +280,10 @@ namespace Wisej.Web.Ext.Speech
 		/// </summary>
 		public void RemoveAll()
 		{
-			if (this.utterances != null)
+			lock (this.utterances)
+			{
 				this.utterances.Clear();
+			}
 		}
 
 		/// <summary>
@@ -295,7 +309,10 @@ namespace Wisej.Web.Ext.Speech
 			if (control == null)
 				throw new ArgumentNullException("control");
 
-			return this.utterances != null && this.utterances.ContainsKey(control);
+			lock (this.utterances)
+			{
+				return this.utterances.ContainsKey(control);
+			}
 		}
 
 		/// <summary>
@@ -308,19 +325,19 @@ namespace Wisej.Web.Ext.Speech
 			if (control == null)
 				throw new ArgumentNullException("control");
 
-			if (this.utterances == null)
-				this.utterances = new Dictionary<Control, Properties>();
-
-			Properties props = null;
-			if (!this.utterances.TryGetValue(control, out props))
+			lock (this.utterances)
 			{
-				props = new Properties(this, control);
-				this.utterances.Add(control, props);
+				Properties props = null;
+				if (!this.utterances.TryGetValue(control, out props))
+				{
+					props = new Properties(this, control);
+					this.utterances.Add(control, props);
 
-				control.Disposed -= Control_Disposed;
-				control.Disposed += Control_Disposed;
+					control.Disposed -= this.Control_Disposed;
+					control.Disposed += this.Control_Disposed;
+				}
+				return props;
 			}
-			return props;
 		}
 
 
@@ -330,8 +347,10 @@ namespace Wisej.Web.Ext.Speech
 			control.Disposed -= Control_Disposed;
 
 			// remove the extender values associated with the disposed control.
-			if (this.utterances != null)
+			lock (this.utterances)
+			{
 				this.utterances.Remove(control);
+			}
 		}
 
 		#endregion
@@ -505,7 +524,7 @@ namespace Wisej.Web.Ext.Speech
 			config.rate = this.Rate;
 			config.voice = this.Voice;
 
-			if (this.utterances != null)
+			lock (this.utterances)
 			{
 				config.utterances = this.utterances.Select(o => new
 				{

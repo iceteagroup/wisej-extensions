@@ -66,48 +66,12 @@ namespace Wisej.HostService.Owin
 
 			switch (fileExtension)
 			{
-				case "":
-					return ProcessSubApplication(context);
-
 				case ".wx":
 					return ProcessWisejRequest(context);
 
 				default:
 					return ProcessAspNetRequest(context);
 			}
-		}
-
-		/// <summary>
-		/// Processes requests without an extension checking if the name corresponds
-		/// to a Wisej application json file.
-		/// </summary>
-		/// <param name="context"></param>
-		/// <returns></returns>
-		Task ProcessSubApplication(IOwinContext context)
-		{
-			var file = context.Request.Path.Value;
-			if (file.StartsWith("/"))
-				file = file.Substring(1);
-
-			file += ".json";
-			var path = Path.Combine(HttpRuntime.AppDomainAppPath, file);
-			if (File.Exists(path))
-			{
-				var config = Wisej.Core.Configuration.GetInstance(path);
-				if (config != null && !String.IsNullOrEmpty(config.Url))
-				{
-					string url = config.Url;
-					if (!url.StartsWith("/"))
-						url = "/" + url;
-
-					context.Request.Path = new PathString(url);
-
-					// restart the pipeline from the top.
-					return Invoke(context);
-				}
-			}
-
-			return ProcessAspNetRequest(context);
 		}
 
 		/// <summary>
