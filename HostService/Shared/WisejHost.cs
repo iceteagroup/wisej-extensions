@@ -197,20 +197,6 @@ namespace Wisej.HostService.Owin
 				/** TODO: Add additional middleware handlers here. */
 
 				// =============================================
-				// FileServer middleware processes all static
-				// resources: html, png, etc...
-				//
-				// It should run before the Wisej middleware to
-				// serve known static files.
-				// ---------------------------------------------
-				builder.UseFileServer(new FileServerOptions
-				{
-					EnableDefaultFiles = true,
-					EnableDirectoryBrowsing = true,
-					FileSystem = new PhysicalFileSystem(HttpRuntime.AppDomainAppPath)
-				});
-
-				// =============================================
 				// Wisej Middleware processes all .wx, .aspx requests
 				// through the System.Web pipeline.
 				//

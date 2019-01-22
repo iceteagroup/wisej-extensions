@@ -42,6 +42,13 @@ namespace Wisej.Web.Ext.Speech
 		// collection of controls using the extender provider.
 		private Dictionary<Control, Properties> listeners;
 
+		#region Constructors
+		public SpeechRecognition()
+		{
+			this.listeners = new Dictionary<Control, Properties>();
+		}
+		#endregion
+
 		#region Events
 
 		/// <summary>
@@ -345,8 +352,11 @@ namespace Wisej.Web.Ext.Speech
 
 		private void ResetSpeechRecognition(Control control)
 		{
-			if (this.listeners != null)
+			lock (this.listeners)
+			{
 				this.listeners.Remove(control);
+				control.Disposed -= this.Control_Disposed;
+			}
 
 			Update(control);
 		}
@@ -356,7 +366,7 @@ namespace Wisej.Web.Ext.Speech
 		/// </summary>
 		public void Clear()
 		{
-			if (this.listeners != null)
+			lock (this.listeners)
 			{
 				this.listeners.ToList().ForEach((o) => {
 					o.Key.Disposed -= this.Control_Disposed;
@@ -388,9 +398,12 @@ namespace Wisej.Web.Ext.Speech
 			if (properties == null)
 				throw new ArgumentNullException("properties");
 
-			properties.Owner = this;
-			properties.Control = control;
-			this.listeners[control] = properties;
+			lock (this.listeners)
+			{
+				properties.Owner = this;
+				properties.Control = control;
+				this.listeners[control] = properties;
+			}
 			Update(control);
 		}
 
@@ -404,7 +417,10 @@ namespace Wisej.Web.Ext.Speech
 			if (control == null)
 				throw new ArgumentNullException("control");
 
-			return this.listeners != null && this.listeners.ContainsKey(control);
+			lock (this.listeners)
+			{
+				return this.listeners.ContainsKey(control);
+			}
 		}
 
 		/// <summary>
@@ -417,19 +433,19 @@ namespace Wisej.Web.Ext.Speech
 			if (control == null)
 				throw new ArgumentNullException("control");
 
-			if (this.listeners == null)
-				this.listeners = new Dictionary<Control, Properties>();
-
-			Properties props = null;
-			if (!this.listeners.TryGetValue(control, out props))
+			lock (this.listeners)
 			{
-				props = new Properties(this, control);
-				this.listeners.Add(control, props);
+				Properties props = null;
+				if (!this.listeners.TryGetValue(control, out props))
+				{
+					props = new Properties(this, control);
+					this.listeners.Add(control, props);
 
-				control.Disposed -= this.Control_Disposed;
-				control.Disposed += this.Control_Disposed;
+					control.Disposed -= this.Control_Disposed;
+					control.Disposed += this.Control_Disposed;
+				}
+				return props;
 			}
-			return props;
 		}
 
 
@@ -439,7 +455,7 @@ namespace Wisej.Web.Ext.Speech
 			control.Disposed -= this.Control_Disposed;
 
 			// remove the extender values associated with the disposed control.
-			if (this.listeners != null)
+			lock (this.listeners)
 				this.listeners.Remove(control);
 		}
 
@@ -449,7 +465,7 @@ namespace Wisej.Web.Ext.Speech
 		/// <param name="e"></param>
 		private void ProcessListeners(SpeechRecognitionEventArgs e)
 		{
-			if (this.listeners != null)
+			lock (this.listeners)
 			{
 				foreach (var l in this.listeners)
 				{
@@ -680,19 +696,22 @@ namespace Wisej.Web.Ext.Speech
 			config.interimResults = this.InterimResults;
 			config.maxAlternatives = this.MaxAlternatives;
 
-			WiredEvents events = new WiredEvents();
-			if (base.Events[nameof(Result)] != null || (this.listeners != null && this.listeners.Count > 0))
-				events.Add("result(Results),");
-			if (base.Events[nameof(SpeechStart)] != null)
-				events.Add("speechstart");
-			if (base.Events[nameof(SpeechEnd)] != null)
-				events.Add("speechend");
-			if (base.Events[nameof(NoMatch)] != null)
-				events.Add("nomatch");
-			if (base.Events[nameof(Error)] != null)
-				events.Add("error(Message)");
+			lock (this.listeners)
+			{
+				WiredEvents events = new WiredEvents();
+				if (base.Events[nameof(Result)] != null || (this.listeners != null && this.listeners.Count > 0))
+					events.Add("result(Results),");
+				if (base.Events[nameof(SpeechStart)] != null)
+					events.Add("speechstart");
+				if (base.Events[nameof(SpeechEnd)] != null)
+					events.Add("speechend");
+				if (base.Events[nameof(NoMatch)] != null)
+					events.Add("nomatch");
+				if (base.Events[nameof(Error)] != null)
+					events.Add("error(Message)");
 
-			config.wiredEvents = (events.Count > 0) ? events : null;
+				config.wiredEvents = (events.Count > 0) ? events : null;
+			}
 		}
 
 		#endregion

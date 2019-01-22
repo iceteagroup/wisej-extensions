@@ -25,6 +25,7 @@ using System.IO;
 using System.Reflection;
 using Wisej.Base;
 using Wisej.Core;
+using Wisej.Web;
 
 namespace Wisej.Ext.WebWorker
 {
@@ -37,7 +38,7 @@ namespace Wisej.Ext.WebWorker
 	[ToolboxItemFilter("Wisej.Web", ToolboxItemFilterType.Require)]
 	[ToolboxItemFilter("Wisej.Mobile", ToolboxItemFilterType.Require)]
 	[Description("The WebWorker component represents a JavaScript WebWorker instance that can run on the client and fire sever events and receive updates from the server.")]
-	public class WebWorker : Wisej.Web.Component, IWisejHandler
+	public class WebWorker : Web.Component, IWisejHandler
 	{
 		// version counter, used to update the source code when it changes.
 		private int version = 0;
@@ -94,7 +95,7 @@ namespace Wisej.Ext.WebWorker
 		{
 			get
 			{
-				bool? supported = ApplicationBase.Browser?.Features?.worker;
+				bool? supported = Wisej.Web.Application.Browser?.Features?.worker;
 				return supported == null || supported.Value == true;
 			}
 		}
@@ -248,7 +249,7 @@ namespace Wisej.Ext.WebWorker
 					return null;
 
 				// return the file in the application's directory, if present.
-				var filePath = Path.Combine(ApplicationBase.StartupPath, fileName);
+				var filePath = Path.Combine(Wisej.Web.Application.StartupPath, fileName);
 				if (File.Exists(filePath))
 				{
 					using (StreamReader reader = new StreamReader(filePath))

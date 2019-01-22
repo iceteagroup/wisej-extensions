@@ -48,6 +48,7 @@ namespace Wisej.Web.Ext.Bubbles
 		/// </summary>
 		public BubbleNotification()
 		{
+			this.bubbles = new Dictionary<Control, Bubble>();
 		}
 
 		/// <summary>
@@ -134,7 +135,7 @@ namespace Wisej.Web.Ext.Bubbles
 		/// </summary>
 		public void Clear()
 		{
-			if (this.bubbles != null)
+			lock (this.bubbles)
 			{
 				this.bubbles.ToList().ForEach((o) => {
 					o.Key.Disposed -= this.Control_Disposed;
@@ -214,7 +215,10 @@ namespace Wisej.Web.Ext.Bubbles
 			if (control == null)
 				throw new ArgumentNullException("control");
 
-			return this.bubbles != null && this.bubbles.ContainsKey(control);
+			lock (this.bubbles)
+			{
+				return this.bubbles.ContainsKey(control);
+			}
 
 		}
 
@@ -228,21 +232,21 @@ namespace Wisej.Web.Ext.Bubbles
 			if (control == null)
 				throw new ArgumentNullException("control");
 
-			if (this.bubbles == null)
-				this.bubbles = new Dictionary<Control, Bubble>();
-
-			Bubble bubble = null;
-			if (!this.bubbles.TryGetValue(control, out bubble))
+			lock (this.bubbles)
 			{
-				bubble = new Bubble() { Widget = control };
-				this.bubbles[control] = bubble;
+				Bubble bubble = null;
+				if (!this.bubbles.TryGetValue(control, out bubble))
+				{
+					bubble = new Bubble() { Widget = control };
+					this.bubbles[control] = bubble;
 
-				// remove the control from the extender when it's disposed.
-				control.Disposed -= this.Control_Disposed;
-				control.Disposed += this.Control_Disposed;
+					// remove the control from the extender when it's disposed.
+					control.Disposed -= this.Control_Disposed;
+					control.Disposed += this.Control_Disposed;
 
+				}
+				return bubble;
 			}
-			return bubble;
 		}
 
 		private void Control_Disposed(object sender, EventArgs e)
@@ -252,8 +256,10 @@ namespace Wisej.Web.Ext.Bubbles
 			control.ControlCreated -= this.Control_Created;
 
 			// remove the extender values associated with the disposed control.
-			if (this.bubbles != null)
+			lock (this.bubbles)
+			{				
 				this.bubbles.Remove(control);
+			}
 		}
 
 		private void Control_Created(object sender, EventArgs e)
@@ -314,31 +320,35 @@ namespace Wisej.Web.Ext.Bubbles
 
 			config.className = "wisej.web.extender.bubbles.BubbleNotifications";
 
-			if (this.bubbles != null)
+			lock (this.bubbles)
 			{
-				List<object> list = new List<object>();
-				foreach (var entry in this.bubbles)
+				if (this.bubbles.Count > 0)
 				{
-					var control = entry.Key;
-					var settings = entry.Value;
-
-					// skip controls that are not yet created.
-					if (!control.Created)
-						continue;
-
-					if (settings.Value > 0)
+					List<object> list = new List<object>();
+					foreach (var entry in this.bubbles)
 					{
-						list.Add(new {
-							id = ((IWisejComponent)control).Id,
-							value = settings.Value,
-							style = settings.Style
-						});
-					}
-				}
-				config.bubbles = list.ToArray();
+						var control = entry.Key;
+						var settings = entry.Value;
 
-				// register non-created control for delayed registration.
-				this.bubbles.Where(o => !o.Key.Created).ToList().ForEach(o => o.Key.ControlCreated += this.Control_Created);
+						// skip controls that are not yet created.
+						if (!control.Created)
+							continue;
+
+						if (settings.Value > 0)
+						{
+							list.Add(new
+							{
+								id = ((IWisejComponent)control).Id,
+								value = settings.Value,
+								style = settings.Style
+							});
+						}
+					}
+					config.bubbles = list.ToArray();
+
+					// register non-created control for delayed registration.
+					this.bubbles.Where(o => !o.Key.Created).ToList().ForEach(o => o.Key.ControlCreated += this.Control_Created);
+				}
 
 				// subscribe only if the event has been attached to since
 				// it's unlikely that this class will be extended to
@@ -348,7 +358,6 @@ namespace Wisej.Web.Ext.Bubbles
 					config.wiredEvents = new WiredEvents();
 					config.wiredEvents.Add("bubbleClick(Control)");
 				}
-
 			}
 		}
 
