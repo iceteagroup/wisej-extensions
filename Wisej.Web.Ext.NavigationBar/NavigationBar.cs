@@ -19,12 +19,16 @@
 
 using System;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Security.Cryptography;
 using System.Text;
+using System.Windows.Forms;
 using Wisej.Base;
+using Wisej.Core;
+using Wisej.Design;
 
 namespace Wisej.Web.Ext.NavigationBar
 {
@@ -36,7 +40,7 @@ namespace Wisej.Web.Ext.NavigationBar
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(NavigationBar))]
 	[Description("Responsive vertical navigation bar.")]
-	public partial class NavigationBar : Wisej.Web.FlexLayoutPanel
+	public partial class NavigationBar : Wisej.Web.FlexLayoutPanel, IWisejDesignTarget
 	{
 		#region Constructor
 
@@ -462,6 +466,85 @@ namespace Wisej.Web.Ext.NavigationBar
 		private void header_Click(object sender, EventArgs e)
 		{
 			OnTitleClick(e);
+		}
+
+		#endregion
+
+		#region IWisejDesignTarget
+
+		bool IWisejDesignTarget.DesignerWndProc(ref Message m)
+		{
+			switch (m.Msg)
+			{
+				// WM_LBUTTONDOWN
+				case 0x0201:
+					var lParam = (int)m.LParam.ToInt64();
+					return SelectClickedItem(lParam);
+			}
+
+			return false;
+		}
+
+		// Represents the child item that is selected in the designer.
+		private IWisejComponent DesignItem
+		{
+			get { return this.UserData.DesignItem; }
+			set
+			{
+				if (this.DesignItem != value)
+				{
+					this.UserData.DesignItem = value;
+					Update();
+				}
+			}
+		}
+
+		// Selects the NavigationBarItem at the coordinate specified in lParam.
+		private bool SelectClickedItem(int lParam)
+		{
+			Point mouseLoc = new Point(
+				(short)(lParam & 65535),
+				(short)(lParam >> 16 & 65535));
+
+			// find clicks on a child item.
+			var target = GetChildAtPoint(mouseLoc);
+			if (target != null && this.Site != null)
+			{
+				while (target != null && target.Site == null)
+				{
+					mouseLoc.Offset(-target.Left, -target.Top);
+					target = target.GetChildAtPoint(mouseLoc);
+				}
+
+				if (target != null && target is NavigationBarItem && target.Site != null && target.Site.DesignMode)
+				{
+					var selectionService = (ISelectionService)this.Site.GetService(typeof(ISelectionService));
+					if (selectionService != null)
+					{
+						selectionService.SelectionChanged -= this.OnDesignComponentSelectionChanged;
+						selectionService.SelectionChanged += this.OnDesignComponentSelectionChanged;
+						selectionService.SetSelectedComponents(new[] { target });
+						this.DesignItem = target;
+						return true;
+					}
+				}
+			}
+			this.DesignItem = null;
+			return false;
+		}
+
+		private void OnDesignComponentSelectionChanged(object server, EventArgs e)
+		{
+			IWisejComponent target = this.DesignItem;
+			if (target != null && this.Site != null)
+			{
+				var selectionService = (ISelectionService)this.Site.GetService(typeof(ISelectionService));
+				if (selectionService != null)
+				{
+					if (selectionService.GetComponentSelected(this))
+						selectionService.SetSelectedComponents(new[] { target });
+				}
+			}
 		}
 
 		#endregion
