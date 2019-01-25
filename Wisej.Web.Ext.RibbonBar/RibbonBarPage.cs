@@ -38,7 +38,7 @@ namespace Wisej.Web.Ext.RibbonBar
 
 		/// <summary>
 		/// Returns the 
-		/// <see cref="RibbonBar"/> that owns this
+		/// <see cref="Wisej.Web.Ext.RibbonBar.RibbonBar"/> that owns this
 		/// <see cref="RibbonBarPage"/>.
 		/// </summary>
 		[Browsable(false)]

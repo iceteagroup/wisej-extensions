@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
+using Wisej.Base;
 using Wisej.Core;
 
 namespace Wisej.Web.Ext.NavigationBar
@@ -169,6 +170,48 @@ namespace Wisej.Web.Ext.NavigationBar
 		private NavigationBarItemCollection _items;
 
 		/// <summary>
+		/// Returns or sets the background color.
+		/// </summary>
+		[SRCategory("CatAppearance")]
+		[SRDescription("ControlBackColorDescr")]
+		public new Color BackColor
+		{
+			get => this.header.BackColor;
+			set => this.header.BackColor = value;
+		}
+
+		private bool ShouldSerializeBackColor()
+		{
+			return this.header.BackColor.Name != "@navbar-background";
+		}
+
+		private new void ResetBackColor()
+		{
+			this.header.BackColor = Color.Empty;
+		}
+
+		/// <summary>
+		/// Returns or sets the text color.
+		/// </summary>
+		[SRCategory("CatAppearance")]
+		[SRDescription("ControlForeColorDescr")]
+		public new Color ForeColor
+		{
+			get => this.header.ForeColor;
+			set => this.header.ForeColor = value;
+		}
+
+		private bool ShouldSerializeForeColor()
+		{
+			return this.header.ForeColor.Name != "@navbar-text";
+		}
+
+		private new void ResetForeColor()
+		{
+			this.header.ForeColor = Color.Empty;
+		}
+
+		/// <summary>
 		/// Expands or collapses child items.
 		/// </summary>
 		[DefaultValue(false)]
@@ -201,21 +244,39 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the background color of the info "bubble".
 		/// </summary>
-		[DefaultValue(typeof(Color), "@navbar-background")]
 		public Color InfoTextBackColor
 		{
 			get => this.info.BackColor;
 			set => this.info.BackColor = value;
 		}
 
+		private bool ShouldSerializeInfoTextBackColor()
+		{
+			return this.info.BackColor != this.header.BackColor;
+		}
+
+		private void ResetInfoTextBackColor()
+		{
+			this.info.BackColor = Color.Empty;
+		}
+
 		/// <summary>
 		/// Returns or sets the text color of the info "bubble".
 		/// </summary>
-		[DefaultValue(typeof(Color), "@navbar-text")]
 		public Color InfoTextForeColor
 		{
 			get => this.info.ForeColor;
 			set => this.info.ForeColor = value;
+		}
+
+		private bool ShouldSerializeInfoTextForeColor()
+		{
+			return this.info.ForeColor.Name != "@navbar-text";
+		}
+
+		private void ResetInfoTextForeColor()
+		{
+			this.info.ForeColor = Color.Empty;
 		}
 
 		/// <summary>
@@ -370,6 +431,21 @@ namespace Wisej.Web.Ext.NavigationBar
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override PanelAutoShowMode AutoShow { get => base.AutoShow; set { } }
+		/// <exclude/>
+		[Browsable(false)]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public override Image BackgroundImage { get => base.BackgroundImage; set { } }
+		/// <exclude/>
+		[Browsable(false)]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public override string BackgroundImageSource { get => base.BackgroundImageSource; set { } }
+		/// <exclude/>
+		[Browsable(false)]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public override ImageLayout BackgroundImageLayout { get => base.BackgroundImageLayout; set { } }
 		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -572,6 +648,9 @@ namespace Wisej.Web.Ext.NavigationBar
 				if (this.items.Visible)
 					this.open.Call("addState", "open");
 			}
+
+			if (this.DesignMode)
+				this.NavigationBar?.Update();
 		}
 
 		#endregion

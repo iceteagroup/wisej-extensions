@@ -65,11 +65,12 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <see cref="RibbonBarGroup"/>.
 		/// </summary>
 		[Browsable(false)]
-		public RibbonBarPage Parent
+		public virtual RibbonBarPage Parent
 		{
-			get;
-			internal set;
+			get { return this._parent; }
+			internal set { this._parent = value; }
 		}
+		private RibbonBarPage _parent;
 
 		/// <summary>
 		/// Returns the <see cref="RibbonBar"/> that contains this <see cref="RibbonBarGroup"/>;
