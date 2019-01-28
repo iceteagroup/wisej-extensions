@@ -1,7 +1,7 @@
 Microsoft OneDrive
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/MicrosoftOneDrive.png" width="358">
+<img src="../Support/Images/MicrosoftOneDrive.png" width="358">
 
 Work in progress.
 
