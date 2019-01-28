@@ -1,7 +1,7 @@
 TinyEditor
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/TinyEditor.png" width="358" height="252">
+<img src="../Support/Images/TinyEditor.png" width="358" height="252">
 
 The TinyEditor extension uses a simple, lightweight (under 9KB) and standalone JavaScript WYSIWYG editor. It handles most of the basic formatting and has some functionality built in to help keep the rendered markup as clean as possible.
 
