@@ -1,7 +1,7 @@
 OfficeViewer
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/OfficeViewer.png" width="358" height="252">
+<img src="../Support/Images/OfficeViewer.png" width="358" height="252">
 
 The OfficeViewer extension control uses Microsoft’s Office 365 Live Viewers to show Word, Excel or PowerPoint documents embedded in a Wisej application. You can view a file or a stream.
 
