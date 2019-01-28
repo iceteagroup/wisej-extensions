@@ -1,7 +1,7 @@
 CountUp
 ====
 
-<img src="../Support/CountUp.png" width="358" height="252">
+<img src="../Support/Images/CountUp.png" width="358" height="252">
 
 The CountUp extension component uses the excellent CountUp.js widget that can be used to quickly create animations that display numerical data in a more interesting way.
 
