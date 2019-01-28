@@ -1,7 +1,7 @@
 jQueryKnob
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/jQueryKnob.png" width="358" height="252">
+<img src="../Support/Images/jQueryKnob.png" width="358" height="252">
 
 The jQueryKnob extension component uses the amazing jQueryKnob widget to create a Wisej Real Time dial control that allows the user to rotate the dial to change its value or to type the value in the middle editor. The component allows you to set the value, range, line style, colors and more.
 
