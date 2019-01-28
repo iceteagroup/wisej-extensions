@@ -1,7 +1,7 @@
 Speech
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/Speech.png" width="358" height="252">
+<img src="../Support/Images/Speech.png" width="358" height="252">
 
 The Speech extender component __enhances all Wisej components__ by providing additional speech synthesis and recognition features that allow a component to speak it’s content – or any text provided in code – and to receive text coming from speech recognition.
 
