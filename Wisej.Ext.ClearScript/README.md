@@ -1,7 +1,7 @@
 ClearScript
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/ClearScript.png" width="358" height="252">
+<img src="../Support/Images/ClearScript.png" width="358" height="252">
 
 This amazing extension to Wisej adds full support for server-side scripting using either VBScript, JScript or the latest Google V8 JavaScript engine. Scripts can access any object or class in the application and can attach to events fired by Wisej controls. Refer to [Microsoft’s ClearScript Reference](https://microsoft.github.io/ClearScript/Reference/html/R_Project_Reference.htm) for the ClearScript reference.
 
