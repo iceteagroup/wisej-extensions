@@ -1,7 +1,7 @@
 FullCalendar
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/FullCalendar.png" width="358" height="252">
+<img src="../Support/Images/FullCalendar.png" width="358" height="252">
 
 The FullCalendar extension is an amazing full-size drag-n-drop event calendar. Supports multiple views, flexible events, custom styles, integrates with Google Calendars, and it’s completely integrated with Wisej.
 
