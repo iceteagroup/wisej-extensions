@@ -1,7 +1,7 @@
 Amazon S3 FileSystem
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/AmazonS3.png" width="358" height="252">
+<img src="../Support/Images/AmazonS3.png" width="358" height="252">
 
 The Amazon S3 extension provides an additional [file system provider](https://wisej.com/docs/html/T_Wisej_Core_IFileSystemProvider.htm) that can be added to the [Open File Dialog](https://wisej.com/docs/html/T_Wisej_Web_OpenFileDialog.htm) or [Save File Dialog](https://wisej.com/docs/html/T_Wisej_Web_SaveFileDialog.htm) to browse and use files on the cloud.
 
