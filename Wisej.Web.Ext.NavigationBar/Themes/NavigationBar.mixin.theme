@@ -54,6 +54,7 @@
       "states": {
         "default": {
           "styles": {
+            "transform": "translateZ(0)",
             "transition": "height 250ms, top 250ms"
           }
         }
