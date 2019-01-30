@@ -182,7 +182,6 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 
 		// add this widget to the same layout parent.
 		component.getLayoutParent()._add(this);
-		this.__updatePosition();
 
 		// hook our handlers to follow the owner component.
 		component.addListener("move", this.__onComponentMove, this);
@@ -191,9 +190,8 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 
 		// show the animation the first time the dom is created.
 		this.addListenerOnce("appear", function (e) {
-
+			this.__updatePosition();
 			setTimeout(this.animate.bind(this), 300);
-
 		});
 	},
 
