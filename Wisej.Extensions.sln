@@ -137,6 +137,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Application.FireFox",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.XTerm", "Wisej.Web.Ext.XTerm\Wisej.Web.Ext.XTerm.csproj", "{176267C2-21D5-4741-B774-4E722BC8BFF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.VisualStudioIcons", "Wisej.Ext.VisualStudioIcons\Wisej.Ext.VisualStudioIcons.csproj", "{69489B33-B14D-4BA2-8681-D1E86DB92350}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -867,6 +869,18 @@ Global
 		{176267C2-21D5-4741-B774-4E722BC8BFF5}.Release|x64.Build.0 = Release|Any CPU
 		{176267C2-21D5-4741-B774-4E722BC8BFF5}.Release|x86.ActiveCfg = Release|Any CPU
 		{176267C2-21D5-4741-B774-4E722BC8BFF5}.Release|x86.Build.0 = Release|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Debug|x64.Build.0 = Debug|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Debug|x86.Build.0 = Debug|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Release|x64.ActiveCfg = Release|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Release|x64.Build.0 = Release|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Release|x86.ActiveCfg = Release|Any CPU
+		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
