@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px"
+	 height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.icon-canvas-transparent{opacity:0;fill:#F6F6F6;}
+	.icon-vs-out{fill:#F6F6F6;}
+	.icon-vs-bg{fill:#424242;}
+	.icon-vs-fg{fill:#F0EFF1;}
+	.icon-white{fill:#FFFFFF;}
+	.icon-vs-green{fill:#339933;}
+</style>
+<g id="canvas">
+	<path class="icon-canvas-transparent" d="M16,16H0V0h16V16z"/>
+</g>
+<g id="outline">
+	<path class="icon-vs-out" d="M16,2v14H1V7.88l-1-0.8V0h8v2H16z"/>
+</g>
+<g id="iconBg">
+	<path class="icon-vs-bg" d="M10,6H8V3h7v5.703c-0.288-0.36-0.616-0.686-1-0.944V6h-3v1.05
+		c-0.347,0.039-0.681,0.112-1,0.225V6z M14.297,15H15v-0.703C14.792,14.557,14.557,14.792,14.297,15z M4,9L1,6.6V1h6v5.6L4,9z
+		 M2,5.8l2,1.601L6,5.8V3H2V5.8z M8.703,15H2V8.68l1,0.8V11h3V9H5.6L7,7.88V8h1.703C8.343,8.288,8.017,8.616,7.76,9H7v2h0.05
+		C7.032,11.166,7,11.329,7,11.5s0.032,0.334,0.05,0.5H7v2h0.76C8.017,14.384,8.343,14.712,8.703,15z M6,12H3v2h3V12z"/>
+</g>
+<g id="iconFg">
+	<path class="icon-vs-fg" d="M3,12h3v2H3V12z M11.5,7c0.925,0,1.785,0.281,2.5,0.76V6h-3v1.05
+		C11.166,7.032,11.329,7,11.5,7z M10,7.276V6H8v1.081l-1,0.8V8h1.703C9.09,7.69,9.524,7.445,10,7.276z M7.76,9H7v2h0.05
+		C7.132,10.268,7.37,9.583,7.76,9z M4,10.28l-1-0.8V11h3V9H5.6L4,10.28z M7.05,12H7v2h0.76C7.37,13.417,7.132,12.732,7.05,12z
+		 M2,5.8l2,1.601L6,5.8V3H2V5.8z"/>
+</g>
+<g id="notificationBg">
+	<path class="icon-vs-green" d="M11.5,8C9.57,8,8,9.57,8,11.5c0,1.93,1.57,3.5,3.5,3.5c1.93,0,3.5-1.57,3.5-3.5
+		C15,9.57,13.43,8,11.5,8z M11.5,14h-1.125L9.25,12h1.125l0.563,0.75L12.625,9h1.125L11.5,14z"/>
+</g>
+<g id="notificationFg">
+	<path class="icon-white" d="M11.5,14h-1.125L9.25,12h1.125l0.563,0.75L12.625,9h1.125L11.5,14z"/>
+</g>
+</svg>

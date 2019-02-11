@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0;fill:#F6F6F6;}
+	.st1{fill:#F6F6F6;}
+	.st2{fill:#9B4F96;}
+	.st3{fill:#F0EFF1;}
+</style>
+<g id="outline">
+	<rect class="st0" width="16" height="16"/>
+	<path class="st1" d="M8,16c-3.99,0-7-1.721-7-4V4c0-2.281,3.01-4,7-4c3.99,0,7,1.719,7,4v8C15,14.279,11.99,16,8,16z"/>
+</g>
+<g id="color_x5F_importance">
+	<path class="st2" d="M8,1C4.687,1,2,2.342,2,4v8c0,1.656,2.687,3,6,3c3.314,0,6-1.344,6-3V4C14,2.342,11.314,1,8,1z M7.997,6
+		c-3.052,0-5-1.186-5-2c0-0.816,1.948-2,5-2c3.052,0,5,1.184,5,2C12.997,4.814,11.049,6,7.997,6z"/>
+</g>
+<g id="icon_x5F_fg">
+	<path class="st3" d="M7.997,2c-3.052,0-5,1.184-5,2c0,0.814,1.948,2,5,2c3.052,0,5-1.186,5-2C12.997,3.184,11.049,2,7.997,2z"/>
+</g>
+</svg>

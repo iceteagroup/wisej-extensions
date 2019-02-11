@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px"
+	 height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.icon-canvas-transparent{opacity:0;fill:#F6F6F6;}
+	.icon-vs-out{fill:#F6F6F6;}
+	.icon-vs-bg{fill:#424242;}
+	.icon-vs-fg{fill:#F0EFF1;}
+</style>
+<g id="canvas">
+	<path  class="icon-canvas-transparent" d="M16,16H0V0h16V16z"/>
+</g>
+<g id="outline">
+	<path  class="icon-vs-out" d="M15,3v10h-5v3H2V6h1V0h8v3H15z"/>
+</g>
+<g id="iconBg">
+	<path class="icon-vs-bg" d="M5,6H4V1h6v2H9V2H5V6z M8,4v2h1V5h4v6h-3v1h4V4H8z M5,7h4v8H3V8V7H5z M8,8H5H4v6h4V8z"/>
+</g>
+<g id="iconFg">
+	<path class="icon-vs-fg" d="M13,5v6h-3V6H9V5H13z M8,8H4v6h4V8z M9,2H5v4h3V4h1V2z"/>
+	
+	
+	
+	
+	
+	
+</g>
+</svg>

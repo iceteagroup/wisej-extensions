@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.icon_x002D_canvas_x002D_transparent{opacity:0;fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_out{fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_fg{fill:#F0EFF1;}
+	.icon_x002D_vs_x002D_blue{fill:#1BA1E2;}
+	.icon_x002D_white{fill:#FFFFFF;}
+</style>
+<g id="canvas">
+	<path class="icon_x002D_canvas_x002D_transparent" d="M16,16H0V0h16V16z"/>
+</g>
+<g id="outline">
+	<path class="icon_x002D_vs_x002D_out" d="M16,11.5c0,2.485-2.015,4.5-4.5,4.5c-0.438,0-0.852-0.082-1.251-0.198
+		C9.548,15.93,8.795,16,8,16c-3.99,0-7-1.72-7-4V4c0-2.28,3.01-4,7-4c3.99,0,7,1.72,7,4v4.703C15.616,9.474,16,10.438,16,11.5z"/>
+</g>
+<g id="iconBg">
+</g>
+<g id="iconFg">
+	<path class="icon_x002D_vs_x002D_fg" d="M12.997,4c0,0.815-1.948,2-5,2c-3.052,0-5-1.185-5-2s1.948-2,5-2
+		C11.049,2,12.997,3.185,12.997,4z"/>
+</g>
+<g id="notificationBg">
+	<path class="icon_x002D_vs_x002D_blue" d="M8,1C4.687,1,2,2.343,2,4v8c0,1.657,2.687,3,6,3c0.229,0,0.456-0.008,0.679-0.021
+		C7.663,14.154,7,12.911,7,11.5C7,9.015,9.015,7,11.5,7c0.926,0,1.785,0.281,2.5,0.76V4C14,2.343,11.314,1,8,1z M7.997,6
+		c-3.052,0-5-1.185-5-2s1.948-2,5-2c3.052,0,5,1.185,5,2S11.049,6,7.997,6z M11.5,8C9.567,8,8,9.567,8,11.5
+		c0,1.933,1.567,3.5,3.5,3.5c1.933,0,3.5-1.567,3.5-3.5C15,9.567,13.433,8,11.5,8z M12,14h-1v-1h1V14z M13,11c0,0.551-0.449,1-1,1
+		v0.5h-1V12c0-0.551,0.449-1,1-1v-1c-0.08-0.044-0.252-0.102-0.5-0.102S11.08,9.956,11,10v1h-1v-1c0-0.58,0.631-1,1.5-1
+		S13,9.42,13,10V11z"/>
+</g>
+<g id="notificationFg">
+	<path class="icon_x002D_white" d="M13,10v1c0,0.551-0.449,1-1,1v0.5h-1V12c0-0.551,0.449-1,1-1v-1
+		c-0.08-0.044-0.252-0.102-0.5-0.102S11.08,9.956,11,10v1h-1v-1c0-0.58,0.631-1,1.5-1S13,9.42,13,10z M11,14h1v-1h-1V14z"/>
+</g>
+</svg>
