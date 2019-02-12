@@ -48,7 +48,7 @@
     </Reference>
     <Reference Include="Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\wisej\Development\1.5\bin\Wisej.Web.dll</HintPath>
+      <HintPath>..\..\..\Development\1.5\bin\Wisej.Web.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
