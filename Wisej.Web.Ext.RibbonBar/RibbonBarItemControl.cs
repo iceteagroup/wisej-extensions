@@ -76,6 +76,7 @@ namespace Wisej.Web.Ext.RibbonBar
 				{
 					if (this._control != null)
 					{
+						this._control.BindingContext = null;
 						this._control.Disposed -= control_Disposed;
 
 						if (this.DesignMode)
