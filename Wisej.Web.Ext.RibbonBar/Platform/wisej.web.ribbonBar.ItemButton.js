@@ -150,9 +150,9 @@ qx.Class.define("wisej.web.ribbonBar.ItemButton", {
 
 			var arrow = this.control.getChildControl("arrow");
 
-				value
-					? arrow.show()
-					: arrow.exclude();
+			value
+				? arrow.show()
+				: arrow.exclude();
 		},
 
 		/**
