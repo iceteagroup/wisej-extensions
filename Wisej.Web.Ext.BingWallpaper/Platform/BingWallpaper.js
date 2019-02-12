@@ -104,6 +104,9 @@ qx.Class.define("wisej.web.ext.BingWallpaper", {
 				var target = this.__getTargetControl();
 				if (!target) {
 
+					if (wisej.web.DesignMode || !this.core.isValidSession())
+						return;
+
 					// if we don't have a target yet, the desktop may have not been created in time.
 					// delay and retry.
 					setTimeout(function () {

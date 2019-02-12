@@ -1,7 +1,7 @@
 YouTube
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/YouTube.png" width="358" height="252">
+<img src="../Support/Images/YouTube.png" width="358" height="252">
 
 Work in progress.
 

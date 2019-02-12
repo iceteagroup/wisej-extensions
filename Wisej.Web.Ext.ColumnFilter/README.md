@@ -1,7 +1,7 @@
 ColumnFilter
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/ColumnFilter.png" width="358">
+<img src="../Support/Images/ColumnFilter.png" width="358">
 
 The ColumnFilter extender component allows you to add row filtering to your DataGridViews. It includes 2 ready made FilterPanels.
 

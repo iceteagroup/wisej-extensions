@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.icon_x002D_canvas_x002D_transparent{opacity:0;fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_out{fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_fg{fill:#F0EFF1;}
+	.icon_x002D_vs_x002D_blue{fill:#1BA1E2;}
+	.icon_x002D_vs_x002D_action_x002D_green{fill:#388A34;}
+</style>
+<g id="canvas">
+	<path id="XMLID_5_" class="icon_x002D_canvas_x002D_transparent" d="M16,16H0V0h16V16z"/>
+</g>
+<g id="outline">
+	<path class="icon_x002D_vs_x002D_out" d="M16,7v6c0,1.711-2.149,3-5,3c-2.851,0-5-1.289-5-3V8H2V6H0V2h2V0h4v2h2v2.579
+		C8.826,4.217,9.851,4,11,4C13.851,4,16,5.29,16,7z"/>
+</g>
+<g id="iconBg">
+	<path class="icon_x002D_vs_x002D_blue" d="M11,5C8.791,5,7,5.896,7,7v6c0,1.104,1.791,2,4,2c2.209,0,4-0.896,4-2V7
+		C15,5.896,13.209,5,11,5z M11,8.325C9.001,8.325,7.675,7.527,7.675,7S9.001,5.675,11,5.675c1.999,0,3.325,0.798,3.325,1.325
+		S12.999,8.325,11,8.325z"/>
+</g>
+<g id="iconFg">
+	<path id="XMLID_7_" class="icon_x002D_vs_x002D_fg" d="M14.325,7c0,0.527-1.326,1.325-3.325,1.325C9.001,8.325,7.675,7.527,7.675,7
+		S9.001,5.675,11,5.675C12.999,5.675,14.325,6.473,14.325,7z"/>
+</g>
+<g id="colorAction">
+	<path class="icon_x002D_vs_x002D_action_x002D_green" d="M7,5H5v2H3V5H1V3h2V1h2v2h2V5z"/>
+</g>
+</svg>

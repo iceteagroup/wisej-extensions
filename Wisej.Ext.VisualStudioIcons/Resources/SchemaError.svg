@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.icon_x002D_canvas_x002D_transparent{opacity:0;fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_out{fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_bg{fill:#424242;}
+	.icon_x002D_vs_x002D_fg{fill:#F0EFF1;}
+	.icon_x002D_vs_x002D_blue{fill:#1BA1E2;}
+	.icon_x002D_vs_x002D_red{fill:#E51400;}
+	.icon_x002D_white{fill:#FFFFFF;}
+</style>
+<g id="canvas">
+	<path class="icon_x002D_canvas_x002D_transparent" d="M16,16H0V0h16V16z"/>
+</g>
+<g id="outline">
+	<path class="icon_x002D_vs_x002D_out" d="M16,9c0,0.352-0.11,0.679-0.279,0.987C15.891,10.462,16,10.967,16,11.5
+		c0,2.485-2.015,4.5-4.5,4.5c-0.171,0-0.334-0.032-0.5-0.051V16H6v-4H5v4H0v-4h1V9h2V5h3V3c0-1.711,2.149-3,5-3c2.851,0,5,1.289,5,3
+		V9z"/>
+</g>
+<g id="iconBg">
+	<path class="icon_x002D_vs_x002D_bg" d="M8.703,15H7v-2h0.275C7.559,13.797,8.056,14.481,8.703,15z M3,11h4.05
+		c0.039-0.347,0.112-0.682,0.225-1H6V8h1V6H4v2h1v2H2v3H1v2h3v-2H3V11z"/>
+</g>
+<g id="iconFg">
+	<path class="icon_x002D_vs_x002D_fg" d="M14.325,3c0,0.527-1.326,1.325-3.325,1.325C9.001,4.325,7.675,3.527,7.675,3
+		S9.001,1.675,11,1.675C12.999,1.675,14.325,2.473,14.325,3z"/>
+</g>
+<g id="colorImportance">
+	<path class="icon_x002D_vs_x002D_blue" d="M8,8.703C8.825,7.673,10.077,7,11.5,7s2.676,0.673,3.5,1.703V6V3
+		c0-0.504-0.385-0.959-1-1.311C13.267,1.271,12.201,1,11,1C9.799,1,8.733,1.271,8,1.689C7.385,2.041,7,2.496,7,3v2h1V8.703z
+		 M7.675,3c0-0.527,1.326-1.325,3.325-1.325c1.999,0,3.325,0.798,3.325,1.325S12.999,4.325,11,4.325
+		C9.001,4.325,7.675,3.527,7.675,3z"/>
+</g>
+<g id="notificationBg">
+	<path class="icon_x002D_vs_x002D_red" d="M11.5,8C9.567,8,8,9.567,8,11.5c0,1.933,1.567,3.5,3.5,3.5c1.933,0,3.5-1.567,3.5-3.5
+		C15,9.567,13.433,8,11.5,8z M13.354,12.646l-0.707,0.707L11.5,12.207l-1.146,1.147l-0.707-0.707l1.147-1.146l-1.147-1.146
+		l0.707-0.707l1.146,1.147l1.146-1.147l0.707,0.707L12.207,11.5L13.354,12.646z"/>
+</g>
+<g id="notificationFg">
+	<path class="icon_x002D_white" d="M12.207,11.5l1.147,1.146l-0.707,0.707L11.5,12.207l-1.146,1.147l-0.707-0.707l1.147-1.146
+		l-1.147-1.146l0.707-0.707l1.146,1.147l1.146-1.147l0.707,0.707L12.207,11.5z"/>
+</g>
+</svg>

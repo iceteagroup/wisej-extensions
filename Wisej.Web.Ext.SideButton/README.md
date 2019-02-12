@@ -1,7 +1,7 @@
 SideButton
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/wip.jpg" height="252">
+<img src="../Support/Images/wip.jpg" height="252">
 
 A retractable animated button that can be used to expand or collapse other panels.
 

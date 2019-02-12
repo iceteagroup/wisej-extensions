@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.icon_x002D_canvas_x002D_transparent{opacity:0;fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_out{fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_bg{fill:#424242;}
+	.icon_x002D_vs_x002D_fg{fill:#F0EFF1;}
+	.icon_x002D_vs_x002D_blue{fill:#1BA1E2;}
+</style>
+<g id="canvas">
+	<path class="icon_x002D_canvas_x002D_transparent" d="M16,16H0V0h16V16z"/>
+</g>
+<g id="outline">
+	<path class="icon_x002D_vs_x002D_out" d="M16,3v6c0,1.71-2.149,3-5,3c-0.336,0-0.675-0.022-1.063-0.071L9.755,11.9v1.481L6.182,16
+		H4.253l-4.086-2.574V8.613l-0.01-0.006l0.01-0.005V7.856l4.884-2.47L6,5.887V3c0-1.71,2.149-3,5-3S16,1.29,16,3z"/>
+</g>
+<g id="iconBg">
+	<path class="icon_x002D_vs_x002D_bg" d="M5.041,6.512L1.167,8.471v4.403l4.081,2.57l3.507-2.57V8.471L5.041,6.512z M8.115,12.561
+		l-2.426,1.748v-3.274L8.115,9.56V12.561z M2.265,8.659l2.731-1.387l2.913,1.435L5.2,10.333L2.265,8.659z M1.861,12.456v-3.15
+		l3.059,1.709v3.436L1.861,12.456z"/>
+</g>
+<g id="iconFg">
+	<path class="icon_x002D_vs_x002D_fg" d="M7.909,8.707L5.2,10.333L2.265,8.659l2.731-1.387L7.909,8.707z M4.92,11.015L1.861,9.306
+		v3.15L4.92,14.45V11.015z M8.115,9.56l-2.426,1.475v3.274l2.426-1.748V9.56z M11,1.675C9.001,1.675,7.675,2.473,7.675,3
+		S9.001,4.325,11,4.325S14.325,3.527,14.325,3S12.999,1.675,11,1.675z"/>
+</g>
+<g id="colorImportance">
+	<path class="icon_x002D_vs_x002D_blue" d="M11,1C8.791,1,7,1.896,7,3v3.415l2.755,1.453v3.018c0.081,0.013,0.158,0.031,0.241,0.042
+		v0c0,0,0.001,0,0.001,0c0.001,0,0.002,0,0.003,0.001v0C10.321,10.971,10.653,11,11,11c2.209,0,4-0.896,4-2V3
+		C15,1.896,13.209,1,11,1z M11,4.325C9.001,4.325,7.675,3.527,7.675,3S9.001,1.675,11,1.675S14.325,2.473,14.325,3
+		S12.999,4.325,11,4.325z"/>
+</g>
+</svg>

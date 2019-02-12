@@ -1,7 +1,7 @@
 XTerm
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/XTerm.png" width="358">
+<img src="../Support/Images/XTerm.png" width="358">
 
 The XTerm extension component uses the excellent Xterm.js widget that is a terminal front-end component written in JavaScript that enables applications to provide fully featured terminals to their users.
 

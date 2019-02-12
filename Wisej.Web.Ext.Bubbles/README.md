@@ -1,7 +1,7 @@
 Bubbles
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/Bubbles.png" width="358" height="252">
+<img src="../Support/Images/Bubbles.png" width="358" height="252">
 
 The Bubbles extender component __enhances all Wisej components__ by providing additional properties and a useful bubble notification functionality. Every widget can display a popup animated and themed bubble when a value changes
 

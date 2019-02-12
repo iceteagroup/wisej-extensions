@@ -1,7 +1,7 @@
 CKEditor<sup>TM</sup>
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/CKEditor.png" width="358" height="252">
+<img src="../Support/Images/CKEditor.png" width="358" height="252">
 
 The CKEditor extension uses CKEditor<sup>TM</sup> (formerly FCKeditor) is an open source WYSIWYG text editor designed to bring common word processor features directly to web pages, simplifying their content creation.
 
