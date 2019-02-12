@@ -1,7 +1,7 @@
 Panorama Viewer
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/Pannellum.png" width="358" height="252">
+<img src="../Support/Images/Pannellum.png" width="358" height="252">
 
 The Pannellum extension component uses the Pannellum library. Pannellum is a lightweight, free, and open source panorama viewer for the web.
 

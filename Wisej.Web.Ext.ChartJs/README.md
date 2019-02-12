@@ -1,7 +1,7 @@
 ChartJS
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/ChartJS.png" width="358" height="252">
+<img src="../Support/Images/ChartJS.png" width="358" height="252">
 
 The ChartJS extension component uses the excellent ChartJS widget to render amazing charts in real time. Please note that this extension is still under development and some advanced options are not yet available. Nevertheless, it’s quite an extension!
 

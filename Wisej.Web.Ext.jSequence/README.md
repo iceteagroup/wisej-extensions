@@ -1,7 +1,7 @@
 jSequence
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/jSequence.png" width="358" height="252">
+<img src="../Support/Images/jSequence.png" width="358" height="252">
 
 The jSequence Diagram extension component turns text sequences into cool UML diagrams and detects clicks on any diagram element.
 

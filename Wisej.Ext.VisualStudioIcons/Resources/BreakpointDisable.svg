@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px"
+	 height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.icon_x002D_canvas_x002D_transparent{opacity:0;fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_out{fill:#F6F6F6;}
+	.icon_x002D_vs_x002D_red{fill:#E51400;}
+	.icon_x002D_white{fill:#FFFFFF;}
+</style>
+<g id="canvas">
+	<path id="XMLID_1_" class="icon_x002D_canvas_x002D_transparent" d="M16,16H0V0h16V16z"/>
+</g>
+<g id="outline">
+	<path class="icon_x002D_vs_x002D_out" d="M15,8c0,3.866-3.135,7-7,7c-3.866,0-7-3.134-7-7c0-3.866,3.134-7,7-7
+		C11.865,1,15,4.134,15,8z"/>
+</g>
+<g id="iconBg">
+	<path class="icon_x002D_vs_x002D_red" d="M8,2C4.686,2,2,4.686,2,8c0,3.314,2.686,6,6,6c3.314,0,6-2.686,6-6C14,4.686,11.314,2,8,2
+		z M8,13c-2.762,0-5-2.238-5-5c0-2.761,2.238-5,5-5c2.762,0,5,2.239,5,5C13,10.762,10.762,13,8,13z"/>
+</g>
+<g id="iconFg">
+	<path id="XMLID_3_" class="icon_x002D_white" d="M13,8c0,2.762-2.238,5-5,5c-2.762,0-5-2.238-5-5c0-2.761,2.238-5,5-5
+		C10.762,3,13,5.239,13,8z"/>
+	<g id="XMLID_5_">
+	</g>
+	<g id="XMLID_6_">
+	</g>
+	<g id="XMLID_7_">
+	</g>
+	<g id="XMLID_8_">
+	</g>
+	<g id="XMLID_9_">
+	</g>
+	<g id="XMLID_10_">
+	</g>
+</g>
+</svg>

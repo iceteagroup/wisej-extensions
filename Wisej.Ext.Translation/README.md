@@ -1,7 +1,7 @@
 Translation
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/Translation.png" width="358" height="252">
+<img src="../Support/Images/Translation.png" width="358" height="252">
 
 The Translation component adds language translation capabilities to any Wisej application. It uses Yandex, Google, Bing, or a custom defined provider (Google and Bing are not yet implemented – only Yandex is currently supported). The component accepts any text and fires an event on the server when the translation is completed.
 

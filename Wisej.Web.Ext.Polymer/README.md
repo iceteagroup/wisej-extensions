@@ -1,7 +1,7 @@
 Polymer
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/Polymer.png" width="358" height="252">
+<img src="../Support/Images/Polymer.png" width="358" height="252">
 
 The Polymer extension can import most Web Components into a Wisej application. Refer to the Polymer Example to see how to create specialized Wisej classes.
 

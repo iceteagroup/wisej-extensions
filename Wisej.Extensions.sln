@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HostService", "HostService", "{4BBA9A17-4996-4573-A88A-1F7EA485BD57}"
 EndProject
@@ -136,6 +136,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Application.Edge", "HostService\Wisej.Application.Edge\Wisej.Application.Edge.csproj", "{C65F6B57-25B9-48DA-985F-FAF5076EC1B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Application.FireFox", "HostService\Wisej.Application.FireFox\Wisej.Application.FireFox.csproj", "{D0889FF0-2FC6-4E53-976C-C6BA560EB1FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.VisualStudioIcons", "Wisej.Ext.VisualStudioIcons\Wisej.Ext.VisualStudioIcons.csproj", "{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -867,6 +869,18 @@ Global
 		{D0889FF0-2FC6-4E53-976C-C6BA560EB1FD}.Release|x64.Build.0 = Release|Any CPU
 		{D0889FF0-2FC6-4E53-976C-C6BA560EB1FD}.Release|x86.ActiveCfg = Release|Any CPU
 		{D0889FF0-2FC6-4E53-976C-C6BA560EB1FD}.Release|x86.Build.0 = Release|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Debug|x64.Build.0 = Debug|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Debug|x86.Build.0 = Debug|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Release|x64.ActiveCfg = Release|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Release|x64.Build.0 = Release|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Release|x86.ActiveCfg = Release|Any CPU
+		{E439C74C-79C4-40D8-A462-2DC6EC3DB0FE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -934,5 +948,8 @@ Global
 		{E74A8C2A-877E-41A8-814E-4F576B1D41A2} = {D7DCF4CA-F508-4C1C-8199-5D865DA943FD}
 		{C65F6B57-25B9-48DA-985F-FAF5076EC1B0} = {4BBA9A17-4996-4573-A88A-1F7EA485BD57}
 		{D0889FF0-2FC6-4E53-976C-C6BA560EB1FD} = {4BBA9A17-4996-4573-A88A-1F7EA485BD57}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F296A2A-34E6-445D-868A-8FBB61447289}
 	EndGlobalSection
 EndGlobal

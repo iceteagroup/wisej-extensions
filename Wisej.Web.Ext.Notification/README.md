@@ -1,7 +1,7 @@
 Notification
 ====
 
-<img src="https://raw.githubusercontent.com/iceteagroup/wisej-extensions/master/Support/Images/Notification.png" width="358" height="252">
+<img src="../Support/Images/Notification.png" width="358" height="252">
 
 The Notification component adds [desktop notifications](https://developer.mozilla.org/en-US/docs/Web/API/notification) to Wisej applications. With this component your web apps can pop notifications on the user’s desktop even when the browser is minimized.
 
