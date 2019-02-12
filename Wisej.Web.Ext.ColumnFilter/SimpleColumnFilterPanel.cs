@@ -88,8 +88,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 				this.reloadItems = false;
 			}
 
-			//if (this.items.Items.Count == 0 && this.DataGridViewColumn.DataGridView.RowCount > 0)
-			//	this.items.ShowLoader = true;
+			if (this.items.Items.Count == 0 && this.DataGridViewColumn.DataGridView.RowCount > 0)
+				this.items.ShowLoader = true;
 		}
 
 		/// <summary>
@@ -104,7 +104,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			}
 			finally
 			{
-				// this.items.ShowLoader = false;
+				this.items.ShowLoader = false;
 			}
 		}
 
