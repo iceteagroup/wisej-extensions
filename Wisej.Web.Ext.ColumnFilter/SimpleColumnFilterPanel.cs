@@ -208,7 +208,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 				else
 					cellText = row[index].FormattedValue?.ToString() ?? string.Empty;
 
-				if (!checkedItems.Contains(cellText))
+				if (!row.IsNewRow && !checkedItems.Contains(cellText))
 					row.Visible = false;
 			}
 
