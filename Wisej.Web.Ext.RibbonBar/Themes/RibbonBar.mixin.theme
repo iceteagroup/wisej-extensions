@@ -438,13 +438,15 @@
                 "vertical": {
                   "properties": {
                     "width": 32,
-                    "height": 32
+                    "height": 32,
+                    "scale": true
                   }
                 },
                 "horizontal": {
                   "properties": {
                     "width": 16,
-                    "height": 16
+                    "height": 16,
+                    "scale": true
                   }
                 }
               }
