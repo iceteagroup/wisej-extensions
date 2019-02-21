@@ -645,7 +645,7 @@ namespace Wisej.Web.Ext.NavigationBar
 
 			if (((IWisejComponent)this).IsNew)
 			{
-				if (this.items.Visible)
+				if (this.items != null && this.items.Visible)
 					this.open.Call("addState", "open");
 			}
 
