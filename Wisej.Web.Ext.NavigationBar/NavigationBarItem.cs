@@ -21,7 +21,6 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
-using Wisej.Core;
 using Wisej.Base;
 
 namespace Wisej.Web.Ext.NavigationBar
@@ -611,12 +610,12 @@ namespace Wisej.Web.Ext.NavigationBar
 			if (this.items.Visible)
 			{
 				OnExpand(e);
-				this.open.Call("addState", "open");
+				this.open.AddState("open");
 			}
 			else
 			{
 				OnCollapse(e);
-				this.open.Call("removeState", "open");
+				this.open.RemoveState("open");
 			}
 		}
 
@@ -642,12 +641,6 @@ namespace Wisej.Web.Ext.NavigationBar
 		public override void Update()
 		{
 			base.Update();
-
-			if (((IWisejComponent)this).IsNew)
-			{
-				if (this.items.Visible)
-					this.open.Call("addState", "open");
-			}
 
 			if (this.DesignMode)
 				this.NavigationBar?.Update();
