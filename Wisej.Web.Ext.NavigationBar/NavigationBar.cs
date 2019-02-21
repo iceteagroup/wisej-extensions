@@ -25,7 +25,6 @@ using System.Drawing;
 using System.Drawing.Design;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Forms;
 using Wisej.Core;
 using Wisej.Core.Design;
 
@@ -470,7 +469,7 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		#region IWisejDesignTarget
 
-		bool IWisejDesignTarget.DesignerWndProc(ref Message m)
+		bool IWisejDesignTarget.DesignerWndProc(ref System.Windows.Forms.Message m)
 		{
 			switch (m.Msg)
 			{
