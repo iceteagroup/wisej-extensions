@@ -129,7 +129,6 @@ qx.Class.define("wisej.web.ext.BingWallpaper", {
 				if (this.__currentImageIndex >= images.length)
 					this.__currentImageIndex = 0;
 
-				var fadeTime = this.getFadeTime();
 				var nextImageUrl = images[this.__currentImageIndex];
 
 				// load the image, but it may be preloaded already and return immediately.

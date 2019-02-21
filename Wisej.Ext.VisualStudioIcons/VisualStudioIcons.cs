@@ -4696,5 +4696,6 @@ namespace Wisej.Ext.VisualStudioIcons
 		public const string ZoomOutInverse = root + "ZoomOut_inverse.svg";
 		public const string ZoomToFit = root + "ZoomToFit.svg";
 		public const string ZoomToWidth = root + "ZoomToWidth.svg";
+
 	}
 }

@@ -472,7 +472,7 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		#region IWisejDesignTarget
 
-		bool IWisejDesignTarget.DesignerWndProc(ref Message m)
+		bool IWisejDesignTarget.DesignerWndProc(ref System.Windows.Forms.Message m)
 		{
 			switch (m.Msg)
 			{
