@@ -141,12 +141,12 @@ namespace Wisej.Web.Ext.WebARIA
 
 			// update the extender, now it will send also this newly created control.
 			Update();
-	}
+		}
 
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
-	{
+			{
 				Clear();
 			}
 
@@ -169,18 +169,18 @@ namespace Wisej.Web.Ext.WebARIA
 
 				Update();
 			}
-	}
+		}
 
 		#endregion
 
 		#region Wisej Implementation
 
-	/// <summary>
+		/// <summary>
 		/// Renders the client component.
-	/// </summary>
+		/// </summary>
 		/// <param name="config">Dynamic configuration object.</param>
 		protected override void OnWebRender(dynamic config)
-	{
+		{
 			base.OnWebRender((object)config);
 
 			config.className = "wisej.web.extender.WebAria";
@@ -211,7 +211,7 @@ namespace Wisej.Web.Ext.WebARIA
 				// register non-created control for delayed registration.
 				this.controls.Where(o => !o.Key.Created).ToList().ForEach(o => o.Key.ControlCreated += this.Control_Created);
 			}
-	}
+		}
 
 		#endregion
 	}

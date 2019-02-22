@@ -182,6 +182,31 @@ namespace Wisej.Web.Ext.RibbonBar
 		private string _text = string.Empty;
 
 		/// <summary>
+		/// Returns or sets the name of the <see cref="RibbonBarItem" />. 
+		///</summary>
+		/// <returns>The name of the <see cref="RibbonBarItem" />.</returns>
+		[Browsable(false)]
+		[SRCategory("CatAppearance")]
+		[Description("Returns or sets the name for the RibbonBarItem.")]
+		public string Name
+		{
+			get
+			{
+				return this.Site != null
+				  ? this.Site.Name
+				  : this._name;
+			}
+			set
+			{
+				this._name = value ?? string.Empty;
+
+				if (this.Site != null)
+					this.Site.Name = this._name;
+			}
+		}
+		private string _name = string.Empty;
+
+		/// <summary>
 		/// Returns or sets the tooltip text for the <see cref="RibbonBarItem"/>.
 		///</summary>
 		/// <returns>The text displayed in a tooltip for the <see cref="RibbonBarItem"/>.</returns>
@@ -389,6 +414,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		{
 			base.OnWebRender((object)config);
 
+			config.name = this.Name;
 			config.enabled = this.Enabled;
 			config.visible = this.Visible;
 			config.columnBreak = this.ColumnBreak;

@@ -57,7 +57,7 @@ namespace System.IO.Compression
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BrotliStream"/> class using the specified stream and
-		/// compression mode, and optionally leaves the stream open.
+		/// compression level, and optionally leaves the stream open.
 		/// </summary>
 		/// <param name="stream">The stream to compress or decompress.</param>
 		/// <param name="level">One of <see cref="CompressionLevel"/> values that indicates the level of compression to adopt.</param>
@@ -89,6 +89,17 @@ namespace System.IO.Compression
 		/// compression mode, and optionally leaves the stream open.
 		/// </summary>
 		/// <param name="stream">The stream to compress or decompress.</param>
+		/// <param name="level">One of <see cref="CompressionLevel"/> values that indicates the level of compression to adopt.</param>
+		public BrotliStream(Stream stream, CompressionLevel level)
+			: this(stream, level, false)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BrotliStream"/> class using the specified stream and
+		/// compression mode, and optionally leaves the stream open.
+		/// </summary>
+		/// <param name="stream">The stream to compress or decompress.</param>
 		/// <param name="mode">One of the enumeration values that indicates whether to compress or decompress the stream.</param>
 		/// <param name="leaveOpen"><c>true</c> to leave the stream open after disposing the <see cref="BrotliStream"/> object; otherwise, <c>false</c>.</param>
 		public BrotliStream(Stream stream, CompressionMode mode, bool leaveOpen)
@@ -102,8 +113,8 @@ namespace System.IO.Compression
 		/// </summary>
 		/// <param name="stream">The stream to compress or decompress.</param>
 		/// <param name="mode">One of the enumeration values that indicates whether to compress or decompress the stream.</param>
-		public BrotliStream(Stream stream, CompressionMode mode) :
-			this(stream, mode, false)
+		public BrotliStream(Stream stream, CompressionMode mode)
+			: base(stream, mode, false)
 		{
 		}
 	}

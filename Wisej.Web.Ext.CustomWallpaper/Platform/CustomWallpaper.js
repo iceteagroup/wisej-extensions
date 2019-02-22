@@ -104,6 +104,9 @@ qx.Class.define("wisej.web.ext.CustomWallpaper", {
 				var target = this.__getTargetControl();
 				if (!target) {
 
+					if (wisej.web.DesignMode || !this.core.isValidSession())
+						return;
+
 					// if we don't have a target yet, the desktop may have not been created in time.
 					// delay and retry.
 					setTimeout(function () {
@@ -126,7 +129,6 @@ qx.Class.define("wisej.web.ext.CustomWallpaper", {
 				if (this.__currentImageIndex >= images.length)
 					this.__currentImageIndex = 0;
 
-				var fadeTime = this.getFadeTime();
 				var nextImageUrl = images[this.__currentImageIndex];
 
 				// load the image, but it may be preloaded already and return immediately.
