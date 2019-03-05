@@ -9,7 +9,7 @@ Uses 3rd party JavaScript library [TinyEditor](https://github.com/jessegreathous
 
 ## [Blog](https://wisej.com/blog/editors-choice/)
 
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/EditorsChoice)
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/2.0/EditorsChoice)
 
 ## [Try it on Online](http://demo.wisej.com/EditorsChoice)
 
