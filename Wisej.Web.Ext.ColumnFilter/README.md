@@ -7,7 +7,7 @@ The ColumnFilter extender component allows you to add row filtering to your Data
 
 ## ["How to" blog](https://wisej.com/blog/columnfilter/)
 
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/ColumnFilter)
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/1.5/ColumnFilter)
 
 ## [Try it on Online](http://demo.wisej.com/ColumnFilter)
 
