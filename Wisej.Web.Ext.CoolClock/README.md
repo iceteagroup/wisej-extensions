@@ -7,7 +7,7 @@ The CoolClock extension component uses the CoolClock widget to render amazing an
 
 Uses 3rd party JavaScript library [CoolClock](http://randomibis.com/coolclock/)
 
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/CodeProject)
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/2.0/CodeProject)
 
 ## [Try it on Online](http://demo.wisej.com/CodeProject)
 
