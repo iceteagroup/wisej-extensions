@@ -7,7 +7,7 @@ The ChartJS extension component uses the excellent ChartJS widget to render amaz
 
 Uses 3rd party JavaScript library [ChartJS](http://www.chartjs.org/)
 
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/ChartJS)
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/1.5/ChartJS)
 
 ## [Try it on Online](http://demo.wisej.com/ChartJS)
 
