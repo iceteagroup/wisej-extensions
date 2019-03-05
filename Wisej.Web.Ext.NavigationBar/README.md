@@ -1,7 +1,7 @@
 NavigationBar
 ====
 
-<img src="../Support/Images/wip.jpg" height="252">
+<img src="../Support/Images/NavigationBar.png" height="252">
 
 A responsive vertical navigation bar that displays an application header with logo, child items, and a user panel with gravatar and other user information.
 
