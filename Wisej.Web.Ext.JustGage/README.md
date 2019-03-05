@@ -7,7 +7,7 @@ The JustGage extension component uses the cool JustGage widget to render animate
 
 Uses 3rd party JavaScript library [JustGage](http://justgage.com/)
 
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/CodeProject)
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/2.0/CodeProject)
 
 ## [Try it on Online](http://demo.wisej.com/CodeProject)
 
