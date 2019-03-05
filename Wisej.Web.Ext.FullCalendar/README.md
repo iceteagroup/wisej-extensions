@@ -7,7 +7,7 @@ The FullCalendar extension is an amazing full-size drag-n-drop event calendar. S
 
 Uses 3rd party JavaScript library [FullCalendar](https://fullcalendar.io/)
 
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/FullCalendar)
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/2.0/FullCalendar)
 
 ## [Try it on Online](http://demo.wisej.com/FullCalendar)
 
