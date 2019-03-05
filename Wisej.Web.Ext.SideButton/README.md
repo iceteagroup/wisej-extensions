@@ -1,7 +1,7 @@
 SideButton
 ====
 
-<img src="../Support/Images/NavigationBar.jpg" height="252">
+<img src="../Support/Images/NavigationBar.png" height="252">
 
 A retractable animated button that can be used to expand or collapse other panels.
 
