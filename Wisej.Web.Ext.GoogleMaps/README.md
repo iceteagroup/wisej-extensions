@@ -7,7 +7,7 @@ The GoogleMaps extension lets you control Google Maps as a fully integrated serv
 
 Uses 3rd party online JavaScript library [Google Maps](https://cloud.google.com/maps-platform/)
 
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/GoogleMaps)
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/2.0/GoogleMaps)
 
 License
 -------

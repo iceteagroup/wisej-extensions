@@ -5,9 +5,11 @@ TourPanel
 
 The TourPanel extension adds a new component and template to Wisej. The TourPanel can create a customized tour of an existing application highlighting specific targets and displaying HTML Text in steps.
 
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/TourPanelSample)
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/2.0/TourPanelSample)
 
 ## [Try it on Online](http://demo.wisej.com/TourPanel)
+
+## [Blog](https://wisej.com/blog/tourpanel-take-your-users-on-a-tour/)
 
 License
 -------

@@ -1,9 +1,15 @@
 SideButton
 ====
 
-<img src="../Support/Images/wip.jpg" height="252">
+<img src="../Support/Images/NavigationBar.png" height="252">
 
 A retractable animated button that can be used to expand or collapse other panels.
+
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/2.0/NavigationBar)
+
+## [Try it on Online](http://demo.wisej.com/NavigationBar)
+
+## [Blog](https://wisej.com/blog/new_controls_navigationbar_and_more/)
 
 License
 -------

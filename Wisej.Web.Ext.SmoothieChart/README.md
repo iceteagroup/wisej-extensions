@@ -7,7 +7,7 @@ The SmoothieChart extension uses a cool JavaScript charting widget for streaming
 
 Uses 3rd party JavaScript library [Smoothie Charts](http://smoothiecharts.org/) for charting streaming data
 
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/master/SmoothieChartSample)
+## [Example application](https://github.com/iceteagroup/wisej-examples/tree/2.0/SmoothieChartSample)
 
 ## [Try it on Online](http://demo.wisej.com/SmoothieChartSample)
 

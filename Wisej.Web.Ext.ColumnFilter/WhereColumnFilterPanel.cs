@@ -127,7 +127,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			string where = "";
 
-			if (this.DataGridViewColumn.ValueType == typeof(System.String))
+			if (this.DataGridViewColumn.ValueType == typeof(System.String) || this.DataGridViewColumn is DataGridViewComboBoxColumn)
 			{
 				where = GetWhereForString();
 			}
@@ -451,7 +451,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			// String =  0-9
 			// Number/Date = 10-15
 			// Bool = 16-19
-			if (this.DataGridViewColumn.ValueType == typeof(string))
+			if (this.DataGridViewColumn.ValueType == typeof(string) || this.DataGridViewColumn is DataGridViewComboBoxColumn)
 			{
 				startIndex = 0;
 				count = 10;
