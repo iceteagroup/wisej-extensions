@@ -5,7 +5,7 @@ namespace Brotli
 {
     class Brolib64
     {
-        internal const String LibName = "brolib64.dll";
+        internal const String LibName = "brolib_x64.dll";
         #region Encoder
         [DllImport(LibName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr BrotliEncoderCreateInstance(IntPtr allocFunc, IntPtr freeFunc, IntPtr opaque);

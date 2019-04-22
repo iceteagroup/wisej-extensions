@@ -35,7 +35,7 @@ namespace System.IO.Compression
 		{
 			try
 			{
-				var fileName = (IntPtr.Size == 4 ? "brolib32.dll" : "brolib64.dll");
+				var fileName = "brolib_x64.dll";
 				var resName = "Wisej.Web.Ext.Brotli.Native." + fileName;
 
 				var asm = typeof(BrotliStream).Assembly;
