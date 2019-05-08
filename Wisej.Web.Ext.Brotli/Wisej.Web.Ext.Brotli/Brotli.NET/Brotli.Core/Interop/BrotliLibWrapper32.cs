@@ -17,7 +17,7 @@ namespace Brotli
 
         static DelegateEncoderCompressStream _funcEncoderCompressStream;
 
-        const string LibraryName = "brolib32.dll";
+        const string LibraryName = "brolib_x86.dll";
         static IntPtr NativeLibraryPtr = IntPtr.Zero;
         internal static void InitLibrary()
         {

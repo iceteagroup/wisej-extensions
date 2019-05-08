@@ -20,6 +20,7 @@
 
 
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace System.IO.Compression
 {
@@ -33,26 +34,26 @@ namespace System.IO.Compression
 		/// </summary>
 		static BrotliStream()
 		{
+			var fileName = "brolib_x" + (IntPtr.Size == 4 ? "86" : "64") + ".dll";
+			var resName = "Wisej.Web.Ext.Brotli.Native." + fileName;
+			var asm = typeof(BrotliStream).Assembly;
+			var tempPath = Path.Combine(Path.GetTempPath(), fileName);
+
 			try
 			{
-				var fileName = "brolib_x64.dll";
-				var resName = "Wisej.Web.Ext.Brotli.Native." + fileName;
-
-				var asm = typeof(BrotliStream).Assembly;
-				var tempPath = Path.Combine(Path.GetTempPath(), fileName);
 				using (var stream = asm.GetManifestResourceStream(resName))
 				using (var writer = new FileStream(tempPath, FileMode.Create, FileAccess.Write))
 				{
 					stream.CopyTo(writer);
 				}
-
-				// load it now that we know where it is.
-				Brotli.NativeMethods.LoadLibrary(tempPath);
 			}
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex.Message);
 			}
+
+			if (Brotli.NativeMethods.LoadLibrary(tempPath) == IntPtr.Zero)
+				throw new Exception($"Failed to load {tempPath} with error code {Marshal.GetLastWin32Error()}.");
 		}
 
 		/// <summary>

@@ -171,8 +171,8 @@ qx.Class.define("wisej.web.RibbonBar", {
 				return;
 
 			var bar = this.tabview.getChildControl("bar");
-			wisej.web.ToolContainer.install(this, bar, value, "left", { index: 4 });
-			wisej.web.ToolContainer.install(this, bar, value, "right", { index: 5 });
+			wisej.web.ToolContainer.install(this, bar, value, "left", { index: 4 }, null, "ribbonbar");
+			wisej.web.ToolContainer.install(this, bar, value, "right", { index: 5 }, null, "ribbonbar");
 		},
 
 		/**

@@ -27,6 +27,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Wisej.Base;
 using System.Text;
+using Wisej.Web;
 
 namespace Wisej.Ext.Translation
 {
@@ -130,9 +131,8 @@ namespace Wisej.Ext.Translation
 		public override void TranslateAsync(string text, string from, string to, Action<TranslationResult> resultCallback)
 		{
 			var callback = resultCallback;
-			ApplicationBase.StartTask(() =>
+			Application.StartTask(() =>
 			{
-
 				TranslationResult result = this.Translate(text, from, to);
 				callback(result);
 
