@@ -40,8 +40,8 @@ namespace Wisej.Web.Ext.Html2Canvas
 	/// </para>
 	/// <code language="cs">
 	///		Html2Canvas.Screenshot(this, (image) => {
-	///			image.Save(@"\images\screen.png");
-	///		});
+	///		image.Save(@"\images\screen.png");
+	/// });
 	///		
 	///		// or using asynchronous code:
 	///		
