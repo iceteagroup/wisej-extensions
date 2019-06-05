@@ -201,9 +201,8 @@ namespace Wisej.Web.Ext.CustomWallpaper
 				var entry = this._images[i];
 				if (entry.Image != null)
 					list[i] = this.GetPostbackURL() + "&ix=" + i;
-				else
-					list[i] = entry.ImageSource;
-
+				else if (entry.ImageSource != null)
+					list[i] = entry.ImageSource.Replace("\\", "/");
 			}
 
 			return list;
