@@ -324,6 +324,8 @@ namespace Wisej.Web.Ext.AspNetControl
 		/// Returns the instance of the <see cref="T:System.Web.UI.ScriptManager"/> in the AspNetHost.asp page
 		/// used to wrap AspNet controls.
 		/// </summary>
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public System.Web.UI.ScriptManager ScriptManager
 		{
 			get { return System.Web.UI.ScriptManager.GetCurrent(this.Page); }

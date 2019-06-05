@@ -132,7 +132,6 @@ namespace Wisej.Ext.Translation
 			var callback = resultCallback;
 			ApplicationBase.StartTask(() =>
 			{
-
 				TranslationResult result = this.Translate(text, from, to);
 				callback(result);
 

@@ -81,9 +81,12 @@ namespace Wisej.Web.Ext.RibbonBar
 
 						if (this.DesignMode)
 						{
-							this._control.Parent = this.RibbonBar?.Parent;
-							this._control.BringToFront();
-							((IWisejComponent)this._control).Updated -= control_Updated;
+							if (!this._control.IsDisposed && !this._control.Disposing)
+							{
+								this._control.Parent = this.RibbonBar?.Parent;
+								this._control.BringToFront();
+								((IWisejComponent)this._control).Updated -= control_Updated;
+							}
 						}
 					}
 
