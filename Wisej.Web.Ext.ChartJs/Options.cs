@@ -508,7 +508,26 @@ namespace Wisej.Web.Ext.ChartJS
 			: base(chart, defaults)
 		{
 		}
-	}
+
+        /// <summary>
+		/// If true, lines stack on top of each other along the y axis.
+		/// </summary>
+		[DefaultValue(50)]
+        [Description("This equates what percentage of the inner should be cut out")]
+        public int CutoutPercentage
+        {
+            get { return this._cutOutPercentage; }
+            set
+            {
+                if (this._cutOutPercentage != value)
+                {
+                    this._cutOutPercentage = value;
+                    Update();
+                }
+            }
+        }
+        private int _cutOutPercentage = 50;
+    }
 
 	/// <summary>
 	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Radar"/> chart.
