@@ -223,7 +223,7 @@ if (!Int32Array.prototype.fill) {
 				if (codepoint > 0xffff) {
 					// codepoint &= ~0x10000;
 					codepoint -= 0x10000;
-					out.push((codepoint >>> 10) & 0x3ff | 0xd800)
+					out.push((codepoint >>> 10) & 0x3ff | 0xd800);
 					codepoint = 0xdc00 | codepoint & 0x3ff;
 				}
 				out.push(codepoint);
@@ -232,7 +232,17 @@ if (!Int32Array.prototype.fill) {
 			}
 		}
 
-		return String.fromCharCode.apply(null, out);
+		// Fix IE bug in String.fromCharCode.
+		if (out.length > 64000) {
+			var text = "";
+			for (var i = 0, l = out.length; i < l; i += 64000) {
+				text += String.fromCharCode.apply(null, out.slice(i, i + 64000));
+			}
+			return text;
+		}
+		else {
+			return String.fromCharCode.apply(null, out);
+		}
 	};
 
 	scope['TextEncoder'] = FastTextEncoder;
