@@ -508,6 +508,25 @@ namespace Wisej.Web.Ext.ChartJS
 			: base(chart, defaults)
 		{
 		}
+
+		/// <summary>
+		/// This equates what percentage of the inner part should be cut out.
+		/// </summary>
+		[DefaultValue(50)]
+		[Description("This equates what percentage of the inner part should be cut out")]
+		public int CutoutPercentage
+		{
+			get { return this._cutOutPercentage; }
+			set
+			{
+				if (this._cutOutPercentage != value)
+				{
+					this._cutOutPercentage = value;
+					Update();
+				}
+			}
+		}
+		private int _cutOutPercentage = 50;
 	}
 
 	/// <summary>

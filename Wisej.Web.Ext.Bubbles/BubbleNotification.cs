@@ -349,6 +349,10 @@ namespace Wisej.Web.Ext.Bubbles
 					// register non-created control for delayed registration.
 					this.bubbles.Where(o => !o.Key.Created).ToList().ForEach(o => o.Key.ControlCreated += this.Control_Created);
 				}
+				else
+				{
+					config.bubbles = null;
+				}
 
 				// subscribe only if the event has been attached to since
 				// it's unlikely that this class will be extended to

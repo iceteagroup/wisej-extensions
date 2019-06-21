@@ -7,30 +7,30 @@ using CefSharp;
 
 namespace Wisej.Application
 {
-    public class DownloadHandler : IDownloadHandler
-    {
-        public event EventHandler<DownloadItem> OnBeforeDownloadFired;
+	public class DownloadHandler : IDownloadHandler
+	{
+		public event EventHandler<DownloadItem> OnBeforeDownloadFired;
 
-        public event EventHandler<DownloadItem> OnDownloadUpdatedFired;
+		public event EventHandler<DownloadItem> OnDownloadUpdatedFired;
 
 		public void OnBeforeDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IBeforeDownloadCallback callback)
-        {
-            var handler = OnBeforeDownloadFired;
-            handler?.Invoke(this, downloadItem);
+		{
+			var handler = OnBeforeDownloadFired;
+			handler?.Invoke(this, downloadItem);
 
-            if (!callback.IsDisposed)
-            {
-                using (callback)
-                {
-                    callback.Continue(downloadItem.SuggestedFileName, true);
-                }
-            }
-        }
+			if (!callback.IsDisposed)
+			{
+				using (callback)
+				{
+					callback.Continue(downloadItem.SuggestedFileName, true);
+				}
+			}
+		}
 
 		public void OnDownloadUpdated(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IDownloadItemCallback callback)
-        {
-            var handler = OnDownloadUpdatedFired;
-            handler?.Invoke(this, downloadItem);
-        }
-    }
+		{
+			var handler = OnDownloadUpdatedFired;
+			handler?.Invoke(this, downloadItem);
+		}
+	}
 }
