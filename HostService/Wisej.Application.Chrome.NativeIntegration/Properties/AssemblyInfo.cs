@@ -1,15 +1,17 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
+[assembly: Wisej.Core.WisejResources()]
+
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Wisej.Application")]
-[assembly: AssemblyDescription("Wisej Chromium Desktop Application")]
+[assembly: AssemblyTitle("Wisej.Application.Chrome.NativeIntegration")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ice Tea Group LLC")]
 [assembly: AssemblyProduct("Wisej 2")]
-[assembly: AssemblyCopyright("Copyright ©2018 Ice Tea Group LLC")]
+[assembly: AssemblyCopyright("Copyright ©2019 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -27,6 +29,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.28.0")]

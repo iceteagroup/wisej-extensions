@@ -32,6 +32,8 @@ namespace Wisej.Application
 			:base(url)
 		{
 			this.KeyboardHandler = this;
+
+			this.JavascriptObjectRepository.Register("NativeMessageBox", new NativeMessageBox(this), false);
 		}
 
 		#region IKeyboardHandler
@@ -67,5 +69,30 @@ namespace Wisej.Application
 		}
 
 		#endregion
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public class NativeMessageBox
+	{
+		private Control owner;
+
+		internal NativeMessageBox(Control owner)
+		{
+			this.owner = owner;
+		}
+
+		public int show(string caption, string text, int buttons, int icon, int defaultButton)
+		{
+			return (int)MessageBox.Show(
+				this.owner,
+				text, 
+				caption, 
+				(MessageBoxButtons)buttons, 
+				(MessageBoxIcon)icon,
+				(MessageBoxDefaultButton)defaultButton
+			);
+		}
 	}
 }
