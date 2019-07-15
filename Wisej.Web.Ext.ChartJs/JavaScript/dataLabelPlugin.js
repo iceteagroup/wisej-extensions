@@ -6,10 +6,21 @@ Chart.plugins.register({
 		var ctx = chart.ctx;
 
 		chart.data.datasets.forEach(function (dataset, i) {
+
 			var meta = chart.getDatasetMeta(i);
-			if (chart.config.options.dataLabel != undefined && chart.config.options.dataLabel.display) {
+
+			// Skip hidden sets
+			if (meta.hidden)
+				return;
+
+			if (chart.config.options.dataLabel !== undefined && chart.config.options.dataLabel.display) {
 			
 				meta.data.forEach(function (element, index) {
+
+			// Skip hidden sets
+					if (meta.data[index].hidden)
+						return;
+
 					// Draw the text in black, with the specified font
 					ctx.fillStyle = 'rgb(0, 0, 0)';
 
@@ -19,8 +30,12 @@ Chart.plugins.register({
 					
 					ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
-					// Just naively convert to string for now
-					var dataString = dataset.data[index].toString();
+					// Use the pre-formatted string or simply convert the data
+					var dataString = "";
+					if (dataset.formatted && dataset.formatted[index] != null)
+						dataString = dataset.formatted[index];
+					else
+						dataString = dataset.data[index].toString();
 
 					// Make sure alignment settings are correct
 					ctx.textAlign = 'center';

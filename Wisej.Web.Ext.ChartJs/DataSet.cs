@@ -80,6 +80,15 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
+		/// Formatted representation of the data to plot displayed when <see cref="OptionsDataLabel.Display"/> is true.
+		/// </summary>
+		public string[] Formatted
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// The fill color of the data set. What it fills is up to the chart type.
 		/// </summary>
 		[DefaultValue(typeof(Color), "")]
