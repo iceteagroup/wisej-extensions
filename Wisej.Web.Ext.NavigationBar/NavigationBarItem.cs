@@ -619,7 +619,7 @@ namespace Wisej.Web.Ext.NavigationBar
 			}
 		}
 
-		private void header_Click(object sender, EventArgs e)
+		private void NavigationBarItem_Click(object sender, EventArgs e)
 		{
 			this.Expanded = !this.Expanded;
 			this.NavigationBar?.FireItemClick(this);
