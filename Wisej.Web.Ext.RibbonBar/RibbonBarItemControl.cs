@@ -37,30 +37,6 @@ namespace Wisej.Web.Ext.RibbonBar
 		#region Properties
 
 		/// <summary>
-		/// Returns the 
-		/// <see cref="RibbonBarGroup"/> that owns this
-		/// <see cref="RibbonBarItem"/>.
-		/// </summary>
-		[Browsable(false)]
-		public override RibbonBarGroup Parent
-		{
-			get { return base.Parent; }
-			internal set
-			{
-				if (base.Parent != value)
-				{
-					if (base.Parent?.RibbonBar != null)
-						base.Parent.RibbonBar.BindingContextChanged -= this.RibbonBar_BindingContextChanged;
-
-					base.Parent = value;
-
-					if (base.Parent?.RibbonBar != null)
-						base.Parent.RibbonBar.BindingContextChanged += this.RibbonBar_BindingContextChanged;
-				}
-			}
-		}
-
-		/// <summary>
 		/// Returns or sets the <see cref="Control"/> to be hosted inside the
 		/// <see cref="RibbonBarItemControl"/>.
 		/// </summary>
@@ -72,20 +48,22 @@ namespace Wisej.Web.Ext.RibbonBar
 			get { return _control; }
 			set
 			{
-				if (this._control != value)
+				var oldControl = this._control;
+				if (oldControl != value)
 				{
-					if (this._control != null)
+					if (oldControl != null)
 					{
-						this._control.BindingContext = null;
-						this._control.Disposed -= control_Disposed;
+						oldControl.Parent = null;
+						oldControl.Disposed -= control_Disposed;
+						oldControl.SetStyle(ControlStyles.Embedded, false);
 
 						if (this.DesignMode)
 						{
-							if (!this._control.IsDisposed && !this._control.Disposing)
+							if (!oldControl.IsDisposed && !oldControl.Disposing)
 							{
-								this._control.Parent = this.RibbonBar?.Parent;
-								this._control.BringToFront();
-								((IWisejComponent)this._control).Updated -= control_Updated;
+								oldControl.Parent = this.RibbonBar?.Parent;
+								oldControl.BringToFront();
+								((IWisejComponent)oldControl).Updated -= control_Updated;
 							}
 						}
 					}
@@ -94,19 +72,20 @@ namespace Wisej.Web.Ext.RibbonBar
 					if (value != null && value == this.RibbonBar)
 						throw new ArgumentException(SR.GetString("CircularOwner"));
 
-					this._control = value;
+					var newControl = this._control = value;
 
-					if (this._control != null)
+					if (newControl != null)
 					{
-						this._control.Parent = null;
-						this._control.CreateControl();
-						this._control.Disposed += control_Disposed;
-						this._control.BindingContext = this.RibbonBar?.BindingContext;
+						newControl.SetStyle(ControlStyles.Embedded, true);
+
+						newControl.Parent = this.RibbonBar;
+						newControl.CreateControl();
+						newControl.Disposed += control_Disposed;
 
 						if (this.DesignMode)
 						{
 							// hook up to the IWisejComponent.Updated event to update the UI while designing.
-							((IWisejComponent)this._control).Updated += control_Updated;
+							((IWisejComponent)newControl).Updated += control_Updated;
 						}
 					}
 
@@ -124,12 +103,6 @@ namespace Wisej.Web.Ext.RibbonBar
 		void control_Disposed(object sender, EventArgs e)
 		{
 			this.Control = null;
-		}
-
-		private void RibbonBar_BindingContextChanged(object sender, EventArgs e)
-		{
-			if (this._control != null)
-				this._control.BindingContext = this.RibbonBar?.BindingContext;
 		}
 
 		/// <summary>
