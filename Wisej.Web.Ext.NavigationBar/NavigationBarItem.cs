@@ -135,8 +135,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns or sets the icon of the <see cref="NavigationBarItem"/>.
 		/// </summary>
 		[DefaultValue(null)]
-		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design")]
-		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 		public string Icon
 		{
 			get => this.icon.ImageSource;
@@ -285,16 +285,21 @@ namespace Wisej.Web.Ext.NavigationBar
 		[DefaultValue(false)]
 		public bool ShowShortcut
 		{
-			get => this.shortcut.Visible;
-			set => this.shortcut.Visible = !this.CompactView && value;
+			get { return this._showShortcut; }
+			set
+			{
+				this._showShortcut = value;
+				this.shortcut.Visible = !this.CompactView && value;
+			}
 		}
+		private bool _showShortcut;
 
 		/// <summary>
 		/// Returns or sets the shortcut icon.
 		/// </summary>
 		[DefaultValue("spinner-plus")]
-		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design")]
-		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 		public string ShortcutIcon
 		{
 			get => this.shortcut.ImageSource;
@@ -589,8 +594,8 @@ namespace Wisej.Web.Ext.NavigationBar
 
 			this.title.Visible = !compactView;
 			this.open.Visible = !compactView && this.Items.Count > 0;
+			this.shortcut.Visible = !compactView && this.ShowShortcut;
 			this.info.Visible = !compactView && !String.IsNullOrEmpty(this.InfoText);
-			this.shortcut.Visible = !compactView && !String.IsNullOrEmpty(this.shortcut.Text);
 
 			if (String.IsNullOrEmpty (this.ToolTipText))
 				this.header.ToolTipText = compactView ? this.title.Text : null;
