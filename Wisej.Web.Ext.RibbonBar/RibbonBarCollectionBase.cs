@@ -33,7 +33,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <typeparam name="TElement"></typeparam>
 	/// <exclude/>
 	[ListBindable(false)]
-	[Editor("Wisej.Design.DefaultCollectionEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
+	[Editor("Wisej.Design.DefaultCollectionEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 	public abstract class RibbonBarCollectionBase<TOwner, TElement> : IList<TElement>, IList
 		where TOwner : IWisejComponent
 		where TElement : IWisejComponent
