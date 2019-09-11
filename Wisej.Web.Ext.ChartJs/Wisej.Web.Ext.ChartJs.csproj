@@ -74,6 +74,7 @@
     <Compile Include="OptionsScales.cs" />
     <Compile Include="OptionsLegend.cs" />
     <Compile Include="OptionsTitle.cs" />
+    <Compile Include="OptionsTooltips.cs" />
     <Compile Include="PointStyle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scale.cs" />
