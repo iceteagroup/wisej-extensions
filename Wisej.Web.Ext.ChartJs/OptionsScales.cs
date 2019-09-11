@@ -487,11 +487,35 @@ namespace Wisej.Web.Ext.ChartJS
             }
         }
         private int? _min;
-           
-        /// <summary>
-        /// Padding between the tick label and the axis. Only applicable to horizontal scales.
-        /// </summary>
-        [DefaultValue(10)]
+
+		/// <summary>
+		/// User defined fixed step size for the scale.
+		/// </summary>
+		/// <remarks>
+		/// If set, the scale ticks will be enumerated by multiple of stepSize, having one tick per increment.
+		/// If not set, the ticks are labeled automatically using the nice numbers algorithm.
+		/// </remarks>
+		[DefaultValue(null)]
+		[Description("User defined fixed step size for the scale.")]
+		public int? StepSize
+		{
+			get { return this._stepSize; }
+			set
+			{
+				if (this._stepSize != value)
+				{
+					this._stepSize = value;
+					Update();
+				}
+			}
+		}
+		private int? _stepSize;
+
+
+		/// <summary>
+		/// Padding between the tick label and the axis. Only applicable to horizontal scales.
+		/// </summary>
+		[DefaultValue(10)]
 		[Description("Padding between the tick label and the axis. Only applicable to horizontal scales.")]
 		public int Padding
 		{

@@ -56,6 +56,17 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
+		/// Hides the dataset.
+		/// </summary>
+		[DefaultValue(false)]
+		[Description("Hides the dataset.")]
+		public bool Hidden
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Returns the type of chart that plots this type of <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/>.
 		/// </summary>
 		[Description("Returns the type of chart that plots this data set.")]
