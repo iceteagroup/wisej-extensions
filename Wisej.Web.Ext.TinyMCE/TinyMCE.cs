@@ -165,7 +165,7 @@ namespace Wisej.Web.Ext.TinyMCE
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 		public new virtual dynamic Options
 		{
 			get
@@ -375,7 +375,7 @@ namespace Wisej.Web.Ext.TinyMCE
 			get { return _baseUrl; }
 			set { _baseUrl = value; }
 		}
-		private static string _baseUrl = "https://cdn.tinymce.com/4/tinymce.min.js";
+		private static string _baseUrl = "https://cdn.tinymce.com/4/";
 
 		/// <summary>
 		/// Overridden to return our list of script resources.
@@ -392,7 +392,7 @@ namespace Wisej.Web.Ext.TinyMCE
 					base.Packages.Add(new Package()
 					{
 						Name = "tinymce.js",
-						Source = BaseUrl
+						Source = $"{BaseUrl}tinymce.min.js"
 					});
 				}
 				return base.Packages;

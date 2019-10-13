@@ -104,7 +104,7 @@ namespace Wisej.Ext.WebWorker
 		/// Returns or sets the JavaScript code to execute in the WebWorker process.
 		/// </summary>
 		[DefaultValue("")]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 		public string JavaScript
 		{
 			get { return this._javaScript; }
@@ -125,7 +125,7 @@ namespace Wisej.Ext.WebWorker
 		/// Returns or sets the JavaScript file with the source code to execute in the WebWorker process.
 		/// </summary>
 		[DefaultValue("")]
-		[Editor("Wisej.Design.JsFileSourceEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.JsFileSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 		public string JavaScriptSource
 		{
 			get { return this._javaScriptSource; }

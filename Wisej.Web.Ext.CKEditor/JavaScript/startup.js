@@ -24,11 +24,12 @@ this.init = function () {
 	// create the dom child.
 	this.container.innerHTML = "<textarea id=\"" + id + "\"></textarea>";
 
-	// create the tinyMCE instance using the options map generated on the server.
+	// create the CKEditor instance using the options map generated on the server.
 	var options = $options;
 	var config = options.config;
 	config.resize_enabled = false;
 	config.removePlugins = config.removePlugins || "";
+	CKEDITOR_BASEPATH = options.basePath;
 
 	// hide the toolbar.
 	if (!options.showToolbar)

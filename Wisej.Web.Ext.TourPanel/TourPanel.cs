@@ -38,7 +38,7 @@ namespace Wisej.Web.Ext.TourPanel
 	[ToolboxItem(false)]
 	[DefaultEvent("Load")]
 	[DesignerCategory("UserControl")]
-	[Designer("Wisej.Design.UserControlDocumentDesigner, Wisej.Framework.Design", typeof(IRootDesigner))]
+	[Designer("Wisej.Design.UserControlDocumentDesigner, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(IRootDesigner))]
 	public class TourPanel : ContainerControl, IWisejControl
 	{
 

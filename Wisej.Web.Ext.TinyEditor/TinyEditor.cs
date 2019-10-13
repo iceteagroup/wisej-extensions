@@ -250,7 +250,7 @@ namespace Wisej.Web.Ext.TinyEditor
 		/// </summary>
 		[DefaultValue("")]
 		[Description("Returns or sets the custom css file used by the editor.")]
-		[Editor("Wisej.Design.CssFileSourceEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CssFileSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 		public string StyleSheetSource
 		{
 			get { return this._styleSheetSource ?? string.Empty; }
