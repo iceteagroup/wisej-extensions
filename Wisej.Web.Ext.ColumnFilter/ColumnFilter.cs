@@ -124,8 +124,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 		[Localizable(true)]
 		[Wisej.Base.SRCategory("CatAppearance")]
 		[Description("Returns or sets the theme name or URL for the image to display in the filter button.")]
-		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design")]
-		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 		public string ImageSource
 		{
 			get { return this._imageSettings == null ? null : this._imageSettings.ImageSource; }
@@ -187,8 +187,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 		[Localizable(true)]
 		[Wisej.Base.SRCategory("CatAppearance")]
 		[Description("Returns or sets the theme name or URL for the image to display in the filter button.")]
-		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design")]
-		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design", typeof(UITypeEditor))]
+		[TypeConverter("Wisej.Web.Design.ImageSourceConverter, Wisej.Web.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Web.Design.ImageSourceEditor, Wisej.Web.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 		public string FilteredImageSource
 		{
 			get { return this._filteredImageSettings == null ? null : this._filteredImageSettings.ImageSource; }
