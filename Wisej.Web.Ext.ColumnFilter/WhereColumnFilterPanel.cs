@@ -341,6 +341,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 								condition = GetStrCondition(value, "(\"" + txt.Text + "\")", cmb.SelectedItem.ToString());
 							else
 								condition = GetStrCondition(value, "(\"" + txt.Text.ToUpper() + "\")", cmb.SelectedItem.ToString());
+
 							where = AppendCondition(condition, LogicalOperator, where);
 						}
 					}
@@ -421,18 +422,18 @@ namespace Wisej.Web.Ext.ColumnFilter
 			{
 				if (c is ComboBox)
 				{
-					var Combo = c as ComboBox;
-					Combo.SelectedIndex = -1;
+					var combo = c as ComboBox;
+					combo.SelectedIndex = -1;
 				}
 				else if (c is TextBox)
 				{
-					var TextBox = c as TextBox;
-					TextBox.Clear();
+					var textBox = c as TextBox;
+					textBox.Clear();
 				}
 				else if (c is DateTimePicker)
 				{
-					var Dtp = c as DateTimePicker;
-					Dtp.Value = DateTime.MinValue;
+					var dtp = c as DateTimePicker;
+					dtp.Value = DateTime.MinValue;
 				}
 			}
 		}

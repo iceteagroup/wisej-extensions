@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.DataGridViewSummaryRow", "Wisej.Web.Ext.DataGridViewSummaryRow.csproj", "{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E345D974-0290-496E-85AE-4F2F6ACED078}
+	EndGlobalSection
+EndGlobal

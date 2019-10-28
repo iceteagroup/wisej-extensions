@@ -17,7 +17,7 @@ Chart.plugins.register({
 			
 				meta.data.forEach(function (element, index) {
 
-			// Skip hidden sets
+					// Skip hidden sets
 					if (meta.data[index].hidden)
 						return;
 

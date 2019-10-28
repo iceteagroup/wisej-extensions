@@ -61,10 +61,11 @@ qx.Class.define("wisej.web.ext.Notification", {
 
 			// not denied yet? ask and display.
 			if (Notification.permission !== 'denied') {
+				var me = this;
 				Notification.requestPermission(function (permission) {
 					if (permission === "granted") {
 
-						this.__show(options);
+						me.__show(options);
 					}
 				});
 			}

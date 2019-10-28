@@ -139,6 +139,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.XTerm", "Wise
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.VisualStudioIcons", "Wisej.Ext.VisualStudioIcons\Wisej.Ext.VisualStudioIcons.csproj", "{69489B33-B14D-4BA2-8681-D1E86DB92350}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.DataGridViewSummaryRow", "Wisej.Web.Ext.DataGridViewSummaryRow\Wisej.Web.Ext.DataGridViewSummaryRow.csproj", "{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

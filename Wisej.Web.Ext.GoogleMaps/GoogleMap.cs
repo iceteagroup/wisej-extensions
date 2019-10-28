@@ -35,7 +35,6 @@ namespace Wisej.Web.Ext.GoogleMaps
 	/// Represent an instance of the Google Maps widget.
 	/// </summary>
 	[ToolboxBitmap(typeof(GoogleMap))]
-	[DefaultEvent("ValueChanged")]
 	public class GoogleMap : Widget
 	{
 		/// <summary>
@@ -200,7 +199,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 		public new virtual dynamic Options
 		{
 			get

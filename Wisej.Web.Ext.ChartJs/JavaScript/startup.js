@@ -98,7 +98,7 @@ this.init = function () {
 				}
 				me.fireWidgetEvent("chartClick", data);
 			}
-		}
+		};
 	}
 }
 
@@ -120,6 +120,17 @@ this._onDestroyed = function () {
 		this.chart.destroy();
 		this.chart = null;
 	}
+}
+
+/**
+ * Returns the chart as base64 png image.
+ */
+this.getImage = function () {
+
+	if (this.canvas == null)
+		return null;
+
+	return this.canvas.toDataURL();
 }
 
 /**

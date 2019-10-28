@@ -145,7 +145,7 @@ namespace Wisej.Web.Ext.CKEditor
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 		public new virtual dynamic Options
 		{
 			get
@@ -339,7 +339,7 @@ namespace Wisej.Web.Ext.CKEditor
 			get { return _baseUrl; }
 			set { _baseUrl = value; }
 		}
-		private static string _baseUrl = "https://cdn.ckeditor.com/4.6.2/full-all/ckeditor.js";
+		private static string _baseUrl = "https://cdn.ckeditor.com/4.12.1/full-all/";
 
 		/// <summary>
 		/// Overridden to return our list of script resources.
@@ -356,7 +356,7 @@ namespace Wisej.Web.Ext.CKEditor
 					base.Packages.Add(new Package()
 					{
 						Name = "ckeditor.js",
-						Source = CKEditor.BaseUrl
+						Source = $"{CKEditor.BaseUrl}ckeditor.js"
 					});
 				}
 
@@ -372,6 +372,7 @@ namespace Wisej.Web.Ext.CKEditor
 
 			options.config = this.Options;
 			options.fonts = this.FontNames;
+			options.basePath = CKEditor.BaseUrl;
 			options.showFooter = this.ShowFooter;
 			options.showToolbar = this.ShowToolbar;
 			options.externalPlugins = this.ExternalPlugins;

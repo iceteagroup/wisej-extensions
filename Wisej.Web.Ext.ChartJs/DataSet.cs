@@ -212,6 +212,17 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
+		/// Length and spacing of dashes. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash.
+		/// </summary>
+		[DefaultValue(null)]
+		[Description("Length and spacing of dashes.")]
+		public int[] BorderDash
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// If true, fill the area under the line.
 		/// </summary>
 		[DefaultValue(false)]

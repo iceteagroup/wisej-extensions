@@ -22,6 +22,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
+using System.IO;
+using System.Threading.Tasks;
 using Wisej.Core;
 using Wisej.Design;
 
@@ -224,6 +226,80 @@ namespace Wisej.Web.Ext.ChartJS
 		#endregion
 
 		#region Methods
+
+		/// <summary>
+		/// Returns the chart as a PNG image.
+		/// </summary>
+		/// <returns>An <see cref="Image"/> with a representation of the chart.</returns>
+		public Task<Image> GetImageAsync()
+		{
+			var tcs = new TaskCompletionSource<Image>();
+
+			GetImage((result) => {
+
+				tcs.SetResult(result);
+			});
+
+			return tcs.Task;
+		}
+
+		/// <summary>
+		/// Returns the chart as a PNG image.
+		/// </summary>
+		/// <param name="callback">Callback method that receives the image.</param>
+		/// <returns>An <see cref="Image"/> with a representation of the chart.</returns>
+		public void GetImage(Action<Image> callback)
+		{
+			if (callback == null)
+				throw new ArgumentNullException("callback");
+
+			Call("getImage", (result) =>
+			{
+				var image = ImageFromBase64(result as string);
+				if (image != null)
+				{
+					// set the background color.
+					var bitmap = new Bitmap(image);
+					using (var g = Graphics.FromImage(bitmap))
+					{
+						g.Clear(this.BackColor);
+						g.DrawImageUnscaled(image, 0, 0);
+					}
+					image = bitmap;
+				}
+
+				callback(image);
+
+			}, null);
+		}
+
+		/// <summary>
+		/// Returns the Image encoded in a base64 string.
+		/// </summary>
+		/// <param name="base64"></param>
+		/// <returns></returns>
+		private static Image ImageFromBase64(string base64)
+		{
+			// data:image/gif;base64,R0lGODlhCQAJAIABAAAAAAAAACH5BAEAAAEALAAAAAAJAAkAAAILjI+py+0NojxyhgIAOw==
+			try
+			{
+				if (String.IsNullOrEmpty(base64))
+					return null;
+
+				int pos = base64.IndexOf("base64,");
+				if (pos < 0)
+					return null;
+
+				base64 = base64.Substring(pos + 7);
+				byte[] buffer = Convert.FromBase64String(base64);
+
+				MemoryStream stream = new MemoryStream(buffer);
+				return Image.FromStream(stream);
+			}
+			catch { }
+
+			return null;
+		}
 
 		/// <summary>
 		/// Causes the chart to update the data set and labels.

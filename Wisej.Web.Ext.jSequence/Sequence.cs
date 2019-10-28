@@ -73,7 +73,7 @@ namespace Wisej.Web.Ext.jSequence
 		/// </summary>
 		[DefaultValue("")]
 		[DesignerActionList]
-		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 		public string UML
 		{
 			get { return this._uml; }
