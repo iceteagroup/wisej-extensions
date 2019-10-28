@@ -379,6 +379,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 				return value2.Length == 0 ? "" : value1 + " != " + value2;
 			else if (operation == "contains")
 				return value2.Length == 0 ? "" : value1 + ".Contains " + value2;
+			else if (operation == "does not contain")
+				return value2.Length == 0 ? "" : "!" + value1 + ".Contains " + value2;
 			else if (operation == "starts with")
 				return value2.Length == 0 ? "" : value1 + ".StartsWith " + value2;
 			else if (operation == "ends with")
