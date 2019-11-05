@@ -565,7 +565,10 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 				}
 			}
 
-			summaryRow[summaryCol].Value = value;
+			if (summaryCol != null)
+			{
+				summaryRow[summaryCol].Value = value;
+			}
 		}
 
 		private static DataGridViewSummaryRow RetrieveSummaryRow(
