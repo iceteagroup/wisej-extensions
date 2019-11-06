@@ -204,6 +204,9 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 		/// <returns>Array of the <see cref="DataGridViewSummaryRow"/> rows displaying the aggregated values.</returns>
 		public static DataGridViewSummaryRow[] AddSummaryRows(this DataGridView grid, SummaryType summaryType, SummaryRowPosition summaryPosition, DataGridViewColumn groupFromCol, DataGridViewColumn groupToCol, DataGridViewColumn summaryCol, DataGridViewCellStyle style = null)
 		{
+			if (summaryType != SummaryType.None && summaryCol == null)
+				throw new ArgumentNullException(nameof(summaryCol));
+
 			lock (grid.Rows)
 			{
 				// calculate the specified aggregates.
