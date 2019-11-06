@@ -211,7 +211,7 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 			{
 				// calculate the specified aggregates.
 				var summaryRows = new List<DataGridViewSummaryRow>();
-				var groups = GetSummaryGroups(grid, groupFromCol, groupToCol);
+				var groups = GetSummaryGroups(grid, summaryPosition, groupFromCol, groupToCol);
 				if (groups.Length > 0)
 				{
 					for (int i = 0; i < groups.Length; i++)
@@ -686,7 +686,7 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 			return index;
 		}
 
-		private static DataGridViewRow[][] GetSummaryGroups(DataGridView grid, DataGridViewColumn groupFrom, DataGridViewColumn groupTo)
+		private static DataGridViewRow[][] GetSummaryGroups(DataGridView grid, SummaryRowPosition position, DataGridViewColumn groupFrom, DataGridViewColumn groupTo)
 		{
 			List<DataGridViewRow> group = new List<DataGridViewRow>();
 			List<DataGridViewRow[]> groups = new List<DataGridViewRow[]>();
@@ -695,13 +695,20 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 			DataGridViewRow groupRow = null;
 			foreach (DataGridViewRow r in rows)
 			{
+				// skip hidden rows
+				if (!r.Visible)
+					continue;
+
 				if (r is DataGridViewSummaryRow)
 				{
-					if (group.Count > 0)
+					if (position == SummaryRowPosition.Parent)
 					{
-						groups.Add(group.ToArray());
-						group.Clear();
-						groupRow = null;
+						if (group.Count > 0)
+						{
+							groups.Add(group.ToArray());
+							group.Clear();
+							groupRow = null;
+						}
 					}
 
 					continue;
