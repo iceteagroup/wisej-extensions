@@ -420,6 +420,15 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		private void clear_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
+			Clear(false);
+		}
+
+		/// <summary>
+		/// Clear the filter panel
+		/// </summary>
+		/// <param name="applyFilters"></param>
+		public override void Clear(bool applyFilters = true)
+		{
 			foreach (Control c in this.flowLayoutPanel.Controls)
 			{
 				if (c is ComboBox)
@@ -437,6 +446,10 @@ namespace Wisej.Web.Ext.ColumnFilter
 					var dtp = c as DateTimePicker;
 					dtp.Value = DateTime.MinValue;
 				}
+			}
+			if (applyFilters)
+			{
+				ApplyFilters();
 			}
 		}
 
