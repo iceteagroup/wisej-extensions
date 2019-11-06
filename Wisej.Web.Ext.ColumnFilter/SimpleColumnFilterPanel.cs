@@ -225,9 +225,22 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		private void clear_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
+			Clear(false);
+		}
+
+		/// <summary>
+		/// Clear the filter panel
+		/// </summary>
+		/// <param name="applyFilters"></param>
+		public override void Clear(bool applyFilters = true)
+		{
 			foreach (int i in this.items.CheckedIndices)
 			{
 				this.items.SetItemChecked(i, false);
+			}
+			if (applyFilters)
+			{
+				ApplyFilters();
 			}
 		}
 	}

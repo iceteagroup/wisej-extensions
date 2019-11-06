@@ -255,6 +255,15 @@ namespace Wisej.Web.Ext.ColumnFilter
 			base.Dispose(disposing);
 		}
 
+		/// <summary>
+		/// Clear the filter
+		/// </summary>
+		/// <param name="applyFilters"></param>
+		public virtual void Clear(bool applyFilters = true)
+		{
+			Trace.TraceWarning("Clear is not implemented.");
+		}
+
 		#endregion
 	}
 }
