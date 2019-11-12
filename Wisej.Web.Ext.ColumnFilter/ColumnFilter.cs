@@ -344,8 +344,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 					}
 				}
 			}
-		}
-
+		}		
 		#endregion
 
 		#region IExtenderProvider

@@ -184,6 +184,7 @@
 			this.items.Size = new System.Drawing.Size(320, 0);
 			this.items.Spacing = 0;
 			this.items.TabIndex = 2;
+			this.items.ControlAdded += new Wisej.Web.ControlEventHandler(this.items_ControlAdded);
 			// 
 			// slideBar
 			// 

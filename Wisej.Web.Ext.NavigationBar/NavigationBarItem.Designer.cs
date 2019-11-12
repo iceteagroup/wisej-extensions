@@ -137,6 +137,7 @@
 			this.items.Name = "items";
 			this.items.Size = new System.Drawing.Size(0, 0);
 			this.items.TabIndex = 0;
+			this.items.Spacing = 0;
 			this.items.Visible = false;
 			this.items.VisibleChanged += new System.EventHandler(this.items_VisibleChanged);
 			this.items.ControlAdded += new Wisej.Web.ControlEventHandler(this.items_ControlAdded);

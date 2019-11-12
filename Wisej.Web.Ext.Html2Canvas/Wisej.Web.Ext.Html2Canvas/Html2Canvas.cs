@@ -25,6 +25,7 @@ using Wisej.Base;
 using System.ComponentModel;
 using Wisej.Core;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Wisej.Web.Ext.Html2Canvas
 {
@@ -202,7 +203,7 @@ namespace Wisej.Web.Ext.Html2Canvas
 		// Implementation
 		private void ScreenshotCore(Control target, Html2CanvasOptions options, Action<Image> callback)
 		{
-			var handle = (IntPtr)GCHandle.Alloc(callback, GCHandleType.Weak);
+			var handle = (IntPtr)GCHandle.Alloc(callback, GCHandleType.Normal);
 			Call("screenshot", target, options, handle.ToInt64());
 		}
 
@@ -245,11 +246,18 @@ namespace Wisej.Web.Ext.Html2Canvas
 			var base64 = data.imageData ?? "";
 
 			var handle = GCHandle.FromIntPtr((IntPtr)id);
-			var callback = (Action<Image> )handle.Target;
+			var callback = (Action<Image>)handle.Target;
 			handle.Free();
 
-			var image = ImageFromBase64(base64);
-			callback(image);
+			if (callback != null)
+			{
+				ImageFromBase64(base64);
+				callback(ImageFromBase64(base64));
+			}
+			else
+			{
+				LogManager.Log("The HtmlwCanvas callback is null.");
+			}
 		}
 
 		/// <summary>

@@ -305,6 +305,32 @@ namespace Wisej.Web.Ext.NavigationBar
 			set => this.shortcut.ImageSource = value;
 		}
 
+		/// <summary>
+		/// Returns or sets the height of the <see cref="NavigationBarItem"/> and its child items.
+		/// </summary>
+		internal int ItemHeight
+		{
+			get { return this.header.Height; }
+			set
+			{
+				if (value < 0 || value > 32000)
+					throw new ArgumentOutOfRangeException(nameof(ItemHeight));
+
+				if (this.header.Height != value)
+				{
+					this.header.Height = value;
+
+					if (this._items?.Count > 0)
+					{
+						foreach (var item in this.Items)
+						{
+							item.ItemHeight = value;
+						}
+					}
+				}
+			}
+		}
+
 		#endregion
 
 		#region Implementation
@@ -634,6 +660,9 @@ namespace Wisej.Web.Ext.NavigationBar
 		{
 			this.open.Visible =
 				!this.CompactView;
+
+			if (this.NavigationBar != null)
+				((NavigationBarItem)e.Control).ItemHeight = this.NavigationBar.ItemHeight;
 		}
 
 		private void items_ControlRemoved(object sender, ControlEventArgs e)
