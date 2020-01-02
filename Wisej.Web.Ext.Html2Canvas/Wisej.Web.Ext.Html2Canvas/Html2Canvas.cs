@@ -25,7 +25,6 @@ using Wisej.Base;
 using System.ComponentModel;
 using Wisej.Core;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Wisej.Web.Ext.Html2Canvas
 {
@@ -246,7 +245,7 @@ namespace Wisej.Web.Ext.Html2Canvas
 			var base64 = data.imageData ?? "";
 
 			var handle = GCHandle.FromIntPtr((IntPtr)id);
-			var callback = (Action<Image>)handle.Target;
+			var callback = (Action<Image> )handle.Target;
 			handle.Free();
 
 			if (callback != null)

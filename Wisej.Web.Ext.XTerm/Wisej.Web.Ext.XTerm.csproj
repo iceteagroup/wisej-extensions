@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wisej.Web.Ext.XTerm</RootNamespace>
     <AssemblyName>Wisej.Web.Ext.XTerm</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,8 +45,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Wisej.Core" />
-    <Reference Include="Wisej.Web" />
+    <Reference Include="Wisej.Framework">
+      <HintPath>..\..\..\Development\2.0\bin\Wisej.Framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="XTerm.cs">
@@ -55,35 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.snk" />
-    <None Include="JavaScript\addons\attach\attach.js.map" />
-    <None Include="JavaScript\addons\attach\attach.test.js.map" />
-    <None Include="JavaScript\addons\attach\package.json" />
-    <None Include="JavaScript\addons\attach\tsconfig.json" />
-    <None Include="JavaScript\addons\fit\fit.js.map" />
-    <None Include="JavaScript\addons\fit\fit.test.js.map" />
-    <None Include="JavaScript\addons\fit\package.json" />
-    <None Include="JavaScript\addons\fit\tsconfig.json" />
-    <None Include="JavaScript\addons\fullscreen\fullscreen.js.map" />
-    <None Include="JavaScript\addons\fullscreen\fullscreen.test.js.map" />
-    <None Include="JavaScript\addons\fullscreen\package.json" />
-    <None Include="JavaScript\addons\fullscreen\tsconfig.json" />
-    <None Include="JavaScript\addons\search\package.json" />
-    <None Include="JavaScript\addons\search\search.js.map" />
-    <None Include="JavaScript\addons\search\SearchHelper.js.map" />
-    <None Include="JavaScript\addons\search\tsconfig.json" />
-    <None Include="JavaScript\addons\terminado\package.json" />
-    <None Include="JavaScript\addons\terminado\terminado.js.map" />
-    <None Include="JavaScript\addons\terminado\terminado.test.js.map" />
-    <None Include="JavaScript\addons\terminado\tsconfig.json" />
-    <None Include="JavaScript\addons\webLinks\webLinks.js.map" />
-    <None Include="JavaScript\addons\winptyCompat\package.json" />
-    <None Include="JavaScript\addons\winptyCompat\tsconfig.json" />
-    <None Include="JavaScript\addons\winptyCompat\winptyCompat.js.map" />
-    <None Include="JavaScript\addons\winptyCompat\winptyCompat.test.js.map" />
-    <None Include="JavaScript\addons\zmodem\package.json" />
-    <None Include="JavaScript\addons\zmodem\tsconfig.json" />
-    <None Include="JavaScript\addons\zmodem\zmodem.js.map" />
-    <None Include="JavaScript\addons\zmodem\zmodem.test.js.map" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="JavaScript\startup.js" />
@@ -97,23 +70,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="JavaScript\addons\attach\attach.js" />
-    <Content Include="JavaScript\addons\attach\attach.test.js" />
     <EmbeddedResource Include="JavaScript\addons\fit\fit.js" />
-    <Content Include="JavaScript\addons\fit\fit.test.js" />
     <EmbeddedResource Include="JavaScript\addons\fullscreen\fullscreen.css" />
     <EmbeddedResource Include="JavaScript\addons\fullscreen\fullscreen.js" />
-    <Content Include="JavaScript\addons\fullscreen\fullscreen.test.js" />
     <EmbeddedResource Include="JavaScript\addons\search\search.js" />
     <Content Include="JavaScript\addons\search\SearchHelper.js" />
     <Content Include="JavaScript\addons\terminado\terminado.js" />
-    <Content Include="JavaScript\addons\terminado\terminado.test.js" />
     <EmbeddedResource Include="JavaScript\addons\webLinks\webLinks.js" />
     <EmbeddedResource Include="JavaScript\addons\winptyCompat\winptyCompat.js" />
-    <Content Include="JavaScript\addons\winptyCompat\winptyCompat.test.js" />
-    <Content Include="JavaScript\addons\zmodem\demo\app.js" />
-    <Content Include="JavaScript\addons\zmodem\demo\main.js" />
     <Content Include="JavaScript\addons\zmodem\zmodem.js" />
-    <Content Include="JavaScript\addons\zmodem\zmodem.test.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="JavaScript\addons\zmodem\demo\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

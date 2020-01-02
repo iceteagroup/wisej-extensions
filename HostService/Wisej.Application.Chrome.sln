@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Application.Chrome", "Wisej.Application.Chrome\Wisej.Application.Chrome.csproj", "{0B41A11F-6EF8-4DFC-9363-1EF4281D93CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Application.Chrome.NativeIntegration", "Wisej.Application.Chrome.NativeIntegration\Wisej.Application.Chrome.NativeIntegration.csproj", "{0C354B59-27F3-4636-8B92-1C7913CBBD81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,19 @@ Global
 		{0B41A11F-6EF8-4DFC-9363-1EF4281D93CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B41A11F-6EF8-4DFC-9363-1EF4281D93CF}.Release|x64.ActiveCfg = Release|x64
 		{0B41A11F-6EF8-4DFC-9363-1EF4281D93CF}.Release|x64.Build.0 = Release|x64
+		{0C354B59-27F3-4636-8B92-1C7913CBBD81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C354B59-27F3-4636-8B92-1C7913CBBD81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C354B59-27F3-4636-8B92-1C7913CBBD81}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0C354B59-27F3-4636-8B92-1C7913CBBD81}.Debug|x64.Build.0 = Debug|Any CPU
+		{0C354B59-27F3-4636-8B92-1C7913CBBD81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C354B59-27F3-4636-8B92-1C7913CBBD81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C354B59-27F3-4636-8B92-1C7913CBBD81}.Release|x64.ActiveCfg = Release|Any CPU
+		{0C354B59-27F3-4636-8B92-1C7913CBBD81}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0212E98-E7F4-4A88-87DF-F60CF5C0520D}
 	EndGlobalSection
 EndGlobal

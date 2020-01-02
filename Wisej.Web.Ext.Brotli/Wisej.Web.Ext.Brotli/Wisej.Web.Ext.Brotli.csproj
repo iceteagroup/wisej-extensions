@@ -54,7 +54,9 @@
     <Compile Include="Brotli.NET\Brotli.Core\Exception\BrotliException.cs" />
     <Compile Include="Brotli.NET\Brotli.Core\Implement\Brolib.cs" />
     <Compile Include="Brotli.NET\Brotli.Core\Implement\BrotliStream.cs" />
+    <Compile Include="Brotli.NET\Brotli.Core\Interop\Brolib32.cs" />
     <Compile Include="Brotli.NET\Brotli.Core\Interop\Brolib64.cs" />
+    <Compile Include="Brotli.NET\Brotli.Core\Interop\BrotliLibWrapper32.cs" />
     <Compile Include="Brotli.NET\Brotli.Core\Interop\BrotliLibWrapper64.cs" />
     <Compile Include="Brotli.NET\Brotli.Core\Interop\BrotliLibWrapperBase.cs" />
     <Compile Include="Brotli.NET\Brotli.Core\Interop\NativeMethods.cs" />
@@ -75,6 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Native\brolib_x64.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Native\brolib_x86.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

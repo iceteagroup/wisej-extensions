@@ -38,7 +38,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
     <Reference Include="Wisej.Framework">
-      <HintPath>..\..\..\wisej\Development\2.0\bin\Wisej.Framework.dll</HintPath>
+      <HintPath>..\..\..\Development\2.0\bin\Wisej.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

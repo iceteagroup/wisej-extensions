@@ -60,7 +60,7 @@
     <EmbeddedResource Include="Platform\BubbleNotifications.js" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Platform\BubbleNotifications.mixin.theme" />
+    <EmbeddedResource Include="Themes\BubbleNotifications.mixin.theme" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BubbleNotification.bmp" />
