@@ -209,9 +209,12 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 
 			lock (grid.Rows)
 			{
+				var groups = FindSummaryGroups(grid, summaryPosition, groupFromCol, groupToCol);
+				if (groups.Length == 0)
+					groups = CollectSummaryGroups(grid, summaryPosition, groupFromCol, groupToCol);
+
 				// calculate the specified aggregates.
 				var summaryRows = new List<DataGridViewSummaryRow>();
-				var groups = GetSummaryGroups(grid, summaryPosition, groupFromCol, groupToCol);
 				if (groups.Length > 0)
 				{
 					for (int i = 0; i < groups.Length; i++)
@@ -574,6 +577,17 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 			}
 		}
 
+		private static DataGridViewRow[][] FindSummaryGroups(
+			DataGridView grid, 
+			SummaryRowPosition position, 
+			DataGridViewColumn groupFrom, 
+			DataGridViewColumn groupTo)
+		{
+			return grid.Rows
+				.Where(r => (r as DataGridViewSummaryRow)?.Match(null, position, groupFrom, groupTo) ?? false)
+				.Select(r => ((DataGridViewSummaryRow)r).GroupRows).ToArray();
+		}
+
 		private static DataGridViewSummaryRow RetrieveSummaryRow(
 			DataGridView grid, 
 			DataGridViewRow[] group, 
@@ -686,7 +700,7 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 			return index;
 		}
 
-		private static DataGridViewRow[][] GetSummaryGroups(DataGridView grid, SummaryRowPosition position, DataGridViewColumn groupFrom, DataGridViewColumn groupTo)
+		private static DataGridViewRow[][] CollectSummaryGroups(DataGridView grid, SummaryRowPosition position, DataGridViewColumn groupFrom, DataGridViewColumn groupTo)
 		{
 			List<DataGridViewRow> group = new List<DataGridViewRow>();
 			List<DataGridViewRow[]> groups = new List<DataGridViewRow[]>();
@@ -695,8 +709,8 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 			DataGridViewRow groupRow = null;
 			foreach (DataGridViewRow r in rows)
 			{
-				// skip hidden rows
-				if (!r.Visible)
+				// skip hidden rows that are not a child row.
+				if (!r.Visible && !r.IsChild)
 					continue;
 
 				if (r is DataGridViewSummaryRow)
