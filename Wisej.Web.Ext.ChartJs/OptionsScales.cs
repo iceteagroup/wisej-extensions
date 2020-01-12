@@ -216,6 +216,24 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
+		/// Used to identify the scale options for multi-axes charts 
+		/// </summary>
+		[DefaultValue("")]
+		[Description("Used to identify the scale options for multi-axes charts")]
+		public String id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				this._id = value;
+			}
+		}
+		private String _id;
+
+		/// <summary>
 		/// Options for the chart ticks on the axes.
 		/// </summary>
 		[Description("Options for the chart ticks on the axes.")]
