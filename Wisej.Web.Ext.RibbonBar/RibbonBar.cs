@@ -654,7 +654,7 @@ namespace Wisej.Web.Ext.RibbonBar
 					this._selectedPage = value;
 
 					OnSelectedPageChanged(EventArgs.Empty);
-					Update();
+					Update("selectedIndex");
 				}
 			}
 		}

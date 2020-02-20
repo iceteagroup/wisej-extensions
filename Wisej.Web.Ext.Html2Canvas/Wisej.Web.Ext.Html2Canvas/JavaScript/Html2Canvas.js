@@ -6321,6 +6321,7 @@
 					}
 
 					if (node instanceof HTMLIFrameElement) {
+						node.removeAttribute('onload');
 						var tempIframe = node.cloneNode(false);
 						var iframeKey = generateIframeKey();
 						tempIframe.setAttribute('data-html2canvas-internal-iframe-key', iframeKey);

@@ -26,7 +26,7 @@ namespace Brotli
         protected BrotliDecoderResult _lastDecodeResult = BrotliDecoderResult.NeedsMoreInput;
         protected Boolean _leaveOpen = false;
 
-        public BrotliStream(Stream baseStream, CompressionMode mode,bool leaveOpen)
+        public BrotliStream(Stream baseStream, CompressionMode mode, bool leaveOpen)
         {
             if (baseStream == null) throw new ArgumentNullException("baseStream");
             _mode = mode;
@@ -57,7 +57,7 @@ namespace Brotli
 
             _managedBuffer = new Byte[BufferSize];
         }
-        public BrotliStream(Stream baseStream, CompressionMode mode):this(baseStream,mode,false)
+        public BrotliStream(Stream baseStream, CompressionMode mode) : this(baseStream, mode, false)
         {
 
         }
@@ -151,7 +151,7 @@ namespace Brotli
             }
             if (_mode == CompressionMode.Compress)
             {
-               FlushBrotliStream(false);
+                FlushBrotliStream(false);
             }
         }
 
@@ -188,9 +188,9 @@ namespace Brotli
                 FlushBrotliStream(true);
             }
             base.Dispose(disposing);
-            if (!_leaveOpen)  _stream.Dispose();
+            if (!_leaveOpen) _stream.Dispose();
             _intermediateStream.Dispose();
-            if (_ptrInputBuffer!=IntPtr.Zero) Marshal.FreeHGlobal(_ptrInputBuffer);
+            if (_ptrInputBuffer != IntPtr.Zero) Marshal.FreeHGlobal(_ptrInputBuffer);
             if (_ptrOutputBuffer != IntPtr.Zero) Marshal.FreeHGlobal(_ptrOutputBuffer);
             _managedBuffer = null;
             _ptrInputBuffer = IntPtr.Zero;
@@ -281,7 +281,7 @@ namespace Brotli
                 {
                     var error = Brolib.BrotliDecoderGetErrorCode(_state);
                     var text = Brolib.BrotliDecoderErrorString(error);
-                    throw new BrotliDecodeException(String.Format("Unable to decode stream,possibly corrupt data.Code={0}({1})",error,text),error,text);
+                    throw new BrotliDecodeException(String.Format("Unable to decode stream,possibly corrupt data.Code={0}({1})", error, text), error, text);
                 }
 
                 if (endOfStream && !Brolib.BrotliDecoderIsFinished(_state) && _lastDecodeResult == BrotliDecoderResult.NeedsMoreInput)
@@ -325,12 +325,50 @@ namespace Brotli
             throw new NotImplementedException();
         }
 
-        static int totalWrote = 0;
+        public override void Close()
+        {
+            lock (logLocker)
+            {
+                if (log != null)
+                {
+                    log.WriteByte(13);
+                    log.WriteByte(10);
+                    log.WriteByte(13);
+                    log.WriteByte(10);
+                    log.Flush();
+                    log.Close();
+                    log = null;
+                }
+            }
+
+            base.Close();
+        }
+
+        private void WriteToLogFile(byte[] buffer, int count)
+        {
+            lock (logLocker)
+            {
+                if (log == null)
+                {
+                    string filePath = Path.Combine(Path.GetTempPath(), "brotli.log");
+                    log = new FileStream(filePath, FileMode.Append, FileAccess.Write);
+                }
+                log.Write(buffer, 0, count);
+                log.Flush();
+                log.Close();
+                log = null;
+            }
+        }
+        
+        private static FileStream log;
+        private static object logLocker = new object();
+
         public override void Write(byte[] buffer, int offset, int count)
         {
+
+            this.WriteToLogFile(buffer, count);
+
             if (_mode != CompressionMode.Compress) throw new BrotliException("Can't write on this stream");
-            totalWrote += count;
-            //Console.WriteLine(String.Format("Write {0} bytes,total={1} bytes.", count, totalWrote));
 
             UInt32 totalOut = 0;
             int bytesRemain = count;

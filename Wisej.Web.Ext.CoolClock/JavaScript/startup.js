@@ -12,14 +12,10 @@
  * be used referring to this.container.
  *
  */
-this.init = function () {
+this.init = function (options) {
 
 	var id = this.getId() + "_canvas";
 
-	// prepare the configuration map.
-	// [$]options is a placeholder that is replaced with the options
-	// map configured in Wisej.Web.Ext.CoolClock.
-	var options = $options;
 	options.canvasId = id;
 
 	// create the canvas dom child.
@@ -29,4 +25,15 @@ this.init = function () {
 	this.container.style.textAlign = "center";
 
 	this.coolClock = new CoolClock(options);
+}
+
+/**
+ * Called when the options change. It lets the 
+ * widget decide whether to update an existing
+ * third-party control or to create a new one.
+ */
+this.update = function (options) {
+
+    // recreate the clock.
+    this.init(options);
 }

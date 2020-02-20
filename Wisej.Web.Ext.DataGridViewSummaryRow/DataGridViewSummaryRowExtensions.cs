@@ -379,7 +379,11 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 				if (value == null || Convert.IsDBNull(value))
 					continue;
 
-				result += (Decimal)Convert.ChangeType(value, typeof(Decimal));
+				try
+				{
+					result += (Decimal)Convert.ChangeType(value, typeof(Decimal));
+				}
+				catch { }
 			}
 
 			return result;
@@ -402,8 +406,12 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 				if (value == null || Convert.IsDBNull(value))
 					continue;
 
-				anyValue = true;
-				result = Math.Min(result, (Decimal)Convert.ChangeType(value, typeof(Decimal)));
+				try
+				{
+					result = Math.Min(result, (Decimal)Convert.ChangeType(value, typeof(Decimal)));
+					anyValue = true;
+				}
+				catch { }
 			}
 
 			if (!anyValue)
@@ -429,8 +437,12 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 				if (value == null || Convert.IsDBNull(value))
 					continue;
 
-				anyValue = true;
-				result = Math.Max(result, (Decimal)Convert.ChangeType(value, typeof(Decimal)));
+				try
+				{
+					result = Math.Max(result, (Decimal)Convert.ChangeType(value, typeof(Decimal)));
+					anyValue = true;
+				}
+				catch { }
 			}
 
 			if (!anyValue)
@@ -479,9 +491,13 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 				if (value == null || Convert.IsDBNull(value))
 					continue;
 
-				anyValue = true;
-				count++;
-				result += (Decimal)Convert.ChangeType(value, typeof(Decimal));
+				try
+				{
+					result += (Decimal)Convert.ChangeType(value, typeof(Decimal));
+					count++;
+					anyValue = true;
+				}
+				catch { }
 			}
 
 			if (!anyValue)
@@ -509,10 +525,14 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 				if (value == null || Convert.IsDBNull(value))
 					continue;
 
-				anyValue = true;
-				count++;
-				values.Add((Decimal)Convert.ChangeType(value, typeof(Decimal)));
-				result += values[values.Count - 1];
+				try
+				{
+					values.Add((Decimal)Convert.ChangeType(value, typeof(Decimal)));
+					count++;
+					anyValue = true;
+					result += values[values.Count - 1];
+				}
+				catch { }
 			}
 
 			if (!anyValue)
