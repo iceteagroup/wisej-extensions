@@ -132,6 +132,10 @@ namespace Wisej.Web.Ext.OfficeViewer
 			{
 				if (this._fileStream != value)
 				{
+					if (value != null && String.IsNullOrEmpty(this.FileName))
+						throw new InvalidOperationException("A valid FileName with extension is required when using FileStream.");
+
+
 					// reset the FileSource when assigning a stream.
 					this.FileSource = null;
 
@@ -143,7 +147,23 @@ namespace Wisej.Web.Ext.OfficeViewer
 		private Stream _fileStream = null;
 
 		/// <summary>
-		/// Returns or sets the source Url of the IFrame.
+		/// Returns or sets the file name with extension to return to the office viewer.
+		/// </summary>
+		/// <remarks>
+		/// This property is required when using <see cref="FileStream"/> instead of <see cref="FileSource"/>.
+		/// </remarks>
+		[DefaultValue("")]
+		[SRCategory("CatBehavior")]
+		[Description("Returns or sets the file name with extension of the office file to view.")]
+		public string FileName
+		{
+			get { return this._fileName; }
+			set { this._fileName = value; }
+		}
+		private string _fileName;
+
+		/// <summary>
+		/// Returns or sets the source URL of the IFrame.
 		/// </summary>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -219,8 +239,13 @@ namespace Wisej.Web.Ext.OfficeViewer
 			HttpRequest request = context.Request;
 			HttpResponse response = context.Response;
 
+			var fileName =
+				String.IsNullOrEmpty(this.FileSource)
+					? this.FileName
+					: Path.GetFileName(this.FileSource);
+
 			response.ContentType = "text/plain";
-			response.AppendHeader("Content-Disposition", new ContentDisposition() { DispositionType = "attachment", FileName = Path.GetFileName(this.FileSource) }.ToString());
+			response.AppendHeader("Content-Disposition", new ContentDisposition() { DispositionType = "attachment", FileName =  fileName}.ToString());
 
 			if (this._fileStream != null)
 			{
@@ -234,7 +259,7 @@ namespace Wisej.Web.Ext.OfficeViewer
 						}
 						catch { }
 
-						this._fileStream.CopyTo(response.OutputStream, 1024);
+						this._fileStream.CopyTo(response.OutputStream);
 					}
 				}
 				catch (Exception ex)
@@ -250,7 +275,7 @@ namespace Wisej.Web.Ext.OfficeViewer
 					if (!Path.IsPathRooted(filePath))
 						filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.FileSource);
 
-					response.TransmitFile(filePath);
+					response.WriteFile(filePath);
 				}
 				catch (Exception ex)
 				{
