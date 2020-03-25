@@ -25,7 +25,6 @@ using System.Drawing;
 using System.Drawing.Design;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Forms;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;

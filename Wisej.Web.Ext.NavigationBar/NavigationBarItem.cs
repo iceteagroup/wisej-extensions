@@ -211,6 +211,18 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
+		/// Determines whether to expand or collapse the item when clicking the item rather than
+		/// having to click the open/close icon.
+		/// </summary>
+		[DefaultValue(true)]
+		public bool ExpandOnClick
+		{
+			get { return this._expandOnClick; }
+			set { this._expandOnClick = value; }
+		}
+		private bool _expandOnClick = true;
+
+		/// <summary>
 		/// Expands or collapses child items.
 		/// </summary>
 		[DefaultValue(false)]
@@ -636,6 +648,11 @@ namespace Wisej.Web.Ext.NavigationBar
 			OnInfoClick(e);
 		}
 
+		private void open_Click(object sender, EventArgs e)
+		{
+			this.Expanded = !this.Expanded;
+		}
+
 		private void items_VisibleChanged(object sender, EventArgs e)
 		{
 			if (this.items.Visible)
@@ -650,9 +667,11 @@ namespace Wisej.Web.Ext.NavigationBar
 			}
 		}
 
-		private void NavigationBarItem_Click(object sender, EventArgs e)
+		private void header_Click(object sender, EventArgs e)
 		{
-			this.Expanded = !this.Expanded;
+			if (this.ExpandOnClick)
+				this.Expanded = !this.Expanded;
+
 			this.NavigationBar?.FireItemClick(this);
 		}
 
