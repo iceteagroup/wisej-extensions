@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using Wisej.Core;
 using Wisej.Design;
 
@@ -624,6 +625,8 @@ namespace Wisej.Web.Ext.Odometer
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override string InitScript
 		{
+			// disable inlining or we lose the calling assembly in GetResourceString().
+			[MethodImpl(MethodImplOptions.NoInlining)]
 			get { return GetResourceString("Wisej.Web.Ext.Odometer.JavaScript.startup.js"); }
 			set { }
 		}
@@ -678,6 +681,8 @@ namespace Wisej.Web.Ext.Odometer
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override List<Package> Packages
 		{
+			// disable inlining or we lose the calling assembly in GetResourceString().
+			[MethodImpl(MethodImplOptions.NoInlining)]
 			get
 			{
 				if (base.Packages.Count == 0)

@@ -20,6 +20,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using Wisej.Core;
 using Wisej.Design;
 
@@ -220,6 +221,8 @@ namespace Wisej.Web.Ext.CoolClock
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override string InitScript
 		{
+			// disable inlining or we lose the calling assembly in GetResourceString().
+			[MethodImpl(MethodImplOptions.NoInlining)]
 			get { return GetResourceString("Wisej.Web.Ext.CoolClock.JavaScript.startup.js"); }
 			set { }
 		}
@@ -228,6 +231,7 @@ namespace Wisej.Web.Ext.CoolClock
 		/// Overridden.
 		/// </summary>
 		[Browsable(false)]
+		[WisejSerializerOptions(WisejSerializerOptions.None)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override dynamic Options
 		{
@@ -235,10 +239,7 @@ namespace Wisej.Web.Ext.CoolClock
 			{
 				dynamic options = new DynamicObject();
 
-				// use ToString() in this case to keep the name uppercase first.
-				// Wisej JSON serializer always lowers the first character to keep with javascript naming convention.
-				options.skinId = this.Skin.ToString();
-
+				options.skinId = this.Skin;
 				options.tickDelay = this.TickDelay;
 				options.longTickDelay = this.LongTickDelay;
 				options.showSecondHand = this.ShowSecondHand;
@@ -263,6 +264,8 @@ namespace Wisej.Web.Ext.CoolClock
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override List<Package> Packages
 		{
+			// disable inlining or we lose the calling assembly in GetResourceString().
+			[MethodImpl(MethodImplOptions.NoInlining)]
 			get
 			{
 				if (base.Packages.Count == 0)

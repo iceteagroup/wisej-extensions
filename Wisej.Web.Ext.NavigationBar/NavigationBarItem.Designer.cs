@@ -44,7 +44,6 @@
 			// header
 			// 
 			this.header.AppearanceKey = "navbar-item/header";
-			// this.header.Anonymous = true;
 			this.header.BackColor = System.Drawing.Color.Transparent;
 			this.header.Controls.Add(this.icon);
 			this.header.Controls.Add(this.title);

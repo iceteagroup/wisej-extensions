@@ -100,6 +100,64 @@ namespace Wisej.Web.Ext.NavigationBar
 			this.Collapse?.Invoke(this, e);
 		}
 
+		#region Redirect pointer events from the header panel
+
+		public new event EventHandler Click
+		{
+			add { this.header.Click += value; }
+			remove { this.header.Click -= value; }
+		}
+
+		public new event EventHandler Tap
+		{
+			add { this.header.Tap += value; }
+			remove { this.header.Tap -= value; }
+		}
+
+		public new event EventHandler LongTap
+		{
+			add { this.header.LongTap += value; }
+			remove { this.header.LongTap -= value; }
+		}
+
+		public new event SwipeEventHandler Swipe
+		{
+			add { this.header.Swipe += value; }
+			remove { this.header.Swipe -= value; }
+		}
+
+		public new event MouseEventHandler MouseClick
+		{
+			add { this.header.MouseClick += value; }
+			remove { this.header.MouseClick -= value; }
+		}
+
+		public new event MouseEventHandler MouseDown
+		{
+			add { this.header.MouseDown += value; }
+			remove { this.header.MouseDown -= value; }
+		}
+
+		public new event MouseEventHandler MouseUp
+		{
+			add { this.header.MouseUp += value; }
+			remove { this.header.MouseUp -= value; }
+		}
+
+		public new event EventHandler MouseEnter
+		{
+			add { this.header.MouseEnter += value; }
+			remove { this.header.MouseEnter -= value; }
+		}
+
+		public new event EventHandler MouseLeave
+		{
+			add { this.header.MouseLeave += value; }
+			remove { this.header.MouseLeave -= value; }
+		}
+
+		#endregion
+
 		#endregion
 
 		#region Properties

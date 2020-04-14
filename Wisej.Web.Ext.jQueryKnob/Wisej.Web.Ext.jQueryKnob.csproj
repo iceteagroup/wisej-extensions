@@ -48,9 +48,6 @@
     <Reference Include="Wisej.Framework">
       <HintPath>..\..\..\Development\2.0\bin\Wisej.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Wisej.Framework.Design">
-      <HintPath>..\..\..\Development\2.0\bin\Wisej.Framework.Design.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="KnobType.cs" />

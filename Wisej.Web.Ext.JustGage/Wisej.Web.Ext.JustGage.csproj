@@ -44,11 +44,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="Wisej.Framework">
-      <HintPath>..\..\..\Development\2.0\bin\Wisej.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Wisej.Framework.Design">
-      <HintPath>..\..\..\Development\2.0\bin\Wisej.Framework.Design.dll</HintPath>
+    <Reference Include="Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Development\2.1\bin\Wisej.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
