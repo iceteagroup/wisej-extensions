@@ -257,7 +257,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			string where = "";
 			string condition = "";
 
-			string Value1 = "Convert.ToDateTime(Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value).Date";
+			string Value1 = "Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value.ToString().Length > 0 && Convert.ToDateTime(Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value).Date";
 
 			if (cmbOperator.SelectedIndex > -1)
 			{
