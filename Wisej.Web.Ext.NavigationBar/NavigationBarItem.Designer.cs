@@ -71,7 +71,6 @@
 			this.icon.Name = "icon";
 			this.icon.Size = new System.Drawing.Size(20, 20);
 			this.icon.SizeMode = Wisej.Web.PictureBoxSizeMode.Zoom;
-			this.icon.TabIndex = 0;
 			// 
 			// title
 			// 
@@ -95,7 +94,6 @@
 			this.shortcut.MaximumSize = new System.Drawing.Size(20, 20);
 			this.shortcut.Name = "shortcut";
 			this.shortcut.Size = new System.Drawing.Size(18, 20);
-			this.shortcut.TabIndex = 4;
 			this.shortcut.Visible = false;
 			this.shortcut.Click += new System.EventHandler(this.shortcut_Click);
 			// 
@@ -123,21 +121,21 @@
 			this.open.MaximumSize = new System.Drawing.Size(20, 20);
 			this.open.Name = "open";
 			this.open.Size = new System.Drawing.Size(16, 20);
-			this.open.TabIndex = 2;
 			this.open.Visible = false;
 			this.open.Click += new System.EventHandler(this.open_Click);
 			// 
 			// items
 			// 
+			this.items.AppearanceKey = "navbar-item/items";
 			this.items.AutoSize = true;
 			this.items.AutoSizeMode = Wisej.Web.AutoSizeMode.GrowAndShrink;
 			this.items.LayoutStyle = Wisej.Web.FlexLayoutStyle.Vertical;
 			this.items.Location = new System.Drawing.Point(0, 45);
 			this.items.Margin = new Wisej.Web.Padding(0);
 			this.items.Name = "items";
-			this.items.Size = new System.Drawing.Size(0, 0);
-			this.items.TabIndex = 0;
+			this.items.Size = new System.Drawing.Size(502, 0);
 			this.items.Spacing = 0;
+			this.items.TabIndex = 0;
 			this.items.Visible = false;
 			this.items.VisibleChanged += new System.EventHandler(this.items_VisibleChanged);
 			this.items.ControlAdded += new Wisej.Web.ControlEventHandler(this.items_ControlAdded);

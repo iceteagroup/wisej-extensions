@@ -173,7 +173,7 @@ namespace Wisej.Web.Ext.NavigationBar
 			{
 				if (this._navbar == null)
 				{
-					for (var parent = this.Parent; parent != null; parent = parent.Parent)
+					for (var parent = base.Parent; parent != null; parent = parent.Parent)
 					{
 						if (parent is NavigationBar)
 						{
@@ -187,6 +187,25 @@ namespace Wisej.Web.Ext.NavigationBar
 			}
 		}
 		private NavigationBar _navbar;
+
+		/// <summary>
+		/// Returns the parent <see cref="NavigationBarItem"/> or null.
+		/// </summary>
+		[Browsable(false)]
+		public new NavigationBarItem Parent
+		{
+			get
+			{
+				for (var parent = base.Parent; parent != null; parent = parent.Parent)
+				{
+					if (parent is NavigationBarItem)
+					{
+						return (NavigationBarItem)parent;
+					}
+				}
+				return null;
+			}
+		}
 
 		/// <summary>
 		/// Returns or sets the icon of the <see cref="NavigationBarItem"/>.
@@ -293,6 +312,48 @@ namespace Wisej.Web.Ext.NavigationBar
 					this.items.Visible = value;
 				else
 					this.items.Visible = false;
+
+				// apply indentation.
+				var level = this.Level + 1;
+				var padding = new Padding(this.NavigationBar.Indentation * level, 0, 0, 0) ;
+				foreach (NavigationBarItem i in this.items.Controls)
+				{
+					i.icon.Margin = padding;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns the indentation level of this <see cref="NavigationBarItem"/> item.
+		/// </summary>
+		[Browsable(false)]
+		public int Level
+		{
+			get
+			{
+				var level = 0;
+				for (var parent = this.Parent; parent != null; parent = parent.Parent)
+				{
+					level++;
+				}
+				return level;
+			}
+		}
+
+		/// <summary>
+		/// Returns whether the <see cref="NavigationBarItem"/> is the currently selected item.
+		/// </summary>
+		[Bindable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public bool Selected
+		{
+			get => this.header.HasState("selected");
+			internal set
+			{
+				if (value)
+					this.header.AddState("selected");
+				else
+					this.header.RemoveState("selected");
 			}
 		}
 
@@ -653,6 +714,7 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		protected override void OnParentChanged(EventArgs e)
 		{
+			// sync the CompactView mode with the parent NavigationBar.
 			if (this._navbar != null)
 			{
 				this._navbar.CompactViewChanged -= this.Navbar_CompactViewChanged;

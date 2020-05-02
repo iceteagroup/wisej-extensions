@@ -80,6 +80,12 @@ namespace Wisej.Web.Ext.NavigationBar
 		public event EventHandler CompactViewChanged;
 
 		/// <summary>
+		/// Fired when the value of the property <see cref="SelectedItem"/> changes.
+		/// </summary>
+		[Description("Fired when the value of the property SelectedItem changes.")]
+		public event EventHandler SelectedItemChanged;
+
+		/// <summary>
 		/// Fires the <see cref="TitleClick"/> event.
 		/// </summary>
 		/// <param name="e">Not used.</param>
@@ -109,15 +115,53 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Fires the <see cref="CompactViewChanged"/> event.
 		/// </summary>
-		/// <param name="e">Not used.</param>
+		/// <param name="e">A <see cref="NavigationBarItemClickEventArgs"/> containing the event data.</param>
 		protected virtual void OnItemClick(NavigationBarItemClickEventArgs e)
 		{
 			this.ItemClick?.Invoke(this, e);
 		}
 
+		/// <summary>
+		/// Fires the <see cref="SelectedItemChanged"/> event.
+		/// </summary>
+		/// <param name="e">Not used.</param>
+		protected virtual void OnSelectedItemChanged(EventArgs e)
+		{
+			this.SelectedItemChanged?.Invoke(this, e);
+		}
+
 		#endregion
 
 		#region Properties
+
+		/// <summary>
+		/// Returns or sets the selected item.
+		/// </summary>
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public NavigationBarItem SelectedItem
+		{
+			get { return this._selectedItem; }
+			set {
+
+				if (value != null && value.NavigationBar != this)
+					throw new ArgumentException("The NavigationBarItem doesn't belong to this NavigationBar.");
+
+				if (this._selectedItem != value)
+				{
+					if (this._selectedItem != null)
+						this._selectedItem.Selected = false;
+
+					this._selectedItem = value;
+
+					if (this._selectedItem != null)
+						this._selectedItem.Selected = true;
+
+					OnSelectedItemChanged(EventArgs.Empty);
+				}
+			}
+		}
+		private NavigationBarItem _selectedItem;
 
 		/// <summary>
 		/// Returns or sets the compact view mode.
@@ -158,6 +202,18 @@ namespace Wisej.Web.Ext.NavigationBar
 		private bool _compactView;
 		private int _savedWidth = 0;
 		private Size _savedAvatarSize = Size.Empty;
+
+		/// <summary>
+		/// Returns or sets the indentation in pixels for child items.
+		/// </summary>
+		[ResponsiveProperty]
+		[DefaultValue(0)]
+		public int Indentation
+		{
+			get { return this._indentation; }
+			set { this._indentation = value; }
+		}
+		private int _indentation = 0;
 
 		/// <summary>
 		/// Returns or sets the logo to display in the <see cref="NavigationBar"/>.
@@ -488,6 +544,8 @@ namespace Wisej.Web.Ext.NavigationBar
 			Debug.Assert(item != null);
 
 			OnItemClick(new NavigationBarItemClickEventArgs(item));
+
+			this.SelectedItem = item;
 		}
 
 		private void user_Click(object sender, EventArgs e)

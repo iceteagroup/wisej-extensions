@@ -207,6 +207,9 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <param name="dispose">Indicates whether to dispose the <see cref="NavigationBarItem" /> instances removed from the collection.</param>
 		public void Clear(bool dispose)
 		{
+			if (this.owner is NavigationBar)
+				((NavigationBar)this.owner).SelectedItem = null;
+
 			this.controls.Clear(dispose);
 		}
 
@@ -263,6 +266,9 @@ namespace Wisej.Web.Ext.NavigationBar
 			if (item == null)
 				throw new ArgumentNullException(nameof(item));
 
+			if (item.NavigationBar != null && item.NavigationBar.SelectedItem == item)
+				item.NavigationBar.SelectedItem = null;
+
 			this.controls.Remove(item);
 		}
 
@@ -272,7 +278,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <param name="index">The zero-based index of the <see cref="NavigationBarItem" /> to remove. </param>
 		public void RemoveAt(int index)
 		{
-			this.controls.RemoveAt(index);
+			Remove((NavigationBarItem)this.controls[index]);
 		}
 
 		/// <summary>
