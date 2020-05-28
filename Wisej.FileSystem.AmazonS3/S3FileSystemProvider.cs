@@ -75,7 +75,8 @@ namespace Wisej.Ext.FileSystem
 		/// All file system operations in the implementation class
 		/// are expected to be limited to the root.
 		/// </summary>
-		/// <remarks>For the S3 file system, the first name in the root path is the bucket name.
+		/// <remarks>
+		/// For the S3 file system, the first name in the root path is the bucket name.
 		/// i.e.: this.Root = "BUCKET_NAME\folder1\folder2";
 		/// </remarks>
 		public string Root
@@ -171,7 +172,7 @@ namespace Wisej.Ext.FileSystem
 			if (path == null)
 				throw new ArgumentNullException("path");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			path = path.Substring(this.BucketName.Length + 1) + "/";
 			var putRequest = new PutObjectRequest()
 			{
@@ -192,7 +193,7 @@ namespace Wisej.Ext.FileSystem
 			if (path == null)
 				throw new ArgumentNullException("path");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			path = path.Substring(this.BucketName.Length + 1) + "/";
 
 			var deleteRequest = new DeleteObjectRequest()
@@ -212,7 +213,7 @@ namespace Wisej.Ext.FileSystem
 			if (path == null)
 				throw new ArgumentNullException("path");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			path = path.Substring(this.BucketName.Length + 1);
 			var deleteRequest = new DeleteObjectRequest()
 			{
@@ -248,7 +249,7 @@ namespace Wisej.Ext.FileSystem
 			if (path == null)
 				throw new ArgumentNullException("path");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			path = path.Substring(this.BucketName.Length + 1);
 
 			// check the cache first.
@@ -282,7 +283,7 @@ namespace Wisej.Ext.FileSystem
 			if (path == null)
 				throw new ArgumentNullException("path");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			path = path.Substring(this.BucketName.Length + 1);
 			var info = new S3FileInfo(S3, this.BucketName, path);
 			return info.Exists;
@@ -298,7 +299,7 @@ namespace Wisej.Ext.FileSystem
 			if (path == null)
 				throw new ArgumentNullException("path");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			if (path.EndsWith("/"))
 				return FileAttributes.Normal | FileAttributes.Directory;
 			else
@@ -315,7 +316,7 @@ namespace Wisej.Ext.FileSystem
 			if (path == null)
 				throw new ArgumentNullException("path");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			path = path.Substring(this.BucketName.Length + 1);
 
 			// check the cache first.
@@ -351,7 +352,7 @@ namespace Wisej.Ext.FileSystem
 			if (newName == null)
 				throw new ArgumentNullException("newName");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			path = path.Substring(this.BucketName.Length + 1);
 			var newPath = Path.GetDirectoryName(path) + "/" + newName;
 
@@ -371,7 +372,7 @@ namespace Wisej.Ext.FileSystem
 			if (newName == null)
 				throw new ArgumentNullException("newName");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			path = path.Substring(this.BucketName.Length + 1) + "/";
 			var newPath = Path.GetDirectoryName(path) + "/" + newName + "/";
 
@@ -392,7 +393,7 @@ namespace Wisej.Ext.FileSystem
 			if (path == null)
 				throw new ArgumentNullException("path");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			var list = GetObjects(path, pattern, searchOption != SearchOption.TopDirectoryOnly);
 
 			this.cache.Clear();
@@ -407,9 +408,10 @@ namespace Wisej.Ext.FileSystem
 				{
 					this.cache[f.Key] = f;
 
-					var fileName = this.BucketName + "/" + f.Key;
-					fileName = fileName.Replace('/', '\\');
+					var fileName = f.Key.Substring(this.Prefix.Length);
 					fileName = fileName.Substring(0, fileName.Length - 1);
+					fileName = fileName.Replace('/', '\\');
+					fileName = this.Name + "\\" + fileName;
 					return fileName;
 
 				}).ToArray();
@@ -428,7 +430,7 @@ namespace Wisej.Ext.FileSystem
 			if (path == null)
 				throw new ArgumentNullException("path");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			var list = GetObjects(path, pattern, searchOption != SearchOption.TopDirectoryOnly);
 
 			this.cache.Clear();
@@ -443,8 +445,9 @@ namespace Wisej.Ext.FileSystem
 				{
 					this.cache[f.Key] = f;
 
-					var fileName = this.BucketName + "/" + f.Key;
+					var fileName = f.Key.Substring(this.Prefix.Length);
 					fileName = fileName.Replace('/', '\\');
+					fileName = this.Name + "\\" + fileName;
 					return fileName;
 
 				}).ToArray();
@@ -462,7 +465,7 @@ namespace Wisej.Ext.FileSystem
 			if (path == null)
 				throw new ArgumentNullException("path");
 
-			path = FixPath(path);
+			path = MapPath(path);
 			path = path.Substring(this.BucketName.Length + 1);
 			if (mode == FileMode.Open && access == FileAccess.Read)
 			{
@@ -505,28 +508,21 @@ namespace Wisej.Ext.FileSystem
 		/// <returns>The physical path for the <see cref="IFileSystemProvider"/> implementation.</returns>
 		public string MapPath(string path)
 		{
-			return FixPath(path);
-		}
-
-		/// <summary>
-		/// Ensures the path is rooted using the Root
-		/// specified in this FileSystemProvider.
-		/// </summary>
-		/// <param name="path"></param>
-		/// <returns></returns>
-		private string FixPath(string path)
-		{
 			path = path ?? "";
 
 			if (path != "")
 			{
-				if (Contains(path))
+
+				// already mapped?
+				if (path.StartsWith(this.Root))
+					return path;
+
+				if (path.Equals(this.Name))
+					path = "";
+				else if (Contains(path))
 					path = path.Substring(this.Name.Length + 1);
 
 				path = path.Replace("\\", "/");
-
-				if (path.StartsWith(this.Root))
-					return path;
 
 				if (path.StartsWith("/"))
 					path = path.Substring(1);

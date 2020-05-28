@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Wisej.Core;
 using Wisej.Design;
 
@@ -1509,6 +1510,8 @@ namespace Wisej.Web.Ext.FullCalendar
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override List<Package> Packages
 		{
+			// disable inlining or we lose the calling assembly in GetResourceString().
+			[MethodImpl(MethodImplOptions.NoInlining)]
 			get
 			{
 				if (base.Packages.Count == 0)

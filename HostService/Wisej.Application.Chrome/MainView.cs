@@ -138,6 +138,8 @@ namespace Wisej.Application
 			CefSettings settings = new CefSettings()
 			{
 				LogSeverity = LogSeverity.Disable,
+				PersistSessionCookies = true,
+				CachePath = Path.Combine(Path.GetTempPath(), "CefSharp"),
 				BrowserSubprocessPath = Path.Combine(CefSharpLoader.CefSharpPath, "CefSharp.BrowserSubprocess.exe")
 
 				/** TODO: Add custom settings here. */

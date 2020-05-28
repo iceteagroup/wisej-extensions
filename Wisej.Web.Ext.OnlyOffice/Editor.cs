@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Web;
 using Wisej.Core;
 
@@ -91,6 +92,8 @@ namespace Wisej.Web.Ext.OnlyOffice
 			this._onlyOfficeURL = null;
 		}
 
+		// disable inlining or we lose the calling assembly in GetResourceString().
+		[MethodImpl(MethodImplOptions.NoInlining)]
 		private string BuildInitScript()
 		{
 

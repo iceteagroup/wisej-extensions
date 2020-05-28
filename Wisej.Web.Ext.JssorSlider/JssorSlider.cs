@@ -19,6 +19,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Wisej.Web.Ext.JssorSlider
 {
@@ -33,6 +34,8 @@ namespace Wisej.Web.Ext.JssorSlider
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override List<Package> Packages
 		{
+			// disable inlining or we lose the calling assembly in GetResourceString().
+			[MethodImpl(MethodImplOptions.NoInlining)]
 			get
 			{
 				if (base.Packages.Count == 0)

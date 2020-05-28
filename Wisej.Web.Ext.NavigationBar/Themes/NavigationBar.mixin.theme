@@ -1,109 +1,119 @@
-﻿{
-  "name": "NavigationBar",
-  "images": {
-    "navbar-open": "",
-    "navbar-close": "",
-    "navbar-shortcut": ""
-  },
-  "colors": {
-    "navbar-background": "#2C3D4D",
-    "navbar-background-hover": "#243340",
-    "navbar-text": "#C4CBD1",
-    "navbar-text-hover": "#E9ECEF"
-  },
-  "appearances": {
-    "navbar": {
-      "states": {
-        "default": {
-          "styles": {
-            "transition": "width 250ms"
-          },
-          "properties": {
-            "textColor": "navbar-text",
-            "backgroundColor": "navbar-background"
-          }
-        }
-      },
-      "components": {
-        "user-info": {
-        },
-        "user-avatar": {
-          "states": {
-            "default": {
-              "styles": {
-                "radius": 40,
-                "width": "1;",
-                "color": "#DCE3E3",
-                "backgroundColor": "#DCE3E3"
-              }
-            }
-          }
-        },
-        "user-status": {
-          "states": {
-            "default": {
-              "styles": {
-                "radius": 20
-              }
-            }
-          }
-        }
-      }
-    },
-    "navbar-item": {
-      "states": {
-        "default": {
-          "styles": {
-            "transform": "translateZ(0)",
-            "transition": "height 250ms, top 250ms"
-          }
-        }
-      },
-      "components": {
-        "info": {
-          "states": {
-            "default": {
-              "styles": {
-                "radius": 4
-              }
-            }
-          }
-        },
-        "header": {
-          "states": {
-            "default": {
-              "properties": {
-                "textColor": "navbar-text",
-                "backgroundColor": "navbar-background"
-              }
-            },
-            "hovered": {
-              "properties": {
-                "textColor": "navbar-text-hover",
-                "backgroundColor": "navbar-background-hover"
-              }
-            }
-          }
-        },
-        "open": {
-          "states": {
-            "default": {
-              "styles": {
-                "transform": "rotateZ(0deg)",
-                "transition": "transform 250ms"
-              },
-              "properties": {
-                "source": "icon-down"
-              }
-            },
-            "open": {
-              "styles": {
-                "transform": "rotateZ(180deg)"
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+ {
+	"name": "NavigationBar.mixin",
+	"images":  {
+		"navbar-open": "",
+		"navbar-close": "",
+		"navbar-shortcut": ""
+	},
+	"colors":  {
+		"navbar-background": "#2C3D4D",
+		"navbar-background-hover": "#243340",
+		"navbar-background-selected": "#486680",
+		"navbar-text": "#C4CBD1",
+		"navbar-text-hover": "#E9ECEF",
+		"navbar-text-selected": "#E9ECEF"
+	},
+	"appearances":  {
+		"navbar":  {
+			"states":  {
+				"default":  {
+					"styles":  {
+						"transition": "width 250ms"
+					},
+					"properties":  {
+						"textColor": "navbar-text",
+						"backgroundColor": "navbar-background"
+					}
+				}
+			},
+			"components":  {
+				"user-info":  {
+				},
+				"user-avatar":  {
+					"states":  {
+						"default":  {
+							"styles":  {
+								"radius": 40,
+								"width": "1;",
+								"color": "#DCE3E3",
+								"backgroundColor": "#DCE3E3"
+							}
+						}
+					}
+				},
+				"user-status":  {
+					"states":  {
+						"default":  {
+							"styles":  {
+								"radius": 20
+							}
+						}
+					}
+				}
+			}
+		},
+		"navbar-item":  {
+			"states":  {
+				"default":  {
+					"styles":  {
+						"transform": "translateZ(0)",
+						"transition": "height 250ms, top 250ms"
+					}
+				}
+			},
+			"components":  {
+				"info":  {
+					"states":  {
+						"default":  {
+							"styles":  {
+								"radius": 4
+							}
+						}
+					}
+				},
+				"header":  {
+					"states":  {
+						"default":  {
+							"properties":  {
+								"textColor": "navbar-text",
+								"backgroundColor": "navbar-background"
+							}
+						},
+						"selected":  {
+							"properties":  {
+								"textColor": "navbar-text-selected",
+								"backgroundColor": "navbar-background-selected"
+							}
+						},
+						"hovered":  {
+							"properties":  {
+								"textColor": "navbar-text-hover",
+								"backgroundColor": "navbar-background-hover"
+							}
+						}
+					}
+				},
+				"open": {
+					"states": {
+						"default": {
+							"styles": {
+								"transform": "rotateZ(0deg)",
+								"transition": "transform 250ms"
+							},
+							"properties": {
+								"source": "icon-down"
+							}
+						},
+						"open": {
+							"styles": {
+								"transform": "rotateZ(180deg)"
+							}
+						}
+					}
+				},
+				"items": {
+				}
+			}
+		}
+	}
 }

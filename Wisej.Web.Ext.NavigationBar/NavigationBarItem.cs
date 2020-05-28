@@ -100,6 +100,64 @@ namespace Wisej.Web.Ext.NavigationBar
 			this.Collapse?.Invoke(this, e);
 		}
 
+		#region Redirect pointer events from the header panel
+
+		public new event EventHandler Click
+		{
+			add { this.header.Click += value; }
+			remove { this.header.Click -= value; }
+		}
+
+		public new event EventHandler Tap
+		{
+			add { this.header.Tap += value; }
+			remove { this.header.Tap -= value; }
+		}
+
+		public new event EventHandler LongTap
+		{
+			add { this.header.LongTap += value; }
+			remove { this.header.LongTap -= value; }
+		}
+
+		public new event SwipeEventHandler Swipe
+		{
+			add { this.header.Swipe += value; }
+			remove { this.header.Swipe -= value; }
+		}
+
+		public new event MouseEventHandler MouseClick
+		{
+			add { this.header.MouseClick += value; }
+			remove { this.header.MouseClick -= value; }
+		}
+
+		public new event MouseEventHandler MouseDown
+		{
+			add { this.header.MouseDown += value; }
+			remove { this.header.MouseDown -= value; }
+		}
+
+		public new event MouseEventHandler MouseUp
+		{
+			add { this.header.MouseUp += value; }
+			remove { this.header.MouseUp -= value; }
+		}
+
+		public new event EventHandler MouseEnter
+		{
+			add { this.header.MouseEnter += value; }
+			remove { this.header.MouseEnter -= value; }
+		}
+
+		public new event EventHandler MouseLeave
+		{
+			add { this.header.MouseLeave += value; }
+			remove { this.header.MouseLeave -= value; }
+		}
+
+		#endregion
+
 		#endregion
 
 		#region Properties
@@ -115,7 +173,7 @@ namespace Wisej.Web.Ext.NavigationBar
 			{
 				if (this._navbar == null)
 				{
-					for (var parent = this.Parent; parent != null; parent = parent.Parent)
+					for (var parent = base.Parent; parent != null; parent = parent.Parent)
 					{
 						if (parent is NavigationBar)
 						{
@@ -129,6 +187,25 @@ namespace Wisej.Web.Ext.NavigationBar
 			}
 		}
 		private NavigationBar _navbar;
+
+		/// <summary>
+		/// Returns the parent <see cref="NavigationBarItem"/> or null.
+		/// </summary>
+		[Browsable(false)]
+		public new NavigationBarItem Parent
+		{
+			get
+			{
+				for (var parent = base.Parent; parent != null; parent = parent.Parent)
+				{
+					if (parent is NavigationBarItem)
+					{
+						return (NavigationBarItem)parent;
+					}
+				}
+				return null;
+			}
+		}
 
 		/// <summary>
 		/// Returns or sets the icon of the <see cref="NavigationBarItem"/>.
@@ -235,6 +312,48 @@ namespace Wisej.Web.Ext.NavigationBar
 					this.items.Visible = value;
 				else
 					this.items.Visible = false;
+
+				// apply indentation.
+				var level = this.Level + 1;
+				var padding = new Padding(this.NavigationBar.Indentation * level, 0, 0, 0) ;
+				foreach (NavigationBarItem i in this.items.Controls)
+				{
+					i.icon.Margin = padding;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns the indentation level of this <see cref="NavigationBarItem"/> item.
+		/// </summary>
+		[Browsable(false)]
+		public int Level
+		{
+			get
+			{
+				var level = 0;
+				for (var parent = this.Parent; parent != null; parent = parent.Parent)
+				{
+					level++;
+				}
+				return level;
+			}
+		}
+
+		/// <summary>
+		/// Returns whether the <see cref="NavigationBarItem"/> is the currently selected item.
+		/// </summary>
+		[Bindable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public bool Selected
+		{
+			get => this.header.HasState("selected");
+			internal set
+			{
+				if (value)
+					this.header.AddState("selected");
+				else
+					this.header.RemoveState("selected");
 			}
 		}
 
@@ -595,6 +714,7 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		protected override void OnParentChanged(EventArgs e)
 		{
+			// sync the CompactView mode with the parent NavigationBar.
 			if (this._navbar != null)
 			{
 				this._navbar.CompactViewChanged -= this.Navbar_CompactViewChanged;

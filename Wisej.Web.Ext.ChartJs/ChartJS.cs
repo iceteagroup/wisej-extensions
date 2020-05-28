@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Wisej.Core;
 using Wisej.Design;
@@ -102,6 +103,7 @@ namespace Wisej.Web.Ext.ChartJS
 		/// </summary>
 		[MergableProperty(false)]
 		[Description("Chart options specific for the value of the ChartType property.")]
+		[WisejSerializerOptions(WisejSerializerOptions.CamelCase | WisejSerializerOptions.IgnoreNulls)]
 		public new Options Options
 		{
 			get
@@ -192,8 +194,44 @@ namespace Wisej.Web.Ext.ChartJS
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override string InitScript
 		{
-			get { return BuildInitScript(); }
+			get { return GetResourceString("Wisej.Web.Ext.ChartJS.JavaScript.startup.js"); }
 			set { }
+		}
+
+		/// <summary>
+		/// Overridden to return our list of script resources.
+		/// </summary>
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public override List<Package> Packages
+		{
+			// disable inlining or we lose the calling assembly in GetResourceString().
+			[MethodImpl(MethodImplOptions.NoInlining)]
+			get
+			{
+				if (base.Packages.Count == 0)
+				{
+					// initialize the loader with the required libraries.
+					base.Packages.AddRange(new[] {
+						new Package() {
+							Name = "moment.js",
+							Source = GetResourceURL("Wisej.Web.Ext.ChartJs.JavaScript.moment-with-locales-2.17.1.js")
+						},
+						new Package()
+						{
+							Name = "chart.js",
+							Source = GetResourceURL("Wisej.Web.Ext.ChartJs.JavaScript.chart-2.7.2.js")
+						},
+						new Package()
+						{
+							Name = "dataLabelPlugin.js",
+							Source = GetResourceURL("Wisej.Web.Ext.ChartJs.JavaScript.dataLabelPlugin.js")
+						}
+					});
+				}
+
+				return base.Packages;
+			}
 		}
 
 		// If we don't have a dataset and we are in design mode, return
@@ -314,7 +352,7 @@ namespace Wisej.Web.Ext.ChartJS
 			if (me.IsDirty)
 				return;
 
-			Call("update", this.DataSets, this.Labels, duration);
+			Call("updateData", this.DataSets, this.Labels, duration);
 		}
 
 		// Creates a new set of options.
@@ -377,68 +415,27 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
-		/// Overridden to return our list of script resources.
+		/// Renders the client component.
 		/// </summary>
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public override List<Package> Packages
+		/// <param name="config">Dynamic configuration object.</param>
+		protected override void OnWebRender(dynamic config)
 		{
-			get
+			base.Options = new
 			{
-				if (base.Packages.Count == 0)
+				type = this.ChartType,
+				options = this.Options,
+				data = new
 				{
-					// initialize the loader with the required libraries.
-					base.Packages.AddRange(new[] {
-						new Package() {
-							Name = "moment.js",
-							Source = GetResourceURL("Wisej.Web.Ext.ChartJs.JavaScript.moment-with-locales-2.17.1.js")
-						},
-						new Package()
-						{
-							Name = "chart.js",
-							Source = GetResourceURL("Wisej.Web.Ext.ChartJs.JavaScript.chart-2.7.2.js")
-						},
-						new Package()
-						{
-							Name = "dataLabelPlugin.js",
-							Source = GetResourceURL("Wisej.Web.Ext.ChartJs.JavaScript.dataLabelPlugin.js")
-						}
-					});
-				}
-
-				return base.Packages;
-			}
-		}
-
-		private string BuildInitScript()
-		{
-
-			IWisejControl me = this;
-			dynamic config = new DynamicObject();
-			string script = GetResourceString("Wisej.Web.Ext.ChartJS.JavaScript.startup.js");
-
-			config.type = this.ChartType;
-
-			// the power of Wisej is all in the next two lines.
-			// options and data are complex objects, with nested objects, arrays and
-			// enumerations. we simply assign them to config and they will be picked
-			// up by the javascript widget without any complex transformations.
-
-			config.options = this.Options;
-
-			config.data = new
-			{
-				labels = this.Labels,
-				datasets =
-					ShouldSerializeDataSets()
+					labels = this.Labels,
+					datasets = ShouldSerializeDataSets()
 						? this.DataSets
 						: this.DesignMode
 							? this.DesignDataSets
 							: null
+				}
 			};
 
-			script = script.Replace("$config", WisejSerializer.Serialize(config, WisejSerializerOptions.IgnoreNulls | WisejSerializerOptions.CamelCase));
-			return script;
+			base.OnWebRender((object)config);
 		}
 
 		#endregion

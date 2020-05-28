@@ -12,14 +12,10 @@
  * be used referring to this.container.
  *
  */
-this.init = function () {
+this.init = function (config) {
 
 	var me = this;
 
-	// prepare the configuration map.
-	// [$]config is a placeholder that is replaced with the options
-	// map configured in Wisej.Web.Ext.ChartJS.
-	var config = $config || {};
 	config.options.responsive = true;
 	config.options.maintainAspectRatio = false;
 
@@ -102,6 +98,7 @@ this.init = function () {
 	}
 }
 
+
 /**
  * Replace the default implementation not to fire "render"
  * here, but after the ChartJS widget has been fully rendered.
@@ -144,7 +141,7 @@ this.getImage = function () {
  * @param labels (array) the labels for the dataset
  * @param duration {Integer} The duration of the update animation in milliseconds.
  */
-this.update = function (datasets, labels, duration) {
+this.updateData = function (datasets, labels, duration) {
 
 	if (!datasets)
 		return;
