@@ -325,49 +325,8 @@ namespace Brotli
             throw new NotImplementedException();
         }
 
-        public override void Close()
-        {
-            lock (logLocker)
-            {
-                if (log != null)
-                {
-                    log.WriteByte(13);
-                    log.WriteByte(10);
-                    log.WriteByte(13);
-                    log.WriteByte(10);
-                    log.Flush();
-                    log.Close();
-                    log = null;
-                }
-            }
-
-            base.Close();
-        }
-
-        private void WriteToLogFile(byte[] buffer, int count)
-        {
-            lock (logLocker)
-            {
-                if (log == null)
-                {
-                    string filePath = Path.Combine(Path.GetTempPath(), "brotli.log");
-                    log = new FileStream(filePath, FileMode.Append, FileAccess.Write);
-                }
-                log.Write(buffer, 0, count);
-                log.Flush();
-                log.Close();
-                log = null;
-            }
-        }
-        
-        private static FileStream log;
-        private static object logLocker = new object();
-
         public override void Write(byte[] buffer, int offset, int count)
         {
-
-            this.WriteToLogFile(buffer, count);
-
             if (_mode != CompressionMode.Compress) throw new BrotliException("Can't write on this stream");
 
             UInt32 totalOut = 0;
