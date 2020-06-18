@@ -110,7 +110,6 @@ this.init = function () {
 
 		// skip "applyFormatting", it's generated too often.
 		if (e.data && e.data.name != "applyFormatting") {
-			var name = e.data.name;
 			me.fireWidgetEvent("command", e.data.name);
 		}
 	});
@@ -129,8 +128,14 @@ this.getText = function () {
 }
 this.setText = function (value) {
 	try {
-		this.editor.setData(value);
-		this.updateState();
+		var me = this;
+		me.editor.setData("", {
+			callback: function () {
+				me.editor.insertHtml(value);
+				me.updateState();
+			}
+		});
+
 	} catch (e) { }
 }
 
