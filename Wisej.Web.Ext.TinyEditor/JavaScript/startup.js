@@ -158,3 +158,12 @@ this.focus = function () {
 	if (this.editor)
 		this.editor.e.body.focus();
 }
+
+/**
+ * Sets the widget to be ReadOnly.
+ */
+this.setEditable = function (editable) {
+	if (this.editor)
+		if (this.editor.e.body)
+			this.editor.e.body.setAttribute('contenteditable', editable);
+}

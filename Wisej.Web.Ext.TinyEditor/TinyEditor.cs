@@ -301,6 +301,16 @@ namespace Wisej.Web.Ext.TinyEditor
 			ExecCommand(command, false, argument);
 		}
 
+		/// <summary>
+		/// Performs additional configuration to the widget.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnEnabledChanged(EventArgs e)
+		{
+			this.Call("setEditable", this.Enabled);
+
+			base.OnEnabledChanged(e);
+		}
 
 		#endregion
 
@@ -399,6 +409,10 @@ namespace Wisej.Web.Ext.TinyEditor
 					this.initialized = true;
 					if (!String.IsNullOrEmpty(this.Text))
 						Call("setText", TextUtils.EscapeText(this.Text, true));
+
+					if (!this.Enabled)
+						Call("setEditable", this.Enabled);
+
 					break;
 
 				case "changeText":
