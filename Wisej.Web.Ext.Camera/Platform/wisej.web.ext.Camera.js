@@ -241,7 +241,6 @@ qx.Class.define("wisej.web.ext.Camera", {
 
 			var video = this._media.getMediaObject();
 			if (video) {
-				video.setAttribute("playsinline", "");
 				video.setAttribute("style", "filter:" + value);
 			}
 		},
@@ -271,6 +270,7 @@ qx.Class.define("wisej.web.ext.Camera", {
 			var video = this._media.getMediaObject();
 			if (video) {
 				video.srcObject = stream;
+				video.setAttribute("playsinline", "");
 				video.play();
 			}
 		},
