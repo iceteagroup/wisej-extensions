@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Wisej.Core;
@@ -61,8 +62,10 @@ namespace Wisej.Web.Ext.XTerm
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override List<Package> Packages
 		{
-			get
-			{
+            // disable inlining or we lose the calling assembly in GetResourceString().
+            [MethodImpl(MethodImplOptions.NoInlining)]
+            get
+            {
 				if (base.Packages.Count == 0)
 				{
 					// initialize the loader with the required libraries.
@@ -117,11 +120,13 @@ namespace Wisej.Web.Ext.XTerm
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region Wisej Implementation
+        #region Wisej Implementation
 
-		private string BuildInitScript()
+        // disable inlining or we lose the calling assembly in GetResourceString().
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private string BuildInitScript()
 		{
 			IWisejControl me = this;
 			dynamic options = new DynamicObject();

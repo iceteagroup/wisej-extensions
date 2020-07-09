@@ -241,9 +241,9 @@ qx.Class.define("wisej.web.ext.Camera", {
 
 			var video = this._media.getMediaObject();
 			if (video) {
+				video.setAttribute("playsinline", "");
 				video.setAttribute("style", "filter:" + value);
 			}
-
 		},
 
 		// creates a hidden <canvas> element to capture the camera image.

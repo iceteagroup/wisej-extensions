@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;
@@ -289,15 +290,21 @@ namespace Wisej.Web.Ext.CKEditor
 		public override void Update()
 		{
 			IWisejControl me = this;
-			if (me.IsNew && this._commands != null)
+			if (me.IsNew)
 			{
-				var enabled = this._commands.Where(o => o.Value == true).Select(o => o.Key);
-				if (enabled.Count() > 0)
-					Call("enableCommand", enabled, true);
+				if (this._commands != null)
+				{
+					var enabled = this._commands.Where(o => o.Value == true).Select(o => o.Key);
+					if (enabled.Count() > 0)
+						Call("enableCommand", enabled, true);
 
-				var disabled = this._commands.Where(o => o.Value == false).Select(o => o.Key);
-				if (disabled.Count() > 0)
-					Call("enableCommand", disabled, false);
+					var disabled = this._commands.Where(o => o.Value == false).Select(o => o.Key);
+					if (disabled.Count() > 0)
+						Call("enableCommand", disabled, false);
+
+				}
+
+				Call("setText", TextUtils.EscapeText(this.Text, true));
 			}
 
 			base.Update();
@@ -364,6 +371,8 @@ namespace Wisej.Web.Ext.CKEditor
 			}
 		}
 
+		// disable inlining or we lose the calling assembly in GetResourceString().
+		[MethodImpl(MethodImplOptions.NoInlining)]
 		private string BuildInitScript()
 		{
 			IWisejControl me = this;

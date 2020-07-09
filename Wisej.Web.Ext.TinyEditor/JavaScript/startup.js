@@ -96,6 +96,7 @@ this.init = function () {
 
 	// inform the server widget that the editor is ready.
 	this.fireWidgetEvent("load");
+	this.fireEvent("initialized");
 }
 
 /**
@@ -110,8 +111,17 @@ this.getText = function () {
 }
 this.setText = function (value) {
 	try {
-		this.editor.e.body.innerHTML = value;
-		this.updateState();
+		if (this.editor) {
+			this.editor.e.body.innerHTML = value;
+			this.updateState();
+		} else {
+
+			var me = this;
+			this.addListenerOnce("initialized", function () {
+				me.setText(value);
+			});
+		}
+		
 	} catch (e) { }
 }
 

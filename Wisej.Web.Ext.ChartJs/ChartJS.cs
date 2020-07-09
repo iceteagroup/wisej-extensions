@@ -194,6 +194,8 @@ namespace Wisej.Web.Ext.ChartJS
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override string InitScript
 		{
+			// disable inlining or we lose the calling assembly in GetResourceString().
+			[MethodImpl(MethodImplOptions.NoInlining)]
 			get { return GetResourceString("Wisej.Web.Ext.ChartJS.JavaScript.startup.js"); }
 			set { }
 		}

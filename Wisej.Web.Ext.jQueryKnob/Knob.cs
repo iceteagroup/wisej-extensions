@@ -377,6 +377,8 @@ namespace Wisej.Web.Ext.jQueryKnob
 			}
 		}
 
+		// disable inlining or we lose the calling assembly in GetResourceString().
+		[MethodImpl(MethodImplOptions.NoInlining)]
 		private string BuildInitScript()
 		{
 			IWisejControl me = this;
