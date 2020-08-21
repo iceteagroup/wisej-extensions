@@ -57,6 +57,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Camera.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Camera.FacingMode.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(ProjectDir)..\bin"

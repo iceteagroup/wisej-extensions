@@ -34,7 +34,7 @@ namespace Wisej.Web.Ext.Camera
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Camera))]
 	[Description("The Camera component makes it possible to take pictures with the device's camera and upload them to the server.")]
-	public class Camera : Control, IWisejHandler
+	public partial class Camera : Control, IWisejHandler
 	{
 		#region Constructors
 
@@ -180,6 +180,28 @@ namespace Wisej.Web.Ext.Camera
 		}
 		private bool _video = true;
 
+		/// <summary>
+		/// Specifies whether the video is front-facing (mobile-only).
+		/// </summary>
+		[DesignerActionList]
+		[DefaultValue(true)]
+		public VideoFacingMode FacingMode
+		{
+			get
+			{
+				return this._facingMode;
+			}
+			set
+			{
+				if (this._facingMode != value)
+				{
+					this._facingMode = value;
+					Update();
+				}
+			}
+		}
+		private VideoFacingMode _facingMode = VideoFacingMode.User;
+
 		#endregion
 
 		#region Methods
@@ -307,7 +329,22 @@ namespace Wisej.Web.Ext.Camera
 			config.className = "wisej.web.ext.Camera";
 			config.videoFilter = this.VideoFilter;
 			config.submitURL = this.GetPostbackURL();
-			config.constraints = new { video = this.Video, audio = this.Audio };
+			dynamic videoConstraints = false;
+
+			// apply video constraints.
+			if (this.Video)
+			{
+				videoConstraints = new
+				{
+					facingMode = this._facingMode
+				};
+			}
+
+			config.constraints = new
+			{
+				video = videoConstraints,
+				audio = this.Audio
+			};
 
 			config.wiredEvents.Add("error(Message)");
 
