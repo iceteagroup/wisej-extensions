@@ -365,6 +365,18 @@ namespace Wisej.Web.Ext.ChartJS
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Bezier curve tension of the line. Set to 0 to draw straight lines. This option is ignored if monotone cubic interpolation is used.
+		/// </summary>
+		[DefaultValue(0.4)]
+		[MergableProperty(false)]
+		[Description("Bezier curve tension of the line. Set to 0 to draw straight lines. This option is ignored if monotone cubic interpolation is used.")]
+		public double LineTension 
+		{ 
+			get; 
+			set; 
+		} = 0.4;
 	}
 
 	/// <summary>
@@ -617,6 +629,18 @@ namespace Wisej.Web.Ext.ChartJS
 		public RadarDataSet() : base()
 		{
 			this.Type = ChartType.Radar;
+		}
+
+		/// <summary>
+		/// Bezier curve tension of the line. Set to 0 to draw straight lines.
+		/// </summary>
+		[DefaultValue(0)]
+		[MergableProperty(false)]
+		[Description("Bezier curve tension of the line. Set to 0 to draw straight lines.")]
+		public double LineTension
+		{
+			get;
+			set;
 		}
 	}
 }
