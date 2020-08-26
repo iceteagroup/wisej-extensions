@@ -97,7 +97,13 @@ namespace Wisej.Web.Ext.Html2Canvas
 			if (callback == null)
 				throw new ArgumentNullException(nameof(callback));
 
-			Instance.ScreenshotCore(null, null, callback);
+			Instance.ScreenshotCore(null, null, (result)=> {
+
+				if (result is Exception)
+					throw (Exception)result;
+				else
+					callback(result as Image);
+			});
 		}
 
 		/// <summary>
@@ -113,7 +119,13 @@ namespace Wisej.Web.Ext.Html2Canvas
 			if (callback == null)
 				throw new ArgumentNullException(nameof(callback));
 
-			Instance.ScreenshotCore(null, options, callback);
+			Instance.ScreenshotCore(null, options, (result) => {
+
+				if (result is Exception)
+					throw (Exception)result;
+				else
+					callback(result as Image);
+			});
 		}
 
 		/// <summary>
@@ -131,7 +143,13 @@ namespace Wisej.Web.Ext.Html2Canvas
 			if (callback == null)
 				throw new ArgumentNullException(nameof(callback));
 
-			Instance.ScreenshotCore(target, null, callback);
+			Instance.ScreenshotCore(target, null, (result) => {
+
+				if (result is Exception)
+					throw (Exception)result;
+				else
+					callback(result as Image);
+			});
 		}
 
 		/// <summary>
@@ -152,7 +170,13 @@ namespace Wisej.Web.Ext.Html2Canvas
 			if (callback == null)
 				throw new ArgumentNullException(nameof(callback));
 
-			Instance.ScreenshotCore(target, options, callback);
+			Instance.ScreenshotCore(target, options, (result) => {
+
+				if (result is Exception)
+					throw (Exception)result;
+				else
+					callback(result as Image);
+			});
 		}
 
 		/// <summary>
@@ -165,10 +189,12 @@ namespace Wisej.Web.Ext.Html2Canvas
 		{
 			var tcs = new TaskCompletionSource<Image>();
 
-			Instance.ScreenshotCore(null, options, (image) => {
+			Instance.ScreenshotCore(null, options, (result) => {
 
-				tcs.SetResult(image);
-
+				if (result is Exception)
+					tcs.SetException((Exception)result);
+				else
+					tcs.SetResult(result as Image);
 			});
 
 			return tcs.Task;
@@ -190,17 +216,21 @@ namespace Wisej.Web.Ext.Html2Canvas
 
 			var tcs = new TaskCompletionSource<Image>();
 
-			Instance.ScreenshotCore(target, options, (image)=> {
+			Instance.ScreenshotCore(target, options, (result)=> {
 
-				tcs.SetResult(image);
-
+				if (result is Exception)
+					tcs.SetException((Exception)result);
+				else if (result is Image)
+					tcs.SetResult((Image)result);
+				else
+					tcs.SetResult(null);
 			});
 
 			return tcs.Task;
 		}
 
 		// Implementation
-		private void ScreenshotCore(Control target, Html2CanvasOptions options, Action<Image> callback)
+		private void ScreenshotCore(Control target, Html2CanvasOptions options, Action<object> callback)
 		{
 			var handle = (IntPtr)GCHandle.Alloc(callback, GCHandleType.Normal);
 			Call("screenshot", target, options, handle.ToInt64());
@@ -245,17 +275,37 @@ namespace Wisej.Web.Ext.Html2Canvas
 			var base64 = data.imageData ?? "";
 
 			var handle = GCHandle.FromIntPtr((IntPtr)id);
-			var callback = (Action<Image> )handle.Target;
+			var callback = (Action<object>)handle.Target;
 			handle.Free();
 
 			if (callback != null)
 			{
-				ImageFromBase64(base64);
 				callback(ImageFromBase64(base64));
 			}
 			else
 			{
-				LogManager.Log("The HtmlwCanvas callback is null.");
+				LogManager.Log("The Html2Canvas callback is null.");
+			}
+		}
+
+		// Handles callback "error" events from the client.
+		private void ProcessErrorWebEvent(WisejEventArgs e)
+		{
+			var data = e.Parameters.Data;
+			var id = data.id ?? -1L;
+			var error = data.error ?? "";
+
+			var handle = GCHandle.FromIntPtr((IntPtr)id);
+			var callback = (Action<object>)handle.Target;
+			handle.Free();
+
+			if (callback != null)
+			{
+				callback(new Exception(error));
+			}
+			else
+			{
+				LogManager.Log("The Html2Canvas callback is null.");
 			}
 		}
 
@@ -269,6 +319,10 @@ namespace Wisej.Web.Ext.Html2Canvas
 			{
 				case "render":
 					ProcessRenderWebEvent(e);
+					break;
+
+				case "error":
+					ProcessErrorWebEvent(e);
 					break;
 
 				default:
@@ -287,7 +341,7 @@ namespace Wisej.Web.Ext.Html2Canvas
 
 			config.className = "wisej.web.ext.Html2Canvas";
 			config.wiredEvents = new WiredEvents();
-			config.wiredEvents.Add("render(Data)");
+			config.wiredEvents.Add("render(Data)", "error(Data)");
 		}
 
 		#endregion

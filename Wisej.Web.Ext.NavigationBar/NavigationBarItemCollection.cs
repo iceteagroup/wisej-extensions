@@ -131,6 +131,7 @@ namespace Wisej.Web.Ext.NavigationBar
 				throw new ArgumentNullException(nameof(item));
 
 			this.controls.Add(item);
+			item.UpdateIndentation();
 		}
 
 		/// <summary>
@@ -152,7 +153,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <param name="text">The text to display on the <see cref="NavigationBarItem" />.</param>
 		public void Add(string key, string text)
 		{
-			NavigationBarItem item = new NavigationBarItem()
+			var item = new NavigationBarItem()
 			{
 				Name = key,
 				Text = text
@@ -168,7 +169,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <param name="icon">The Url or name of the icon to display on the <see cref="NavigationBarItem" />.</param>
 		public void Add(string key, string text, string icon)
 		{
-			NavigationBarItem item = new NavigationBarItem()
+			var item = new NavigationBarItem()
 			{
 				Name = key,
 				Text = text,
@@ -187,7 +188,7 @@ namespace Wisej.Web.Ext.NavigationBar
 			if (items == null)
 				throw new ArgumentNullException("items");
 
-			foreach (NavigationBarItem item in items)
+			foreach (var item in items)
 			{
 				Add(item);
 			}

@@ -44,7 +44,6 @@
 			// header
 			// 
 			this.header.AppearanceKey = "navbar-item/header";
-			this.header.BackColor = System.Drawing.Color.Transparent;
 			this.header.Controls.Add(this.icon);
 			this.header.Controls.Add(this.title);
 			this.header.Controls.Add(this.shortcut);
@@ -59,6 +58,7 @@
 			this.header.Size = new System.Drawing.Size(502, 45);
 			this.header.Spacing = 12;
 			this.header.TabIndex = 1;
+			this.header.TabStop = true;
 			this.header.Click += new System.EventHandler(this.header_Click);
 			// 
 			// icon
@@ -136,8 +136,8 @@
 			this.items.Size = new System.Drawing.Size(502, 0);
 			this.items.Spacing = 0;
 			this.items.TabIndex = 0;
+			this.items.TabStop = true;
 			this.items.Visible = false;
-			this.items.VisibleChanged += new System.EventHandler(this.items_VisibleChanged);
 			this.items.ControlAdded += new Wisej.Web.ControlEventHandler(this.items_ControlAdded);
 			this.items.ControlRemoved += new Wisej.Web.ControlEventHandler(this.items_ControlRemoved);
 			// 

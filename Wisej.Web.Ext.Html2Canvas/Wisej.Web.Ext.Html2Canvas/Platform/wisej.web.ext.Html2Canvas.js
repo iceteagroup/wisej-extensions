@@ -52,11 +52,15 @@ qx.Class.define("wisej.web.ext.Html2Canvas", {
 
 			// need allowTaint to render svg icons.
 			// https://github.com/niklasvh/html2canvas/issues/95
-			options.allowTaint = true;
+			options.useCORS = true;
 
 			// make sure the html2canvas library is loaded.
 			var me = this;
 			wisej.utils.Loader.load([
+				{
+					id: "promise-polyfill.js",
+					url: "resource.wx/Wisej.Web.Ext.Html2Canvas.JavaScript.promise-polyfill.js"
+				},
 				{
 					id: "html2canvas.js",
 					url: "resource.wx/Wisej.Web.Ext.Html2Canvas.JavaScript.Html2Canvas.js"
@@ -64,14 +68,21 @@ qx.Class.define("wisej.web.ext.Html2Canvas", {
 
 					html2canvas(dom, options).then(function (canvas) {
 
-						var imageData = canvas.toDataURL();
-						me.fireDataEvent("render", {
-							id: callbackId,
-							imageData: imageData
-						});
+						try {
+							var imageData = canvas.toDataURL();
+							me.fireDataEvent("render", {
+								id: callbackId,
+								imageData: imageData
+							});
+						}
+						catch (error) {
+							me.fireDataEvent("error", {
+								id: callbackId,
+								error: error.message
+							});
+						}
 					});
 			});
 		},
 	}
-
 });

@@ -34,7 +34,7 @@
 						"default":  {
 							"styles":  {
 								"radius": 40,
-								"width": "1;",
+								"width": 1,
 								"color": "#DCE3E3",
 								"backgroundColor": "#DCE3E3"
 							}
@@ -74,9 +74,9 @@
 				"header":  {
 					"states":  {
 						"default":  {
-							"properties":  {
-								"textColor": "navbar-text",
-								"backgroundColor": "navbar-background"
+							"properties": {
+								"textColor": "",
+								"backgroundColor": "transparent"
 							}
 						},
 						"selected":  {

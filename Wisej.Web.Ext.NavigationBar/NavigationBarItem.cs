@@ -258,10 +258,10 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		private bool ShouldSerializeBackColor()
 		{
-			return this.header.BackColor.Name != "@navbar-background";
+			return this.header.BackColor != Color.Transparent;
 		}
 
-		private new void ResetBackColor()
+		public override void ResetBackColor()
 		{
 			this.header.BackColor = Color.Empty;
 		}
@@ -279,12 +279,12 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		private bool ShouldSerializeForeColor()
 		{
-			return this.header.ForeColor.Name != "@navbar-text";
+			return TypeDescriptor.GetProperties(this.header)["ForeColor"].ShouldSerializeValue(this.header);
 		}
 
-		private new void ResetForeColor()
+		public override void ResetForeColor()
 		{
-			this.header.ForeColor = Color.Empty;
+			TypeDescriptor.GetProperties(this.header)["ForeColor"].ResetValue(this.header);
 		}
 
 		/// <summary>
@@ -305,23 +305,28 @@ namespace Wisej.Web.Ext.NavigationBar
 		[DefaultValue(false)]
 		public bool Expanded
 		{
-			get => this.items.Visible;
+			get => this._expanded;
 			set
 			{
-				if (this.items.Controls.Count > 0)
-					this.items.Visible = value;
-				else
-					this.items.Visible = false;
-
-				// apply indentation.
-				var level = this.Level + 1;
-				var padding = new Padding(this.NavigationBar.Indentation * level, 0, 0, 0) ;
-				foreach (NavigationBarItem i in this.items.Controls)
+				if (this._expanded != value)
 				{
-					i.icon.Margin = padding;
+					this._expanded = value;
+					this.items.Visible = value;
+
+					if (this.Expanded)
+					{
+						OnExpand(EventArgs.Empty);
+						this.open.AddState("open");
+					}
+					else
+					{
+						OnCollapse(EventArgs.Empty);
+						this.open.RemoveState("open");
+					}
 				}
 			}
 		}
+		private bool _expanded;
 
 		/// <summary>
 		/// Returns the indentation level of this <see cref="NavigationBarItem"/> item.
@@ -401,12 +406,12 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		private bool ShouldSerializeInfoTextForeColor()
 		{
-			return this.info.ForeColor.Name != "@navbar-text";
+			return TypeDescriptor.GetProperties(this.info)["ForeColor"].ShouldSerializeValue(this.info);
 		}
 
 		private void ResetInfoTextForeColor()
 		{
-			this.info.ForeColor = Color.Empty;
+			TypeDescriptor.GetProperties(this.info)["ForeColor"].ResetValue(this.info);
 		}
 
 		/// <summary>
@@ -465,6 +470,27 @@ namespace Wisej.Web.Ext.NavigationBar
 		#endregion
 
 		#region Implementation
+
+		internal void UpdateIndentation()
+		{
+			if (this.NavigationBar != null)
+			{
+				var level = this.Level + 1;
+				var padding = new Padding(this.NavigationBar.Indentation * level, 0, 0, 0);
+				foreach (NavigationBarItem i in this.items.Controls)
+				{
+					i.icon.Margin = padding;
+				}
+
+				if (this._items != null)
+				{
+					foreach (var i in this.Items)
+					{
+						i.UpdateIndentation();
+					}
+				}
+			}
+		}
 
 		#region Unsupported properties and events
 
@@ -771,20 +797,6 @@ namespace Wisej.Web.Ext.NavigationBar
 		private void open_Click(object sender, EventArgs e)
 		{
 			this.Expanded = !this.Expanded;
-		}
-
-		private void items_VisibleChanged(object sender, EventArgs e)
-		{
-			if (this.items.Visible)
-			{
-				OnExpand(e);
-				this.open.AddState("open");
-			}
-			else
-			{
-				OnCollapse(e);
-				this.open.RemoveState("open");
-			}
 		}
 
 		private void header_Click(object sender, EventArgs e)

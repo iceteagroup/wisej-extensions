@@ -186,7 +186,7 @@ namespace Wisej.Web.Ext.NavigationBar
 						this._savedWidth = this.Width;
 						this._savedAvatarSize = this.avatar.Size;
 
-						this.Width = this.logo.Right + this.logo.Left;
+						this.Width = this.CompactViewWidth;
 						this.avatar.Size = this.avatar.MaximumSize = this.logo.Size;
 					}
 					else if (this._savedWidth > 0)
@@ -203,6 +203,14 @@ namespace Wisej.Web.Ext.NavigationBar
 		private int _savedWidth = 0;
 		private Size _savedAvatarSize = Size.Empty;
 
+		private int CompactViewWidth
+		{
+			get
+			{
+				return this.logo.Right + this.logo.Left;
+			}
+		}
+
 		/// <summary>
 		/// Returns or sets the indentation in pixels for child items.
 		/// </summary>
@@ -211,7 +219,21 @@ namespace Wisej.Web.Ext.NavigationBar
 		public int Indentation
 		{
 			get { return this._indentation; }
-			set { this._indentation = value; }
+			set
+			{
+				if (this._indentation != value)
+				{
+					this._indentation = value;
+
+					if (this._items != null)
+					{
+						foreach (var i in this.Items)
+						{
+							i.UpdateIndentation();
+						}
+					}
+				}
+			}
 		}
 		private int _indentation = 0;
 
@@ -623,6 +645,14 @@ namespace Wisej.Web.Ext.NavigationBar
 			return false;
 		}
 
+		protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
+		{
+			if (this.CompactView)
+				width = this.CompactViewWidth;
+
+			base.SetBoundsCore(x, y, width, height, specified);
+		}
+
 		private void OnDesignComponentSelectionChanged(object server, EventArgs e)
 		{
 			IWisejComponent target = this.DesignItem;
@@ -632,12 +662,14 @@ namespace Wisej.Web.Ext.NavigationBar
 				if (selectionService != null)
 				{
 					if (selectionService.GetComponentSelected(this))
-						selectionService.SetSelectedComponents(new[] { target });
+					{
+						this.DesignItem = null;
+						selectionService.SetSelectedComponents(new[] { target }, SelectionTypes.Replace);
+					}
 				}
 			}
 		}
 
 		#endregion
-
 	}
 }

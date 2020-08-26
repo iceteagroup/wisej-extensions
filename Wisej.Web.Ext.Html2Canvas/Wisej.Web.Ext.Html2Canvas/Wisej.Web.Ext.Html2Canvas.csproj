@@ -51,7 +51,9 @@
   <ItemGroup>
     <EmbeddedResource Include="JavaScript\Html2Canvas.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="JavaScript\promise-polyfill.js" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Platform\wisej.web.ext.Html2Canvas.js" />
   </ItemGroup>
