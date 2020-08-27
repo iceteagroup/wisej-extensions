@@ -349,6 +349,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns whether the <see cref="NavigationBarItem"/> is the currently selected item.
 		/// </summary>
 		[Bindable(false)]
+		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool Selected
 		{
