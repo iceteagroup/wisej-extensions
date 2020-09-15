@@ -564,7 +564,7 @@ namespace Wisej.Web.Ext.Barcode
 		/// Draws the barcode and returns the image object.
 		/// </summary>
 		/// <returns></returns>
-		private Image DrawBarCode()
+		public Image DrawBarCode()
 		{
 			barcode.Format = (ZXing.BarcodeFormat)this.BarcodeType;
 			barcode.Options.PureBarcode = !this.ShowLabel;
