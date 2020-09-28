@@ -46,16 +46,19 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Wisej.Framework">
-      <HintPath>..\..\..\Development\2.0\bin\Wisej.Framework.dll</HintPath>
+      <HintPath>..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Barcode.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="BarcodeReader.cs" />
+    <Compile Include="ScanEventHandler.cs" />
     <Compile Include="BarcodeType.cs" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScanMode.cs" />
     <Compile Include="ZXing.NET\aztec\AztecDetectorResult.cs" />
     <Compile Include="ZXing.NET\aztec\AztecReader.cs" />
     <Compile Include="ZXing.NET\aztec\AztecResultMetadata.cs" />
@@ -320,6 +323,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Platform\wisej.web.ext.BarcodeReader.js" />
+    <EmbeddedResource Include="Resources\ZXing.BrowserMultiFormatReader.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ZXing.Browser.Int32Array.Polyfill.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

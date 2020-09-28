@@ -47,7 +47,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
     <Reference Include="Wisej.Framework">
-      <HintPath>..\..\..\Development\2.0\bin\Wisej.Framework.dll</HintPath>
+      <HintPath>..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
