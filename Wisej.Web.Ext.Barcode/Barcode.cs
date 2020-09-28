@@ -512,7 +512,7 @@ namespace Wisej.Web.Ext.Barcode
 		/// Shows or hides the barcode label.
 		/// </summary>
 		[DefaultValue(true)]
-		[Description(" Shows or hides the barcode label.")]
+		[Description("Shows or hides the barcode label.")]
 		public bool ShowLabel
 		{
 			get { return this._showLabel; }
@@ -537,6 +537,27 @@ namespace Wisej.Web.Ext.Barcode
 				return new Size(100, 40);
 			}
 		}
+
+		/// <summary>
+		/// The number of pixels to offset from the bottom of the barcode.
+		/// </summary>
+		[DefaultValue(0)]
+		[Description("The number of pixels to offset from the bottom of the barcode.")]
+		public int VerticalOffset
+		{
+			get
+			{
+				return this._verticalOffset;
+			}
+			set
+			{
+				if (this._verticalOffset == value)
+					return;
+
+				this._verticalOffset = value;
+			}
+		}
+		private int _verticalOffset = 0;
 
 		#endregion
 
@@ -568,6 +589,7 @@ namespace Wisej.Web.Ext.Barcode
 		{
 			barcode.Format = (ZXing.BarcodeFormat)this.BarcodeType;
 			barcode.Options.PureBarcode = !this.ShowLabel;
+			barcode.Options.VerticalOffset = this.VerticalOffset;
 			barcode.Options.Width = this.Width - this.Padding.Horizontal;
 			barcode.Options.Height = this.Height - this.Padding.Vertical;
 			ZXing.Rendering.BitmapRenderer renderer = (ZXing.Rendering.BitmapRenderer)barcode.Renderer;

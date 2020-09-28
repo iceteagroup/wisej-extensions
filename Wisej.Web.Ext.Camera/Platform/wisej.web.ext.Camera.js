@@ -204,6 +204,14 @@ qx.Class.define("wisej.web.ext.Camera", {
 		},
 
 		/**
+		 * Gets the video media object.
+		 **/
+		getMediaObject: function () {
+
+			return this._media.getMediaObject();
+		},
+
+		/**
 		 * Stops the recording of the MediaStream and sends the recording to Wisej.
 		 */
 		stopRecording: function () {

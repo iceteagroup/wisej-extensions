@@ -92,7 +92,7 @@ namespace Wisej.Web.Ext.Camera
 		/// <summary>
 		/// Fires the <see cref="Uploaded" /> event.
 		/// </summary>
-		/// <param name="e">A <see cref="T:Wisej.Web.UploadedEventArgs" /> that contains the event data. </param>
+		/// <param name="e">A <see cref="T:Wisej.Web.UploadedEventArgs" /> that contains the event data.</param>
 		protected virtual void OnUploaded(UploadedEventArgs e)
 		{
 			((UploadedEventHandler)base.Events[nameof(Uploaded)])?.Invoke(this, e);
