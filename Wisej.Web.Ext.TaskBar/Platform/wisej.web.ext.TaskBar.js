@@ -100,17 +100,7 @@ qx.Class.define("wisej.web.ext.TaskBar", {
 			// update the taskbar position in the singleton preview widget.
 			wisej.web.desktop.TaskbarPreview.getInstance().setTaskbarPosition(value);
 
-			// update all the existing items.
-			var items = this.getItems();
-			if (items != null && items.length > 0) {
-				var orientation = this.__getOrientation();
-				for (var i = 0; i < items.length; i++) {
-					items[i].removeState("horizontal");
-					items[i].removeState("vertical");
-					items[i].addState(orientation);
-				}
-			}
-			var items = this.__taskbar.getChildren();
+			var items = this.getChildren();
 			if (items != null && items.length > 0) {
 				var orientation = this.__getOrientation();
 				for (var i = 0; i < items.length; i++) {
