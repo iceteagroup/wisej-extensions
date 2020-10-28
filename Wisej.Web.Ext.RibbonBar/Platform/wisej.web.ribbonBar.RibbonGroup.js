@@ -99,7 +99,10 @@ qx.Class.define("wisej.web.ribbonBar.RibbonGroup", {
 		 */
 		_applyLabel: function (value, old) {
 
-			this.getChildControl("label").setValue(value);
+			var label = this.getChildControl("label");
+
+			label.setValue(value);
+			value ? label.show() : label.exclude();
 		},
 
 		/**
