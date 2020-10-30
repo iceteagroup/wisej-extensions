@@ -372,6 +372,7 @@ namespace Wisej.Web.Ext.ChartJS
 		public OptionScalesAxesX(OptionsBase owner)
 			:base (owner)
 		{
+			this.Type = ScaleType.Category;
 		}
 
 		/// <summary>
