@@ -75,7 +75,6 @@
 					"states":  {
 						"default":  {
 							"properties": {
-								"textColor": "",
 								"backgroundColor": "transparent"
 							}
 						},
