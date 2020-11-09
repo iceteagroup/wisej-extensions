@@ -815,6 +815,8 @@ namespace Wisej.Web.Ext.NavigationBar
 
 			if (this.NavigationBar != null)
 				((NavigationBarItem)e.Control).ItemHeight = this.NavigationBar.ItemHeight;
+
+			UpdateIndentation();
 		}
 
 		private void items_ControlRemoved(object sender, ControlEventArgs e)

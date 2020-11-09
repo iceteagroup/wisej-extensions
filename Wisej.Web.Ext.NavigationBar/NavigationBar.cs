@@ -157,6 +157,15 @@ namespace Wisej.Web.Ext.NavigationBar
 					if (this._selectedItem != null)
 						this._selectedItem.Selected = true;
 
+					// expand all parents.
+					if (this._selectedItem != null)
+					{
+						for (var parent = this._selectedItem.Parent; parent != null; parent = parent.Parent)
+						{
+							parent.Expanded = true;
+						}
+					}
+
 					OnSelectedItemChanged(EventArgs.Empty);
 				}
 			}
