@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wisej.Application</RootNamespace>
     <AssemblyName>Wisej.Application</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -56,8 +56,11 @@
     <Reference Include="Microsoft.Owin.StaticFiles">
       <HintPath>..\Assemblies\Microsoft.Owin.StaticFiles.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Toolkit.Win32.UI.Controls">
-      <HintPath>..\Assemblies\Microsoft.Toolkit.Win32.UI.Controls.dll</HintPath>
+    <Reference Include="Microsoft.Web.WebView2.Core">
+      <HintPath>Edge\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms">
+      <HintPath>Edge\Microsoft.Web.WebView2.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\Assemblies\Owin.dll</HintPath>
@@ -127,12 +130,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Edge\Microsoft.Toolkit.Win32.UI.Controls.dll" />
+    <EmbeddedResource Include="Edge\WebView2Loader.dll" />
     <Content Include="Wisej-Black.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)..\Shared\ILMerge.exe" /ndebug /copyattrs /targetplatform:v4 /out:"$(TargetPath)" "$(TargetPath)" "$(TargetDir)Microsoft.Owin.Host.HttpListener.dll" "$(TargetDir)Microsoft.Owin.Hosting.dll" "$(TargetDir)Microsoft.Owin.StaticFiles.dll" "$(TargetDir)Microsoft.Owin.dll" "$(TargetDir)Microsoft.Owin.FileSystems.dll" "$(TargetDir)Owin.dll"
+    <PostBuildEvent>"$(ProjectDir)..\Shared\ILMerge.exe" /ndebug /copyattrs /targetplatform:v4 /out:"$(TargetPath)" "$(TargetPath)" "$(TargetDir)Microsoft.Owin.Host.HttpListener.dll" "$(TargetDir)Microsoft.Owin.Hosting.dll" "$(TargetDir)Microsoft.Owin.StaticFiles.dll" "$(TargetDir)Microsoft.Owin.dll" "$(TargetDir)Microsoft.Owin.FileSystems.dll" "$(TargetDir)Owin.dll" "$(TargetDir)Microsoft.Web.WebView2.Core.dll" "$(TargetDir)Microsoft.Web.WebView2.WinForms.dll"
 
 mkdir "$(ProjectDir)..\..\bin"
 mkdir "$(ProjectDir)..\..\bin\HostEdge"

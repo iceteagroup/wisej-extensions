@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 //
-// (C) 2017 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
+// (C) 2020 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
 //
 // 
 //
@@ -17,29 +17,22 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
-using Microsoft.Toolkit.Win32.UI.Controls.WinForms;
-using Microsoft.Win32;
+using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.WinForms;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Wisej.Application.Properties;
 
 namespace Wisej.Application
 {
 	/// <summary>
-	/// Browser wrapper control. Works either as IE or Edge if supported.
+	/// Browser wrapper control.
 	/// </summary>
-	/// <remarks>
-	/// NOTE: When updating the embedded Microsoft.Toolkit.Win32.UI.Controls.dll you also
-	/// must update the version string in Resources.resx other it will not extract and update
-	/// systems where this executable has already been used.
-	/// </remarks>
 	internal class Browser : Control
 	{
 		private string url;
@@ -47,7 +40,7 @@ namespace Wisej.Application
 
 		static Browser()
 		{
-			SetEmulationVersion(GetInternetExplorerMajorVersion());
+			ExtractEdgeNativeLoader();
 		}
 
 		/// <summary>
@@ -59,32 +52,7 @@ namespace Wisej.Application
 		{
 			this.url = url;
 
-			try
-			{
-				// get ready to load Microsoft.Toolkit.Win32.UI.Controls.dll
-				//
-				// NOTE: When updating the embedded Microsoft.Toolkit.Win32.UI.Controls.dll you also
-				// must update the version string in Resources.resx other it will not extract and update
-				// systems where this executable has already been used.
-				AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
-				// allow Win32WebViewHost to use localhost.
-				var pi = new ProcessStartInfo()
-				{
-					UseShellExecute = false,
-					CreateNoWindow = true,
-					RedirectStandardOutput = true,
-					FileName = "checknetisolation",
-					Arguments = "LoopbackExempt -a -n=Microsoft.Win32WebViewHost_cw5n1h2txyewy"
-				};
-				Process.Start(pi);
-
-				CreateEdge();
-			}
-			catch
-			{
-				CreateIE();
-			}
+			CreateEdge();
 		}
 
 		/// <summary>
@@ -105,177 +73,65 @@ namespace Wisej.Application
 
 		private void CreateEdge()
 		{
-			var edge = new WebView();
-			((ISupportInitialize)edge).BeginInit();
+			var edge = new WebView2();
+
+			var path = Path.Combine(Path.GetTempPath(), "Wisej2", "Edge");
+			edge.CreationProperties = new CoreWebView2CreationProperties()
+			{
+				UserDataFolder = path
+			};
+
+			edge.KeyDown += this.Edge_KeyDown;
+			edge.CoreWebView2Ready += Edge_CoreWebView2Ready;
 			edge.NavigationCompleted += Edge_NavigationCompleted;
-			edge.AcceleratorKeyPressed += Edge_AcceleratorKeyPressed;
-			edge.IsPrivateNetworkClientServerCapabilityEnabled = true;
-			((ISupportInitialize)edge).EndInit();
 
-			edge.Location = new Point(0, 0);
-			edge.Dock = DockStyle.Fill;
-			edge.Parent = this;
-			edge.Navigate(this.url);
+			var current = Directory.GetCurrentDirectory();
+			try
+			{
+				Directory.SetCurrentDirectory(path);
 
-			this.webView = edge;
+				edge.Location = new Point(0, 0);
+				edge.Dock = DockStyle.Fill;
+				edge.Parent = this;
+				edge.Source = new Uri(this.url);
+				this.webView = edge;
+			}
+			finally
+			{
+				Directory.SetCurrentDirectory(current);
+			}
 		}
 
-		// Need to extract and load Microsoft.Toolkit.Win32.UI.Controls.dll.
-		// it cannot be ILMerged.
-		private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs e)
+		private static void ExtractEdgeNativeLoader()
 		{
-			if (e.Name.StartsWith("Microsoft.Toolkit.Win32.UI.Controls"))
-			{
-				var filePath = ExtractEdgeAssembly();
-				return Assembly.LoadFrom(filePath);
-			}
-
-			return null;
-		}
-
-		private string ExtractEdgeAssembly()
-		{
-			var tempPath = Path.Combine(Path.GetTempPath(), "Wisej", "Edge");
-			var filePath = Path.Combine(tempPath, "Microsoft.Toolkit.Win32.UI.Controls.dll");
-
-			// check if already extracted and up to date.
-			if (File.Exists(filePath))
-			{
-				var version = new Version(Resources.EdgeVersion).ToString();
-				var fileVersion = FileVersionInfo.GetVersionInfo(filePath).FileVersion;
-
-				// don't extract again.
-				if (version == fileVersion)
-					return filePath;
-			}
+			var tempPath = Path.Combine(Path.GetTempPath(), "Wisej2", "Edge");
+			var filePath = Path.Combine(tempPath, "WebView2Loader.dll");
 
 			Directory.CreateDirectory(tempPath);
 			using (var file = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-			using (var stream = typeof(Browser).Assembly.GetManifestResourceStream("Wisej.Application.Edge.Microsoft.Toolkit.Win32.UI.Controls.dll"))
+			using (var stream = typeof(Browser).Assembly.GetManifestResourceStream("Wisej.Application.Edge.WebView2Loader.dll"))
 			{
 				stream.CopyTo(file);
 			}
-
-			return filePath;
 		}
 
-		private void Edge_AcceleratorKeyPressed(object sender, WebViewControlAcceleratorKeyPressedEventArgs e)
+		private void Edge_CoreWebView2Ready(object sender, EventArgs e)
 		{
-			OnPreviewKeyDown(new PreviewKeyDownEventArgs((Keys)e.VirtualKey));
+			var settings = ((WebView2)this.webView).CoreWebView2.Settings;
+
+			settings.AreDevToolsEnabled = false;
 		}
 
-		private void Edge_NavigationCompleted(object sender, WebViewControlNavigationCompletedEventArgs e)
+		private void Edge_KeyDown(object sender, KeyEventArgs e)
 		{
-			this.DocumentTitle = ((WebView)this.webView).DocumentTitle + " (Edge)";
+			OnPreviewKeyDown(new PreviewKeyDownEventArgs(e.KeyCode));
+		}
+
+		private void Edge_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
+		{
+			this.DocumentTitle = ((WebView2)this.webView).CoreWebView2.DocumentTitle + " (Edge)";
 			this.DocumentCompleted?.Invoke(this, EventArgs.Empty);
 		}
-
-		#endregion
-
-		#region Explorer
-
-		private void CreateIE()
-		{
-			var explorer = new WebBrowser();
-			explorer.DocumentCompleted += Explorer_DocumentCompleted;
-			explorer.PreviewKeyDown += Explorer_PreviewKeyDown;
-
-			explorer.Location = new Point(0, 0);
-			explorer.Dock = DockStyle.Fill;
-			explorer.Parent = this;
-			explorer.Navigate(this.url);
-
-			this.webView = explorer;
-
-			if (GetInternetExplorerMajorVersion() == 11)
-				SetUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko");
-			else
-				SetUserAgent("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)");
-		}
-
-		private void Explorer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-		{
-			OnPreviewKeyDown(e);
-		}
-
-		private void Explorer_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-		{
-			this.DocumentTitle = ((WebBrowser)this.webView).DocumentTitle + " (IE)";
-			this.DocumentCompleted?.Invoke(this, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Changes the user agent for the embedded IE.
-		/// </summary>
-		/// <param name="ua"></param>
-		private static void SetUserAgent(string ua)
-		{
-			UrlMkSetSessionOption(0x10000002, null, 0, 0);
-			UrlMkSetSessionOption(0x10000001, ua, ua.Length, 0);
-		}
-
-		/// <summary>
-		/// Sets the IE emulation version for the embedded browser.
-		/// </summary>
-		private static void SetEmulationVersion(int version)
-		{
-			try
-			{
-				string programName = Path.GetFileName(Environment.GetCommandLineArgs()[0]);
-				RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION");
-				key.SetValue(programName, version * 1000, RegistryValueKind.DWord);
-
-				key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_NINPUT_LEGACYMODE");
-				key.SetValue(programName, 0, RegistryValueKind.DWord);
-
-				// 64 bit
-				if (IntPtr.Size == 8)
-				{
-					key = Registry.CurrentUser.CreateSubKey(@"Software\Wow6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION");
-					key.SetValue(programName, version * 1000, RegistryValueKind.DWord);
-
-					key = Registry.CurrentUser.CreateSubKey(@"Software\Wow6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_NINPUT_LEGACYMODE");
-					key.SetValue(programName, 0, RegistryValueKind.DWord);
-				}
-			}
-			catch { }
-		}
-
-		/// <summary>
-		/// Determine the version if the IE that is installed.
-		/// </summary>
-		/// <returns></returns>
-		private static int GetInternetExplorerMajorVersion()
-		{
-			int result = 10;
-			try
-			{
-				RegistryKey key = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Internet Explorer");
-				if (key != null)
-				{
-					object value = key.GetValue("svcVersion", null) ?? key.GetValue("Version", null);
-
-					if (value != null)
-					{
-						string version = value.ToString();
-						int separator = version.IndexOf('.');
-						if (separator != -1)
-							int.TryParse(version.Substring(0, separator), out result);
-					}
-				}
-			}
-			catch { }
-
-			return result;
-		}
-
-		#region UrlMkSetSessionOption
-
-		[DllImport("urlmon.dll", CharSet = CharSet.Ansi)]
-		private static extern int UrlMkSetSessionOption(
-			int dwOption, string pBuffer, int dwBufferLength, int dwReserved);
-
-		#endregion
 
 		#endregion
 	}
