@@ -376,7 +376,7 @@ namespace Wisej.Web.Ext.TinyMCE
 			get { return _baseUrl; }
 			set { _baseUrl = value; }
 		}
-		private static string _baseUrl = "https://cdn.tinymce.com/4/";
+		private static string _baseUrl = "https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/";
 
 		/// <summary>
 		/// Overridden to return our list of script resources.
