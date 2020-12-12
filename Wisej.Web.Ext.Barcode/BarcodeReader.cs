@@ -159,12 +159,15 @@ namespace Wisej.Web.Ext.Barcode
 		/// <remarks>Uses the ZXing.NET library to parse the image.</remarks>
 		public string DecodeBarcode(Image image)
 		{
-			var reader = new ZXing.BarcodeReader();
+			var reader = new ZXing.BarcodeReader();			
 
 			var bmp = new Bitmap(image);
-			var data = reader.Decode(bmp);
-		
-			return data.Text;
+			var data = reader.Decode(bmp);			
+
+			if (data != null)
+				return data.Text;
+			else
+				return "";
 		}
 
 		/// <summary>
