@@ -91,6 +91,52 @@ namespace Wisej.Web.Ext.Bubbles
 		#region Properties
 
 		/// <summary>
+		/// Specifies the alignment of the bubble notification.
+		/// </summary>
+		[SRCategory("CatLayout")]
+		[DefaultValue(ContentAlignment.TopRight)]
+		[Description("Specifies the alignment of the bubble notification.")]
+		public ContentAlignment Alignment
+		{
+			get { return this._alignment; }
+			set { this._alignment = value; }
+		}
+		private ContentAlignment _alignment = ContentAlignment.TopRight;
+
+		/// <summary>
+		/// Specifies the offset of the bubble notification.
+		/// </summary>
+		[Localizable(true)]
+		[SRCategory("CatLayout")]
+		[Description("Specifies the offset of the bubble notification.")]
+		public Padding Margin
+		{
+			get { return this._margin; }
+			set { this._margin = value; }
+		}
+		private Padding _margin = new Padding(0);
+
+		/// <summary>
+		/// Returns the default value for the <see cref="Margin"/> property.
+		/// </summary>
+		/// <returns>A <see cref="Padding" /> that represents the default space between controls.</returns>
+		protected virtual Padding DefaultMargin
+		{
+			get { return _defaultMargin; }
+		}
+		private static Padding _defaultMargin = new Padding(0);
+
+		private bool ShouldSerializeMargin()
+		{
+			return this.Margin != this.DefaultMargin;
+		}
+
+		private void ResetMargin()
+		{
+			this.Margin = this.DefaultMargin;
+		}
+
+		/// <summary>
 		/// Returns or sets the object that contains programmer-supplied data associated with this component.
 		/// </summary>
 		/// <returns>An <see cref="T:System.Object" /> that contains user data. The default is null.</returns>
@@ -344,6 +390,8 @@ namespace Wisej.Web.Ext.Bubbles
 							});
 						}
 					}
+					config.margin = this._margin;
+					config.alignment = this._alignment;
 					config.bubbles = list.ToArray();
 
 					// register non-created control for delayed registration.

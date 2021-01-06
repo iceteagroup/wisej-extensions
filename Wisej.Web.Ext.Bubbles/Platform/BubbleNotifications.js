@@ -50,8 +50,20 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 		 *
 		 * Defines the animation frames to use on the bubble when the value changes.
 		 */
-		animation: { init: null, nullable: true, check: "Map" }
+		animation: { init: null, nullable: true, check: "Map" },
 
+		/**
+		 * Bubble alignment.
+		 */
+		alignment: {
+			init: "topRight",
+			check: ["topRight", "middleRight", "bottomRight", "topLeft", "topCenter", "middleLeft", "middleCenter", "bottomLeft", "bottomCenter"]
+		},
+
+		/*
+		 * Bubble padding (Top, Right, Bottom, Left).
+		 */
+		margin: { init: null, check: "Array" }
 	},
 
 	members: {
@@ -96,10 +108,23 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 					var bubble = this.__bubbleWidgets[id];
 					var comp = Wisej.Core.getComponent(id);
 					if (comp) {
+
+						var container = comp.getParent();
+
+						// retrieve the TabPage button, if the opener is a TabPage.
+						if (comp instanceof qx.ui.tabview.Page)
+							comp = comp.getButton();
+
 						if (bubble == null) {
 
 							// create the new bubble widget.
-							this.__bubbleWidgets[id] = bubble = new wisej.web.extender.bubbles.Bubble(comp, this.getAnimation());
+							this.__bubbleWidgets[id] = bubble =
+								new wisej.web.extender.bubbles.Bubble(
+									container,
+									comp,
+									this.getAnimation(),
+									this.getAlignment(),
+									this.getMargin());
 
 							// apply the custom style.
 							if (value[i].style)
@@ -154,7 +179,7 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 
 	extend: qx.ui.basic.Label,
 
-	construct: function (component, animation) {
+	construct: function (container, component, animation, alignment, margin) {
 
 		this.base(arguments);
 
@@ -172,7 +197,10 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 
 		// save a reference to the owner.
 		this.__component = component;
+
+		this.__margin = margin;
 		this.__animation = animation;
+		this.__alignment = alignment;
 
 		if (!component)
 			throw new Error("Cannot create a bubble without a valid component");
@@ -181,7 +209,8 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 		this.exclude();
 
 		// add this widget to the same layout parent.
-		component.getLayoutParent()._add(this);
+		container._add(this);
+		container.getContentElement().setStyle("overflow", "visible");
 
 		// hook our handlers to follow the owner component.
 		component.addListener("move", this.__onComponentMove, this);
@@ -211,8 +240,14 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 
 	members: {
 
+		// the margin of the bubble.
+		__margin: null,
+
 		// the component that owns this bubble.
 		__component: null,
+
+		// the alignment of the bubble.
+		__alignment: "topRight",
 
 		// return the component associated with this bubble.
 		getComponent: function () {
@@ -292,9 +327,71 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 
 				var mySize = this.getSizeHint();
 				if (mySize) {
+
 					var y = bounds.top - mySize.height;
 					var x = bounds.left + bounds.width - mySize.width;
-					this.setLayoutProperties({ left: x, top: y });
+
+					switch (this.__alignment) {
+						case "topLeft":
+							y = bounds.top - mySize.height;
+							x = bounds.left;
+							break;
+
+						case "topCenter":
+							y = bounds.top - mySize.height;
+							x = (bounds.left + bounds.width / 2) - (mySize.width / 2);
+							break;
+
+						case "topRight":
+							break;
+
+						case "middleLeft":
+							y = (bounds.top + (bounds.height / 2)) - (mySize.height / 2);
+							x = bounds.left - mySize.width;
+							break;
+
+						case "middleCenter":
+							y = (bounds.top + (bounds.height / 2)) - (mySize.height / 2);
+							x = (bounds.left + bounds.width / 2) - (mySize.width / 2);
+							break;
+
+						case "middleRight":
+							y = (bounds.top + (bounds.height / 2)) - (mySize.height / 2);
+							x = bounds.left + bounds.width;
+							break;
+
+						case "bottomLeft":
+							y = bounds.top + bounds.height;
+							x = bounds.left;
+							break;
+
+						case "bottomCenter":
+							y = bounds.top + bounds.height;
+							x = (bounds.left + bounds.width / 2) - (mySize.width / 2);
+							break;
+
+						case "bottomRight":
+							y = bounds.top + bounds.height;
+							x = bounds.left + bounds.width - mySize.width;
+							break;
+					}
+
+					// apply margin.
+					var margin = this.__margin;
+					if (margin) {
+						var top = margin[0];
+						var left = margin[3];
+						var right = margin[1];
+						var bottom = margin[2];
+
+						x += left;
+						x -= right;
+
+						y += top;
+						y -= bottom;
+					}
+
+					this.setUserBounds(x, y, mySize.width, mySize.height);
 				}
 			}
 		},
