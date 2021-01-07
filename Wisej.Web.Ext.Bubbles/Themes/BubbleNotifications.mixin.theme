@@ -1,49 +1,56 @@
 ﻿{
-    "name": "BubbleNotifications",
-    "fonts": {
-        "bubble-small": {
-            "size": 9,
-            "family": [ "helvetica", " arial", " verdana", " sans-serif" ]
-        }
-    },
-    // TODO: Set the real colors.
-    "colors": {
-        "bubble-color": "white",
-        "bubble-alert": "red",
-        "bubble-warning": "yellow",
-        "bubble-critical": "purple"
-    },
-    "appearances": {
-        "bubble": {
-            "states": {
-                "default": {
-                    "styles": {
-                        "backgroundColor": "bubble-alert",
-                        "radius": [ 8, 8, 8, 8 ],
-                        "width": 1,
-                        "color": "bubble-alert"
-                    },
-                    "properties": {
-                        "cursor": "pointer",
-                        "textColor": "bubble-color",
-                        "font": "bubble-small",
-                        "padding": [ 2, 6, 2, 6 ],
-                        "margin": [ 0, 0, 0, -16 ]
-                    }
-                },
-                "warning": {
-                    "styles": {
-                        "backgroundColor": "bubble-warning",
-                        "color": "bubble-warning"
-                    }
-                },
-                "critical": {
-                    "styles": {
-                        "backgroundColor": "bubble-critical",
-                        "color": "bubble-critical"
-                    }
-                }
-            }
-        }
+  "name": "BubbleNotifications",
+  "fonts": {
+    "bubble-small": {
+      "size": 9,
+      "family": [ "helvetica", "arial", "verdana", "sans-serif" ]
     }
+  },
+  "colors": {
+    "bubble-alert-text": "white",
+    "bubble-alert-background": "#C70039",
+    "bubble-warning-text": "black",
+    "bubble-warning-background": "#FFC300",
+    "bubble-critical-text": "white",
+    "bubble-critical-background": "#9029AB"
+  },
+  "appearances": {
+    "bubble": {
+      "states": {
+        "default": {
+          "styles": {
+            "backgroundColor": "bubble-alert-background",
+            "radius": [ 8, 8, 8, 8 ],
+            "width": 1,
+            "color": "bubble-alert-background"
+          },
+          "properties": {
+            "cursor": "pointer",
+            "textColor": "bubble-alert-text",
+            "font": "bubble-small",
+            "padding": [ 2, 6, 2, 6 ],
+            "margin": [ 0, 0, 0, -16 ]
+          }
+        },
+        "warning": {
+          "styles": {
+            "backgroundColor": "bubble-warning-background",
+            "color": "bubble-warning-background"
+          },
+          "properties": {
+            "textColor": "bubble-warning-text"
+          }
+        },
+        "critical": {
+          "styles": {
+            "backgroundColor": "bubble-critical-background",
+            "color": "bubble-critical-background"
+          },
+          "properties": {
+            "textColor": "bubble-critical-text"
+          }
+        }
+      }
+    }
+  }
 }
