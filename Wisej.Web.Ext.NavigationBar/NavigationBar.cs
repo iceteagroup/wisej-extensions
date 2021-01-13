@@ -361,6 +361,36 @@ namespace Wisej.Web.Ext.NavigationBar
 			((NavigationBarItem)e.Control).ItemHeight = this.ItemHeight;
 		}
 
+		/// <summary>
+		/// Allows the user to change the <see cref="SelectedItem"/> using the keyboard.
+		/// </summary>
+		[DefaultValue(false)]
+		public bool EnableKeyboardNavigation
+		{
+			get { return this._enableKeyboardNavigation; }
+			set
+			{
+				if (this._enableKeyboardNavigation != value)
+				{
+					this._enableKeyboardNavigation = value;
+
+					if (value)
+					{
+						this.Focusable = true;
+						this.KeyDown += this.NavigationBar_KeyDown;
+						this.KeyPress += this.NavigationBar_KeyPress;
+					}
+					else
+					{
+						this.Focusable = true;
+						this.KeyDown -= this.NavigationBar_KeyDown;
+						this.KeyPress -= this.NavigationBar_KeyPress;
+					}
+				}
+			}
+		}
+		private bool _enableKeyboardNavigation = false;
+
 		#endregion
 
 		#region Methods
@@ -424,11 +454,6 @@ namespace Wisej.Web.Ext.NavigationBar
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override ComponentToolCollection Tools => base.Tools;
-		/// <exclude/>
-		[Browsable(false)]
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public override int TabIndex { get => base.TabIndex; set { } }
 		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -569,6 +594,115 @@ namespace Wisej.Web.Ext.NavigationBar
 		public new event ToolClickEventHandler ToolClick { add { } remove { } }
 
 		#endregion
+
+		private void NavigationBar_KeyDown(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Up:
+					this.SelectedItem = GetPreviousItem(this.SelectedItem, true);
+					break;
+
+				case Keys.Down:
+					this.SelectedItem = GetNextItem(this.SelectedItem, true);
+					break;
+
+				case Keys.Right:
+					if (this.SelectedItem?.Items.Count > 0)
+						this.SelectedItem = this.SelectedItem.Items[0];
+					break;
+
+				case Keys.Left:
+					if (this.SelectedItem?.Parent != null)
+						this.SelectedItem = this.SelectedItem?.Parent;
+					break;
+
+				case Keys.Home:
+					if (this.Items.Count > 0)
+						this.SelectedItem = this.Items[0];
+					break;
+
+				case Keys.End:
+					if (this.Items.Count > 0)
+						this.SelectedItem = this.Items[this.Items.Count - 1];
+					break;
+
+				case Keys.Space:
+				case Keys.Enter:
+					if (this.SelectedItem != null)
+						this.SelectedItem.Expanded = !this.SelectedItem.Expanded;
+					break;
+			}
+		}
+
+		private void NavigationBar_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			switch (e.KeyChar)
+			{
+				case '-':
+					if (this.SelectedItem != null)
+						this.SelectedItem.Expanded = false;
+					break;
+
+				case '+':
+					if (this.SelectedItem != null)
+						this.SelectedItem.Expanded = true;
+					break;
+			}
+		}
+
+		private NavigationBarItem GetPreviousItem(NavigationBarItem selectedItem, bool deep)
+		{
+			if (selectedItem != null)
+			{
+				var items = selectedItem.Parent?.Items ?? this.Items;
+				if (items != null)
+				{
+					var index = items.IndexOf(selectedItem) - 1;
+					if (index > -1)
+					{
+						selectedItem = items[index];
+						while (deep && selectedItem.Expanded && selectedItem.Items?.Count > 0)
+						{
+							selectedItem = selectedItem.Items[selectedItem.Items.Count - 1];
+						}
+					}
+					else
+					{
+						selectedItem = selectedItem.Parent;
+					}
+				}
+			}
+
+			if (selectedItem == null && this.Items.Count > 0)
+				selectedItem = this.Items[this.Items.Count - 1];
+
+			return selectedItem;
+		}
+
+		private NavigationBarItem GetNextItem(NavigationBarItem selectedItem, bool deep)
+		{
+			if (selectedItem != null)
+			{
+				if (deep && selectedItem.Expanded && selectedItem.Items?.Count > 0)
+					return selectedItem.Items[0];
+
+				var items = selectedItem.Parent?.Items ?? this.Items;
+				if (items != null)
+				{
+					var index = items.IndexOf(selectedItem) + 1;
+					if (index < items.Count)
+						return items[index];
+
+					return GetNextItem(selectedItem.Parent, false);
+				}
+			}
+
+			if (selectedItem == null && this.Items.Count > 0)
+				selectedItem = this.Items[0];
+
+			return selectedItem;
+		}
 
 		internal void FireItemClick(NavigationBarItem item)
 		{

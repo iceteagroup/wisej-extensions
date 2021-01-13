@@ -1,4 +1,6 @@
-﻿namespace Wisej.Web.Ext.NavigationBar
+﻿using System;
+
+namespace Wisej.Web.Ext.NavigationBar
 {
 	partial class NavigationBar
 	{
