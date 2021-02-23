@@ -48,7 +48,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Development\2.1\bin\Wisej.Framework.dll</HintPath>
+      <HintPath>..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +69,7 @@
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Design\OptionsEditor.cs" />
+    <Compile Include="OptionsAxisGridLines.cs" />
     <Compile Include="OptionsDataLabel.cs" />
     <Compile Include="OptionsScales.cs" />
     <Compile Include="OptionsLegend.cs" />

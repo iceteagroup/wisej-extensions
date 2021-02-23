@@ -29,7 +29,7 @@ namespace Wisej.Web.Ext.ChartJS
 	/// </summary>
 	[TypeConverter(typeof(OptionsBase.Converter))]
 	[Editor(typeof(Design.OptionsEditor), typeof(UITypeEditor))]
-	public abstract class OptionsBase
+	public abstract class OptionsBase : ICloneable
 	{
 		#region Properties
 
@@ -162,6 +162,15 @@ namespace Wisej.Web.Ext.ChartJS
 			return true;
 		}
 
+		/// <summary>
+		/// Serves as the default hash function.
+		/// </summary>
+		/// <returns>A hash code for the current object.</returns>
+		public override int GetHashCode()
+		{
+			return this.ToJSON().GetHashCode();
+		}
+
 		#endregion
 
 		#region Converter
@@ -175,6 +184,15 @@ namespace Wisej.Web.Ext.ChartJS
 
 				return base.ConvertTo(context, culture, value, destinationType);
 			}
+		}
+
+		#endregion
+
+		#region ICloneable
+
+		object ICloneable.Clone()
+		{
+			return Clone();
 		}
 
 		#endregion

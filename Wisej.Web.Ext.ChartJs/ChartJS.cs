@@ -101,7 +101,9 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Chart options specific for the value of <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.ChartType"/>.
 		/// </summary>
+		[DefaultValue(null)]
 		[MergableProperty(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[Description("Chart options specific for the value of the ChartType property.")]
 		[WisejSerializerOptions(WisejSerializerOptions.CamelCase | WisejSerializerOptions.IgnoreNulls)]
 		public new Options Options
@@ -152,9 +154,11 @@ namespace Wisej.Web.Ext.ChartJS
 				&& this._dataSets[0].Data != null
 				&& this._dataSets[0].Data.Length > 0;
 		}
+
 		private void ResetDataSets()
 		{
-			this.Labels = null;
+			this._dataSets = null;
+			Update();
 		}
 
 		/// <summary>

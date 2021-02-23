@@ -433,7 +433,6 @@ namespace Wisej.Web.Ext.ChartJS
 			get;
 			set;
 		}
-
 	}
 
 	/// <summary>
