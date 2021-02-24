@@ -192,5 +192,27 @@ namespace Wisej.Web.Ext.ChartJS
 			}
 		}
 		private string _tooltipFormat = "";
+
+		/// <summary>
+		/// A custom format to be used by Moment.js to parse the date.
+		/// </summary>
+		[DefaultValue("")]
+		[Description("A custom format to be used by Moment.js to parse the date.")]
+		public string Parser
+		{
+			get
+			{
+				return this._parser;
+			}
+			set
+			{
+				if (this._parser != value)
+				{
+					this._parser = value;
+					Update();
+				}
+			}
+		}
+		private string _parser = "";
 	}
 }
