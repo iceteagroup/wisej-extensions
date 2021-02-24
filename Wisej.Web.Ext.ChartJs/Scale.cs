@@ -194,6 +194,28 @@ namespace Wisej.Web.Ext.ChartJS
 		private string _tooltipFormat = "";
 
 		/// <summary>
+		/// Sets how different time units are displayed.
+		/// </summary>
+		[DefaultValue(null)]
+		[Description("Sets how different time units are displayed.")]
+		public object DisplayFormats
+		{
+			get
+			{
+				return this._displayFormats;
+			}
+			set
+			{
+				if (this._displayFormats != value)
+				{
+					this._displayFormats = value;
+					Update();
+				}
+			}
+		}
+		private object _displayFormats;
+
+		/// <summary>
 		/// A custom format to be used by Moment.js to parse the date.
 		/// </summary>
 		[DefaultValue("")]
