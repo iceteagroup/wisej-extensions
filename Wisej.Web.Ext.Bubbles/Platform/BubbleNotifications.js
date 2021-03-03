@@ -220,6 +220,7 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 		// show the animation the first time the dom is created.
 		this.addListenerOnce("appear", function (e) {
 			this.__updatePosition();
+			container.invalidateLayoutChildren();
 			setTimeout(this.animate.bind(this), 300);
 		});
 	},
