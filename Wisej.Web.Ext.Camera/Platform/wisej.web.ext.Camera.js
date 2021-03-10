@@ -26,7 +26,15 @@ qx.Class.define("wisej.web.ext.Camera", {
 
 	extend: wisej.web.Video,
 
+	// All Wisej components must include this mixin
+	// to provide services to the Wisej core.
+	include: [
+		wisej.mixin.MBorderStyle
+	],
+
 	properties: {
+
+		appearance: { init: "widget", refine: true },
 
 		/**
 		 * Constraints property.
@@ -41,6 +49,14 @@ qx.Class.define("wisej.web.ext.Camera", {
 		 * Sets the CSS filter to the video element: https://developer.mozilla.org/en-US/docs/Web/CSS/filter.
 		 */
 		videoFilter: { check: "String", apply: "_applyFilter" },
+
+		/*
+		 * object-fit Property
+		 *
+		 * The CSS object-fit property is used to specify how an video should be resized to fit its container.
+		 * https://www.w3schools.com/css/css3_object-fit.asp
+		 */
+		objectFit: { check: "String", apply: "_applyObjectFit" },
 
 		/**
 		 * SubmitURL property.
@@ -234,12 +250,30 @@ qx.Class.define("wisej.web.ext.Camera", {
 				return;
 
 			var me = this;
-			navigator.mediaDevices.getUserMedia(value)
-				.then(function (stream) {
+			if (value.video || value.audio) {
+				navigator.mediaDevices.getUserMedia(value)
+					.then(function (stream) {
 
-					// bind to the video element.
-					me._bindStream(stream);
-				});
+						// bind to the video element.
+						me._bindStream(stream);
+					});
+			} else {
+				// stop the stream.
+				var video = this.getMediaObject();
+
+				video.pause();
+
+				var stream = video.srcObject;
+				if (stream) {
+					stream.getTracks().forEach(function (track) {
+						track.stop();
+					});
+
+					stream = null;
+					video.src = "";
+					video.srcObject = null;
+				}
+			}
 		},
 
 		/**
@@ -249,7 +283,20 @@ qx.Class.define("wisej.web.ext.Camera", {
 
 			var video = this._media.getMediaObject();
 			if (video) {
-				video.setAttribute("style", "filter:" + value + "; width:100%; height:100%;");
+				video.style.filter = value;
+				video.style.width = "100%";
+				video.style.height = "100%";
+			}
+		},
+
+		/**
+		 * Applies the object-fit property.
+		 */
+		_applyObjectFit: function (value, old) {
+
+			var video = this._media.getMediaObject();
+			if (video) {
+				video.style.objectFit = value;
 			}
 		},
 

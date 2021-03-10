@@ -40,9 +40,8 @@ qx.Class.define("wisej.web.ext.Html2Canvas", {
 		 *
 		 * @param widget {Widget?} The widget to capture. If null, it captures the entire body.
 		 * @param options {Map?} Set of options, defined here http://html2canvas.hertzen.com/configuration.
-		 * @param callbackId {Integer} The callback id on the server.
 		 */
-		screenshot: function (widget, options, callbackId) {
+		screenshot: function (widget, options) {
 
 			var dom = document.body;
 			if (widget)
@@ -54,35 +53,28 @@ qx.Class.define("wisej.web.ext.Html2Canvas", {
 			// https://github.com/niklasvh/html2canvas/issues/95
 			options.useCORS = true;
 
-			// make sure the html2canvas library is loaded.
-			var me = this;
-			wisej.utils.Loader.load([
-				{
-					id: "promise-polyfill.js",
-					url: "resource.wx/Wisej.Web.Ext.Html2Canvas.JavaScript.promise-polyfill.js"
-				},
-				{
-					id: "html2canvas.js",
-					url: "resource.wx/Wisej.Web.Ext.Html2Canvas.JavaScript.Html2Canvas.js"
-				}], function () {
+			var result = new Promise(function(resolve, reject) {
 
-					html2canvas(dom, options).then(function (canvas) {
+				// make sure the html2canvas library is loaded.
+				wisej.utils.Loader.load([
+					{
+						id: "html2canvas.js",
+						url: "resource.wx/Wisej.Web.Ext.Html2Canvas.JavaScript.Html2Canvas.js"
+					}], function () {
 
-						try {
-							var imageData = canvas.toDataURL();
-							me.fireDataEvent("render", {
-								id: callbackId,
-								imageData: imageData
-							});
-						}
-						catch (error) {
-							me.fireDataEvent("error", {
-								id: callbackId,
-								error: error.message
-							});
-						}
-					});
+						html2canvas(dom, options).then(function (canvas) {
+
+							try {
+								resolve(canvas.toDataURL());
+							}
+							catch (error) {
+								reject(error);
+							}
+						});
+				});
 			});
-		},
+
+			return result;
+		}
 	}
 });

@@ -23,6 +23,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Web;
+using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;
 
@@ -137,6 +138,29 @@ namespace Wisej.Web.Ext.Camera
 		private string _videoFilter = null;
 
 		/// <summary>
+		/// CSS The object-fit Property (<see href="https://www.w3schools.com/css/css3_object-fit.asp"/>)
+		/// to apply to the video.
+		/// </summary>
+		[DesignerActionList]
+		[DefaultValue(true)]
+		public ObjectFitMode ObjectFit
+		{
+			get
+			{
+				return this._objectfit;
+			}
+			set
+			{
+				if (this._objectfit != value)
+				{
+					this._objectfit = value;
+					Update();
+				}
+			}
+		}
+		private ObjectFitMode _objectfit = ObjectFitMode.Contain;
+
+		/// <summary>
 		/// Specifies whether audio should be recorded.
 		/// </summary>
 		[DesignerActionList]
@@ -201,6 +225,33 @@ namespace Wisej.Web.Ext.Camera
 			}
 		}
 		private VideoFacingMode _facingMode = VideoFacingMode.User;
+
+		/// <summary>
+		/// Indicates the border style for the control.
+		/// </summary>
+		/// <returns>One of the <see cref="T:Wisej.Web.BorderStyle" /> values. The default is BorderStyle.None.</returns>
+		[DefaultValue(BorderStyle.Solid)]
+		[SRCategory("CatAppearance")]
+		[SRDescription("Indicates the border style for the control.")]
+		public virtual BorderStyle BorderStyle
+		{
+			get
+			{
+				return this._borderStyle;
+			}
+			set
+			{
+				if (this._borderStyle != value)
+				{
+					this._borderStyle = value;
+
+					Refresh();
+
+					OnStyleChanged(EventArgs.Empty);
+				}
+			}
+		}
+		private BorderStyle _borderStyle = BorderStyle.Solid;
 
 		#endregion
 
@@ -327,6 +378,9 @@ namespace Wisej.Web.Ext.Camera
 			base.OnWebRender((object)config);
 
 			config.className = "wisej.web.ext.Camera";
+			
+			config.objectFit = this.ObjectFit;
+			config.borderStyle = this.BorderStyle;
 			config.videoFilter = this.VideoFilter;
 			config.submitURL = this.GetPostbackURL();
 			dynamic videoConstraints = false;

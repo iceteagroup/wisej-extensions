@@ -177,10 +177,14 @@ qx.Class.define("wisej.web.ext.BarcodeReader", {
 	 **/
 	destruct: function () {
 
-		this.codeReader.stopContinuousDecode();
-		this.codeReader = null;
-
-		this.cameraRecorder.stopContinuousDecode();
-		this.cameraRecorder = null;
+		if (this.codeReader) {
+			this.codeReader.stopContinuousDecode();
+			this.codeReader = null;
+		}
+		
+		if (this.cameraRecorder) {
+			this.cameraRecorder.stopContinuousDecode();
+			this.cameraRecorder = null;
+		}
 	}
 });

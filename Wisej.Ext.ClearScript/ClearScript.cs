@@ -149,7 +149,7 @@ namespace Wisej.Ext.ClearScript
 		// thread bound to the current Wisej session.
 		private static ScriptEngine CreateThreadBoundEngine(EngineType type, string name, WindowsScriptEngineFlags flags)
 		{
-			ScriptEngine engine = null;
+			WindowsScriptEngine engine = null;
 			var checkPoint = new ManualResetEventSlim();
 			Application.StartTask(() => {
 

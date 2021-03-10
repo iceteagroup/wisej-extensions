@@ -98,6 +98,27 @@ namespace Wisej.Web.Ext.CKEditor
 		private string _text = "";
 
 		/// <summary>
+		/// Returns or sets whether the user can interact with the editor.
+		/// </summary>
+		[DesignerActionList]
+		[DefaultValue(false)]
+		[Description("Returns or sets whether the user can interact with the editor.")]
+		public bool ReadOnly
+		{
+			get { return this._readOnly; }
+
+			set
+			{
+				if (this._readOnly != value)
+				{
+					this._readOnly = value;
+					Call("setReadOnly", value);
+				}
+			}
+		}
+		private bool _readOnly = false;
+
+		/// <summary>
 		/// Shows or hides the toolbar panel.
 		/// </summary>
 		[DesignerActionList]
@@ -290,21 +311,15 @@ namespace Wisej.Web.Ext.CKEditor
 		public override void Update()
 		{
 			IWisejControl me = this;
-			if (me.IsNew)
+			if (me.IsNew && this._commands != null)
 			{
-				if (this._commands != null)
-				{
-					var enabled = this._commands.Where(o => o.Value == true).Select(o => o.Key);
-					if (enabled.Count() > 0)
-						Call("enableCommand", enabled, true);
+				var enabled = this._commands.Where(o => o.Value == true).Select(o => o.Key);
+				if (enabled.Count() > 0)
+					Call("enableCommand", enabled, true);
 
-					var disabled = this._commands.Where(o => o.Value == false).Select(o => o.Key);
-					if (disabled.Count() > 0)
-						Call("enableCommand", disabled, false);
-
-				}
-
-				Call("setText", TextUtils.EscapeText(this.Text, true));
+				var disabled = this._commands.Where(o => o.Value == false).Select(o => o.Key);
+				if (disabled.Count() > 0)
+					Call("enableCommand", disabled, false);
 			}
 
 			base.Update();
@@ -419,13 +434,11 @@ namespace Wisej.Web.Ext.CKEditor
 			switch (e.Type)
 			{
 				case "load":
-					this.initialized = true;
-					if (!String.IsNullOrEmpty(this.Text))
-						Call("setText", TextUtils.EscapeText(this.Text, true));
+					ProcessLoadEvent();
 					break;
-
+					
 				case "changeText":
-					this.Text = e.Data ?? "";
+					this._text = e.Data ?? "";
 					break;
 
 				case "command":
@@ -438,6 +451,17 @@ namespace Wisej.Web.Ext.CKEditor
 
 			}
 			base.OnWidgetEvent(e);
+		}
+
+		// processes the initialization event from the client.
+		private void ProcessLoadEvent()
+		{
+			this.initialized = true;
+
+			if (!String.IsNullOrEmpty(this.Text))
+				Call("setText", TextUtils.EscapeText(this.Text, true));
+
+			Call("setReadOnly", this.ReadOnly);
 		}
 
 		// Handles the "focus" event from the client.

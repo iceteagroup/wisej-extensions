@@ -1031,7 +1031,8 @@ namespace Wisej.Web.Ext.RibbonBar
 					for (int i = 0; i < rects.Length; i++)
 					{
 						dynamic rect = rects[i];
-						tabRects[i] = new Rectangle(rect.left, rect.top, rect.width, rect.height);
+						if (rect != null)
+							tabRects[i] = new Rectangle(rect.left, rect.top, rect.width, rect.height);
 					}
 					this.UserData.DesignTabRects = tabRects;
 				}
@@ -1043,15 +1044,20 @@ namespace Wisej.Web.Ext.RibbonBar
 					for (int i = 0; i < itemMetrics.Length; i++)
 					{
 						dynamic item = itemMetrics[i];
-						var id = item.id;
-						var rect = item.rect;
-
-						// find the ribbon item.
-						IWisejComponent component = FindDesignChildComponent(id);
-						if (component != null)
+						if (item != null)
 						{
-							var designRect = new Rectangle(rect.left, rect.top, rect.width, rect.height);
-							component.DesignRect = designRect;
+							var id = item.id;
+							var rect = item.rect;
+							if (rect != null)
+							{
+								// find the ribbon item.
+								IWisejComponent component = FindDesignChildComponent(id);
+								if (component != null)
+								{
+									var designRect = new Rectangle(rect.left, rect.top, rect.width, rect.height);
+									component.DesignRect = designRect;
+								}
+							}
 						}
 					}
 				}

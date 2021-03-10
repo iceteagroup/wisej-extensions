@@ -40,7 +40,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Development\2.1\bin\Wisej.Framework.dll</HintPath>
+      <HintPath>..\..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -50,9 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="JavaScript\Html2Canvas.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JavaScript\promise-polyfill.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Platform\wisej.web.ext.Html2Canvas.js" />

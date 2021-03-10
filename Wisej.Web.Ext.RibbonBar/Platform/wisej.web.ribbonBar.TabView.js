@@ -105,7 +105,7 @@ qx.Class.define("wisej.web.ribbonBar.TabView", {
 			var barBounds = this.getChildControl("bar").getBounds();
 
 			// shift the tab buttons by the width of the app button.
-			if (appButton && appButton.getBounds()) {
+			if (appButton && appButton.getBounds() && barBounds) {
 				barBounds.left += appButton.getBounds().width;
 			}
 
@@ -114,10 +114,17 @@ qx.Class.define("wisej.web.ribbonBar.TabView", {
 			for (var i = 0; i < pages.length; i++) {
 
 				var bounds = pages[i].getButton().getBounds();
-				bounds.top += barBounds.top;
-				bounds.left += barBounds.left;
-
-				rects.push(bounds);
+				if (!bounds || !barBounds) {
+					rects.push(null);
+				}
+				else {
+					rects.push({
+						top: bounds.top += barBounds.top,
+						left: bounds.left += barBounds.left,
+						width: bounds.width,
+						height: bounds.height
+					});
+				}
 			}
 
 			return rects;

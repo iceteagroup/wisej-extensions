@@ -18,12 +18,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
-using System.Runtime.InteropServices;
-using Wisej.Base;
-using System.ComponentModel;
-using Wisej.Core;
 using System.Threading.Tasks;
 
 namespace Wisej.Web.Ext.Html2Canvas
@@ -232,8 +229,15 @@ namespace Wisej.Web.Ext.Html2Canvas
 		// Implementation
 		private void ScreenshotCore(Control target, Html2CanvasOptions options, Action<object> callback)
 		{
-			var handle = (IntPtr)GCHandle.Alloc(callback, GCHandleType.Normal);
-			Call("screenshot", target, options, handle.ToInt64());
+			Call("screenshot",
+				(result) =>
+				{
+					if (result is string)
+						result = ImageFromBase64((string)result);
+
+					callback(result);
+				},
+				new object[] { target, options });
 		}
 
 		/// <summary>
@@ -267,70 +271,6 @@ namespace Wisej.Web.Ext.Html2Canvas
 
 		#region Wisej Implementation
 
-		// Handles callback "render" events from the client.
-		private void ProcessRenderWebEvent(WisejEventArgs e)
-		{
-			var data = e.Parameters.Data;
-			var id = data.id ?? -1L;
-			var base64 = data.imageData ?? "";
-
-			var handle = GCHandle.FromIntPtr((IntPtr)id);
-			var callback = (Action<object>)handle.Target;
-			handle.Free();
-
-			if (callback != null)
-			{
-				callback(ImageFromBase64(base64));
-			}
-			else
-			{
-				LogManager.Log("The Html2Canvas callback is null.");
-			}
-		}
-
-		// Handles callback "error" events from the client.
-		private void ProcessErrorWebEvent(WisejEventArgs e)
-		{
-			var data = e.Parameters.Data;
-			var id = data.id ?? -1L;
-			var error = data.error ?? "";
-
-			var handle = GCHandle.FromIntPtr((IntPtr)id);
-			var callback = (Action<object>)handle.Target;
-			handle.Free();
-
-			if (callback != null)
-			{
-				callback(new Exception(error));
-			}
-			else
-			{
-				LogManager.Log("The Html2Canvas callback is null.");
-			}
-		}
-
-		/// <summary>
-		/// Processes the event from the client.
-		/// </summary>
-		/// <param name="e">Event arguments.</param>
-		protected override void OnWebEvent(Core.WisejEventArgs e)
-		{
-			switch (e.Type)
-			{
-				case "render":
-					ProcessRenderWebEvent(e);
-					break;
-
-				case "error":
-					ProcessErrorWebEvent(e);
-					break;
-
-				default:
-					base.OnWebEvent(e);
-					break;
-			}
-		}
-
 		/// <summary>
 		/// Renders the client component.
 		/// </summary>
@@ -340,8 +280,6 @@ namespace Wisej.Web.Ext.Html2Canvas
 			base.OnWebRender((object)config);
 
 			config.className = "wisej.web.ext.Html2Canvas";
-			config.wiredEvents = new WiredEvents();
-			config.wiredEvents.Add("render(Data)", "error(Data)");
 		}
 
 		#endregion

@@ -48,6 +48,9 @@
     <Compile Include="Camera.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Camera.ObjectFitMode.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CameraErrorHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

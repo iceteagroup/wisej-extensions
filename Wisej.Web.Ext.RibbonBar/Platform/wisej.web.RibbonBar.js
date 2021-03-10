@@ -215,6 +215,8 @@ qx.Class.define("wisej.web.RibbonBar", {
 
 			// determine the top offset.
 			var paneRect = this.tabview.getChildControl("pane").getBounds();
+			if (!paneRect)
+				return null;
 
 			// return only the relevant components.
 			var items = [];
@@ -223,24 +225,32 @@ qx.Class.define("wisej.web.RibbonBar", {
 				if (widget.isWisejComponent && widget.isSeeable()) {
 
 					var widgetRect = widget.getBounds();
-					widgetRect.top += paneRect.top;
+					if (widgetRect) {
 
-					items.push({
-						id: widget.getId(),
-						rect: widgetRect
-					});
+						widgetRect.top += paneRect.top;
 
-					// add the rect for the wrapped control.
-					if (widget instanceof wisej.web.ribbonBar.ItemControl) {
-						var control = widget.getControl();
-						if (control && control.isWisejComponent) {
-							items.push({
-								id: control.getId(),
-								rect: control.getBounds()
-							});
+						items.push({
+							id: widget.getId(),
+							rect: widgetRect
+						});
+
+						// add the rect for the wrapped control.
+						if (widget instanceof wisej.web.ribbonBar.ItemControl) {
+							var control = widget.getControl();
+							if (control && control.isWisejComponent) {
+								items.push({
+									id: control.getId(),
+									rect: control.getBounds()
+								});
+							}
 						}
 					}
-
+					else {
+						items.push({
+							id: widget.getId(),
+							rect: null
+						});
+					}
 				}
 			}
 			return items;

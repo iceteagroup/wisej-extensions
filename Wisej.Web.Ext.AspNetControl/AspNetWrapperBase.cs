@@ -369,6 +369,8 @@ namespace Wisej.Web.Ext.AspNetControl
 			this.IsPostBack = page.IsPostBack;
 			this.IsCallback = page.IsCallback;
 
+			page.Culture = page.UICulture = Application.CurrentCulture.Name;
+
 			page.PreInit += Page_PreInit;
 			page.Init += Page_Init;
 			page.InitComplete += Page_InitComplete;
