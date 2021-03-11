@@ -82,8 +82,8 @@ namespace Wisej.Application
 			};
 
 			edge.KeyDown += this.Edge_KeyDown;
-			edge.CoreWebView2Ready += Edge_CoreWebView2Ready;
 			edge.NavigationCompleted += Edge_NavigationCompleted;
+			edge.CoreWebView2InitializationCompleted += Edge_CoreWebView2InitializationCompleted;
 
 			var current = Directory.GetCurrentDirectory();
 			try
@@ -115,7 +115,7 @@ namespace Wisej.Application
 			}
 		}
 
-		private void Edge_CoreWebView2Ready(object sender, EventArgs e)
+		private void Edge_CoreWebView2InitializationCompleted(object sender, EventArgs e)
 		{
 			var settings = ((WebView2)this.webView).CoreWebView2.Settings;
 

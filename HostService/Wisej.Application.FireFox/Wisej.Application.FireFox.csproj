@@ -75,6 +75,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Shared\MimeTypes.cs">
+      <Link>Owin\MimeTypes.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\WisejExtensions.cs">
       <Link>Owin\WisejExtensions.cs</Link>
     </Compile>

@@ -481,6 +481,8 @@ namespace Wisej.HostService.Owin
 		/// <param name="length">The number of bytes to send. </param>
 		public override void SendResponseFromFile(string filename, long offset, long length)
 		{
+			this.context.Response.ContentType = MimeTypes.GetMimeType(filename);
+
 			using (var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
 			{
 				SendResponseFromFileStream(fileStream, offset, length);
@@ -518,7 +520,8 @@ namespace Wisej.HostService.Owin
 				if (offset > 0)
 					stream.Seek(offset, SeekOrigin.Begin);
 
-				stream.CopyTo(this.context.Response.Body, 1024);
+				response.ContentLength = length;
+				stream.CopyTo(response.Body, 1024);
 			}
 		}
 
