@@ -57,13 +57,14 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 		 */
 		alignment: {
 			init: "topRight",
-			check: ["topRight", "middleRight", "bottomRight", "topLeft", "topCenter", "middleLeft", "middleCenter", "bottomLeft", "bottomCenter"]
+			check: ["topRight", "middleRight", "bottomRight", "topLeft", "topCenter", "middleLeft", "middleCenter", "bottomLeft", "bottomCenter"],
+			apply: "_updateBubbles"
 		},
 
 		/*
 		 * Bubble padding (Top, Right, Bottom, Left).
 		 */
-		margin: { init: null, check: "Array" }
+		margin: { init: null, check: "Array", apply:"_updateBubbles" }
 	},
 
 	members: {
@@ -109,7 +110,7 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 					var comp = Wisej.Core.getComponent(id);
 					if (comp) {
 
-						var container = comp.getParent();
+						var container = comp.getLayoutParent();
 
 						// retrieve the TabPage button, if the opener is a TabPage.
 						if (comp instanceof qx.ui.tabview.Page)
@@ -143,6 +144,21 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 							delete this.__bubbleWidgets[id];
 						}
 					}
+				}
+			}
+		},
+
+		/**
+		 * Applies the Alignment and Margin properties to bubbles that are already created.
+		 */
+		_updateBubbles: function (value, old) {
+			if (this.__bubbleWidgets) {
+				var bubbles = this.__bubbleWidgets;
+				var alignment = this.getAlignment();
+				var margin = this.getMargin();
+
+				for (var id in bubbles) {
+					bubbles[id].updatePosition(alignment, margin);
 				}
 			}
 		},
@@ -273,8 +289,9 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 			}
 		},
 
-		// expands the bubble performing a simple
-		// scaling animation.
+		/**
+		 * Animates the bubble using the defined animation.
+		 */
 		animate: function () {
 
 			if (!this.__animation)
@@ -285,6 +302,20 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 				return;
 
 			qx.bom.element.Animation.animate(dom, this.__animation);
+		},
+
+		/**
+		 * Updates the alignment and margin of the bubble.
+		 * @param {String} alignment New alignment.
+		 * @param {Map} margin New margin.
+		 */
+		updatePosition: function (alignment, margin) {
+
+			if (this.__alignment != alignment || this.__margin != margin) {
+				this.__alignment = alignment;
+				this.__margin = margin;
+				this.__updatePosition();
+			}
 		},
 
 		_applyStyle: function (value, old) {
@@ -323,7 +354,10 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 		// updates this bubble widget position.
 		__updatePosition: function () {
 
+			var margin = this.__margin;
+			var alignment = this.__alignment;
 			var bounds = this.__component.getBounds();
+
 			if (bounds) {
 
 				var mySize = this.getSizeHint();
@@ -332,7 +366,7 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 					var y = bounds.top - mySize.height;
 					var x = bounds.left + bounds.width - mySize.width;
 
-					switch (this.__alignment) {
+					switch (alignment) {
 						case "topLeft":
 							y = bounds.top - mySize.height;
 							x = bounds.left;
@@ -378,7 +412,6 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 					}
 
 					// apply margin.
-					var margin = this.__margin;
 					if (margin) {
 						var top = margin[0];
 						var left = margin[3];
