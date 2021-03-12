@@ -99,7 +99,11 @@ namespace Wisej.Web.Ext.Bubbles
 		public ContentAlignment Alignment
 		{
 			get { return this._alignment; }
-			set { this._alignment = value; }
+			set
+			{
+				this._alignment = value;
+				Update();
+			}
 		}
 		private ContentAlignment _alignment = ContentAlignment.TopRight;
 
@@ -112,7 +116,11 @@ namespace Wisej.Web.Ext.Bubbles
 		public Padding Margin
 		{
 			get { return this._margin; }
-			set { this._margin = value; }
+			set
+			{
+				this._margin = value;
+				Update();
+			}
 		}
 		private Padding _margin = new Padding(0);
 
@@ -217,9 +225,6 @@ namespace Wisej.Web.Ext.Bubbles
 		/// <param name="value">The value to show in the bubble notification; 0 hides the bubble.</param>
 		public void SetBubbleValue(Control control, int value)
 		{
-			if (value < 0)
-				throw new ArgumentOutOfRangeException("value");
-
 			GetBubble(control).Value = value;
 			Update();
 		}

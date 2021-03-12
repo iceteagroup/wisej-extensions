@@ -221,6 +221,10 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 		if (!component)
 			throw new Error("Cannot create a bubble without a valid component");
 
+		this.setRich(true);
+		this.setWrap(false);
+		this.setAllowGrowX(true);
+
 		// start hidden.
 		this.exclude();
 
@@ -283,6 +287,8 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 				this.exclude();
 			}
 			else if (this.__component.isVisible()) {
+
+				this.__updatePosition();
 
 				this.show();
 				this.animate();
