@@ -33,6 +33,8 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 	construct: function () {
 
 		this.base(arguments);
+
+		this.__bubbleWidgets = {};
 	},
 
 	properties: {
@@ -71,9 +73,11 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 
 		// collection of bubble widgets, the key is the id of the
 		// associated control.
-		__bubbleWidgets: {},
+		__bubbleWidgets: null,
 
 		_applyBubbles: function (value, old) {
+
+			var bubbles = this.__bubbleWidgets;
 
 			if (old != null && old.length > 0) {
 				for (var i = 0; i < old.length; i++) {
@@ -94,10 +98,10 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 					if (!id)
 						continue;
 
-					var bubble = this.__bubbleWidgets[id];
+					var bubble = bubbles[id];
 					if (bubble) {
 						bubble.destroy();
-						delete this.__bubbleWidgets[id];
+						delete bubbles[id];
 					}
 				}
 			}
@@ -106,7 +110,7 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 				for (var i = 0; i < value.length; i++) {
 
 					var id = value[i].id;
-					var bubble = this.__bubbleWidgets[id];
+					var bubble = bubbles[id];
 					var comp = Wisej.Core.getComponent(id);
 					if (comp) {
 
@@ -119,7 +123,7 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 						if (bubble == null) {
 
 							// create the new bubble widget.
-							this.__bubbleWidgets[id] = bubble =
+							bubbles[id] = bubble =
 								new wisej.web.extender.bubbles.Bubble(
 									container,
 									comp,
