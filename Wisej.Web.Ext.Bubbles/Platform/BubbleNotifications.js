@@ -131,15 +131,12 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 									this.getAlignment(),
 									this.getMargin());
 
-							// apply the custom style.
-							if (value[i].style)
-								bubble.setStyle(value[i].style);
-
 							// listen to clicks to fire our "bubbleClick" event.
 							bubble.addListener("click", this._onBubbleClick, this);
 						}
 
 						bubble.setValue(value[i].value);
+						bubble.setStyle(value[i].style);
 					}
 					else {
 						// destroy the bubble in case the component doesn't exist anymore...
@@ -258,9 +255,9 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 		 * A style string that is applied to the widget as a state.
 		 * When the style is changed, the previous style is removed from the states.
 		 * This value is used in the theme to change the appearance of the bubble
-		 * according to the style. I.e.: "warning", "error", "critical", ...
+		 * according to the style. I.e.: "alert", "warning", "critical", "custom".
 		 */
-		style: { init: "", check: "String", apply: "_applyStyle", themeable: true }
+		style: { init: "alert", check: ["alert", "warning", "critical", "custom"], apply: "_applyStyle", themeable: true }
 	},
 
 	members: {
@@ -328,6 +325,9 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 			}
 		},
 
+		/**
+		 * Applies the Style property.
+		 */
 		_applyStyle: function (value, old) {
 
 			if (old)
@@ -335,6 +335,8 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 
 			if (value)
 				this.addState(value.toLowerCase());
+			else if (value == null)
+				this.resetStyle();
 		},
 
 		// follow the component position.

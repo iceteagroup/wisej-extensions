@@ -25,18 +25,23 @@ namespace Wisej.Web.Ext.Bubbles
 	public enum BubbleStyle
 	{
 		/// <summary>
-		/// Uses the alert state in the theme.
+		/// Uses the "alert" state in the theme.
 		/// </summary>
 		Alert,
 
 		/// <summary>
-		/// Uses the warning state in the theme.
+		/// Uses the "warning" state in the theme.
 		/// </summary>
 		Warning,
 
 		/// <summary>
-		/// Uses the critical state in the theme.
+		/// Uses the "critical" state in the theme.
 		/// </summary>
-		Critical
+		Critical,
+
+		/// <summary>
+		/// Uses the "custom" state in the theme.
+		/// </summary>
+		Custom
 	}
 }

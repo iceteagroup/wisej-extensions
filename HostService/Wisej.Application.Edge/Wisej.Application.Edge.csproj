@@ -76,6 +76,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Shared\MimeTypes.cs">
+      <Link>Owin\MimeTypes.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\WisejExtensions.cs">
       <Link>Owin\WisejExtensions.cs</Link>
     </Compile>
@@ -135,7 +138,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)..\Shared\ILMerge.exe" /ndebug /copyattrs /targetplatform:v4 /out:"$(TargetPath)" "$(TargetPath)" "$(TargetDir)Microsoft.Owin.Host.HttpListener.dll" "$(TargetDir)Microsoft.Owin.Hosting.dll" "$(TargetDir)Microsoft.Owin.StaticFiles.dll" "$(TargetDir)Microsoft.Owin.dll" "$(TargetDir)Microsoft.Owin.FileSystems.dll" "$(TargetDir)Owin.dll" "$(TargetDir)Microsoft.Web.WebView2.Core.dll" "$(TargetDir)Microsoft.Web.WebView2.WinForms.dll"
+    <PostBuildEvent>"$(ProjectDir)..\Shared\ILMerge.exe" /debug /copyattrs /targetplatform:v4 /out:"$(TargetPath)" "$(TargetPath)" "$(TargetDir)Microsoft.Owin.Host.HttpListener.dll" "$(TargetDir)Microsoft.Owin.Hosting.dll" "$(TargetDir)Microsoft.Owin.StaticFiles.dll" "$(TargetDir)Microsoft.Owin.dll" "$(TargetDir)Microsoft.Owin.FileSystems.dll" "$(TargetDir)Owin.dll" "$(TargetDir)Microsoft.Web.WebView2.Core.dll" "$(TargetDir)Microsoft.Web.WebView2.WinForms.dll"
 
 mkdir "$(ProjectDir)..\..\bin"
 mkdir "$(ProjectDir)..\..\bin\HostEdge"
