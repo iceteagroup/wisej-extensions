@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BC93ABE3-9949-4BCA-BCA4-22A5B2F3A5F6}</ProjectGuid>
+    <ProjectGuid>{143E2664-A0A4-46E4-BF57-D5CBC70F2149}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wisej.Application</RootNamespace>
@@ -138,7 +138,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)..\Shared\ILMerge.exe" /debug /copyattrs /targetplatform:v4 /out:"$(TargetPath)" "$(TargetPath)" "$(TargetDir)Microsoft.Owin.Host.HttpListener.dll" "$(TargetDir)Microsoft.Owin.Hosting.dll" "$(TargetDir)Microsoft.Owin.StaticFiles.dll" "$(TargetDir)Microsoft.Owin.dll" "$(TargetDir)Microsoft.Owin.FileSystems.dll" "$(TargetDir)Owin.dll" "$(TargetDir)Microsoft.Web.WebView2.Core.dll" "$(TargetDir)Microsoft.Web.WebView2.WinForms.dll"
+    <PostBuildEvent>"$(ProjectDir)..\Shared\ILMerge.exe" /ndebug /copyattrs /targetplatform:4.0 /out:"$(TargetPath)" "$(TargetPath)" "$(TargetDir)Microsoft.Owin.Host.HttpListener.dll" "$(TargetDir)Microsoft.Owin.Hosting.dll" "$(TargetDir)Microsoft.Owin.StaticFiles.dll" "$(TargetDir)Microsoft.Owin.dll" "$(TargetDir)Microsoft.Owin.FileSystems.dll" "$(TargetDir)Owin.dll" "$(TargetDir)Microsoft.Web.WebView2.Core.dll" "$(TargetDir)Microsoft.Web.WebView2.WinForms.dll"
 
 mkdir "$(ProjectDir)..\..\bin"
 mkdir "$(ProjectDir)..\..\bin\HostEdge"
