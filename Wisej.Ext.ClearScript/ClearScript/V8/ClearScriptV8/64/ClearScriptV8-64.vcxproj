@@ -75,7 +75,7 @@
       </PrecompiledHeaderOutputFile>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalUsingDirectories>$(OutDir);C:\Projects\WISEJ\Extensions\1.4\bin</AdditionalUsingDirectories>
+      <AdditionalUsingDirectories>$(OutDir);..\..\..\..\..\bin</AdditionalUsingDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
       <SDLCheck>true</SDLCheck>
@@ -101,7 +101,7 @@
       </PrecompiledHeaderOutputFile>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalUsingDirectories>$(OutDir);C:\Projects\WISEJ\Extensions\1.4\bin</AdditionalUsingDirectories>
+      <AdditionalUsingDirectories>$(OutDir);..\..\..\..\..\bin</AdditionalUsingDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
       <SDLCheck>true</SDLCheck>
