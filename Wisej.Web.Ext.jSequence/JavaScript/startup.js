@@ -70,12 +70,12 @@ this.getImage = function () {
 
 	return new Promise(function (resolve, reject) {
 		img.onload = function () {
-			var canvas = document.createElement('canvas');
+			var canvas = document.createElement("canvas");
 			var w = me.getWidth();
 			var h = me.getHeight();
 			canvas.width = w;
 			canvas.height = h;
-			canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+			canvas.getContext("2d").drawImage(img, 0, 0, w, h);
 			resolve(canvas.toDataURL("image/png"));
 		};
 		img.src = "data:image/svg+xml;base64," + window.btoa(svgStr);
