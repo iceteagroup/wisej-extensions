@@ -22,7 +22,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web.Configuration;
 using Wisej.Core;
 using Wisej.Design;
@@ -224,6 +226,90 @@ namespace Wisej.Web.Ext.jSequence
 				default:
 					return MouseButtons.None;
 			}
+		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Returns the sequence image.
+		/// </summary>
+		/// <param name="callback">Callback method that receives the <see cref="Image"/> object.</param>
+		/// <exception cref="ArgumentNullException">If any of the arguments is null.</exception>
+		public void GetImage(Action<Image> callback)
+		{
+			if (callback == null)
+				throw new ArgumentNullException(nameof(callback));
+
+			GetImageCore((result) => {
+
+				if (result is Exception)
+					throw (Exception)result;
+				else
+					callback(result as Image);
+			});
+		}
+
+		/// <summary>
+		/// Asynchronously returns the sequence image.
+		/// </summary>
+		/// <returns>An awaitable <see cref="Task"/> that contains the image.</returns>
+		public Task<Image> GetImageAsync()
+		{
+			var tcs = new TaskCompletionSource<Image>();
+
+			GetImageCore((result) => {
+
+				if (result is Exception)
+					tcs.SetException((Exception)result);
+				else if (result is Image)
+					tcs.SetResult((Image)result);
+				else
+					tcs.SetResult(null);
+			});
+
+			return tcs.Task;
+		}
+
+		// Implementation
+		private void GetImageCore(Action<object> callback)
+		{
+			Call("getImage",
+				(result) =>
+				{
+					if (result is string)
+						result = ImageFromBase64((string)result);
+
+					callback(result);
+				}, null);
+		}
+
+		/// <summary>
+		/// Returns the Image encoded in a base64 string.
+		/// </summary>
+		/// <param name="base64">The base64 string representation of the image from the client.</param>
+		/// <returns>An <see cref="Image"/> created from the <paramref name="base64"/> string.</returns>
+		internal static Image ImageFromBase64(string base64)
+		{
+			// data:image/gif;base64,R0lGODlhCQAJAIABAAAAAAAAACH5BAEAAAEALAAAAAAJAAkAAAILjI+py+0NojxyhgIAOw==
+			try
+			{
+				if (String.IsNullOrEmpty(base64))
+					return null;
+
+				int pos = base64.IndexOf("base64,");
+				if (pos < 0)
+					return null;
+
+				base64 = base64.Substring(pos + 7);
+				byte[] buffer = Convert.FromBase64String(base64);
+				MemoryStream stream = new MemoryStream(buffer);
+				return new Bitmap(stream);
+			}
+			catch { }
+
+			return null;
 		}
 
 		#endregion
