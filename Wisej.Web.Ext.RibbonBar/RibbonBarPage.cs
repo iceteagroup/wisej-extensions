@@ -212,6 +212,35 @@ namespace Wisej.Web.Ext.RibbonBar
 		private bool _enabled = true;
 
 		/// <summary>
+		/// Returns or sets the name of the <see cref="RibbonBarPage"/>.
+		/// </summary>
+		/// <returns>The name of the <see cref="RibbonBarPage"/>. The default is an empty string ("").</returns>
+		[Browsable(false)]
+		public string Name
+		{
+			get
+			{
+				if (this.Site != null && !String.IsNullOrEmpty(this.Site.Name))
+					this._name = this.Site.Name;
+
+				return this._name;
+			}
+			set
+			{
+				value = value ?? string.Empty;
+
+				if (this._name != value)
+				{
+					this._name = value;
+
+					if (this.Site != null)
+						this.Site.Name = value;
+				}
+			}
+		}
+		private string _name = string.Empty;
+
+		/// <summary>
 		/// Returns or sets whether the <see cref="RibbonBarPage"/> is the 
 		/// currently <see cref="RibbonBar.SelectedPage"/>.
 		/// </summary>

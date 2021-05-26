@@ -85,6 +85,12 @@
     <None Include="Templates\Visual C#\TourPanel\TourPanel.vstemplate" />
     <None Include="Templates\Visual C#\TourPanel\__TemplateIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wisej.Web.Ext.RibbonBar\Wisej.Web.Ext.RibbonBar.csproj">
+      <Project>{3bd92cff-3b17-45eb-9aad-d22a7bcdb640}</Project>
+      <Name>Wisej.Web.Ext.RibbonBar</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(ProjectDir)..\bin"

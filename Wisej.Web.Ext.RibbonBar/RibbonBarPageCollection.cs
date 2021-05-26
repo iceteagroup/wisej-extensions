@@ -17,6 +17,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System;
+
 namespace Wisej.Web.Ext.RibbonBar
 {
 	/// <summary>
@@ -26,6 +28,29 @@ namespace Wisej.Web.Ext.RibbonBar
 	{
 		internal RibbonBarPageCollection(RibbonBar owner) : base(owner)
 		{
+		}
+
+		/// <summary>
+		/// Returns the first <see cref="RibbonBarPage"/> with the specified <paramref name="name"/>.
+		/// </summary>
+		/// <param name="name">The name of the <see cref="RibbonBarPage"/> to retrieve.</param>
+		/// <returns>The first <see cref="RibbonBarPage"/> with the specified name or null.</returns>
+		public RibbonBarPage this[string name]
+		{
+			get
+			{
+				if (name == null)
+					throw new ArgumentNullException(nameof(name));
+
+				var count = this.Count;
+				for (var i = 0; i < count; i++)
+				{
+					if (String.Compare(name, this[i].Name, true) == 0)
+						return this[i];
+				}
+
+				return null;
+			}
 		}
 
 		/// <summary>

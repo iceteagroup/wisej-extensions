@@ -1531,6 +1531,8 @@ namespace Wisej.Web.Ext.TourPanel
 							child = ((MenuBar)component).MenuItems[p];
 						else if (component is Form && p == "menu")
 							child = ((Form)component).Menu;
+						else if (component is RibbonBar.RibbonBar)
+							child = ((RibbonBar.RibbonBar)component).Pages[p];
 						else if (component is Form && ((Form)component).IsMdiContainer)
 							child = ((Form)component).MdiChildren.FirstOrDefault(f => f.Name == p);
 					}
@@ -1539,6 +1541,14 @@ namespace Wisej.Web.Ext.TourPanel
 				else if (component is MainMenu)
 				{
 					component = ((MainMenu)component).MenuItems[p];
+				}
+				else if (component is RibbonBar.RibbonBarPage)
+				{
+					component = ((RibbonBar.RibbonBarPage)component).Groups[p];
+				}
+				else if (component is RibbonBar.RibbonBarGroup)
+				{
+					component = ((RibbonBar.RibbonBarGroup)component).Items[p];
 				}
 				else
 				{
@@ -1628,6 +1638,8 @@ namespace Wisej.Web.Ext.TourPanel
 						((Panel)component).Collapsed = false;
 					else if (component is GroupBox)
 						((GroupBox)component).Collapsed = false;
+					else if (component is RibbonBar.RibbonBarPage)
+						((RibbonBar.RibbonBarPage)component).Selected = true;
 					else if (component is Form)
 						((Form)component).Activate();
 					else if (component is DataGridViewColumn)
@@ -1643,6 +1655,26 @@ namespace Wisej.Web.Ext.TourPanel
 
 						// go up the hierarchy.
 						component = control.Parent;
+					}
+					else if (component is DataGridViewColumn)
+					{
+						component = ((DataGridViewColumn)component).DataGridView;
+					}
+					else if (component is ColumnHeader)
+					{
+						component = ((ColumnHeader)component).ListView;
+					}
+					else if (component is RibbonBar.RibbonBarPage)
+					{
+						component = ((RibbonBar.RibbonBarPage)component).RibbonBar;
+					}
+					else if (component is RibbonBar.RibbonBarGroup)
+					{
+						component = ((RibbonBar.RibbonBarGroup)component).RibbonBar;
+					}
+					else if (component is RibbonBar.RibbonBarItem)
+					{
+						component = ((RibbonBar.RibbonBarItem)component).RibbonBar;
 					}
 					else
 					{
