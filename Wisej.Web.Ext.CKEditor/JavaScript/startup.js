@@ -85,6 +85,12 @@ this.init = function () {
 			me.fireEvent("render");
 		}
 
+		me.editor.editable().on('click', function (e) {
+			var link = e.data.getTarget().getAttribute("href");
+			if (link && !wisej.web.DesignMode)
+				me.fireWidgetEvent("linkClick", link);
+		});
+
 		me.fireEvent("initialized");
 	});
 
@@ -125,22 +131,8 @@ this.getText = function () {
 }
 this.setText = function (value) {
 	try {
-		var me = this;
-		me.editor.setData("", {
-			callback: function () {
-				var readOnly = me.editor.readOnly;
-				if (readOnly)
-					me.editor.setReadOnly(false);
-
-				me.editor.insertHtml(value);
-
-				if (readOnly)
-					me.editor.setReadOnly(true);
-
-				me.updateState();
-			}
-		});
-
+		this.editor.editable().setHtml(value);
+		this.updateState();
 	} catch (e) { }
 }
 
@@ -149,6 +141,7 @@ this.setReadOnly = function (value) {
 	try {
 		if (this.editor.readOnly != value)
 			this.editor.setReadOnly(value);
+			
 	} catch (e) { }
 }
 

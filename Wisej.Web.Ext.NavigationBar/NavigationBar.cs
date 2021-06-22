@@ -39,6 +39,7 @@ namespace Wisej.Web.Ext.NavigationBar
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(NavigationBar))]
 	[Description("Responsive vertical navigation bar.")]
+	[Designer("Wisej.Design.ControlDesigner, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
 	public partial class NavigationBar : Wisej.Web.FlexLayoutPanel, IWisejDesignTarget
 	{
 		#region Constructor
@@ -173,9 +174,21 @@ namespace Wisej.Web.Ext.NavigationBar
 		private NavigationBarItem _selectedItem;
 
 		/// <summary>
+		/// Shows or hides the user panel.
+		/// </summary>
+		[DesignerActionList]
+		[ResponsiveProperty]
+		public bool ShowUser
+		{
+			get => this.user.Visible;
+			set => this.user.Visible = value;
+		}
+
+		/// <summary>
 		/// Returns or sets the compact view mode.
 		/// </summary>
 		[ResponsiveProperty]
+		[DesignerActionList]
 		[DefaultValue(false)]
 		public bool CompactView
 		{
@@ -247,21 +260,10 @@ namespace Wisej.Web.Ext.NavigationBar
 		private int _indentation = 0;
 
 		/// <summary>
-		/// Returns or sets the logo to display in the <see cref="NavigationBar"/>.
-		/// </summary>
-		[DefaultValue("")]
-		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
-		public string Logo
-		{
-			get => this.logo.ImageSource;
-			set => this.logo.ImageSource = value;
-		}
-
-		/// <summary>
 		/// Returns or sets the title to display in the <see cref="NavigationBar"/>.
 		/// </summary>
 		[DefaultValue("")]
+		[DesignerActionList]
 		public override string Text
 		{
 			get => this.title.Text;
@@ -269,12 +271,16 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Shows or hides the user panel.
+		/// Returns or sets the logo to display in the <see cref="NavigationBar"/>.
 		/// </summary>
-		public bool ShowUser
+		[DefaultValue("")]
+		[DesignerActionList]
+		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		public string Logo
 		{
-			get => this.user.Visible;
-			set => this.user.Visible = value;
+			get => this.logo.ImageSource;
+			set => this.logo.ImageSource = value;
 		}
 
 		/// <summary>

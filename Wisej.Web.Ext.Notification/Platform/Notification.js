@@ -52,6 +52,11 @@ qx.Class.define("wisej.web.ext.Notification", {
 			if (!("Notification" in window))
 				return;
 
+			if (!options.icon)
+				delete options.icon;
+			if (!options.image)
+				delete options.image;
+
 			// already granted? display.
 			if (Notification.permission == "granted") {
 
@@ -74,15 +79,19 @@ qx.Class.define("wisej.web.ext.Notification", {
 		// Implementation of the show() method.
 		__show: function(options)
 		{
-
 			var me = this;
-			var title = options.title;
-			var body = options.body;
-			var icon = options.icon;
-			var language = options.language;
 			var showOnClick = options.showOnClick;
 
-			var notification = new Notification(title, { body: body, icon: icon, lang: language });
+			var notification = new Notification(
+				options.title,
+				{
+					body: options.body,
+					icon: options.icon,
+					image: options.image,
+					lang: options.language,
+					requireInteraction: options.requireInteraction,
+				}
+			);
 
 			notification.onclick = function (e) {
 
@@ -90,7 +99,7 @@ qx.Class.define("wisej.web.ext.Notification", {
 					window.focus();
 
 				me.fireDataEvent("click", title);
-			};
+			};		
 		}
 	}
 });

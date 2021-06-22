@@ -79,8 +79,7 @@ this.init = function () {
 	// hookup the blur event in the child iframe to fire onEditorBlur in the owner window.
 	if (!wisej.web.DesignMode) {
 
-		this.editor.e.body.addEventListener("blur", function () {
-
+		this.editor.e.body.addEventListener("keyup", function () {
 			var newText = me.getText();
 			if (savedText != newText) {
 				me.setDirty(true);

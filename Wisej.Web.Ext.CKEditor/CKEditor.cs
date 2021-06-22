@@ -66,6 +66,24 @@ namespace Wisej.Web.Ext.CKEditor
 			((CommandEventHandler)base.Events[nameof(Command)])?.Invoke(this, e);
 		}
 
+		/// <summary>
+		/// Fired after a link is clicked in the editor.
+		/// </summary>
+		public event LinkClickedEventHandler LinkClicked
+        {
+			add { base.AddHandler(nameof(LinkClicked), value); }
+			remove { base.RemoveHandler(nameof(LinkClicked), value); }
+        }
+
+		/// <summary>
+		/// Fires the LinkClicked event.
+		/// </summary>
+		/// <param name="e"></param>
+		protected virtual void OnLinkClicked(LinkClickedEventArgs e)
+		{
+			((LinkClickedEventHandler)base.Events[nameof(LinkClicked)])?.Invoke(this, e);
+		}
+
 		#endregion
 
 		#region Properties
@@ -449,6 +467,10 @@ namespace Wisej.Web.Ext.CKEditor
 					ProcessFocusWebEvent(e);
 					break;
 
+				case "linkClick":
+					ProcessLinkClickedWebEvent(e);
+					break;
+
 			}
 			base.OnWidgetEvent(e);
 		}
@@ -482,6 +504,11 @@ namespace Wisej.Web.Ext.CKEditor
 		{
 			OnCommand(new CommandEventArgs(e.Data));
 		}
+
+		private void ProcessLinkClickedWebEvent(WidgetEventArgs e)
+        {
+			OnLinkClicked(new LinkClickedEventArgs(e.Data));
+        }
 
 		#endregion
 	}

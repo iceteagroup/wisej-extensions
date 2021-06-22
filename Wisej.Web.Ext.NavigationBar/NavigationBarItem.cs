@@ -29,6 +29,8 @@ namespace Wisej.Web.Ext.NavigationBar
 	/// Represents a navigation item in the <see cref="NavigationBar"/> control.
 	/// </summary>
 	[ToolboxItem(false)]
+	[DesignTimeVisible(false)]
+	[Designer("Wisej.Design.ComponentDesigner, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
 	public partial class NavigationBarItem : Wisej.Web.FlexLayoutPanel
 	{
 		/// <summary>
@@ -59,8 +61,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		public event EventHandler Expand;
 
 		/// <summary>
-		///  Fired when the <see cref="NavigationBarItem"/> is collapsed to hide
-		///  child items.
+		/// Fired when the <see cref="NavigationBarItem"/> is collapsed to hide
+		/// child items.
 		/// </summary>
 		public event EventHandler Collapse;
 

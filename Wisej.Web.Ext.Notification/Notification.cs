@@ -72,7 +72,7 @@ namespace Wisej.Web.Ext.Notification
 		}
 
 		/// <summary>
-		/// Fires the Click event.
+		/// Fires the <see cref="Click"/> event.
 		/// </summary>
 		/// <param name="e">A <see cref="T:Wisej.Web.Ext.Notification.NotificationClickEventArgs" /> that contains the event data. </param>
 		protected virtual void OnClick(NotificationClickEventArgs e)
@@ -105,17 +105,30 @@ namespace Wisej.Web.Ext.Notification
 		/// </summary>
 		/// <param name="title">The title of the notification.</param>
 		/// <param name="body">The optional body string of the notification.</param>
-		/// <param name="icon">The <see cref="T:System.Drawing.Image"/> or URL of the image used as an icon of the notification.</param>
+		/// <param name="icon">The URL of the image used as an icon of the notification.</param>
 		/// <param name="showOnClick">Indicates whether to activate the browser when the user clicks the notification.</param>
-		public void Show(string title, string body = null, object icon = null, bool showOnClick = false)
+		/// <param name="image">URL of an image to show at the top of the notification window.</param>
+		/// <param name="actions">An array of <see cref="Notification.Action"/> items representing the actions available to the user when the notification is presented.</param>
+		/// <param name="requireInteraction">Indicates that a notification should remain active until the user clicks or dismisses it, rather than closing automatically.</param>
+		public void Show(
+			string title, 
+			string body = null, 
+			string icon = null, 
+			bool showOnClick = false,
+			string image = null, 
+			Action[] actions = null,
+			bool requireInteraction = false)
 		{
 			Call("show", new
 			{
-				Title = title,
-				Body = body,
-				Icon = icon,
-				Culture = CultureInfo.CurrentCulture.Name,
-				showOnClick = showOnClick
+				title = title,
+				body = body,
+				icon = icon,
+				image = image,
+				actions = actions,
+				showOnClick = showOnClick,
+				requireInteraction = requireInteraction,
+				Language = CultureInfo.CurrentCulture.Name
 			});
 		}
 

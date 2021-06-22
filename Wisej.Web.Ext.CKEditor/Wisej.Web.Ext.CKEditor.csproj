@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="CommandEventHandler.cs" />
     <Compile Include="ExternalPlugin.cs" />
+    <Compile Include="LinkClickedEventHandler.cs" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

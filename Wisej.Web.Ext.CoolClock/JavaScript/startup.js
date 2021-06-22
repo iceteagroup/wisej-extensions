@@ -14,6 +14,8 @@
  */
 this.init = function (options) {
 
+	this.setSelectable(false);
+
 	var id = this.getId() + "_canvas";
 
 	options.canvasId = id;
@@ -34,6 +36,6 @@ this.init = function (options) {
  */
 this.update = function (options) {
 
-    // recreate the clock.
-    this.init(options);
+	// recreate the clock.
+	this.init(options);
 }

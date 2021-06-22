@@ -672,17 +672,23 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 			if (row.GroupRows.Length > 0)
 			{
 				var groupRow = row.GroupRows[0];
-				int colFromIndex = row.GroupFromColumn?.Index ?? 0;
-				int colToIndex = row.GroupToColumn?.Index ?? row.CellCount - 1;
+				int colToIndex = row.GroupToColumn?.Index ?? -1;
+				int colFromIndex = row.GroupFromColumn?.Index ?? -1;
 
-				for (var c = colFromIndex; c <= colToIndex; c++)
+				if (colFromIndex > -1 || colToIndex > -1)
 				{
-					if (c >= row.CellCount)
-						break;
-					if (c >= groupRow.CellCount)
-						break;
+					colFromIndex = colFromIndex == -1 ? 0 : colFromIndex;
+					colToIndex = colToIndex == -1 ? row.CellCount - 1 : colToIndex;
 
-					row[c].Value = groupRow[c].Value;
+					for (var c = colFromIndex; c <= colToIndex; c++)
+					{
+						if (c >= row.CellCount)
+							break;
+						if (c >= groupRow.CellCount)
+							break;
+
+						row[c].Value = groupRow[c].Value;
+					}
 				}
 			}
 		}

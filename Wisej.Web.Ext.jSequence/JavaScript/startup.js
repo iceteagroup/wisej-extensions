@@ -77,8 +77,13 @@ this.getImage = function () {
 			var h = me.getHeight();
 			canvas.width = w;
 			canvas.height = h;
-			canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-			resolve(canvas.toDataURL("image/png"));
+			try {
+				canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+				resolve(canvas.toDataURL("image/png"));
+			}
+			catch (error) {
+				reject(error);
+			}
 		};
 		img.src = "data:image/svg+xml;base64," + window.btoa(svgStr);
 	});

@@ -119,7 +119,9 @@ namespace Wisej.Ext.FileSystem
 				if (value == null || value == "")
 					throw new ArgumentNullException("value");
 
-				this._name = value;
+				// remove trailing and last separator.
+				// it's used by the treeview to build the path.
+				this._name = value.Trim('\\');
 			}
 		}
 		private string _name;
