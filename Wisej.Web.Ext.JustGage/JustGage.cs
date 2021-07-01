@@ -183,7 +183,7 @@ namespace Wisej.Web.Ext.JustGage
 		[RefreshProperties(RefreshProperties.All)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets the lower limit of the range.")]
-		public int Minimum
+		public float Minimum
 		{
 			get
 			{
@@ -202,7 +202,7 @@ namespace Wisej.Web.Ext.JustGage
 				}
 			}
 		}
-		private int _minimum = 0;
+		private float _minimum = 0;
 
 		/// <summary>
 		/// Returns or sets the upper limit of the range.
@@ -212,7 +212,7 @@ namespace Wisej.Web.Ext.JustGage
 		[RefreshProperties(RefreshProperties.All)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets the upper limit of the range.")]
-		public int Maximum
+		public float Maximum
 		{
 			get
 			{
@@ -231,7 +231,7 @@ namespace Wisej.Web.Ext.JustGage
 				}
 			}
 		}
-		private int _maximum = 100;
+		private float _maximum = 100;
 
 		/// <summary>
 		/// Returns or sets the title of the JustGage control.
