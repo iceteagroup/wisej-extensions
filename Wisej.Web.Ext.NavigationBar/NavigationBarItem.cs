@@ -238,6 +238,26 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
+		/// Returns or sets a value indicating that the control can display HTML in the Text property.
+		/// </summary>
+		[DefaultValue(false)]
+		public bool AllowHtml
+		{
+			get => this.title.AllowHtml;
+			set => this.title.AllowHtml = value;
+		}
+
+		/// <summary>
+		/// Returns or sets whether the item's icon is visible.
+		/// </summary>
+		[DefaultValue(true)]
+		public bool IconVisible
+		{
+			get => this.icon.Visible;
+			set => this.icon.Visible = value;
+		}
+
+		/// <summary>
 		/// Returns the collection of items to display in the <see cref="NavigationBarItem"/>.
 		/// </summary>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
