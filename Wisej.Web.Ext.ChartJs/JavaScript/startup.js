@@ -82,9 +82,11 @@ this.init = function (config) {
 		canvas.onclick = function (e) {
 
 			// returns the list of elements under the click point.
+			var element = me.chart.getElementAtEvent(e);
 			var elements = me.chart.getElementsAtEvent(e);
 			if (elements.length > 0) {
 				// package the data and send it back to our managed event handler.
+				var result = {};
 				var data = [];
 				for (var i = 0; i < elements.length; i++) {
 					data.push({
@@ -92,7 +94,13 @@ this.init = function (config) {
 						dataSetIndex: elements[i]._datasetIndex
 					});
 				}
-				me.fireWidgetEvent("chartClick", data);
+				result.data = data;
+				result.selected = {
+					pointIndex: element[0]._index,
+					dataSetIndex: element[0]._datasetIndex
+				};
+
+				me.fireWidgetEvent("chartClick", result);
 			}
 		};
 	}

@@ -97,5 +97,36 @@ namespace Wisej.Web.Ext.ChartJS
 		{
 			this.Font = null;
 		}
+
+		/// <summary>
+		/// Color of the data label.
+		/// </summary>
+		[Description("The color of the data label.")]
+		public Color Color
+		{
+			get
+			{
+				return this._color;
+			}
+			set
+			{
+				if (this._color != value)
+				{
+					this._color = value;
+					Update();
+				}
+			}
+		}
+		private Color _color = Color.Black;
+
+		private bool ShouldSerializeColor()
+		{
+			return this._color != null;
+		}
+
+		private void ResetColor()
+		{
+			this.Color = Color.Black;
+		}
 	}
 }

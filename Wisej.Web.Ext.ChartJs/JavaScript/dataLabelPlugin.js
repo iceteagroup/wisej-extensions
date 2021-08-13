@@ -22,7 +22,7 @@ Chart.plugins.register({
 						return;
 
 					// Draw the text in black, with the specified font
-					ctx.fillStyle = 'rgb(0, 0, 0)';
+					ctx.fillStyle = chart.config.options.dataLabel.color;
 
 					var fontSize = chart.config.options.dataLabel.fontSize;
 					var fontStyle = chart.config.options.dataLabel.fontStyle;

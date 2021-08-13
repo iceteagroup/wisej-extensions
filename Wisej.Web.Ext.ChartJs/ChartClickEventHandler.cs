@@ -42,7 +42,8 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <param name="e"></param>
 		internal ChartClickEventArgs(Wisej.Web.Ext.ChartJS.ChartJS chart, WidgetEventArgs e)
 		{
-			dynamic[] points = e.Data;
+			dynamic[] points = e.Data.data;
+			dynamic selection = e.Data.selected;
 			List<int> dataPoints = new List<int>();
 			List<object> values = new List<object>();
 			List<DataSet> dataSets = new List<DataSet>();
@@ -59,6 +60,13 @@ namespace Wisej.Web.Ext.ChartJS
 					dataSets.Add(chart.DataSets[dataSetIndex]);
 					values.Add(chart.DataSets[dataSetIndex].Data[pointIndex]);
 				}
+
+				// add information about the value directly underneath the click.
+				var selPointIndex = selection.pointIndex;
+				var selDataSetIndex = selection.dataSetIndex;
+
+				this.SelectedDataSet = chart.DataSets[selDataSetIndex];
+				this.SelectedValue = chart.DataSets[selDataSetIndex].Data[selPointIndex];
 			}
 
 			this.DataSets = dataSets.ToArray();
@@ -90,6 +98,24 @@ namespace Wisej.Web.Ext.ChartJS
 		/// Returns the data sets in the click radius.
 		/// </summary>
 		public DataSet[] DataSets
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Returns the data set directly underneath the click.
+		/// </summary>
+		public DataSet SelectedDataSet
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Returns the value directly underneath the click.
+		/// </summary>
+		public object SelectedValue
 		{
 			get;
 			private set;
