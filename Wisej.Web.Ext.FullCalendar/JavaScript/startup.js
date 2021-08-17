@@ -375,11 +375,11 @@ this.onItemDrop = function (e) {
 	var view = this.calendar.view;
 	try {
 
-		view.prepareHits();
+		view.dayGrid.prepareHits();
+		view.timeGrid.prepareHits();
 		var hit = view.queryHit(x, y);
-		view.releaseHits();
 
-		var footprint = hit.component.getSafeHitFootprint(hit);
+		var footprint = view.getSafeHitFootprint(hit);
 		var date = this.calendar.footprintToDateProfile(footprint).start;
 		var day = date.toDate();
 		if (!date.hasTime())
