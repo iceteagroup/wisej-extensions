@@ -358,6 +358,38 @@ namespace Wisej.Web.Ext.GoogleMaps
 		}
 
 		/// <summary>
+		/// Uses GoogleMaps DirectionService to route and display a path between the origin and destination.
+		/// See https://developers.google.com/maps/documentation/javascript/directions.
+		/// </summary>
+		/// <param name="origin">The latitude and longitude of the origin.</param>
+		/// <param name="destination">The latitude and longitude of the destination.</param>
+		/// <param name="travelMode">The type of routing requested.</param>
+		public void AddRoute(LatLng origin, LatLng destination, TravelMode travelMode)
+		{
+			Call("addRoute", origin, destination, travelMode);
+		}
+
+		/// <summary>
+		/// Uses GoogleMaps DirectionService to route and display a path between the origin and destination.
+		/// See https://developers.google.com/maps/documentation/javascript/directions.
+		/// </summary>
+		/// <param name="origin">The name of the origin.</param>
+		/// <param name="destination">The name of the destination.</param>
+		/// <param name="travelMode">The type of routing requested.</param>
+		public void AddRoute(string origin, string destination, TravelMode travelMode)
+		{
+			Call("addRoute", origin, destination, travelMode);
+		}
+
+		/// <summary>
+		/// Clears any routes, if they exist.
+		/// </summary>
+		public void ClearRoutes()
+		{
+			Call("clearRoutes");
+		}
+
+		/// <summary>
 		/// Centers the map at the specified location.
 		/// </summary>
 		/// <param name="lat">The latitude of the center of the map.</param>

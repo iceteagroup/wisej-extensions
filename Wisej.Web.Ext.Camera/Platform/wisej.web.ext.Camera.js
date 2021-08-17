@@ -253,14 +253,21 @@ qx.Class.define("wisej.web.ext.Camera", {
 			if (value.video || value.audio) {
 				navigator.mediaDevices.getUserMedia(value)
 					.then(function (stream) {
-
 						// bind to the video element.
 						me._bindStream(stream);
 					});
 			} else {
-				// stop the stream.
-				var video = this.getMediaObject();
+				this.deactivateCamera();
+			}
+		},
 
+		/**
+		 * Detaches the camera feed and clears the tracks.
+		 **/
+		deactivateCamera: function () {
+
+			var video = this.getMediaObject();
+			if (video) {
 				video.pause();
 
 				var stream = video.srcObject;
@@ -351,14 +358,17 @@ qx.Class.define("wisej.web.ext.Camera", {
 
 	destruct: function () {
 
-		if (this.canvas) {
+		this.deactivateCamera();
+		this.recordedBlob = null;
 
+		if (this.canvas) {
 			this.canvas.remove();
 			this.canvas = null;
 		}
 
-		this.recordedBlob = null;
-		this.mediaRecorder = null;
+		if (this.mediaRecorder) {
+			this.mediaRecorder.stop();
+			this.mediaRecorder = null;
+		}
 	}
-
 });

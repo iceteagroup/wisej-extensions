@@ -392,3 +392,55 @@ this.getGeocode = function (callbackId, location) {
 
 	});
 }
+
+/*
+====================================================================
+Google Maps Directions
+====================================================================
+*/
+
+/**
+ * Uses google.maps.DirectionsService to map a route between the origin and destination.
+ * @param {any} origin
+ * @param {any} destination
+ */
+this.addRoute = function (origin, destination, travelMode) {
+
+	var me = this;
+
+	if (!this._directionsService)
+		this._directionsService = new google.maps.DirectionsService();
+
+	if (!this._directionsRenderer) {
+		this._directionsRenderer = new google.maps.DirectionsRenderer();
+		this._directionsRenderer.setMap(this.map);
+	}
+
+	this._directionsService.route(
+		{
+			origin: {
+				query: origin
+			},
+			destination: {
+				query: destination
+			},
+			travelMode: travelMode.toUpperCase(),
+		}, function(response, status) {
+			if (status === "OK") {
+				me._directionsRenderer.setDirections(response);
+			} else {
+				debugger;
+			}
+	});
+}
+
+/**
+ * Clears any routes, if they exist. 
+ **/
+this.clearRoutes = function () {
+
+	if (this._directionsRenderer) {
+		this._directionsRenderer.setMap(null);
+		this._directionsRenderer = null;
+	}
+}
