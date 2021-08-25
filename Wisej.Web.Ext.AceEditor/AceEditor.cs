@@ -19,12 +19,13 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Wisej.Design;
 
 namespace Wisej.Web.Ext.AceEditor
 {
 	/// <summary>
-	/// Integrates the AceEditor (<see href="https://ace.c9.io/">) widget.
+	/// Integrates the AceEditor (<see href="https://ace.c9.io/" />) widget.
 	/// </summary>
 	/// <remarks>
 	/// Ace is an embeddable code editor written in JavaScript. 
@@ -35,6 +36,9 @@ namespace Wisej.Web.Ext.AceEditor
 		private const string ACE_MODE = "ace/mode/";
 		private const string ACE_THEME = "ace/theme/";
 
+		/// <summary>
+		/// Initializes a new instance of <see cref="AceEditor"/>.
+		/// </summary>
 		public AceEditor()
 		{
 			this.ShowGutter = true;
@@ -64,6 +68,8 @@ namespace Wisej.Web.Ext.AceEditor
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override List<Package> Packages
 		{
+			// disable inlining or we lose the calling assembly in GetResourceString().
+			[MethodImpl(MethodImplOptions.NoInlining)]
 			get
 			{
 				if (base.Packages.Count == 0)
@@ -72,7 +78,7 @@ namespace Wisej.Web.Ext.AceEditor
 					base.Packages.Add(new Package()
 					{
 						Name = "ace.js",
-						Source = $"resource.wx/Wisej.Web.Ext.AceEditor/Wisej.Web.Ext.AceEditor.JavaScript.src.ace.js"
+						Source = GetResourceURL("Wisej.Web.Ext.AceEditor.JavaScript.src.ace.js")
 					});
 				}
 
@@ -87,6 +93,8 @@ namespace Wisej.Web.Ext.AceEditor
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override string InitScript
 		{
+			// disable inlining or we lose the calling assembly in GetResourceString().
+			[MethodImpl(MethodImplOptions.NoInlining)]
 			get { return this.GetResourceString("Wisej.Web.Ext.AceEditor.JavaScript.startup.js"); }
 			set { }
 		}
