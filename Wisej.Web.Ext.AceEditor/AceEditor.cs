@@ -17,6 +17,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -241,6 +242,13 @@ namespace Wisej.Web.Ext.AceEditor
 		{
 			var text = e.Data ?? "";
 			base.Text = text;
+		}
+
+		protected override void OnGotFocus(EventArgs e)
+		{
+			this.Instance.focus();
+
+			base.OnGotFocus(e);
 		}
 
 		#endregion
