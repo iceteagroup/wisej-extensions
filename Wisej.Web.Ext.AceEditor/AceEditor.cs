@@ -47,6 +47,7 @@ namespace Wisej.Web.Ext.AceEditor
 			this.ShowPrintMargin = true;
 			this.DisplayIndentGuides = true;
 			this.PrintMarginColumn = 80;
+			this.AutoUpdateDelay = 1000;
 		}
 
 		#region Properties
@@ -221,6 +222,24 @@ namespace Wisej.Web.Ext.AceEditor
 			set { this.Options.fontSize = value; }
 		}
 
+		/// <summary>
+		/// Sets the amount of in time in milliseconds to wait before updating the
+		/// server that the content of the editor has changed while the user is typing.
+		/// A value of 0 disables it.
+		/// </summary>
+		[DefaultValue(1000)]
+		public int AutoUpdateDelay
+		{
+			get { return this.Options.autoUpdateDelay; }
+			set
+			{
+				if (value < 0)
+					throw new ArgumentOutOfRangeException(nameof(AutoUpdateDelay));
+
+				this.Options.autoUpdateDelay = value;
+			}
+		}
+
 		#endregion
 
 		#region Event Handlers
@@ -229,16 +248,15 @@ namespace Wisej.Web.Ext.AceEditor
 		{
 			switch (e.Type)
 			{
-				case "blur":
-					ProcessWidgetBlurEvent(e);
+				case "change":
+					ProcessWidgetChangeEvent(e);
 					break;
-
 			}
 
 			base.OnWidgetEvent(e);
 		}
 
-		private void ProcessWidgetBlurEvent(WidgetEventArgs e)
+		private void ProcessWidgetChangeEvent(WidgetEventArgs e)
 		{
 			var text = e.Data ?? "";
 			base.Text = text;

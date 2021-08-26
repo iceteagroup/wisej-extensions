@@ -17,6 +17,10 @@ this.init = function (options) {
 
 	var me = this;
 
+	// store the auto update delay.
+	this.autoUpdateDelay = options.autoUpdateDelay;
+	delete options.autoUpdateDelay;
+
 	ace.config.set("basePath", "resource.wx/Wisej.Web.Ext.AceEditor/");
 
 	if (this.widget)
@@ -25,7 +29,23 @@ this.init = function (options) {
 	var editor = this.widget = ace.edit(this.container, options);
 
 	this.widget.on("blur", function () {
-		me.fireWidgetEvent("blur", editor.getValue());
+		me.fireWidgetEvent("change", editor.getValue());
+	});
+
+	this.widget.on("change", function () {
+
+		clearTimeout(me.updateTimer);
+
+		var delay = me.autoUpdateDelay;
+		if (delay) {
+			me.updateTimer = setTimeout(function () {
+				me.fireWidgetEvent("change", editor.getValue());
+			}, delay);
+		}
+	});
+
+	this.addListener("resize", function (e) {
+		me.editor.resize();
 	});
 }
 
@@ -37,6 +57,14 @@ this.init = function (options) {
  */
 this.update = function (options, old) {
 
-	if (this.widget)
+	// update the auto update delay.
+	if (options.autoUpdateDelay !== undefined) {
+		this.autoUpdateDelay = options.autoUpdateDelay;
+		delete options.autoUpdateDelay;
+	}
+
+	if (this.widget) {
+
 		this.widget.setOptions(options);
+	}
 }
