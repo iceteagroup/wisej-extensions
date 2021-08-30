@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48</TargetFrameworks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ChartJS3.bmp" />
+    <None Remove="JavaScript\chart.js" />
+    <None Remove="JavaScript\chartjs-plugin-datalabels.js" />
+    <None Remove="JavaScript\moment.js" />
+    <None Remove="JavaScript\startup.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ChartJS3.bmp" />
+    <EmbeddedResource Include="JavaScript\chart.js" />
+    <EmbeddedResource Include="JavaScript\chartjs-plugin-datalabels.js" />
+    <EmbeddedResource Include="JavaScript\moment.js" />
+    <EmbeddedResource Include="JavaScript\startup.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Wisej.Framework">
+      <HintPath>..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin&quot; /s /y&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\&quot; /y&#xD;&#xA;" />
+  </Target>
+
+</Project>
