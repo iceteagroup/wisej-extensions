@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
 // (C) 2020 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
 //
@@ -226,11 +226,56 @@ namespace Wisej.Web.Ext.Camera
 		}
 		private VideoFacingMode _facingMode = VideoFacingMode.User;
 
+		
+		private int _widthCapture = 640;
 		/// <summary>
-		/// Indicates the border style for the control.
+		/// Video capture resolution - Width
 		/// </summary>
-		/// <returns>One of the <see cref="T:Wisej.Web.BorderStyle" /> values. The default is BorderStyle.None.</returns>
-		[DefaultValue(BorderStyle.Solid)]
+		[DesignerActionList]
+		[DefaultValue(true)]
+		public int WidthCapture
+		{
+			get
+			{
+				return this._widthCapture;
+			}
+			set
+			{
+				if (this._widthCapture != value)
+				{
+					this._widthCapture = value;
+					Update();
+				}
+			}
+		}
+
+		private int _heightCapture = 480;
+		/// <summary>
+		/// Video capture resolution - Height
+		/// </summary>
+		[DesignerActionList]
+		[DefaultValue(true)]
+		public int HeightCapture
+		{
+			get
+			{
+				return this._heightCapture;
+			}
+			set
+			{
+				if (this._heightCapture != value)
+				{
+					this._heightCapture = value;
+					Update();
+				}
+			}
+		}
+		
+			/// <summary>
+			/// Indicates the border style for the control.
+			/// </summary>
+			/// <returns>One of the <see cref="T:Wisej.Web.BorderStyle" /> values. The default is BorderStyle.None.</returns>
+			[DefaultValue(BorderStyle.Solid)]
 		[SRCategory("CatAppearance")]
 		[SRDescription("Indicates the border style for the control.")]
 		public virtual BorderStyle BorderStyle
@@ -390,7 +435,10 @@ namespace Wisej.Web.Ext.Camera
 			{
 				videoConstraints = new
 				{
-					facingMode = this._facingMode
+					facingMode = this._facingMode,
+					width = this._widthCapture,
+					height = this._heightCapture
+
 				};
 			}
 
