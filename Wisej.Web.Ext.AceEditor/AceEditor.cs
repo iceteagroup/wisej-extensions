@@ -128,11 +128,11 @@ namespace Wisej.Web.Ext.AceEditor
 		{
 			get
 			{
-				var theme = this.Options.mode ?? "";
-				if (theme.Length >= ACE_MODE.Length)
-					theme = theme.Substring(ACE_MODE.Length);
+				var language = this.Options.mode ?? "";
+				if (language.Length >= ACE_MODE.Length)
+					language = language.Substring(ACE_MODE.Length);
 
-				return theme;
+				return language;
 			}
 			set { this.Options.mode = $"{ACE_MODE}{value}"; }
 		}
@@ -213,7 +213,7 @@ namespace Wisej.Web.Ext.AceEditor
 		}
 
 		/// <summary>
-		/// If readOnly is true, then the editor is set to read-only mode, and none of the content can change.
+		/// Returns or sets the FontSize.
 		/// </summary>
 		[DefaultValue(null)]
 		public float? FontSize
@@ -274,7 +274,7 @@ namespace Wisej.Web.Ext.AceEditor
 		#region Methods
 
 		/// <summary>
-		/// Perform an undo operation on the document, reverting the last change.
+		/// Performs an undo operation on the document, reverting the last change.
 		/// </summary>
 		public void Undo()
 		{
@@ -282,7 +282,7 @@ namespace Wisej.Web.Ext.AceEditor
 		}
 
 		/// <summary>
-		/// Perform a redo operation on the document, reimplementing the last change.
+		/// Performs a redo operation on the document, reimplementing the last change.
 		/// </summary>
 		public void Redo()
 		{
