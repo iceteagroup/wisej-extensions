@@ -1,7 +1,7 @@
 ACEditor
 ====
 
-<img src="../Support/Images/aceditr.png" width="358" height="252">
+<img src="../Support/Images/aceditor.png" width="358" height="252">
 
 Integrates the AceEditor widget.
 Ace is an embeddable code editor written in JavaScript.
