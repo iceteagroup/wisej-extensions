@@ -17,6 +17,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
 using System.Drawing;
 
 namespace Wisej.Web.Ext.Html2Canvas
@@ -24,6 +25,7 @@ namespace Wisej.Web.Ext.Html2Canvas
 	/// <summary>
 	/// Defines the options to pass to the <see cref="Html2Canvas.Screenshot"/> method.
 	/// </summary>
+	[ApiCategory("Html2Canvas")]
 	public class Html2CanvasOptions
 	{
 		/// <summary>

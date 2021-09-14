@@ -18,7 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.CKEditor
 {
@@ -34,6 +34,7 @@ namespace Wisej.Web.Ext.CKEditor
 	/// <summary>
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.CKEditor.CKEditor.Command" /> event.
 	/// </summary>
+	[ApiCategory("CKEditor")]
 	public class CommandEventArgs : EventArgs
 	{
 		/// <summary>

@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.FullCalendar
 {
@@ -31,6 +32,7 @@ namespace Wisej.Web.Ext.FullCalendar
 	/// <summary>
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.EventChanged" /> event.
 	/// </summary>
+	[ApiCategory("FullCalendar")]
 	public class EventValueEventArgs : EventArgs
 	{
 		/// <summary>

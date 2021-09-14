@@ -32,6 +32,7 @@ namespace Wisej.Web.Ext.Polymer
 	/// </summary>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(PolymerWidget))]
+	[ApiCategory("Polymer")]
 	public class PolymerWidget : Control
 	{
 		#region Events

@@ -17,6 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.SmoothieChart
 {
@@ -32,6 +33,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.SmoothieChart.SmoothieChart.DataNeeded" /> event of the 
 	/// <see cref="T:Wisej.Web.Ext.SmoothieChart.SmoothieChart" /> control.
 	/// </summary>
+	[ApiCategory("SmoothieCHart")]
 	public class DataNeededEventArgs : EventArgs
 	{
 		/// <summary>

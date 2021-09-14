@@ -17,15 +17,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
 using System.Web;
 
 namespace Wisej.Web.Ext.AspNetControl
 {
-	/// <summary>
-	/// Self registration for <see cref="HttpModule"/>.
-	/// </summary>
-	/// <exclude/>
-	public class HttpModuleStartup
+    /// <summary>
+    /// Self registration for <see cref="HttpModule"/>.
+    /// </summary>
+    /// <exclude/>
+	[ApiCategory("ASPNetControl")]
+    public class HttpModuleStartup
 	{
 		/// <summary>
 		/// Registers the module.

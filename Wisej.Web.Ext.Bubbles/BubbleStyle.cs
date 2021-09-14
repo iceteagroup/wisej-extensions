@@ -17,12 +17,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.Bubbles
 {
-	/// <summary>
-	/// Bubble styles. Corresponds to states in the theme.
-	/// </summary>
-	public enum BubbleStyle
+    /// <summary>
+    /// Bubble styles. Corresponds to states in the theme.
+    /// </summary>
+	[ApiCategory("Bubbles")]
+    public enum BubbleStyle
 	{
 		/// <summary>
 		/// Uses the "alert" state in the theme.

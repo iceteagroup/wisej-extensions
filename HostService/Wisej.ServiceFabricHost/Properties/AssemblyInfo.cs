@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Wisej Service Fabric Host")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ice Tea Group LLC")]
-[assembly: AssemblyProduct("Wisej 2")]
+[assembly: AssemblyProduct("Wisej 2.2 Extensions")]
 [assembly: AssemblyCopyright("Copyright ©2018 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.FullCalendar
 {
@@ -34,6 +35,7 @@ namespace Wisej.Web.Ext.FullCalendar
 	/// <summary>
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.FullCalendar.VirtualEventsNeededEventArgs" /> event.
 	/// </summary>
+	[ApiCategory("FullCalendar")]
 	public class VirtualEventsNeededEventArgs : EventArgs
 	{
 		/// <summary>

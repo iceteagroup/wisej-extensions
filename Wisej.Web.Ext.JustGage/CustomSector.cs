@@ -17,6 +17,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
 using System.Drawing;
 using Wisej.Base;
 
@@ -25,6 +26,7 @@ namespace Wisej.Web.Ext.JustGage
 	/// <summary>
 	/// Represents custom sectors as used by JustGauge
 	/// </summary>
+	[ApiCategory("JustGage")]
 	public class CustomSector
     {
         /// <summary>

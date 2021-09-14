@@ -17,11 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.jQueryKnob
 {
 	/// <summary>
 	/// Type of the gauge line endings.
 	/// </summary>
+	[ApiCategory("jQueryKnob")]
 	public enum LineCapType
 	{
 		Butt,

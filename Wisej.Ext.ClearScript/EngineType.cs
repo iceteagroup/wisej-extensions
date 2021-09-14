@@ -17,11 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.ClearScript
 {
 	/// <summary>
 	/// Indicates the type of scripting engine to create.
 	/// </summary>
+	[ApiCategory("ClearScript")]
 	public enum EngineType
 	{
 		/// <summary>

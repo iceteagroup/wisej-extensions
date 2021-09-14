@@ -42,6 +42,7 @@ namespace Wisej.Web.Ext.TinyMCE
 	[ToolboxBitmap(typeof(WinForms.RichTextBox))]
 	[DefaultProperty("Text")]
 	[DefaultEvent("TextChanged")]
+	[ApiCategory("TinyMCE")]
 	public class TinyMCE : Widget, IWisejControl
 	{
 		// indicates that the control is ready to update its content.

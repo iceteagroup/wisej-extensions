@@ -35,6 +35,7 @@ namespace Wisej.Web.Ext.CustomWallpaper
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(CustomWallpaper))]
 	[SRDescription("Changes the background image of the Desktop or any Control to use a custom list of images.")]
+	[ApiCategory("CustomWallpaper")]
 	public class CustomWallpaper : Wisej.Web.Component, IWisejHandler
 	{
 		#region Constructors

@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 using Wisej.Core;
 
 namespace Wisej.Web.Ext.GoogleMaps
@@ -33,6 +34,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 	/// <summary>
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.GoogleMaps.GoogleMap.MapPropertyChanged" /> event.
 	/// </summary>
+	[ApiCategory("GoogleMaps")]
 	public class MapPropertyChangedEventArgs : EventArgs
 	{
 		/// <summary>

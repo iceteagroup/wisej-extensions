@@ -28,6 +28,7 @@ namespace Wisej.Web.Ext.FullCalendar
 	/// Represents a resource in the <see cref="T:Wisej.Web.Ext.FullCalendar.FullCalendar"/> control
 	/// when using the scheduler commercial plug in.
 	/// </summary>
+	[ApiCategory("FullCalendar")]
 	public class Resource
 	{
 

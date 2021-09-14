@@ -28,6 +28,7 @@ namespace Wisej.Web.Ext.TourPanel
 	/// <summary>
 	/// Represents a steps in a <see cref="Wisej.Web.Ext.TourPanel"/>.
 	/// </summary>
+	[ApiCategory("TourPanel")]
 	public class TourStep
 	{
 		#region Events

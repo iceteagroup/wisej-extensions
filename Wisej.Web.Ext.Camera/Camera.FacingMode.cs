@@ -1,5 +1,8 @@
-﻿namespace Wisej.Web.Ext.Camera
+﻿using System.ComponentModel;
+
+namespace Wisej.Web.Ext.Camera
 {
+	[ApiCategory("Camera")]
 	public partial class Camera
 	{
 		/// <summary>

@@ -176,9 +176,10 @@ qx.Class.define("wisej.web.ext.Camera", {
 			}
 
 			var options = {
-				bitsPerSecond: bitsPerSecond,
-				mimeType: format || "video/webm"
+				bitsPerSecond: bitsPerSecond
 			};
+			if (format)
+				options.format = format;
 
 			try {
 
@@ -249,16 +250,15 @@ qx.Class.define("wisej.web.ext.Camera", {
 			if (wisej.web.DesignMode)
 				return;
 
+			this.deactivateCamera();
+
 			var me = this;
-			if (value.video || value.audio) {
-				navigator.mediaDevices.getUserMedia(value)
-					.then(function (stream) {
-						// bind to the video element.
-						me._bindStream(stream);
-					});
-			} else {
-				this.deactivateCamera();
-			}
+			navigator.mediaDevices.getUserMedia(value)
+				.then(function (stream) {
+
+					// bind to the video element.
+					me._bindStream(stream);
+				});
 		},
 
 		/**

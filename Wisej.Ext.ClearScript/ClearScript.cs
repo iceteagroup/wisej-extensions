@@ -22,6 +22,7 @@ using Microsoft.ClearScript;
 using Microsoft.ClearScript.V8;
 using Microsoft.ClearScript.Windows;
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -61,6 +62,7 @@ namespace Wisej.Ext.ClearScript
 	/// </para>
 	/// </note>
 	/// </remarks>
+	[ApiCategory("ClearScript")]
 	public static class ClearScript
 	{
 		private static readonly object syncLock = new object();

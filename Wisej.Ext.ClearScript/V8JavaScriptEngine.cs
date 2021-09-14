@@ -19,6 +19,7 @@
 
 using Microsoft.ClearScript.V8;
 using Microsoft.ClearScript.Windows;
+using System.ComponentModel;
 
 namespace Wisej.Ext.ClearScript
 {
@@ -32,6 +33,7 @@ namespace Wisej.Ext.ClearScript
 	/// instance. Script delegates and event handlers are invoked on the calling thread without
 	/// marshaling.
 	/// </remarks>
+	[ApiCategory("ClearScript")]
 	public class V8JavaScriptEngine : Microsoft.ClearScript.V8.V8ScriptEngine
 	{
 		public V8JavaScriptEngine(string name, V8RuntimeConstraints constraints, V8ScriptEngineFlags flags)

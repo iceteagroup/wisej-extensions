@@ -31,7 +31,8 @@ namespace Wisej.Web.Ext.ChartJS
 	/// See http://www.chartjs.org/docs/#line-chart-data-structure for additional information regarding the data structure of ChartJS.
 	/// </summary>
 	[TypeConverter(typeof(DataSet.Converter))]
-	public class DataSet
+	[ApiCategory("ChartJS")]
+    public class DataSet
 	{
 		/// <summary>
 		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/>.

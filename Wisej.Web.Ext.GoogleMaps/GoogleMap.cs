@@ -36,6 +36,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 	/// Represent an instance of the Google Maps widget.
 	/// </summary>
 	[ToolboxBitmap(typeof(GoogleMap))]
+	[ApiCategory("GoogleMaps")]
 	public class GoogleMap : Widget
 	{
 		/// <summary>

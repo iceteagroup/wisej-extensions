@@ -28,6 +28,7 @@ namespace Wisej.Web.Ext.FullCalendar
 	/// Represents the column header formats for the different views.
 	/// </summary>
 	[TypeConverter(typeof(ColumnHeaderFormats.Converter))]
+	[ApiCategory("FullCalendar")]
 	public class ColumnHeaderFormats
 	{
 		private FullCalendar owner;

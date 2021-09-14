@@ -24,23 +24,24 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.AspNetControl
 {
 
-	/// <summary>
-	/// The AspNetWrapperBase is the base class of all wrapped ASP.NET controls.
-	/// </summary>
-	/// <remarks>
-	/// When you using a wrapped ASP.NET control  you must add the <see cref="T:Wisej.Web.Ext.AspNetControl.HttpModule"/> to
-	/// Web.config, like this:
-	/// <code lang="xml">
-	/// <![CDATA[
-	/// 
-	/// <system.webServer>
-	///		<modules>
-	///			<add name = "WisejAspNetControl" type="Wisej.Web.Ext.AspNetControl.HttpModule, Wisej.Web.Ext.AspNetControl" />
-	///			...
-	/// ]]>
-	/// </code>
-	/// </remarks>
-	public class AspNetWrapper<T> : AspNetWrapperBase where T: WebControl, new()
+    /// <summary>
+    /// The AspNetWrapperBase is the base class of all wrapped ASP.NET controls.
+    /// </summary>
+    /// <remarks>
+    /// When you using a wrapped ASP.NET control  you must add the <see cref="T:Wisej.Web.Ext.AspNetControl.HttpModule"/> to
+    /// Web.config, like this:
+    /// <code lang="xml">
+    /// <![CDATA[
+    /// 
+    /// <system.webServer>
+    ///		<modules>
+    ///			<add name = "WisejAspNetControl" type="Wisej.Web.Ext.AspNetControl.HttpModule, Wisej.Web.Ext.AspNetControl" />
+    ///			...
+    /// ]]>
+    /// </code>
+    /// </remarks>
+	[ApiCategory("ASPNetControl")]
+    public class AspNetWrapper<T> : AspNetWrapperBase where T: WebControl, new()
 	{
 		/// <summary>
 		/// Returns the instance of the wrapped ASP.NET control.

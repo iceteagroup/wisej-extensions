@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\Wisej.Web.Ext.Brotli.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Wisej.Web.Ext.Brotli.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -43,7 +45,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Development\2.1\bin\Wisej.Framework.dll</HintPath>
+      <HintPath>..\..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +87,7 @@
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(ProjectDir)..\..\bin"
 copy "$(TargetPath)" "$(ProjectDir)..\..\bin\" /y
+copy "$(TargetDir)$(TargetName).xml" "$(ProjectDir)..\..\bin\" /y
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

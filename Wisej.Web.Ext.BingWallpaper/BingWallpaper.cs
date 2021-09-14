@@ -36,7 +36,8 @@ namespace Wisej.Web.Ext.BingWallpaper
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(BingWallpaper))]
 	[SRDescription("Changes the background image of the Desktop or any Control to use Bing's images of the day.")]
-	public class BingWallpaper : Wisej.Web.Component
+	[ApiCategory("BingWallpaper")]
+    public class BingWallpaper : Wisej.Web.Component
 	{
 		#region Constructors
 

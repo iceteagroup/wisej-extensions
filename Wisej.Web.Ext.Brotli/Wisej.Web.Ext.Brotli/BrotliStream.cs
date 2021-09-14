@@ -18,7 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -27,6 +27,7 @@ namespace System.IO.Compression
 	/// <summary>
 	/// Represents a Brotli stream for compression or decompression.
 	/// </summary>
+	[ApiCategory("Brotli")]
 	public class BrotliStream : Brotli.BrotliStream
 	{
 		/// <summary>

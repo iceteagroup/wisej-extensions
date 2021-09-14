@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using Wisej.Core;
 
@@ -26,6 +27,7 @@ namespace Wisej.Web.Ext.Speech
 	/// <summary>
 	/// Represents an entry in the list of speech recognition results.
 	///</summary>
+	[ApiCategory("Speech")]
 	public class SpeechRecognitionResult
 	{
 		/// <summary>

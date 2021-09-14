@@ -34,6 +34,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
+	[ApiCategory("RibbonBar")]
 	public class RibbonBarAppButton : Wisej.Web.Component
 	{
 		#region Constructor

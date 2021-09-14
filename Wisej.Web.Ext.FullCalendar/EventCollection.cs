@@ -28,6 +28,7 @@ namespace Wisej.Web.Ext.FullCalendar
 	/// <summary>
 	/// Collection of <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> objects.
 	/// </summary>
+	[ApiCategory("FullCalendar")]
 	public class EventCollection : IList<Event>
 	{
 		// the calendar control that owns this collection.

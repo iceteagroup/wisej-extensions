@@ -37,6 +37,7 @@ namespace Wisej.Ext.Translation
 	/// <remarks>
 	/// See https://tech.yandex.com/translate/.
 	/// </remarks>
+	[ApiCategory("Translation")]
 	public class TranslationProviderYandex : TranslationProviderBase
 	{
 		private const string URL = "https://translate.yandex.net/api/v1.5/tr/translate";

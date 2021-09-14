@@ -31,6 +31,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
+	[ApiCategory("RibbonBar")]
 	public class RibbonBarItemComboBox : RibbonBarItem, IWisejComponent
 	{
 		#region Events

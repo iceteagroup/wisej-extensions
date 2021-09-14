@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using Wisej.Core;
 
@@ -26,6 +27,7 @@ namespace Wisej.Web.Ext.FullCalendar
 	/// <summary>
 	/// Represents an event in the <see cref="T:Wisej.Web.Ext.FullCalendar.FullCalendar"/> control.
 	/// </summary>
+	[ApiCategory("FullCalendar")]
 	public class Event
 	{
 		internal FullCalendar owner;
@@ -147,7 +149,7 @@ namespace Wisej.Web.Ext.FullCalendar
 		private string _id = null;
 
 		/// <summary>
-		/// Returns or sets the <see cref="Resource"/> associated to this event.
+		/// Returns or sets the id of the <see cref="Resource"/> associated to this event.
 		/// </summary>
 		public string ResourceId
 		{

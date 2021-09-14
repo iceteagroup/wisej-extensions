@@ -21,7 +21,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Wisej.Base;
 using Wisej.Core;
@@ -36,6 +35,7 @@ namespace Wisej.Ext.Geolocation
 	[ToolboxItemFilter("Wisej.Web", ToolboxItemFilterType.Require)]
 	[ToolboxItemFilter("Wisej.Mobile", ToolboxItemFilterType.Require)]
 	[Description("The Geolocation component represents an object able to programmatically obtain the position of the device.")]
+	[ApiCategory("Geolocation")]
 	public class Geolocation : Wisej.Base.Component, IComponent
 	{
 		#region Constructors

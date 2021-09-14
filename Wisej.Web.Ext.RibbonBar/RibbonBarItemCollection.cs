@@ -18,12 +18,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.RibbonBar
 {
 	/// <summary>
 	/// Represents a collection of <see cref="RibbonBarItem"/> in a <see cref="RibbonBarGroup"/>
 	/// </summary>
+	[ApiCategory("RibbonBar")]
 	public class RibbonBarItemCollection : RibbonBarCollectionBase<RibbonBarGroup, RibbonBarItem>
 	{
 		internal RibbonBarItemCollection(RibbonBarGroup owner) : base(owner)

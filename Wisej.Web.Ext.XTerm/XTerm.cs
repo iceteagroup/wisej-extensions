@@ -34,7 +34,8 @@ namespace Wisej.Web.Ext.XTerm
 	/// </summary>
 	[ToolboxBitmapAttribute(typeof(XTerm))]
 	[Description("XTerm is a lightweight, free, and open source terminal for the web.")]
-	public class XTerm : Widget
+    [ApiCategory("XTerm")]
+    public class XTerm : Widget
 	{
 
 		#region Properties

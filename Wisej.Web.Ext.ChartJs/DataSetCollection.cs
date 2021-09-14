@@ -33,7 +33,8 @@ namespace Wisej.Web.Ext.ChartJS
 	/// </summary>
 	[TypeConverter(typeof(DataSetCollection.Converter))]
 	[Editor(typeof(Design.DataSetCollectionEditor), typeof(UITypeEditor))]
-	public class DataSetCollection : IList, IList<DataSet>
+	[ApiCategory("ChartJS")]
+    public class DataSetCollection : IList, IList<DataSet>
 	{
 		// reference to the ChartJS control that owns this data set collection.
 		internal ChartJS chart;

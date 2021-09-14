@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.Camera
 {
@@ -31,6 +32,7 @@ namespace Wisej.Web.Ext.Camera
 	/// <summary>
 	/// Provides data for the <see cref="Camera.Error"/> event of the <see cref="Camera"/> control.
 	/// </summary>
+	[ApiCategory("Camera")]
 	public class CameraErrorEventArgs : EventArgs
 	{
 		/// <summary>

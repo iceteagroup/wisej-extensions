@@ -29,6 +29,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 	/// Represents the collection of <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> lines
 	/// displayed on the <see cref="T:Wisej.Web.Ext.SmoothieChart.SmoothieChart"/> control.
 	/// </summary>
+	[ApiCategory("SmoothieCHart")]
 	public class TimeSeriesCollection : IList<TimeSeries>, IList
 	{
 		// the owner of this list.

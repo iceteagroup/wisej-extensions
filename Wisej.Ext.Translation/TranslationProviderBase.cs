@@ -27,6 +27,7 @@ namespace Wisej.Ext.Translation
 	/// <summary>
 	/// Base class for the translation providers.
 	/// </summary>
+	[ApiCategory("Translation")]
 	public abstract class TranslationProviderBase
 	{
 		/// <summary>

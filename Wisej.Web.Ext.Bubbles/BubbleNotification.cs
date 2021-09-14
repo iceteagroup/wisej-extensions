@@ -36,7 +36,8 @@ namespace Wisej.Web.Ext.Bubbles
 	[ProvideProperty("BubbleValue", typeof(Control))]
 	[ProvideProperty("BubbleStyle", typeof(Control))]
 	[Description("Represents a numeric notification bubble that can be displayed next to any control.")]
-	public class BubbleNotification : Wisej.Web.Component, IExtenderProvider
+	[ApiCategory("Bubbles")]
+    public class BubbleNotification : Wisej.Web.Component, IExtenderProvider
 	{
 		// collection of controls with the related bubble notification value.
 		private Dictionary<Control, Bubble> bubbles;

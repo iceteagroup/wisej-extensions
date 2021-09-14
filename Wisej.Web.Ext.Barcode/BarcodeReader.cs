@@ -33,6 +33,7 @@ namespace Wisej.Web.Ext.Barcode
 	/// </summary>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Barcode))]
+	[ApiCategory("Barcode")]
 	public partial class BarcodeReader : Component, IExtenderProvider
 	{
 		#region Constructors

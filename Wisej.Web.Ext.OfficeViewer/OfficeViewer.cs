@@ -31,6 +31,7 @@ namespace Wisej.Web.Ext.OfficeViewer
 	/// <summary>
 	/// Microsoft Office Viewer panel. Uses https://products.office.com/en-us/office-online/view-office-documents-online.
 	/// </summary>
+	[ApiCategory("OfficeViewer")]
 	public class OfficeViewer : IFramePanel, IWisejHandler
 	{
 		private const string OFFICEAPPS_URL = "https://view.officeapps.live.com/op/view.aspx?src=";

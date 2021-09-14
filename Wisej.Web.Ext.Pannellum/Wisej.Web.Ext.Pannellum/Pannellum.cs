@@ -31,6 +31,7 @@ namespace Wisej.Web.Ext.Pannellum
 	/// </summary>
 	[ToolboxBitmapAttribute(typeof(Pannellum))]
 	[Description("Pannellum is a lightweight, free, and open source panorama viewer for the web.")]
+	[ApiCategory("Pannellum")]
 	public class Pannellum : Widget
 	{
 

@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using Wisej.Core;
 
@@ -34,6 +35,7 @@ namespace Wisej.Web.Ext.Speech
 	/// <summary>
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.Speech.SpeechRecognition.Result" /> events.
 	///</summary>
+	[ApiCategory("Speech")]
 	public class SpeechRecognitionEventArgs : EventArgs
 	{
 		#region Constructors

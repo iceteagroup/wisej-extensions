@@ -41,6 +41,7 @@ namespace Wisej.Web.Ext.CKEditor
 	[ToolboxBitmap(typeof(WinForms.RichTextBox))]
 	[DefaultProperty("Text")]
 	[DefaultEvent("TextChanged")]
+	[ApiCategory("CKEditor")]
 	public class CKEditor : Widget, IWisejControl
 	{
 		// indicates that the control is ready to update its content.

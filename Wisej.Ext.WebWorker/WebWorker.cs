@@ -38,6 +38,7 @@ namespace Wisej.Ext.WebWorker
 	[ToolboxItemFilter("Wisej.Web", ToolboxItemFilterType.Require)]
 	[ToolboxItemFilter("Wisej.Mobile", ToolboxItemFilterType.Require)]
 	[Description("The WebWorker component represents a JavaScript WebWorker instance that can run on the client and fire sever events and receive updates from the server.")]
+	[ApiCategory("WebWorker")]
 	public class WebWorker : Web.Component, IWisejHandler
 	{
 		// version counter, used to update the source code when it changes.

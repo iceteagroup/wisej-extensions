@@ -30,6 +30,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 	///	
 	/// </summary>
 	[ToolboxItem(true)]
+	[ApiCategory("ColumnFilter")]
 	public partial class WhereColumnFilterPanel : ColumnFilterPanel
 	{
 		/// <summary>

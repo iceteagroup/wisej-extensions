@@ -1,6 +1,9 @@
-﻿namespace Wisej.Web.Ext.Camera
+﻿using System.ComponentModel;
+
+namespace Wisej.Web.Ext.Camera
 {
-    public partial class Camera
+	[ApiCategory("Camera")]
+	public partial class Camera
     {
         /// <summary>
         /// The CSS object-fit property is used to specify how the video should be resized to fit its container.

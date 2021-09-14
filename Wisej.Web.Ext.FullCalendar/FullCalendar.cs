@@ -39,6 +39,7 @@ namespace Wisej.Web.Ext.FullCalendar
 	[ToolboxBitmap(typeof(FullCalendar))]
 	[DefaultEvent("EventClick")]
 	[Description("FullCalendar is a drag-n-drop widget for displaying events on a full-sized calendar based on the open-source fullcalendar.io. See http://fullcalendar.io/.")]
+	[ApiCategory("FullCalendar")]
 	public class FullCalendar : Widget, IWisejDataStore, IWisejControl
 	{
 		/// <summary>
@@ -1383,9 +1384,10 @@ namespace Wisej.Web.Ext.FullCalendar
 				int x = data.x ?? 0;
 				int y = data.y ?? 0;
 				Control target = data.target;
+				string resourceId = data.resourceId;
 				var location = PointToClient(new Point(x, y));
 
-				OnItemDrop(new ItemDropEventArgs(target, day, location));
+				OnItemDrop(new ItemDropEventArgs(target, day, location, resourceId));
 			}
 		}
 

@@ -49,6 +49,7 @@ namespace Wisej.Web.Ext.Html2Canvas
 	/// </remarks>
 	[ToolboxItem(false)]
 	[Description("Implementation of the html2canvas library (https://html2canvas.hertzen.com/).")]
+	[ApiCategory("Html2Canvas")]
 	public class Html2Canvas : Component
 	{
 		#region Constructor

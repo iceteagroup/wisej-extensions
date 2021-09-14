@@ -32,6 +32,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
+	[ApiCategory("RibbonBar")]
 	public class RibbonBarItemControl : RibbonBarItem
 	{
 		#region Properties

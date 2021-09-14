@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.ChartJS
 {
@@ -30,10 +31,11 @@ namespace Wisej.Web.Ext.ChartJS
 	/// <param name="e">A <see cref="T:Wisej.Web.Ext.ChartJS.ChartClickEventArgs" /> that contains the event data. </param>
 	public delegate void ChartClickEventHandler(object sender, ChartClickEventArgs e);
 
-	/// <summary>
-	/// Provides data for the <see cref="E:Wisej.Web.Ext.ChartJS.ChartJS.ChartClick" /> event of the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS" /> control.
-	/// </summary>
-	public class ChartClickEventArgs: EventArgs
+    /// <summary>
+    /// Provides data for the <see cref="E:Wisej.Web.Ext.ChartJS.ChartJS.ChartClick" /> event of the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS" /> control.
+    /// </summary>
+	[ApiCategory("ChartJS")]
+    public class ChartClickEventArgs: EventArgs
 	{
 		/// <summary>
 		///  Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.ChartClickEventArgs"/>.

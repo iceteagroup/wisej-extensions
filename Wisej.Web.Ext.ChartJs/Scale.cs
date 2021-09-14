@@ -21,10 +21,11 @@ using System.ComponentModel;
 
 namespace Wisej.Web.Ext.ChartJS
 {
-	/// <summary>
-	/// Type of scale being employed.
-	/// </summary>
-	public enum ScaleType
+    /// <summary>
+    /// Type of scale being employed.
+    /// </summary>
+	[ApiCategory("ChartJS")]
+    public enum ScaleType
 	{
 		/// <summary>
 		/// The linear scale can be used to display numerical data. It can be placed on either the x or y axis. The scatter chart type automatically configures a line chart to use one of these scales for the x axis.

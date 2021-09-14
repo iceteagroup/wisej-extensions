@@ -36,6 +36,7 @@ namespace Wisej.Web.Ext.JustGage
 	[DefaultProperty("Value")]
 	[DefaultBindingProperty("Value")]
 	[Description("JustGage is an animated, nice & clean gage widget.")]
+	[ApiCategory("JustGage")]
 	public class JustGage : Control, IWisejControl
 	{
 		#region Events

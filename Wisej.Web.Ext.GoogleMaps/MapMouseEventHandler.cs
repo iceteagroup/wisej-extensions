@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.GoogleMaps
 {
@@ -31,6 +32,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 	/// <summary>
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.GoogleMaps.GoogleMap.MapClick" /> and the <see cref="E:Wisej.Web.Ext.GoogleMaps.GoogleMap.MapDoubleClick" /> event.
 	/// </summary>
+	[ApiCategory("GoogleMaps")]
 	public class MapMouseEventArgs : EventArgs
 	{
 		/// <summary>

@@ -34,6 +34,7 @@ namespace Wisej.Web.Ext.Polymer
 	[ToolboxItemFilter("Wisej.Web", ToolboxItemFilterType.Require)]
 	[ToolboxItemFilter("Wisej.Mobile", ToolboxItemFilterType.Require)]
 	[Description("The PolymerComponent component represents a set of polymer libraries to import in the application's page using &lt;link rel='import'&gt; elements.")]
+	[ApiCategory("Polymer")]
 	public class PolymerComponent : Wisej.Base.Component, IComponent
 	{
 		#region Constructors

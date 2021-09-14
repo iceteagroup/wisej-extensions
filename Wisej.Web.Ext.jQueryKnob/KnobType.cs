@@ -17,11 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.jQueryKnob
 {
 	/// <summary>
 	/// Type of the knob.
 	/// </summary>
+	[ApiCategory("jQueryKnob")]
 	public enum KnobType
 	{
 		Gauge,

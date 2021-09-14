@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
 
 namespace Wisej.Web.Ext.GoogleMaps
@@ -34,6 +35,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 	/// <see cref="E:Wisej.Web.Ext.GoogleMaps.GoogleMap.MarkerDragStart" /> and the 
 	/// <see cref="E:Wisej.Web.Ext.GoogleMaps.GoogleMap.MarkerDragEnd" /> event.
 	/// </summary>
+	[ApiCategory("GoogleMaps")]
 	public class MarkerDragEventArgs : EventArgs
 	{
 		/// <summary>

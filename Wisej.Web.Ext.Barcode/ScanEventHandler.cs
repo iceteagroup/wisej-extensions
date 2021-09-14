@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.Barcode
 {
@@ -26,11 +27,13 @@ namespace Wisej.Web.Ext.Barcode
 	/// </summary>
 	/// <param name="sender">The source of the event. </param>
 	/// <param name="e">A <see cref="ScanEventArgs" /> that contains the event data.</param>
+	[ApiCategory("Barcode")]
 	public delegate void ScanEventHandler(object sender, ScanEventArgs e);
 
 	/// <summary>
 	/// Provides data for the <see cref="BarcodeReader.ScanSuccess"/> event of the <see cref="BarcodeReader"/> component.
 	/// </summary>
+	[ApiCategory("Barcode")]
 	public class ScanEventArgs : EventArgs
 	{
 		/// <summary>

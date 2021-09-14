@@ -17,11 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.Translation
 {
 	/// <summary>
 	/// Represents the result of a translation request. 
 	/// </summary>
+	[ApiCategory("Translation")]
 	public class TranslationResult
 	{
 		/// <summary>

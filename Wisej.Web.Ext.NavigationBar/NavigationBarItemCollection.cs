@@ -30,6 +30,7 @@ namespace Wisej.Web.Ext.NavigationBar
 	/// Contains a collection of <see cref="NavigationBarItem" /> objects.
 	/// </summary>
 	[ListBindable(false)]
+	[ApiCategory("NavigationBar")]
 	public class NavigationBarItemCollection : IList, IList<NavigationBarItem>, IEnumerable<NavigationBarItem>
 	{
 

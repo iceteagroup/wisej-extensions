@@ -18,12 +18,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.ChartJS
 {
-	/// <summary>
-	/// Defines the type of chart rendered by the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control.
-	/// </summary>
-	public enum ChartType
+    /// <summary>
+    /// Defines the type of chart rendered by the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control.
+    /// </summary>
+	[ApiCategory("ChartJS")]
+    public enum ChartType
 	{
 		/// <summary>
 		/// A line chart plots data points on a line.

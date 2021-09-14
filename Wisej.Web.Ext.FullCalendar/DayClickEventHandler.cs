@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
 
 namespace Wisej.Web.Ext.FullCalendar
@@ -34,6 +35,7 @@ namespace Wisej.Web.Ext.FullCalendar
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.DayClick" /> event of 
 	/// the <see cref="T:Wisej.Web.Ext.FullCalendar.FullCalendar" /> control.
 	/// </summary>
+	[ApiCategory("FullCalendar")]
 	public class DayClickEventArgs : MouseEventArgs
 	{
 		/// <summary>

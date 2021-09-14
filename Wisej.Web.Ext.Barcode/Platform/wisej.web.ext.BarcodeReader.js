@@ -97,7 +97,8 @@ qx.Class.define("wisej.web.ext.BarcodeReader", {
 			var video = camera.getMediaObject();
 
 			// if the video source isn't ready yet, schedule a callback.
-			if (!video.srcObject) {
+			var stream = video.srcObject;
+			if (!stream) {
 
 				var play = function (e) {
 					me.startMonitoring();
@@ -110,16 +111,17 @@ qx.Class.define("wisej.web.ext.BarcodeReader", {
 			if (!this.codeReader)
 				this.codeReader = new ZXing.BrowserMultiFormatReader();
 
-			this.codeReader.decodeFromVideoDevice(null, video.id, function (result, err) {
+			var deviceId = stream.getTracks()[0].getCapabilities().deviceId;
 
-					if (result) {
+			this.codeReader.decodeFromVideoDevice(deviceId, video.id, function (result, error) {
+				if (result) {
 
-						me.fireDataEvent("scanSuccess", result.text);
+					me.fireDataEvent("scanSuccess", result.text);
 
-						if (me.getScanMode() !== "automatic")
-							me.codeReader.stopContinuousDecode();
-					}
-				});
+					if (me.getScanMode() !== "automatic")
+						me.codeReader.stopContinuousDecode();
+				}
+			});
 		},
 
 		/**
@@ -140,13 +142,16 @@ qx.Class.define("wisej.web.ext.BarcodeReader", {
 			var camera = this.getCamera();
 			var video = camera.getMediaObject();
 
-			if (video.srcObject) {
+			var stream = video.srcObject;
+			if (stream) {
 
 				if (!this.cameraReader)
 					this.cameraReader = new ZXing.BrowserMultiFormatReader();
 
+				var deviceId = stream.getTracks()[0].getCapabilities().deviceId;
+
 				var me = this;
-				this.cameraReader.decodeFromVideoDevice(null, video.id, function (result, error) {
+				this.cameraReader.decodeFromVideoDevice(deviceId, video.id, function (result, error) {
 
 					if (error) {
 						me.fireDataEvent("scanError", error.message);

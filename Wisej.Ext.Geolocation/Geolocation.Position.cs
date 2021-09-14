@@ -25,6 +25,7 @@ namespace Wisej.Ext.Geolocation
 	/// <summary>
 	///  Represents the status of the Position object.
 	/// </summary>
+	[ApiCategory("Geolocation")]
 	public enum StatusCode
 	{
 		/// <summary>

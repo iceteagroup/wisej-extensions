@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ice Tea Group LLC")]
-[assembly: AssemblyProduct("Wisej 2")]
+[assembly: AssemblyProduct("Wisej 2.2 Extensions")]
 [assembly: AssemblyCopyright("Copyright ©2018 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -29,4 +29,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.2.53.1")]
+[assembly: AssemblyFileVersion("2.2.60.0")]

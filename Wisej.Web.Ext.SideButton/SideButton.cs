@@ -31,6 +31,7 @@ namespace Wisej.Web.Ext.SideButton
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(SideButton))]
 	[Description("Retractable animated side button.")]
+	[ApiCategory("SideButton")]
 	public class SideButton : Button, IWisejControl
 	{
 		#region Constructor

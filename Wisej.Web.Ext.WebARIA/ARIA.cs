@@ -28,6 +28,7 @@ namespace Wisej.Web.Ext.WebARIA
 	/// Represents the WAI-ARIA properties associated to a <see cref="Control"/>.
 	/// </summary>
 	[TypeConverter(typeof(ARIA.ExpandableObjectConverter))]
+	[ApiCategory("WebARIA")]
 	public class ARIA
 	{
 		private Control owner;

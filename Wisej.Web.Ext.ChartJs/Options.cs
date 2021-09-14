@@ -29,7 +29,8 @@ namespace Wisej.Web.Ext.ChartJS
 	/// </summary>
 	[TypeConverter(typeof(OptionsBase.Converter))]
 	[Editor(typeof(Design.OptionsEditor), typeof(UITypeEditor))]
-	public abstract class OptionsBase : ICloneable
+	[ApiCategory("ChartJS")]
+    public abstract class OptionsBase : ICloneable
 	{
 		#region Properties
 

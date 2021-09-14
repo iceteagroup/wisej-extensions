@@ -31,6 +31,7 @@ namespace Wisej.Web.Ext.NavigationBar
 	[ToolboxItem(false)]
 	[DesignTimeVisible(false)]
 	[Designer("Wisej.Design.ComponentDesigner, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+	[ApiCategory("NavigationBar")]
 	public partial class NavigationBarItem : Wisej.Web.FlexLayoutPanel
 	{
 		/// <summary>

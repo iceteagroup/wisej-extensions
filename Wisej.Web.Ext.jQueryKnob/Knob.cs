@@ -32,6 +32,7 @@ namespace Wisej.Web.Ext.jQueryKnob
 	/// </summary>
 	[ToolboxBitmap(typeof(Knob))]
 	[DefaultEvent("ValueChanged")]
+	[ApiCategory("jQueryKnob")]
 	public class Knob : Widget
 	{
 		/// <summary>

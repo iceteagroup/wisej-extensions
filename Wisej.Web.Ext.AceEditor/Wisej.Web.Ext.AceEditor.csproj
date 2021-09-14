@@ -20,8 +20,7 @@
 		<Reference Include="System.Drawing" />
 		<Reference Include="System.Windows.Forms" />
 		<Reference Include="Wisej.Framework">
-			<SpecificVersion>False</SpecificVersion>
-			<HintPath>C:\Projects\Wisej\IceTeaGroup\Wisej\Development\2.2\bin\Wisej.Framework.dll</HintPath>
+		  <HintPath>..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 

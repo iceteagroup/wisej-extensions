@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.Notification
 {
@@ -31,6 +32,7 @@ namespace Wisej.Web.Ext.Notification
 	/// <summary>
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.Notification.Notification.Click"/> events.
 	/// </summary>
+	[ApiCategory("Notification")]
 	public class NotificationClickEventArgs : EventArgs
 	{
 		/// <summary>

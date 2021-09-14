@@ -25,6 +25,7 @@ namespace Wisej.Web.Ext.TourPanel
 	/// <summary>
 	/// Provides data for <see cref="E:Wisej.Web.Ext.TourPanel.TourPanelEventHandler" /> event.
 	/// </summary>
+	[ApiCategory("TourPanel")]
 	public class TourPanelEventArgs : CancelEventArgs
 	{
 		/// <summary>

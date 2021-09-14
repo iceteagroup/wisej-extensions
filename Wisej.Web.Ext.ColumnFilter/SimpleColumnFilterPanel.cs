@@ -32,6 +32,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 	/// the bound column in a checked list box. The user can select
 	/// multiple values, clear the selection or select all.
 	/// </summary>
+	[ApiCategory("ColumnFilter")]
 	public partial class SimpleColumnFilterPanel : ColumnFilterPanel
 	{
 		/// <summary>

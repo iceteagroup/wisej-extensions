@@ -17,11 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.Barcode
 {
 	/// <summary>
 	/// Determines the barcode symbology to display display.
 	/// </summary>
+	[ApiCategory("Barcode")]
 	public enum BarcodeType
 	{
 		/// <summary>Aztec 2D barcode format.</summary>

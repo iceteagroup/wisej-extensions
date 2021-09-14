@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.RibbonBar
 {
@@ -25,6 +26,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// Contains the data for the events in a <see cref="RibbonBar"/> control
 	/// fired by its <see cref="RibbonBarGroup"/> components.
 	/// </summary>
+	[ApiCategory("RibbonBar")]
 	public class RibbonBarGroupEventArgs : EventArgs
 	{
 		/// <summary>

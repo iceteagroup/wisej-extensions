@@ -30,6 +30,7 @@ namespace Wisej.Web.Ext.TaskBar
 	/// </summary>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(TaskBar))]
+	[ApiCategory("TaskBar")]
 	public class TaskBar : Control, IWisejControl
 	{
 		#region Constructors

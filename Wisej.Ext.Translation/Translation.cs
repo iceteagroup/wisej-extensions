@@ -32,6 +32,7 @@ namespace Wisej.Ext.Translation
 	[ToolboxItemFilter("Wisej.Web", ToolboxItemFilterType.Require)]
 	[ToolboxItemFilter("Wisej.Mobile", ToolboxItemFilterType.Require)]
 	[Description("The Translation component interfaces with several third party translation providers to provide language translation services to the application.")]
+	[ApiCategory("Translation")]
 	public class Translation : System.ComponentModel.Component
 	{
 		private const string DEFAULT_PROVIDER_TYPE = "Wisej.Ext.Translation.TranslationProviderYandex";

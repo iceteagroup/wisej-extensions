@@ -17,12 +17,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.ChartJS
 {
-	/// <summary>
-	/// Defines the style of a point in the chart.
-	/// </summary>
-	public enum PointStyle
+    /// <summary>
+    /// Defines the style of a point in the chart.
+    /// </summary>
+	[ApiCategory("ChartJS")]
+    public enum PointStyle
 	{
         /// <summary>
         /// Circle

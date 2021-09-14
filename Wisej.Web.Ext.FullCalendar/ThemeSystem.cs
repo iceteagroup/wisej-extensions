@@ -17,11 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.FullCalendar
 {
 	/// <summary>
 	/// Enumerates the theme systems supported by the FullCalendar.
 	/// </summary>
+	[ApiCategory("FullCalendar")]
 	public enum ThemeSystem
 	{
 		/// <summary>

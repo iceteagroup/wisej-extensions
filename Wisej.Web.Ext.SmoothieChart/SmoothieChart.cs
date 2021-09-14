@@ -32,6 +32,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 	[ToolboxBitmap(typeof(SmoothieChart))]
 	[DefaultEvent("DataNeeded")]
 	[Description("SmoothieChart is a JavaScript charting library for streaming data.")]
+	[ApiCategory("SmoothieChart")]
 	public class SmoothieChart : Control
 	{
 		/// <summary>

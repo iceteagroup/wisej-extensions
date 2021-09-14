@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ice Tea Group LLC")]
-[assembly: AssemblyProduct("Wisej 2")]
+[assembly: AssemblyProduct("Wisej 2.2 Extensions")]
 [assembly: AssemblyCopyright("Copyright ©2020 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,4 +32,4 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.2.53.2")]
+[assembly: AssemblyFileVersion("2.2.60.0")]

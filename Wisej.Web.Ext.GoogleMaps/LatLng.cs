@@ -19,6 +19,7 @@
 
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.GoogleMaps
 {
@@ -39,6 +40,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 	/// Notice that you cannot modify the coordinates of a LatLng. If you want to compute another point, you have to create a new one.
 	/// 
 	/// </remarks>
+	[ApiCategory("GoogleMaps")]
 	public class LatLng
 	{
 		/// <summary>

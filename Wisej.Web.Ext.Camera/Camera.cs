@@ -35,6 +35,7 @@ namespace Wisej.Web.Ext.Camera
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Camera))]
 	[Description("The Camera component makes it possible to take pictures with the device's camera and upload them to the server.")]
+	[ApiCategory("Camera")]
 	public partial class Camera : Control, IWisejHandler
 	{
 		#region Constructors
@@ -227,7 +228,6 @@ namespace Wisej.Web.Ext.Camera
 		private VideoFacingMode _facingMode = VideoFacingMode.User;
 
 		
-		private int _widthCapture = 640;
 		/// <summary>
 		/// Video capture resolution - Width
 		/// </summary>
@@ -248,8 +248,8 @@ namespace Wisej.Web.Ext.Camera
 				}
 			}
 		}
+		private int _widthCapture = 640;
 
-		private int _heightCapture = 480;
 		/// <summary>
 		/// Video capture resolution - Height
 		/// </summary>
@@ -270,6 +270,8 @@ namespace Wisej.Web.Ext.Camera
 				}
 			}
 		}
+		private int _heightCapture = 480;
+
 		
 			/// <summary>
 			/// Indicates the border style for the control.
@@ -341,7 +343,7 @@ namespace Wisej.Web.Ext.Camera
 		/// <param name="bitsPerSecond">Audio and video bits per second. <see href="https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder"/>.</param>
 		/// <param name="updateInterval">Update interval in seconds. The default is zero causing the video to be uploaded on <see cref="StopRecording"/>.</param>
 		/// <remarks>You must call <see cref="StopRecording"/>to end recording.</remarks>
-		public void StartRecording(string format = "video/webm", int bitsPerSecond = 2500000, int updateInterval = 0)
+		public void StartRecording(string format=null, int bitsPerSecond = 2500000, int updateInterval = 0)
 		{
 			Call("startRecording", format, bitsPerSecond, updateInterval);
 		}
@@ -435,10 +437,9 @@ namespace Wisej.Web.Ext.Camera
 			{
 				videoConstraints = new
 				{
-					facingMode = this._facingMode,
 					width = this._widthCapture,
-					height = this._heightCapture
-
+					height = this._heightCapture,
+					facingMode = this._facingMode,
 				};
 			}
 

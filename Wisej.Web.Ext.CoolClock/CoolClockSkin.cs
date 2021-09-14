@@ -17,11 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.CoolClock
 {
 	/// <summary>
 	/// CoolClock available skins.
 	/// </summary>
+	[ApiCategory("CoolClock")]
 	public enum CoolClockSkin
 	{
 		SwissRail,

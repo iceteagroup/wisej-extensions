@@ -18,12 +18,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.DataGridViewSummaryRow
 {
 	/// <summary>
 	/// Represents a summary row in a <see cref="DataGridView"/> control.
 	/// </summary>
+	[ApiCategory("DataGridViewSummaryRow")]
 	public class DataGridViewSummaryRow : DataGridViewRow
 	{
 		internal DataGridViewSummaryRow(DataGridViewRow[] group, DataGridViewColumn groupFromCol, DataGridViewColumn groupToCol, SummaryRowPosition summaryPosition)

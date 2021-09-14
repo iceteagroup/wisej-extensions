@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.IO;
 using System.Web;
 using System.Web.Caching;
@@ -26,14 +27,15 @@ using System.Web.Hosting;
 
 namespace Wisej.Web.Ext.AspNetControl
 {
-	/// <summary>
-	/// Custom module that installs a virtual path provider for the AspNetControl wrapper.
-	/// </summary>
-	/// <remarks>
-	/// The virtual path provider is used to "feed" a blank ASP.NET page that
-	/// hosts the ASP.NET control that we are wrapping.
-	/// </remarks>
-	public class HttpModule : IHttpModule
+    /// <summary>
+    /// Custom module that installs a virtual path provider for the AspNetControl wrapper.
+    /// </summary>
+    /// <remarks>
+    /// The virtual path provider is used to "feed" a blank ASP.NET page that
+    /// hosts the ASP.NET control that we are wrapping.
+    /// </remarks>
+	[ApiCategory("ASPNetControl")]
+    public class HttpModule : IHttpModule
 	{
 		private const string ASPNETHOSTPAGE = "/Wisej.AspNetHost.aspx";
 		private const string ASPNETHOSTPAGERESOURCE = "Wisej.Web.Ext.AspNetControl.Wisej.AspNetHost.aspx";

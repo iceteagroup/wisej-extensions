@@ -32,8 +32,9 @@ namespace Wisej.Web.Ext.AceEditor
 	/// Ace is an embeddable code editor written in JavaScript. 
 	/// It matches the features and performance of native editors such as Sublime, Vim and TextMate. 
 	/// </remarks>
+	[ApiCategory("AceEditor")]
 	public class AceEditor : Widget
-    {
+	{
 		private const string ACE_MODE = "ace/mode/";
 		private const string ACE_THEME = "ace/theme/";
 

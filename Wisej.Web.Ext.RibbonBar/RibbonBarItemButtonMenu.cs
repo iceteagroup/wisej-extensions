@@ -27,6 +27,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <see cref="RibbonBarItemSplitButton"/>.
 	/// </summary>
 	[ToolboxItem(false)]
+	[ApiCategory("RibbonBar")]
 	internal class RibbonBarItemButtonMenu : ContextMenu
 	{
 		internal RibbonBarItemButtonMenu(RibbonBarItemButton button)

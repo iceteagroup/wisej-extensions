@@ -37,7 +37,8 @@ namespace Wisej.Web.Ext.ChartJS
 	[ToolboxBitmap(typeof(ChartJS))]
 	[DefaultEvent("ChartClick")]
 	[Description("ChartJS is a simple yet flexible JavaScript charting for designers & developers from http://www.chartjs.org/.")]
-	public class ChartJS : Widget, IWisejControl
+	[ApiCategory("ChartJS")]
+    public class ChartJS : Widget, IWisejControl
 	{
 		/// <summary>
 		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control.

@@ -17,6 +17,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
 using System.Drawing;
 
 namespace Wisej.Web.Ext.jSequence
@@ -33,6 +34,7 @@ namespace Wisej.Web.Ext.jSequence
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.jSequence.Sequence.ElementClick" /> event of 
 	/// the <see cref="T:Wisej.Web.Ext.jSequence.Sequence" /> control.
 	/// </summary>
+	[ApiCategory("jSequence")]
 	public class ElementClickEventArgs : MouseEventArgs
 	{
 		/// <summary>

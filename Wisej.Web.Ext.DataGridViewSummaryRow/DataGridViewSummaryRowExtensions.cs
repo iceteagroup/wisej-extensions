@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,6 +27,7 @@ namespace Wisej.Web.Ext.DataGridViewSummaryRow
 	/// <summary>
 	/// Adds summary methods to the <see cref="DataGridView"/> control.
 	/// </summary>
+	[ApiCategory("DataGridViewSummaryRow")]
 	public static class DataGridViewSummaryRowExtensions
 	{
 		#region Methods

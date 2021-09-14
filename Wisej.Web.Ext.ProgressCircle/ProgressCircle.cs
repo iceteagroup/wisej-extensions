@@ -33,6 +33,7 @@ namespace Wisej.Web.Ext.ProgressCircle
 	/// </summary>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(ProgressCircle))]
+	[ApiCategory("ProgressCircle")]
 	public class ProgressCircle : Canvas
 	{
 		/// <summary>

@@ -38,6 +38,7 @@ namespace Wisej.Web.Ext.CountUp
 	[DefaultEvent(nameof(CountTerminated))]
 	[DefaultBindingProperty(nameof(Value))]
 	[Description("CountUp.js is a JavaScript widget that can create animations to display numerical data.")]
+	[ApiCategory("CountUp")]
 	public class CountUp : Control, IWisejControl
 	{
 		#region Events

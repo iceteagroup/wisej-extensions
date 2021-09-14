@@ -40,6 +40,7 @@ namespace Wisej.Web.Ext.NavigationBar
 	[ToolboxBitmap(typeof(NavigationBar))]
 	[Description("Responsive vertical navigation bar.")]
 	[Designer("Wisej.Design.ControlDesigner, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+	[ApiCategory("NavigationBar")]
 	public partial class NavigationBar : Wisej.Web.FlexLayoutPanel, IWisejDesignTarget
 	{
 		#region Constructor

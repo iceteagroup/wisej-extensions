@@ -33,6 +33,7 @@ namespace Wisej.Web.Ext.Notification
 	/// </summary>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Notification))]
+	[ApiCategory("Notification")]
 	[SRDescription("Adds support for the Notification API: https://developer.mozilla.org/en-US/docs/Web/API/notification.")]
 	public class Notification : Wisej.Web.Component
 	{

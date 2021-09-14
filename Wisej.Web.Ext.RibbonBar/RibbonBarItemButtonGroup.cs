@@ -32,6 +32,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// </summary>
 	[ToolboxItem(false)]
 	[DesignTimeVisible(false)]
+	[ApiCategory("RibbonBar")]
 	public class RibbonBarItemButtonGroup : RibbonBarItem
 	{
 		#region Events

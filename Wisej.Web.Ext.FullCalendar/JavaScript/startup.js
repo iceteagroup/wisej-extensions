@@ -388,7 +388,8 @@ this.onItemDrop = function (e) {
 		this.fireWidgetEvent("itemDrop", {
 			date: day,
 			x: x, y: y,
-			target: e.getDragTarget()
+			target: e.getDragTarget(),
+			resourceId: footprint.resourceId
 		});
 	} catch (ex) {
 

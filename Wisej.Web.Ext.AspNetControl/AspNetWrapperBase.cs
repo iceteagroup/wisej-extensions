@@ -30,7 +30,8 @@ namespace Wisej.Web.Ext.AspNetControl
 	/// Base non-generic class for <see cref="T:Wisej.Web.Ext.AspNetControl.AspNetWrapperBase"/>.
 	/// </summary>
 	[ToolboxItem(false)]
-	public abstract class AspNetWrapperBase : IFramePanel
+	[ApiCategory("ASPNetControl")]
+    public abstract class AspNetWrapperBase : IFramePanel
 	{
 		// used to change the url of the inner panel when calling Update. 
 		private int _version;

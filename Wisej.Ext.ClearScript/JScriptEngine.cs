@@ -19,6 +19,7 @@
 
 using Microsoft.ClearScript.Windows;
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Ext.ClearScript
 {
@@ -27,6 +28,7 @@ namespace Wisej.Ext.ClearScript
 	/// Thread safe JScriptEngine implementation of the
 	/// <see cref="Microsoft.ClearScript.Windows.JScriptEngine"/> scripting engine.
 	/// </summary>
+	[ApiCategory("ClearScript")]
 	public class JScriptEngine : Microsoft.ClearScript.Windows.JScriptEngine
 	{
 		public JScriptEngine(string name, WindowsScriptEngineFlags flags)

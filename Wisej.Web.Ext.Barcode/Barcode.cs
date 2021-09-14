@@ -32,6 +32,7 @@ namespace Wisej.Web.Ext.Barcode
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Barcode))]
 	[DefaultProperty("Value")]
+	[ApiCategory("Barcode")]
 	[Description("Represents a barcode widget supporting several formats.")]
 	public class Barcode : Control, IWisejControl
 	{

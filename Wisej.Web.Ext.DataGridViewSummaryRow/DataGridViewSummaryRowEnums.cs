@@ -17,12 +17,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.DataGridViewSummaryRow
 {
 
 	/// <summary>
 	/// Determines the aggregation result to display in the <see cref="DataGridViewSummaryRow"/>.
 	/// </summary>
+	[ApiCategory("DataGridViewSummaryRow")]
 	public enum SummaryType
 	{
 		/// <summary>

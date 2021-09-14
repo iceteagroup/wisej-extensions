@@ -38,6 +38,7 @@ namespace Wisej.Web.Ext.Speech
 	[ToolboxBitmap(typeof(SpeechSynthesis))]
 	[ProvideProperty("SpeechSynthesis", typeof(Control))]
 	[Description("The SpeechSynthesis interface of the Web Speech API is the controller interface for the speech service.")]
+	[ApiCategory("Speech")]
 	public class SpeechSynthesis : Wisej.Web.Component, IExtenderProvider
 	{
 		// collection of controls using the extender provider.

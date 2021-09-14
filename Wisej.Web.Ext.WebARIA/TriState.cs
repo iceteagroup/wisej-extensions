@@ -17,11 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.WebARIA
 {
 	/// <summary>
 	/// Represents a tristate value for a boolean ARIA property.
 	/// </summary>
+	[ApiCategory("WebARIA")]
 	public enum TriState
 	{
 		/// <summary>

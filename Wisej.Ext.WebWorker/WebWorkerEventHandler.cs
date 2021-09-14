@@ -19,6 +19,7 @@
 
 
 using System;
+using System.ComponentModel;
 using Wisej.Core;
 
 namespace Wisej.Ext.WebWorker
@@ -33,6 +34,7 @@ namespace Wisej.Ext.WebWorker
 	/// <summary>
 	/// Provides data for the PostMessage event.
 	/// </summary>
+	[ApiCategory("WebWorker")]
 	public class WebWorkerPostMessageEventArgs : EventArgs
 	{
 		/// <summary>

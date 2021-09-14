@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 	/// <summary>
 	/// Determines the interpolation used to draw the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> line.
 	/// </summary>
+	[ApiCategory("SmoothieCHart")]
 	public enum InterpolationType
 	{
 		/// <summary>

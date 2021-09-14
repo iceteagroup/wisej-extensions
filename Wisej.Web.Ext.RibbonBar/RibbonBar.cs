@@ -47,6 +47,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	[DefaultEvent("Load")]
 	[ToolboxBitmap(typeof(RibbonBar))]
 	[Description("The RibbonBar organizes the features of an application into a series of tabs.")]
+	[ApiCategory("RibbonBar")]
 	public class RibbonBar : Control, IWisejControl, IWisejDesignTarget
 	{
 		#region Constructor

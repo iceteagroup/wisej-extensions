@@ -30,6 +30,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 	/// <see cref="ColumnFilter"/> extender.
 	/// </summary>
 	[ToolboxItem(false)]
+	[ApiCategory("ColumnFilter")]
 	public partial class ColumnFilterPanel : Wisej.Web.UserPopup
 	{
 		#region Constructors

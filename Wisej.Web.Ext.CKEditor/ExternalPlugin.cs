@@ -26,6 +26,7 @@ namespace Wisej.Web.Ext.CKEditor
 	/// a local installation, although for local installations, it is not necessary to register
 	/// local plugins. See https://cdn.ckeditor.com/ under "Enabling Local Plugins.
 	/// </summary>
+	[ApiCategory("CKEditor")]
 	public class ExternalPlugin
 	{
 		/// <summary>

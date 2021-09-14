@@ -17,6 +17,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.WebARIA
 {
 	/// <summary>
@@ -24,6 +26,7 @@ namespace Wisej.Web.Ext.WebARIA
 	/// This may include formats such as email addresses or telephone numbers. aria-invalid can also be used to indicate that a required field has not been filled in.
 	/// The attribute should be programmatically set as a result of a validation process.
 	/// </summary>
+	[ApiCategory("WebARIA")]
 	public enum Invalid
 	{
 		/// <summary>

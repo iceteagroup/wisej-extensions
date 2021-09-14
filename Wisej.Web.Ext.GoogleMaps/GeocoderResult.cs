@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.GoogleMaps
 {
@@ -26,6 +27,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 	/// Represents a single geocoding result.
 	/// </summary>
 	/// <remarks>A geocode request may return multiple result objects.</remarks>
+	[ApiCategory("GoogleMaps")]
 	public class GeocoderResult
 	{
 		internal GeocoderResult(string errorCode)

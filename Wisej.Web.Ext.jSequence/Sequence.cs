@@ -37,6 +37,7 @@ namespace Wisej.Web.Ext.jSequence
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Sequence))]
 	[DefaultEvent("ElementClick")]
+	[ApiCategory("jSequence")]
 	public class Sequence : Widget
 	{
 		/// <summary>

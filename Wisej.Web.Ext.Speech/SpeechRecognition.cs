@@ -37,6 +37,7 @@ namespace Wisej.Web.Ext.Speech
 	[ToolboxBitmap(typeof(SpeechRecognition))]
 	[ProvideProperty("SpeechRecognition", typeof(Control))]
 	[Description("The SpeechRecognition interface of Web Speech API allows JavaScript to have access to a browser's audio stream and convert it to text.")]
+	[ApiCategory("Speech")]
 	public class SpeechRecognition : Wisej.Web.Component, IExtenderProvider
 	{
 		// collection of controls using the extender provider.

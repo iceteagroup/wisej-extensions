@@ -21,12 +21,15 @@ using System;
 using System.Linq;
 using System.IO;
 using Wisej.Core;
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.FullCalendar
 {
 	/// <summary>
 	/// Emphasizes certain time slots on the calendar. By default, Monday-Friday, 9am-5pm.
-	/// </summary>
+	/// </summary>	
+	[ApiCategory("FullCalendar")]
+
 	public class BusinessHours : Wisej.Core.IWisejSerializable
 	{
 		/// <summary>

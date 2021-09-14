@@ -37,6 +37,7 @@ namespace Wisej.Ext.FileSystem
 	/// Implementation of the Amazon S3 file system.
 	/// Provides access to the S3 storage as a file system.
 	/// </summary>
+	[ApiCategory("Amazon S3")]
 	public class S3FileSystemProvider : IFileSystemProvider
 	{
 		/// <summary>

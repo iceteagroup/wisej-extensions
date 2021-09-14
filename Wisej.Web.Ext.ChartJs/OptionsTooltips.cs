@@ -23,10 +23,11 @@ using System.Drawing;
 
 namespace Wisej.Web.Ext.ChartJS
 {
-	/// <summary>
-	/// Represents the options for the chart tooltips.
-	/// </summary>
-	public class OptionsTooltips : OptionsBase
+    /// <summary>
+    /// Represents the options for the chart tooltips.
+    /// </summary>
+	[ApiCategory("ChartJS")]
+    public class OptionsTooltips : OptionsBase
 	{
 		/// <summary>
 		/// Default constructor.

@@ -17,11 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.FullCalendar
 {
 	/// <summary>
 	/// Enumerates the different "views", or ways of displaying days and events.
 	/// </summary>
+	[ApiCategory("FullCalendar")]
 	public enum ViewType
 	{
 		/// <summary>

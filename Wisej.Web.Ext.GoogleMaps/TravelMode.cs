@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 //
-// (C) 2015 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
+// (C) 2021 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
 //
 // 
 //
@@ -19,16 +19,32 @@
 
 using System.ComponentModel;
 
-namespace Wisej.Web.Ext.CoolClock
+namespace Wisej.Web.Ext.GoogleMaps
 {
 	/// <summary>
-	/// CoolClock clock types.
+	/// Indicates additional data about the specified location.
 	/// </summary>
-	[ApiCategory("CoolClock")]
-	public enum CoolClockType
-	{
-		Standard,
-		Logarithmic,
-		LogarithmicReversed
-	}
+	[ApiCategory("GoogleMaps")]
+	public enum TravelMode
+    {
+        /// <summary>
+        /// Specifies a bicycling directions request.
+        /// </summary>
+        Bicycling,
+
+        /// <summary>
+        /// Specifies a driving directions request.
+        /// </summary>
+        Driving,
+
+        /// <summary>
+        /// Specifies a transit directions request.
+        /// </summary>
+        Transit,
+
+        /// <summary>
+        /// Specifies a walking directions request.
+        /// </summary>
+        Walking
+    }
 }

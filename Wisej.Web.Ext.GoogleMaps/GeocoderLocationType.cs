@@ -17,12 +17,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.GoogleMaps
 {
-    /// <summary>
-    /// Indicates additional data about the specified location.
-    /// </summary>
-    public enum GeocoderLocationType
+	/// <summary>
+	/// Indicates additional data about the specified location.
+	/// </summary>
+	[ApiCategory("GoogleMaps")]
+	public enum GeocoderLocationType
     {
         /// <summary>
         /// Indicates that the returned result reflects a precise geocode.
