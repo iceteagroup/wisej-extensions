@@ -34,6 +34,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 	[ToolboxBitmap(typeof(ColumnFilter))]
 	[ProvideProperty("ShowFilter", typeof(DataGridViewColumn))]
 	[Description("Adds a filter button to DataGridViewColumn to display a custom filter panel.")]
+	[ApiCategory("ColumnFilter")]
 	public class ColumnFilter : Wisej.Web.Component, IWisejExtenderProvider, ISupportInitialize
 	{
 		#region Constructors

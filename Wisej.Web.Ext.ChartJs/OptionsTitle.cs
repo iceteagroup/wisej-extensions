@@ -23,11 +23,11 @@ using System.Drawing;
 
 namespace Wisej.Web.Ext.ChartJS
 {
-    /// <summary>
-    /// Represents the options for the chart title.
-    /// </summary>
+	/// <summary>
+	/// Represents the options for the chart title.
+	/// </summary>
 	[ApiCategory("ChartJS")]
-    public class OptionsTitle : OptionsBase
+	public class OptionsTitle : OptionsBase
 	{
 		/// <summary>
 		/// Default constructor.

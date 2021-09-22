@@ -24,11 +24,11 @@ using System.Drawing.Design;
 
 namespace Wisej.Web.Ext.ChartJS
 {
-    /// <summary>
-    /// Represents the options for the axes.
-    /// </summary>
+	/// <summary>
+	/// Represents the options for the axes.
+	/// </summary>
 	[ApiCategory("ChartJS")]
-    public class OptionsScales : OptionsBase
+	public class OptionsScales : OptionsBase
 	{
 
 		/// <summary>

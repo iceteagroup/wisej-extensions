@@ -21,11 +21,11 @@ using System.ComponentModel;
 
 namespace Wisej.Web.Ext.ChartJS
 {
-    /// <summary>
-    /// Defines the style of a stepped line for a line chart.
-    /// </summary>
+	/// <summary>
+	/// Defines the style of a stepped line for a line chart.
+	/// </summary>
 	[ApiCategory("ChartJS")]
-    public enum SteppedLine
+	public enum SteppedLine
 	{
 		/// <summary>
 		/// Stepped lines are not used

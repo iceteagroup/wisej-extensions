@@ -22,7 +22,6 @@ namespace Wisej.Ext.ElegantIcons
 	/// <summary>
 	/// Defines all the images in the icon set.
 	/// </summary>
-
 	public static class Icons
 	{
 		private const string root = "resource.wx/Wisej.Ext.ElegantIcons/";

@@ -232,7 +232,7 @@ namespace Wisej.Web.Ext.ChartJS
 						new Package()
 						{
 							Name = "dataLabelPlugin.js",
-							Source = GetResourceURL("Wisej.Web.Ext.ChartJs.JavaScript.dataLabelPlugin.js")
+							Source = GetResourceURL("Wisej.Web.Ext.ChartJS.JavaScript.dataLabelPlugin.js")
 						}
 					});
 				}

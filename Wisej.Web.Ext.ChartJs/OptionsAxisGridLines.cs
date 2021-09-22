@@ -23,11 +23,11 @@ using System.Drawing;
 
 namespace Wisej.Web.Ext.ChartJS
 {
-    /// <summary>
-    /// Specifies the grid line configuration for each axis.
-    /// </summary>
+	/// <summary>
+	/// Specifies the grid line configuration for each axis.
+	/// </summary>
 	[ApiCategory("ChartJS")]
-    public class OptionsAxisGridLines : OptionsBase
+	public class OptionsAxisGridLines : OptionsBase
 	{
 		#region Constructor
 

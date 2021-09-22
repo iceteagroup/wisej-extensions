@@ -25,7 +25,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 	/// <summary>
 	/// Represents a line on the <see cref="T:Wisej.Web.Ext.SmoothieChart.SmoothieChart"/> control.
 	/// </summary>
-	[ApiCategory("SmoothieCHart")]
+	[ApiCategory("SmoothieChart")]
 	public class TimeSeries
 	{
 		#region Properties

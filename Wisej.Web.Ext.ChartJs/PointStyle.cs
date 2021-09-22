@@ -21,11 +21,11 @@ using System.ComponentModel;
 
 namespace Wisej.Web.Ext.ChartJS
 {
-    /// <summary>
-    /// Defines the style of a point in the chart.
-    /// </summary>
+	/// <summary>
+	/// Defines the style of a point in the chart.
+	/// </summary>
 	[ApiCategory("ChartJS")]
-    public enum PointStyle
+	public enum PointStyle
 	{
         /// <summary>
         /// Circle

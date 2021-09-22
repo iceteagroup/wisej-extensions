@@ -10,7 +10,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 	/// <summary>
 	/// Determines the interpolation used to draw the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> line.
 	/// </summary>
-	[ApiCategory("SmoothieCHart")]
+	[ApiCategory("SmoothieChart")]
 	public enum InterpolationType
 	{
 		/// <summary>

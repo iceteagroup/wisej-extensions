@@ -28,7 +28,7 @@ namespace Wisej.Web.Ext.OfficeViewer
 	/// OfficeViewer module. Filters postback.wx requests
 	/// that have been modified by the <see cref="OfficeViewer"/> control
 	/// to pack the arguments into the URL.
-	/// </summary>	
+	/// </summary>
 	class OfficeViewerModule : IHttpModule
 	{
 		public void Init(HttpApplication context)

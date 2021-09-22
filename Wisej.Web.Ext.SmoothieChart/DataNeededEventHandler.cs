@@ -33,7 +33,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.SmoothieChart.SmoothieChart.DataNeeded" /> event of the 
 	/// <see cref="T:Wisej.Web.Ext.SmoothieChart.SmoothieChart" /> control.
 	/// </summary>
-	[ApiCategory("SmoothieCHart")]
+	[ApiCategory("SmoothieChart")]
 	public class DataNeededEventArgs : EventArgs
 	{
 		/// <summary>
