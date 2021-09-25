@@ -3,10 +3,7 @@ ACEditor
 
 <img src="../Support/Images/aceditor.png" width="358" height="252">
 
-Integrates the AceEditor widget.
-Ace is an embeddable code editor written in JavaScript.
-
-Uses 3rd party JavaScript library [ACEditor](https://ace.c9.io/)
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/aceeditor)
 
 License
 -------
