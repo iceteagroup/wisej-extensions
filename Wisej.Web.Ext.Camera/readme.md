@@ -1,7 +1,7 @@
-Camra
+Camera
 ====
 
-<img src="../Support/Images/camera.png" width="358" height="252">
+<img src="../Support/Images/camera.png" width="358" height="552">
 
 [📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/camera)
 
