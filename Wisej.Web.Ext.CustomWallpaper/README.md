@@ -3,7 +3,7 @@ CustomWallpaper
 
 <img src="../Support/Images/CustomWallpaper.jpg" width="358">
 
-The CustomWallpaper extender component enhances the Desktop, the MainPage or any Control control by rotating a list of custom images over the control’s background.
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/customwallpaper)
 
 License
 -------

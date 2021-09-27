@@ -3,7 +3,7 @@ Brotli
 
 <img src="../Support/Images/Brotli.png" width="358" height="252">
 
-The Brotli extension adds Brotli compression to your Wisej applications (on both http and winsock communication).
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/brotli)
 
 License
 -------
