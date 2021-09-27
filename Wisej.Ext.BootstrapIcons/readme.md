@@ -1,7 +1,7 @@
 ACEditor
 ====
 
-<img src="../Support/Images/bootstrapicons.png" width="358" height="252">
+<img src="../Support/Images/bootstrapicons.png" width="500" height="252">
 
 [📙 Description and Documentation](https://docs.wisej.com/extensions/icon-packs/bootstrapicons)
 
