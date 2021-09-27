@@ -3,9 +3,7 @@ jSequence
 
 <img src="../Support/Images/jSequence.png" width="358" height="252">
 
-The jSequence Diagram extension component turns text sequences into cool UML diagrams and detects clicks on any diagram element.
-
-Uses 3rd party JavaScript library [js-Sequence-Diagram ](https://bramp.github.io/js-sequence-diagrams/)
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/jsequence)
 
 License
 -------
