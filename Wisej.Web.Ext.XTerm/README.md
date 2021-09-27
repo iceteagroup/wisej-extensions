@@ -3,9 +3,7 @@ XTerm
 
 <img src="../Support/Images/XTerm.png" width="358">
 
-The XTerm extension component uses the excellent Xterm.js widget that is a terminal front-end component written in JavaScript that enables applications to provide fully featured terminals to their users.
-
-Uses 3rd party JavaScript library [XTerm](https://xtermjs.org/)
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/xterm)
 
 License
 -------
