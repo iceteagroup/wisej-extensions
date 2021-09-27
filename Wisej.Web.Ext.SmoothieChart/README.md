@@ -3,13 +3,7 @@ SmoothieChart
 
 <img src="../Support/Images/SmoothieChart.png" width="358" height="252">
 
-The SmoothieChart extension uses a cool JavaScript charting widget for streaming data in a scrolling chart.
-
-Uses 3rd party JavaScript library [Smoothie Charts](http://smoothiecharts.org/) for charting streaming data
-
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/2.0/SmoothieChartSample)
-
-## [Try it on Online](http://demo.wisej.com/SmoothieChartSample)
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/smoothiechart)
 
 License
 -------

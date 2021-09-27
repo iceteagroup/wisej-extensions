@@ -3,7 +3,7 @@ Barcode
 
 <img src="../Support/Images/Barcode.png" width="358" height="252">
 
-The Barcode extension component uses [ZXing.Net](https://github.com/micjahn/ZXing.Net) to generate Barcodes on the server and render them on the client. Supports: UPC-A, EAN-8, EAN-13, Code 39, Code 128, ITF, Codabar, Plessey, MSI, QR Code, PDF-417, Aztec, Data Matrix.
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/barcode)
 
 License
 -------

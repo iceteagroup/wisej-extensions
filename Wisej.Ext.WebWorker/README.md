@@ -3,7 +3,7 @@ WebWorker
 
 <img src="../Support/Images/WebWorker.png" width="358" height="252">
 
-The WebWorker extension component adds client-side [JavaScript workers](https://developer.mozilla.org/en-US/docs/Web/API/Worker) to Wisej controls. It receives data sent by the worker using postMessage, it can terminate the worker, and can send data to the running worker.
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/webworker)
 
 License
 -------

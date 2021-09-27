@@ -3,7 +3,7 @@ Geolocation
 
 <img src="../Support/Images/Geolocation.png" width="358" height="252">
 
-The Geolocation extension component adds geolocation capabilities to the container it is dropped on. Provides methods to retrieve the current location of the client and raises events when the location changes.
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/geolocation)
 
 License
 -------

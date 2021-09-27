@@ -3,7 +3,7 @@ AspNetControl
 
 <img src="../Support/Images/AspNetControl.png" width="358" height="252">
 
-AspNetControl wrapper. This control is a generic class capable of wrapping most ASP.NET controls using a very simple syntax. Read the included readme.pdf for the technical details on how to use it to create ASP.NET wrappers.
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/aspnetcontrol)
 
 License
 -------
