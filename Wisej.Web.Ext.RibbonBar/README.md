@@ -1,11 +1,9 @@
-RibbonBar (V1)
+RibbonBar
 ====
 
 <img src="../Support/Images/RibbonBar.png" width="358" height="252">
 
-The first release of the RibbonBar extension adds a new extension component to Wisej similar to the RibbonBar found in Windows applications. Requires Wisej 1.4.59+.
-
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/1.5/RibbonBar)
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/ribbonbar)
 
 License
 -------

@@ -3,11 +3,7 @@ GoogleMaps
 
 <img src="../Support/Images/GoogleMaps.png" width="358" height="252">
 
-The GoogleMaps extension lets you control Google Maps as a fully integrated server control. The control fires events back to the server and the server can affect any visual aspect of the map. Requires Wisej 1.3.21 or above.
-
-Uses 3rd party online JavaScript library [Google Maps](https://cloud.google.com/maps-platform/)
-
-## [Example application](https://github.com/iceteagroup/wisej-examples/tree/1.5/GoogleMaps)
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/googlemaps)
 
 License
 -------
