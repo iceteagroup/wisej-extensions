@@ -3,7 +3,7 @@ Speech
 
 <img src="../Support/Images/Speech.png" width="358" height="252">
 
-[📙 Description and Documentation](https://docs.wisej.com/extensions/icon-packs/bootstrapicons)
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/speech)
 
 License
 -------
