@@ -1,4 +1,4 @@
-RibbonBar (V1)
+RibbonBar
 ====
 
 <img src="../Support/Images/RibbonBar.png" width="358" height="252">
