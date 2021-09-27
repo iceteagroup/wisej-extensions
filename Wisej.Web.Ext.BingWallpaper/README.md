@@ -3,7 +3,7 @@ BingWallpaper
 
 <img src="../Support/Images/BingWallpaper.png" width="358" height="252">
 
-The BingWallpaper extender component enhances the Desktop control by adding Bing’s daily stunning [wallpaper images](https://www.bing.com/). You can set the rotation interval, fade duration and number of images.
+[📙 Description and Documentation](https://docs.wisej.com/extensions/extensions/bingwallpaper)
 
 License
 -------
