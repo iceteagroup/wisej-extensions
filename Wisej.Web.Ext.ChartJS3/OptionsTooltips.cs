@@ -36,9 +36,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionsTooltips"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.OptionsTooltips"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		public OptionsTooltips(OptionsBase owner)
 		{
 			this.Owner = owner;

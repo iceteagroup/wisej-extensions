@@ -36,9 +36,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionsLegend"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.OptionsLegend"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		public OptionsLegend(OptionsBase owner)
 		{
 			this.Owner = owner;
@@ -122,9 +122,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionsLegendLabels"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.OptionsLegendLabels"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		public OptionsLegendLabels(OptionsBase owner)
 		{
 			this.Owner = owner;

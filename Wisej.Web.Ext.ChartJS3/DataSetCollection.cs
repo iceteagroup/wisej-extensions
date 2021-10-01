@@ -28,7 +28,7 @@ using System.Globalization;
 namespace Wisej.Web.Ext.ChartJS3
 {
 	/// <summary>
-	/// Collection of <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> objects.
+	/// Collection of <see cref="Wisej.Web.Ext.ChartJS3.DataSet"/> objects.
 	/// Represents the sets of data to plot.
 	/// </summary>
 	[TypeConverter(typeof(DataSetCollection.Converter))]
@@ -42,9 +42,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		private List<DataSet> list = new List<DataSet>();
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.DataSetCollection"/> class.
+		/// Constructs a new instance of the <see cref="Wisej.Web.Ext.ChartJS3.DataSetCollection"/> class.
 		/// </summary>
-		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this collection.</param>
+		/// <param name="chart">The <see cref="Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this collection.</param>
 		/// <param name="previous">The previous data sets to reload into this new collection, or null.</param>
 		internal DataSetCollection(ChartJS3 chart, DataSetCollection previous)
 		{
@@ -66,8 +66,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Creates a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> specialized according to the
-		/// default <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.ChartType"/> of the <see cref="T:Wisej.Web.Ext.ChartJS"/> control.
+		/// Creates a new instance of <see cref="Wisej.Web.Ext.ChartJS3.DataSet"/> specialized according to the
+		/// default <see cref="Wisej.Web.Ext.ChartJS3.ChartJS3.ChartType"/> of the <see cref="Wisej.Web.Ext.ChartJS3"/> control.
 		/// </summary>
 		/// <param name="label"></param>
 		/// <returns></returns>
@@ -97,7 +97,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Returns or sets the <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> at the specified position.
+		/// Returns or sets the <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> at the specified position.
 		/// </summary>
 		/// <param name="index"></param>
 		/// <returns></returns>
@@ -112,7 +112,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Returns or sets the <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> identified by the label name.
+		/// Returns or sets the <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> identified by the label name.
 		/// </summary>
 		/// <param name="label"></param>
 		/// <returns></returns>
@@ -135,7 +135,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Returns the number of <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> objects in the collection.
+		/// Returns the number of <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> objects in the collection.
 		/// </summary>
 		public int Count
 		{
@@ -143,9 +143,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Adds a new <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> to the collection.
+		/// Adds a new <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> to the collection.
 		/// </summary>
-		/// <param name="dataSet">The <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> to add to the collection.</param>
+		/// <param name="dataSet">The <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> to add to the collection.</param>
 		public void Add(DataSet dataSet)
 		{
 			if (dataSet == null)
@@ -156,9 +156,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Creates and adds a new <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> to the collection.
+		/// Creates and adds a new <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> to the collection.
 		/// </summary>
-		/// <param name="name">The name of the new <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/>.</param>
+		/// <param name="name">The name of the new <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/>.</param>
 		/// <returns></returns>
 		public DataSet Add(string name)
 		{
@@ -180,9 +180,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Checks if the specified <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> exists in the collection.
+		/// Checks if the specified <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> exists in the collection.
 		/// </summary>
-		/// <param name="dataSet">The <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> to look for.</param>
+		/// <param name="dataSet">The <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> to look for.</param>
 		/// <returns></returns>
 		public bool Contains(DataSet dataSet)
 		{
@@ -200,7 +200,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Returns the index of the specified <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> in the collection.
+		/// Returns the index of the specified <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> in the collection.
 		/// </summary>
 		/// <param name="dataSet"></param>
 		/// <returns></returns>
@@ -210,7 +210,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Returns the index of the <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> in the collection.
+		/// Returns the index of the <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> in the collection.
 		/// </summary>
 		/// <param name="index"></param>
 		/// <param name="dataSet"></param>
@@ -224,9 +224,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Removes the <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> from the collection and updates the chart.
+		/// Removes the <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> from the collection and updates the chart.
 		/// </summary>
-		/// <param name="dataSet">The <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> to remove.</param>
+		/// <param name="dataSet">The <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> to remove.</param>
 		/// <returns></returns>
 		public bool Remove(DataSet dataSet)
 		{
@@ -238,9 +238,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Removes the <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> at the specified index from the collection and updates the chart.
+		/// Removes the <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> at the specified index from the collection and updates the chart.
 		/// </summary>
-		/// <param name="index">The index of the <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> to remove.</param>
+		/// <param name="index">The index of the <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> to remove.</param>
 		public void RemoveAt(int index)
 		{
 			this.list.RemoveAt(index);
@@ -248,7 +248,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Returns an enumerator that iterates all the <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> objects in the collection.
+		/// Returns an enumerator that iterates all the <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> objects in the collection.
 		/// </summary>
 		/// <returns></returns>
 		public IEnumerator<DataSet> GetEnumerator()
@@ -266,7 +266,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		#region IList
 
 		/// <summary>
-		/// Returns or sets the <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> at the specified position.
+		/// Returns or sets the <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/> at the specified position.
 		/// </summary>
 		/// <param name="index"></param>
 		/// <returns></returns>
@@ -351,7 +351,7 @@ namespace Wisej.Web.Ext.ChartJS3
 
 		#region TypeConverter
 
-		internal class Converter : System.ComponentModel.TypeConverter
+		internal class Converter : TypeConverter
 		{
 			public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
 			{

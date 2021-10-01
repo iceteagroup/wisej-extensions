@@ -38,9 +38,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionsScales"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.OptionsScales"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		public OptionsScales(OptionsBase owner)
 		{
 			this.Owner = owner;
@@ -165,9 +165,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionScalesAxes"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.OptionScalesAxes"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		public OptionScalesAxes(OptionsBase owner)
 		{
 			this.Owner = owner;
@@ -188,7 +188,94 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Specifies the configuration of the axis' grid lines.
+		/// Background color of the scale area.
+		/// </summary>
+		[DefaultValue(typeof(Color), "")]
+		[Description("Background color of the scale area.")]
+		public Color BackgroundColor
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// User defined maximum number for the scale, overrides maximum value from data.
+		/// </summary>                
+		[DefaultValue(null)]
+		[Description("User defined maximum number for the scale, overrides maximum value from data.")]
+		public int? Max
+		{
+			get { return this._max; }
+			set
+			{
+				if (this._max != value)
+				{
+					this._max = value;
+					Update();
+				}
+			}
+		}
+		private int? _max;
+
+		/// <summary>
+		/// User defined minimum number for the scale, overrides minimum value from data.
+		/// </summary>
+		[DefaultValue(null)]
+		[Description("User defined minimum number for the scale, overrides minimum value from data.")]
+		public int? Min
+		{
+			get { return this._min; }
+			set
+			{
+				if (this._min != value)
+				{
+					this._min = value;
+					Update();
+				}
+			}
+		}
+		private int? _min;
+
+		/// <summary>
+		/// Returns or sets the adjustment used when calculating the maximum data value.
+		/// </summary>                
+		[DefaultValue(null)]
+		[Description("Returns or sets the adjustment used when calculating the maximum data value.")]
+		public int? SuggestedMax
+		{
+			get { return this._suggestedMax; }
+			set
+			{
+				if (this._suggestedMax != value)
+				{
+					this._suggestedMax = value;
+					Update();
+				}
+			}
+		}
+		private int? _suggestedMax;
+
+		/// <summary>
+		/// Returns or sets the adjustment used when calculating the minimum data value.
+		/// </summary>
+		[DefaultValue(null)]
+		[Description("Returns or sets the adjustment used when calculating the minimum data value.")]
+		public int? SuggestedMin
+		{
+			get { return this._suggestedMin; }
+			set
+			{
+				if (this._suggestedMin != value)
+				{
+					this._suggestedMin = value;
+					Update();
+				}
+			}
+		}
+		private int? _suggestedMin;
+
+		/// <summary>
+		/// Returrns or sets the configuration of the axis' grid lines.
 		/// </summary>
 		public OptionsAxisGrid Grid
 		{
@@ -280,14 +367,14 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// </summary>
 		[Description("Options for the title on the axes.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public OptionsScaleTitle ScaleLabel
+		public OptionsScaleTitle Title
 		{
 			get
 			{
-				if (this._scaleLabel == null)
-					this._scaleLabel = new OptionsScaleTitle(this);
+				if (this._title == null)
+					this._title = new OptionsScaleTitle(this);
 
-				return this._scaleLabel;
+				return this._title;
 			}
 			set
 			{
@@ -295,10 +382,10 @@ namespace Wisej.Web.Ext.ChartJS3
 					throw new ArgumentNullException("value");
 
 				value.Owner = this;
-				this._scaleLabel = value;
+				this._title = value;
 			}
 		}
-		private OptionsScaleTitle _scaleLabel;
+		private OptionsScaleTitle _title;
 
 		/// <summary>
 		/// Type of scale being employed.
@@ -426,9 +513,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionScalesAxesX"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.OptionScalesAxesX"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		public OptionScalesAxesX(OptionsBase owner)
 			:base (owner)
 		{
@@ -479,9 +566,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionScalesAxesY"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.OptionScalesAxesY"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		public OptionScalesAxesY(OptionsBase owner)
 					: base(owner)
 		{
@@ -521,51 +608,13 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionsScalesTicks"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.OptionsScalesTicks"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		public OptionsScalesTicks(OptionsBase owner)
 		{
 			this.Owner = owner;
 		}
-
-		/// <summary>
-		/// User defined maximum number for the scale, overrides maximum value from data.
-		/// </summary>                
-		[DefaultValue(null)]
-		[Description("User defined maximum number for the scale, overrides maximum value from data.")]
-		public int? Max
-		{
-			get { return this._max; }
-			set
-			{
-				if (this._max != value)
-				{
-					this._max = value;
-					Update();
-				}
-			}
-		}
-		private int? _max;
-
-		/// <summary>
-		/// User defined minimum number for the scale, overrides minimum value from data.
-		/// </summary>
-		[DefaultValue(null)]
-		[Description("User defined minimum number for the scale, overrides minimum value from data.")]
-		public int? Min
-		{
-			get { return this._min; }
-			set
-			{
-				if (this._min != value)
-				{
-					this._min = value;
-					Update();
-				}
-			}
-		}
-		private int? _min;
 
 		/// <summary>
 		/// User defined fixed step size for the scale.
@@ -589,7 +638,6 @@ namespace Wisej.Web.Ext.ChartJS3
 			}
 		}
 		private int? _stepSize;
-
 
 		/// <summary>
 		/// Padding between the tick label and the axis. Only applicable to horizontal scales.
@@ -686,35 +734,35 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// Tick labels color.
 		/// </summary>
 		[Description("Tick labels color.")]
-		public Color FontColor
+		public Color Color
 		{
 			get
 			{
 				var chart = this.Chart;
-				if (this._fontColor.IsEmpty && chart != null)
+				if (this._color.IsEmpty && chart != null)
 					return chart.ForeColor;
 
-				return this._fontColor;
+				return this._color;
 			}
 			set
 			{
-				if (this._fontColor != value)
+				if (this._color != value)
 				{
-					this._fontColor = value;
+					this._color = value;
 					Update();
 				}
 			}
 		}
-		private Color _fontColor;
+		private Color _color;
 
-		private bool ShouldSerializeFontColor()
+		private bool ShouldSerializeColor()
 		{
-			return !this._fontColor.IsEmpty;
+			return !this._color.IsEmpty;
 		}
 
-		private void ResetFontColor()
+		private void ResetColor()
 		{
-			this.FontColor = Color.Empty;
+			this.Color = Color.Empty;
 		}
 
 		/// <summary>
@@ -750,9 +798,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionsScaleTitle"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.OptionsScaleTitle"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		public OptionsScaleTitle(OptionsBase owner)
 		{
 			this.Owner = owner;
@@ -799,7 +847,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		[Description("Show the scale label block.")]
 		public bool Display
 		{
-			get { return this._display && !String.IsNullOrEmpty(this._labelString); }
+			get { return this._display && !String.IsNullOrEmpty(this._text); }
 			set
 			{
 				if (this._display != value)
@@ -822,62 +870,62 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Title text.
+		/// The text for the title. (i.e. "# of People" or "Response Choices").
 		/// </summary>
 		[DefaultValue("")]
-		[Description("Label text.")]
-		public string LabelString
+		[Description("The text for the title. (i.e. '# of People' or 'Response Choices').")]
+		public string Text
 		{
 			get
 			{
-				return this._labelString;
+				return this._text;
 			}
 			set
 			{
 				value = value ?? string.Empty;
 
-				if (this._labelString != value)
+				if (this._text != value)
 				{
-					this._labelString = value;
+					this._text = value;
 					Update();
 				}
 			}
 		}
-		private string _labelString = string.Empty;
+		private string _text = string.Empty;
 
 		/// <summary>
-		/// Title color.
+		/// Color of label.
 		/// </summary>
 		[Description("Scale label font color.")]
-		public Color FontColor
+		public Color Color
 		{
 			get
 			{
 				var chart = this.Chart;
-				if (this._fontColor.IsEmpty && chart != null)
+				if (this._color.IsEmpty && chart != null)
 					return chart.ForeColor;
 
-				return this._fontColor;
+				return this._color;
 			}
 			set
 			{
-				if (this._fontColor != value)
+				if (this._color != value)
 				{
-					this._fontColor = value;
+					this._color = value;
 					Update();
 				}
 			}
 		}
-		private Color _fontColor = Color.Empty;
+		private Color _color = Color.Empty;
 
 		private bool ShouldSerializeFontColor()
 		{
-			return !this._fontColor.IsEmpty;
+			return !this._color.IsEmpty;
 		}
 
 		private void ResetFontColor()
 		{
-			this.FontColor = Color.Empty;
+			this.Color = Color.Empty;
 		}
 
 	}

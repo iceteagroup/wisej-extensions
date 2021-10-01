@@ -38,9 +38,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionsAxisGridlines"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.OptionsAxisGridlines"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		public OptionsAxisGrid(OptionsBase owner)
 		{
 			this.Owner = owner;

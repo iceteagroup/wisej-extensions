@@ -24,19 +24,19 @@ namespace Wisej.Web.Ext.ChartJS3
 {
 
 	/// <summary>
-	/// Represents the method that will handle the <see cref="E:Wisej.Web.Ext.ChartJS.ChartJS.ChartClick" /> event in a <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/>.
+	/// Represents the method that will handle the <see cref="E:Wisej.Web.Ext.ChartJS3.ChartJS.ChartClick" /> event in a <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/>.
 	/// </summary>
 	/// <param name="sender">The source of the event. </param>
-	/// <param name="e">A <see cref="T:Wisej.Web.Ext.ChartJS.ChartClickEventArgs" /> that contains the event data. </param>
+	/// <param name="e">A <see cref="T:Wisej.Web.Ext.ChartJS3.ChartClickEventArgs" /> that contains the event data. </param>
 	public delegate void ChartClickEventHandler(object sender, ChartClickEventArgs e);
 
 	/// <summary>
-	/// Provides data for the <see cref="E:Wisej.Web.Ext.ChartJS.ChartJS.ChartClick" /> event of the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS" /> control.
+	/// Provides data for the <see cref="E:Wisej.Web.Ext.ChartJS3.ChartJS.ChartClick" /> event of the <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3" /> control.
 	/// </summary>
 	public class ChartClickEventArgs: EventArgs
 	{
 		/// <summary>
-		///  Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.ChartClickEventArgs"/>.
+		///  Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS3.ChartClickEventArgs"/>.
 		/// </summary>
 		/// <param name="chart"></param>
 		/// <param name="e"></param>

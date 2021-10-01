@@ -25,7 +25,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	/// <summary>
 	/// Represents the options for the data label.
 	/// </summary>
-	public class OptionsDataLabel : OptionsBase
+	public class OptionsDataLabels : OptionsBase
 	{
 
 		#region Constructors
@@ -33,15 +33,15 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		public OptionsDataLabel()
+		public OptionsDataLabels()
 		{
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionsDataLabel"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.OptionsDataLabel"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
-		public OptionsDataLabel(OptionsBase owner)
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
+		public OptionsDataLabels(OptionsBase owner)
 		{
 			this.Owner = owner;
 		}

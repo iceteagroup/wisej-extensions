@@ -83,7 +83,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		#region Methods
 
 		/// <summary>
-		/// Updates the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control using
+		/// Updates the <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> control using
 		/// this set of options.
 		/// </summary>
 		public void Update()
@@ -200,8 +200,8 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Represents the base options for the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> widget.
-	/// Different <see cref="T:Wisej.Web.Ext.ChartJS.ChartType"/> extend this class with type specific options.
+	/// Represents the base options for the <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> widget.
+	/// Different <see cref="T:Wisej.Web.Ext.ChartJS3.ChartType"/> extend this class with type specific options.
 	/// </summary>
 	public abstract class Options : OptionsBase
 	{
@@ -214,9 +214,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.Options"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.Options"/> set.
 		/// </summary>
-		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		/// <param name="defaults">Default options to copy from.</param>
 		public Options(ChartJS3 chart, Options defaults)
 		{
@@ -227,31 +227,6 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		#region Properties
-
-		/// <summary>
-		/// Options for the chart title.
-		/// </summary>
-		[Description("Options for the chart title.")]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public OptionsTitle Title
-		{
-			get
-			{
-				if (this._title == null)
-					this._title = new OptionsTitle(this);
-
-				return this._title;
-			}
-			set
-			{
-				if (value == null)
-					throw new ArgumentNullException("value");
-
-				value.Owner = this;
-				this._title = value;
-			}
-		}
-		private OptionsTitle _title;
 
 		/// <summary>
 		/// Options for the chart tooltips.
@@ -279,31 +254,6 @@ namespace Wisej.Web.Ext.ChartJS3
 		private OptionsTooltips _tooltips;
 
 		/// <summary>
-		/// Options for the chart legend.
-		/// </summary>
-		[Description("Options for the chart legend.")]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public OptionsLegend Legend
-		{
-			get
-			{
-				if (this._legend == null)
-					this._legend = new OptionsLegend(this);
-
-				return this._legend;
-			}
-			set
-			{
-				if (value == null)
-					throw new ArgumentNullException("value");
-
-				value.Owner = this;
-				this._legend = value;
-			}
-		}
-		private OptionsLegend _legend;
-
-		/// <summary>
 		/// Options for the chart scales.
 		/// </summary>
 		[Description("Options for the chart scales.")]
@@ -329,31 +279,6 @@ namespace Wisej.Web.Ext.ChartJS3
 		private OptionsScales _scales;
 
 		/// <summary>
-		/// Options for the data label.
-		/// </summary>
-		[Description("Options for the data label.")]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public OptionsDataLabel DataLabel
-		{
-			get
-			{
-				if (this._dataLabel == null)
-					this._dataLabel = new OptionsDataLabel(this);
-
-				return this._dataLabel;
-			}
-			set
-			{
-				if (value == null)
-					throw new ArgumentNullException("value");
-
-				value.Owner = this;
-				this._dataLabel = value;
-			}
-		}
-		private OptionsDataLabel _dataLabel;
-
-		/// <summary>
 		/// Gets or sets the index axis of the chart.
 		/// </summary>
 		[DefaultValue("x")]
@@ -372,11 +297,36 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 		private string _indexAxis = "x";
 
+		/// <summary>
+		/// Options for the chart plugins.
+		/// </summary>
+		[Description("Options for the chart plugins.")]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public OptionsPlugins Plugins
+		{
+			get
+			{
+				if (this._plugins == null)
+					this._plugins = new OptionsPlugins(this);
+
+				return this._plugins;
+			}
+			set
+			{
+				if (value == null)
+					throw new ArgumentNullException("value");
+
+				value.Owner = this;
+				this._plugins = value;
+			}
+		}
+		private OptionsPlugins _plugins;
+
 		#endregion
 	}
 
 	/// <summary>
-	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Line"/> chart.
+	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Line"/> chart.
 	/// </summary>
 	public class LineOptions : Options
 	{
@@ -388,9 +338,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.LineOptions"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.LineOptions"/> set.
 		/// </summary>
-		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		/// <param name="defaults">Default options to copy from.</param>
 		public LineOptions(ChartJS3 chart, Options defaults)
 			: base(chart, defaults)
@@ -437,7 +387,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Bar"/> chart.
+	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Bar"/> chart.
 	/// </summary>
 	public class BarOptions : Options
 	{
@@ -449,9 +399,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.LineOptions"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.LineOptions"/> set.
 		/// </summary>
-		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		/// <param name="defaults">Default options to copy from.</param>
 		public BarOptions(ChartJS3 chart, Options defaults)
 			: base(chart, defaults)
@@ -479,7 +429,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Pie"/> chart.
+	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Pie"/> chart.
 	/// </summary>
 	public class PieOptions : Options
 	{
@@ -491,9 +441,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.PieOptions"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.PieOptions"/> set.
 		/// </summary>
-		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		/// <param name="defaults">Default options to copy from.</param>
 		public PieOptions(ChartJS3 chart, Options defaults)
 			: base(chart, defaults)
@@ -502,7 +452,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.PolarArea"/> chart.
+	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.PolarArea"/> chart.
 	/// </summary>
 	public class PolarAreaOptions : Options
 	{
@@ -514,9 +464,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.PolarAreaOptions"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.PolarAreaOptions"/> set.
 		/// </summary>
-		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		/// <param name="defaults">Default options to copy from.</param>
 		public PolarAreaOptions(ChartJS3 chart, Options defaults)
 			: base(chart, defaults)
@@ -525,7 +475,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Doughnut"/> chart.
+	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Doughnut"/> chart.
 	/// </summary>
 	public class DoughnutOptions : Options
 	{
@@ -537,9 +487,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.DoughnutOptions"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.DoughnutOptions"/> set.
 		/// </summary>
-		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		/// <param name="defaults">Default options to copy from.</param>
 		public DoughnutOptions(ChartJS3 chart, Options defaults)
 			: base(chart, defaults)
@@ -567,7 +517,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Radar"/> chart.
+	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Radar"/> chart.
 	/// </summary>
 	public class RadarOptions : Options
 	{
@@ -579,9 +529,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.RadarOptions"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.RadarOptions"/> set.
 		/// </summary>
-		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		/// <param name="defaults">Default options to copy from.</param>
 		public RadarOptions(ChartJS3 chart, Options defaults)
 			: base(chart, defaults)
@@ -590,7 +540,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Bubble"/> chart.
+	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Bubble"/> chart.
 	/// </summary>
 	public class BubbleOptions : Options
 	{
@@ -602,9 +552,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.BubbleOptions"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.BubbleOptions"/> set.
 		/// </summary>
-		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		/// <param name="defaults">Default options to copy from.</param>
 		public BubbleOptions(ChartJS3 chart, Options defaults)
 			: base(chart, defaults)
@@ -613,7 +563,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Scatter"/> chart.
+	/// Options for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Scatter"/> chart.
 	/// </summary>
 	public class ScatterOptions : Options
 	{
@@ -625,9 +575,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.ScatterOptions"/> set.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.ScatterOptions"/> set.
 		/// </summary>
-		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="chart">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		/// <param name="defaults">Default options to copy from.</param>
 		public ScatterOptions(ChartJS3 chart, Options defaults)
 			: base(chart, defaults)

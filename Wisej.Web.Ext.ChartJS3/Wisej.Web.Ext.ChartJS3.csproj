@@ -7,7 +7,6 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
 
@@ -28,19 +27,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="Wisej.Framework">
+      <HintPath>..\..\..\Development\2.5\bin\Wisej.Framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Wisej.Framework">
-      <HintPath>..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

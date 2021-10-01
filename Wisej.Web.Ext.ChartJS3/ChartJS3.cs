@@ -40,7 +40,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	public class ChartJS3 : Widget, IWisejControl
 	{
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> control.
 		/// </summary>
 		public ChartJS3()
 		{
@@ -59,7 +59,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Fires the <see cref="E:Wisej.Web.Ext.ChartJS.ChartJS.ChartClick"/> event.
+		/// Fires the <see cref="E:Wisej.Web.Ext.ChartJS3.ChartJS.ChartClick"/> event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected virtual void OnChartClick(ChartClickEventArgs e)
@@ -99,7 +99,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		private ChartType _chartType = ChartType.Line;
 
 		/// <summary>
-		/// Chart options specific for the value of <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.ChartType"/>.
+		/// Chart options specific for the value of <see cref="P:Wisej.Web.Ext.ChartJS3.ChartJS.ChartType"/>.
 		/// </summary>
 		[DefaultValue(null)]
 		[MergableProperty(false)]

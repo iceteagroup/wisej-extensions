@@ -27,20 +27,21 @@ using System.Reflection;
 namespace Wisej.Web.Ext.ChartJS3
 {
 	/// <summary>
-	/// Represents the data used by the <see cref="T: Wisej.Web.Ext.ChartJS.ChartJS"/> control to plot the chart.
+	/// Represents the data used by the <see cref="T: Wisej.Web.Ext.ChartJS3.ChartJS3"/> control to plot the chart.
 	/// See http://www.chartjs.org/docs/#line-chart-data-structure for additional information regarding the data structure of ChartJS.
 	/// </summary>
 	[TypeConverter(typeof(DataSet.Converter))]
 	public class DataSet
 	{
 		/// <summary>
-		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/>.
+		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/>.
 		/// </summary>
 		public DataSet()
 		{
 			this.Label = "Data Set";
 			this.BorderWidth = 0;
-			this.BackgroundColor = Color.Empty;
+			this.BorderColor = Color.FromArgb(76, 0, 0, 0);
+			this.BackgroundColor = Color.FromArgb(76, 0, 0, 0);
 		}
 
 		/// <summary>
@@ -66,7 +67,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Returns the type of chart that plots this type of <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/>.
+		/// Returns the type of chart that plots this type of <see cref="T:Wisej.Web.Ext.ChartJS3.DataSet"/>.
 		/// </summary>
 		[Description("Returns the type of chart that plots this data set.")]
 		public ChartType? Type
@@ -90,7 +91,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
-		/// Formatted representation of the data to plot displayed when <see cref="OptionsDataLabel.Display"/> is true.
+		/// Formatted representation of the data to plot displayed when <see cref="OptionsDataLabels.Display"/> is true.
 		/// </summary>
 		public string[] Formatted
 		{
@@ -101,7 +102,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// The fill color of the data set. What it fills is up to the chart type.
 		/// </summary>
-		[DefaultValue(typeof(Color), "")]
+		[DefaultValue(typeof(Color), "76, 0, 0, 0")]
 		[Description("The fill color of the data set. What it fills is up to the chart type.")]
 		public Color BackgroundColor
 		{
@@ -112,7 +113,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// The border color of the data set. What it fills is up to the chart type.
 		/// </summary>
-		[DefaultValue(typeof(Color), "")]
+		[DefaultValue(typeof(Color), "76, 0, 0, 0")]
 		[Description("The border color of the data set. What it fills is up to the chart type.")]
 		public Color BorderColor
 		{
@@ -213,24 +214,24 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Line"/> chart.
+	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Line"/> chart.
 	/// </summary>
 	public class LineDataSet : DataSet
 	{
 		/// <summary>
-		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.LineDataSet"/>.
+		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS3.LineDataSet"/>.
 		/// </summary>
 		public LineDataSet() : base()
 		{
 			this.Fill = false;
 			this.ShowLine = true;
 			this.BorderWidth = 3;
-			this.SteppedLine = SteppedLine.False;
 			this.SpanGaps = false;
-			this.PointStyle = new PointStyle[] { Ext.ChartJS3.PointStyle.Circle };
+			this.Type = ChartType.Line;
+			this.Stepped = SteppedLine.False;
 			this.PointRadius = new int[] { 5 };
 			this.PointHoverRadius = new int[] { 5 };
-			this.Type = ChartType.Line;
+			this.PointStyle = new PointStyle[] { Ext.ChartJS3.PointStyle.Circle };
 		}
 
 		/// <summary>
@@ -283,18 +284,6 @@ namespace Wisej.Web.Ext.ChartJS3
 		[DefaultValue(false)]
 		[Description("If true, lines will be drawn between points with no or null data. If false, points with NaN data will create a break in the line.")]
 		public bool SpanGaps
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// If true, show the line.
-		/// </summary>
-		[DefaultValue(SteppedLine.False)]
-		[Description("Show a stepped line rather than a curve.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
-		public SteppedLine SteppedLine
 		{
 			get;
 			set;
@@ -401,15 +390,40 @@ namespace Wisej.Web.Ext.ChartJS3
 			get; 
 			set; 
 		} = 0.4;
+
+		/// <summary>
+		/// The ID of the group to which this dataset belongs to 
+		/// (when stacked, each group will be a separate stack).
+		/// </summary>
+		[DefaultValue(null)]
+		[MergableProperty(false)]
+		[Description("The ID of the group to which this dataset belongs to.")]
+		public string Stack
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Shows the lines as stepped values.
+		/// </summary>
+		[MergableProperty(false)]
+		[DefaultValue(SteppedLine.False)]
+		[Description("When true, Shows the lines as stepped values.")]
+		public SteppedLine Stepped
+		{
+			get;
+			set;
+		}
 	}
 
 	/// <summary>
-	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Bar"/> chart.
+	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Bar"/> chart.
 	/// </summary>
 	public class BarDataSet : DataSet
 	{
 		/// <summary>
-		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.BarDataSet"/>.
+		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS3.BarDataSet"/>.
 		/// </summary>
 		public BarDataSet() : base()
 		{
@@ -493,15 +507,28 @@ namespace Wisej.Web.Ext.ChartJS3
 			get;
 			set;
 		} = 0;
+
+		/// <summary>
+		/// The ID of the group to which this dataset belongs to 
+		/// (when stacked, each group will be a separate stack).
+		/// </summary>
+		[DefaultValue(null)]
+		[MergableProperty(false)]
+		[Description("The ID of the group to which this dataset belongs to.")]
+		public string Stack
+		{
+			get;
+			set;
+		}
 	}
 
 	/// <summary>
-	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.HorizontalBar"/> chart.
+	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.HorizontalBar"/> chart.
 	/// </summary>
 	public class HorizontalBarDataSet : BarDataSet
 	{
 		/// <summary>
-		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.HorizontalBarDataSet"/>.
+		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS3.HorizontalBarDataSet"/>.
 		/// </summary>
 		public HorizontalBarDataSet() : base()
 		{
@@ -510,12 +537,12 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Doughnut"/> chart.
+	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Doughnut"/> chart.
 	/// </summary>
 	public class DoughnutDataSet : DataSet
 	{
 		/// <summary>
-		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.DoughnutDataSet"/>.
+		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS3.DoughnutDataSet"/>.
 		/// </summary>
 		public DoughnutDataSet() : base()
 		{
@@ -567,12 +594,12 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Pie"/> chart.
+	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Pie"/> chart.
 	/// </summary>
 	public class PieDataSet : DataSet
 	{
 		/// <summary>
-		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.PieDataSet"/>.
+		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS3.PieDataSet"/>.
 		/// </summary>
 		public PieDataSet() : base()
 		{
@@ -624,12 +651,12 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.PolarArea"/> chart.
+	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.PolarArea"/> chart.
 	/// </summary>
 	public class PolarAreaDataSet : DataSet
 	{
 		/// <summary>
-		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.PolarAreaDataSet"/>.
+		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS3.PolarAreaDataSet"/>.
 		/// </summary>
 		public PolarAreaDataSet() : base()
 		{
@@ -681,12 +708,12 @@ namespace Wisej.Web.Ext.ChartJS3
 	}
 
 	/// <summary>
-	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Radar"/> chart.
+	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS3.ChartType.Radar"/> chart.
 	/// </summary>
 	public class RadarDataSet : DataSet
 	{
 		/// <summary>
-		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.RadarDataSet"/>.
+		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS3.RadarDataSet"/>.
 		/// </summary>
 		public RadarDataSet() : base()
 		{

@@ -16,16 +16,19 @@ this.init = function (config) {
 
 	var me = this;
 
+	Chart.register(ChartDataLabels);
+
 	config.options.responsive = true;
-	config.plugins = [ChartDataLabels];
 	config.options.maintainAspectRatio = false;
 	config.type = config.type === "horizontalBar" ? "bar" : config.type;
 
+	this.__processPlugins(config);
+
+	// process the datasets.
+	this.__processDataSets(config.data.datasets);
+
 	// processes the scales format.
 	this.__processScales(config.options);
-
-	// moves plugins to their appropriate spots.
-	this.__processPlugins(config.options);
 
 	// convert fonts and colors from Wisej maps to
 	// the appropriate field in the options map.
@@ -163,6 +166,18 @@ this.updateData = function (datasets, labels, duration) {
 }
 
 /**
+ * Applies a transformation to the datasets.
+ * @param {any} datasets
+ */
+this.__processDataSets = function (datasets) {
+
+	datasets.forEach(dataset => {
+		if (dataset.stepped == "false")
+			dataset.stepped = false;
+	});
+},
+
+/**
  * Moves the scales to the correct location.
  * @param {any} options
  */
@@ -190,23 +205,13 @@ this.__processScales = function (options) {
  * Moves the plugins to options.plugins.
  * @param {any} options
  */
-this.__processPlugins = function (options) {
+this.__processPlugins = function (config) {
 
-	if (options == null)
-		return;
-
-	options.plugins = {};
-
-	if (options.legend) {
-		options.legend.useEmbeddedFont = true;
-		options.plugins.legend = options.legend;
-		delete options.legend;
-	}
-
-	if (options.dataLabel) {
-		options.dataLabel.useEmbeddedFont = true;
-		options.plugins.datalabels = options.dataLabel;
-		delete options.dataLabel;
+	var plugins = config.options.plugins;
+	if (plugins.dataLabels) {
+		plugins.dataLabels.useEmbeddedFont = true;
+		plugins.datalabels = plugins.dataLabels;
+		delete plugins.dataLabels;
 	}
 }
 
@@ -227,27 +232,18 @@ this.__setFontAndColors = function (options) {
 		if (name == "font") {
 			var font = fontMgr.resolve(options.font);
 			if (font) {
-				if (options.useEmbeddedFont) {
-					options.font = {
-						size : font.getSize(),
-						family : font.getFamily().join(","),
-						style : font.isBold() ? "bold" : "normal"
-					};
-					delete options.useEmbeddedFont;
-				} else {
-					options.fontSize = font.getSize();
-					options.fontFamily = font.getFamily().join(",");
-					options.fontStyle = font.isBold() ? "bold" : "normal";
-					delete options.font
-				}
+				options.font = {
+					size : font.getSize(),
+					family : font.getFamily().join(","),
+					style : font.isBold() ? "bold" : "normal"
+				};
 			}
 			continue;
 		}
 
 		// it's a color, resolve it.
-		if (name == "fontColor") {
-
-			options.fontColor = colorMgr.resolve(options.fontColor);
+		if (name == "color" || name == "fontColor") {
+			options[name] = colorMgr.resolve(options[name]);
 			continue;
         }
 
