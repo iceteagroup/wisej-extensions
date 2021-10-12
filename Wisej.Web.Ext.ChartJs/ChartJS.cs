@@ -231,8 +231,8 @@ namespace Wisej.Web.Ext.ChartJS
 						},
 						new Package()
 						{
-							Name = "dataLabelPlugin.js",
-							Source = GetResourceURL("Wisej.Web.Ext.ChartJS.JavaScript.dataLabelPlugin.js")
+							Name = "chartjs-plugin-datalabels.js",
+							Source = GetResourceURL("Wisej.Web.Ext.ChartJS.JavaScript.chartjs-plugin-datalabels.js")
 						}
 					});
 				}

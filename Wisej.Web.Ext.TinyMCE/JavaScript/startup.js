@@ -70,7 +70,7 @@ this.init = function () {
 	// create the editor instance.
 	tinymce.init(config).then(function (editors) {
 
-		me.editor = editors[0];
+		me.editor = me.widget = editors[0];
 
 		me.__resizeEditor();
 

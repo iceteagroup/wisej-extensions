@@ -95,7 +95,7 @@ this.init = function (options) {
 	// patch the fullCalendar class to handle right clicks.
 	this.__patchHandlers();
 
-	this.calendar = new $.fullCalendar.Calendar($(this.container), options);
+	this.calendar = this.widget = new $.fullCalendar.Calendar($(this.container), options);
 	this.calendar.render();
 
 	// save the current date in order to fire "currentDateChanged".

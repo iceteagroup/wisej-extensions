@@ -19,6 +19,13 @@ this.init = function (config) {
 	config.options.responsive = true;
 	config.options.maintainAspectRatio = false;
 
+	var dataLabel = config.options.dataLabel;
+	if (dataLabel) {
+		dataLabel.embedFontObject = true;
+		config.options.plugins = { datalabels: dataLabel }
+		delete config.options.dataLabel;
+	}
+
 	// convert fonts and colors from Wisej maps to
 	// the appropriate field in the options map.
 	this.__setFontAndColors(config.options);
@@ -31,7 +38,6 @@ this.init = function (config) {
 
 	// Design Mode Only:
 	// Turn off animation and attach the animationComplete callback to fire "render" to the designer.
-
 	if (wisej.web.DesignMode) {
 		Chart.defaults.global.animation.duration = 0;
 		Chart.defaults.global.animation.onComplete = function () {
@@ -73,7 +79,7 @@ this.init = function (config) {
 
 	// create and save the chart object.
 	var ctx = canvas.getContext("2d");
-	this.chart = new Chart(ctx, config);
+	this.chart = this.widget = new Chart(ctx, config);
 
 	// Runtime Mode Only:
 	// Attach the click event to fire our managed event.
@@ -170,6 +176,25 @@ this.updateData = function (datasets, labels, duration) {
 }
 
 /**
+ * Processes embedded font syntax.
+ * @param {any} options
+ */
+this.__setEmbeddedFont = function (options) {
+
+	if (options.font) {
+		var fontMgr = qx.theme.manager.Font.getInstance();
+		var font = fontMgr.resolve(options.font);
+		if (font) {
+			options.font = {
+				size: font.getSize(),
+				family: font.getFamily().join(","),
+				style: font.isBold() ? "bold" : "normal"
+			}
+		}
+	}
+}
+
+/**
  * Resolves themed fonts and colors recursively.
  */
 this.__setFontAndColors = function (options) {
@@ -184,6 +209,12 @@ this.__setFontAndColors = function (options) {
 
 		// it's a font, resolve it.
 		if (name == "font") {
+
+			if (options.embedFontObject) {
+				this.__setEmbeddedFont(options);
+				continue;
+			}
+
 			var font = fontMgr.resolve(options.font);
 			if (font) {
 				options.fontSize = font.getSize();
@@ -199,7 +230,7 @@ this.__setFontAndColors = function (options) {
 
 			options.fontColor = colorMgr.resolve(options.fontColor);
 			continue;
-        }
+		}
 
 		// it's an array, go through all elements.
 		var array = options[name];

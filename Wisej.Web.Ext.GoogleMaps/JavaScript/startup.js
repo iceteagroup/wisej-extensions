@@ -28,7 +28,7 @@ this.init = function () {
 	// create the Google map widget.
 	if (this.map == null) {
 
-		this.map = new google.maps.Map(this.container, options);
+		this.map = this.widget = new google.maps.Map(this.container, options);
 
 		// dynamically resize the map.
 		this.addListener("resize", function () {

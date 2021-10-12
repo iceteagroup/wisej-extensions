@@ -20,7 +20,7 @@ this.init = function (options) {
 
 	// create the odometer using the options map generated on the server.
 	options.el = this.container.firstChild;
-	this.odometer = new Odometer(options);
+	this.odometer = this.widget = new Odometer(options);
 
 	// force the odometer not to wrap.
 	options.el.style.whiteSpace = "nowrap";

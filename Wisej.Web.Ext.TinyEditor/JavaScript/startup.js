@@ -63,7 +63,7 @@ this.init = function () {
 	}
 
 	// create the tiny editor instance.
-	this.editor = new TINY.editor.edit(id, options);
+	this.editor = this.widget = new TINY.editor.edit(id, options);
 
 	// save the gap to calculate the new iframe size when resizing.
 	var i = this.editor.i;

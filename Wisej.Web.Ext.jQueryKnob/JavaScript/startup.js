@@ -37,7 +37,7 @@ this.init = function () {
 		el.innerHTML = "<input type\"text\" style:\"display:none\" id=\"" + id + "\" />";
 
 		// save a reference to knob widget.
-		this.knob = $("#" + id);
+		this.knob = this.widget = $("#" + id);
 
 		// fire our events.
 		options.change = function (value) {

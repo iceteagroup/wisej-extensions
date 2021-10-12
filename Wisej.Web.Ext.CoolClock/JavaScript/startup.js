@@ -26,7 +26,7 @@ this.init = function (options) {
 	// center the inner canvas.
 	this.container.style.textAlign = "center";
 
-	this.coolClock = new CoolClock(options);
+	this.coolClock = this.widget = new CoolClock(options);
 }
 
 /**

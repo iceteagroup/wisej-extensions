@@ -25,7 +25,6 @@ using System.Drawing.Design;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Web.Configuration;
 using Wisej.Core;
 using Wisej.Design;
 

@@ -29,7 +29,7 @@ this.init = function (options) {
     Terminal.applyAddon(webLinks);
     Terminal.applyAddon(winptyCompat);
 
-    this.term = new Terminal({
+    this.term = this.widget = new Terminal({
         cursorBlink: true,
         scrollback: 1000,
         tabStopWith: 4

@@ -7,7 +7,7 @@
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ice Tea Group LLC")]
-[assembly: AssemblyProduct("Wisej 2.2 Extensions")]
+[assembly: AssemblyProduct("Wisej 2.5 Extensions")]
 [assembly: AssemblyCopyright("Copyright ©2018 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -23,4 +23,4 @@
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.2.60.0")]
+[assembly: AssemblyFileVersion("2.5.17.0")]

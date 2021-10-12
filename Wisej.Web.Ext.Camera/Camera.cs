@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 //
 // (C) 2020 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
 //
@@ -26,6 +26,7 @@ using System.Web;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;
+using Wisej.Web.Enumerations;
 
 namespace Wisej.Web.Ext.Camera
 {
@@ -139,12 +140,14 @@ namespace Wisej.Web.Ext.Camera
 		private string _videoFilter = null;
 
 		/// <summary>
-		/// CSS The object-fit Property (<see href="https://www.w3schools.com/css/css3_object-fit.asp"/>)
-		/// to apply to the video.
+		/// Specifies the object-fit to apply to the video.
 		/// </summary>
+		/// <remarks>
+		/// See href="https://www.w3schools.com/css/css3_object-fit.asp"/>.
+		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue(true)]
-		public ObjectFitMode ObjectFit
+		public ObjectFit ObjectFit
 		{
 			get
 			{
@@ -159,7 +162,7 @@ namespace Wisej.Web.Ext.Camera
 				}
 			}
 		}
-		private ObjectFitMode _objectfit = ObjectFitMode.Contain;
+		private ObjectFit _objectfit = ObjectFit.Contain;
 
 		/// <summary>
 		/// Specifies whether audio should be recorded.

@@ -15,25 +15,22 @@
  */
 
 using System;
-using System.Windows;
+using System.Drawing;
 #if NETFX_CORE
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 #else
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 #endif
 
 using ZXing.Common;
-using ZXing.OneD;
 
 namespace ZXing.Rendering
 {
-   /// <summary>
-   /// Renders a <see cref="BitMatrix" /> to a <see cref="WriteableBitmap" />
-   /// </summary>
-   public class WriteableBitmapRenderer : IBarcodeRenderer<WriteableBitmap>
+	/// <summary>
+	/// Renders a <see cref="BitMatrix" /> to a <see cref="WriteableBitmap" />
+	/// </summary>
+	public class WriteableBitmapRenderer : IBarcodeRenderer<WriteableBitmap>
    {
       /// <summary>
       /// Gets or sets the foreground color.

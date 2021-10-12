@@ -65,7 +65,7 @@ this.init = function () {
 	this.setStateProperties(this.getStateProperties().concat(["text"]));
 
 	// create the editor instance.
-	me.editor = CKEDITOR.replace(id, config);
+	me.editor = me.widget = CKEDITOR.replace(id, config);
 
 	// complete the initialization once the editor is fully loaded.
 	me.editor.once("instanceReady", function (e) {

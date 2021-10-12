@@ -702,13 +702,21 @@ namespace Wisej.Web.Ext.RibbonBar
 		{
 			switch (e.Action)
 			{
+				case CollectionChangeAction.Refresh:
+					if (this.Pages.Count == 0)
+					{
+						this._selectedPage = null;
+						Update("selectedIndex");
+					}
+					break;
+
 				case CollectionChangeAction.Remove:
 					if (e.Element == this.SelectedPage)
 					{
 						if (this.Pages.Count > 0)
 							this.SelectedPage = this.Pages.FirstOrDefault(p => p.Visible);
 						else
-							this.SelectedPage = null;
+							this._selectedPage = null;
 
 						Update("selectedIndex");
 					}
