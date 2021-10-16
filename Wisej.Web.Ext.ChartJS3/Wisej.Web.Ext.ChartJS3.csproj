@@ -30,9 +30,7 @@
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="Wisej.Framework">
-      <HintPath>..\..\..\Development\2.5\bin\Wisej.Framework.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Wisej-2" Version="2.5.*" />
   </ItemGroup>
 
   <ItemGroup>

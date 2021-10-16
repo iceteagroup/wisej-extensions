@@ -1,99 +1,61 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{176267C2-21D5-4741-B774-4E722BC8BFF5}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wisej.Web.Ext.XTerm</RootNamespace>
-    <AssemblyName>Wisej.Web.Ext.XTerm</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Wisej.Web.Ext.XTerm.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Wisej.Web.Ext.XTerm.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFrameworks>net48</TargetFrameworks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Wisej.Framework">
-      <HintPath>..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
-    </Reference>
+    <None Remove="JavaScript\addons\attach\attach.js" />
+    <None Remove="JavaScript\addons\fit\fit.js" />
+    <None Remove="JavaScript\addons\fullscreen\fullscreen.css" />
+    <None Remove="JavaScript\addons\fullscreen\fullscreen.js" />
+    <None Remove="JavaScript\addons\search\search.js" />
+    <None Remove="JavaScript\addons\search\SearchHelper.js" />
+    <None Remove="JavaScript\addons\terminado\terminado.js" />
+    <None Remove="JavaScript\addons\webLinks\webLinks.js" />
+    <None Remove="JavaScript\addons\winptyCompat\winptyCompat.js" />
+    <None Remove="JavaScript\addons\zmodem\zmodem.js" />
+    <None Remove="JavaScript\startup.js" />
+    <None Remove="JavaScript\xterm.css" />
+    <None Remove="JavaScript\xterm.js" />
+    <None Remove="XTerm.bmp" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="XTerm.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="extension.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JavaScript\startup.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="XTerm.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JavaScript\xterm.css" />
-    <EmbeddedResource Include="JavaScript\xterm.js" />
-  </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="JavaScript\addons\attach\attach.js" />
     <EmbeddedResource Include="JavaScript\addons\fit\fit.js" />
     <EmbeddedResource Include="JavaScript\addons\fullscreen\fullscreen.css" />
     <EmbeddedResource Include="JavaScript\addons\fullscreen\fullscreen.js" />
     <EmbeddedResource Include="JavaScript\addons\search\search.js" />
-    <Content Include="JavaScript\addons\search\SearchHelper.js" />
-    <Content Include="JavaScript\addons\terminado\terminado.js" />
+    <EmbeddedResource Include="JavaScript\addons\search\SearchHelper.js" />
+    <EmbeddedResource Include="JavaScript\addons\terminado\terminado.js" />
     <EmbeddedResource Include="JavaScript\addons\webLinks\webLinks.js" />
     <EmbeddedResource Include="JavaScript\addons\winptyCompat\winptyCompat.js" />
-    <Content Include="JavaScript\addons\zmodem\zmodem.js" />
+    <EmbeddedResource Include="JavaScript\addons\zmodem\zmodem.js" />
+    <EmbeddedResource Include="JavaScript\startup.js" />
+    <EmbeddedResource Include="JavaScript\xterm.css" />
+    <EmbeddedResource Include="JavaScript\xterm.js" />
+    <EmbeddedResource Include="XTerm.bmp" />
   </ItemGroup>
+
   <ItemGroup>
-    <Folder Include="JavaScript\addons\zmodem\demo\" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <PackageReference Include="Wisej-2" Version="2.5.*" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>mkdir "$(ProjectDir)..\bin"
-copy "$(TargetPath)" "$(ProjectDir)..\bin\"
-copy "$(TargetDir)$(TargetName).xml" "$(ProjectDir)..\bin\"</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin&quot; /s /y&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\&quot; /y&#xD;&#xA;" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

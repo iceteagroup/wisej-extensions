@@ -1,89 +1,44 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3BD92CFF-3B17-45EB-9AAD-D22A7BCDB640}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wisej.Web.Ext.RibbonBar</RootNamespace>
-    <AssemblyName>Wisej.Web.Ext.RibbonBar</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Wisej.Web.Ext.RibbonBar.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Wisej.Web.Ext.RibbonBar.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFrameworks>net48</TargetFrameworks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="Wisej.Framework">
-      <HintPath>..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
-    </Reference>
+    <None Remove="Platform\wisej.web.ribbonBar.AppButton.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.Item.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemButton.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemButtonGroup.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemCheckBox.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemComboBox.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemControl.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemRadioButton.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemSeparator.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemSplitButton.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemTextBox.js" />
+    <None Remove="Platform\wisej.web.RibbonBar.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.RibbonGroup.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.RibbonGroupLayout.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.RibbonPage.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.TabView.js" />
+    <None Remove="RibbonBar.bmp" />
+    <None Remove="Themes\RibbonBar.mixin.theme" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="NamespaceDoc.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RibbonBar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="RibbonBarCollectionBase.cs" />
-    <Compile Include="RibbonBarGroup.cs" />
-    <Compile Include="RibbonBarGroupCollection.cs" />
-    <Compile Include="RibbonBarItem.cs" />
-    <Compile Include="RibbonBarAppButton.cs" />
-    <Compile Include="RibbonBarItemButtonGroup.cs" />
-    <Compile Include="RibbonBarItemButtonMenu.cs" />
-    <Compile Include="RibbonBarItemButton.cs" />
-    <Compile Include="RibbonBarItemCheckBox.cs" />
-    <Compile Include="RibbonBarItemCollection.cs" />
-    <Compile Include="RibbonBarItemComboBox.cs" />
-    <Compile Include="RibbonBarItemControl.cs" />
-    <Compile Include="RibbonBarGroupEventArgs.cs" />
-    <Compile Include="RibbonBarMenuItemEventArgs.cs" />
-    <Compile Include="RibbonBarItemEventArgs.cs" />
-    <Compile Include="RibbonBarGroupEventHandler.cs" />
-    <Compile Include="RibbonBarMenuItemEventHandler.cs" />
-    <Compile Include="RibbonBarItemEventHandler.cs" />
-    <Compile Include="RibbonBarItemRadioButton.cs" />
-    <Compile Include="RibbonBarItemSeparator.cs" />
-    <Compile Include="RibbonBarItemSplitButton.cs" />
-    <Compile Include="RibbonBarItemTextBox.cs" />
-    <Compile Include="RibbonBarPage.cs" />
-    <Compile Include="RibbonBarPageCollection.cs" />
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.AppButton.js" />
     <EmbeddedResource Include="Platform\wisej.web.ribbonBar.Item.js" />
     <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemButton.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemButtonGroup.js" />
     <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemCheckBox.js" />
     <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemComboBox.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemControl.js" />
     <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemRadioButton.js" />
     <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemSeparator.js" />
     <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemSplitButton.js" />
@@ -93,36 +48,22 @@
     <EmbeddedResource Include="Platform\wisej.web.ribbonBar.RibbonGroupLayout.js" />
     <EmbeddedResource Include="Platform\wisej.web.ribbonBar.RibbonPage.js" />
     <EmbeddedResource Include="Platform\wisej.web.ribbonBar.TabView.js" />
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include="RibbonBar.bmp" />
     <EmbeddedResource Include="Themes\RibbonBar.mixin.theme" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="extension.snk" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <PackageReference Include="Wisej-2" Version="2.5.*" />
   </ItemGroup>
+
   <ItemGroup>
-    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemButtonGroup.js" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemControl.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="RibbonBar.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.AppButton.js" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>mkdir "$(ProjectDir)..\bin"
-copy "$(TargetPath)" "$(ProjectDir)..\bin\" /y
-copy "$(TargetDir)$(TargetName).xml" "$(ProjectDir)..\bin\" /y</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin&quot; /s /y&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\&quot; /y&#xD;&#xA;" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

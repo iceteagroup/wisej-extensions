@@ -1,115 +1,45 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{50CF8FEB-368D-48C7-AA42-1618654DB2AA}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wisej.Web.Ext.ChartJS</RootNamespace>
-    <AssemblyName>Wisej.Web.Ext.ChartJS</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Wisej.Web.Ext.ChartJS.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Wisej.Web.Ext.ChartJS.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFrameworks>net48</TargetFrameworks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
+    <None Remove="ChartJs.bmp" />
+    <None Remove="JavaScript\chart-2.7.2.js" />
+    <None Remove="JavaScript\chartjs-plugin-datalabels.js" />
+    <None Remove="JavaScript\dataLabelPlugin.js" />
+    <None Remove="JavaScript\moment-with-locales-2.17.1.js" />
+    <None Remove="JavaScript\startup.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ChartJs.bmp" />
+    <EmbeddedResource Include="JavaScript\chart-2.7.2.js" />
+    <EmbeddedResource Include="JavaScript\chartjs-plugin-datalabels.js" />
+    <EmbeddedResource Include="JavaScript\moment-with-locales-2.17.1.js" />
+    <EmbeddedResource Include="JavaScript\startup.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
-    </Reference>
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="ChartClickEventHandler.cs" />
-    <Compile Include="ChartJS.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ChartType.cs" />
-    <Compile Include="Design\OptionsEditorUI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Design\OptionsEditorUI.Designer.cs">
-      <DependentUpon>OptionsEditorUI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataSet.cs" />
-    <Compile Include="DataSetCollection.cs" />
-    <Compile Include="Design\DataSetCollectionEditor.cs" />
-    <Compile Include="NamespaceDoc.cs" />
-    <Compile Include="Options.cs" />
-    <Compile Include="Design\OptionsEditor.cs" />
-    <Compile Include="OptionsAxisGridLines.cs" />
-    <Compile Include="OptionsDataLabel.cs" />
-    <Compile Include="OptionsScales.cs" />
-    <Compile Include="OptionsLegend.cs" />
-    <Compile Include="OptionsTitle.cs" />
-    <Compile Include="OptionsTooltips.cs" />
-    <Compile Include="PointStyle.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scale.cs" />
-    <Compile Include="SteppedLine.cs" />
+    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="Wisej-2" Version="2.5.*" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JavaScript\startup.js" />
-    <EmbeddedResource Include="Design\OptionsEditorUI.resx">
-      <DependentUpon>OptionsEditorUI.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ChartJS.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="extension.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JavaScript\chart-2.7.2.js" />
-    <EmbeddedResource Include="JavaScript\moment-with-locales-2.17.1.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JavaScript\dataLabelPlugin.js" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>mkdir "$(ProjectDir)..\bin"
-copy "$(TargetPath)" "$(ProjectDir)..\bin\" /y
-copy "$(TargetDir)$(TargetName).xml" "$(ProjectDir)..\bin\" /y</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin&quot; /s /y&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\&quot; /y&#xD;&#xA;" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

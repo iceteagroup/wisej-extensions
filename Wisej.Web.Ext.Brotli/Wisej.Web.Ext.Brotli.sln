@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Brotli", "Wisej.Web.Ext.Brotli\Wisej.Web.Ext.Brotli.csproj", "{C5AAFF5E-4A31-414B-AA49-140FC6CB9DE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Brotli", "Wisej.Web.Ext.Brotli.csproj", "{C5AAFF5E-4A31-414B-AA49-140FC6CB9DE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

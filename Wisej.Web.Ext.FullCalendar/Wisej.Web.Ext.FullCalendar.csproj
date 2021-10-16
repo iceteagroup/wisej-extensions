@@ -1,102 +1,51 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4CE816D9-DA9E-4E37-AF3C-8004FF02D991}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wisej.Web.Ext.FullCalendar</RootNamespace>
-    <AssemblyName>Wisej.Web.Ext.FullCalendar</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>net48</TargetFrameworks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Wisej.Web.Ext.FullCalendar.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Wisej.Web.Ext.FullCalendar.XML</DocumentationFile>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="Wisej.Framework">
-      <HintPath>..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
-    </Reference>
+    <None Remove="FullCalendar.bmp" />
+    <None Remove="JavaScript\fullcalendar-3.9.0.css" />
+    <None Remove="JavaScript\fullcalendar-3.9.0.js" />
+    <None Remove="JavaScript\jquery-3.1.1.js" />
+    <None Remove="JavaScript\moment-with-locales-2.17.1.js" />
+    <None Remove="JavaScript\scheduler-1.9.4.css" />
+    <None Remove="JavaScript\scheduler-1.9.4.js" />
+    <None Remove="JavaScript\startup.js" />
+    <None Remove="Themes\FullCalendar.mixin.theme" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BusinessHours.cs" />
-    <Compile Include="ColumnHeaderFormats.cs" />
-    <Compile Include="ResourceEventHandler.cs" />
-    <Compile Include="Resource.cs" />
-    <Compile Include="ItemDropEventHandler.cs" />
-    <Compile Include="DayClickEventHandler.cs" />
-    <Compile Include="ThemeSystem.cs" />
-    <Compile Include="VirtualEventsNeededEventHandler.cs" />
-    <Compile Include="Event.cs" />
-    <Compile Include="EventClickEventHandler.cs" />
-    <Compile Include="EventCollection.cs" />
-    <Compile Include="EventValueEventHandler.cs" />
-    <Compile Include="FullCalendar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="NamespaceDoc.cs" />
-    <EmbeddedResource Include="Themes\FullCalendar.mixin.theme" />
-    <Compile Include="RetrieveVirtualEventEventHandler.cs" />
-    <Compile Include="ViewType.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JavaScript\startup.js" />
-  </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="FullCalendar.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JavaScript\jquery-3.1.1.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="JavaScript\moment-with-locales-2.17.1.js" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="JavaScript\fullcalendar-3.9.0.css" />
     <EmbeddedResource Include="JavaScript\fullcalendar-3.9.0.js" />
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include="JavaScript\jquery-3.1.1.js" />
+    <EmbeddedResource Include="JavaScript\moment-with-locales-2.17.1.js" />
     <EmbeddedResource Include="JavaScript\scheduler-1.9.4.css" />
     <EmbeddedResource Include="JavaScript\scheduler-1.9.4.js" />
+    <EmbeddedResource Include="JavaScript\startup.js" />
+    <EmbeddedResource Include="Themes\FullCalendar.mixin.theme" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>mkdir "$(ProjectDir)..\bin"
-copy "$(TargetPath)" "$(ProjectDir)..\bin\" /y
-copy "$(TargetDir)$(TargetName).xml" "$(ProjectDir)..\bin\" /y</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+
+  <ItemGroup>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <PackageReference Include="Wisej-2" Version="2.5.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin&quot; /s /y&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\&quot; /y&#xD;&#xA;" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

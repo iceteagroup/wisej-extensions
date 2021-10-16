@@ -1,114 +1,47 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{25594D69-8943-47F2-BF2F-428B2387D125}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wisej.Web.Ext.ColumnFilter</RootNamespace>
-    <AssemblyName>Wisej.Web.Ext.ColumnFilter</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Wisej.Web.Ext.ColumnFilter.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Wisej.Web.Ext.ColumnFilter.XML</DocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Linq.Dynamic">
-      <HintPath>lib\System.Linq.Dynamic.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="Wisej.Framework">
-      <HintPath>..\..\..\Development\2.2\bin\Wisej.Framework.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ColumnFilter.cs" />
-    <Compile Include="ColumnFilterPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ColumnFilterPanel.designer.cs">
-      <DependentUpon>ColumnFilterPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ColumnFilterPanelTypeConverter.cs" />
-    <Compile Include="lblANDOR.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleColumnFilterPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SimpleColumnFilterPanel.designer.cs">
-      <DependentUpon>SimpleColumnFilterPanel.cs</DependentUpon>
-    </Compile>
-    <None Include="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.cs" />
-    <None Include="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.Designer.cs">
-      <DependentUpon>ColumnFilterPanel.cs</DependentUpon>
-    </None>
-    <Compile Include="WhereColumnFilterPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WhereColumnFilterPanel.designer.cs">
-      <DependentUpon>WhereColumnFilterPanel.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ColumnFilterPanel.resx">
-      <DependentUpon>ColumnFilterPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SimpleColumnFilterPanel.resx">
-      <DependentUpon>SimpleColumnFilterPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WhereColumnFilterPanel.resx">
-      <DependentUpon>WhereColumnFilterPanel.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Templates\Visual Basic\ColumnFilterPanel\ColumnFilterPanel.Designer.vb" />
-    <None Include="Templates\Visual Basic\ColumnFilterPanel\ColumnFilterPanel.vb" />
-    <None Include="Templates\Visual Basic\ColumnFilterPanel\ColumnFilterPanel.vstemplate" />
-    <None Include="Templates\Visual Basic\ColumnFilterPanel\__TemplateIcon.png" />
-    <None Include="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.vstemplate" />
-    <None Include="Templates\Visual C#\ColumnFilterPanel\__TemplateIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ColumnFilter.bmp" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>mkdir "$(ProjectDir)..\bin"
-copy "$(TargetPath)" "$(ProjectDir)..\bin\" /y
-copy "$(TargetDir)$(TargetName).xml" "$(ProjectDir)..\bin\" /y</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net48</TargetFrameworks>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<SignAssembly>true</SignAssembly>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.cs" />
+		<Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.Designer.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="ColumnFilter.bmp" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="ColumnFilter.bmp" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.cs" />
+		<None Include="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.Designer.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Linq.Dynamic">
+			<HintPath>lib\System.Linq.Dynamic.dll</HintPath>
+		</Reference>
+		<PackageReference Include="Wisej-2" Version="2.5.*" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Microsoft.CSharp" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin&quot; /s /y&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\&quot; /y&#xD;&#xA;" />
+	</Target>
+
 </Project>

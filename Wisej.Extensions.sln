@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HostService", "HostService", "{4BBA9A17-4996-4573-A88A-1F7EA485BD57}"
 EndProject
@@ -19,97 +19,97 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Application.Chrome", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IconPacks", "IconPacks", "{F0DF53A6-5CC5-495E-AED7-387189F9C7C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.ModernUI", "Wisej.Ext.ModernUI\Wisej.Ext.ModernUI.csproj", "{F9747F5E-C996-41FF-8B41-BE9692B33C93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.ModernUI", "Wisej.Ext.ModernUI\Wisej.Ext.ModernUI.csproj", "{F9747F5E-C996-41FF-8B41-BE9692B33C93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.FontAwesome", "Wisej.Ext.FontAwesome\Wisej.Ext.FontAwesome.csproj", "{FE4F1C87-C718-4757-895E-8776308C4238}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.FontAwesome", "Wisej.Ext.FontAwesome\Wisej.Ext.FontAwesome.csproj", "{FE4F1C87-C718-4757-895E-8776308C4238}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.MaterialDesign", "Wisej.Ext.MaterialDesign\Wisej.Ext.MaterialDesign.csproj", "{13EFDB0B-493C-4DA2-8D44-0CE37CA7D610}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.MaterialDesign", "Wisej.Ext.MaterialDesign\Wisej.Ext.MaterialDesign.csproj", "{13EFDB0B-493C-4DA2-8D44-0CE37CA7D610}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.ElegantIcons", "Wisej.Ext.ElegantIcons\Wisej.Ext.ElegantIcons.csproj", "{617179EE-51D7-4878-AED8-A81CC4071D50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.ElegantIcons", "Wisej.Ext.ElegantIcons\Wisej.Ext.ElegantIcons.csproj", "{617179EE-51D7-4878-AED8-A81CC4071D50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.YouTube", "Wisej.Web.Ext.YouTube\Wisej.Web.Ext.YouTube.csproj", "{EA0413B3-B5F4-4281-B4D4-7AE19987725C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.YouTube", "Wisej.Web.Ext.YouTube\Wisej.Web.Ext.YouTube.csproj", "{EA0413B3-B5F4-4281-B4D4-7AE19987725C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.WebCharts", "Wisej.Web.Ext.WebCharts\Wisej.Web.Ext.WebCharts.csproj", "{F03191B2-5B86-4E7D-B3C7-54E03F8C0DE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.WebCharts", "Wisej.Web.Ext.WebCharts\Wisej.Web.Ext.WebCharts.csproj", "{F03191B2-5B86-4E7D-B3C7-54E03F8C0DE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.OnlyOffice", "Wisej.Web.Ext.OnlyOffice\Wisej.Web.Ext.OnlyOffice.csproj", "{966048E5-FF85-4938-9EBC-E28C36B74922}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.OnlyOffice", "Wisej.Web.Ext.OnlyOffice\Wisej.Web.Ext.OnlyOffice.csproj", "{966048E5-FF85-4938-9EBC-E28C36B74922}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.JssorSlider", "Wisej.Web.Ext.JssorSlider\Wisej.Web.Ext.JssorSlider.csproj", "{2568B246-E1C6-49B8-8AE5-3CB0650B566F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.JssorSlider", "Wisej.Web.Ext.JssorSlider\Wisej.Web.Ext.JssorSlider.csproj", "{2568B246-E1C6-49B8-8AE5-3CB0650B566F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.ImageSlider", "Wisej.Web.Ext.ImageSlider\Wisej.Web.Ext.ImageSlider.csproj", "{BDD6EEE7-CE78-4468-9CBC-C30DF85EBEE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.ImageSlider", "Wisej.Web.Ext.ImageSlider\Wisej.Web.Ext.ImageSlider.csproj", "{BDD6EEE7-CE78-4468-9CBC-C30DF85EBEE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.HighCharts", "Wisej.Web.Ext.HighCharts\Wisej.Web.Ext.HighCharts.csproj", "{B0275FA9-F3F5-4F43-9FEE-8113B6A8DFBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.HighCharts", "Wisej.Web.Ext.HighCharts\Wisej.Web.Ext.HighCharts.csproj", "{B0275FA9-F3F5-4F43-9FEE-8113B6A8DFBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Charts", "Wisej.Web.Ext.Charts\Wisej.Web.Ext.Charts.csproj", "{C319C75F-C718-4496-98F8-311920A4FD84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Charts", "Wisej.Web.Ext.Charts\Wisej.Web.Ext.Charts.csproj", "{C319C75F-C718-4496-98F8-311920A4FD84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.FileSystem.AmazonS3", "Wisej.FileSystem.AmazonS3\Wisej.Ext.FileSystem.AmazonS3.csproj", "{36A1248D-1E2E-4772-8A3C-D12A708F2A44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.FileSystem.AmazonS3", "Wisej.FileSystem.AmazonS3\Wisej.Ext.FileSystem.AmazonS3.csproj", "{36A1248D-1E2E-4772-8A3C-D12A708F2A44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.WebARIA", "Wisej.Web.Ext.WebARIA\Wisej.Web.Ext.WebARIA.csproj", "{AC90C50F-EBED-4445-8F8F-623BD7F85081}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.WebARIA", "Wisej.Web.Ext.WebARIA\Wisej.Web.Ext.WebARIA.csproj", "{AC90C50F-EBED-4445-8F8F-623BD7F85081}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.TourPanel", "Wisej.Web.Ext.TourPanel\Wisej.Web.Ext.TourPanel.csproj", "{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.TourPanel", "Wisej.Web.Ext.TourPanel\Wisej.Web.Ext.TourPanel.csproj", "{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.TinyMCE", "Wisej.Web.Ext.TinyMCE\Wisej.Web.Ext.TinyMCE.csproj", "{ED84D9C5-5164-4719-ACA1-B8488E81CBEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.TinyMCE", "Wisej.Web.Ext.TinyMCE\Wisej.Web.Ext.TinyMCE.csproj", "{ED84D9C5-5164-4719-ACA1-B8488E81CBEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.TinyEditor", "Wisej.Web.Ext.TinyEditor\Wisej.Web.Ext.TinyEditor.csproj", "{6DD90729-B469-4E9E-9AAE-EC786B38EF4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.TinyEditor", "Wisej.Web.Ext.TinyEditor\Wisej.Web.Ext.TinyEditor.csproj", "{6DD90729-B469-4E9E-9AAE-EC786B38EF4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Speech", "Wisej.Web.Ext.Speech\Wisej.Web.Ext.Speech.csproj", "{FA965176-62C1-4708-806F-D1A2BE663D01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Speech", "Wisej.Web.Ext.Speech\Wisej.Web.Ext.Speech.csproj", "{FA965176-62C1-4708-806F-D1A2BE663D01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.SmoothieChart", "Wisej.Web.Ext.SmoothieChart\Wisej.Web.Ext.SmoothieChart.csproj", "{8E76EE22-9896-4D59-B48E-BAEE92B73BF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.SmoothieChart", "Wisej.Web.Ext.SmoothieChart\Wisej.Web.Ext.SmoothieChart.csproj", "{8E76EE22-9896-4D59-B48E-BAEE92B73BF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.RibbonBar", "Wisej.Web.Ext.RibbonBar\Wisej.Web.Ext.RibbonBar.csproj", "{3BD92CFF-3B17-45EB-9AAD-D22A7BCDB640}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.RibbonBar", "Wisej.Web.Ext.RibbonBar\Wisej.Web.Ext.RibbonBar.csproj", "{3BD92CFF-3B17-45EB-9AAD-D22A7BCDB640}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.ProgressCircle", "Wisej.Web.Ext.ProgressCircle\Wisej.Web.Ext.ProgressCircle.csproj", "{D3748609-66F8-4C9C-9256-8C229E761674}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.ProgressCircle", "Wisej.Web.Ext.ProgressCircle\Wisej.Web.Ext.ProgressCircle.csproj", "{D3748609-66F8-4C9C-9256-8C229E761674}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Polymer", "Wisej.Web.Ext.Polymer\Wisej.Web.Ext.Polymer.csproj", "{17049895-E034-48F0-8C30-08CBA9347BE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Polymer", "Wisej.Web.Ext.Polymer\Wisej.Web.Ext.Polymer.csproj", "{17049895-E034-48F0-8C30-08CBA9347BE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Pannellum", "Wisej.Web.Ext.Pannellum\Wisej.Web.Ext.Pannellum\Wisej.Web.Ext.Pannellum.csproj", "{2D7E23B4-4D1E-4A30-9598-D042620C6A7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Pannellum", "Wisej.Web.Ext.Pannellum\Wisej.Web.Ext.Pannellum.csproj", "{2D7E23B4-4D1E-4A30-9598-D042620C6A7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Odometer", "Wisej.Web.Ext.Odometer\Wisej.Web.Ext.Odometer.csproj", "{AAA54956-01FE-44F6-A678-8F08CCA68997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Odometer", "Wisej.Web.Ext.Odometer\Wisej.Web.Ext.Odometer.csproj", "{AAA54956-01FE-44F6-A678-8F08CCA68997}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.OfficeViewer", "Wisej.Web.Ext.OfficeViewer\Wisej.Web.Ext.OfficeViewer.csproj", "{3CE08380-6A9D-4E63-9FFC-5E6A19ED2CEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.OfficeViewer", "Wisej.Web.Ext.OfficeViewer\Wisej.Web.Ext.OfficeViewer.csproj", "{3CE08380-6A9D-4E63-9FFC-5E6A19ED2CEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.BingWallpaper", "Wisej.Web.Ext.BingWallpaper\Wisej.Web.Ext.BingWallpaper.csproj", "{20AE90CD-B4D7-42BB-B306-2BCCFAC2235E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.BingWallpaper", "Wisej.Web.Ext.BingWallpaper\Wisej.Web.Ext.BingWallpaper.csproj", "{20AE90CD-B4D7-42BB-B306-2BCCFAC2235E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.GoogleMaps", "Wisej.Web.Ext.GoogleMaps\Wisej.Web.Ext.GoogleMaps.csproj", "{0F6235E6-967C-40EB-B356-DF55FACEFFD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.GoogleMaps", "Wisej.Web.Ext.GoogleMaps\Wisej.Web.Ext.GoogleMaps.csproj", "{0F6235E6-967C-40EB-B356-DF55FACEFFD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Html2Canvas", "Wisej.Web.Ext.Html2Canvas\Wisej.Web.Ext.Html2Canvas\Wisej.Web.Ext.Html2Canvas.csproj", "{1C0F56E9-C005-4D47-BD39-7695F7E82E9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Html2Canvas", "Wisej.Web.Ext.Html2Canvas\Wisej.Web.Ext.Html2Canvas.csproj", "{1C0F56E9-C005-4D47-BD39-7695F7E82E9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.CoolClock", "Wisej.Web.Ext.CoolClock\Wisej.Web.Ext.CoolClock.csproj", "{18BBC66E-3628-4431-9F2C-2A680A0C43E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.CoolClock", "Wisej.Web.Ext.CoolClock\Wisej.Web.Ext.CoolClock.csproj", "{18BBC66E-3628-4431-9F2C-2A680A0C43E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.CKEditor", "Wisej.Web.Ext.CKEditor\Wisej.Web.Ext.CKEditor.csproj", "{4D4AAFE6-81A9-4C2D-B46D-C68C402BE4F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.CKEditor", "Wisej.Web.Ext.CKEditor\Wisej.Web.Ext.CKEditor.csproj", "{4D4AAFE6-81A9-4C2D-B46D-C68C402BE4F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.ChartJs", "Wisej.Web.Ext.ChartJs\Wisej.Web.Ext.ChartJs.csproj", "{50CF8FEB-368D-48C7-AA42-1618654DB2AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.ChartJS", "Wisej.Web.Ext.ChartJs\Wisej.Web.Ext.ChartJS.csproj", "{50CF8FEB-368D-48C7-AA42-1618654DB2AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Bubbles", "Wisej.Web.Ext.Bubbles\Wisej.Web.Ext.Bubbles.csproj", "{EA5376AE-16E7-4E95-86DA-8C80A32E7C30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Bubbles", "Wisej.Web.Ext.Bubbles\Wisej.Web.Ext.Bubbles.csproj", "{EA5376AE-16E7-4E95-86DA-8C80A32E7C30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Barcode", "Wisej.Web.Ext.Barcode\Wisej.Web.Ext.Barcode.csproj", "{7338E287-F649-4429-93F1-09126910CD33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Barcode", "Wisej.Web.Ext.Barcode\Wisej.Web.Ext.Barcode.csproj", "{7338E287-F649-4429-93F1-09126910CD33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.FullCalendar", "Wisej.Web.Ext.FullCalendar\Wisej.Web.Ext.FullCalendar.csproj", "{4CE816D9-DA9E-4E37-AF3C-8004FF02D991}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.FullCalendar", "Wisej.Web.Ext.FullCalendar\Wisej.Web.Ext.FullCalendar.csproj", "{4CE816D9-DA9E-4E37-AF3C-8004FF02D991}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.CountUp", "Wisej.Web.Ext.CountUp\Wisej.Web.Ext.CountUp.csproj", "{73FFE3F5-53DE-45C8-8012-4283AB2F9146}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.CountUp", "Wisej.Web.Ext.CountUp\Wisej.Web.Ext.CountUp.csproj", "{73FFE3F5-53DE-45C8-8012-4283AB2F9146}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.AspNetControl", "Wisej.Web.Ext.AspNetControl\Wisej.Web.Ext.AspNetControl.csproj", "{EDE76A2A-2120-4198-A6C3-275389175A5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.AspNetControl", "Wisej.Web.Ext.AspNetControl\Wisej.Web.Ext.AspNetControl.csproj", "{EDE76A2A-2120-4198-A6C3-275389175A5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.WebWorker", "Wisej.Ext.WebWorker\Wisej.Ext.WebWorker.csproj", "{69E773BC-8FE4-4600-A704-3EF52221ADB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.WebWorker", "Wisej.Ext.WebWorker\Wisej.Ext.WebWorker.csproj", "{69E773BC-8FE4-4600-A704-3EF52221ADB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.Translation", "Wisej.Ext.Translation\Wisej.Ext.Translation.csproj", "{382BF7A6-1A9F-4E4A-A8F9-6885A6E1F4A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.Translation", "Wisej.Ext.Translation\Wisej.Ext.Translation.csproj", "{382BF7A6-1A9F-4E4A-A8F9-6885A6E1F4A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Notification", "Wisej.Web.Ext.Notification\Wisej.Web.Ext.Notification.csproj", "{A913D48F-BF8C-4987-B45D-7019BA055E51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Notification", "Wisej.Web.Ext.Notification\Wisej.Web.Ext.Notification.csproj", "{A913D48F-BF8C-4987-B45D-7019BA055E51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.JustGage", "Wisej.Web.Ext.JustGage\Wisej.Web.Ext.JustGage.csproj", "{C3C6CD99-8ADF-4231-ACA8-8FBDCA849D68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.JustGage", "Wisej.Web.Ext.JustGage\Wisej.Web.Ext.JustGage.csproj", "{C3C6CD99-8ADF-4231-ACA8-8FBDCA849D68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.jSequence", "Wisej.Web.Ext.jSequence\Wisej.Web.Ext.jSequence.csproj", "{28D4FD03-A319-48D9-8EB6-F4D2EC02046A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.jSequence", "Wisej.Web.Ext.jSequence\Wisej.Web.Ext.jSequence.csproj", "{28D4FD03-A319-48D9-8EB6-F4D2EC02046A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.jQueryKnob", "Wisej.Web.Ext.jQueryKnob\Wisej.Web.Ext.jQueryKnob.csproj", "{A4F646BC-8A03-432F-9E74-920ED4EF3C2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.jQueryKnob", "Wisej.Web.Ext.jQueryKnob\Wisej.Web.Ext.jQueryKnob.csproj", "{A4F646BC-8A03-432F-9E74-920ED4EF3C2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.Geolocation", "Wisej.Ext.Geolocation\Wisej.Ext.Geolocation.csproj", "{F8AAE3FC-E5BE-4DEE-BF04-CA3E0CD5E842}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.Geolocation", "Wisej.Ext.Geolocation\Wisej.Ext.Geolocation.csproj", "{F8AAE3FC-E5BE-4DEE-BF04-CA3E0CD5E842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.CognitiveServices", "Wisej.Ext.CognitiveServices\Wisej.Ext.CognitiveServices.csproj", "{63B9B87B-1474-4EEB-A3E9-CE32983F9582}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.CognitiveServices", "Wisej.Ext.CognitiveServices\Wisej.Ext.CognitiveServices.csproj", "{63B9B87B-1474-4EEB-A3E9-CE32983F9582}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.CustomWallpaper", "Wisej.Web.Ext.CustomWallpaper\Wisej.Web.Ext.CustomWallpaper.csproj", "{E98F1592-9E30-4002-B8AD-9D4DF27A055B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.CustomWallpaper", "Wisej.Web.Ext.CustomWallpaper\Wisej.Web.Ext.CustomWallpaper.csproj", "{E98F1592-9E30-4002-B8AD-9D4DF27A055B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.ColumnFilter", "Wisej.Web.Ext.ColumnFilter\Wisej.Web.Ext.ColumnFilter.csproj", "{25594D69-8943-47F2-BF2F-428B2387D125}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.ColumnFilter", "Wisej.Web.Ext.ColumnFilter\Wisej.Web.Ext.ColumnFilter.csproj", "{25594D69-8943-47F2-BF2F-428B2387D125}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.ClearScript", "Wisej.Ext.ClearScript\Wisej.Ext.ClearScript.csproj", "{B4A2D752-8D5D-48D5-A368-45A5A9F72E7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.ClearScript", "Wisej.Ext.ClearScript\Wisej.Ext.ClearScript.csproj", "{B4A2D752-8D5D-48D5-A368-45A5A9F72E7F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClearScriptV8", "ClearScriptV8", "{D88E9EF7-A426-412E-92CD-63C2E415FA2C}"
 EndProject
@@ -117,33 +117,43 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ClearScriptV8-64", "Wisej.E
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ClearScriptV8-32", "Wisej.Ext.ClearScript\ClearScript\V8\ClearScriptV8\32\ClearScriptV8-32.vcxproj", "{2D63EA35-BA9C-4E77-B5A4-4938DBBFEFA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Navigator", "Wisej.Web.Ext.Navigator\Wisej.Web.Ext.Navigator.csproj", "{AB9A1C37-61CB-4886-B9D0-F986300E6322}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Navigator", "Wisej.Web.Ext.Navigator\Wisej.Web.Ext.Navigator.csproj", "{AB9A1C37-61CB-4886-B9D0-F986300E6322}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.ServiceFabricHost", "HostService\Wisej.ServiceFabricHost\Wisej.ServiceFabricHost.csproj", "{AAFF10BA-8664-46C6-AC7B-9220E978015B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.NavigationBar", "Wisej.Web.Ext.NavigationBar\Wisej.Web.Ext.NavigationBar.csproj", "{71898F65-E421-4AD8-BAF5-CED5EAF288D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.NavigationBar", "Wisej.Web.Ext.NavigationBar\Wisej.Web.Ext.NavigationBar.csproj", "{71898F65-E421-4AD8-BAF5-CED5EAF288D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.SideButton", "Wisej.Web.Ext.SideButton\Wisej.Web.Ext.SideButton.csproj", "{96DA489E-EFBB-45A6-9AE2-CDEE62FCF259}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.SideButton", "Wisej.Web.Ext.SideButton\Wisej.Web.Ext.SideButton.csproj", "{96DA489E-EFBB-45A6-9AE2-CDEE62FCF259}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Brotli", "Wisej.Web.Ext.Brotli\Wisej.Web.Ext.Brotli\Wisej.Web.Ext.Brotli.csproj", "{C5AAFF5E-4A31-414B-AA49-140FC6CB9DE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Brotli", "Wisej.Web.Ext.Brotli\Wisej.Web.Ext.Brotli.csproj", "{C5AAFF5E-4A31-414B-AA49-140FC6CB9DE2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Application.FireFox", "HostService\Wisej.Application.FireFox\Wisej.Application.FireFox.csproj", "{1AF46CD0-AFC7-41CA-B936-AEDDEFB30305}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.XTerm", "Wisej.Web.Ext.XTerm\Wisej.Web.Ext.XTerm.csproj", "{176267C2-21D5-4741-B774-4E722BC8BFF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.XTerm", "Wisej.Web.Ext.XTerm\Wisej.Web.Ext.XTerm.csproj", "{176267C2-21D5-4741-B774-4E722BC8BFF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.VisualStudioIcons", "Wisej.Ext.VisualStudioIcons\Wisej.Ext.VisualStudioIcons.csproj", "{69489B33-B14D-4BA2-8681-D1E86DB92350}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.VisualStudioIcons", "Wisej.Ext.VisualStudioIcons\Wisej.Ext.VisualStudioIcons.csproj", "{69489B33-B14D-4BA2-8681-D1E86DB92350}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.DataGridViewSummaryRow", "Wisej.Web.Ext.DataGridViewSummaryRow\Wisej.Web.Ext.DataGridViewSummaryRow.csproj", "{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.VaadinIcons", "Wisej.Ext.VaadinIcons\Wisej.Ext.VaadinIcons.csproj", "{F0387704-9F72-4760-B2D8-599FE0BA105D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.VaadinIcons", "Wisej.Ext.VaadinIcons\Wisej.Ext.VaadinIcons.csproj", "{F0387704-9F72-4760-B2D8-599FE0BA105D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.Camera", "Wisej.Web.Ext.Camera\Wisej.Web.Ext.Camera.csproj", "{CB444D81-FB22-4533-8B20-82A32707C54F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Camera", "Wisej.Web.Ext.Camera\Wisej.Web.Ext.Camera.csproj", "{CB444D81-FB22-4533-8B20-82A32707C54F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.ScreenRecorder", "Wisej.Web.Ext.ScreenRecorder\Wisej.Web.Ext.ScreenRecorder.csproj", "{8AF0BACD-49DC-47E2-9D6F-770E29BC9494}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.ScreenRecorder", "Wisej.Web.Ext.ScreenRecorder\Wisej.Web.Ext.ScreenRecorder.csproj", "{8AF0BACD-49DC-47E2-9D6F-770E29BC9494}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.PrintPreview", "Wisej.Web.Ext.PrintPreview\Wisej.Web.Ext.PrintPreview.csproj", "{6482A203-E77B-4153-92D1-906BB554FF78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.TaskBar", "Wisej.Web.Ext.TaskBar\Wisej.Web.Ext.TaskBar.csproj", "{7C597365-5EB5-4541-A4A6-4AC40BE8911F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Application.Edge", "HostService\Wisej.Application.Edge\Wisej.Application.Edge.csproj", "{143E2664-A0A4-46E4-BF57-D5CBC70F2149}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.PrintPreview", "Wisej.Web.Ext.PrintPreview\Wisej.Web.Ext.PrintPreview.csproj", "{6482A203-E77B-4153-92D1-906BB554FF78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.ChartJS3", "Wisej.Web.Ext.ChartJs3\Wisej.Web.Ext.ChartJS3.csproj", "{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.AceEditor", "Wisej.Web.Ext.AceEditor\Wisej.Web.Ext.AceEditor.csproj", "{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.BootstrapIcons", "Wisej.Ext.BootstrapIcons\Wisej.Ext.BootstrapIcons.csproj", "{9D21FB7B-D2F9-4095-9072-889C2E092D28}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Ext.ClientFileSystem", "Wisej.Ext.ClientFileSystem\Wisej.Ext.ClientFileSystem.csproj", "{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.MobileIntegration", "Wisej.Web.Ext.MobileIntegration\Wisej.Web.Ext.MobileIntegration\Wisej.Web.Ext.MobileIntegration.csproj", "{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Notify", "Wisej.Web.Ext.MobileIntegration\Wisej.Notify\Wisej.Notify.csproj", "{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -851,18 +861,6 @@ Global
 		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Release|x64.Build.0 = Release|Any CPU
 		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Release|x86.ActiveCfg = Release|Any CPU
 		{69489B33-B14D-4BA2-8681-D1E86DB92350}.Release|x86.Build.0 = Release|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Debug|x64.Build.0 = Debug|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Debug|x86.Build.0 = Debug|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Release|x64.ActiveCfg = Release|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Release|x64.Build.0 = Release|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Release|x86.ActiveCfg = Release|Any CPU
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3}.Release|x86.Build.0 = Release|Any CPU
 		{F0387704-9F72-4760-B2D8-599FE0BA105D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F0387704-9F72-4760-B2D8-599FE0BA105D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0387704-9F72-4760-B2D8-599FE0BA105D}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -899,18 +897,6 @@ Global
 		{8AF0BACD-49DC-47E2-9D6F-770E29BC9494}.Release|x64.Build.0 = Release|Any CPU
 		{8AF0BACD-49DC-47E2-9D6F-770E29BC9494}.Release|x86.ActiveCfg = Release|Any CPU
 		{8AF0BACD-49DC-47E2-9D6F-770E29BC9494}.Release|x86.Build.0 = Release|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Debug|x64.Build.0 = Debug|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Debug|x86.Build.0 = Debug|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Release|x64.ActiveCfg = Release|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Release|x64.Build.0 = Release|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Release|x86.ActiveCfg = Release|Any CPU
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F}.Release|x86.Build.0 = Release|Any CPU
 		{6482A203-E77B-4153-92D1-906BB554FF78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6482A203-E77B-4153-92D1-906BB554FF78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6482A203-E77B-4153-92D1-906BB554FF78}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -923,6 +909,90 @@ Global
 		{6482A203-E77B-4153-92D1-906BB554FF78}.Release|x64.Build.0 = Release|Any CPU
 		{6482A203-E77B-4153-92D1-906BB554FF78}.Release|x86.ActiveCfg = Release|Any CPU
 		{6482A203-E77B-4153-92D1-906BB554FF78}.Release|x86.Build.0 = Release|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Debug|x64.Build.0 = Debug|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Debug|x86.Build.0 = Debug|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Release|x64.ActiveCfg = Release|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Release|x64.Build.0 = Release|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Release|x86.ActiveCfg = Release|Any CPU
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149}.Release|x86.Build.0 = Release|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Debug|x64.Build.0 = Debug|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Debug|x86.Build.0 = Debug|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Release|x64.ActiveCfg = Release|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Release|x64.Build.0 = Release|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Release|x86.ActiveCfg = Release|Any CPU
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB}.Release|x86.Build.0 = Release|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Debug|x64.Build.0 = Debug|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Debug|x86.Build.0 = Debug|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Release|x64.ActiveCfg = Release|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Release|x64.Build.0 = Release|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Release|x86.ActiveCfg = Release|Any CPU
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD}.Release|x86.Build.0 = Release|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Debug|x64.Build.0 = Debug|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Debug|x86.Build.0 = Debug|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Release|x64.ActiveCfg = Release|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Release|x64.Build.0 = Release|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Release|x86.ActiveCfg = Release|Any CPU
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28}.Release|x86.Build.0 = Release|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Debug|x64.Build.0 = Debug|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Debug|x86.Build.0 = Debug|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Release|x64.ActiveCfg = Release|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Release|x64.Build.0 = Release|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Release|x86.ActiveCfg = Release|Any CPU
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C}.Release|x86.Build.0 = Release|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Debug|x64.Build.0 = Debug|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Debug|x86.Build.0 = Debug|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Release|x64.ActiveCfg = Release|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Release|x64.Build.0 = Release|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Release|x86.ActiveCfg = Release|Any CPU
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC}.Release|x86.Build.0 = Release|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Debug|x64.Build.0 = Debug|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Debug|x86.Build.0 = Debug|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Release|x64.ActiveCfg = Release|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Release|x64.Build.0 = Release|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Release|x86.ActiveCfg = Release|Any CPU
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -988,12 +1058,17 @@ Global
 		{1AF46CD0-AFC7-41CA-B936-AEDDEFB30305} = {4BBA9A17-4996-4573-A88A-1F7EA485BD57}
 		{176267C2-21D5-4741-B774-4E722BC8BFF5} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
 		{69489B33-B14D-4BA2-8681-D1E86DB92350} = {F0DF53A6-5CC5-495E-AED7-387189F9C7C0}
-		{A2D26585-F266-44F3-9F1B-C2715E3DFEC3} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
 		{F0387704-9F72-4760-B2D8-599FE0BA105D} = {F0DF53A6-5CC5-495E-AED7-387189F9C7C0}
 		{CB444D81-FB22-4533-8B20-82A32707C54F} = {D8955065-A2D7-41A8-8CB2-4316AC6B0B27}
 		{8AF0BACD-49DC-47E2-9D6F-770E29BC9494} = {D7DCF4CA-F508-4C1C-8199-5D865DA943FD}
-		{7C597365-5EB5-4541-A4A6-4AC40BE8911F} = {D8955065-A2D7-41A8-8CB2-4316AC6B0B27}
 		{6482A203-E77B-4153-92D1-906BB554FF78} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
+		{143E2664-A0A4-46E4-BF57-D5CBC70F2149} = {4BBA9A17-4996-4573-A88A-1F7EA485BD57}
+		{D0E9CBFA-9D9F-407B-8FF8-25B43D6C70AB} = {D8955065-A2D7-41A8-8CB2-4316AC6B0B27}
+		{4A7CCF1A-6F6A-4A16-9D4D-E6ADC5954FAD} = {D8955065-A2D7-41A8-8CB2-4316AC6B0B27}
+		{9D21FB7B-D2F9-4095-9072-889C2E092D28} = {F0DF53A6-5CC5-495E-AED7-387189F9C7C0}
+		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
+		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
+		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFDB97B7-7798-4B99-AE27-BBA1C4110DAD}
