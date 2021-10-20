@@ -32,7 +32,7 @@ namespace Wisej.Web.Ext.NavigationBar
 	[DesignTimeVisible(false)]
 	[Designer("Wisej.Design.ComponentDesigner, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
 	[ApiCategory("NavigationBar")]
-	public partial class NavigationBarItem : Wisej.Web.FlexLayoutPanel
+	public partial class NavigationBarItem : Web.FlexLayoutPanel
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="NavigationBarItem"/> class.
@@ -254,9 +254,10 @@ namespace Wisej.Web.Ext.NavigationBar
 		[DefaultValue(true)]
 		public bool IconVisible
 		{
-			get => this.icon.Visible;
-			set => this.icon.Visible = value;
+			get => this._iconVisible;
+			set => this.icon.Visible = this._iconVisible = value;
 		}
+		private bool _iconVisible = true;
 
 		/// <summary>
 		/// Returns the collection of items to display in the <see cref="NavigationBarItem"/>.
@@ -491,6 +492,17 @@ namespace Wisej.Web.Ext.NavigationBar
 			}
 		}
 
+		/// <summary>
+		/// Returns or sets the visibility of the <see cref="NavigationBarItem"/>.
+		/// </summary>
+		[DefaultValue(false)]
+		public bool Hidden
+		{
+			get => this._hidden;
+			set => this.Visible = !(this._hidden = value);
+		}
+		private bool _hidden = false;
+
 		#endregion
 
 		#region Implementation
@@ -676,7 +688,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public new string ImageSource { get => base.ImageSource; set { } }      /// <exclude/>
+		public new string ImageSource { get => base.ImageSource; set { } }
+		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -741,7 +754,11 @@ namespace Wisej.Web.Ext.NavigationBar
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new int Spacing { get => base.Spacing; set => base.Spacing = value; }
-
+		/// <exclude/>
+		[Browsable(false)]
+		[EditorBrowsable(EditorBrowsableState.Always)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public override bool Visible { get => base.Visible; set => base.Visible = value; }
 		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]

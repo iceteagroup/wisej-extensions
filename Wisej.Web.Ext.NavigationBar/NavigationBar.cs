@@ -775,7 +775,7 @@ namespace Wisej.Web.Ext.NavigationBar
 				while (target != null && target.Site == null)
 				{
 					mouseLoc.Offset(-target.Left, -target.Top);
-					target = target.GetChildAtPoint(mouseLoc);
+					target = target.GetChildAtPoint(mouseLoc, GetChildAtPointSkip.Invisible);
 				}
 
 				if (target != null && target is NavigationBarItem && target.Site != null && target.Site.DesignMode)
