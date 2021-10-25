@@ -91,6 +91,7 @@ namespace Wisej.Web.Ext.MobileIntegration
 			{
 				CreateNoWindow = true,
 				UseShellExecute = false,
+				WorkingDirectory = TOOL_PATH,
 				RedirectStandardOutput = true,
 				Arguments = Convert.ToBase64String(dataBytes),
 				FileName = Path.Combine(TOOL_PATH, "Wisej.Notify.exe"),

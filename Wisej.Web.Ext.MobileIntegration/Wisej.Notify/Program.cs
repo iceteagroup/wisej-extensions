@@ -19,6 +19,7 @@
 
 using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Text;
 
 namespace Wisej.Notify
@@ -35,7 +36,7 @@ namespace Wisej.Notify
 				ProcessResponse("Invalid number of arguments.");
 				return;
 			}
-				
+
 			try
 			{
 				var dataBytes = Convert.FromBase64String(args[0]);

@@ -20,6 +20,8 @@
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace Wisej.Notify
 {
@@ -68,9 +70,9 @@ namespace Wisej.Notify
 
 			using (var request = new HttpRequestMessage(HttpMethod.Post, _fcmServerUrl))
 			{
-				request.Content = new StringContent(json);
-
-				request.Headers.TryAddWithoutValidation("Authorization", $"key={serverKey}");
+				request.Version = new Version(2, 0);
+				request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+				request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", serverKey);
 
 				using var response = _client.SendAsync(request).Result;
 				result = response.ReasonPhrase;
