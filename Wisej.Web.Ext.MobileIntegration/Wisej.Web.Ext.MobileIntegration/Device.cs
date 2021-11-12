@@ -17,11 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using Wisej.Base;
 using Wisej.Core;
+using static Wisej.Web.Ext.MobileIntegration.DeviceResponse;
 
 namespace Wisej.Web.Ext.MobileIntegration
 {
@@ -60,9 +63,24 @@ namespace Wisej.Web.Ext.MobileIntegration
 				{
 					instance = new Device();
 					Application.Session[typeof(Device).FullName] = instance;
+					Application.SessionTimeout += Application_SessionTimeout;
+					Application.ApplicationRefresh += instance.Application_ApplicationRefresh;
+					
 				}
 				return instance;
 			}
+		}
+
+		private static void Application_SessionTimeout(object sender, HandledEventArgs e)
+		{
+			e.Handled = true;
+		}
+
+		private void Application_ApplicationRefresh(object sender, EventArgs e)
+		{
+			this._tabBar.Update(true);
+			this._toolbar.Update(true);
+			this._statusbar.Update(true);
 		}
 
 		#endregion
@@ -439,11 +457,67 @@ namespace Wisej.Web.Ext.MobileIntegration
 		}
 		private string _offlinePage;
 
+		/// <summary>
+		/// Returns a dynamic object that can be used to store custom data in relation to the device.
+		/// The data is persistent and can be accessed across different applications.
+		/// </summary>
+		public static new UserDataDictionary<string, object> UserData
+		{
+			get
+			{
+				if (Instance._userData == null)
+				{
+					var result = PostModalMessage("device.getUserData");
+					if (result.Status == StatusCode.Success)
+						Instance._userData = JsonConvert.DeserializeObject<UserDataDictionary<string, object>>(result.Value);
+					else
+						Instance._userData = new UserDataDictionary<string, object>();
+
+					Instance._userData.PropertyChanged += Instance._userData_PropertyChanged;
+				}
+				return Instance._userData;
+			}
+			set
+			{
+				if (Instance._userData == null || !Instance._userData.Equals(value))
+				{
+					Instance._userData = value;
+					PostMessage("device.setUserData", JsonConvert.SerializeObject(value));
+				}
+			}
+		}
+		private UserDataDictionary<string, object> _userData;
+
+		/// <summary>
+		/// Processes changes in UserData.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void _userData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			switch (e.PropertyName)
+			{
+				case "": // update everything.
+					PostMessage("device.setUserData", JsonConvert.SerializeObject(UserData));
+					break;
+
+				default: // update only the given property.
+					PostMessage("device.updateUserData", e.PropertyName, UserData[e.PropertyName]);
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Checks if the <see cref="UserData"/> dynamic object was created and has any value.
+		/// </summary>
+		public new bool HasUserData
+		{
+			get { return this._userData != null && this._userData.Count > 0; }
+		}
+
 		#endregion
 
 		#region Methods
-
-		#region Utilities
 
 		/// <summary>
 		/// Triggers notification feedback on the device.
@@ -459,10 +533,17 @@ namespace Wisej.Web.Ext.MobileIntegration
 		/// </summary>
 		/// <param name="permission">The permission to request.</param>
 		/// <returns>The success of the permission request.</returns>
+		/// <exception cref="DeviceException">
+		/// Occurs when the permission could not be requested.
+		/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
+		/// </exception>
 		public static bool RequestPermission(PermissionType permission)
 		{
 			var result = PostModalMessage($"permissions.{permission}");
-			return result.ErrorCode == 0;
+			if (result.Status != StatusCode.Success)
+				ThrowDeviceException(result);
+
+			return true;
 		}
 
 		/// <summary>
@@ -471,46 +552,68 @@ namespace Wisej.Web.Ext.MobileIntegration
 		/// <param name="url">The URL to display on the external screen.</param>
 		public static void SetExternalScreenData(string url)
 		{
-			Device.PostMessage("screen.data", url);
+			PostMessage("screen.data", url);
 		}
 
 		/// <summary>
 		/// Asks the device to authenticate the user using biometrics if available, or the device's passcode.
 		/// </summary>
 		/// <param name="message">The reason for authenticating.</param>
-		/// <returns>The success of the authentication.</returns>
-		public static bool Authenticate(string message)
+		/// <exception cref="DeviceException">
+		/// Occurs when the device did not successfully authenticate the user.
+		/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
+		/// </exception>
+		public static void Authenticate(string message)
 		{
 			var result = PostModalMessage("action.authenticate", message);
-			return result.ErrorCode == 0;
+			if (result.Status != StatusCode.Success)
+				ThrowDeviceException(result);
 		}
 
 		/// <summary>
-		/// EXPERIMENTAL: Sets the device's language settings to the specified culture.
+		/// Sets the device's language settings to the specified culture.
 		/// </summary>
 		/// <param name="culture">The culture to apply (i.e, "en", "it", etc.)</param>
 		public static void SetLocalization(string culture)
 		{
-			Device.PostMessage("localization.change", culture);
+			PostMessage("localization.change", culture);
 		}
 
 		/// <summary>
-		/// EXPERIMENTAL: Attempts to bind the native application to the specified URL.
+		/// Attempts to bind the native application to the specified URL.
 		/// </summary>
 		/// <param name="link">The link of the Wisej application.</param>
-		/// <returns>The success of binding the app.</returns>
-		public static bool BindApplication(string link)
+		/// <exception cref="DeviceException">
+		/// Occurs when the device could not be bound to the given application.
+		/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
+		/// </exception>
+		public static void BindApplication(string link)
 		{
-			var result = Device.PostModalMessage("device.bind", link);
-			return result.ErrorCode == 0;
+			var result = PostModalMessage("device.bind", link);
+			if(result.Status != StatusCode.Success)
+				ThrowDeviceException(result);
 		}
 
 		/// <summary>
-		/// EXPERIMENTAL: Removes the bound-app configuration from the device.
+		/// Removes the bound-app configuration from the device.
 		/// </summary>
 		public static void FreeBoundApplication()
 		{
-			Device.PostMessage("device.freeBind");
+			PostMessage("device.freeBind");
+		}
+
+		/// <summary>
+		/// Processes exceptions from the device.
+		/// </summary>
+		/// <param name="result"></param>
+		/// <param name="callerName"></param>
+		/// <exception cref="DeviceException">
+		/// Occurs when there was an error executing a command.
+		/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
+		/// </exception>
+		private static void ThrowDeviceException(DeviceResponse result, [CallerMemberName] string callerName = "")
+		{
+			throw new DeviceException(result.Value, callerName, result.Status);
 		}
 
 		#endregion
@@ -561,8 +664,6 @@ namespace Wisej.Web.Ext.MobileIntegration
 
 		// last result receive in the action.response event from the device.
 		private DeviceResponse _result;
-
-		#endregion
 
 		#endregion
 

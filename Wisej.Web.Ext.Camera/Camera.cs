@@ -26,7 +26,6 @@ using System.Web;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;
-using Wisej.Web.Enumerations;
 
 namespace Wisej.Web.Ext.Camera
 {

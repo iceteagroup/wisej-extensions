@@ -29,15 +29,26 @@ namespace Wisej.Web.Ext.MobileIntegration
 	/// </summary>
 	public class NotificationManager
 	{
+
+		#region Properties
+
 		/// <summary>
 		/// The directory path of the Wisej.Notify executable file (exe).
 		/// </summary>
 		public static string TOOL_PATH;
 
+		#endregion
+
+		#region Constructor
+
 		static NotificationManager()
 		{
 			TOOL_PATH = Path.Combine(Directory.GetParent(Application.ExecutablePath).FullName, "Wisej.Notify");
 		}
+
+		#endregion
+
+		#region Methods
 
 		/// <summary>
 		/// Pushes a notification to Firebase Cloud Messenger (FCM).
@@ -82,6 +93,14 @@ namespace Wisej.Web.Ext.MobileIntegration
 			return ProcessNotificationRequest(data);
 		}
 
+		/// <summary>
+		/// Starts a new instance of Wisej.Notify to process the notification payload.
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		/// <exception cref="InvalidOperationException">
+		/// Occurs when an error happens in Wisej.Notify.
+		/// </exception>
 		private static NotificationResponse ProcessNotificationRequest(object data)
 		{
 			var dataString = JSON.Stringify(data, false);
@@ -110,5 +129,8 @@ namespace Wisej.Web.Ext.MobileIntegration
 				return new NotificationResponse(response.Success, response.ReasonString, response.Timestamp);
 			}
 		}
+
+		#endregion
+
 	}
 }

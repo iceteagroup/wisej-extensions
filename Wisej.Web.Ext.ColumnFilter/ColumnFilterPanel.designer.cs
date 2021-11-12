@@ -15,44 +15,36 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ColumnFilterPanel));
 			this.ok = new Wisej.Web.Button();
 			this.cancel = new Wisej.Web.Button();
 			this.SuspendLayout();
 			// 
 			// ok
 			// 
-			this.ok.Anchor = Wisej.Web.AnchorStyles.Bottom;
+			resources.ApplyResources(this.ok, "ok");
 			this.ok.AppearanceKey = "button-ok";
-			this.ok.Location = new System.Drawing.Point(22, 256);
 			this.ok.Name = "ok";
-			this.ok.Size = new System.Drawing.Size(92, 32);
-			this.ok.TabIndex = 0;
-			this.ok.Text = "OK";
 			this.ok.Click += new System.EventHandler(this.ok_Click);
 			// 
 			// cancel
 			// 
-			this.cancel.Anchor = Wisej.Web.AnchorStyles.Bottom;
+			resources.ApplyResources(this.cancel, "cancel");
 			this.cancel.AppearanceKey = "button-cancel";
-			this.cancel.Location = new System.Drawing.Point(126, 256);
 			this.cancel.Name = "cancel";
-			this.cancel.Size = new System.Drawing.Size(92, 32);
-			this.cancel.TabIndex = 1;
-			this.cancel.Text = "Cancel";
 			this.cancel.Click += new System.EventHandler(this.cancel_Click);
 			// 
 			// ColumnFilterPanel
 			// 
 			this.Accelerators = new Wisej.Web.Keys[] {
-        Wisej.Web.Keys.Return,
+        Wisej.Web.Keys.Enter,
         Wisej.Web.Keys.Escape};
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = Wisej.Web.AutoScaleMode.Font;
 			this.BorderStyle = Wisej.Web.BorderStyle.Solid;
 			this.Controls.Add(this.cancel);
 			this.Controls.Add(this.ok);
 			this.Name = "ColumnFilterPanel";
-			this.Size = new System.Drawing.Size(241, 309);
 			this.Accelerator += new Wisej.Web.AcceleratorEventHandler(this.ColumnFilterPanel_Accelerator);
 			this.VisibleChanged += new System.EventHandler(this.ColumnFilterPanel_VisibleChanged);
 			this.ResumeLayout(false);

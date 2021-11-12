@@ -19,13 +19,14 @@
 
 using System;
 using System.ComponentModel;
+using static Wisej.Web.Ext.MobileIntegration.DeviceResponse;
 
 namespace Wisej.Web.Ext.MobileIntegration
 {
 	public sealed partial class Device
 	{
 		/// <summary>
-		/// Provides functionality for interacting with the device's native NFC reader / writer.
+		/// Provides methods for interacting with the device's NFC reader and writer.
 		/// </summary>
 		[ApiCategory("API")]
 		public class NFC
@@ -33,11 +34,15 @@ namespace Wisej.Web.Ext.MobileIntegration
 			/// <summary>
 			/// Reads messages from NFC devices.
 			/// </summary>
+			/// <exception cref="DeviceException">
+			/// Occurs when the device is not able to read the data from the NFC-enabled device.
+			/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
+			/// </exception>
 			public static string ReadNFC()
 			{
 				var result = PostModalMessage("nfc.read");
-				if (result.ErrorCode != 0)
-					throw new Exception(result.Value);
+				if (result.Status != StatusCode.Success)
+					ThrowDeviceException(result);
 
 				return result.Value;
 			}
@@ -46,13 +51,15 @@ namespace Wisej.Web.Ext.MobileIntegration
 			/// Writes the specified message to the NFC device.
 			/// </summary>
 			/// <param name="message">The message to write to the NFC device.</param>
+			/// <exception cref="DeviceException">
+			/// Occurs when the device is not able to write the data to the NFC-enabled device.
+			/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
+			/// </exception>
 			public static string WriteNFC(string message)
 			{
 				var result = PostModalMessage("nfc.write", message);
-				var success = result.ErrorCode == 0;
-
-				if (!success)
-					throw new Exception(result.Value);
+				if (result.Status != StatusCode.Success)
+					ThrowDeviceException(result);
 
 				return result.Value;
 			}

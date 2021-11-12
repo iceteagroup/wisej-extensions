@@ -29,10 +29,17 @@ namespace Wisej.Web.Ext.MobileIntegration
 	[ApiCategory("API")]
 	public partial class DeviceStatusbar
 	{
+
+		#region Constructor
+
 		internal DeviceStatusbar()
 		{
 			this.Visible = true;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Returns the statusbar options.
@@ -93,6 +100,10 @@ namespace Wisej.Web.Ext.MobileIntegration
 			}
 		}
 
+		#endregion
+
+		#region Methods
+
 		/// <summary>
 		/// Starts updating mode. The device will not receive the updates
 		/// until <see cref="EndUpdate"/> is called an equal number of times as
@@ -114,16 +125,27 @@ namespace Wisej.Web.Ext.MobileIntegration
 				Update();
 		}
 
+		#endregion
+
+		#region Wisej Implementation
+
 		/// <summary>
 		/// Updates the device. Sends the difference between the last update and the current options.
 		/// </summary>
-		internal void Update()
+		internal void Update(bool forceRefresh=false)
 		{
-			var diff = ((DynamicObject)this._options).Diff(this._lastOptions);
-			this._lastOptions = ((DynamicObject)this._options).Clone();
-
-			Device.PostMessage("statusbar.options", diff);
+			var options = this._lastOptions;
+			if (!forceRefresh)
+			{
+				options = ((DynamicObject)this._options).Diff(this._lastOptions);
+				this._lastOptions = ((DynamicObject)this._options).Clone();
+			}
+			
+			Device.PostMessage("statusbar.options", options);
 		}
 		private dynamic _lastOptions = null;
+
+		#endregion
+
 	}
 }

@@ -47,7 +47,7 @@ namespace Wisej.Web.Ext.MobileIntegration
 		/// <summary>
 		/// The response reason.
 		/// </summary>
-		public string ReasonString
+		public string Reason
 		{
 			get;
 			internal set;
@@ -63,7 +63,7 @@ namespace Wisej.Web.Ext.MobileIntegration
 		{
 			this.Success = success;
 			this.TimeStamp = dateTime;
-			this.ReasonString = reasonString;
+			this.Reason = reasonString;
 		}
 
 		/// <summary>

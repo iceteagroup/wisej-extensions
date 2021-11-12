@@ -38,7 +38,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		public lblANDOR ()
 		{
 			this.AllowHtml = true;
-			this.Text = AND;
+			this.Text = Messages.AND;			
 			this.Click += LblANDOR_Click;
 		}
 		#endregion
@@ -46,14 +46,14 @@ namespace Wisej.Web.Ext.ColumnFilter
 		#region Methods
 		private void LblANDOR_Click(object sender, EventArgs e)
 		{
-			if (this.Text == AND)
-				this.Text = OR;
+			if (this.Text == Messages.AND)
+				this.Text = Messages.OR;
 			else
-				this.Text = AND;
+				this.Text = Messages.AND;
 		}
 		public string GetOperator()
 		{
-			if (this.Text == AND)
+			if (this.Text == Messages.AND)
 				return "AND";
 			else
 				return "OR";

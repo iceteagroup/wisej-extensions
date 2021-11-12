@@ -28,9 +28,16 @@ namespace Wisej.Web.Ext.MobileIntegration
 	[ApiCategory("API")]
 	public partial class DeviceTabBar
 	{
+
+		#region Constructor
+
 		internal DeviceTabBar()
 		{
 		}
+
+		#endregion
+
+		#region Events
 
 		/// <summary>
 		/// Fired when the user changes the selected tab button.
@@ -57,6 +64,10 @@ namespace Wisej.Web.Ext.MobileIntegration
 			button.Selected = true;
 			this.Selected?.Invoke(this, new SelectedEventArgs(button));
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Returns or sets whether the tabBar is visible on the device.
@@ -149,12 +160,16 @@ namespace Wisej.Web.Ext.MobileIntegration
 		private bool _buttonsChanged;
 		private static Button[] _empty = new Button[0];
 
+		#endregion
+
+		#region Wisej Implementation
+
 		/// <summary>
 		/// Updates the tabBar on the device.
 		/// </summary>
-		public void Update()
+		public void Update(bool refresh=false)
 		{
-			if (this._buttonsChanged)
+			if (this._buttonsChanged || refresh)
 			{
 				Device.PostMessage("tabbar.options", new
 				{
@@ -178,5 +193,8 @@ namespace Wisej.Web.Ext.MobileIntegration
 				}); ;
 			}
 		}
+
+		#endregion
+
 	}
 }

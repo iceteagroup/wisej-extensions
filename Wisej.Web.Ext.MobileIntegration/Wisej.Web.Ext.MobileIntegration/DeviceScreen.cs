@@ -31,6 +31,9 @@ namespace Wisej.Web.Ext.MobileIntegration
 	[ApiCategory("API")]
 	public partial class DeviceScreen
 	{
+
+		#region Constructor
+
 		/// <summary>
 		/// Initializes a new instance of <see cref="DeviceScreen"/> using the
 		/// incoming arguments from the native application to initialize its values.
@@ -43,6 +46,10 @@ namespace Wisej.Web.Ext.MobileIntegration
 
 			ReadDeviceProperties(queryString["info"]);
 		}
+
+		#endregion
+
+		#region Methods
 
 		/// <summary>
 		/// Converts the base64 representation of device properties into a <see cref="DeviceScreen"/> object.
@@ -72,6 +79,10 @@ namespace Wisej.Web.Ext.MobileIntegration
 		{
 			this._brightness = (int)(100 * value);
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Returns or sets whether the idle timer locks the device.
@@ -132,5 +143,8 @@ namespace Wisej.Web.Ext.MobileIntegration
 			}
 		}
 		private OrientationType _orientation;
+
+		#endregion
+
 	}
 }

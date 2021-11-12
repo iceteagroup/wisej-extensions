@@ -18,13 +18,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-using Wisej.Core;
-using Wisej.Base;
-using System.Text;
-using System.IO;
-using System.Web;
-using System.Net.Mime;
 using System.ComponentModel;
+using System.IO;
+using System.Net;
+using System.Net.Mime;
+using System.Web;
+using Wisej.Base;
+using Wisej.Core;
 
 namespace Wisej.Web.Ext.OfficeViewer
 {
@@ -194,27 +194,16 @@ namespace Wisej.Web.Ext.OfficeViewer
 					|| source.StartsWith("https:", StringComparison.InvariantCultureIgnoreCase))
 				{
 					this.Url =
-						OFFICEAPPS_URL + HttpUtility.UrlEncode(source);
+						OFFICEAPPS_URL + WebUtility.UrlEncode(source);
 
 					return;
 				}
 			}
 
-			var startUpUrl = Application.StartupUri.ToString();
-			if (!startUpUrl.EndsWith("/"))
-				startUpUrl += "/";
-
-			// build a callback URL without parameters, the office viewer
-			// is not capable of using URLs with arguments.
-			//
-			// this URL will be processed by OfficeViewerModule and
-			// rewritten to match the arguments used by Wisej ResourceManager.
-			var postback = this.GetPostbackURL() + "&v=" + DateTime.Now.Ticks;
-			var arg = Convert.ToBase64String(Encoding.UTF8.GetBytes(postback));
-
-			this.Url =
+			// this URL will be processed by OfficeViewerModule
+			this.Url = 
 				OFFICEAPPS_URL +
-				HttpUtility.UrlEncode(startUpUrl + "postback.wx/" + arg);
+				WebUtility.UrlEncode(this.GetServiceURL());
 		}
 
 		#endregion

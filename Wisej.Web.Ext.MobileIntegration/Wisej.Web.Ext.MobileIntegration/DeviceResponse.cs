@@ -17,6 +17,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.ComponentModel;
 
 namespace Wisej.Web.Ext.MobileIntegration
@@ -25,8 +26,11 @@ namespace Wisej.Web.Ext.MobileIntegration
 	/// Represents a response from the native device.
 	/// </summary>
 	[ApiCategory("API")]
-	public class DeviceResponse
+	public partial class DeviceResponse
 	{
+
+		#region Properties
+
 		/// <summary>
 		/// Represents the return value.
 		/// </summary>
@@ -35,7 +39,11 @@ namespace Wisej.Web.Ext.MobileIntegration
 		/// <summary>
 		/// Represents the error code, if applicable.
 		/// </summary>
-		public int ErrorCode;
+		public StatusCode Status;
+
+		#endregion
+
+		#region Constructors
 
 		/// <summary>
 		/// Creates a new instance of <see cref="DeviceResponse"/>.
@@ -48,11 +56,14 @@ namespace Wisej.Web.Ext.MobileIntegration
 		/// Creates a new instance of <see cref="DeviceResponse"/> with the given arguments.
 		/// </summary>
 		/// <param name="value"></param>
-		/// <param name="errorCode"></param>
-		public DeviceResponse(dynamic value, int errorCode)
+		/// <param name="status"></param>
+		public DeviceResponse(dynamic value, string status)
 		{
 			this.Value = value;
-			this.ErrorCode = errorCode;
+			this.Status = (StatusCode) Enum.Parse(typeof(StatusCode), status);
 		}
+
+		#endregion
+
 	}
 }

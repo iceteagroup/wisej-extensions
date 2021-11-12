@@ -78,6 +78,7 @@ namespace Wisej.Web.Ext.MobileIntegration
 				get;
 				set;
 			}
+
 			bool IWisejSerializable.Serialize(TextWriter writer, WisejSerializerOptions options)
 			{
 				writer.Write(JSON.Stringify(new

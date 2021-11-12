@@ -90,5 +90,4 @@ namespace Wisej.Web.Ext.MobileIntegration
 			private set;
 		}
 	}
-
 }

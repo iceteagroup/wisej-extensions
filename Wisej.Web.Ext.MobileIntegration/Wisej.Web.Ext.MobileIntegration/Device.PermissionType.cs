@@ -23,7 +23,6 @@ namespace Wisej.Web.Ext.MobileIntegration
 {
 	public partial class Device
 	{
-
 		/// <summary>
 		/// Available device permissions.
 		/// </summary>

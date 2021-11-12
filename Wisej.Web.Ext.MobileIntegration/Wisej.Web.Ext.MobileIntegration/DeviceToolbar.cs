@@ -28,9 +28,16 @@ namespace Wisej.Web.Ext.MobileIntegration
 	[ApiCategory("API")]
 	public partial class DeviceToolbar
 	{
+
+		#region Constructor
+
 		internal DeviceToolbar()
 		{
 		}
+
+		#endregion
+
+		#region Events
 
 		/// <summary>
 		/// Fired when the user clicks a toolbar button.
@@ -49,6 +56,10 @@ namespace Wisej.Web.Ext.MobileIntegration
 			var button = this.Buttons[index];
 			this.Click?.Invoke(this, new ClickEventArgs(button));
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Returns or sets whether the toolbar is visible on the device.
@@ -124,12 +135,16 @@ namespace Wisej.Web.Ext.MobileIntegration
 		private bool _buttonsChanged;
 		private static Button[] _empty = new Button[0];
 
+		#endregion
+
+		#region Wisej Implementation
+
 		/// <summary>
 		/// Updates the device. Sends the difference between the last update and the current options.
 		/// </summary>
-		internal void Update()
+		internal void Update(bool refresh=false)
 		{
-			if (this._buttonsChanged)
+			if (this._buttonsChanged || refresh)
 			{
 				Device.PostMessage("toolbar.options", new
 				{
@@ -151,5 +166,8 @@ namespace Wisej.Web.Ext.MobileIntegration
 				});
 			}
 		}
+
+		#endregion
+
 	}
 }

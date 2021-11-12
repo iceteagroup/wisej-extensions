@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System.ComponentModel;
+using static Wisej.Web.Ext.MobileIntegration.DeviceResponse;
 
 namespace Wisej.Web.Ext.MobileIntegration
 {
@@ -30,40 +31,20 @@ namespace Wisej.Web.Ext.MobileIntegration
 		public class Sensors
 		{
 
-			#region Events
-
-			/// <summary>
-			/// Fired when there's an update from the device's accelerometers.
-			/// </summary>
-			public event DeviceEventHandler AccelerometerUpdate
-			{
-				add { this._accelerometerUpdate += value; }
-				remove { this._accelerometerUpdate -= value; }
-			}
-			private event DeviceEventHandler _accelerometerUpdate;
-
-			/// <summary>
-			/// Fired when there's an update from the device's magnetometer.
-			/// </summary>
-			public event DeviceEventHandler MagnetometerUpdate
-			{
-				add { this._magnetometerUpdate += value; }
-				remove { this._magnetometerUpdate -= value; }
-			}
-			private event DeviceEventHandler _magnetometerUpdate;
-
-			#endregion
-
 			#region Methods
 
 			/// <summary>
 			/// Starts accelerometer updates.
 			/// </summary>
-			/// <returns>When true, the device enabled accelerometer updates.</returns>
-			public static bool StartAccelerometer()
+			/// <exception cref="DeviceException">
+			/// Occurs when the device cannot start the accelerometer.
+			/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
+			/// </exception>
+			public static void StartAccelerometer()
 			{
-				var result = Device.PostModalMessage("accelerometer.start");
-				return result.ErrorCode == 0;
+				var result = PostModalMessage("accelerometer.start");
+				if (result.Status != StatusCode.Success)
+					ThrowDeviceException(result);
 			}
 
 			/// <summary>
@@ -71,17 +52,21 @@ namespace Wisej.Web.Ext.MobileIntegration
 			/// </summary>
 			public static void StopAccelerometer()
 			{
-				Device.PostMessage("accelerometer.stop");
+				PostMessage("accelerometer.stop");
 			}
 
 			/// <summary>
 			/// Starts gyroscope updates.
 			/// </summary>
-			/// <returns>When true, the device enabled gyroscope updates.</returns>
-			public static bool StartGyro()
+			/// <exception cref="DeviceException">
+			/// Occurs when the device cannot start the gyroscope.
+			/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
+			/// </exception>
+			public static void StartGyro()
 			{
-				var result = Device.PostModalMessage("gyroscope.start");
-				return result.ErrorCode == 0;
+				var result = PostModalMessage("gyroscope.start");
+				if (result.Status != StatusCode.Success)
+					ThrowDeviceException(result);
 			}
 
 			/// <summary>
@@ -89,17 +74,21 @@ namespace Wisej.Web.Ext.MobileIntegration
 			/// </summary>
 			public static void StopGyro()
 			{
-				Device.PostMessage("gyroscope.stop");
+				PostMessage("gyroscope.stop");
 			}
 
 			/// <summary>
 			/// Starts magnetometer updates.
 			/// </summary>
-			/// <returns>When true, the device enabled magnetometer updates.</returns>
-			public static bool StartMagnetometer()
+			/// <exception cref="DeviceException">
+			/// Occurs when the device cannot start the magnetometer.
+			/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
+			/// </exception>
+			public static void StartMagnetometer()
 			{
-				var result = Device.PostModalMessage("magnetometer.start");
-				return result.ErrorCode == 0;
+				var result = PostModalMessage("magnetometer.start");
+				if (result.Status != StatusCode.Success)
+					ThrowDeviceException(result);
 			}
 
 			/// <summary>
@@ -107,7 +96,7 @@ namespace Wisej.Web.Ext.MobileIntegration
 			/// </summary>
 			public static void StopMagnetometer()
 			{
-				Device.PostMessage("magnetometer.stop");
+				PostMessage("magnetometer.stop");
 			}
 
 			#endregion

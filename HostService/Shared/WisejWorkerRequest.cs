@@ -361,7 +361,7 @@ namespace Wisej.HostService.Owin
 				case "REMOTE_ADDR": return GetRemoteAddress();
 				case "LOCAL_ADDR": return GetLocalAddress();
 				case "REMOTE_PORT": return GetRemotePort().ToString();
-				case "SERVER_SOFTWARE":  return GetType().Assembly.GetName().Name;
+				case "SERVER_SOFTWARE": return GetType().Assembly.GetName().Name;
 			}
 
 			string[] value = null;
@@ -481,7 +481,9 @@ namespace Wisej.HostService.Owin
 		/// <param name="length">The number of bytes to send. </param>
 		public override void SendResponseFromFile(string filename, long offset, long length)
 		{
-			this.context.Response.ContentType = MimeTypes.GetMimeType(filename);
+			// auto detect the file's mime type if the caller didn't set it.
+			if (this.context.Response.ContentType == "text/html")
+				this.context.Response.ContentType = MimeTypes.GetMimeType(filename);
 
 			using (var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
 			{
