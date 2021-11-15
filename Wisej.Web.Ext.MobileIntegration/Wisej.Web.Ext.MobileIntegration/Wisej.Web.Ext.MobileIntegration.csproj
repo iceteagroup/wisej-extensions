@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <SignAssembly>True</SignAssembly>
-    <TargetFrameworks>net48</TargetFrameworks>
+    <TargetFramework>net48</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Wisej-2" Version="2.5.16" />
   </ItemGroup>
 

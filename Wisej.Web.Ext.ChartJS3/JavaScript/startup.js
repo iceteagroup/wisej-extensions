@@ -25,7 +25,8 @@ this.init = function (config) {
 	this.__processPlugins(config);
 
 	// process the datasets.
-	this.__processDataSets(config.data.datasets);
+	if (config.data.datasets)
+		this.__processDataSets(config.data.datasets);
 
 	// processes the scales format.
 	this.__processScales(config.options);
