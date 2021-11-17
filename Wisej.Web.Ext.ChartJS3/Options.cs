@@ -19,7 +19,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Drawing.Design;
 using System.Globalization;
 
 namespace Wisej.Web.Ext.ChartJS3
@@ -27,8 +26,10 @@ namespace Wisej.Web.Ext.ChartJS3
 	/// <summary>
 	/// Base class for all the option classes.
 	/// </summary>
+	[ApiCategory("ChartJS3")]
 	[TypeConverter(typeof(OptionsBase.Converter))]
-	[Editor(typeof(Design.OptionsEditor), typeof(UITypeEditor))]
+	[Editor("Wisej.Web.Ext.ChartJS3.Design.OptionsEditor", 
+			"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 	public abstract class OptionsBase : ICloneable
 	{
 		#region Properties
@@ -449,6 +450,25 @@ namespace Wisej.Web.Ext.ChartJS3
 			: base(chart, defaults)
 		{
 		}
+
+		/// <summary>
+		/// This equates what percentage of the inner part should be cut out.
+		/// </summary>
+		[DefaultValue(0)]
+		[Description("This equates what percentage of the inner part should be cut out")]
+		public int Cutout
+		{
+			get { return this._cutOut; }
+			set
+			{
+				if (this._cutOut != value)
+				{
+					this._cutOut = value;
+					Update();
+				}
+			}
+		}
+		private int _cutOut = 0;
 	}
 
 	/// <summary>
@@ -501,19 +521,19 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// </summary>
 		[DefaultValue(50)]
 		[Description("This equates what percentage of the inner part should be cut out")]
-		public int CutoutPercentage
+		public int Cutout
 		{
-			get { return this._cutOutPercentage; }
+			get { return this._cutOut; }
 			set
 			{
-				if (this._cutOutPercentage != value)
+				if (this._cutOut != value)
 				{
-					this._cutOutPercentage = value;
+					this._cutOut = value;
 					Update();
 				}
 			}
 		}
-		private int _cutOutPercentage = 50;
+		private int _cutOut = 50;
 	}
 
 	/// <summary>
@@ -584,5 +604,4 @@ namespace Wisej.Web.Ext.ChartJS3
 		{
 		}
 	}
-
 }

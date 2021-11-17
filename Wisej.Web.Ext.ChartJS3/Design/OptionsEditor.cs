@@ -18,29 +18,26 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Windows.Forms.Design;
 using WinForms = System.Windows.Forms;
 
 namespace Wisej.Web.Ext.ChartJS3.Design
 {
-	/// <summary>
-	/// Design time editor for the chart's options.
-	/// </summary>
-	internal class OptionsEditor : UITypeEditor
-	{
+    /// <summary>
+    /// Design time editor for the chart's options.
+    /// </summary>
+    internal class OptionsEditor : System.Drawing.Design.UITypeEditor
+    {
 		/// <summary>
 		/// Return the drop down style for this editor.
 		/// </summary>
 		/// <param name="context"></param>
 		/// <returns></returns>
-		public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
+		public override System.Drawing.Design.UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
 		{
-			return UITypeEditorEditStyle.Modal;
+			return System.Drawing.Design.UITypeEditorEditStyle.Modal;
 		}
 
 		/// <summary>

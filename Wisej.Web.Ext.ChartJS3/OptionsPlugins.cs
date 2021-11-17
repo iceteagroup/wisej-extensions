@@ -25,6 +25,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	/// <summary>
 	/// Represents the options for the plugins.
 	/// </summary>
+	[ApiCategory("ChartJS3")]
 	public class OptionsPlugins : OptionsBase
 	{
 		/// <summary>

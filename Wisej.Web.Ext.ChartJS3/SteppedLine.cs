@@ -17,11 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.ChartJS3
 {
 	/// <summary>
 	/// Defines the style of a stepped line for a line chart.
 	/// </summary>
+	[ApiCategory("ChartJS3")]
 	public enum SteppedLine
 	{
 		/// <summary>

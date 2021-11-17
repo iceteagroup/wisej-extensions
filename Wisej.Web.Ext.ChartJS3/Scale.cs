@@ -24,6 +24,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	/// <summary>
 	/// Type of scale being employed.
 	/// </summary>
+	[ApiCategory("ChartJS3")]
 	public enum ScaleType
 	{
 		/// <summary>

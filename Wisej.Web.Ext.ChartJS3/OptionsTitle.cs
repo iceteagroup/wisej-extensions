@@ -26,6 +26,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	/// <summary>
 	/// Represents the options for the chart title.
 	/// </summary>
+	[ApiCategory("ChartJS3")]
 	public class OptionsTitle : OptionsBase
 	{
 		/// <summary>

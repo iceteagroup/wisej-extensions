@@ -20,13 +20,13 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
 
 namespace Wisej.Web.Ext.ChartJS3
 {
 	/// <summary>
 	/// Represents the options for the axes.
 	/// </summary>
+	[ApiCategory("ChartJS3")]
 	public class OptionsScales : OptionsBase
 	{
 
@@ -51,7 +51,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// </summary>
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public OptionScalesAxesX[] xAxes
 		{
 			get
@@ -103,7 +104,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// Options for the y-axes.
 		/// </summary>
 		[TypeConverter(typeof(ArrayConverter))]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public OptionScalesAxesY[] yAxes
 		{
 			get

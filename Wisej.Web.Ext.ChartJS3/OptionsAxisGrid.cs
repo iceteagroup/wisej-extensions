@@ -26,6 +26,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	/// <summary>
 	/// Specifies the grid line configuration for each axis.
 	/// </summary>
+	[ApiCategory("ChartJS3")]
 	public class OptionsAxisGrid : OptionsBase
 	{
 		#region Constructor

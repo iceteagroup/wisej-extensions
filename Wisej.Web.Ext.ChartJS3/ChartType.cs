@@ -17,12 +17,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
 
 namespace Wisej.Web.Ext.ChartJS3
 {
 	/// <summary>
 	/// Defines the type of chart rendered by the <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> control.
 	/// </summary>
+	[ApiCategory("ChartJS3")]
 	public enum ChartType
 	{
 		/// <summary>

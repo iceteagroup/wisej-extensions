@@ -25,6 +25,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	/// <summary>
 	/// Represents the options for the data label.
 	/// </summary>
+	[ApiCategory("ChartJS3")]
 	public class OptionsDataLabels : OptionsBase
 	{
 

@@ -20,7 +20,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Globalization;
 using System.Reflection;
 
@@ -30,6 +29,7 @@ namespace Wisej.Web.Ext.ChartJS3
 	/// Represents the data used by the <see cref="T: Wisej.Web.Ext.ChartJS3.ChartJS3"/> control to plot the chart.
 	/// See http://www.chartjs.org/docs/#line-chart-data-structure for additional information regarding the data structure of ChartJS.
 	/// </summary>
+	[ApiCategory("ChartJS3")]
 	[TypeConverter(typeof(DataSet.Converter))]
 	public class DataSet
 	{
@@ -83,7 +83,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public object[] Data
 		{
 			get;
@@ -295,7 +296,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[DefaultValue(new PointStyle[] { Wisej.Web.Ext.ChartJS3.PointStyle.Circle })]
 		[MergableProperty(false)]
 		[Description("The style of a point on the line. One entry is the default for all points, otherwise each point can define a style.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public PointStyle[] PointStyle
 		{
 			get;
@@ -320,7 +322,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[DefaultValue(new int[] { 5 })]
 		[MergableProperty(false)]
 		[Description("The radius of the point when hovered")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public int[] PointHoverRadius
 		{
 			get;
@@ -334,7 +337,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The fill colors of the points for the data set. One entry is the default color for all the points, otherwise each point can define a background color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public Color[] PointBackgroundColor
 		{
 			get;
@@ -348,7 +352,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The border colors of the points for the data set. One entry is the default color for all the points, otherwise each point can define a border color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public Color[] PointBorderColor
 		{
 			get;
@@ -437,7 +442,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The fill colors of the data set. One entry is the default color for all the bars, otherwise each bar can define a background color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new Color[] BackgroundColor
 		{
 			get;
@@ -451,7 +457,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The border colors of the data set. One entry is the default color for all the bars, otherwise each bar can define a border color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new Color[] BorderColor
 		{
 			get;
@@ -465,7 +472,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The hover colors of the data set. One entry is the default color for all the slices, otherwise each slice can define a different hover background color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public Color[] HoverBackgroundColor
 		{
 			get;
@@ -557,7 +565,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The fill colors of the data set. One entry is the default color for all the slices, otherwise each slice can define a background color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new Color[] BackgroundColor
 		{
 			get;
@@ -571,7 +580,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The border colors of the data set. One entry is the default color for all the slices, otherwise each slice can define a border color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new Color[] BorderColor
 		{
 			get;
@@ -585,7 +595,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The hover colors of the data set. One entry is the default color for all the slices, otherwise each slice can define a different hover background color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public Color[] HoverBackgroundColor
 		{
 			get;
@@ -614,7 +625,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The fill colors of the data set. One entry is the default color for all the slices, otherwise each slice can define a background color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new Color[] BackgroundColor
 		{
 			get;
@@ -628,7 +640,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The border colors of the data set. One entry is the default color for all the slices, otherwise each slice can define a border color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new Color[] BorderColor
 		{
 			get;
@@ -642,7 +655,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The hover colors of the data set. One entry is the default color for all the slices, otherwise each slice can define a different hover background color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public Color[] HoverBackgroundColor
 		{
 			get;
@@ -671,7 +685,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The fill colors of the data set. One entry is the default color for all the slices, otherwise each slice can define a background color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new Color[] BackgroundColor
 		{
 			get;
@@ -685,7 +700,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The border colors of the data set. One entry is the default color for all the slices, otherwise each slice can define a border color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new Color[] BorderColor
 		{
 			get;
@@ -699,7 +715,8 @@ namespace Wisej.Web.Ext.ChartJS3
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("The hover colors of the data set. One entry is the default color for all the slices, otherwise each slice can define a different hover background color.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public Color[] HoverBackgroundColor
 		{
 			get;
