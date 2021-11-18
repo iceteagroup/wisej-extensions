@@ -454,9 +454,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// This equates what percentage of the inner part should be cut out.
 		/// </summary>
-		[DefaultValue(0)]
+		[DefaultValue("0")]
 		[Description("This equates what percentage of the inner part should be cut out")]
-		public int Cutout
+		public string Cutout
 		{
 			get { return this._cutOut; }
 			set
@@ -468,7 +468,7 @@ namespace Wisej.Web.Ext.ChartJS3
 				}
 			}
 		}
-		private int _cutOut = 0;
+		private string _cutOut = "0";
 	}
 
 	/// <summary>
@@ -519,9 +519,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// This equates what percentage of the inner part should be cut out.
 		/// </summary>
-		[DefaultValue(50)]
+		[DefaultValue("50%")]
 		[Description("This equates what percentage of the inner part should be cut out")]
-		public int Cutout
+		public string Cutout
 		{
 			get { return this._cutOut; }
 			set
@@ -533,7 +533,7 @@ namespace Wisej.Web.Ext.ChartJS3
 				}
 			}
 		}
-		private int _cutOut = 50;
+		private string _cutOut = "50%";
 	}
 
 	/// <summary>
