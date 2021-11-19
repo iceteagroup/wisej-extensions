@@ -493,6 +493,18 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 
 		/// <summary>
+		/// Specifies the border color when hovered.
+		/// </summary>
+		[DefaultValue(null)]
+		[MergableProperty(false)]
+		[Description("Setting the default bar axis")]
+		public string Axis
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Specifies the border width when hovered (in pixels).
 		/// </summary>
 		[DefaultValue(1)]
