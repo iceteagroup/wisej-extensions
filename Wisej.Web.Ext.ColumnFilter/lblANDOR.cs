@@ -18,22 +18,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Wisej.Web;
-using Wisej.Core;
 
 namespace Wisej.Web.Ext.ColumnFilter
 {
-	/// <summary>
-	/// Custom AND/OR label.
-	/// </summary>
-	internal class lblANDOR : Label
+    /// <summary>
+    /// Custom AND/OR label.
+    /// </summary>
+    internal class lblANDOR : Label
 	{
-		private string AND = "<b>AND</b> | OR";
-		private string OR = "AND | <b>OR</b>";
-
 		#region Constructors
 		public lblANDOR ()
 		{

@@ -20,12 +20,10 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
 using System.IO;
 using System.Reflection;
 using Wisej.Base;
 using Wisej.Core;
-using Wisej.Web;
 
 namespace Wisej.Ext.WebWorker
 {
@@ -105,7 +103,8 @@ namespace Wisej.Ext.WebWorker
 		/// Returns or sets the JavaScript code to execute in the WebWorker process.
 		/// </summary>
 		[DefaultValue("")]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string JavaScript
 		{
 			get { return this._javaScript; }
@@ -126,7 +125,8 @@ namespace Wisej.Ext.WebWorker
 		/// Returns or sets the JavaScript file with the source code to execute in the WebWorker process.
 		/// </summary>
 		[DefaultValue("")]
-		[Editor("Wisej.Design.JsFileSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.JsFileSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string JavaScriptSource
 		{
 			get { return this._javaScriptSource; }
@@ -229,9 +229,9 @@ namespace Wisej.Ext.WebWorker
 		bool IWisejHandler.Compress { get { return true; } }
 
 		/// <summary>
-		/// Process the http request.
+		/// Process the HTTP request.
 		/// </summary>
-		/// <param name="context">The current <see cref="T:System.Web.HttpContext"/>.</param>
+		/// <param name="context">The current <see cref="System.Web.HttpContext"/>.</param>
 		void IWisejHandler.ProcessRequest(System.Web.HttpContext context)
 		{
 			string source = !String.IsNullOrEmpty(this.JavaScript)

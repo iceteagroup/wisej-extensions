@@ -22,7 +22,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Web;
 using Wisej.Base;
 using Wisej.Core;
 using MicrosoftCharts = System.Windows.Forms.DataVisualization.Charting;
@@ -141,7 +140,7 @@ namespace Wisej.Web.Ext.WebCharts
 		/// Process the http request.
 		/// </summary>
 		/// <param name="context">The current <see cref="T:System.Web.HttpContext"/>.</param>
-		void IWisejHandler.ProcessRequest(HttpContext context)
+		void IWisejHandler.ProcessRequest(System.Web.HttpContext context)
 		{
 			chart.Width = this.Width;
 			chart.Height = this.Height;

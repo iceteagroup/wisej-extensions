@@ -72,6 +72,7 @@ namespace Wisej.Ext.ClientFileSystem
 		/// </summary>
 		/// <param name="pattern">Wild card pattern to match.</param>
 		/// <param name="callback">Callback method that receives an Array of <see cref="Wisej.Ext.ClientFileSystem.Directory"/> object.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
 		public void GetFiles(string pattern, Action<File[]> callback)
 		{
 			if (callback == null)
@@ -97,6 +98,7 @@ namespace Wisej.Ext.ClientFileSystem
 		/// </summary>
 		/// <param name="pattern">Wild card pattern to match.</param>
 		/// <param name="callback">Callback method that receives an array of <see cref="Wisej.Ext.ClientFileSystem.Directory"/> object.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
 		public void GetDirectories(string pattern, Action<Directory[]> callback)
 		{
 			if (callback == null)
@@ -159,6 +161,7 @@ namespace Wisej.Ext.ClientFileSystem
 		/// <param name="name">Represents the file or directory's name.</param>
 		/// <param name="recursive">If <paramref name="name"/> is a directory, set to true to delete recursively; otherwise false.</param>
 		/// <param name="callback">Optional callback method that receives a boolean indicating the success or failure of the delete operation.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
 		public void Remove(string name, bool recursive, Action<bool> callback)
 		{
 			var context = Application.Current;

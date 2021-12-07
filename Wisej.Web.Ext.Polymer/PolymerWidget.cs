@@ -20,7 +20,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;
@@ -104,7 +103,8 @@ namespace Wisej.Web.Ext.Polymer
 		/// Returns or sets the HTML content associated with this polymer widget.
 		/// </summary>
 		/// <returns>The inner HTML content of the polymer widget.</returns>
-		[Editor("Wisej.Design.MultilineStringEditorWithAllowHtml, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.MultilineStringEditorWithAllowHtml, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public override string Text
 		{
 			get { return base.Text; }
@@ -162,7 +162,8 @@ namespace Wisej.Web.Ext.Polymer
 		[Category("Polymer")]
 		[DefaultValue(null)]
 		[MergableProperty(false)]
-		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new virtual string[] Events
 		{
 			get { return this._events; }
@@ -181,7 +182,8 @@ namespace Wisej.Web.Ext.Polymer
 		[DesignerActionList]
 		[Category("Polymer")]
 		[MergableProperty(false)]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public virtual dynamic Properties
 		{
 			get

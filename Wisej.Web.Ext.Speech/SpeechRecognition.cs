@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Globalization;
 using System.Linq;
 using Wisej.Base;
@@ -256,7 +255,8 @@ namespace Wisej.Web.Ext.Speech
 		/// </summary>
 		[Localizable(true)]
 		[Description("Gets and sets a collection of grammar definitions - using the JSpeech Grammar Format (JSGF) https://www.w3.org/TR/jsgf/.")]
-		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string[] Grammars
 		{
 			get { return this._grammars; }

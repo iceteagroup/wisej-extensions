@@ -21,7 +21,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -76,7 +75,8 @@ namespace Wisej.Web.Ext.jSequence
 		/// </summary>
 		[DefaultValue("")]
 		[DesignerActionList]
-		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string UML
 		{
 			get { return this._uml; }
@@ -242,7 +242,8 @@ namespace Wisej.Web.Ext.jSequence
 			if (callback == null)
 				throw new ArgumentNullException(nameof(callback));
 
-			GetImageCore((result) => {
+			GetImageCore((result) =>
+			{
 
 				if (result is Exception)
 					throw (Exception)result;
@@ -259,7 +260,8 @@ namespace Wisej.Web.Ext.jSequence
 		{
 			var tcs = new TaskCompletionSource<Image>();
 
-			GetImageCore((result) => {
+			GetImageCore((result) =>
+			{
 
 				if (result is Exception)
 					tcs.SetException((Exception)result);

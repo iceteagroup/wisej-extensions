@@ -20,7 +20,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
 using Wisej.Base;
 
 namespace Wisej.Web.Ext.NavigationBar
@@ -215,7 +214,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		[DefaultValue(null)]
 		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string Icon
 		{
 			get => this.icon.ImageSource;
@@ -459,7 +459,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		[DefaultValue("spinner-plus")]
 		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string ShortcutIcon
 		{
 			get => this.shortcut.ImageSource;
@@ -821,7 +822,7 @@ namespace Wisej.Web.Ext.NavigationBar
 			this.shortcut.Visible = !compactView && this.ShowShortcut;
 			this.info.Visible = !compactView && !String.IsNullOrEmpty(this.InfoText);
 
-			if (String.IsNullOrEmpty (this.ToolTipText))
+			if (String.IsNullOrEmpty(this.ToolTipText))
 				this.header.ToolTipText = compactView ? this.title.Text : null;
 		}
 

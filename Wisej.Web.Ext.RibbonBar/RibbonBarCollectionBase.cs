@@ -18,7 +18,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Drawing.Design;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,9 +31,10 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <typeparam name="TOwner"></typeparam>
 	/// <typeparam name="TElement"></typeparam>
 	/// <exclude/>
-	[ListBindable(false)]
-	[Editor("Wisej.Design.DefaultCollectionEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
 	[ApiCategory("RibbonBar")]
+	[ListBindable(false)]
+	[Editor("Wisej.Design.DefaultCollectionEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 	public abstract class RibbonBarCollectionBase<TOwner, TElement> : IList<TElement>, IList
 		where TOwner : IWisejComponent
 		where TElement : IWisejComponent

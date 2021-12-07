@@ -17,12 +17,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.ChartJS
 {
 	/// <summary>
 	/// Alignment configuration for ChartJS datalabel. 
 	/// See: https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset.
 	/// </summary>
+	[ApiCategory("ChartJS")]
 	public enum DataLabelAlign
 	{
 		/// <summary>

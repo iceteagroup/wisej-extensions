@@ -29,6 +29,7 @@ namespace Wisej.Web.Ext.ChartJS
 	/// </summary>
 	/// <param name="sender">The source of the event. </param>
 	/// <param name="e">A <see cref="T:Wisej.Web.Ext.ChartJS.ChartClickEventArgs" /> that contains the event data. </param>
+	[ApiCategory("ChartJS")]
 	public delegate void ChartClickEventHandler(object sender, ChartClickEventArgs e);
 
     /// <summary>

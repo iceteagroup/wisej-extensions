@@ -155,6 +155,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.MobileIntegra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Notify", "Wisej.Web.Ext.MobileIntegration\Wisej.Notify\Wisej.Notify.csproj", "{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.ClientClipboard", "Wisej.Ext.ClientClipboard\Wisej.Ext.ClientClipboard.csproj", "{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -993,6 +995,18 @@ Global
 		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Release|x64.Build.0 = Release|Any CPU
 		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Release|x86.ActiveCfg = Release|Any CPU
 		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0}.Release|x86.Build.0 = Release|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Debug|x64.Build.0 = Debug|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Debug|x86.Build.0 = Debug|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Release|x64.ActiveCfg = Release|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Release|x64.Build.0 = Release|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Release|x86.ActiveCfg = Release|Any CPU
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1069,6 +1083,7 @@ Global
 		{28C25ABD-A3A5-4D6F-AFED-B51DBDC4D41C} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
 		{7126BEA3-DA70-4BFF-B7D3-68FBE50ADBFC} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
 		{9078FCEF-5FCB-4C6B-B1D0-2A39F3CF01C0} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
+		{5AAECBF5-EDEA-4589-BEE5-AC074EF52D31} = {2535EDEC-B72A-4378-A87A-0B124000C55B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFDB97B7-7798-4B99-AE27-BBA1C4110DAD}

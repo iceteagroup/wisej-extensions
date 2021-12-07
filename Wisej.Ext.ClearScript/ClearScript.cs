@@ -118,7 +118,7 @@ namespace Wisej.Ext.ClearScript
 		/// <summary>
 		/// Creates a new instance of the specified <paramref name="type"/>.
 		/// </summary>
-		/// <param name="type">The <see cref="EncodingType"/> to create.</param>
+		/// <param name="type">The <see cref="EngineType"/> to create.</param>
 		/// <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
 		/// <param name="v8constraints">An optional instance of <see cref="V8RuntimeConstraints"/> used to initialize the <see cref="EngineType.V8"/> script engine.</param>
 		/// <param name="v8flags">An optional combination of <see cref="V8ScriptEngineFlags"/> flags used to initialize the <see cref="EngineType.V8"/> script engine.</param>

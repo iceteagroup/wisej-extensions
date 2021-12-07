@@ -22,7 +22,6 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Security.Cryptography;
 using System.Text;
 using Wisej.Base;
@@ -144,8 +143,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		public NavigationBarItem SelectedItem
 		{
 			get { return this._selectedItem; }
-			set {
-
+			set
+			{
 				if (value != null && value.NavigationBar != this)
 					throw new ArgumentException("The NavigationBarItem doesn't belong to this NavigationBar.");
 
@@ -277,7 +276,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		[DefaultValue("")]
 		[DesignerActionList]
 		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string Logo
 		{
 			get => this.logo.ImageSource;
@@ -288,7 +288,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns or sets the user avatar to display in the <see cref="NavigationBar"/>.
 		/// </summary>
 		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string UserAvatar
 		{
 			get => this.avatar.ImageSource;

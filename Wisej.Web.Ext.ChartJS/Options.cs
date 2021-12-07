@@ -19,7 +19,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Drawing.Design;
 using System.Globalization;
 
 namespace Wisej.Web.Ext.ChartJS
@@ -27,10 +26,11 @@ namespace Wisej.Web.Ext.ChartJS
 	/// <summary>
 	/// Base class for all the option classes.
 	/// </summary>
-	[TypeConverter(typeof(OptionsBase.Converter))]
-	[Editor(typeof(Design.OptionsEditor), typeof(UITypeEditor))]
 	[ApiCategory("ChartJS")]
-    public abstract class OptionsBase : ICloneable
+	[TypeConverter(typeof(OptionsBase.Converter))]
+	[Editor("Wisej.Web.Ext.ChartJS3.Design.OptionsEditor",
+			"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+	public abstract class OptionsBase : ICloneable
 	{
 		#region Properties
 
@@ -616,5 +616,4 @@ namespace Wisej.Web.Ext.ChartJS
 		{
 		}
 	}
-
 }

@@ -18,7 +18,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System.ComponentModel;
-using System.Drawing.Design;
 using Wisej.Core;
 using Wisej.Base;
 using System;
@@ -131,7 +130,8 @@ namespace Wisej.Web.Ext.RibbonBar
 		[SRCategory("CatData")]
 		[Description("Returns the collection of items contained in this RibbonBarItemComboBox.")]
 		[TypeConverter(typeof(ArrayConverter))]
-		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public virtual string[] Items
 		{
 			get

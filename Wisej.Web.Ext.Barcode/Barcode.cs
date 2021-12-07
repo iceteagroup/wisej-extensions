@@ -20,7 +20,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
 

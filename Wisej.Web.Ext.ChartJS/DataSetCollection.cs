@@ -22,7 +22,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing.Design;
 using System.Globalization;
 
 namespace Wisej.Web.Ext.ChartJS
@@ -32,9 +31,10 @@ namespace Wisej.Web.Ext.ChartJS
 	/// Represents the sets of data to plot.
 	/// </summary>
 	[TypeConverter(typeof(DataSetCollection.Converter))]
-	[Editor(typeof(Design.DataSetCollectionEditor), typeof(UITypeEditor))]
 	[ApiCategory("ChartJS")]
-    public class DataSetCollection : IList, IList<DataSet>
+	[Editor("Wisej.Web.Ext.ChartJS3.Design.DataSetCollectionEditor", 
+			"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+	public class DataSetCollection : IList, IList<DataSet>
 	{
 		// reference to the ChartJS control that owns this data set collection.
 		internal ChartJS chart;
@@ -284,7 +284,7 @@ namespace Wisej.Web.Ext.ChartJS
 
 		object IList.this[int index]
 		{
-			get { return this[index];  }
+			get { return this[index]; }
 			set { this[index] = (DataSet)value; }
 		}
 

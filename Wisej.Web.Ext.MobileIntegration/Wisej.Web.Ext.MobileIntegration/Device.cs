@@ -468,7 +468,7 @@ namespace Wisej.Web.Ext.MobileIntegration
 				if (Instance._userData == null)
 				{
 					var result = PostModalMessage("device.getUserData");
-					if (result.Status == StatusCode.Success)
+					if (result.Status == StatusCode.Success && !string.IsNullOrEmpty(result.Value))
 						Instance._userData = JsonConvert.DeserializeObject<UserDataDictionary<string, object>>(result.Value);
 					else
 						Instance._userData = new UserDataDictionary<string, object>();

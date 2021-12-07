@@ -21,7 +21,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Wisej.Base;
@@ -38,11 +37,11 @@ namespace Wisej.Web.Ext.TinyMCE
 	/// 
 	/// from: https://www.tinymce.com/
 	/// </summary>
+	[ApiCategory("TinyMCE")]
 	[ToolboxItem(true)]
-	[ToolboxBitmap(typeof(WinForms.RichTextBox))]
+	[ToolboxBitmap(typeof(WinForms.Control), "RichTextBox.bmp")]
 	[DefaultProperty("Text")]
 	[DefaultEvent("TextChanged")]
-	[ApiCategory("TinyMCE")]
 	public class TinyMCE : Widget, IWisejControl
 	{
 		// indicates that the control is ready to update its content.
@@ -167,7 +166,8 @@ namespace Wisej.Web.Ext.TinyMCE
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new virtual dynamic Options
 		{
 			get
@@ -188,7 +188,8 @@ namespace Wisej.Web.Ext.TinyMCE
 		[DesignerActionList]
 		[TypeConverter(typeof(ArrayConverter))]
 		[Description("Returns or sets the font names to display in the toolbar.")]
-		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string[] FontNames
 		{
 			get { return this._fontNames; }

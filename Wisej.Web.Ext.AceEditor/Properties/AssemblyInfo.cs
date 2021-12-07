@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Wisej.Web.Ext.AceEditor")]
 [assembly: AssemblyCompany("Ice Tea Group LLC")]
-[assembly: AssemblyProduct("Wisej 2")]
+[assembly: AssemblyProduct("Wisej 2.5 Extensions")]
 [assembly: AssemblyCopyright("Copyright ©2021 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -27,4 +27,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.5.20.0")]
+[assembly: AssemblyFileVersion("2.5.20.1")]

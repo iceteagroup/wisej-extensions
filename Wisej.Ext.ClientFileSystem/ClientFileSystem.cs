@@ -24,16 +24,17 @@ using Wisej.Web;
 namespace Wisej.Ext.ClientFileSystem
 {
 	/// <summary>
-	/// Implementation of File System Access API.
+	/// Implementation of <see href="https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API">File System Access API</see>.
 	/// Provides access to files and directories on client machines.
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// ///	This extension enables developers to build powerful apps that interact the user’s device via the device’s file system.
+	/// This extension enables developers to build powerful apps that interact the user's device via the device's 
+	/// file system.
 	/// </para>
 	///	<para>
-	///	It also allows the application to read or save changes directly to files and folders on the user’s device and it also offers
-	///	the ability to open a directory and enumerate its contents.
+	///	It also allows the application to read or save changes directly to files and folders on the user's device 
+	///	and it also offers the ability to open a directory and enumerate its contents.
 	/// </para>
 	/// </remarks>
 	public static class ClientFileSystem
@@ -47,6 +48,7 @@ namespace Wisej.Ext.ClientFileSystem
 		/// <param name="excludeAcceptAllOption">True if there's a pattern to apply; otherwise false</param>
 		/// <param name="filter">Represents the MIME type and the file extension</param>
 		/// <param name="callback">Callback method that receives a <see cref="T:Wisej.Ext.ClientFileSystem.File"/>[] object</param>
+		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
 		public static void ShowOpenFilePicker(bool multiple, bool excludeAcceptAllOption, string filter, Action<File[]> callback)
 		{
 			if (callback == null)
@@ -102,6 +104,7 @@ namespace Wisej.Ext.ClientFileSystem
 		/// <param name="filter">Represents the MIME type and the file extension</param>
 		/// <param name="callback">Callback method that receives a <see cref="Wisej.Ext.ClientFileSystem.File"/> object</param>
 		/// <param name="suggestedName">A name to associate with the file</param>
+		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
 		public static void ShowSaveFilePicker(bool excludeAcceptAllOption, string filter, string suggestedName, Action<File> callback)
 		{
 			if (callback == null)
@@ -148,6 +151,7 @@ namespace Wisej.Ext.ClientFileSystem
 		/// Opens a client directory picker that allows the user to select a directory
 		/// </summary>
 		/// <param name="callback">Callback method that receives a <see cref="Wisej.Ext.ClientFileSystem.Directory"/> object</param>
+		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
 		public static void ShowDirectoryPicker(Action<Directory> callback)
 		{
 			if (callback == null)

@@ -19,7 +19,6 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Design;
 using System.ComponentModel;
 using Wisej.Core;
 using System.Collections.Generic;
@@ -126,7 +125,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 		[Wisej.Base.SRCategory("CatAppearance")]
 		[Description("Returns or sets the theme name or URL for the image to display in the filter button.")]
 		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string ImageSource
 		{
 			get { return this._imageSettings == null ? null : this._imageSettings.ImageSource; }
@@ -189,7 +189,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 		[Wisej.Base.SRCategory("CatAppearance")]
 		[Description("Returns or sets the theme name or URL for the image to display in the filter button.")]
 		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string FilteredImageSource
 		{
 			get { return this._filteredImageSettings == null ? null : this._filteredImageSettings.ImageSource; }
@@ -345,7 +346,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 					}
 				}
 			}
-		}		
+		}
 		#endregion
 
 		#region IExtenderProvider

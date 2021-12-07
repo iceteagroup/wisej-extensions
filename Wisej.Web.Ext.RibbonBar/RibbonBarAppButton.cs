@@ -21,7 +21,6 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
 
@@ -208,7 +207,8 @@ namespace Wisej.Web.Ext.RibbonBar
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the theme name or URL for the image to display in the RibbonBarApplicationButton.")]
 		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string ImageSource
 		{
 			get { return this._imageSettings == null ? null : this._imageSettings.ImageSource; }
@@ -242,7 +242,8 @@ namespace Wisej.Web.Ext.RibbonBar
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the index value of the image assigned to the RibbonBarApplicationButton.")]
 		[TypeConverter(typeof(ImageIndexConverter))]
-		[Editor("Wisej.Design.ImageIndexEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.ImageIndexEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public int ImageIndex
 		{
 			get { return this._imageSettings == null ? -1 : this._imageSettings.ImageIndex; }
@@ -258,7 +259,8 @@ namespace Wisej.Web.Ext.RibbonBar
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the name of the image assigned to the RibbonBarApplicationButton.")]
 		[TypeConverter(typeof(ImageKeyConverter))]
-		[Editor("Wisej.Design.ImageIndexEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.ImageIndexEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string ImageKey
 		{
 			get { return this._imageSettings == null ? string.Empty : this._imageSettings.ImageKey; }

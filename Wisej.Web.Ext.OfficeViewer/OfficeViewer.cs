@@ -22,7 +22,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Net.Mime;
-using System.Web;
 using Wisej.Base;
 using Wisej.Core;
 
@@ -216,18 +215,18 @@ namespace Wisej.Web.Ext.OfficeViewer
 		bool IWisejHandler.Compress { get { return false; } }
 
 		/// <summary>
-		/// Process the http request.
+		/// Process the HTTP request.
 		/// </summary>
-		/// <param name="context">The current <see cref="T:System.Web.HttpContext"/>.</param>
-		void IWisejHandler.ProcessRequest(HttpContext context)
+		/// <param name="context">The current <see cref="System.Web.HttpContext"/>.</param>
+		void IWisejHandler.ProcessRequest(System.Web.HttpContext context)
 		{
 			var args = new HandledEventArgs(false);
 			OnFileRequested(args);
 			if (args.Handled)
 				return;
 
-			HttpRequest request = context.Request;
-			HttpResponse response = context.Response;
+			var request = context.Request;
+			var response = context.Response;
 
 			var fileName =
 				String.IsNullOrEmpty(this.FileSource)
@@ -265,7 +264,7 @@ namespace Wisej.Web.Ext.OfficeViewer
 					if (!Path.IsPathRooted(filePath))
 						filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.FileSource);
 
-					response.WriteFile(filePath);
+					response.TransmitFile(filePath);
 				}
 				catch (Exception ex)
 				{

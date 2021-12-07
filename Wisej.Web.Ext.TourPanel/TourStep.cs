@@ -19,7 +19,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
 
@@ -110,7 +109,8 @@ namespace Wisej.Web.Ext.TourPanel
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
 		[SRDescription("Returns or sets the HTML text to display in the TourPanel,")]
-		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string Text
 		{
 			get { return this._text; }

@@ -24,7 +24,6 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;

@@ -20,7 +20,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
 using Wisej.Core;
 
 namespace Wisej.Web.Ext.Polymer
@@ -86,7 +85,8 @@ namespace Wisej.Web.Ext.Polymer
 		/// </summary>
 		[DefaultValue(null)]
 		[MergableProperty(false)]
-		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string[] Imports
 		{
 			get { return this._imports; }

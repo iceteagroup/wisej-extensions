@@ -22,10 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Web.Configuration;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;
@@ -65,7 +63,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="e"></param>
 		protected virtual void OnMapClick(MapMouseEventArgs e)
 		{
-			((MapMouseEventHandler) base.Events[nameof(MapClick)])?.Invoke(this, e);
+			((MapMouseEventHandler)base.Events[nameof(MapClick)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -83,7 +81,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="e"></param>
 		protected virtual void OnMapDoubleClick(MapMouseEventArgs e)
 		{
-			((MapMouseEventHandler) base.Events[nameof(MapDoubleClick)])?.Invoke(this, e);
+			((MapMouseEventHandler)base.Events[nameof(MapDoubleClick)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -101,7 +99,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="e"></param>
 		protected virtual void OnMapPropertyChanged(MapPropertyChangedEventArgs e)
 		{
-			((MapPropertyChangedEventHandler) base.Events[nameof(MapPropertyChanged)])?.Invoke(this, e);
+			((MapPropertyChangedEventHandler)base.Events[nameof(MapPropertyChanged)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -119,7 +117,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="e"></param>
 		protected virtual void OnMarkerDragStart(MarkerDragEventArgs e)
 		{
-			((MarkerDragEventHandler) base.Events[nameof(MarkerDragStart)])?.Invoke(this, e);
+			((MarkerDragEventHandler)base.Events[nameof(MarkerDragStart)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -137,7 +135,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="e"></param>
 		protected virtual void OnMarkerDragEnd(MarkerDragEventArgs e)
 		{
-			((MarkerDragEventHandler) base.Events[nameof(MarkerDragEnd)])?.Invoke(this, e);
+			((MarkerDragEventHandler)base.Events[nameof(MarkerDragEnd)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -201,7 +199,8 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(UITypeEditor))]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new virtual dynamic Options
 		{
 			get
@@ -269,25 +268,10 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// </remarks>
 		public static string GoogleMapsURL
 		{
-			get
-			{
-				if (_GoogleMapsURL == null)
-				{
-					// read the google maps api url from web.config.
-					_GoogleMapsURL = WebConfigurationManager.AppSettings["GoogleMaps.URL"];
-					if (String.IsNullOrEmpty(_GoogleMapsURL))
-						_GoogleMapsURL = "//maps.googleapis.com/maps/api/js";
-				}
-
-				return _GoogleMapsURL;
-			}
-			set
-			{
-				_GoogleMapsURL = value;
-			}
+			get { return _googleMapsURL; }
+			set { _googleMapsURL = value; }
 		}
-
-		private static string _GoogleMapsURL;
+		private static string _googleMapsURL = "//maps.googleapis.com/maps/api/js";
 
 		// disable inlining or we lose the calling assembly in GetResourceString().
 		[MethodImpl(MethodImplOptions.NoInlining)]
@@ -416,6 +400,15 @@ namespace Wisej.Web.Ext.GoogleMaps
 		public void CenterMap(string address)
 		{
 			Call("centerMap", address);
+		}
+
+		/// <summary>
+		/// Centers the map around a set of coordinates.
+		/// </summary>
+		/// <param name="coordinates"></param>
+		public void FitBounds(params LatLng[] coordinates)
+		{
+			Call("fitBounds", coordinates);
 		}
 
 		/// <summary>

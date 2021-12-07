@@ -21,7 +21,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Design;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;
@@ -642,7 +641,8 @@ namespace Wisej.Web.Ext.JustGage
 		[TypeConverter(typeof(ArrayConverter))]
 		[SRCategory("CatBehavior")]
 		[Description("Gets or sets custom sectors for the gauge.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public CustomSector[] CustomSectors
 		{
 			get

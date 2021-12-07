@@ -310,6 +310,20 @@ this.showInfoWindow = function (id, options) {
 }
 
 /**
+ * Helper method for setting the map bounds around an array of coordinates.
+ * @param {any} coordinates An array of coordinates.
+ */
+this.fitBounds = function () {
+
+	var bounds = new google.maps.LatLngBounds();
+	for (var i = 0; i < arguments.length; i++) {
+		bounds.extend(arguments[i]);
+	}
+
+	this.widget.fitBounds(bounds);
+}
+
+/**
  * Closes the google.maps.InfoWindow related to the specified marker.
  *
  * @param id {String} the marker unique id.

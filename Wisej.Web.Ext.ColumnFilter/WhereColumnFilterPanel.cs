@@ -291,7 +291,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 					else if (c is DateTimePicker && c != dateTimePicker1)
 					{
 						dtp = c as DateTimePicker;
-						if (cmb.SelectedIndex > -1 && dtp.Value != null)
+						if (cmb.SelectedIndex > -1 && dtp.NullableValue != null)
 						{
 							condition = Value1 + cmb.SelectedItem.ToString() + "Convert.ToDateTime(\"" + dtp.Value + "\").Date";
 							where = AppendCondition(condition, LogicalOperator, where);

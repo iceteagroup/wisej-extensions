@@ -17,23 +17,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Design;
-using Wisej.Base;
-using Wisej.Core;
-using Wisej.Design;
-
 namespace Wisej.Web.Ext.YouTube
 {
-	/// <summary>
-	/// Implements a YouTube viewer control.
-	/// </summary>
-	//[ToolboxItem(true)]
-	//[DefaultProperty("Value")]
-	//[DefaultBindingProperty("Value")]
-	public class YouTube // : Control, IWisejControl
+    /// <summary>
+    /// Implements a YouTube viewer control.
+    /// </summary>
+    //[ToolboxItem(true)]
+    //[DefaultProperty("Value")]
+    //[DefaultBindingProperty("Value")]
+    public class YouTube // : Control, IWisejControl
     {
     }
 }

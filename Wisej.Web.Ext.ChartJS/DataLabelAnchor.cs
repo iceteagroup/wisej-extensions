@@ -17,12 +17,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.ChartJS
 {
 	/// <summary>
 	/// Anchor configuration for ChartJS datalabel. 
 	/// See: https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#anchoring.
 	/// </summary>
+	[ApiCategory("ChartJS")]
 	public enum DataLabelAnchor
 	{
 		/// <summary>
