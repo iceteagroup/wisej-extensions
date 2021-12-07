@@ -44,7 +44,7 @@ namespace Wisej.Ext.ClientClipboard
     /// permissions using the Permissions API and the "clipboard-read" or "clipboard-write" permission as appropriate
     /// </para>
     /// </remarks>
-    public class ClientClipboard
+    public static class ClientClipboard
     {
         internal const string TARGET = "wisej.ext.ClientClipboard";
 
