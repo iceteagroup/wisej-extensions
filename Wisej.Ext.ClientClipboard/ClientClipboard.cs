@@ -46,7 +46,39 @@ namespace Wisej.Ext.ClientClipboard
     /// </remarks>
     public static class ClientClipboard
     {
-        internal const string TARGET = "wisej.ext.ClientClipboard";
+        static ClientClipboard()
+		{
+            _clipboard = new ClipboardComponent();
+		}
+        private static ClipboardComponent _clipboard;
+
+		/// <summary>
+		/// Fired when the user copies, cuts, or pastes content to or from the clipboard.
+		/// </summary>
+		public static event ClientClipboardEventHandler ClipboardChange;
+
+        // Raises the ClipboardChange event.
+        private static void RaiseClipboardChange(string type, Control target, string content)
+        {
+            if (ClipboardChange != null)
+			{
+                var eventType = ClientClipboardChangeType.Copy;
+                switch (type)
+				{
+                    case "cut":
+                        eventType = ClientClipboardChangeType.Cut;
+                        break;
+                    case "copy":
+                        eventType = ClientClipboardChangeType.Copy;
+                        break;
+                    case "paste":
+                        eventType = ClientClipboardChangeType.Paste;
+                        break;
+                }
+
+                ClipboardChange(target, new ClientClipboardEventArgs(target, eventType, content));
+			}
+        }
 
         /// <summary>
         /// Returns the textual content of the client clipboard.
@@ -79,7 +111,7 @@ namespace Wisej.Ext.ClientClipboard
         /// <returns>The string result from the client's clipboard</returns>
         public static async Task<string> ReadTextAsync()
         {
-            return await Application.CallAsync($"{TARGET}.readText");
+            return await _clipboard.CallAsync("readText");
         }
 
         /// <summary>
@@ -115,7 +147,7 @@ namespace Wisej.Ext.ClientClipboard
         /// <param name="text">The text to write to the client's clipboard.</param>
         public static async Task WriteTextAsync(string text)
         {
-            await Application.CallAsync($"{TARGET}.writeText", text);
+            await _clipboard.CallAsync("writeText", text);
         }
 
         /// <summary>
@@ -149,7 +181,7 @@ namespace Wisej.Ext.ClientClipboard
         /// <returns>The string result from the client's clipboard</returns>
         public static async Task<Image> ReadImageAsync()
         {
-            return ImageFromBase64(await Application.CallAsync($"{TARGET}.readImage"));
+            return ImageFromBase64(await _clipboard.CallAsync("readImage"));
         }
 
         /// <summary>
@@ -191,7 +223,7 @@ namespace Wisej.Ext.ClientClipboard
             if (image is null)
                 throw new ArgumentNullException(nameof(image));
 
-            await Application.CallAsync($"{TARGET}.writeImage", ImageToBase64(image, ImageFormat.Png));
+            await _clipboard.CallAsync("writeImage", ImageToBase64(image, ImageFormat.Png));
         }
 
         /// <summary>
@@ -206,7 +238,7 @@ namespace Wisej.Ext.ClientClipboard
             if (image is null)
                 throw new ArgumentNullException(nameof(image));
 
-            await Application.CallAsync($"{TARGET}.writeImage", ImageToBase64(image, format));
+            await _clipboard.CallAsync("writeImage", ImageToBase64(image, format));
         }
 
         // Returns the base64 encoding of the image.
@@ -259,5 +291,45 @@ namespace Wisej.Ext.ClientClipboard
 
             return null;
         }
-    }
+
+		#region Wisej Implementation
+
+		// Connection to the client component.
+		private class ClipboardComponent : Wisej.Base.Component
+		{
+            private void ProcessClipboardChangeWebEvent(Core.WisejEventArgs e)
+            {
+                var data = e.Parameters.Data;
+                var type = data.type as string;
+                var target = data.target as Control;
+                var content = data.content as string;
+
+                ClientClipboard.RaiseClipboardChange(type, target, content);
+            }
+
+            protected override void OnWebRender(dynamic config)
+			{
+				base.OnWebRender((object)config);
+
+                config.className = "wisej.ext.ClientClipboard";
+                config.wiredEvents = new[] {"clipboardchange(Data)"};
+			}
+
+			protected override void OnWebEvent(Core.WisejEventArgs e)
+			{
+                switch (e.Type)
+                {
+                    case "clipboardchange":
+                        ProcessClipboardChangeWebEvent(e);
+                        break;
+
+                    default:
+                        base.OnWebEvent(e);
+                        break;
+                }
+			}
+		}
+
+		#endregion
+	}
 }

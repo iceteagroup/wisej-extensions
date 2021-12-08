@@ -22,10 +22,25 @@
  * wisej.ext.ClientClipboard
  */
 qx.Class.define("wisej.ext.ClientClipboard", {
-	type: "static",
+
+	type: "singleton",
 	extend: qx.core.Object,
 
-	statics: {
+	// All Wisej components must include this mixin
+	// to provide services to the Wisej core.
+	include: [wisej.mixin.MWisejComponent],
+
+	construct: function () {
+
+		this.base(arguments);
+
+		var handler = this.__onClipboardChange.bind(this);
+		qx.bom.Event.addNativeListener(window, "cut", handler);
+		qx.bom.Event.addNativeListener(window, "copy", handler);
+		qx.bom.Event.addNativeListener(window, "paste", handler);
+	},
+
+	members: {
 
 		/**
 		 * Returns the data content of the system clipboard.
@@ -103,6 +118,22 @@ qx.Class.define("wisej.ext.ClientClipboard", {
 						},
 						reject);
 				});
+			});
+		},
+
+		/**
+		 * Handles clipboard event to notify the server.
+		 */
+		__onClipboardChange: function (e) {
+
+			var type = e.type;
+			var content = e.clipboardData.getData("text");
+			var target = wisej.utils.Widget.findWisejComponent(e.target) || Wisej.Platform.getFocusedComponent();
+
+			this.fireDataEvent("clipboardchange", {
+				type,
+				target,
+				content
 			});
 		}
 	}
