@@ -46,12 +46,6 @@ namespace Wisej.Ext.ClientClipboard
     /// </remarks>
     public static class ClientClipboard
     {
-        static ClientClipboard()
-		{
-            _clipboard = new ClipboardComponent();
-		}
-        private static ClipboardComponent _clipboard;
-
 		/// <summary>
 		/// Fired when the user copies, cuts, or pastes content to or from the clipboard.
 		/// </summary>
@@ -111,7 +105,7 @@ namespace Wisej.Ext.ClientClipboard
         /// <returns>The string result from the client's clipboard</returns>
         public static async Task<string> ReadTextAsync()
         {
-            return await _clipboard.CallAsync("readText");
+            return await Instance.CallAsync("readText");
         }
 
         /// <summary>
@@ -147,7 +141,7 @@ namespace Wisej.Ext.ClientClipboard
         /// <param name="text">The text to write to the client's clipboard.</param>
         public static async Task WriteTextAsync(string text)
         {
-            await _clipboard.CallAsync("writeText", text);
+            await Instance.CallAsync("writeText", text);
         }
 
         /// <summary>
@@ -181,7 +175,7 @@ namespace Wisej.Ext.ClientClipboard
         /// <returns>The string result from the client's clipboard</returns>
         public static async Task<Image> ReadImageAsync()
         {
-            return ImageFromBase64(await _clipboard.CallAsync("readImage"));
+            return ImageFromBase64(await Instance.CallAsync("readImage"));
         }
 
         /// <summary>
@@ -223,7 +217,7 @@ namespace Wisej.Ext.ClientClipboard
             if (image is null)
                 throw new ArgumentNullException(nameof(image));
 
-            await _clipboard.CallAsync("writeImage", ImageToBase64(image, ImageFormat.Png));
+            await Instance.CallAsync("writeImage", ImageToBase64(image, ImageFormat.Png));
         }
 
         /// <summary>
@@ -238,7 +232,7 @@ namespace Wisej.Ext.ClientClipboard
             if (image is null)
                 throw new ArgumentNullException(nameof(image));
 
-            await _clipboard.CallAsync("writeImage", ImageToBase64(image, format));
+            await Instance.CallAsync("writeImage", ImageToBase64(image, format));
         }
 
         // Returns the base64 encoding of the image.
@@ -293,6 +287,22 @@ namespace Wisej.Ext.ClientClipboard
         }
 
 		#region Wisej Implementation
+
+        private const string INSTANCE_KEY = "Wisej.Ext.ClientClipboard";
+
+        private static ClipboardComponent Instance
+		{
+			get
+			{
+                var instance = Application.Session[INSTANCE_KEY];
+                if (instance == null)
+				{
+                    instance = new ClipboardComponent();
+                    Application.Session[INSTANCE_KEY] = instance;
+                }
+                return instance;
+			}
+		}
 
 		// Connection to the client component.
 		private class ClipboardComponent : Wisej.Base.Component
