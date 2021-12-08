@@ -82,7 +82,7 @@ qx.Class.define("wisej.ext.ClientClipboard", {
 						resolve(null);
 					});
 				} catch (ex) {
-					reject(ex.error);
+					reject(ex);
 				}
 			});
 		},
