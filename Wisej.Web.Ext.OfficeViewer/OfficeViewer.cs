@@ -200,9 +200,13 @@ namespace Wisej.Web.Ext.OfficeViewer
 			}
 
 			// this URL will be processed by OfficeViewerModule
-			this.Url = 
+			var startUpUrl = Application.StartupUrl;
+			if (!startUpUrl.EndsWith("/"))
+				startUpUrl += "/";
+
+			this.Url =
 				OFFICEAPPS_URL +
-				WebUtility.UrlEncode(this.GetServiceURL());
+				WebUtility.UrlEncode(startUpUrl + this.GetServiceURL());
 		}
 
 		#endregion
@@ -260,10 +264,7 @@ namespace Wisej.Web.Ext.OfficeViewer
 			{
 				try
 				{
-					string filePath = this.FileSource;
-					if (!Path.IsPathRooted(filePath))
-						filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.FileSource);
-
+					var filePath = Application.MapPath(this.FileSource);
 					response.TransmitFile(filePath);
 				}
 				catch (Exception ex)
