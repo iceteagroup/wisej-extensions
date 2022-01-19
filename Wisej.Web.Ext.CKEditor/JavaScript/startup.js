@@ -91,6 +91,20 @@ this.init = function () {
 				me.fireWidgetEvent("linkClick", link);
 		});
 
+		// fire keyboard events from the editor.
+		me.editor.editable().on('keypress', function (e) {
+			me.fireEvent("keypress");
+		});
+		// fire keyboard events from the editor.
+		me.editor.editable().on('keydown', function (e) {
+			me.fireEvent("keydown");
+		});
+		// fire keyboard events from the editor.
+		me.editor.editable().on('keyup', function (e) {
+			me.fireEvent("keyup");
+		});
+
+
 		me.fireEvent("initialized");
 	});
 
