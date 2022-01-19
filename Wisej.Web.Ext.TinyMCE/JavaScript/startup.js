@@ -90,6 +90,17 @@ this.init = function () {
 			me.setDirty(true);
 		});
 
+		// fire keyboard events from the editor.
+		me.editor.on('keypress', function (e) {
+			me.fireEvent("keypress");
+		});
+		me.editor.on('keydown', function (e) {
+			me.fireEvent("keydown");
+		});
+		me.editor.on('keyup', function (e) {
+			me.fireEvent("keyup");
+		});
+
 		// focus the wrapper wisej widget.
 		// IFrame editors cannot propagate pointer events to their container.
 		me.editor.on('focus', function (e) {
