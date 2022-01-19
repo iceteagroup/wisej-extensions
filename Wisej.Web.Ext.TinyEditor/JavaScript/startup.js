@@ -79,14 +79,22 @@ this.init = function () {
 	// hookup the blur event in the child iframe to fire onEditorBlur in the owner window.
 	if (!wisej.web.DesignMode) {
 
-		this.editor.e.body.addEventListener("keyup", function () {
+		this.editor.e.body.addEventListener("keydown", function () {
 			var newText = me.getText();
 			if (savedText != newText) {
 				me.setDirty(true);
 				savedText = newText;
 			}
-
+			me.fireEvent("keydown");
 		});
+
+		this.editor.e.body.addEventListener("keyup", function () {
+			me.fireEvent("keyup");
+		});
+
+		this.editor.e.body.addEventListener("keypress", function () {
+            me.fireEvent("keypress");
+        });
 
 		this.editor.e.body.addEventListener("focus", function () {
 			me.fireWidgetEvent("focus");
@@ -112,15 +120,16 @@ this.setText = function (value) {
 	try {
 		if (this.editor) {
 			this.editor.e.body.innerHTML = value;
-			this.updateState();
-		} else {
+            this.updateState();
+            
+        } else {
 
 			var me = this;
 			this.addListenerOnce("initialized", function () {
 				me.setText(value);
 			});
-		}
-		
+        }
+        
 	} catch (e) { }
 }
 
