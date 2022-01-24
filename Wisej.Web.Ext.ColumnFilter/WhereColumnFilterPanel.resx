@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="ok.Location" type="System.Drawing.Point, System.Drawing">
-    <value>67, 256</value>
+    <value>81, 256</value>
   </data>
   <data name="&gt;&gt;ok.Name" xml:space="preserve">
     <value>ok</value>
@@ -134,7 +134,7 @@
     <value>4</value>
   </data>
   <data name="cancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>171, 256</value>
+    <value>185, 256</value>
   </data>
   <data name="&gt;&gt;cancel.Name" xml:space="preserve">
     <value>cancel</value>
@@ -157,7 +157,7 @@
     <value>True</value>
   </data>
   <data name="clear.Location" type="System.Drawing.Point, System.Drawing">
-    <value>287, 10</value>
+    <value>315, 10</value>
   </data>
   <data name="clear.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 15</value>
@@ -187,7 +187,7 @@
     <value>0, 234</value>
   </data>
   <data name="line1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>330, 10</value>
+    <value>358, 10</value>
   </data>
   <data name="&gt;&gt;line1.Name" xml:space="preserve">
     <value>line1</value>
@@ -264,8 +264,11 @@
   <data name="cmbOperator.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 31</value>
   </data>
+  <data name="cmbOperator.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>110, 0</value>
+  </data>
   <data name="cmbOperator.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 22</value>
+    <value>110, 22</value>
   </data>
   <data name="cmbOperator.TabIndex" type="System.Int32, mscorlib">
     <value>28</value>
@@ -282,14 +285,14 @@
   <data name="&gt;&gt;cmbOperator.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="txtValue.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="txtValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 31</value>
+    <value>119, 31</value>
+  </data>
+  <data name="txtValue.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>90, 0</value>
   </data>
   <data name="txtValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 22</value>
+    <value>90, 22</value>
   </data>
   <data name="txtValue.TabIndex" type="System.Int32, mscorlib">
     <value>29</value>
@@ -310,10 +313,10 @@
     <value>False</value>
   </data>
   <data name="dateTimePicker1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>214, 31</value>
+    <value>215, 31</value>
   </data>
   <data name="dateTimePicker1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 22</value>
+    <value>15, 22</value>
   </data>
   <data name="dateTimePicker1.TabIndex" type="System.Int32, mscorlib">
     <value>31</value>
@@ -330,11 +333,14 @@
   <data name="&gt;&gt;dateTimePicker1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="labelLogicalOperator.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="labelLogicalOperator.Location" type="System.Drawing.Point, System.Drawing">
-    <value>255, 31</value>
+    <value>236, 31</value>
   </data>
   <data name="labelLogicalOperator.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 16</value>
+    <value>110, 15</value>
   </data>
   <data name="labelLogicalOperator.TabIndex" type="System.Int32, mscorlib">
     <value>30</value>
@@ -358,7 +364,7 @@
     <value>5, 32</value>
   </data>
   <data name="flowLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>318, 196</value>
+    <value>349, 196</value>
   </data>
   <data name="flowLayoutPanel.TabIndex" type="System.Int32, mscorlib">
     <value>32</value>
@@ -410,7 +416,7 @@
 </value>
   </metadata>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>331, 309</value>
+    <value>359, 309</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>WhereColumnFilterPanel</value>

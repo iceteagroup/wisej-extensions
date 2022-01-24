@@ -56,7 +56,7 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin&quot; /s /y&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\&quot; /y&#xD;&#xA;" />
+		<Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetDir)Wisej.Web.Ext.*.dll&quot; &quot;$(ProjectDir)..\bin&quot; /s /y&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\&quot; /y&#xD;&#xA;" />
 	</Target>
 
 </Project>

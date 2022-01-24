@@ -96,8 +96,8 @@
 			// 
 			// txtValue
 			// 
-			resources.ApplyResources(this.txtValue, "txtValue");
 			this.flowLayoutPanel.SetFillWeight(this.txtValue, 2);
+			resources.ApplyResources(this.txtValue, "txtValue");
 			this.txtValue.Name = "txtValue";
 			// 
 			// labelLogicalOperator
