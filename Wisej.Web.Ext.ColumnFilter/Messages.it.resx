@@ -123,4 +123,40 @@
   <data name="OR" xml:space="preserve">
     <value>E | &lt;b&gt;O&lt;/b&gt;</value>
   </data>
+  <data name="contains" xml:space="preserve">
+    <value>Contiene</value>
+  </data>
+  <data name="does_not_contain" xml:space="preserve">
+    <value>non contiene</value>
+  </data>
+  <data name="ends_with" xml:space="preserve">
+    <value>termina con</value>
+  </data>
+  <data name="equal_to" xml:space="preserve">
+    <value>uguale a</value>
+  </data>
+  <data name="is_empty" xml:space="preserve">
+    <value>è vuoto</value>
+  </data>
+  <data name="is_false" xml:space="preserve">
+    <value>è false</value>
+  </data>
+  <data name="is_not_empty" xml:space="preserve">
+    <value>non è vuoto</value>
+  </data>
+  <data name="is_not_null" xml:space="preserve">
+    <value>non è nullo</value>
+  </data>
+  <data name="is_null" xml:space="preserve">
+    <value>è null</value>
+  </data>
+  <data name="is_true" xml:space="preserve">
+    <value>è vero</value>
+  </data>
+  <data name="not_equal_to" xml:space="preserve">
+    <value>non uguale a</value>
+  </data>
+  <data name="starts_with" xml:space="preserve">
+    <value>inizia con</value>
+  </data>
 </root>

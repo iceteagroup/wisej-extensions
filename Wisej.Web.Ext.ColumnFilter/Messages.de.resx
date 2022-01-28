@@ -120,7 +120,43 @@
   <data name="AND" xml:space="preserve">
     <value>&lt;b&gt;UND&lt;/b&gt; | ODER</value>
   </data>
+  <data name="contains" xml:space="preserve">
+    <value>enthält</value>
+  </data>
+  <data name="does_not_contain" xml:space="preserve">
+    <value>enthält nicht</value>
+  </data>
+  <data name="ends_with" xml:space="preserve">
+    <value>endet mit</value>
+  </data>
+  <data name="equal_to" xml:space="preserve">
+    <value>ist gleich</value>
+  </data>
+  <data name="is_empty" xml:space="preserve">
+    <value>ist leer</value>
+  </data>
+  <data name="is_false" xml:space="preserve">
+    <value>ist falsch</value>
+  </data>
+  <data name="is_not_empty" xml:space="preserve">
+    <value>ist nicht leer</value>
+  </data>
+  <data name="is_not_null" xml:space="preserve">
+    <value>ist nicht null</value>
+  </data>
+  <data name="is_null" xml:space="preserve">
+    <value>ist null</value>
+  </data>
+  <data name="is_true" xml:space="preserve">
+    <value>ist wahr</value>
+  </data>
+  <data name="not_equal_to" xml:space="preserve">
+    <value>ist nicht gleich</value>
+  </data>
   <data name="OR" xml:space="preserve">
     <value>UND | &lt;b&gt;ODER&lt;/b&gt;</value>
+  </data>
+  <data name="starts_with" xml:space="preserve">
+    <value>beginnt mit</value>
   </data>
 </root>

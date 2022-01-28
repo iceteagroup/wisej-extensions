@@ -70,11 +70,119 @@ namespace Wisej.Web.Ext.ColumnFilter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to contains.
+        /// </summary>
+        internal static string contains {
+            get {
+                return ResourceManager.GetString("contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to does not contain.
+        /// </summary>
+        internal static string does_not_contain {
+            get {
+                return ResourceManager.GetString("does_not_contain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ends with.
+        /// </summary>
+        internal static string ends_with {
+            get {
+                return ResourceManager.GetString("ends_with", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to equal to.
+        /// </summary>
+        internal static string equal_to {
+            get {
+                return ResourceManager.GetString("equal_to", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is empty.
+        /// </summary>
+        internal static string is_empty {
+            get {
+                return ResourceManager.GetString("is_empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is false.
+        /// </summary>
+        internal static string is_false {
+            get {
+                return ResourceManager.GetString("is_false", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is not empty.
+        /// </summary>
+        internal static string is_not_empty {
+            get {
+                return ResourceManager.GetString("is_not_empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is not null.
+        /// </summary>
+        internal static string is_not_null {
+            get {
+                return ResourceManager.GetString("is_not_null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is null.
+        /// </summary>
+        internal static string is_null {
+            get {
+                return ResourceManager.GetString("is_null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is true.
+        /// </summary>
+        internal static string is_true {
+            get {
+                return ResourceManager.GetString("is_true", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to not equal to.
+        /// </summary>
+        internal static string not_equal_to {
+            get {
+                return ResourceManager.GetString("not_equal_to", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AND | &lt;b&gt;OR&lt;/b&gt;.
         /// </summary>
         internal static string OR {
             get {
                 return ResourceManager.GetString("OR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to starts with.
+        /// </summary>
+        internal static string starts_with {
+            get {
+                return ResourceManager.GetString("starts_with", resourceCulture);
             }
         }
     }

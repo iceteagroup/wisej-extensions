@@ -40,8 +40,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// </summary>
 		public ColumnFilterPanel()
 		{
-			InitializeComponent();
-		}
+			InitializeComponent();			
+		}		
 
 		#endregion
 
@@ -78,6 +78,12 @@ namespace Wisej.Web.Ext.ColumnFilter
 			internal set;
 		}
 
+		public int FilteredRowCount
+		{
+			get;
+			internal set;
+		}
+
 		#endregion
 
 		#region Implementation
@@ -109,10 +115,11 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// </summary>
 		protected virtual void ApplyFilters()
 		{
+			ColumnFilter columnFilter = null;
 			var panels = GetFilterPanels();
 			foreach (var panel in panels)
 			{
-				var columnFilter = panel.ColumnFilter;
+				columnFilter = panel.ColumnFilter;
 				if (panel.OnApplyFilter())
 				{
 					if (columnFilter.FilteredImage != null)
@@ -126,8 +133,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 						panel.FilterButton.Image = columnFilter.Image;
 					else if (columnFilter.ImageSource.Length > 0)
 						panel.FilterButton.ImageSource = columnFilter.ImageSource;
-				}
-			}
+				}				
+			}			
 		}
 
 		/// <summary>
@@ -166,7 +173,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			Trace.TraceWarning("OnApplyFilter is not implemented.");
 			return true;
 		}
-
+		
 		private void ColumnFilterPanel_VisibleChanged(object sender, EventArgs e)
 		{
 			if (this.Visible)

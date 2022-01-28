@@ -201,66 +201,6 @@
   <data name="&gt;&gt;line1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="cmbOperator.Items" xml:space="preserve">
-    <value>equal to</value>
-  </data>
-  <data name="cmbOperator.Items1" xml:space="preserve">
-    <value>not equal to</value>
-  </data>
-  <data name="cmbOperator.Items2" xml:space="preserve">
-    <value>contains</value>
-  </data>
-  <data name="cmbOperator.Items3" xml:space="preserve">
-    <value>does not contain</value>
-  </data>
-  <data name="cmbOperator.Items4" xml:space="preserve">
-    <value>starts with</value>
-  </data>
-  <data name="cmbOperator.Items5" xml:space="preserve">
-    <value>ends with</value>
-  </data>
-  <data name="cmbOperator.Items6" xml:space="preserve">
-    <value>is empty</value>
-  </data>
-  <data name="cmbOperator.Items7" xml:space="preserve">
-    <value>is not empty</value>
-  </data>
-  <data name="cmbOperator.Items8" xml:space="preserve">
-    <value>is null</value>
-  </data>
-  <data name="cmbOperator.Items9" xml:space="preserve">
-    <value>is not null</value>
-  </data>
-  <data name="cmbOperator.Items10" xml:space="preserve">
-    <value>=</value>
-  </data>
-  <data name="cmbOperator.Items11" xml:space="preserve">
-    <value>!=</value>
-  </data>
-  <data name="cmbOperator.Items12" xml:space="preserve">
-    <value>&lt;</value>
-  </data>
-  <data name="cmbOperator.Items13" xml:space="preserve">
-    <value>&gt;</value>
-  </data>
-  <data name="cmbOperator.Items14" xml:space="preserve">
-    <value>&lt;=</value>
-  </data>
-  <data name="cmbOperator.Items15" xml:space="preserve">
-    <value>&gt;=</value>
-  </data>
-  <data name="cmbOperator.Items16" xml:space="preserve">
-    <value>is true</value>
-  </data>
-  <data name="cmbOperator.Items17" xml:space="preserve">
-    <value>is false</value>
-  </data>
-  <data name="cmbOperator.Items18" xml:space="preserve">
-    <value>is null</value>
-  </data>
-  <data name="cmbOperator.Items19" xml:space="preserve">
-    <value>is not null</value>
-  </data>
   <data name="cmbOperator.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 31</value>
   </data>

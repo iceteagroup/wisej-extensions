@@ -22,6 +22,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Reflection;
+using System.Resources;
 
 namespace Wisej.Web.Ext.ColumnFilter
 {
@@ -89,10 +91,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 			{
 				// make all rows visible before applying the filters.
 				var dataGrid = this.DataGridViewColumn.DataGridView;
-				foreach (var row in dataGrid.Rows)
-				{
-					row.Visible = true;
-				}
+				foreach (var row in dataGrid.Rows)				
+					row.Visible = true;									
 				
 				// reset Combined where
 				dataGrid.UserData.columFiltercombinedWhere = "";
@@ -107,11 +107,17 @@ namespace Wisej.Web.Ext.ColumnFilter
 					var indexes = dataGrid.Rows.Where(combinedWhere).Select(r => r.Index).ToArray();
 					foreach (var row in dataGrid.Rows)
 					{
-						int test = Array.BinarySearch(indexes, row.Index);
-						if (Array.BinarySearch(indexes, row.Index) < 0)
-							row.Visible = false;
-					}
+						if (Array.BinarySearch(indexes, row.Index) < 0)						
+							row.Visible = false;						
+					}					
 				}
+
+				FilteredRowCount = dataGrid.Rows.GetRowCount(DataGridViewElementStates.Visible);
+				if (ColumnFilter != null)
+				{
+					ColumnFilter.OnFiltersApplied(FilteredRowCount);
+				}
+
 			}
 			finally
 			{
@@ -383,25 +389,25 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		private string GetStrCondition(string value1, string value2, string operation)
 		{
-			if (operation == "equal to")
+			if (operation == Messages.equal_to)
 				return value2.Length == 0 ? "" : value1 + " == " + value2;
-			else if (operation == "not equal to")
+			else if (operation == Messages.not_equal_to)
 				return value2.Length == 0 ? "" : value1 + " != " + value2;
-			else if (operation == "contains")
+			else if (operation == Messages.contains)
 				return value2.Length == 0 ? "" : value1 + ".Contains " + value2;
-			else if (operation == "does not contain")
+			else if (operation == Messages.does_not_contain)
 				return value2.Length == 0 ? "" : "!" + value1 + ".Contains " + value2;
-			else if (operation == "starts with")
+			else if (operation == Messages.starts_with)
 				return value2.Length == 0 ? "" : value1 + ".StartsWith " + value2;
-			else if (operation == "ends with")
+			else if (operation == Messages.ends_with)
 				return value2.Length == 0 ? "" : value1 + ".EndsWith " + value2;
-			else if (operation == "is empty")
+			else if (operation == Messages.is_empty)
 				return value1 + " == \"\"";
-			else if (operation == "is not empty")
+			else if (operation == Messages.is_not_empty)
 				return value1 + " != \"\"";
-			else if (operation == "is null")
+			else if (operation == Messages.is_null)
 				return value1 + " == null";
-			else if (operation == "is not null")
+			else if (operation == Messages.is_not_null)
 				return value1 + " != null";
 
 			return "";
@@ -409,19 +415,19 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		private string GetBoolCondition(string value1, string operation)
 		{
-			if (operation == "is true")
+			if (operation == Messages.is_true)
 			{
 				return value1 + " == true";
 			}
-			else if (operation == "is false")
+			else if (operation == Messages.is_false)
 			{
 				return value1 + " == false";
 			}
-			else if (operation == "is null")
+			else if (operation == Messages.is_null)
 			{
 				return value1 + " == null";
 			}
-			else if (operation == "is not null")
+			else if (operation == Messages.is_not_null)
 			{
 				return value1 + " != null";
 			}
@@ -459,8 +465,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 			}
 			if (applyFilters)
 			{
-				ApplyFilters();
-			}
+				ApplyFilters();				
+			}			
 		}
 
 		private void WhereColumnFilterPanel_Load(object sender, EventArgs e)
@@ -468,6 +474,28 @@ namespace Wisej.Web.Ext.ColumnFilter
 			CloneControls();
 
 			// Operators
+			cmbOperator.Items.Clear();
+
+			cmbOperator.Items.Add(Messages.equal_to);
+			cmbOperator.Items.Add(Messages.not_equal_to);
+			cmbOperator.Items.Add(Messages.contains);
+			cmbOperator.Items.Add(Messages.does_not_contain);
+			cmbOperator.Items.Add(Messages.starts_with);
+			cmbOperator.Items.Add(Messages.ends_with);
+			cmbOperator.Items.Add(Messages.is_empty);
+			cmbOperator.Items.Add(Messages.is_not_empty);
+			cmbOperator.Items.Add(Messages.is_null);
+			cmbOperator.Items.Add(Messages.is_not_null);
+			cmbOperator.Items.Add("=");
+			cmbOperator.Items.Add("!=");
+			cmbOperator.Items.Add("<");
+			cmbOperator.Items.Add(">");
+			cmbOperator.Items.Add("<=");
+			cmbOperator.Items.Add(">=");
+			cmbOperator.Items.Add(Messages.is_true);
+			cmbOperator.Items.Add(Messages.is_false);
+			cmbOperator.Items.Add(Messages.is_null);
+			cmbOperator.Items.Add(Messages.is_not_null);
 
 			// store complete list of operators for later reference.
 			var lstItems = cmbOperator.Items.Cast<Object>().Select(item => item.ToString()).ToList();

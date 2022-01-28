@@ -280,7 +280,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		private void Column_Disposed(object sender, EventArgs e)
 		{
 			var column = (DataGridViewColumn)sender;
-			column.UserData.ColumnFilter?.SetShowFilter(column, false);
+			column.UserData.ColumnFilter?.SetShowFilter(column, false);			
 		}
 
 		// Creates the filter button to add to the target
@@ -323,30 +323,29 @@ namespace Wisej.Web.Ext.ColumnFilter
 				filterPanel.Close();
 			else
 				filterPanel.ShowPopup(column);
-		}
+		}		
+		#endregion
+
+		#region Events
 
 		/// <summary>
-		/// Applies all the filters on the specified <see cref="DataGridView"/>.
+		/// Event is fired whan all filters are applied.
 		/// </summary>
-		/// <param name="dataGrid">The <see cref="DataGridView"/> with the filters to apply.</param>
-		public void ApplyFilters(DataGridView dataGrid)
-		{
-			if (dataGrid == null)
-				throw new ArgumentNullException(nameof(dataGrid));
+		[Browsable(true)]
+		[Description("Fired when all filters are applied. Includes number of filtered rows.")]
+		public event EventHandler<RowsFilteredEventArg> RowsFiltered;
 
-			foreach (DataGridViewColumn column in dataGrid.Columns)
-			{
-				if (column.UserData.ColumnFilter == this)
-				{
-					var panel = column.UserData.FilterPanel as ColumnFilterPanel;
-					if (panel != null)
-					{
-						panel.ApplyFiltersInternal();
-						break;
-					}
-				}
-			}
+		/// <summary>
+		/// FiltersApplied event argument
+		/// </summary>
+		public class RowsFilteredEventArg : EventArgs
+		{
+			/// <summary>
+			/// Number of filtered rows.
+			/// </summary>
+			public int FilteredRowCount;
 		}
+
 		#endregion
 
 		#region IExtenderProvider
@@ -417,6 +416,21 @@ namespace Wisej.Web.Ext.ColumnFilter
 			// to the column headers.
 			return null;
 		}
+
+		/// <summary>
+		/// Fires FiltersApplied event.
+		/// </summary>
+		/// <param name="filteredRowCount"></param>
+		public virtual void OnFiltersApplied(int filteredRowCount)
+		{
+			if (RowsFiltered != null)
+			{
+				var args = new RowsFilteredEventArg { FilteredRowCount = filteredRowCount };
+				RowsFiltered(this, args);
+			}
+		}
+
+
 
 		#endregion
 	}

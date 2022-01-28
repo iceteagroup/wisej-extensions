@@ -70,27 +70,6 @@
 			// cmbOperator
 			// 
 			this.cmbOperator.DropDownStyle = Wisej.Web.ComboBoxStyle.DropDownList;
-			this.cmbOperator.Items.AddRange(new object[] {
-            resources.GetString("cmbOperator.Items"),
-            resources.GetString("cmbOperator.Items1"),
-            resources.GetString("cmbOperator.Items2"),
-            resources.GetString("cmbOperator.Items3"),
-            resources.GetString("cmbOperator.Items4"),
-            resources.GetString("cmbOperator.Items5"),
-            resources.GetString("cmbOperator.Items6"),
-            resources.GetString("cmbOperator.Items7"),
-            resources.GetString("cmbOperator.Items8"),
-            resources.GetString("cmbOperator.Items9"),
-            resources.GetString("cmbOperator.Items10"),
-            resources.GetString("cmbOperator.Items11"),
-            resources.GetString("cmbOperator.Items12"),
-            resources.GetString("cmbOperator.Items13"),
-            resources.GetString("cmbOperator.Items14"),
-            resources.GetString("cmbOperator.Items15"),
-            resources.GetString("cmbOperator.Items16"),
-            resources.GetString("cmbOperator.Items17"),
-            resources.GetString("cmbOperator.Items18"),
-            resources.GetString("cmbOperator.Items19")});
 			resources.ApplyResources(this.cmbOperator, "cmbOperator");
 			this.cmbOperator.Name = "cmbOperator";
 			// 

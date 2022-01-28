@@ -172,9 +172,15 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 				// apply all the filters.
 				base.ApplyFilters();
+
+				FilteredRowCount = dataGrid.Rows.GetRowCount(DataGridViewElementStates.Visible);
+				if (ColumnFilter != null)
+				{
+					ColumnFilter.OnFiltersApplied(FilteredRowCount);
+				}
 			}
 			finally
-			{
+			{				
 				Close();
 			}
 		}

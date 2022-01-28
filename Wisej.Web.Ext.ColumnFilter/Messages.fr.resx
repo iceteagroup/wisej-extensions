@@ -120,7 +120,43 @@
   <data name="AND" xml:space="preserve">
     <value>&lt;b&gt;ET&lt;/b&gt; | OU</value>
   </data>
+  <data name="contains" xml:space="preserve">
+    <value>contient</value>
+  </data>
+  <data name="does_not_contain" xml:space="preserve">
+    <value>ne contient pas</value>
+  </data>
+  <data name="ends_with" xml:space="preserve">
+    <value>se termine par</value>
+  </data>
+  <data name="equal_to" xml:space="preserve">
+    <value>egale à</value>
+  </data>
+  <data name="is_empty" xml:space="preserve">
+    <value>est vide</value>
+  </data>
+  <data name="is_false" xml:space="preserve">
+    <value>est faux</value>
+  </data>
+  <data name="is_not_empty" xml:space="preserve">
+    <value>n'est pas vide</value>
+  </data>
+  <data name="is_not_null" xml:space="preserve">
+    <value>n'est pas null</value>
+  </data>
+  <data name="is_null" xml:space="preserve">
+    <value>est null</value>
+  </data>
+  <data name="is_true" xml:space="preserve">
+    <value>est vrais</value>
+  </data>
+  <data name="not_equal_to" xml:space="preserve">
+    <value>n’est pas égal à</value>
+  </data>
   <data name="OR" xml:space="preserve">
     <value>ET | &lt;b&gt;OU&lt;/b&gt;</value>
+  </data>
+  <data name="starts_with" xml:space="preserve">
+    <value>commence par</value>
   </data>
 </root>
