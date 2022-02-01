@@ -75,12 +75,12 @@
 			// 
 			// txtValue
 			// 
-			this.flowLayoutPanel.SetFillWeight(this.txtValue, 2);
 			resources.ApplyResources(this.txtValue, "txtValue");
 			this.txtValue.Name = "txtValue";
 			// 
 			// labelLogicalOperator
 			// 
+			this.flowLayoutPanel.SetFillWeight(this.labelLogicalOperator, 2);
 			resources.ApplyResources(this.labelLogicalOperator, "labelLogicalOperator");
 			this.labelLogicalOperator.Name = "labelLogicalOperator";
 			// 
@@ -98,7 +98,6 @@
 			// dateTimePicker1
 			// 
 			resources.ApplyResources(this.dateTimePicker1, "dateTimePicker1");
-			this.flowLayoutPanel.SetFillWeight(this.dateTimePicker1, 1);
 			this.dateTimePicker1.Format = Wisej.Web.DateTimePickerFormat.Short;
 			this.dateTimePicker1.Name = "dateTimePicker1";
 			this.dateTimePicker1.Value = new System.DateTime(2018, 1, 10, 0, 6, 28, 837);

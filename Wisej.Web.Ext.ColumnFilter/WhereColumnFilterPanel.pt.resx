@@ -117,46 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AND" xml:space="preserve">
-    <value>&lt;b&gt;Y&lt;/b&gt; | O</value>
+  <data name="clear.Text" xml:space="preserve">
+    <value>Claro</value>
   </data>
-  <data name="OR" xml:space="preserve">
-    <value>Y | &lt;b&gt;O&lt;/b&gt;</value>
-  </data>
-  <data name="contains" xml:space="preserve">
-    <value>contiene</value>
-  </data>
-  <data name="does_not_contain" xml:space="preserve">
-    <value>no contiene</value>
-  </data>
-  <data name="ends_with" xml:space="preserve">
-    <value>termina con</value>
-  </data>
-  <data name="equal_to" xml:space="preserve">
-    <value>igual a</value>
-  </data>
-  <data name="is_empty" xml:space="preserve">
-    <value>está vacío</value>
-  </data>
-  <data name="is_false" xml:space="preserve">
-    <value>es falso</value>
-  </data>
-  <data name="is_not_empty" xml:space="preserve">
-    <value>no está vacío</value>
-  </data>
-  <data name="is_not_null" xml:space="preserve">
-    <value>no es null</value>
-  </data>
-  <data name="is_null" xml:space="preserve">
-    <value>es null</value>
-  </data>
-  <data name="is_true" xml:space="preserve">
-    <value>es verdadero</value>
-  </data>
-  <data name="not_equal_to" xml:space="preserve">
-    <value>no es igual a</value>
-  </data>
-  <data name="starts_with" xml:space="preserve">
-    <value>comienza con</value>
+  <data name="cbMatchCase.Text" xml:space="preserve">
+    <value>Caso de Correspondência</value>
   </data>
 </root>

@@ -21,9 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Linq.Dynamic;
-using System.Reflection;
-using System.Resources;
+using System.Linq.Dynamic.Core;
 
 namespace Wisej.Web.Ext.ColumnFilter
 {
@@ -104,7 +102,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 				string combinedWhere = dataGrid.UserData.columFiltercombinedWhere;
 				if (combinedWhere.Length > 0)
 				{
-					var indexes = dataGrid.Rows.Where(combinedWhere).Select(r => r.Index).ToArray();
+					var indexes = dataGrid.Rows.AsQueryable().Where(combinedWhere).Select(r => r.Index).ToArray();
 					foreach (var row in dataGrid.Rows)
 					{
 						if (Array.BinarySearch(indexes, row.Index) < 0)						
@@ -539,22 +537,25 @@ namespace Wisej.Web.Ext.ColumnFilter
 			int count = 4;
 			for (int i = 0; i < count; i++)
 			{
-				Label lbl;
-
-				this.flowLayoutPanel.Controls.Add(CloneCombo(this.cmbOperator));
+				ComboBox cmb;
+				cmb = CloneCombo(this.cmbOperator);
+				this.flowLayoutPanel.Controls.Add(CloneCombo(cmb));
+				this.flowLayoutPanel.SetFillWeight(cmb, this.flowLayoutPanel.GetFillWeight(this.cmbOperator));
 
 				TextBox txt;
 				txt = CloneTextBox(this.txtValue);
 				this.flowLayoutPanel.Controls.Add(txt);
-				this.flowLayoutPanel.SetFillWeight(txt, 2);
+				this.flowLayoutPanel.SetFillWeight(txt, this.flowLayoutPanel.GetFillWeight(this.txtValue));
 
 				DateTimePicker dtp;
 				dtp = CloneDateTimePicker(this.dateTimePicker1);
 				this.flowLayoutPanel.Controls.Add(dtp);
-				this.flowLayoutPanel.SetFillWeight(dtp, 1);
+				this.flowLayoutPanel.SetFillWeight(dtp, this.flowLayoutPanel.GetFillWeight(this.dateTimePicker1));
 
+				Label lbl;
 				lbl = CloneLabel(this.labelLogicalOperator);				
-				this.flowLayoutPanel.Controls.Add(lbl);				
+				this.flowLayoutPanel.Controls.Add(lbl);
+				this.flowLayoutPanel.SetFillWeight(lbl, this.flowLayoutPanel.GetFillWeight(this.labelLogicalOperator));
 			}
 		}
 
