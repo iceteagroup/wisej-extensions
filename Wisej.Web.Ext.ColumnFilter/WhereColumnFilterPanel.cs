@@ -536,26 +536,11 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			int count = 4;
 			for (int i = 0; i < count; i++)
-			{
-				ComboBox cmb;
-				cmb = CloneCombo(this.cmbOperator);
-				this.flowLayoutPanel.Controls.Add(CloneCombo(cmb));
-				this.flowLayoutPanel.SetFillWeight(cmb, this.flowLayoutPanel.GetFillWeight(this.cmbOperator));
-
-				TextBox txt;
-				txt = CloneTextBox(this.txtValue);
-				this.flowLayoutPanel.Controls.Add(txt);
-				this.flowLayoutPanel.SetFillWeight(txt, this.flowLayoutPanel.GetFillWeight(this.txtValue));
-
-				DateTimePicker dtp;
-				dtp = CloneDateTimePicker(this.dateTimePicker1);
-				this.flowLayoutPanel.Controls.Add(dtp);
-				this.flowLayoutPanel.SetFillWeight(dtp, this.flowLayoutPanel.GetFillWeight(this.dateTimePicker1));
-
-				Label lbl;
-				lbl = CloneLabel(this.labelLogicalOperator);				
-				this.flowLayoutPanel.Controls.Add(lbl);
-				this.flowLayoutPanel.SetFillWeight(lbl, this.flowLayoutPanel.GetFillWeight(this.labelLogicalOperator));
+			{				
+				this.flowLayoutPanel.Controls.Add(CloneCombo(this.cmbOperator));
+				this.flowLayoutPanel.Controls.Add(CloneTextBox(this.txtValue));
+				this.flowLayoutPanel.Controls.Add(CloneDateTimePicker(this.dateTimePicker1));
+				this.flowLayoutPanel.Controls.Add(CloneLabel(this.labelLogicalOperator));
 			}
 		}
 
@@ -565,6 +550,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			newCombo.Width = cmbOriginal.Width;
 			newCombo.DropDownStyle = cmbOriginal.DropDownStyle;
 			newCombo.Items.AddRange(cmbOriginal.Items.Cast<Object>().ToArray());
+			this.flowLayoutPanel.SetFillWeight(newCombo, this.flowLayoutPanel.GetFillWeight(cmbOriginal));
 			return newCombo;
 		}
 
@@ -572,6 +558,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			var newTextBox = (TextBox)Activator.CreateInstance(txtOriginal.GetType());
 			newTextBox.Width = txtOriginal.Width;
+			this.flowLayoutPanel.SetFillWeight(newTextBox, this.flowLayoutPanel.GetFillWeight(txtOriginal));
 			return newTextBox;
 		}
 
@@ -582,6 +569,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			newLabel.Text = lblOriginal.Text;
 			newLabel.TextAlign = lblOriginal.TextAlign;
 			newLabel.AllowHtml = lblOriginal.AllowHtml;
+			this.flowLayoutPanel.SetFillWeight(newLabel, this.flowLayoutPanel.GetFillWeight(lblOriginal));
 			return newLabel;
 		}
 
@@ -589,8 +577,9 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			var newdtp = (DateTimePicker)Activator.CreateInstance(dtpOriginal.GetType());
 			newdtp.AutoSize = dtpOriginal.AutoSize;
+			newdtp.Width = dtpOriginal.Width;
 			newdtp.Format = dtpOriginal.Format;
-			this.flowLayoutPanel.SetFillWeight(newdtp, 1);
+			this.flowLayoutPanel.SetFillWeight(newdtp, this.flowLayoutPanel.GetFillWeight(dtpOriginal));
 			return newdtp;
 		}
 

@@ -123,4 +123,7 @@
   <data name="selectAll.Text" xml:space="preserve">
     <value>Alle auswählen</value>
   </data>
+  <data name="items.Items" xml:space="preserve">
+    <value>Objekte</value>
+  </data>
 </root>

@@ -99,8 +99,7 @@
 			// 
 			resources.ApplyResources(this.dateTimePicker1, "dateTimePicker1");
 			this.dateTimePicker1.Format = Wisej.Web.DateTimePickerFormat.Short;
-			this.dateTimePicker1.Name = "dateTimePicker1";
-			this.dateTimePicker1.Value = new System.DateTime(2018, 1, 10, 0, 6, 28, 837);
+			this.dateTimePicker1.Name = "dateTimePicker1";			
 			// 
 			// WhereColumnFilterPanel
 			// 

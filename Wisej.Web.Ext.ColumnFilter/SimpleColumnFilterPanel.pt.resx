@@ -120,4 +120,10 @@
   <data name="clear.Text" xml:space="preserve">
     <value>Claro</value>
   </data>
+  <data name="items.Items" xml:space="preserve">
+    <value>Itens</value>
+  </data>
+  <data name="selectAll.Text" xml:space="preserve">
+    <value>Selecione todos</value>
+  </data>
 </root>

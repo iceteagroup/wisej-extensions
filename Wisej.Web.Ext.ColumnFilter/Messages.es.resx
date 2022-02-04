@@ -145,10 +145,10 @@
     <value>no está vacío</value>
   </data>
   <data name="is_not_null" xml:space="preserve">
-    <value>no es null</value>
+    <value>no es nulo</value>
   </data>
   <data name="is_null" xml:space="preserve">
-    <value>es null</value>
+    <value>es nulo</value>
   </data>
   <data name="is_true" xml:space="preserve">
     <value>es verdadero</value>

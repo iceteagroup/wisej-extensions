@@ -256,10 +256,10 @@
     <value>False</value>
   </data>
   <data name="dateTimePicker1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>258, 31</value>
+    <value>3, 59</value>
   </data>
   <data name="dateTimePicker1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 22</value>
+    <value>100, 22</value>
   </data>
   <data name="dateTimePicker1.TabIndex" type="System.Int32, mscorlib">
     <value>31</value>
@@ -277,10 +277,10 @@
     <value>3</value>
   </data>
   <data name="labelLogicalOperator.Location" type="System.Drawing.Point, System.Drawing">
-    <value>303, 31</value>
+    <value>109, 59</value>
   </data>
   <data name="labelLogicalOperator.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 15</value>
+    <value>236, 15</value>
   </data>
   <data name="labelLogicalOperator.TabIndex" type="System.Int32, mscorlib">
     <value>30</value>
