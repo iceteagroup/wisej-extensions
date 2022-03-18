@@ -17,6 +17,11 @@
 
   <ItemGroup>
     <None Remove="Platform\wisej.web.ext.TourPanel.js" />
+    <None Remove="Themes\TourPanel.mixin.theme" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Themes\TourPanel.mixin.theme" />
   </ItemGroup>
 
   <ItemGroup>
