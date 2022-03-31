@@ -118,5 +118,30 @@ namespace Wisej.Web.Ext.ChartJS3
 			}
 		}
 		private OptionsTitle _title;
+
+		/// <summary>
+		/// Options for the chart tooltip.
+		/// </summary>
+		[Description("Options for the chart tooltip.")]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public OptionsTooltips Tooltip
+		{
+			get
+            {
+				if (this._tooltip == null)
+					this._tooltip = new OptionsTooltips(this);
+
+				return this._tooltip;
+            }
+			set
+            {
+				if (value == null)
+					throw new ArgumentNullException("value");
+
+				value.Owner = this;
+				this._tooltip = value;
+            }
+		}
+		private OptionsTooltips _tooltip;
 	}
 }

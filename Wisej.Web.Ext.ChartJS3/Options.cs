@@ -230,31 +230,6 @@ namespace Wisej.Web.Ext.ChartJS3
 		#region Properties
 
 		/// <summary>
-		/// Options for the chart tooltips.
-		/// </summary>
-		[Description("Options for the chart tooltips.")]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public OptionsTooltips Tooltips
-		{
-			get
-			{
-				if (this._tooltips == null)
-					this._tooltips = new OptionsTooltips(this);
-
-				return this._tooltips;
-			}
-			set
-			{
-				if (value == null)
-					throw new ArgumentNullException("value");
-
-				value.Owner = this;
-				this._tooltips = value;
-			}
-		}
-		private OptionsTooltips _tooltips;
-
-		/// <summary>
 		/// Options for the chart scales.
 		/// </summary>
 		[Description("Options for the chart scales.")]
