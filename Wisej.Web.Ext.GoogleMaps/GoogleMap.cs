@@ -199,7 +199,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public new virtual dynamic Options
 		{
@@ -248,7 +248,9 @@ namespace Wisej.Web.Ext.GoogleMaps
 						base.Packages.Add(new Package()
 						{
 							Name = "GoogleMaps",
-							Source = GoogleMapsURL + "?key=" + this.ApiKey
+							Source = $"{GoogleMapsURL}?key={this.ApiKey}" 
+								+ (String.IsNullOrEmpty(Version) ? "" : $"&v={Version}")
+								+ (String.IsNullOrEmpty(Libraries) ? "" : $"&libraries={Libraries}")
 						});
 					}
 				}
@@ -283,6 +285,30 @@ namespace Wisej.Web.Ext.GoogleMaps
 
 			return script;
 		}
+
+		/// <summary>
+		/// The Google Maps version to load.
+		/// </summary>
+		/// <remarks>
+		/// See: https://developers.google.com/maps/documentation/javascript/versions.
+		/// </remarks>
+		public static string Version
+		{
+			get { return _version; }
+			set { _version = value; }
+		}
+		private static string _version;
+
+		/// <summary>
+		/// Gets or sets the Google Maps libraries to load.
+		/// See: https://developers.google.com/maps/documentation/javascript/libraries.
+		/// </summary>
+		public static string Libraries
+		{
+			get { return _libraries; }
+			set { _libraries = value; }
+		}
+		private static string _libraries;
 
 		#endregion
 

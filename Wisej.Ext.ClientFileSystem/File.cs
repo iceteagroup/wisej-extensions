@@ -24,12 +24,12 @@ using Wisej.Web;
 namespace Wisej.Ext.ClientFileSystem
 {
 	/// <summary>
-	/// Represents a File of a <see cref="T:Wisej.Ext.ClientFileSystem.ClientFileSystem"/>.
+	/// Represents a File of a <see cref="ClientFileSystem"/>.
 	/// </summary>
 	public class File : IDisposable
 	{
 		/// <summary>
-		/// Destroys an instance of <see cref="T:Wisej.Ext.ClientFileSystem.File"/>.
+		/// Destroys an instance of <see cref="File"/>.
 		/// </summary>
 		~File()
 		{
@@ -37,7 +37,7 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Creates a new instance of <see cref="T:Wisej.Ext.ClientFileSystem.File"/>.
+		/// Creates a new instance of <see cref="File"/>.
 		/// </summary>
 		/// <param name="config">Dynamic configuration object.</param>
 		public File(dynamic config)
@@ -161,8 +161,13 @@ namespace Wisej.Ext.ClientFileSystem
 		/// <returns>A byte array containing data read from <see cref="T:Wisej.Ext.ClientFileSystem.File"/></returns>
 		public async Task<byte[]> ReadBytesAsync()
 		{
-			int[] buffer = await CallAsync("readBytes");
-
+			int[] buffer = new int[0];
+			
+			try
+            {
+				buffer = await CallAsync("readBytes");
+			} catch { }
+			
 			var bytes = new byte[buffer.Length];
 			for (int i = 0, l = buffer.Length; i < l; i++)
 			{
@@ -212,16 +217,18 @@ namespace Wisej.Ext.ClientFileSystem
 		/// <summary>
 		/// Writes an array of <see cref="byte"/> starting from a position in the file.
 		/// </summary>
-		/// <param name="bytes">The <see cref="T:byte"/>[] to write</param>
+		/// <param name="bytes">The <see cref="byte"/> array to write</param>
+		/// <param name="type">Write mode from <see cref="WritableType"/>.</param>
+		/// <param name="keepExistingData">If false the temporary file starts out empty, otherwise the existing file is first copied to this temporary file.</param>
 		/// <param name="position">The cursor's position</param>
 		/// <param name="callback">Callback method that receives a <see cref="bool"/> object.</param>
-		public void WriteBytes(byte[] bytes, int position, Action<bool> callback)
+		public void WriteBytes(byte[] bytes, WritableType type, bool keepExistingData, int position, Action<bool> callback)
 		{
 			if (callback == null)
 				throw new ArgumentNullException(nameof(callback));
 
 			var context = Application.Current;
-			var task = WriteBytesAsync(bytes, position);
+			var task = WriteBytesAsync(bytes, position, type, keepExistingData);
 
 			task.ContinueWith((t) =>
 			{
@@ -238,12 +245,14 @@ namespace Wisej.Ext.ClientFileSystem
 		/// <summary>
 		/// Writes an array of <see cref="byte"/> starting from a position in the file asynchronously.
 		/// </summary>
-		/// <param name="bytes">The <see cref="T:byte"/>[] to write</param>
+		/// <param name="bytes">The <see cref="byte"/> array to write</param>
 		/// <param name="position">The cursor's position</param>
+		/// <param name="type">Write mode from <see cref="WritableType"/>.</param>
+		/// <param name="keepExistingData">If false the temporary file starts out empty, otherwise the existing file is first copied to this temporary file.</param>
 		/// <returns>An awaitable <see cref="Task"/> that represents the asynchronous operation.</returns>
-		public async Task WriteBytesAsync(byte[] bytes, int position)
+		public async Task WriteBytesAsync(byte[] bytes, int position, WritableType type, bool keepExistingData)
 		{
-			await CallAsync("writeBytes", bytes, position);
+			await CallAsync("writeBytes", bytes, position, keepExistingData, type);
 		}
 
 		/// <summary>
@@ -304,10 +313,10 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Queries the current state of the read permission of the <see cref="Wisej.Ext.ClientFileSystem.File"/>.
+		/// Queries the current state of the read permission of the <see cref="File"/>.
 		/// </summary>
-		/// <param name="mode">One of the <see cref="Wisej.Ext.ClientFileSystem.Permission" /> values.</param>
-		/// <param name="callback">Callback method that receives one of the <see cref="Wisej.Ext.ClientFileSystem.PermissionState"/> values.</param>
+		/// <param name="mode">One of the <see cref="Permission" /> values.</param>
+		/// <param name="callback">Callback method that receives one of the <see cref="PermissionState"/> values.</param>
 		public void QueryPermission(Permission mode, Action<PermissionState> callback)
 		{
 			if (callback == null)
@@ -329,10 +338,10 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Queries the current state of the read permission of the <see cref="Wisej.Ext.ClientFileSystem.File"/> asynchronously.
+		/// Queries the current state of the read permission of the <see cref="File"/> asynchronously.
 		/// </summary>
-		/// <param name="mode">One of the <see cref="Wisej.Ext.ClientFileSystem.Permission" /> values.</param>
-		/// <returns>One of the <see cref="Wisej.Ext.ClientFileSystem.PermissionState" /> values.</returns>
+		/// <param name="mode">One of the <see cref="Permission" /> values.</param>
+		/// <returns>One of the <see cref="PermissionState" /> values.</returns>
 		public async Task<PermissionState> QueryPermissionAsync(Permission mode)
 		{
 			var result = await CallAsync("queryPermission", mode.ToString().ToLower());
@@ -352,10 +361,10 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Requests read or readwrite permissions for the <see cref="Wisej.Ext.ClientFileSystem.File"/>.
+		/// Requests read or read-write permissions for the <see cref="File"/>.
 		/// </summary>
 		/// <param name="mode">One of the <see cref="Wisej.Ext.ClientFileSystem.Permission" /> values.</param>
-		/// <param name="callback">Callback method that receives one of the <see cref="Wisej.Ext.ClientFileSystem.PermissionState"/> values.</param>
+		/// <param name="callback">Callback method that receives one of the <see cref="PermissionState"/> values.</param>
 		public void RequestPermission(Permission mode, Action<PermissionState> callback)
 		{
 			if (callback == null)
@@ -377,7 +386,7 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Requests read or readwrite permissions for the <see cref="Wisej.Ext.ClientFileSystem.File"/> asynchronously.
+		/// Requests read or read-write permissions for the <see cref="File"/> asynchronously.
 		/// </summary>
 		/// <param name="mode">One of the <see cref="Wisej.Ext.ClientFileSystem.Permission" /> values.</param>
 		/// <returns>One of the <see cref="Wisej.Ext.ClientFileSystem.PermissionState" /> values.</returns>
@@ -413,7 +422,7 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Dispose the <see cref="Wisej.Ext.ClientFileSystem.Directory"/> object.
+		/// Dispose the <see cref="Directory"/> object.
 		/// </summary>
 		public void Dispose()
 		{

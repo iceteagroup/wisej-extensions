@@ -40,6 +40,16 @@ namespace Wisej.Web.Ext.MobileIntegration
 		/// <summary>
 		/// Biometric face recognition.
 		/// </summary>
-		FaceID
+		FaceID,
+
+		/// <summary>
+		/// The device is protected by a passcode and not enrolled in any form of biometric authentication.
+		/// </summary>
+		Passcode,
+
+		/// <summary>
+		/// The device is enrolled in a biometric form of authentication, but the type is unknown.
+		/// </summary>
+		UnknownBiometric,
 	}
 }

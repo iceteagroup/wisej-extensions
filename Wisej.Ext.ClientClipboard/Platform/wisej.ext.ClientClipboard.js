@@ -128,7 +128,7 @@ qx.Class.define("wisej.ext.ClientClipboard", {
 
 			var type = e.type;
 			var content = e.clipboardData.getData("text");
-			var target = wisej.utils.Widget.findWisejComponent(e.target) || Wisej.Platform.getFocusedComponent();
+			var target = wisej.utils.Widget.findWisejComponent(e.target, true) || Wisej.Platform.getFocusedComponent();
 
 			this.fireDataEvent("clipboardchange", {
 				type,

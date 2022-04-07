@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.MaterialDesign", "Wisej.Ext.MaterialDesign.csproj", "{13EFDB0B-493C-4DA2-8D44-0CE37CA7D610}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.MaterialDesign", "Wisej.Ext.MaterialDesign.csproj", "{824DF78B-32D1-41A5-A003-249FE3927904}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{13EFDB0B-493C-4DA2-8D44-0CE37CA7D610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13EFDB0B-493C-4DA2-8D44-0CE37CA7D610}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13EFDB0B-493C-4DA2-8D44-0CE37CA7D610}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13EFDB0B-493C-4DA2-8D44-0CE37CA7D610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{824DF78B-32D1-41A5-A003-249FE3927904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{824DF78B-32D1-41A5-A003-249FE3927904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{824DF78B-32D1-41A5-A003-249FE3927904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{824DF78B-32D1-41A5-A003-249FE3927904}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33B1C223-F8FB-449D-B640-6587546462F8}
 	EndGlobalSection
 EndGlobal

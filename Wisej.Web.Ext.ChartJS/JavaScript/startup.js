@@ -289,13 +289,13 @@ this.__normalizeLineChartDataSetArrays = function (datasets) {
 
             var ds = datasets[i];
 
-            if (ds.pointStyle.length == 1)
+            if (ds.pointStyle && ds.pointStyle.length == 1)
                 ds.pointStyle = ds.pointStyle[0];
 
-            if (ds.pointRadius.length == 1)
+            if (ds.pointRadius && ds.pointRadius.length == 1)
                 ds.pointRadius = ds.pointRadius[0];
 
-            if (ds.pointHoverRadius.length == 1)
+            if (ds.pointHoverRadius && ds.pointHoverRadius.length == 1)
                 ds.pointHoverRadius = ds.pointHoverRadius[0];
 
             if (ds.steppedLine == 'false')

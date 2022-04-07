@@ -19,18 +19,35 @@
 
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using static Wisej.Web.Ext.MobileIntegration.DeviceResponse;
 
 namespace Wisej.Web.Ext.MobileIntegration
 {
 	public sealed partial class Device
 	{
+		#region Events
+
+		/// <summary>
+		/// Fired when the selected color of a ColorPicker window changes.
+		/// </summary>
+		public static event DeviceEventHandler SelectedColorChanged
+		{
+			add { Instance._selectedColorChanged += value; }
+			remove { Instance._selectedColorChanged -= value; }
+		}
+		private event DeviceEventHandler _selectedColorChanged;
+
+		#endregion
+
 		/// <summary>
 		/// Provides methods for displaying popups to the user.
 		/// </summary>
 		[ApiCategory("API")]
-		public class Popups
+		public partial class Popups
 		{
+			#region Methods
+
 			/// <summary>
 			/// Displays a native alert box with the specified configuration.
 			/// </summary>
@@ -72,7 +89,7 @@ namespace Wisej.Web.Ext.MobileIntegration
 			}
 
 			/// <summary>
-			/// Shows a picker with the specified configuration.
+			/// Shows a date picker with the specified configuration.
 			/// </summary>
 			/// <param name="mode">The picker style.</param>
 			/// <param name="minimumDateTime">The minimum date or time to show on the picker.</param>
@@ -83,9 +100,9 @@ namespace Wisej.Web.Ext.MobileIntegration
 			/// Occurs when the device cannot show the picker.
 			/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
 			/// </exception>
-			public static DateTime? ShowPicker(PickerModes mode, DateTime minimumDateTime, DateTime maximumDateTime, DateTime startDateTime)
+			public static DateTime? ShowDatePicker(PickerModes mode, DateTime minimumDateTime, DateTime maximumDateTime, DateTime startDateTime)
 			{
-				var result = PostModalMessage("picker.show", new
+				var result = PostModalMessage("picker.date", new
 				{
 					mode = (int)mode,
 					minimumDateTime,
@@ -97,6 +114,38 @@ namespace Wisej.Web.Ext.MobileIntegration
 
 				return Convert.ToDateTime(result.Value);
 			}
+
+			/// <summary>
+			/// Starts a ColorPicker activity that will fire the 
+			/// </summary>
+			/// <param name="selectedColor"></param>
+			/// <param name="supportsAlpha"></param>
+			public static void ShowColorPicker(Color selectedColor, bool supportsAlpha)
+			{
+				var result = PostModalMessage("picker.color", new
+				{
+					selectedColor = DeviceUtils.GetHtmlColor(selectedColor),
+					alpha = selectedColor.A,
+					supportsAlpha
+				});
+				if (result.Status != StatusCode.Success)
+					ThrowDeviceException(result);
+			}
+
+			/// <summary>
+			/// Shows the UIActivityViewController on iOS.
+			/// </summary>
+			public static void ShowActivityView(ActivityType activityType, string content)
+			{
+				PostMessage("picker.activity", new
+				{
+					activityType,
+					content
+				});
+			}
+
+			#endregion
+
 		}
 	}
 }

@@ -103,7 +103,7 @@ namespace Wisej.Ext.WebWorker
 		/// Returns or sets the JavaScript code to execute in the WebWorker process.
 		/// </summary>
 		[DefaultValue("")]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string JavaScript
 		{
@@ -125,7 +125,7 @@ namespace Wisej.Ext.WebWorker
 		/// Returns or sets the JavaScript file with the source code to execute in the WebWorker process.
 		/// </summary>
 		[DefaultValue("")]
-		[Editor("Wisej.Design.JsFileSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
+		[Editor("Wisej.Design.JsFileSourceEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string JavaScriptSource
 		{
@@ -231,8 +231,8 @@ namespace Wisej.Ext.WebWorker
 		/// <summary>
 		/// Process the HTTP request.
 		/// </summary>
-		/// <param name="context">The current <see cref="System.Web.HttpContext"/>.</param>
-		void IWisejHandler.ProcessRequest(System.Web.HttpContext context)
+		/// <param name="context">The current <see cref="HttpContext"/>.</param>
+		void IWisejHandler.ProcessRequest(HttpContext context)
 		{
 			string source = !String.IsNullOrEmpty(this.JavaScript)
 					? this.JavaScript

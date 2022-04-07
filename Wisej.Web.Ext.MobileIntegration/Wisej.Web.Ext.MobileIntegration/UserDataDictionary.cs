@@ -48,10 +48,17 @@ namespace Wisej.Web.Ext.MobileIntegration
 		/// <returns></returns>
 		public new Tvalue this[Tkey key]
 		{
-			get { return base[key]; }
-			set 
+			get 
 			{ 
-				base[key] = value; 
+				return this.ContainsKey(key) ? base[key] : default(Tvalue); 
+			}
+			set 
+			{
+				if (value != null)
+					base[key] = value;
+				else
+					base.Remove(key);
+
 				this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(key.ToString()));
 			}
 		}

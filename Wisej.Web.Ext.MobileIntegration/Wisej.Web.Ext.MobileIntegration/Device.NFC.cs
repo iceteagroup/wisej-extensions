@@ -34,6 +34,21 @@ namespace Wisej.Web.Ext.MobileIntegration
 			/// <summary>
 			/// Reads messages from NFC devices.
 			/// </summary>
+			/// <example>
+			/// <code>
+			/// try 
+			///	{
+			///		var json = Device.NFC.ReadNFC();
+			///		var data = JSON.Parse(json);
+			///
+			///		AlertBox.Show(data.records);
+			///	} 
+			///	catch (DeviceException ex) 
+			///	{
+			///		AlertBox.Show(ex.Reason);
+			///	}
+			/// </code>
+			/// </example>
 			/// <exception cref="DeviceException">
 			/// Occurs when the device is not able to read the data from the NFC-enabled device.
 			/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
@@ -51,6 +66,18 @@ namespace Wisej.Web.Ext.MobileIntegration
 			/// Writes the specified message to the NFC device.
 			/// </summary>
 			/// <param name="message">The message to write to the NFC device.</param>
+			/// <example>
+			/// <code>
+			/// try
+			///	{
+			///		var response = Device.NFC.WriteNFC(this.textBoxWritable.Text);
+			///	}
+			///	catch (DeviceException ex)
+			///	{
+			///		AlertBox.Show(ex.Reason);
+			///	}
+			/// </code>
+			/// </example>
 			/// <exception cref="DeviceException">
 			/// Occurs when the device is not able to write the data to the NFC-enabled device.
 			/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.

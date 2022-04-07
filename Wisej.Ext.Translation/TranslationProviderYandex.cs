@@ -74,7 +74,7 @@ namespace Wisej.Ext.Translation
 			string requestUrl = String.Format("{0}?key={1}&text={2}&lang={3}",
 				URL,
 				this.ClientSecret,
-				HttpUtility.UrlEncode(text),
+				WebUtility.UrlEncode(text),
 				(String.IsNullOrEmpty(from) ? string.Empty : from + "-") + to);
 
 			try

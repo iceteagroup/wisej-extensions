@@ -117,13 +117,14 @@ qx.Class.define("wisej.ext.FileSystemFileHandle", {
 		 * @param {String} base64 Represents the byte array encoded in base64.
 		 * @param {Integer} position The cursor's position.
 		 */
-		writeBytes: function (base64, position) {
+		writeBytes: function (base64, position, keepExistingData, type) {
 			var me = this;
 			return (async function () {
-				var writable = await me.handle.createWritable({ keepExistingData: true });
+				var writable = await me.handle.createWritable({ keepExistingData: keepExistingData });
 				await writable.write({
-					data: atob(base64),
+					type: type,
 					position: position,
+					data: Uint8Array.from(atob(base64), function (c) { return c.charCodeAt(0); }),
 				});
 				await writable.close();
 			})();
@@ -155,6 +156,26 @@ qx.Class.define("wisej.ext.FileSystemDirectoryHandle", {
 	extend: wisej.ext.FileSystemHandle,
 
 	members: {
+
+		/**
+		 * Returns the file within a FileSystemDirectoryHandle object.
+		 * @param {String} name Name of the file to return.
+		 * @param {Boolean?} create Optional flag to the create the file if it doesn't exist.
+		 */
+		getFile: function (name, create) {
+			var me = this;
+			return (async function () {
+				var file = await me.handle.getFileHandle(name, { create: create || false });
+				return {
+					size: file.size ?? 0,
+					type: file.type,
+					name: file.name,
+					lastModified: file.lastModifiedDate ?? new Date(),
+					hash: new wisej.ext.FileSystemFileHandle(handle, file).$$hash,
+				};
+			})();
+		},
+
 		/**
 		 * Returns the files within a FileSystemDirectoryHandle object.
 		 * @param {String} pattern Represents the MIME type and the file extension.
@@ -232,6 +253,17 @@ qx.Class.define("wisej.ext.FileSystemDirectoryHandle", {
 			pattern = pattern.replaceAll("\\*", ".*");
 			pattern = pattern.replaceAll("\\?", ".");
 			return new RegExp(pattern);
-		}
+		},
+
+		/**
+		 * Requests read or readwrite permissions for the file handle.
+		 * @param {String} mode Can be either "read" or "readwrite".
+		 */
+		requestPermission: function (mode) {
+			var me = this;
+			return (async function () {
+				return await me.handle.requestPermission({ mode });
+			})();
+		},
 	}
 });

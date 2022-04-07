@@ -77,6 +77,7 @@ this._onInitialized = function () {
 		}
 	}
 
+	this.fireEvent("loaded");
 	this.fireEvent("initialized");
 }
 

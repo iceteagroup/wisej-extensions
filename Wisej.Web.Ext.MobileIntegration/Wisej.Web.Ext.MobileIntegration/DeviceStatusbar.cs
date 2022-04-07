@@ -42,29 +42,21 @@ namespace Wisej.Web.Ext.MobileIntegration
 		#region Properties
 
 		/// <summary>
-		/// Returns the statusbar options.
-		/// </summary>
-		public dynamic Options
-		{
-			get { return this._options; }
-		}
-		private dynamic _options = new DynamicObject();
-
-		/// <summary>
 		/// Returns or sets whether the statusbar is visible on the device.
 		/// </summary>
 		public bool Visible
 		{
-			get { return this.Options.visible ?? true; }
+			get { return this._visible; }
 			set
 			{
-				if (this.Visible != value)
+				if (this._visible != value)
 				{
-					this.Options.visible = value;
+					this._visible = value;
 					Update();
 				}
 			}
 		}
+		private bool _visible = true;
 
 		/// <summary>
 		/// Returns or sets the background color of the statusbar.
@@ -77,7 +69,6 @@ namespace Wisej.Web.Ext.MobileIntegration
 				if (this.BackColor != value)
 				{
 					this._backColor = value;
-					this.Options.backgroundColor = DeviceUtils.GetHtmlColor(value);
 					Update();
 				}
 			}
@@ -89,16 +80,17 @@ namespace Wisej.Web.Ext.MobileIntegration
 		/// </summary>
 		public StatusBarForeColor ForeColor
 		{
-			get { return this.Options.foregroundColor ?? StatusBarForeColor.Black; }
+			get { return this._foreColor; }
 			set
 			{
-				if (this.ForeColor != value)
+				if (this._foreColor != value)
 				{
-					this.Options.foregroundColor = value;
+					this._foreColor = value;
 					Update();
 				}
 			}
 		}
+		private StatusBarForeColor _foreColor;
 
 		#endregion
 
@@ -134,16 +126,13 @@ namespace Wisej.Web.Ext.MobileIntegration
 		/// </summary>
 		internal void Update(bool forceRefresh=false)
 		{
-			var options = this._lastOptions;
-			if (!forceRefresh)
+			Device.PostMessage("statusbar.options", new
 			{
-				options = ((DynamicObject)this._options).Diff(this._lastOptions);
-				this._lastOptions = ((DynamicObject)this._options).Clone();
-			}
-			
-			Device.PostMessage("statusbar.options", options);
+				backgroundColor = DeviceUtils.GetHtmlColor(this.BackColor),
+				foregroundColor = this.ForeColor,
+				visible = this.Visible
+			});
 		}
-		private dynamic _lastOptions = null;
 
 		#endregion
 

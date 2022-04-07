@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.ElegantIcons", "Wisej.Ext.ElegantIcons.csproj", "{617179EE-51D7-4878-AED8-A81CC4071D50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.ElegantIcons", "Wisej.Ext.ElegantIcons.csproj", "{74224416-37E8-4CD3-B287-69E346058B81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{617179EE-51D7-4878-AED8-A81CC4071D50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{617179EE-51D7-4878-AED8-A81CC4071D50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{617179EE-51D7-4878-AED8-A81CC4071D50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{617179EE-51D7-4878-AED8-A81CC4071D50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74224416-37E8-4CD3-B287-69E346058B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74224416-37E8-4CD3-B287-69E346058B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74224416-37E8-4CD3-B287-69E346058B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74224416-37E8-4CD3-B287-69E346058B81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {616BA8AD-68C3-4B2E-9B9B-C1859836215C}
 	EndGlobalSection
 EndGlobal

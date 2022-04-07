@@ -46,10 +46,11 @@ namespace Wisej.Web.Ext.JustGage
 		public event EventHandler ValueChanged;
 
 		/// <summary>
-		/// Fired when the value of the <see cref="P:Wisej.Web.Ext.JustGage.JustGage.AutoSize" /> property changes.
+		/// This event is not relevant for this class.
 		/// </summary>
-		[Browsable(true)]
-		[EditorBrowsable(EditorBrowsableState.Always)]
+		/// <exclude/>
+		[Browsable(false)]
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public new event EventHandler AutoSizeChanged
 		{
 			add { base.AutoSizeChanged += value; }
@@ -57,8 +58,9 @@ namespace Wisej.Web.Ext.JustGage
 		}
 
 		/// <summary>
-		/// Fired when the <see cref="P:Wisej.Web.Ext.JustGage.JustGage.BackgroundImage" /> property changes.
+		/// This event is not relevant for this class.
 		/// </summary>
+		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public new event EventHandler BackgroundImageChanged
@@ -68,8 +70,9 @@ namespace Wisej.Web.Ext.JustGage
 		}
 
 		/// <summary>
-		/// Fired when the <see cref="P:Wisej.Web.Ext.JustGage.JustGage.BackgroundImageLayout" /> property changes.
+		/// This event is not relevant for this class.
 		/// </summary>
+		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public new event EventHandler BackgroundImageLayoutChanged
@@ -79,8 +82,9 @@ namespace Wisej.Web.Ext.JustGage
 		}
 
 		/// <summary>
-		/// Fired when the <see cref="P:Wisej.Web.Ext.JustGage.JustGage.Font" /> property changes.
+		/// This event is not relevant for this class.
 		/// </summary>
+		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public new event EventHandler FontChanged
@@ -90,8 +94,9 @@ namespace Wisej.Web.Ext.JustGage
 		}
 
 		/// <summary>
-		/// Fired when the <see cref="P:Wisej.Web.Ext.JustGage.JustGage.ForeColor" /> property changes.
+		/// This event is not relevant for this class.
 		/// </summary>
+		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public new event EventHandler ForeColorChanged
@@ -101,8 +106,9 @@ namespace Wisej.Web.Ext.JustGage
 		}
 
 		/// <summary>
-		/// Fired when the <see cref="P:Wisej.Web.Ext.JustGage.JustGage.ImeMode" /> property changes.
+		/// This event is not relevant for this class.
 		/// </summary>
+		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public new event EventHandler ImeModeChanged
@@ -112,8 +118,9 @@ namespace Wisej.Web.Ext.JustGage
 		}
 
 		/// <summary>
-		/// Fired when the value of the <see cref="P:Wisej.Web.Ext.JustGage.JustGage.Padding" /> property changes.
+		/// This event is not relevant for this class.
 		/// </summary>
+		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public new event EventHandler PaddingChanged
@@ -123,8 +130,9 @@ namespace Wisej.Web.Ext.JustGage
 		}
 
 		/// <summary>
-		/// Fired when the <see cref="P:Wisej.Web.Ext.JustGage.JustGage.Text" /> property changes.
+		/// This event is not relevant for this class.
 		/// </summary>
+		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public new event EventHandler TextChanged

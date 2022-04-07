@@ -194,7 +194,13 @@ qx.Class.define("wisej.web.RibbonBar", {
 		 */
 		getDesignMetrics: function () {
 
+			this.resetHeight();
+			this.invalidateLayoutCache();
+			var size = this.getSizeHint();
+
 			return {
+				width: size.width,
+				height: size.height,
 				tabRects: this.__getTabRects(),
 				itemMetrics: this.__getItemMetrics()
 			};

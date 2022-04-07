@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.Geolocation", "Wisej.Ext.Geolocation.csproj", "{F8AAE3FC-E5BE-4DEE-BF04-CA3E0CD5E842}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.Geolocation", "Wisej.Ext.Geolocation.csproj", "{B6F7E374-9A83-4D1B-8ECB-45F1D9301C4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F8AAE3FC-E5BE-4DEE-BF04-CA3E0CD5E842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8AAE3FC-E5BE-4DEE-BF04-CA3E0CD5E842}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8AAE3FC-E5BE-4DEE-BF04-CA3E0CD5E842}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8AAE3FC-E5BE-4DEE-BF04-CA3E0CD5E842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6F7E374-9A83-4D1B-8ECB-45F1D9301C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6F7E374-9A83-4D1B-8ECB-45F1D9301C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6F7E374-9A83-4D1B-8ECB-45F1D9301C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6F7E374-9A83-4D1B-8ECB-45F1D9301C4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {82D916CE-2FD7-4B6E-94CE-1501FBA46239}
 	EndGlobalSection
 EndGlobal

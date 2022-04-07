@@ -24,12 +24,12 @@ using Wisej.Web;
 namespace Wisej.Ext.ClientFileSystem
 {
 	/// <summary>
-	/// Represents a Directory of a <see cref="T:Wisej.Ext.ClientFileSystem.ClientFileSystem"/>.
+	/// Represents a Directory of a <see cref="ClientFileSystem"/>.
 	/// </summary>
 	public class Directory : IDisposable
 	{
 		/// <summary>
-		/// Destroys an instance of <see cref="T:Wisej.Ext.ClientFileSystem.Directory"/>.
+		/// Destroys an instance of <see cref="Directory"/>.
 		/// </summary>
 		~Directory()
 		{
@@ -37,7 +37,7 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Creates a new instance of <see cref="T:Wisej.Ext.ClientFileSystem.Directory"/>.
+		/// Creates a new instance of <see cref="Directory"/>.
 		/// </summary>
 		/// <param name="config">Dynamic configuration object.</param>
 		public Directory(dynamic config)
@@ -68,10 +68,10 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Gets the files within a <see cref="T:Wisej.Ext.ClientFileSystem.Directory"/> object.
+		/// Gets the files within a <see cref="Directory"/> object.
 		/// </summary>
 		/// <param name="pattern">Wild card pattern to match.</param>
-		/// <param name="callback">Callback method that receives an Array of <see cref="Wisej.Ext.ClientFileSystem.Directory"/> object.</param>
+		/// <param name="callback">Callback method that receives an Array of <see cref="Directory"/> object.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
 		public void GetFiles(string pattern, Action<File[]> callback)
 		{
@@ -120,10 +120,22 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Gets the Files within a <see cref="T:Wisej.Ext.ClientFileSystem.Directory"/> object asynchronously.
+		/// Returns or creates a file in the <see cref="Directory"/> asynchronously.
+		/// </summary>
+		/// <param name="name">Name of the file to open.</param>
+		/// <param name="create">Optional flag to create the specified file.</param>
+		/// <returns></returns>
+		public async Task<File> GetFileAsync(string name, bool create = false){
+
+			var result = await CallAsync("getFile", name, create);
+			return new File(result);
+		}
+
+		/// <summary>
+		/// Gets the Files within a <see cref="Directory"/> object asynchronously.
 		/// </summary>
 		/// <param name="pattern">Wild card pattern to match.</param>
-		/// <returns>An array of <see cref="T:Wisej.Ext.ClientFileSystem.File"/> containing the files in a <see cref="Wisej.Ext.ClientFileSystem.Directory"/>.</returns>
+		/// <returns>An array of <see cref="File"/> containing the files in a <see cref="Directory"/>.</returns>
 		public async Task<File[]> GetFilesAsync(string pattern)
 		{
 			var result = await CallAsync("getFiles", pattern);
@@ -138,10 +150,10 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Gets the Directories within a <see cref="T:Wisej.Ext.ClientFileSystem.Directory"/> object asynchronously.
+		/// Gets the Directories within a <see cref="Directory"/> object asynchronously.
 		/// </summary>
 		/// <param name="pattern"></param>
-		/// <returns>An array of <see cref="Wisej.Ext.ClientFileSystem.Directory"/> containing the directories in a <see cref="Wisej.Ext.ClientFileSystem.Directory"/>.</returns>
+		/// <returns>An array of <see cref="Directory"/> containing the directories in a <see cref="Directory"/>.</returns>
 		public async Task<Directory[]> GetDirectoriesAsync(string pattern)
 		{
 			var result = await CallAsync("getDirectories", pattern);
@@ -153,6 +165,29 @@ namespace Wisej.Ext.ClientFileSystem
 				array[i] = new Directory(config[i]);
 			}
 			return array;
+		}
+
+		/// <summary>
+		/// Requests read or read-write permissions for the <see cref="Directory"/> asynchronously.
+		/// </summary>
+		/// <param name="mode">One of the <see cref="Wisej.Ext.ClientFileSystem.Permission" /> values.</param>
+		/// <returns>One of the <see cref="Wisej.Ext.ClientFileSystem.PermissionState" /> values.</returns>
+		public async Task<PermissionState> RequestPermissionAsync(Permission mode)
+		{
+			var result = await CallAsync("requestPermission", mode.ToString().ToLower());
+
+			var state = (string)result;
+			switch (state)
+			{
+				case "granted":
+					return PermissionState.Granted;
+				case "denied":
+					return PermissionState.Denied;
+				case "prompt":
+					return PermissionState.Prompt;
+			}
+
+			throw new NotSupportedException($"State {state} is not supported.");
 		}
 
 		/// <summary>
@@ -207,7 +242,7 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Dispose the <see cref="Wisej.Ext.ClientFileSystem.Directory"/> object.
+		/// Dispose the <see cref="Directory"/> object.
 		/// </summary>
 		public void Dispose()
 		{

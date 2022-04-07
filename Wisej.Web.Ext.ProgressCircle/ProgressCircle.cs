@@ -170,16 +170,19 @@ namespace Wisej.Web.Ext.ProgressCircle
 		[Description("Sets or returns the style of the end caps for a line.")]
 		public new CanvasLineCap LineCap
 		{
-			get { return base.LineCap; }
+			get { return this._lineCap ?? base.LineCap; }
 			set
 			{
-				if (base.LineCap != value)
+				if (this._lineCap != value)
 				{
+					this._lineCap = value;
 					base.LineCap = value;
+					
 					Update();
 				}
 			}
 		}
+		private CanvasLineCap? _lineCap;
 
 		/// <summary>
 		/// Returns or sets the progress value between 0 and 100.
@@ -278,6 +281,7 @@ namespace Wisej.Web.Ext.ProgressCircle
 
 			// fill the perimeter line proportional to the value.
 			base.LineWidth = lineWidth;
+			base.LineCap = this.LineCap;
 			base.BeginPath();
 			base.Arc(centerX, centerY, radius - lineWidth / 2, 0, 360 * this.Value / 100);
 			base.Stroke();

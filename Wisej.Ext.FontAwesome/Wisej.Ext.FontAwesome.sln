@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.FontAwesome", "Wisej.Ext.FontAwesome.csproj", "{FE4F1C87-C718-4757-895E-8776308C4238}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.FontAwesome", "Wisej.Ext.FontAwesome.csproj", "{30A4C92A-50DA-4264-ADBF-1343CB0C6C6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FE4F1C87-C718-4757-895E-8776308C4238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE4F1C87-C718-4757-895E-8776308C4238}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE4F1C87-C718-4757-895E-8776308C4238}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE4F1C87-C718-4757-895E-8776308C4238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30A4C92A-50DA-4264-ADBF-1343CB0C6C6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30A4C92A-50DA-4264-ADBF-1343CB0C6C6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30A4C92A-50DA-4264-ADBF-1343CB0C6C6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30A4C92A-50DA-4264-ADBF-1343CB0C6C6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {606E8497-CD83-49A7-8CB9-7D8DB1BE0057}
 	EndGlobalSection
 EndGlobal

@@ -54,17 +54,19 @@ namespace Wisej.Web.Ext.RibbonBar
 				{
 					if (oldControl != null)
 					{
-						oldControl.Parent = null;
-						oldControl.Disposed -= control_Disposed;
 						oldControl.SetStyle(ControlStyles.Embedded, false);
+						oldControl.Parent = this.RibbonBar?.Parent;
+						oldControl.Disposed -= control_Disposed;
 
 						if (this.DesignMode)
 						{
 							if (!oldControl.IsDisposed && !oldControl.Disposing)
 							{
-								oldControl.Parent = this.RibbonBar?.Parent;
+								oldControl.Visible = true;
 								oldControl.BringToFront();
-								((IWisejComponent)oldControl).Updated -= control_Updated;
+								((IWisejComponent)oldControl).Updated -= Control_Updated;
+
+								Update();
 							}
 						}
 					}
@@ -77,16 +79,20 @@ namespace Wisej.Web.Ext.RibbonBar
 
 					if (newControl != null)
 					{
+						newControl.Parent = null;
 						newControl.SetStyle(ControlStyles.Embedded, true);
-
 						newControl.Parent = this.RibbonBar;
+
 						newControl.CreateControl();
+						newControl.AutoSize = false;
 						newControl.Disposed += control_Disposed;
 
 						if (this.DesignMode)
 						{
+							newControl.Visible = false;
+
 							// hook up to the IWisejComponent.Updated event to update the UI while designing.
-							((IWisejComponent)newControl).Updated += control_Updated;
+							((IWisejComponent)newControl).Updated += Control_Updated;
 						}
 					}
 
@@ -96,7 +102,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 		private Control _control;
 
-		private void control_Updated(object sender, EventArgs e)
+		private void Control_Updated(object sender, EventArgs e)
 		{
 			Update();
 		}

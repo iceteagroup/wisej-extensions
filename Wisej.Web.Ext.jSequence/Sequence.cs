@@ -75,7 +75,7 @@ namespace Wisej.Web.Ext.jSequence
 		/// </summary>
 		[DefaultValue("")]
 		[DesignerActionList]
-		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string UML
 		{

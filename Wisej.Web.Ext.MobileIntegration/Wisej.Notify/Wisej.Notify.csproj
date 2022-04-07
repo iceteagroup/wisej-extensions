@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +13,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="mkdir &quot;$(ProjectDir)..\..\bin\$(ProjectName)&quot; /p&#xD;&#xA;xcopy &quot;$(TargetDir)&quot; &quot;$(ProjectDir)..\..\bin\$(ProjectName)&quot; /y" />
+    <Exec Command="mkdir &quot;$(ProjectDir)..\..\bin\$(TargetFramework)\$(ProjectName)&quot;&#xD;&#xA;xcopy &quot;$(TargetDir)*.*&quot; &quot;$(ProjectDir)..\..\bin\$(TargetFramework)\$(ProjectName)&quot; /s /y" />
   </Target>
 
 </Project>

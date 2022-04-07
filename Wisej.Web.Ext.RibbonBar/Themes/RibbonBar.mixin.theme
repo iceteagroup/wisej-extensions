@@ -40,8 +40,7 @@
         "default": {
           "properties": {
             "backgroundColor": "window",
-            "textColor": "ribbonBarText",
-            "height": 145
+            "textColor": "ribbonBarText"
           }
         }
       },

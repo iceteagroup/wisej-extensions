@@ -140,7 +140,7 @@ namespace Wisej.Web.Ext.WebCharts
 		/// Process the http request.
 		/// </summary>
 		/// <param name="context">The current <see cref="T:System.Web.HttpContext"/>.</param>
-		void IWisejHandler.ProcessRequest(System.Web.HttpContext context)
+		void IWisejHandler.ProcessRequest(HttpContext context)
 		{
 			chart.Width = this.Width;
 			chart.Height = this.Height;

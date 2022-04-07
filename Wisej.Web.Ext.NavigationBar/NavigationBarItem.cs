@@ -29,7 +29,7 @@ namespace Wisej.Web.Ext.NavigationBar
 	/// </summary>
 	[ToolboxItem(false)]
 	[DesignTimeVisible(false)]
-	[Designer("Wisej.Design.ComponentDesigner, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+	[Designer("Wisej.Design.ComponentDesigner, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
 	[ApiCategory("NavigationBar")]
 	public partial class NavigationBarItem : Web.FlexLayoutPanel
 	{
@@ -213,8 +213,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns or sets the icon of the <see cref="NavigationBarItem"/>.
 		/// </summary>
 		[DefaultValue(null)]
-		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string Icon
 		{
@@ -458,8 +458,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns or sets the shortcut icon.
 		/// </summary>
 		[DefaultValue("spinner-plus")]
-		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string ShortcutIcon
 		{

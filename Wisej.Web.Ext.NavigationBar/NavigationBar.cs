@@ -38,7 +38,7 @@ namespace Wisej.Web.Ext.NavigationBar
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(NavigationBar))]
 	[Description("Responsive vertical navigation bar.")]
-	[Designer("Wisej.Design.ControlDesigner, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+	[Designer("Wisej.Design.ControlDesigner, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
 	[ApiCategory("NavigationBar")]
 	public partial class NavigationBar : Wisej.Web.FlexLayoutPanel, IWisejDesignTarget
 	{
@@ -114,7 +114,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Fires the <see cref="CompactViewChanged"/> event.
+		/// Fires the <see cref="ItemClick"/> event.
 		/// </summary>
 		/// <param name="e">A <see cref="NavigationBarItemClickEventArgs"/> containing the event data.</param>
 		protected virtual void OnItemClick(NavigationBarItemClickEventArgs e)
@@ -275,8 +275,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		[DefaultValue("")]
 		[DesignerActionList]
-		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string Logo
 		{
@@ -287,8 +287,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the user avatar to display in the <see cref="NavigationBar"/>.
 		/// </summary>
-		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string UserAvatar
 		{
@@ -733,6 +733,16 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		#endregion
 
+#if NETCOREAPP
+
+		bool IWisejDesignTarget.DesignerWndProc(ref System.Windows.Forms.Message m)
+        {
+			return false;
+        }
+
+
+#elif NET48
+
 		#region IWisejDesignTarget
 
 		bool IWisejDesignTarget.DesignerWndProc(ref System.Windows.Forms.Message m)
@@ -822,5 +832,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		#endregion
+
+#endif
+
 	}
 }

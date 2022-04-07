@@ -73,7 +73,8 @@ qx.Class.define("wisej.web.ribbonBar.ItemControl", {
 
 			if (old) {
 				this.control._remove(old);
-				this.resetPadding();
+				this.removeState("control");
+
 				old.removeListener("resize", this._onControlResize, this);
 			}
 
@@ -82,7 +83,7 @@ qx.Class.define("wisej.web.ribbonBar.ItemControl", {
 				var widget = value;
 				widget.resetUserBounds();
 				this.control._add(widget);
-				this.setPadding(0);
+				this.addState("control");
 
 				widget.addListener("resize", this._onControlResize, this);
 			}

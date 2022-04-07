@@ -22,6 +22,7 @@ using System.ComponentModel;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
+using static Wisej.Web.Ext.MobileIntegration.Device;
 
 namespace Wisej.Web.Ext.MobileIntegration
 {
@@ -60,14 +61,21 @@ namespace Wisej.Web.Ext.MobileIntegration
 				this.ID = info.id ?? "";
 				this.Name = info.name ?? "";
 				this.Model = info.model ?? "";
+				this.Camera = info.camera ?? false;
+				this.Photos = info.photos ?? false;
 				this.VendorID = info.vendorId ?? "";
+				this.UserData = info.userData ?? "";
+				this.Location = info.location ?? false;
+				this.AppVersion = info.appVersion ?? "";
 				this.SystemName = info.systemName ?? "";
 				this.DeviceToken = info.deviceToken ?? "";
+				this.Microphone = info.microphone ?? false;
 				this.SystemVersion = info.systemVersion ?? "";
+				this.Notifications = info.notifications ?? false;
 				this.StyleMode = (Device.StyleModes)(info.styleMode ?? Device.StyleModes.Unspecified);
 				this.ScreenSize = new Size(info.screenWidth ?? 0, info.screenHeight ?? 0);
 				this.AuthenticationType = (DeviceAuthenticationType)(info.authenticationType ?? DeviceAuthenticationType.None);
-
+				
 				UpdateOrientation(info.orientation);
 			}
 		}
@@ -118,6 +126,29 @@ namespace Wisej.Web.Ext.MobileIntegration
 		internal void UpdateStyleMode(int mode)
 		{
 			this.StyleMode = (Device.StyleModes)mode;
+		}
+
+		/// <summary>
+		/// Updates the given permission status.
+		/// </summary>
+		/// <returns>True if the permission status was updated.</returns>
+		/// <param name="args">The updated permission data.</param>
+		internal bool UpdatePermission(DeviceEventArgs args)
+		{
+			var result = args.Data.result;
+			var permission = (PermissionType)args.Data.type;
+			var property = this.GetType().GetProperty(Enum.GetName(typeof(PermissionType), permission));
+
+			// convert the permission string to the PermissionType enum.
+			args.Data.type = permission;
+
+			// check if the value was updated.
+			var value = (bool)property.GetValue(this);
+
+			if (value != result)
+				property.SetValue(this, result);
+
+			return value != result;
 		}
 
 		/// <summary>
@@ -238,6 +269,15 @@ namespace Wisej.Web.Ext.MobileIntegration
 		}
 
 		/// <summary>
+		/// A string value that contains any data passed on startup.
+		/// </summary>
+		public string UserData
+		{
+			get;
+			internal set;
+		}
+
+		/// <summary>
 		/// A value indicating which mode the device is in (Dark mode, light mode, etc.).
 		/// </summary>
 		public Device.StyleModes StyleMode
@@ -255,5 +295,65 @@ namespace Wisej.Web.Ext.MobileIntegration
 			internal set { this._size = value; }
 		}
 		private Size _size;
+
+		/// <summary>
+		/// A value indicating whether the application has permission to use the camera.
+		/// </summary>
+		public bool Camera
+		{
+			get { return this._camera; }
+			internal set { this._camera = value; }
+		}
+		private bool _camera;
+
+		/// <summary>
+		/// A value indicating whether the application has permission to use photos.
+		/// </summary>
+		public bool Photos
+		{
+			get { return this._photos; }
+			internal set { this._photos = value; }
+		}
+		private bool _photos;
+
+		/// <summary>
+		/// A value indicating whether the application has permission to use location services.
+		/// </summary>
+		public bool Location
+		{
+			get { return this._location; }
+			internal set { this._location = value; }
+		}
+		private bool _location;
+
+		/// <summary>
+		/// A value indicating whether the application has permission to use the microphone.
+		/// </summary>
+		public bool Microphone
+		{
+			get { return this._microphone; }
+			internal set { this._microphone = value; }
+		}
+		private bool _microphone;
+
+		/// <summary>
+		/// A value indicating whether the application has permission to push notifications.
+		/// </summary>
+		public bool Notifications
+		{
+			get { return this._notifications; }
+			internal set { this._notifications = value; }
+		}
+		private bool _notifications;
+
+		/// <summary>
+		/// The app version of the connected device.
+		/// </summary>
+		public string AppVersion
+		{
+			get { return this._appVersion; }
+			set { this._appVersion = value; }
+		}
+		private string _appVersion;
 	}
 }

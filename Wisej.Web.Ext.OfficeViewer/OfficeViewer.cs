@@ -221,8 +221,8 @@ namespace Wisej.Web.Ext.OfficeViewer
 		/// <summary>
 		/// Process the HTTP request.
 		/// </summary>
-		/// <param name="context">The current <see cref="System.Web.HttpContext"/>.</param>
-		void IWisejHandler.ProcessRequest(System.Web.HttpContext context)
+		/// <param name="context">The current <see cref="HttpContext"/>.</param>
+		void IWisejHandler.ProcessRequest(HttpContext context)
 		{
 			var args = new HandledEventArgs(false);
 			OnFileRequested(args);

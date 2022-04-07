@@ -293,9 +293,7 @@ namespace Wisej.Web.Ext.CustomWallpaper
 						var mediaType = GetImageMediaType(image);
 
 						response.ContentType = mediaType;
-						response.Cache.SetSlidingExpiration(true);
-						response.Cache.SetMaxAge(TimeSpan.FromDays(1));
-						response.Cache.SetCacheability(HttpCacheability.Private);
+						response.AppendHeader("Cache-Control", "private, max-age=86400");
 
 						image.Save(response.OutputStream, format);
 					}

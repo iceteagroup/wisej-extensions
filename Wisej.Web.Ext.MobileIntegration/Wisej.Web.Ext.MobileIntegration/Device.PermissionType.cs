@@ -24,7 +24,7 @@ namespace Wisej.Web.Ext.MobileIntegration
 	public partial class Device
 	{
 		/// <summary>
-		/// Available device permissions.
+		/// Available device permission types.
 		/// </summary>
 		[ApiCategory("API")]
 		public enum PermissionType 

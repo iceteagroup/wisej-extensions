@@ -48,8 +48,11 @@ namespace Wisej.Web.Ext.RibbonBar
 	[ToolboxBitmap(typeof(RibbonBar))]
 	[Description("The RibbonBar organizes the features of an application into a series of tabs.")]
 	[ApiCategory("RibbonBar")]
-	public class RibbonBar : Control, IWisejControl, IWisejDesignTarget
+	public class RibbonBar : Control, IWisejControl, IWisejDesignTarget2
 	{
+		// autosize height
+		private int requestedHeight;
+
 		#region Constructor
 
 		/// <summary>
@@ -66,18 +69,6 @@ namespace Wisej.Web.Ext.RibbonBar
 		#region Events
 
 		#region Not Relevant
-
-		/// <summary>
-		/// This event is not relevant for this class.
-		/// </summary>
-		/// <exclude/>
-		[Browsable(false)]
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		public new event EventHandler AutoSizeChanged
-		{
-			add { base.AutoSizeChanged += value; }
-			remove { base.AutoSizeChanged -= value; }
-		}
 
 		/// <summary>
 		/// This event is not relevant for this class.
@@ -539,6 +530,26 @@ namespace Wisej.Web.Ext.RibbonBar
 
 		#endregion
 
+
+		/// <summary>
+		/// Returns or sets a value that indicates whether the control resizes based on its contents.
+		/// </summary>
+		/// <returns>true if the control automatically resizes based on its contents; otherwise, false. The default is true.</returns>
+		[Browsable(true)]
+		[EditorBrowsable(EditorBrowsableState.Always)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public override bool AutoSize
+		{
+			get
+			{
+				return base.AutoSize;
+			}
+			set
+			{
+				base.AutoSize = value;
+			}
+		}
+
 		/// <summary>
 		/// Returns or sets whether clicking RibbonBar items causes validation to be performed on
 		/// the active control.
@@ -798,6 +809,49 @@ namespace Wisej.Web.Ext.RibbonBar
 			base.Dispose(disposing);
 		}
 
+		/// <summary>
+		/// Retrieves the size of a rectangular area into which a control can be fitted.
+		///</summary>
+		/// <param name="proposedSize">The custom size specified for the control.</param>
+		/// <returns>The <see cref="System.Drawing.Size" /> representing the preferred size of the control.</returns>
+		public override Size GetPreferredSize(Size proposedSize)
+		{
+			var size = base.GetPreferredSize(proposedSize);
+
+			if (this.requestedHeight > 0 && !IsHeightDynamic())
+			{
+				size.Height = this.requestedHeight;
+
+				var minSize = this.MinimumSize;
+				var maxSize = this.MaximumSize;
+
+				if (maxSize != Size.Empty)
+				{
+					size.Height = maxSize.Height > 0 ? Math.Min(maxSize.Height, size.Height) : size.Height;
+				}
+
+				if (minSize != Size.Empty)
+				{
+					size.Height = Math.Max(minSize.Height, size.Height);
+				}
+			}
+
+			return size;
+		}
+
+		private bool IsHeightDynamic()
+		{
+			switch (this.Dock)
+			{
+				case DockStyle.Left:
+				case DockStyle.Right:
+				case DockStyle.Fill:
+					return true;
+			}
+
+			return (this.Anchor.HasFlag(AnchorStyles.Top | AnchorStyles.Bottom));
+		}
+
 		#endregion
 
 		#region Wisej Implementation
@@ -852,6 +906,25 @@ namespace Wisej.Web.Ext.RibbonBar
 				this.Size = new Size(
 					Convert.ToInt32(size.width),
 					Convert.ToInt32(size.height));
+			}
+		}
+
+		// Updates the height of the RibbonBar when
+		// AutoSize is true and the client changes the size.
+		private void UpdateMetrics(dynamic metrics)
+		{
+			if (metrics != null && this.AutoSize)
+			{
+				if (IsHeightDynamic())
+					return;
+
+				int height = Convert.ToInt32(metrics.height ?? 0);
+				if (height > 0 && this.Height != height)
+				{
+					this.requestedHeight = height;
+					this.Height = height;
+					Refresh();
+				}
 			}
 		}
 
@@ -925,7 +998,21 @@ namespace Wisej.Web.Ext.RibbonBar
 
 		#endregion
 
-		#region IWisejDesignTarget
+		#region IWisejDesignTarget2
+
+		bool IWisejDesignTarget2.ShouldDrawBorder()
+		{
+			return this.Pages.Count == 0;
+		}
+
+#if NETCOREAPP
+
+		bool IWisejDesignTarget.DesignerWndProc(ref System.Windows.Forms.Message m)
+        {
+			return false;
+        }
+
+#elif NET48
 
 		/// <summary>
 		/// Processes Windows mouse messages forwarded by the designer.
@@ -1018,7 +1105,10 @@ namespace Wisej.Web.Ext.RibbonBar
 				if (selectionService != null)
 				{
 					if (selectionService.GetComponentSelected(this))
+					{
+						this.DesignItem = null;
 						selectionService.SetSelectedComponents(new[] { target });
+					}
 				}
 			}
 		}
@@ -1032,6 +1122,11 @@ namespace Wisej.Web.Ext.RibbonBar
 		{
 			if (metrics != null)
 			{
+				if (this.AutoSize)
+				{
+					UpdateMetrics(metrics);
+				}
+
 				// retrieve the rectangles of the tab buttons.
 				if (metrics.tabRects != null)
 				{
@@ -1159,6 +1254,8 @@ namespace Wisej.Web.Ext.RibbonBar
 			}
 			return target;
 		}
+
+#endif
 
 		#endregion
 	}

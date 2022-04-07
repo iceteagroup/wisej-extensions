@@ -1,19 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net48</TargetFramework>
+		<TargetFrameworks>net48;net6.0</TargetFrameworks>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<Reference Include="System.Drawing" />
-		<Reference Include="System.Windows.Forms" />
-	</ItemGroup>
 
 	<ItemGroup>
 	  <None Remove="Camera.bmp" />
@@ -25,20 +19,17 @@
 	  <EmbeddedResource Include="Platform\wisej.web.ext.Camera.js" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <PackageReference Include="Wisej-2" Version="2.5.*" />
-	</ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)'=='net48' ">
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<Reference Include="Microsoft.CSharp" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Reference Include="System.Web" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Wisej-3" Version="3.*-*" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin&quot; /s /y&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\&quot; /y&#xD;&#xA;" />
+		<Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
 	</Target>
 
 </Project>

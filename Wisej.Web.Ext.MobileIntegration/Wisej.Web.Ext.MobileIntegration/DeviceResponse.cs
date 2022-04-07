@@ -55,8 +55,8 @@ namespace Wisej.Web.Ext.MobileIntegration
 		/// <summary>
 		/// Creates a new instance of <see cref="DeviceResponse"/> with the given arguments.
 		/// </summary>
-		/// <param name="value"></param>
-		/// <param name="status"></param>
+		/// <param name="value">The message value.</param>
+		/// <param name="status">The message status.</param>
 		public DeviceResponse(dynamic value, string status)
 		{
 			this.Value = value;

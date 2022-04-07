@@ -167,7 +167,7 @@ namespace Wisej.Web.Ext.PrintPreview
 			get { return false; }
 		}
 
-		void IWisejHandler.ProcessRequest(System.Web.HttpContext context)
+		void IWisejHandler.ProcessRequest(HttpContext context)
 		{
 			EnsureTempPdf();
 

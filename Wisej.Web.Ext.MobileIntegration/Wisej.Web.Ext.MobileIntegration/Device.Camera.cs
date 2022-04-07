@@ -41,14 +41,15 @@ namespace Wisej.Web.Ext.MobileIntegration
 			/// <summary>
 			/// Detects and scans documents using the camera.
 			/// </summary>
+			/// <param name="compressionQuality">The quality of the resulting images, expressed as a value from 0.0 to 1.0.</param>
 			/// <returns>An array <see cref="Image"/> objects containing the documents.</returns>
 			/// <exception cref="DeviceException">
 			/// Occurs when the device fails to scan documents.
 			/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
 			/// </exception>
-			public static Image[] ScanDocument()
+			public static Image[] ScanDocument(float compressionQuality = 1.0F)
 			{
-				var result = PostModalMessage("document.scan");
+				var result = PostModalMessage("document.scan", compressionQuality);
 				if (result.Status != StatusCode.Success)
 					ThrowDeviceException(result);
 

@@ -20,7 +20,7 @@
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
-using System.IO;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 using Wisej.Base;
 using Wisej.Core;
@@ -53,7 +53,9 @@ namespace Wisej.Web.Ext.MobileIntegration
 			}
 		}
 
-		// The Device singleton.
+		/// <summary>
+		/// Gets or creates the device singleton.
+		/// </summary>
 		private static Device Instance
 		{
 			get
@@ -237,6 +239,26 @@ namespace Wisej.Web.Ext.MobileIntegration
 		}
 		private event DeviceEventHandler _backButtonPressed;
 
+		/// <summary>
+		/// Fired when the device is shaken.
+		/// </summary>
+		public static event DeviceEventHandler Shake
+		{
+			add { Instance._shake += value; }
+			remove { Instance._shake -= value; }
+		}
+		private event DeviceEventHandler _shake;
+
+		/// <summary>
+		/// Fired when a device permission value changes.
+		/// </summary>
+		public static event DeviceEventHandler PermissionStateChanged
+		{
+			add { Instance._permissionStateChanged += value; }
+			remove { Instance._permissionStateChanged -= value; }
+		}
+		private event DeviceEventHandler _permissionStateChanged;
+
 		// Handles "device.response" event from the device.
 		private void ProcessDeviceResponseEvent(WisejEventArgs e)
 		{
@@ -278,8 +300,27 @@ namespace Wisej.Web.Ext.MobileIntegration
 					this._modeChanged?.Invoke(this, args);
 					break;
 
+				case "app.permission":
+					var updated = Device.Info.UpdatePermission(args);
+					if (updated)
+						this._permissionStateChanged?.Invoke(this, args);
+					break;
+
+				case "color.pick":
+					var hex = args.Data.color;
+					var alpha = args.Data.alpha;
+					var color = Color.FromArgb(alpha, ColorTranslator.FromHtml(hex));
+
+					args.Data.color = color;
+					this._selectedColorChanged?.Invoke(this, args);
+					break;
+
 				case "device.back":
 					this._backButtonPressed?.Invoke(this, args);
+					break;
+
+				case "device.shake":
+					this._shake?.Invoke(this, args);
 					break;
 
 				case "gyroscope.update":
@@ -339,7 +380,7 @@ namespace Wisej.Web.Ext.MobileIntegration
 		#region Properties
 
 		/// <summary>
-		/// Returns the <see cref="DeviceInfo"/> object containing the
+		/// Returns the <see cref="DeviceInfo"/> object containing
 		/// information related to the user's mobile device.
 		/// </summary>
 		public static DeviceInfo Info
@@ -422,59 +463,31 @@ namespace Wisej.Web.Ext.MobileIntegration
 		}
 
 		/// <summary>
-		/// The HTML page to display on the device when it loses network connectivity.
-		/// </summary>
-		/// <remarks>Pass the relative path of the file.</remarks>
-		public static string OfflinePage
-		{
-			get
-			{
-				return Instance._offlinePage;
-			}
-			set
-			{
-				var device = Instance;
-				if (device._offlinePage != value)
-				{
-					device._offlinePage = value;
-
-					// read the contents of the file and send them to the device
-					try {
-						var html = File.ReadAllText(Application.MapPath(value));
-
-						PostMessage("device.offlineHtml", html);
-					}
-					catch (FileNotFoundException)
-					{
-						throw new FileNotFoundException("The path to the file could not be found.");
-					}
-					catch (Exception e)
-					{
-						throw new Exception(e.Message);
-					}
-				}
-			}
-		}
-		private string _offlinePage;
-
-		/// <summary>
 		/// Returns a dynamic object that can be used to store custom data in relation to the device.
 		/// The data is persistent and can be accessed across different applications.
 		/// </summary>
+		/// <example>
+		/// <code>
+		/// // saving data.
+		/// Device.UserData["myTest"] = "Hello, World!";
+		/// 
+		/// // reading data.
+		/// var text = Device.UserData["myTest"];
+		/// 
+		/// // clearing data.
+		/// Device.UserData.Remove("myTest");
+		/// </code>
+		/// </example>
+		/// <remarks>
+		/// The data is serialized and deserialized using JSONConvert before and after retrieval from the device.
+		/// </remarks>
 		public static new UserDataDictionary<string, object> UserData
 		{
 			get
 			{
 				if (Instance._userData == null)
-				{
-					var result = PostModalMessage("device.getUserData");
-					if (result.Status == StatusCode.Success && !string.IsNullOrEmpty(result.Value))
-						Instance._userData = JsonConvert.DeserializeObject<UserDataDictionary<string, object>>(result.Value);
-					else
-						Instance._userData = new UserDataDictionary<string, object>();
+					LoadUserData();
 
-					Instance._userData.PropertyChanged += Instance._userData_PropertyChanged;
-				}
 				return Instance._userData;
 			}
 			set
@@ -489,11 +502,25 @@ namespace Wisej.Web.Ext.MobileIntegration
 		private UserDataDictionary<string, object> _userData;
 
 		/// <summary>
+		/// Loads the userdata config from the client device.
+		/// </summary>
+		private static void LoadUserData()
+		{
+			var result = PostModalMessage("device.getUserData");
+			if (result.Status == StatusCode.Success && !string.IsNullOrEmpty(result.Value))
+				Instance._userData = JsonConvert.DeserializeObject<UserDataDictionary<string, object>>(result.Value);
+			else
+				Instance._userData = new UserDataDictionary<string, object>();
+
+			Instance._userData.PropertyChanged += Instance.userData_PropertyChanged;
+		}
+
+		/// <summary>
 		/// Processes changes in UserData.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void _userData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		private void userData_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			switch (e.PropertyName)
 			{
@@ -515,6 +542,20 @@ namespace Wisej.Web.Ext.MobileIntegration
 			get { return this._userData != null && this._userData.Count > 0; }
 		}
 
+		/// <summary>
+		/// Specifies the background color of the device frame.
+		/// </summary>
+		/// <example>
+		/// <code>
+		/// // set the application frame to red.
+		/// Device.SetBackgroundColor(Color.Red);
+		/// </code>
+		/// </example>
+		public static void SetBackgroundColor(Color value)
+		{
+			PostMessage("device.backcolor", ColorTranslator.ToHtml(value));
+		}
+
 		#endregion
 
 		#region Methods
@@ -529,10 +570,9 @@ namespace Wisej.Web.Ext.MobileIntegration
 		}
 
 		/// <summary>
-		/// Requests the specified permission from the device.
+		/// Requests the specified permission from the device if access hasn't already been granted.
 		/// </summary>
 		/// <param name="permission">The permission to request.</param>
-		/// <returns>The success of the permission request.</returns>
 		/// <exception cref="DeviceException">
 		/// Occurs when the permission could not be requested.
 		/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
@@ -540,19 +580,10 @@ namespace Wisej.Web.Ext.MobileIntegration
 		public static bool RequestPermission(PermissionType permission)
 		{
 			var result = PostModalMessage($"permissions.{permission}");
-			if (result.Status != StatusCode.Success)
+			if (result.Status != StatusCode.Success || permission != (PermissionType)result.Value.type)
 				ThrowDeviceException(result);
 
-			return true;
-		}
-
-		/// <summary>
-		/// If the device is connected to an external display, opens the page on the display.
-		/// </summary>
-		/// <param name="url">The URL to display on the external screen.</param>
-		public static void SetExternalScreenData(string url)
-		{
-			PostMessage("screen.data", url);
+			return result.Value.result;
 		}
 
 		/// <summary>
@@ -568,38 +599,6 @@ namespace Wisej.Web.Ext.MobileIntegration
 			var result = PostModalMessage("action.authenticate", message);
 			if (result.Status != StatusCode.Success)
 				ThrowDeviceException(result);
-		}
-
-		/// <summary>
-		/// Sets the device's language settings to the specified culture.
-		/// </summary>
-		/// <param name="culture">The culture to apply (i.e, "en", "it", etc.)</param>
-		public static void SetLocalization(string culture)
-		{
-			PostMessage("localization.change", culture);
-		}
-
-		/// <summary>
-		/// Attempts to bind the native application to the specified URL.
-		/// </summary>
-		/// <param name="link">The link of the Wisej application.</param>
-		/// <exception cref="DeviceException">
-		/// Occurs when the device could not be bound to the given application.
-		/// See <see cref="DeviceException.ErrorCode"/> and <see cref="DeviceException.Reason"/>.
-		/// </exception>
-		public static void BindApplication(string link)
-		{
-			var result = PostModalMessage("device.bind", link);
-			if(result.Status != StatusCode.Success)
-				ThrowDeviceException(result);
-		}
-
-		/// <summary>
-		/// Removes the bound-app configuration from the device.
-		/// </summary>
-		public static void FreeBoundApplication()
-		{
-			PostMessage("device.freeBind");
 		}
 
 		/// <summary>
@@ -642,6 +641,36 @@ namespace Wisej.Web.Ext.MobileIntegration
 			Instance.Call("postMessage", command, args);
 			return DoModal();
 		}
+
+		// TODO: Later...
+		///// <summary>
+		///// Posts a message to the device and passes the response to a callback.
+		///// </summary>
+		///// <param name="command"></param>
+		///// <param name="callback"></param>
+		///// <param name="args"></param>
+		//public static void PostMessage(string command, Action<DeviceResponse> callback, params object[] args)
+		//{
+			
+		//}
+
+		///// <summary>
+		///// Posts a message to the device and returns the result asynchronously.
+		///// </summary>
+		///// <param name="command"></param>
+		///// <param name="args"></param>
+		///// <returns></returns>
+		//public static Task<DeviceResponse> PostMessageAsync(string command, params object[] args)
+		//{
+		//	var tcs = new TaskCompletionSource<DeviceResponse>();
+
+		//	PostMessage(command, (response) => {
+		//		// TODO: tcs.SetException
+		//		tcs.SetResult(response);
+		//	}, args);
+
+		//	return tcs.Task;
+		//}
 
 		// Starts the modal state.
 		private static DeviceResponse DoModal()
