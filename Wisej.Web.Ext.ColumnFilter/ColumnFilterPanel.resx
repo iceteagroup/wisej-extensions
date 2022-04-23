@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="Wisej.Framework" name="Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
+  <assembly alias="Wisej.Framework" name="Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
   <data name="ok.Anchor" type="Wisej.Web.AnchorStyles, Wisej.Framework">
     <value>Bottom</value>
   </data>
@@ -139,7 +139,7 @@
     <value>ok</value>
   </data>
   <data name="&gt;&gt;ok.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;ok.Parent" xml:space="preserve">
     <value>$this</value>
@@ -166,7 +166,7 @@
     <value>cancel</value>
   </data>
   <data name="&gt;&gt;cancel.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;cancel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -194,6 +194,6 @@
     <value>ColumnFilterPanel</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Wisej.Web.UserPopup, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.UserPopup, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
 </root>

@@ -125,7 +125,7 @@
     <value>ok</value>
   </data>
   <data name="&gt;&gt;ok.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;ok.Parent" xml:space="preserve">
     <value>$this</value>
@@ -140,7 +140,7 @@
     <value>cancel</value>
   </data>
   <data name="&gt;&gt;cancel.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;cancel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -148,7 +148,7 @@
   <data name="&gt;&gt;cancel.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <assembly alias="Wisej.Framework" name="Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
+  <assembly alias="Wisej.Framework" name="Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
   <data name="clear.Anchor" type="Wisej.Web.AnchorStyles, Wisej.Framework">
     <value>Top, Right</value>
   </data>
@@ -172,7 +172,7 @@
     <value>clear</value>
   </data>
   <data name="&gt;&gt;clear.Type" xml:space="preserve">
-    <value>Wisej.Web.LinkLabel, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.LinkLabel, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;clear.Parent" xml:space="preserve">
     <value>$this</value>
@@ -193,7 +193,7 @@
     <value>line1</value>
   </data>
   <data name="&gt;&gt;line1.Type" xml:space="preserve">
-    <value>Wisej.Web.Line, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Line, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;line1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -217,7 +217,7 @@
     <value>cmbOperator</value>
   </data>
   <data name="&gt;&gt;cmbOperator.Type" xml:space="preserve">
-    <value>Wisej.Web.ComboBox, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.ComboBox, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;cmbOperator.Parent" xml:space="preserve">
     <value>flowLayoutPanel</value>
@@ -244,7 +244,7 @@
     <value>txtValue</value>
   </data>
   <data name="&gt;&gt;txtValue.Type" xml:space="preserve">
-    <value>Wisej.Web.TextBox, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.TextBox, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;txtValue.Parent" xml:space="preserve">
     <value>flowLayoutPanel</value>
@@ -268,7 +268,7 @@
     <value>dateTimePicker1</value>
   </data>
   <data name="&gt;&gt;dateTimePicker1.Type" xml:space="preserve">
-    <value>Wisej.Web.DateTimePicker, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.DateTimePicker, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;dateTimePicker1.Parent" xml:space="preserve">
     <value>flowLayoutPanel</value>
@@ -313,7 +313,7 @@
     <value>flowLayoutPanel</value>
   </data>
   <data name="&gt;&gt;flowLayoutPanel.Type" xml:space="preserve">
-    <value>Wisej.Web.FlowLayoutPanel, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.FlowLayoutPanel, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;flowLayoutPanel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -337,7 +337,7 @@
     <value>cbMatchCase</value>
   </data>
   <data name="&gt;&gt;cbMatchCase.Type" xml:space="preserve">
-    <value>Wisej.Web.CheckBox, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.CheckBox, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;cbMatchCase.Parent" xml:space="preserve">
     <value>flowLayoutPanel</value>

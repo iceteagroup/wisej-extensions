@@ -117,22 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="Wisej.Framework" name="Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
+  <data name="HtmlText.Anchor" type="Wisej.Web.AnchorStyles, Wisej.Framework">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="HtmlText.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 64</value>
   </data>
-  <assembly alias="Wisej.Web" name="Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
-  <data name="HtmlText.Margin" type="Wisej.Web.Padding, Wisej.Web">
+  <data name="HtmlText.Margin" type="Wisej.Web.Padding, Wisej.Framework">
     <value>3, 10, 3, 10</value>
   </data>
   <data name="HtmlText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>680, 324</value>
+    <value>680, 372</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="HtmlText.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;HtmlText.Name" xml:space="preserve">
     <value>HtmlText</value>
   </data>
   <data name="&gt;&gt;HtmlText.Type" xml:space="preserve">
-    <value>Wisej.Web.Ext.TourPanel.TourPanel+HtmlPanel, Wisej.Web.Ext.TourPanel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
+    <value>Wisej.Web.Ext.TourPanel.TourPanel+HtmlPanel, Wisej.Web.Ext.TourPanel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
   </data>
   <data name="&gt;&gt;HtmlText.Parent" xml:space="preserve">
     <value>$this</value>
@@ -140,16 +147,12 @@
   <data name="&gt;&gt;HtmlText.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="TitleLabel.Dock" type="Wisej.Web.DockStyle, Wisej.Web">
+  <data name="TitleLabel.Dock" type="Wisej.Web.DockStyle, Wisej.Framework">
     <value>Fill</value>
-  </data>
-  <data name="TitleLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
   </data>
   <data name="TitleLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>646, 41</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="TitleLabel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
@@ -160,7 +163,7 @@
     <value>TitleLabel</value>
   </data>
   <data name="&gt;&gt;TitleLabel.Type" xml:space="preserve">
-    <value>Wisej.Web.Ext.TourPanel.TourPanel+Label, Wisej.Web.Ext.TourPanel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
+    <value>Wisej.Web.Ext.TourPanel.TourPanel+Label, Wisej.Web.Ext.TourPanel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
   </data>
   <data name="&gt;&gt;TitleLabel.Parent" xml:space="preserve">
     <value>TitlePanel</value>
@@ -168,7 +171,7 @@
   <data name="&gt;&gt;TitleLabel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="CloseButton.Dock" type="Wisej.Web.DockStyle, Wisej.Web">
+  <data name="CloseButton.Dock" type="Wisej.Web.DockStyle, Wisej.Framework">
     <value>Right</value>
   </data>
   <data name="CloseButton.ImageSource" xml:space="preserve">
@@ -190,7 +193,7 @@
     <value>CloseButton</value>
   </data>
   <data name="&gt;&gt;CloseButton.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;CloseButton.Parent" xml:space="preserve">
     <value>TitlePanel</value>
@@ -217,7 +220,7 @@
     <value>NextButton</value>
   </data>
   <data name="&gt;&gt;NextButton.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;NextButton.Parent" xml:space="preserve">
     <value>ButtonsPanel</value>
@@ -226,7 +229,7 @@
     <value>0</value>
   </data>
   <data name="BackButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>486, 3</value>
+    <value>491, 3</value>
   </data>
   <data name="BackButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 35</value>
@@ -241,7 +244,7 @@
     <value>BackButton</value>
   </data>
   <data name="&gt;&gt;BackButton.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;BackButton.Parent" xml:space="preserve">
     <value>ButtonsPanel</value>
@@ -250,7 +253,7 @@
     <value>1</value>
   </data>
   <data name="ExitButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>385, 3</value>
+    <value>395, 3</value>
   </data>
   <data name="ExitButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 35</value>
@@ -265,7 +268,7 @@
     <value>ExitButton</value>
   </data>
   <data name="&gt;&gt;ExitButton.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;ExitButton.Parent" xml:space="preserve">
     <value>ButtonsPanel</value>
@@ -277,7 +280,7 @@
     <value>icon-play</value>
   </data>
   <data name="PlayButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>333, 3</value>
+    <value>343, 3</value>
   </data>
   <data name="PlayButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 35</value>
@@ -289,7 +292,7 @@
     <value>PlayButton</value>
   </data>
   <data name="&gt;&gt;PlayButton.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;PlayButton.Parent" xml:space="preserve">
     <value>ButtonsPanel</value>
@@ -297,10 +300,10 @@
   <data name="&gt;&gt;PlayButton.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="ButtonsPanel.Dock" type="Wisej.Web.DockStyle, Wisej.Web">
+  <data name="ButtonsPanel.Dock" type="Wisej.Web.DockStyle, Wisej.Framework">
     <value>Bottom</value>
   </data>
-  <data name="ButtonsPanel.FlowDirection" type="Wisej.Web.FlowDirection, Wisej.Web">
+  <data name="ButtonsPanel.FlowDirection" type="Wisej.Web.FlowDirection, Wisej.Framework">
     <value>RightToLeft</value>
   </data>
   <data name="ButtonsPanel.Location" type="System.Drawing.Point, System.Drawing">
@@ -316,7 +319,7 @@
     <value>ButtonsPanel</value>
   </data>
   <data name="&gt;&gt;ButtonsPanel.Type" xml:space="preserve">
-    <value>Wisej.Web.FlowLayoutPanel, Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.FlowLayoutPanel, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;ButtonsPanel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -324,7 +327,7 @@
   <data name="&gt;&gt;ButtonsPanel.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="TitlePanel.Dock" type="Wisej.Web.DockStyle, Wisej.Web">
+  <data name="TitlePanel.Dock" type="Wisej.Web.DockStyle, Wisej.Framework">
     <value>Top</value>
   </data>
   <data name="TitlePanel.Location" type="System.Drawing.Point, System.Drawing">
@@ -340,7 +343,7 @@
     <value>TitlePanel</value>
   </data>
   <data name="&gt;&gt;TitlePanel.Type" xml:space="preserve">
-    <value>Wisej.Web.Panel, Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Panel, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;TitlePanel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -348,16 +351,23 @@
   <data name="&gt;&gt;TitlePanel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="$this.Localizable" type="System.Boolean, mscorlib">
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
+  </metadata>
+  <metadata name="$this.RulerSnapLines" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
+        dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EHAQAAAAABAAAAAAAAAAQU
+        U3lzdGVtLkRyYXdpbmcuUG9pbnQCAAAACw==
+</value>
+  </metadata>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>700, 500</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>370, 280</value>
   </data>
-  <data name="$this.Padding" type="Wisej.Web.Padding, Wisej.Web">
+  <data name="$this.Padding" type="Wisej.Web.Padding, Wisej.Framework">
     <value>10, 10, 10, 10</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
@@ -367,6 +377,6 @@
     <value>TourPanel</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Wisej.Web.UserControl, Wisej.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.ContainerControl, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
 </root>

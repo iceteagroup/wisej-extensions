@@ -121,7 +121,7 @@
     <value>ok</value>
   </data>
   <data name="&gt;&gt;ok.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;ok.Parent" xml:space="preserve">
     <value>$this</value>
@@ -133,7 +133,7 @@
     <value>cancel</value>
   </data>
   <data name="&gt;&gt;cancel.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;cancel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -141,7 +141,7 @@
   <data name="&gt;&gt;cancel.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <assembly alias="Wisej.Framework" name="Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
+  <assembly alias="Wisej.Framework" name="Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
   <data name="items.Anchor" type="Wisej.Web.AnchorStyles, Wisej.Framework">
     <value>Top, Bottom, Left, Right</value>
   </data>
@@ -163,7 +163,7 @@
     <value>items</value>
   </data>
   <data name="&gt;&gt;items.Type" xml:space="preserve">
-    <value>Wisej.Web.CheckedListBox, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.CheckedListBox, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;items.Parent" xml:space="preserve">
     <value>$this</value>
@@ -193,7 +193,7 @@
     <value>selectAll</value>
   </data>
   <data name="&gt;&gt;selectAll.Type" xml:space="preserve">
-    <value>Wisej.Web.LinkLabel, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.LinkLabel, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;selectAll.Parent" xml:space="preserve">
     <value>$this</value>
@@ -223,7 +223,7 @@
     <value>clear</value>
   </data>
   <data name="&gt;&gt;clear.Type" xml:space="preserve">
-    <value>Wisej.Web.LinkLabel, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.LinkLabel, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;clear.Parent" xml:space="preserve">
     <value>$this</value>
@@ -244,7 +244,7 @@
     <value>line1</value>
   </data>
   <data name="&gt;&gt;line1.Type" xml:space="preserve">
-    <value>Wisej.Web.Line, Wisej.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Line, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;line1.Parent" xml:space="preserve">
     <value>$this</value>
