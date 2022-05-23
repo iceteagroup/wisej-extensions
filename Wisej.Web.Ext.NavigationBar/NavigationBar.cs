@@ -733,16 +733,6 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		#endregion
 
-#if NETCOREAPP
-
-		bool IWisejDesignTarget.DesignerWndProc(ref System.Windows.Forms.Message m)
-        {
-			return false;
-        }
-
-
-#elif NET48
-
 		#region IWisejDesignTarget
 
 		bool IWisejDesignTarget.DesignerWndProc(ref System.Windows.Forms.Message m)
@@ -832,8 +822,5 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		#endregion
-
-#endif
-
 	}
 }

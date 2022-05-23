@@ -51,7 +51,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	public class RibbonBar : Control, IWisejControl, IWisejDesignTarget2
 	{
 		// autosize height
-		private int requestedHeight;
+		private int _requestedHeight;
 
 		#region Constructor
 
@@ -60,6 +60,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// </summary>
 		public RibbonBar()
 		{
+			base.AutoSize = true;
 			this.Dock = DockStyle.Top;
 			base.CausesValidation = false;
 		}
@@ -540,14 +541,8 @@ namespace Wisej.Web.Ext.RibbonBar
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public override bool AutoSize
 		{
-			get
-			{
-				return base.AutoSize;
-			}
-			set
-			{
-				base.AutoSize = value;
-			}
+			get { return base.AutoSize; }
+			set { base.AutoSize = value; }
 		}
 
 		/// <summary>
@@ -763,6 +758,40 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 		internal ImagePropertySettings _imageSettings;
 
+		/// <summary>
+		/// Returns or sets the compact view mode.
+		/// </summary>
+		[DefaultValue(false)]
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public bool CompactView
+		{
+			get => this._compactView;
+			set
+			{
+				if (this._compactView != value)
+				{
+					if (value)
+						this._savedHeight = this.Height;
+					else
+						this.Height = this._savedHeight;
+
+					this._compactView = value;
+
+					// OnCompactViewChanged(EventArgs.Empty);
+					Update();
+				}
+			}
+		}
+		private bool _compactView;
+		private int _savedHeight = 0;
+
+		private int CompactViewHeight
+		{
+			get;
+			set;
+		}
+
 		#endregion
 
 		#region Methods
@@ -816,11 +845,11 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <returns>The <see cref="System.Drawing.Size" /> representing the preferred size of the control.</returns>
 		public override Size GetPreferredSize(Size proposedSize)
 		{
-			var size = base.GetPreferredSize(proposedSize);
+			var size = this.Size;
 
-			if (this.requestedHeight > 0 && !IsHeightDynamic())
+			if (this._requestedHeight > 0 && !IsHeightDynamic())
 			{
-				size.Height = this.requestedHeight;
+				size.Height = this._requestedHeight;
 
 				var minSize = this.MinimumSize;
 				var maxSize = this.MaximumSize;
@@ -903,28 +932,8 @@ namespace Wisej.Web.Ext.RibbonBar
 			dynamic size = e.Parameters.Size;
 			if (size != null)
 			{
-				this.Size = new Size(
-					Convert.ToInt32(size.width),
-					Convert.ToInt32(size.height));
-			}
-		}
-
-		// Updates the height of the RibbonBar when
-		// AutoSize is true and the client changes the size.
-		private void UpdateMetrics(dynamic metrics)
-		{
-			if (metrics != null && this.AutoSize)
-			{
-				if (IsHeightDynamic())
-					return;
-
-				int height = Convert.ToInt32(metrics.height ?? 0);
-				if (height > 0 && this.Height != height)
-				{
-					this.requestedHeight = height;
-					this.Height = height;
-					Refresh();
-				}
+				this._requestedHeight = Convert.ToInt32(size.height);
+				this.Height = this._requestedHeight;
 			}
 		}
 
@@ -965,6 +974,7 @@ namespace Wisej.Web.Ext.RibbonBar
 
 			config.className = "wisej.web.RibbonBar";
 			config.selectedIndex = this.SelectedPageIndex;
+			config.compactView = this.CompactView;
 
 			// Tools.
 			if (this._tools != null)
@@ -982,7 +992,7 @@ namespace Wisej.Web.Ext.RibbonBar
 				if (me.IsNew || me.IsDirty)
 					config.pages = this.Pages.Render();
 
-				config.designItem = this.UserData.DesignItem;
+				config.designItem = this.DesignItem;
 			}
 			else
 			{
@@ -991,7 +1001,10 @@ namespace Wisej.Web.Ext.RibbonBar
 				if (me.IsNew || this.Pages.IsDirty)
 					config.pages = this.Pages.Render();
 
-				config.wiredEvents.Add("changePage(Page)", "toolClick(Tool)", "resize(Size)");
+				config.wiredEvents.Add(
+					"changePage(Page)",
+					"toolClick(Tool)",
+					"resize(Size)");
 			}
 
 		}
@@ -1004,15 +1017,6 @@ namespace Wisej.Web.Ext.RibbonBar
 		{
 			return this.Pages.Count == 0;
 		}
-
-#if NETCOREAPP
-
-		bool IWisejDesignTarget.DesignerWndProc(ref System.Windows.Forms.Message m)
-        {
-			return false;
-        }
-
-#elif NET48
 
 		/// <summary>
 		/// Processes Windows mouse messages forwarded by the designer.
@@ -1098,18 +1102,22 @@ namespace Wisej.Web.Ext.RibbonBar
 
 		private void OnDesignComponentSelectionChanged(object server, EventArgs e)
 		{
-			IWisejComponent target = this.DesignItem;
-			if (target != null && this.Site != null)
+			var designItem = this.DesignItem;
+			if (designItem != null && this.Site != null)
 			{
 				var selectionService = (ISelectionService)this.Site.GetService(typeof(ISelectionService));
 				if (selectionService != null)
 				{
 					if (selectionService.GetComponentSelected(this))
 					{
-						this.DesignItem = null;
-						selectionService.SetSelectedComponents(new[] { target });
+						selectionService.SetSelectedComponents(new[] { designItem });
+						this.UserData.DesignItem = null;
 					}
 				}
+			}
+			else
+			{
+				Update();
 			}
 		}
 
@@ -1122,9 +1130,14 @@ namespace Wisej.Web.Ext.RibbonBar
 		{
 			if (metrics != null)
 			{
-				if (this.AutoSize)
+				if (this.AutoSize && !IsHeightDynamic())
 				{
-					UpdateMetrics(metrics);
+					int height = Convert.ToInt32(metrics.height ?? 0);
+					if (height > 0)
+					{
+						this.Height = height;
+						this._requestedHeight = height;
+					}
 				}
 
 				// retrieve the rectangles of the tab buttons.
@@ -1254,8 +1267,6 @@ namespace Wisej.Web.Ext.RibbonBar
 			}
 			return target;
 		}
-
-#endif
 
 		#endregion
 	}

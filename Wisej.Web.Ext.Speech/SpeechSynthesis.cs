@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Web;
@@ -221,6 +222,14 @@ namespace Wisej.Web.Ext.Speech
 		public void Cancel()
 		{
 			Call("cancel");
+		}
+
+		/**
+		 * Returns the list of voices available in the browser.
+		 */
+		public async Task<string[]> GetVoicesAsync()
+		{
+			return await CallAsync("getVoices");
 		}
 
 		/// <summary>

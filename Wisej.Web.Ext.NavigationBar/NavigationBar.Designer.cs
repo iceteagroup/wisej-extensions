@@ -171,6 +171,7 @@ namespace Wisej.Web.Ext.NavigationBar
 			// 
 			this.userStatusName.Anonymous = true;
 			this.userStatus.SetFillWeight(this.userStatusName, 1);
+			this.userStatusName.Font = new System.Drawing.Font("@default", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
 			this.userStatusName.Location = new System.Drawing.Point(27, 1);
 			this.userStatusName.Margin = new Wisej.Web.Padding(3, 1, 3, 1);
 			this.userStatusName.Name = "userStatusName";

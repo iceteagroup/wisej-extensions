@@ -206,7 +206,7 @@ namespace Wisej.Web.Ext.OfficeViewer
 
 			this.Url =
 				OFFICEAPPS_URL +
-				WebUtility.UrlEncode(startUpUrl + this.GetServiceURL());
+				WebUtility.UrlEncode(startUpUrl + this.GetServiceURL() + "?v=" + DateTime.Now.Ticks);
 		}
 
 		#endregion

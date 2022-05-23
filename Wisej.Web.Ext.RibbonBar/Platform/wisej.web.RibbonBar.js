@@ -68,6 +68,13 @@ qx.Class.define("wisej.web.RibbonBar", {
 		appButton: { init: null, apply: "_applyAppButton", transform: "_transformComponent" },
 
 		/**
+		 * CompactView property.
+		 *
+		 * Enabled the compact-view mode making only the tab buttons visible.
+		 */
+		compactView: { init: false, check: "Boolean", apply: "_applyCompactView" },
+
+		/**
 		 * DesignItem property.
 		 *
 		 * This property is used only at design time to highlight the
@@ -115,6 +122,10 @@ qx.Class.define("wisej.web.RibbonBar", {
 			var page = e.getData()[0];
 			if (page) {
 				this.fireDataEvent("changePage", page);
+
+				// when in compact view, temporarily expand the ribbon bar.
+				if (this.isCompactView())
+					this.getContentElement().setStyle("overflow", "visible");
 			}
 		},
 
@@ -176,12 +187,74 @@ qx.Class.define("wisej.web.RibbonBar", {
 		},
 
 		/**
+		 * Applies the compactView property.
+		 */
+		_applyCompactView: function (value, old) {
+
+			var bar = this.tabview.getChildControl("bar");
+			var barSize = bar.getSizeHint();
+
+			if (value) {
+				this.setMaxHeight(barSize.height);
+				this.tabview.setAllowEmptySelection(true);
+				this.setSelectedIndex(-1);
+				this.setZIndex(11);
+
+				// handle pointer/mouse events globally when in compact view mode.
+				qx.event.Registration.addListener(
+					window.document.documentElement,
+					"pointerdown",
+					this._onCompactViewPointerDown, this, true);
+
+			}
+			else if (old) {
+				this.resetMaxHeight();
+				this.tabview.setAllowEmptySelection(false);
+				this.setSelectedIndex(0);
+				this.resetZIndex();
+				this.getContentElement().setStyle("overflow", "hidden");
+
+				qx.event.Registration.removeListener(
+					window.document.documentElement,
+					"pointerdown",
+					this._onCompactViewPointerDown, this, true);
+			}
+		},
+
+		/**
+		 * Handles the pointerdown event on any element when in compact view mode.
+		 */
+		_onCompactViewPointerDown: function (e) {
+
+			var target = e.getTarget();
+			target = qx.ui.core.Widget.getWidgetByElement(target, true);
+
+			// if the user clicked anywhere outside of the ribbon, collapse the view.
+			if (qx.ui.core.Widget.contains(this, target))
+				return;
+
+			// check if the click was on menu item.
+			var container = target.isWisejMenu ? target.findContainer() : null;
+			var opener = container ? container.getOpener() : null;
+			if (qx.ui.core.Widget.contains(this, opener))
+				return;
+
+			this.setSelectedIndex(-1);
+			this.getContentElement().setStyle("overflow", "hidden");
+		},
+
+		/**
 		 * Applies the designItem property.
 		 *
 		 * Adds a border to the widget.
 		 */
 		_applyDesignItem: function(value, old)
 		{
+			if (old) {
+				old.getContentElement().removeStyle("border");
+				old.syncAppearance();
+			}
+
 			if (value) {
 				value.getContentElement().setStyle("border", "1px dotted gray");
 			}
@@ -261,6 +334,12 @@ qx.Class.define("wisej.web.RibbonBar", {
 			}
 			return items;
 		},
-	}
+	},
 
+	destruct: function () {
+		qx.event.Registration.removeListener(
+			window.document.documentElement,
+			"pointerdown",
+			this._onCompactViewPointerDown, this, true);
+	}
 });

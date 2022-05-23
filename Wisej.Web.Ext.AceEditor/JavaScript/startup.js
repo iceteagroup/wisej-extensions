@@ -26,10 +26,10 @@ this.init = function (options) {
 	if (this.widget)
 		this.widget.destroy();
 
-	var editor = this.widget = ace.edit(this.container, options);
+	this.editor = this.widget = ace.edit(this.container, options);
 
 	this.widget.on("blur", function () {
-		me.fireWidgetEvent("change", editor.getValue());
+		me.fireWidgetEvent("change", this.editor.getValue());
 	});
 
 	this.widget.on("change", function () {
@@ -45,7 +45,7 @@ this.init = function (options) {
 	});
 
 	this.addListener("resize", function (e) {
-		me.editor.resize();
+		me.widget.resize();
 	});
 }
 

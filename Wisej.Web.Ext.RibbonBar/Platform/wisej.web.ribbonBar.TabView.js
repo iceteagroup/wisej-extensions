@@ -45,7 +45,10 @@ qx.Class.define("wisej.web.ribbonBar.TabView", {
 	},
 
 	properties: {
-
+		/**
+		 * Allows all tab pages to be deselected.
+		 */
+		allowEmptySelection: { init: false, check: "Boolean", apply: "_applyAllowEmptySelection" }
 	},
 
 	members: {
@@ -79,6 +82,11 @@ qx.Class.define("wisej.web.ribbonBar.TabView", {
 					}
 				}
 			}
+		},
+
+		_applyAllowEmptySelection: function (value, old) {
+
+			this.__radioGroup.setAllowEmptySelection(value);
 		},
 
 		// Listens to "changeRtl" to mirror the widgets in the tabview bar.
@@ -128,7 +136,7 @@ qx.Class.define("wisej.web.ribbonBar.TabView", {
 			}
 
 			return rects;
-		},
+		}
 	}
 
 });

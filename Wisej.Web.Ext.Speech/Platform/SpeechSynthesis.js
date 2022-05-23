@@ -38,12 +38,20 @@ qx.Class.define("wisej.web.extender.speech.SpeechSynthesis", {
 		this.__speechByComponentId = {};
 	},
 
-	defer: function () {
+	defer: function (statics) {
 
 		// try to preload the list of voices.
 		var speech = window.speechSynthesis;
 		if (speech && speech.getVoices)
-			var voices = speech.getVoices();
+			statics.voices = speech.getVoices();
+	},
+
+	statics: {
+
+		/**
+		 * Preloaded list of voices.
+		 */
+		voices: null
 	},
 
 	properties: {
@@ -168,19 +176,29 @@ qx.Class.define("wisej.web.extender.speech.SpeechSynthesis", {
 				speech.cancel();
 		},
 
+		/**
+		 * Returns the list of voices available in the browser.
+		 */
+		getVoices: function () {
+
+			var voices = wisej.web.extender.speech.SpeechSynthesis.voices;
+			if (voices) {
+				return voices.map(function (x) { return x.name; });
+			}
+			return null;
+		},
+
 		_applyVoice: function (value, old) {
 
 			this.__voice = null;
 
 			// find the voice that matches the name.
 			var speech = window.speechSynthesis;
-			if (speech && speech.getVoices)
-			{
-				var voices = speech.getVoices();
-				for (var i=0;i<voices.length; i++)
-				{
-					if (voices[i].name == value)
-					{
+			var voices = wisej.web.extender.speech.SpeechSynthesis.voices;
+
+			if (speech && voices) {
+				for (var i = 0; i < voices.length; i++) {
+					if (voices[i].name == value) {
 						this.__voice = voices[i];
 						break;
 					}

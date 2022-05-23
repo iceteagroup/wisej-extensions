@@ -270,6 +270,16 @@ namespace Wisej.Web.Ext.NavigationBar
 		private NavigationBarItemCollection _items;
 
 		/// <summary>
+		/// Returns whether the <see cref="NavigationBarItem"/> contains child items.
+		/// </summary>
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public new bool HasChildren
+		{
+			get => this._items?.Count > 0;
+		}
+
+		/// <summary>
 		/// Returns or sets the background color.
 		/// </summary>
 		[SRCategory("CatAppearance")]

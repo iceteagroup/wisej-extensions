@@ -459,6 +459,20 @@ namespace Wisej.Web.Ext.ChartJS
 	}
 
 	/// <summary>
+	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Bubble"/> chart.
+	/// </summary>
+	public class BubbleDataSet : DataSet
+	{
+		/// <summary>
+		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.BubbleDataSet"/>.
+		/// </summary>
+		public BubbleDataSet() : base()
+		{
+			this.Type = ChartType.Bubble;
+		}
+	}
+
+	/// <summary>
 	/// Specialized data set for the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Doughnut"/> chart.
 	/// </summary>
 	public class DoughnutDataSet : DataSet
