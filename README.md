@@ -1,34 +1,61 @@
-Wisej-Extensions
-====
+<div id="top"></div>
 
-Repository for __Wisej - Full Stack Web Development__ extensions.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="https://wisej.com/wp-content/uploads/2022/05/wisej-dotnet-logotype-main-nav-203-05312022.png" alt="Logo" width="203" height="68">
+  </a>
 
-__Wisej__ is designed to build, debug, deploy and manage web applications of any complexity in Visual Studio or SharpDevelop. It’s a highly specialized framework for Real Time Web Applications. Developers can focus on their projects and don’t worry about HTML, state management, backend services, callbacks, ajax panels, synchronization, DOM, CSS, JavaScript, security, authentication, concurrency...
+  <h3 align="center">Wisej.NET Extensions</h3>
 
-This repository groups the content of all extensions found on [Wisej site](https://wisej.com/extensions/) and some new extensions. This repository is updated more frequently than the source code at Wisej site.
+  <p align="center">
+    View the entire Wisej.NET Extension Suite
+    <br />
+    <a href="https://wisej.com">Wisej.com</a>
+    ·
+    <a href="https://madewithwisej.com">MadeWithWisej.com</a>
+    ·
+    <a href="https://docs.wisej.com">Wisej.NET Docs</a>
+  </p>
+</div>
 
-Developers new to Wisej should install [Wisej trial version](https://wisej.com/#buy).
+<!-- ABOUT THE PROJECT -->
+## About The Project
+![Wisej.NET Extensions](https://user-images.githubusercontent.com/21205878/171510449-4a02bf8a-503e-4951-ab56-14bceef5e915.png)
 
-## Extending Wisej
+This repository groups the content of all extensions found on Wisej.NET site and some new extensions.
 
-Wisej was designed to be extensible and open to all sorts of technologies from the start. The extensions published are a fraction of what is possible and what will be available during the product’s lifetime.
+## About Wisej.NET
 
-Note that most published extensions are also already precompiled and included in the installer and are automatically added to Visual Studio’s toolbox.
+Wisej.NET provides a platform and set of tools designed to ease the burden of developing, testing, deploying, and maintaining complex business software. It bridges the gap between traditional WinForms-style desktop applications and the web by empowering developers to leverage their existing .NET and C# or VB.NET skills.
 
-## News
+Developers are able to use the tools they are familiar with, like a pixel-perfect design surface and drag-and-drop controls with the languages they are comfortable with (C# or VB.NET) to build real-time web applications without having to learn HTML, CSS, or JavaScript. They can stay in their favorite IDE like Visual Studio to take advantage of features like IntelliSense, integrated debugging, design surfaces and source control integration. Front-end developers can leverage their knowledge of web technologies to augment applications and seamlessly integrate third-party packages like HTML5 charting libraries and ASP.NET controls.
 
-| Extension | Change&nbsp;Date | Description |
-| :--- | :---: | :--- |
-| Wisej.Web.Ext.ChartJs | 16 Aug 2018 | Added support for SteppedLine. Set colours and style on each individual point. Upgraded to chartjs 2.7.2. |
-| Wisej.Web.Ext.FullCalendar | 12 Aug 2018 | Added support for the Scheduler plug in, timeline views and BusinessHours. Upgraded to fullcalendar 3.9.0. |
-| Wisej.Web.Ext.RibbonBar | 12 Aug 2018 | Added a slidebar to scroll tab buttons and tab pages that exceed the width of the container. |
-| Wisej.Web.Ext.RibbonBar | 07 Aug 2018 | Items are removed when disposed. |
-| Wisej.Web.Ext.GoogleMaps | 07 Aug 2018 | Prevent capturing clicks on overlays on mobile. |
-| Wisej.Web.Ext.GoogleMaps | 31 Jul 2018 | Added Reverse Geocode support including awaitable methods. |
-| Wisej.Ext.Geolocation | 29 Jul 2018 | Added awaitable methods. |
-| Wisej.Web.Ext.Html2Canvas | 29 Jul 2018 | Added awaitable methods. |
-| Wisej.Web.Ext.SmoothieChart | 29 Jul 2018 | Added awaitable methods. |
+To bridge the gap between legacy desktop applications and modern web applications, Wisej.NET provides several features that create a straightforward path to migrate existing applications or build green field projects without having to learn a new set of technologies. Support for touch and gestures is built into the software with emulation to support the desktop experience, localization is a first-class citizen, and the applications Wisej.NET produces are out-of-the-box responsive. That means they are readily accessible from desktop browsers, mobile smartphones and tablets.
 
-License
--------
-Wisej is Copyright Ice Tea Group LLC, 2018
+[The Easy Button for Enterprise Software >>](https://www.codeproject.com/Articles/1208339/Wisej-The-Easy-Button-for-Enterprise-Software)
+
+### Key Benefits
+<b>Fast Development</b>: Create complex cloud applications faster than Blazor, Angular, or other web frameworks.
+<br>
+<b>Flat Learning Curve</b>: C#, VB.NET, WinForms, WPF, Silverlight and ASP.NET developers are productive in no time.
+<br>
+<b>Open and Integrated</b>: Seamlessly integrate any JavaScript widget as a .NET component. Easy Deployment: Cloud, Hosting, On-Premise, Hybrid Desktop or Mobile options available.
+
+### Features
+* WYSIWYG Pixel-Perfect Designer
+* Advanced Theme Builder
+* Integrated Drag & Drop
+* Native SVG Icons
+* Background Tasks
+* Full State Management
+* Modal Workflow
+* Responsive Design
+* No JavaScript, HTML, CSS Required
+* 100+ Controls Available
+
+## Support
+To log issues related to this project, please use the Issues section of this repository.
+
+You may also fork this project and modify it to fit your needs and if you want to share a change or fix, please create a pull request.
