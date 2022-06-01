@@ -39,7 +39,7 @@ this.init = function (options) {
 		var delay = me.autoUpdateDelay;
 		if (delay) {
 			me.updateTimer = setTimeout(function () {
-				me.fireWidgetEvent("change", editor.getValue());
+				me.fireWidgetEvent("change", me.editor.getValue());
 			}, delay);
 		}
 	});

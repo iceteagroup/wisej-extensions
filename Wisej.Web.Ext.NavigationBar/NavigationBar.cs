@@ -159,13 +159,8 @@ namespace Wisej.Web.Ext.NavigationBar
 						this._selectedItem.Selected = true;
 
 					// expand all parents.
-					if (this._selectedItem != null)
-					{
-						for (var parent = this._selectedItem.Parent; parent != null; parent = parent.Parent)
-						{
-							parent.Expanded = true;
-						}
-					}
+					if (!this.CompactView)
+						EnsureItemIsVisible(this._selectedItem);
 
 					OnSelectedItemChanged(EventArgs.Empty);
 				}
@@ -210,11 +205,21 @@ namespace Wisej.Web.Ext.NavigationBar
 
 						this.Width = this.CompactViewWidth;
 						this.avatar.Size = this.avatar.MaximumSize = this.logo.Size;
+
+						// auto collapse all children.
+						foreach (var item in this.Items)
+						{
+							item.Expanded = false;
+						}
+
 					}
 					else if (this._savedWidth > 0)
 					{
 						this.Width = this._savedWidth;
 						this.avatar.Size = this.avatar.MaximumSize = this._savedAvatarSize;
+
+						// make sure the selected item is visible, in case the parent was collapsed.
+						EnsureItemIsVisible(this.SelectedItem);
 					}
 
 					OnCompactViewChanged(EventArgs.Empty);
@@ -602,6 +607,17 @@ namespace Wisej.Web.Ext.NavigationBar
 		public new event ToolClickEventHandler ToolClick { add { } remove { } }
 
 		#endregion
+
+		private void EnsureItemIsVisible(NavigationBarItem item)
+		{
+			if (item == null)
+				return;
+
+			for (var parent = item.Parent; parent != null; parent = parent.Parent)
+			{
+				parent.Expanded = true;
+			}
+		}
 
 		private void NavigationBar_KeyDown(object sender, KeyEventArgs e)
 		{

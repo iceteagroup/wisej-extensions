@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 //
-// (C) 2018 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
+// (C) 2022 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
 //
 // 
 //
@@ -16,35 +16,31 @@
 // FROM ICE TEA GROUP LLC.
 //
 ///////////////////////////////////////////////////////////////////////////////
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Wisej.Web.Ext.Navigator
+namespace Wisej.Web.Ext.NavigationBar
 {
 	/// <summary>
-	/// Determines how the <see cref="Navigator"/> manages the views
-	/// when loading (navigating to) and unloading (navigating away).
+	/// Represents a menu item in the context menu displayed when the
+	/// <see cref="NavigationBar.CompactView"/> is true and the user
+	/// selects an item with child items.
 	/// </summary>
-	public enum NavigatorViewMode
+	public class NavigationBarMenuItem : MenuItem
 	{
 		/// <summary>
-		/// The view is disposed when unloaded.
+		/// Returns or sets the <see cref="NavigationBarItem"/> that corresponds to this menu item.
 		/// </summary>
-		Dispose,
+		public NavigationBarItem Item { get; set; }
 
-		/// <summary>
-		/// The view is not disposed when unloaded, but it will
-		/// be disposed by the GC unless it's reused before the GC kicks in.
-		/// </summary>
-		Collect,
+		#region Wisej Implementation
 
-		/// <summary>
-		/// The view is not disposed when unloaded, it is hidden
-		/// and then shown again when reused.
-		/// </summary>
-		Persist,
+		protected override void OnWebRender(dynamic config)
+		{
+			base.OnWebRender((object)config);
+
+			if (config.className == "wisej.web.menu.MenuItem")
+				config.className = "wisej.web.ext.NavigationBarMenuItem";
+		}
+
+		#endregion
 	}
 }

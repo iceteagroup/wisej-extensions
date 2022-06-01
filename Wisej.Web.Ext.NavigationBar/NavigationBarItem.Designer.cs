@@ -59,7 +59,7 @@
 			this.header.Spacing = 12;
 			this.header.TabIndex = 1;
 			this.header.TabStop = true;
-			this.header.Click += new System.EventHandler(this.header_Click);
+			this.header.Anonymous = true;
 			// 
 			// icon
 			// 
@@ -156,6 +156,7 @@
 			this.Spacing = 0;
 			this.header.ResumeLayout(false);
 			this.header.PerformLayout();
+			this.Click += new System.EventHandler(this.NavigationBarItem_Click);
 			((System.ComponentModel.ISupportInitialize)(this.icon)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.shortcut)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.open)).EndInit();

@@ -11,7 +11,12 @@
 
   <ItemGroup>
     <None Remove="NavigationBar.bmp" />
+    <None Remove="Platform\wisej.web.ext.NavigationBarMenu.js" />
     <None Remove="Themes\NavigationBar.mixin.theme" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Platform\wisej.web.ext.NavigationBarMenu.js" />
   </ItemGroup>
 
   <ItemGroup>

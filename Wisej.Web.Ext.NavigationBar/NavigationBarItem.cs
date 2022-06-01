@@ -102,64 +102,6 @@ namespace Wisej.Web.Ext.NavigationBar
 			this.Collapse?.Invoke(this, e);
 		}
 
-		#region Redirect pointer events from the header panel
-
-		public new event EventHandler Click
-		{
-			add { this.header.Click += value; }
-			remove { this.header.Click -= value; }
-		}
-
-		public new event EventHandler Tap
-		{
-			add { this.header.Tap += value; }
-			remove { this.header.Tap -= value; }
-		}
-
-		public new event EventHandler LongTap
-		{
-			add { this.header.LongTap += value; }
-			remove { this.header.LongTap -= value; }
-		}
-
-		public new event SwipeEventHandler Swipe
-		{
-			add { this.header.Swipe += value; }
-			remove { this.header.Swipe -= value; }
-		}
-
-		public new event MouseEventHandler MouseClick
-		{
-			add { this.header.MouseClick += value; }
-			remove { this.header.MouseClick -= value; }
-		}
-
-		public new event MouseEventHandler MouseDown
-		{
-			add { this.header.MouseDown += value; }
-			remove { this.header.MouseDown -= value; }
-		}
-
-		public new event MouseEventHandler MouseUp
-		{
-			add { this.header.MouseUp += value; }
-			remove { this.header.MouseUp -= value; }
-		}
-
-		public new event EventHandler MouseEnter
-		{
-			add { this.header.MouseEnter += value; }
-			remove { this.header.MouseEnter -= value; }
-		}
-
-		public new event EventHandler MouseLeave
-		{
-			add { this.header.MouseLeave += value; }
-			remove { this.header.MouseLeave -= value; }
-		}
-
-		#endregion
-
 		#endregion
 
 		#region Properties
@@ -344,6 +286,16 @@ namespace Wisej.Web.Ext.NavigationBar
 			{
 				if (this._expanded != value)
 				{
+
+					// ignore if in compact view. show a context menu instead.
+					if (value && this.NavigationBar != null && this.NavigationBar.CompactView)
+					{
+						if (this.HasChildren && this.Parent == null)
+							ShowItemContextMenu();
+
+						return;
+					}
+
 					this._expanded = value;
 					this.items.Visible = value;
 
@@ -851,7 +803,7 @@ namespace Wisej.Web.Ext.NavigationBar
 			this.Expanded = !this.Expanded;
 		}
 
-		private void header_Click(object sender, EventArgs e)
+		private void NavigationBarItem_Click(object sender, System.EventArgs e)
 		{
 			if (this.ExpandOnClick)
 				this.Expanded = !this.Expanded;
@@ -883,6 +835,47 @@ namespace Wisej.Web.Ext.NavigationBar
 
 			if (this.DesignMode)
 				this.NavigationBar?.Update();
+		}
+
+		private void ShowItemContextMenu()
+		{
+			var contextMenu = CreateItemMenu();
+			contextMenu.Show(this, Placement.RightTop, (c) => { c.Dispose(); });
+		}
+
+		/// <summary>
+		/// Creates the menu used to show child items when the <see cref="NavigationBar.CompactView"/> property is set to true.
+		/// </summary>
+		/// <returns>A <see cref="NavigationBarMenu"/> instance.</returns>
+		protected virtual NavigationBarMenu CreateItemMenu()
+		{
+			var contextMenu = new NavigationBarMenu();
+			CreateMenuItems(contextMenu.MenuItems);
+			return contextMenu;
+		}
+
+		private void CreateMenuItems(Menu.MenuItemCollection items)
+		{
+			foreach (var item in this.Items)
+			{
+				var menu = new NavigationBarMenuItem
+				{
+					Item = item,
+					Text = item.Text,
+					Name = item.Name,
+					IconSource = item.Icon
+				};
+				menu.Click += Menu_Click;
+				items.Add(menu);
+
+				if (item.HasChildren)
+					item.CreateMenuItems(menu.MenuItems);
+			}
+		}
+
+		private static void Menu_Click(object sender, EventArgs e)
+		{
+			((NavigationBarMenuItem)sender).Item.OnClick(e);
 		}
 
 		#endregion

@@ -10,8 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Templates\Visual C#\TourPanel\TourPanel.cs" />
-    <Compile Remove="Templates\Visual C#\TourPanel\TourPanel.Designer.cs" />
+    <Compile Remove="Templates\**" />
+    <Compile Remove="Wisej.TourPanel.Templates\**" />
+    <EmbeddedResource Remove="Templates\**" />
+    <EmbeddedResource Remove="Wisej.TourPanel.Templates\**" />
+    <None Remove="Templates\**" />
+    <None Remove="Wisej.TourPanel.Templates\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,11 +29,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Platform\wisej.web.ext.TourPanel.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Templates\Visual C#\TourPanel\TourPanel.cs" />
-    <None Include="Templates\Visual C#\TourPanel\TourPanel.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)'=='net48' ">

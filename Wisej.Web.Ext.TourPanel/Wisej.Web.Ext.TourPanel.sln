@@ -1,22 +1,41 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.TourPanel", "Wisej.Web.Ext.TourPanel.csproj", "{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.TourPanel", "Wisej.Web.Ext.TourPanel.csproj", "{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.TourPanel.Templates", "Wisej.TourPanel.Templates\Wisej.TourPanel.Templates.csproj", "{F5915BE7-8E0F-4CF3-8F20-2809489FCC31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}.Debug|x86.Build.0 = Debug|Any CPU
 		{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}.Release|x86.ActiveCfg = Release|Any CPU
+		{CCDC3962-93A1-4456-AEEA-E3AC349E5A2B}.Release|x86.Build.0 = Release|Any CPU
+		{F5915BE7-8E0F-4CF3-8F20-2809489FCC31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5915BE7-8E0F-4CF3-8F20-2809489FCC31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5915BE7-8E0F-4CF3-8F20-2809489FCC31}.Debug|x86.ActiveCfg = Debug|x86
+		{F5915BE7-8E0F-4CF3-8F20-2809489FCC31}.Debug|x86.Build.0 = Debug|x86
+		{F5915BE7-8E0F-4CF3-8F20-2809489FCC31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5915BE7-8E0F-4CF3-8F20-2809489FCC31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5915BE7-8E0F-4CF3-8F20-2809489FCC31}.Release|x86.ActiveCfg = Release|x86
+		{F5915BE7-8E0F-4CF3-8F20-2809489FCC31}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC9D1210-8918-4EF0-A7F5-4EF95F9A8D86}
 	EndGlobalSection
 EndGlobal

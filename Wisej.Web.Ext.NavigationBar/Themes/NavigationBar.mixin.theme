@@ -1,11 +1,11 @@
- {
+{
 	"name": "NavigationBar.mixin",
-	"images":  {
+	"images": {
 		"navbar-open": "",
 		"navbar-close": "",
 		"navbar-shortcut": ""
 	},
-	"colors":  {
+	"colors": {
 		"navbar-background": "#2C3D4D",
 		"navbar-background-hover": "#243340",
 		"navbar-background-selected": "#486680",
@@ -13,26 +13,26 @@
 		"navbar-text-hover": "#E9ECEF",
 		"navbar-text-selected": "#E9ECEF"
 	},
-	"appearances":  {
-		"navbar":  {
-			"states":  {
-				"default":  {
-					"styles":  {
+	"appearances": {
+		"navbar": {
+			"states": {
+				"default": {
+					"styles": {
 						"transition": "width 250ms"
 					},
-					"properties":  {
+					"properties": {
 						"textColor": "navbar-text",
 						"backgroundColor": "navbar-background"
 					}
 				}
 			},
-			"components":  {
-				"user-info":  {
+			"components": {
+				"user-info": {
 				},
-				"user-avatar":  {
-					"states":  {
-						"default":  {
-							"styles":  {
+				"user-avatar": {
+					"states": {
+						"default": {
+							"styles": {
 								"radius": 40,
 								"width": 1,
 								"color": "#DCE3E3",
@@ -41,10 +41,10 @@
 						}
 					}
 				},
-				"user-status":  {
-					"states":  {
-						"default":  {
-							"styles":  {
+				"user-status": {
+					"states": {
+						"default": {
+							"styles": {
 								"radius": 20
 							}
 						}
@@ -52,41 +52,41 @@
 				}
 			}
 		},
-		"navbar-item":  {
-			"states":  {
-				"default":  {
-					"styles":  {
+		"navbar-item": {
+			"states": {
+				"default": {
+					"styles": {
 						"transform": "translateZ(0)",
 						"transition": "height 250ms, top 250ms"
 					}
 				}
 			},
-			"components":  {
-				"info":  {
-					"states":  {
-						"default":  {
-							"styles":  {
+			"components": {
+				"info": {
+					"states": {
+						"default": {
+							"styles": {
 								"radius": 4
 							}
 						}
 					}
 				},
-				"header":  {
-					"states":  {
-						"default":  {
+				"header": {
+					"states": {
+						"default": {
 							"properties": {
 								"textColor": "inherit",
 								"backgroundColor": "transparent"
 							}
 						},
-						"selected":  {
-							"properties":  {
+						"selected": {
+							"properties": {
 								"textColor": "navbar-text-selected",
 								"backgroundColor": "navbar-background-selected"
 							}
 						},
-						"hovered":  {
-							"properties":  {
+						"hovered": {
+							"properties": {
 								"textColor": "navbar-text-hover",
 								"backgroundColor": "navbar-background-hover"
 							}
@@ -112,6 +112,116 @@
 					}
 				},
 				"items": {
+				}
+			}
+		},
+		"navbar-menu": {
+			"states": {
+				"default": {
+					"styles": {
+						"backgroundColor": "navbar-background"
+					},
+					"properties": {
+						"iconColumnWidth": 16,
+						"font": "menu",
+						"placementModeX": "keep-align",
+						"placementModeY": "keep-align"
+					}
+				},
+				"submenu": {
+					"properties": {
+						"position": "right-top"
+					}
+				}
+			},
+			"components": {
+				"item": {
+					"states": {
+						"default": {
+							"properties": {
+								"textColor": "navbar-text",
+								"opacity": 1,
+								"icon": null,
+								"height": 45,
+								"padding": [ 0, 5, 0, 8 ]
+							},
+							"styles": {
+								"backgroundColor": "transparent"
+							}
+						},
+						"selected": {
+							"styles": {
+								"backgroundColor": "navbar-background-selected"
+							},
+							"properties": {
+								"cursor": "pointer",
+								"textColor": "navbar-text-selected"
+							}
+						},
+						"disabled": {
+							"properties": {
+								"opacity": 0.5
+							}
+						}
+					},
+					"components": {
+						"icon": {
+							"states": {
+								"default": {
+									"properties": {
+										"marginRight": 8,
+										"scale": true,
+										"textColor": "navbar-text"
+									}
+								},
+								"hovered": {
+									"properties": {
+										"textColor": "navbar-text-hover"
+									}
+								},
+								"selected": {
+									"properties": {
+										"textColor": "navbar-text-selected"
+									}
+								}
+							},
+							"inherit": "icon-dark"
+						},
+						"shortcut": {
+							"states": {
+								"default": {
+									"properties": {
+										"paddingLeft": 20,
+										"paddingRight": 5
+									}
+								}
+							}
+						},
+						"arrow": {
+							"states": {
+								"default": {
+									"properties": {
+										"source": "menu-parent"
+									}
+								}
+							},
+							"inherit": "icon-dark"
+						}
+					}
+				},
+				"separator": {
+					"states": {
+						"default": {
+							"styles": {
+								"widthBottom": 1,
+								"colorBottom": "windowFrame"
+							},
+							"properties": {
+								"height": 1,
+								"margin": [ 6, 2, 6, 2 ]
+							}
+						}
+					}
 				}
 			}
 		}
