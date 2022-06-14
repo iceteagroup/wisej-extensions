@@ -12,6 +12,9 @@
   <p align="center">
     View the entire Wisej.NET Extension Suite
     <br />
+    <a href="https://demo.wisej.com/demos/#Extensions/Premium"><strong>View the Live Demo »</strong></a>
+    <br />
+    <br />
     <a href="https://wisej.com">Wisej.com</a>
     ·
     <a href="https://madewithwisej.com">MadeWithWisej.com</a>
