@@ -20,7 +20,7 @@ this.init = function (config) {
 	config.options.maintainAspectRatio = false;
 
 	// applies the tooltip configuration to the chart.
-	this.__applyTooltips(config.options);
+	this.__applyTooltips(config);
 
 	// applies the data label configuration to the chart.
 	this.__applyDataLabel(config.options);
@@ -196,19 +196,20 @@ this.__setEmbeddedFont = function (options) {
 
 /**
  * Applies the tooltip with the formatted data label, if applicable.
- * @param {any} options
+ * @param {any} config
  */
-this.__applyTooltips = function (options) {
+this.__applyTooltips = function (config) {
 
-	if (options == null)
+	if (config == null)
 		return;
 
-	var tooltips = options.tooltips;
+	var labels = config.data.labels;
+	var tooltips = config.options.tooltips;
 	if (tooltips) {
 		tooltips.callbacks = {
 			label: function (tooltipItem, data) {
+				var label = labels[tooltipItem.index] ?? "Data Set";
 				var dataset = data.datasets[tooltipItem.datasetIndex];
-				var label = dataset.label ?? "Data Set";
 				var formattedValue = dataset.formatted?.[tooltipItem.index]
 					?? dataset.data[tooltipItem.index];
 
