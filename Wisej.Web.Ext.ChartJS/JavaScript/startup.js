@@ -19,12 +19,11 @@ this.init = function (config) {
 	config.options.responsive = true;
 	config.options.maintainAspectRatio = false;
 
-	var dataLabel = config.options.dataLabel;
-	if (dataLabel) {
-		dataLabel.embedFontObject = true;
-		config.options.plugins = { datalabels: dataLabel }
-		delete config.options.dataLabel;
-	}
+	// applies the tooltip configuration to the chart.
+	this.__applyTooltips(config);
+
+	// applies the data label configuration to the chart.
+	this.__applyDataLabel(config.options);
 
 	// convert fonts and colors from Wisej maps to
 	// the appropriate field in the options map.
@@ -164,9 +163,10 @@ this.updateData = function (datasets, labels, duration) {
 
 		this.__normalizeColorArrays(datasets);
 
-		// update only the data of each data set.
-		for (var i = 0; i < datasets.length; i++)
+		for (var i = 0; i < datasets.length; i++) {
 			this.chart.data.datasets[i].data = datasets[i].data;
+			this.chart.data.datasets[i].formatted = datasets[i].formatted;
+        }
 
 		if (labels)
 		    this.chart.config.data.labels = labels;
@@ -191,6 +191,54 @@ this.__setEmbeddedFont = function (options) {
 				style: font.isBold() ? "bold" : "normal"
 			}
 		}
+	}
+}
+
+/**
+ * Applies the tooltip with the formatted data label, if applicable.
+ * @param {any} config
+ */
+this.__applyTooltips = function (config) {
+
+	if (config == null)
+		return;
+
+	var labels = config.data.labels;
+	var tooltips = config.options.tooltips;
+	if (tooltips) {
+		tooltips.callbacks = {
+			label: function (tooltipItem, data) {
+				var label = labels[tooltipItem.index] ?? "Data Set";
+				var dataset = data.datasets[tooltipItem.datasetIndex];
+				var formattedValue = dataset.formatted?.[tooltipItem.index]
+					?? dataset.data[tooltipItem.index];
+
+				return `${label}: ${formattedValue}`;
+			}
+		}
+	}
+}
+
+/**
+ * Applies the data label configuration to the chart.
+ * @param {any} options
+ */
+this.__applyDataLabel = function (options) {
+
+	if (options == null)
+		return;
+
+	var dataLabel = options.dataLabel;
+	if (dataLabel) {
+		dataLabel.embedFontObject = true;
+		options.plugins = { datalabels: dataLabel }
+		options.plugins.datalabels.formatter = function (value, context) {
+			var index = context.dataset.data.indexOf(value);
+			var formattedValue = context.dataset.formatted?.[index] ?? value;
+
+			return formattedValue;
+		}
+		delete options.dataLabel;
 	}
 }
 
