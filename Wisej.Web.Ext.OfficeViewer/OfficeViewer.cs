@@ -22,6 +22,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Net.Mime;
+using System.Web;
 using Wisej.Base;
 using Wisej.Core;
 
@@ -206,7 +207,7 @@ namespace Wisej.Web.Ext.OfficeViewer
 
 			this.Url =
 				OFFICEAPPS_URL +
-				WebUtility.UrlEncode(startUpUrl + this.GetServiceURL());
+				WebUtility.UrlEncode(startUpUrl + this.GetServiceURL() + "?v=" + DateTime.Now.Ticks);
 		}
 
 		#endregion
@@ -221,8 +222,8 @@ namespace Wisej.Web.Ext.OfficeViewer
 		/// <summary>
 		/// Process the HTTP request.
 		/// </summary>
-		/// <param name="context">The current <see cref="System.Web.HttpContext"/>.</param>
-		void IWisejHandler.ProcessRequest(System.Web.HttpContext context)
+		/// <param name="context">The current <see cref="HttpContext"/>.</param>
+		void IWisejHandler.ProcessRequest(HttpContext context)
 		{
 			var args = new HandledEventArgs(false);
 			OnFileRequested(args);
@@ -238,7 +239,7 @@ namespace Wisej.Web.Ext.OfficeViewer
 					: Path.GetFileName(this.FileSource);
 
 			response.ContentType = "text/plain";
-			response.AppendHeader("Content-Disposition", new ContentDisposition() { DispositionType = "attachment", FileName =  fileName}.ToString());
+			response.AppendHeader("Content-Disposition", new ContentDisposition() { DispositionType = "attachment", FileName = fileName }.ToString());
 
 			if (this._fileStream != null)
 			{
