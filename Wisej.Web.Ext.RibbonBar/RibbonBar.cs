@@ -735,7 +735,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		///</summary>
 		/// <returns>An <see cref="T:Wisej.Web.ImageList" /> that contains images available to the <see cref="RibbonBarItem" /> controls. The default is null.</returns>
 		[DefaultValue(null)]
-		[SRCategory("CatBehavior")]
+		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the collection of images available to the RibbonBar items.")]
 		public ImageList ImageList
 		{
@@ -762,8 +762,8 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets the compact view mode.
 		/// </summary>
 		[DefaultValue(false)]
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		[SRCategory("CatAppearance")]
+		[Description("Returns or sets the compact view mode.")]
 		public bool CompactView
 		{
 			get => this._compactView;

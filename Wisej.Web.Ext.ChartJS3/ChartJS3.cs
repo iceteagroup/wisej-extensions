@@ -221,20 +221,17 @@ namespace Wisej.Web.Ext.ChartJS3
 					base.Packages.AddRange(new[] {
 						new Package()
 						{
-							Name = "chart.js",
+							Name = "chart-3.js",
 							Source = GetResourceURL("Wisej.Web.Ext.ChartJS3.JavaScript.chart.js")
 						},
-
-						// add packages.
 						new Package()
 						{
-							Name = "moment.js",
+							Name = "moment-3.js",
 							Source = GetResourceURL("Wisej.Web.Ext.ChartJS3.JavaScript.moment.js")
 						},
-
 						new Package()
 						{
-							Name = "chartjs-plugin-datalabels.js",
+							Name = "chartjs-3-plugin-datalabels.js",
 							Source = GetResourceURL("Wisej.Web.Ext.ChartJS3.JavaScript.chartjs-plugin-datalabels.js")
 						}
 					});

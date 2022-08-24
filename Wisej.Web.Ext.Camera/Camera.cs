@@ -207,10 +207,32 @@ namespace Wisej.Web.Ext.Camera
 		}
 		private bool _video = true;
 
-		/// <summary>
-		/// Specifies whether the video is front-facing (mobile-only).
-		/// </summary>
-		[DesignerActionList]
+        /// <summary>
+        /// Specifies whether the media should be mirrored.
+        /// </summary>
+        [DesignerActionList]
+        [DefaultValue(false)]
+        public bool Mirror
+        {
+            get
+            {
+                return this._mirror;
+            }
+            set
+            {
+                if (this._mirror != value)
+                {
+                    this._mirror = value;
+                    Update();
+                }
+            }
+        }
+        private bool _mirror = false;
+
+        /// <summary>
+        /// Specifies whether the video is front-facing (mobile-only).
+        /// </summary>
+        [DesignerActionList]
 		[DefaultValue(true)]
 		public VideoFacingMode FacingMode
 		{
@@ -427,7 +449,8 @@ namespace Wisej.Web.Ext.Camera
 			base.OnWebRender((object)config);
 
 			config.className = "wisej.web.ext.Camera";
-			
+
+			config.mirror = this.Mirror;
 			config.objectFit = this.ObjectFit;
 			config.borderStyle = this.BorderStyle;
 			config.videoFilter = this.VideoFilter;

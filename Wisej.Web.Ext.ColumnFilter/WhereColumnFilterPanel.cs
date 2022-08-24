@@ -89,9 +89,16 @@ namespace Wisej.Web.Ext.ColumnFilter
 			{
 				// make all rows visible before applying the filters.
 				var dataGrid = this.DataGridViewColumn.DataGridView;
-				foreach (var row in dataGrid.Rows)				
-					row.Visible = true;									
-				
+				foreach (var row in dataGrid.Rows)
+				{
+					row.Visible = true;
+				}
+
+				// remove all summary rows.
+				dataGrid.Rows
+					.Where(r => r is DataGridViewSummaryRow)
+					.ToList().ForEach(r => dataGrid.Rows.Remove(r));
+
 				// reset Combined where
 				dataGrid.UserData.columFiltercombinedWhere = "";
 
@@ -110,12 +117,11 @@ namespace Wisej.Web.Ext.ColumnFilter
 					}					
 				}
 
-				FilteredRowCount = dataGrid.Rows.GetRowCount(DataGridViewElementStates.Visible);
-				if (ColumnFilter != null)
+				if (this.ColumnFilter != null)
 				{
-					ColumnFilter.OnFiltersApplied(FilteredRowCount);
+					this.ColumnFilter.OnRowsFiltered(
+						dataGrid.Rows.GetRowCount(DataGridViewElementStates.Visible));
 				}
-
 			}
 			finally
 			{
@@ -175,7 +181,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		private string GetWhereForNumber()
 		{
 			string where = "";
-			string Condition = "";
+			string condition = "";
 
 			Type type = this.DataGridViewColumn.ValueType;
 			if (Nullable.GetUnderlyingType(type) != null)
@@ -186,8 +192,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 			if (cmbOperator.SelectedIndex > -1)
 			{
-				Condition = Value1 + cmbOperator.SelectedItem.ToString() + "Convert.To" + Type + "(\"" + txtValue.Text + "\")";
-				where = AppendCondition(Condition, "", where);
+				condition = Value1 + cmbOperator.SelectedItem.ToString() + "Convert.To" + Type + "(\"" + txtValue.Text + "\")";
+				where = AppendCondition(condition, "", where);
 			}
 
 			// only check cloned fields when the first condition is valid.
@@ -209,8 +215,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 						txt = c as TextBox;
 						if (cmb.SelectedIndex > -1 && txt.Text != null)
 						{
-							Condition = Value1 + cmb.SelectedItem.ToString() + "Convert.To" + Type + "(\"" + txt.Text + "\")";
-							where = AppendCondition(Condition, LogicalOperator, where);
+							condition = Value1 + cmb.SelectedItem.ToString() + "Convert.To" + Type + "(\"" + txt.Text + "\")";
+							where = AppendCondition(condition, LogicalOperator, where);
 						}
 					}
 					else if (c is lblANDOR && c != labelLogicalOperator)
@@ -227,15 +233,15 @@ namespace Wisej.Web.Ext.ColumnFilter
 		private string GetWhereForBool()
 		{
 			string where = "";
-			string Condition = "";
+			string condition = "";
 
 			string Type = "Boolean";
 			string Value1 = Value1 = "Convert.To" + Type + "(Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value)";
 
 			if (cmbOperator.SelectedIndex > -1)
 			{
-				Condition = GetBoolCondition(Value1, cmbOperator.SelectedItem.ToString());
-				where = AppendCondition(Condition, "", where);
+				condition = GetBoolCondition(Value1, cmbOperator.SelectedItem.ToString());
+				where = AppendCondition(condition, "", where);
 			}
 			string LogicalOperator = labelLogicalOperator.GetOperator();
 			// only check cloned fields when the first condition is valid.
@@ -251,8 +257,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 						cmb = c as ComboBox;
 						if (cmb.SelectedIndex > -1)
 						{
-							Condition = GetBoolCondition(Value1, cmb.SelectedItem.ToString());
-							where = AppendCondition(Condition, LogicalOperator, where);
+							condition = GetBoolCondition(Value1, cmb.SelectedItem.ToString());
+							where = AppendCondition(condition, LogicalOperator, where);
 						}
 					}					
 					else if (c is lblANDOR && c != labelLogicalOperator)

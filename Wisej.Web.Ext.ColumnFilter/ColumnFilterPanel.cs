@@ -52,6 +52,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// to this <see cref="ColumnFilterPanel"/>.
 		/// </summary>
 		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public DataGridViewColumn DataGridViewColumn
 		{
 			get;
@@ -62,6 +63,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// Returns the control used as the filter button.
 		/// </summary>
 		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public PictureBox FilterButton
 		{
 			get { return this.DataGridViewColumn?.HeaderCell.Control as PictureBox; }
@@ -72,13 +74,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// <see cref="ColumnFilterPanel"/>.
 		/// </summary>
 		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public ColumnFilter ColumnFilter
-		{
-			get;
-			internal set;
-		}
-
-		public int FilteredRowCount
 		{
 			get;
 			internal set;

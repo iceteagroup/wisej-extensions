@@ -191,6 +191,17 @@ qx.Class.define("wisej.web.RibbonBar", {
 		 */
 		_applyCompactView: function (value, old) {
 
+			// if the ribbon bar is not visible we have to wait until it's visible
+			// to enable the compact view mode.
+			if (!this.isSeeable()) {
+				if (value) {
+					this.addListenerOnce("appear", function () {
+						this._applyCompactView(this.getCompactView());
+					}, this);
+				}
+				return;
+			}
+
 			var bar = this.tabview.getChildControl("bar");
 			var barSize = bar.getSizeHint();
 

@@ -37,6 +37,13 @@ qx.Class.define("wisej.web.ext.Camera", {
 		appearance: { init: "widget", refine: true },
 
 		/**
+		 * Mirror property.
+		 *
+		 * Specifies whether the media stream should be mirrored.
+		 */
+		mirror: { init: false, check: "Boolean", apply: "_applyMirror" },
+
+		/**
 		 * Constraints property.
 		 * 
 		 * See: https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamConstraints
@@ -150,11 +157,16 @@ qx.Class.define("wisej.web.ext.Camera", {
 		 */
 		getImage: function () {
 
-			var ctx = this.__getCanvasContext();
+			var mediaObject = this._media.getMediaObject();
+			var height = mediaObject.videoHeight;
+			var width = mediaObject.videoWidth;
+			
+			var ctx = this.__getCanvasContext(height, width);
 			if (ctx) {
 
 				ctx.filter = this.getVideoFilter();
-				ctx.drawImage(this._media.getMediaObject(), 0, 0, this.canvas.width, this.canvas.height);
+				ctx.drawImage(mediaObject, 0, 0, width, height);
+
 				return this.canvas.toDataURL();
 			}
 
@@ -243,6 +255,19 @@ qx.Class.define("wisej.web.ext.Camera", {
 		},
 
 		/**
+		 * Applies the mirror property.
+		 * @param {any} value
+		 * @param {any} old
+		 */
+		_applyMirror: function (value, old) {
+
+			var scaleFactor = value ? "-1" : "1";
+			var media = this._media.getMediaObject();
+
+			media.style.transform = `scaleX(${scaleFactor})`;
+        },
+
+		/**
 		 * Applies the Constraints property.
 		 */
 		_applyConstraints: function (value, old) {
@@ -308,14 +333,13 @@ qx.Class.define("wisej.web.ext.Camera", {
 		},
 
 		// creates a hidden <canvas> element to capture the camera image.
-		__getCanvasContext: function () {
+		__getCanvasContext: function (height, width) {
 
 			if (!this.canvas) {
-				var bounds = this.getBounds();
 				var el = document.createElement("canvas");
 				el.style.display = "none";
-				el.width = bounds.width;
-				el.height = bounds.height;
+				el.width = width;
+				el.height = height;
 				document.body.appendChild(el);
 
 				this.canvas = el;

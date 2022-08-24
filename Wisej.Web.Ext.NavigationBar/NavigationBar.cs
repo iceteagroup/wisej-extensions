@@ -173,6 +173,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		[DesignerActionList]
 		[ResponsiveProperty]
+		[SRCategory("CatAppearance")]
+		[Description("Shows or hides the user panel.")]
 		public bool ShowUser
 		{
 			get => this.user.Visible;
@@ -185,6 +187,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		[ResponsiveProperty]
 		[DesignerActionList]
 		[DefaultValue(false)]
+		[SRCategory("CatAppearance")]
+		[Description("Returns or sets the compact view mode.")]
 		public bool CompactView
 		{
 			get => this._compactView;
@@ -243,6 +247,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		[ResponsiveProperty]
 		[DefaultValue(0)]
+		[SRCategory("CatAppearance")]
+		[Description("Returns or sets the indentation in pixels for child items.")]
 		public int Indentation
 		{
 			get { return this._indentation; }
@@ -265,10 +271,12 @@ namespace Wisej.Web.Ext.NavigationBar
 		private int _indentation = 0;
 
 		/// <summary>
-		/// Returns or sets the title to display in the <see cref="NavigationBar"/>.
+		/// Returns or sets the text to display in the title.
 		/// </summary>
 		[DefaultValue("")]
 		[DesignerActionList]
+		[SRCategory("CatAppearance")]
+		[Description("Returns or sets the text to display in the title.")]
 		public override string Text
 		{
 			get => this.title.Text;
@@ -276,13 +284,15 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Returns or sets the logo to display in the <see cref="NavigationBar"/>.
+		/// Returns or sets the logo to display in the title.
 		/// </summary>
 		[DefaultValue("")]
 		[DesignerActionList]
 		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
 		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+		[SRCategory("CatAppearance")]
+		[Description("Returns or sets the logo to display in the title.")]
 		public string Logo
 		{
 			get => this.logo.ImageSource;
@@ -290,11 +300,13 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Returns or sets the user avatar to display in the <see cref="NavigationBar"/>.
+		/// Returns or sets the user avatar to display in the user panel.
 		/// </summary>
 		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
 		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+		[SRCategory("CatAppearance")]
+		[Description("Returns or sets the user avatar to display in the user panel.")]
 		public string UserAvatar
 		{
 			get => this.avatar.ImageSource;
@@ -302,9 +314,11 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Returns or sets the user status color.
+		/// Returns or sets the status color to display in the user panel.
 		/// </summary>
 		[DefaultValue(typeof(Color), "")]
+		[SRCategory("CatAppearance")]
+		[Description("Returns or sets the status color to display in the user panel.")]
 		public Color UserStatusColor
 		{
 			get => this.userStatusColor.BackColor;
@@ -312,9 +326,11 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Returns or sets the user status.
+		/// Returns or sets the status text to display in the user panel.
 		/// </summary>
 		[DefaultValue("")]
+		[SRCategory("CatAppearance")]
+		[Description("Returns or sets the status text to display in the user panel.")]
 		public string UserStatus
 		{
 			get => this.userStatusName.Text;
@@ -322,9 +338,11 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Returns or sets the user name.
+		/// Returns or sets the user name to display in the user panel.
 		/// </summary>
 		[DefaultValue("")]
+		[SRCategory("CatAppearance")]
+		[Description("Returns or sets the user name to display in the user panel.")]
 		public string UserName
 		{
 			get => this.userName.Text;
@@ -335,6 +353,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns or sets the height of the child <see cref="NavigationBarItem"/> elements.
 		/// </summary>
 		[DefaultValue(45)]
+		[SRCategory("CatAppearance")]
+		[Description("Returns or sets the height of the child NavigationBarItem elements.")]
 		public int ItemHeight
 		{
 			get { return this._itemHeight; }
@@ -363,6 +383,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns the collection of items to display in the <see cref="NavigationBar"/>.
 		/// </summary>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		[SRCategory("CatBehavior")]
+		[Description("Returns the collection of items in the NavigationBar.")]
 		public NavigationBarItemCollection Items
 		{
 			get => this._items = this._items ?? new NavigationBarItemCollection(this.items);
@@ -378,6 +400,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Allows the user to change the <see cref="SelectedItem"/> using the keyboard.
 		/// </summary>
 		[DefaultValue(false)]
+		[SRCategory("CatBehavior")]
+		[Description("Allows the user to change the SelectedItem using the keyboard.")]
 		public bool EnableKeyboardNavigation
 		{
 			get { return this._enableKeyboardNavigation; }

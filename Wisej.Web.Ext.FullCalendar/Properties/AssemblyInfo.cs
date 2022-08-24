@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("Ice Tea Group LLC")]
 [assembly: AssemblyProduct("Wisej 3 Extensions")]
 [assembly: AssemblyCopyright("Copyright ©2018 Ice Tea Group LLC")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
@@ -29,4 +27,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.0.9.0")]
+[assembly: AssemblyFileVersion("3.0.14.0")]

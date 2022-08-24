@@ -170,13 +170,18 @@ namespace Wisej.Web.Ext.ColumnFilter
 					row.Visible = true;
 				}
 
+				// remove all summary rows.
+				dataGrid.Rows
+					.Where(r => r is DataGridViewSummaryRow)
+					.ToList().ForEach(r => dataGrid.Rows.Remove(r));
+
 				// apply all the filters.
 				base.ApplyFilters();
 
-				FilteredRowCount = dataGrid.Rows.GetRowCount(DataGridViewElementStates.Visible);
-				if (ColumnFilter != null)
+				if (this.ColumnFilter != null)
 				{
-					ColumnFilter.OnFiltersApplied(FilteredRowCount);
+					this.ColumnFilter.OnRowsFiltered(
+						dataGrid.Rows.GetRowCount(DataGridViewElementStates.Visible));
 				}
 			}
 			finally

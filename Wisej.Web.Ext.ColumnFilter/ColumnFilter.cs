@@ -290,7 +290,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			var search = new PictureBox()
 			{
 				Dock = DockStyle.Right,
-				Size = new System.Drawing.Size(24, 24),
+				Size = new Size(24, 24),
 				Cursor = Cursors.Hand
 			};
 
@@ -329,7 +329,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		#region Events
 
 		/// <summary>
-		/// Event is fired whan all filters are applied.
+		/// Event is fired when all filters are applied.
 		/// </summary>
 		[Browsable(true)]
 		[Description("Fired when all filters are applied. Includes number of filtered rows.")]
@@ -418,19 +418,17 @@ namespace Wisej.Web.Ext.ColumnFilter
 		}
 
 		/// <summary>
-		/// Fires FiltersApplied event.
+		/// Fires the <see cref="RowsFiltered"/> event.
 		/// </summary>
 		/// <param name="filteredRowCount"></param>
-		public virtual void OnFiltersApplied(int filteredRowCount)
+		public virtual void OnRowsFiltered(int filteredRowCount)
 		{
-			if (RowsFiltered != null)
+			if (this.RowsFiltered != null)
 			{
 				var args = new RowsFilteredEventArg { FilteredRowCount = filteredRowCount };
-				RowsFiltered(this, args);
+				this.RowsFiltered(this, args);
 			}
 		}
-
-
 
 		#endregion
 	}
