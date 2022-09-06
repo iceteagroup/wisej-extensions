@@ -20,7 +20,7 @@
 namespace Wisej.Ext.WebAuthn
 {
     /// <summary>
-    /// Relying Party's rerquirements for client-side discoverable credentials.
+    /// Relying Party's requirements for client-side discoverable credentials.
     /// </summary>
     /// <remarks>
     /// See: https://www.w3.org/TR/webauthn-2/#enum-residentKeyRequirement.

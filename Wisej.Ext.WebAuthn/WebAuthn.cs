@@ -21,7 +21,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using Wisej.Web;
 
@@ -39,7 +38,7 @@ namespace Wisej.Ext.WebAuthn
 		/// <returns>True if the device has a user-verifying platform authenticator.</returns>
 		public static async Task<bool> IsUserVerifyingPlatformAuthenticatorAvailableAsync()
         {
-			return await Instance.CallAsync("isUserVerifyingPlatformAuthenticatorAvailable");
+			return await CallAsync("isUserVerifyingPlatformAuthenticatorAvailable");
         }
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace Wisej.Ext.WebAuthn
 			int timeout, 
 			AttestationConveyancePreference attestation)
         {
-            var result = await Instance.CallAsync("create", 
+            var result = await CallAsync("create", 
 				challenge, 
 				rp, 
 				user, 
@@ -109,7 +108,7 @@ namespace Wisej.Ext.WebAuthn
 			PublicKeyCredentialDescriptor allowCredentials, 
 			int timeout)
         {
-			var result = await Instance.CallAsync("get", challenge, allowCredentials, timeout);
+			var result = await CallAsync("get", challenge, allowCredentials, timeout);
 
 			if (result is string)
             {
@@ -172,7 +171,7 @@ namespace Wisej.Ext.WebAuthn
 		}
 
         /// <summary>
-        /// Valides an ES256 signature.
+        /// Validates an ES256 signature.
         /// </summary>
         /// <param name="publicKey"></param>
         /// <param name="clientDataBase64"></param>
@@ -324,42 +323,9 @@ namespace Wisej.Ext.WebAuthn
 
 		#region Wisej Implementation
 
-		private const string INSTANCE_KEY = "Wisej.Ext.WebAuthn";
-
-		private static WebAuthnComponent Instance
+		private static Task<dynamic> CallAsync(string method, params object[] args)
 		{
-			get
-			{
-				var instance = Application.Session[INSTANCE_KEY];
-				if (instance == null)
-				{
-					instance = new WebAuthnComponent();
-					Application.Session[INSTANCE_KEY] = instance;
-				}
-				return instance;
-			}
-		}
-
-		// Connection to the client component.
-		private class WebAuthnComponent : Component
-		{
-			protected override void OnWebRender(dynamic config)
-			{
-				base.OnWebRender((object)config);
-
-				config.className = "wisej.ext.WebAuthn";
-			}
-
-			protected override void OnWebEvent(Core.WisejEventArgs e)
-			{
-				switch (e.Type)
-				{
-
-					default:
-						base.OnWebEvent(e);
-						break;
-				}
-			}
+			return Application.CallAsync($"wisej.ext.WebAuthn.{method}", args);
 		}
 
         #endregion

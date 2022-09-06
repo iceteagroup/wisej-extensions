@@ -10,18 +10,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="JavaScript\cbor.js" />
 	  <None Remove="Platform\wisej.ext.WebAuthn.js" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="JavaScript\cbor.js" />
+	  <EmbeddedResource Include="Platform\cbor.js" />
 	  <EmbeddedResource Include="Platform\wisej.ext.WebAuthn.js" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="System.Memory" Version="4.5.1" />
-		<PackageReference Include="Wisej-3" Version="3.0.*-*" />
+		<PackageReference Include="Wisej-3" Version="3.1.*-*" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 	</ItemGroup>
 

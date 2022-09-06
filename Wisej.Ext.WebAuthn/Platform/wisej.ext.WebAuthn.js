@@ -22,29 +22,14 @@
  * wisej.ext.WebAuthn
  * 
  * Provides a wrapper for Web Authentication API.
+ * See https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API.
  */
 qx.Class.define("wisej.ext.WebAuthn", {
 
-	type: "singleton",
+	type: "static",
 	extend: qx.core.Object,
 
-	// All Wisej components must include this mixin
-	// to provide services to the Wisej core.
-	include: [wisej.mixin.MWisejComponent],
-
-	construct: function () {
-
-		this.base(arguments);
-
-		// cbor.js is required to decode authenticator-related data.
-		wisej.utils.Loader.load([
-			{
-				id: "cbor.js",
-				url: "resource.wx/Wisej.Ext.WebAuthn.JavaScript.cbor.js"
-			}]);
-	},
-
-	members: {
+	statics: {
 
 		/**
 		 * Detects whether a platform-authenticator is available for the user.
@@ -56,7 +41,9 @@ qx.Class.define("wisej.ext.WebAuthn", {
         },
 
 		/**
-		 * Creates a new Credential instance based on the provided options, or null if no Credential object can be created.
+		 * Creates a new Credential instance based on the provided options, or null 
+		 * if no Credential object can be created.
+		 * 
 		 * @param {any} challenge Random string for validating the request.
 		 * @param {any} rp Relaying Party (rp), the organization responsible for registering and authenticating the user.
 		 * @param {any} user Information about the user currently registering.
@@ -95,22 +82,28 @@ qx.Class.define("wisej.ext.WebAuthn", {
 
 		/**
 		 * Gets an assertion that verifies the user has a private key.
+		 * 
 		 * @param {any} challenge Random string for validating the request.
-		 * @param {any} allowCredentials Which credentials the server would like the user to authenticate with.
+		 * @param {any} credential Which credential the server would like the user to authenticate with.
 		 * @param {any} timeout The time in milliseconds that the user has to respond to a prompt for registration.
 		 */
-		get: function (challenge, allowCredentials, timeout) {
+		get: function (challenge, credential, timeout) {
 			var me = this;
 			return (async function () {
+
+				var allowCredentials =
+					credential
+						? [{
+							type: credential.type,
+							transports: credential.transports ?? [],
+							id: me._base64ToUint8Array(credential.id)
+						}]
+						: undefined;
 
 				var assertion = await navigator.credentials.get({
 					publicKey: {
 						challenge: me._formatChallenge(challenge),
-						allowCredentials: [{
-							type: allowCredentials.type,
-							transports: allowCredentials.transports ?? [],
-							id: me._base64ToUint8Array(allowCredentials.id)
-						}],
+						allowCredentials,
 						timeout: timeout
 					}
 				});
@@ -121,19 +114,21 @@ qx.Class.define("wisej.ext.WebAuthn", {
 
 		/**
 		 * Converts the given challenge into a Uint8Array for use with the authenticator.
+		 * 
 		 * @param {any} challenge The request challenge.
 		 */
 		_formatChallenge: function (challenge) {
-			var byteCharacters = atob(challenge);
-			var byteNumbers = new Array(byteCharacters.length);
-			for (var i = 0; i < byteCharacters.length; i++) {
-				byteNumbers[i] = byteCharacters.charCodeAt(i);
+			// var byteCharacters = atob(challenge);
+			var byteNumbers = new Array(challenge.length);
+			for (var i = 0; i < challenge.length; i++) {
+				byteNumbers[i] = challenge.charCodeAt(i);
 			}
 			return new Uint8Array(byteNumbers);
 		},
 
 		/**
 		 * Converts the given data into a response format usable by the server.
+		 * 
 		 * @param {any} data The credential response.
 		 */
 		_processResponse: function (data) {
@@ -188,6 +183,7 @@ qx.Class.define("wisej.ext.WebAuthn", {
 
 		/**
 		 * Converts an ArrayBuffer to a base64 encoded value.
+		 * 
 		 * @param {any} arrayBuffer
 		 */
 		_arrayBufferToBase64: function (arrayBuffer) {
@@ -196,6 +192,7 @@ qx.Class.define("wisej.ext.WebAuthn", {
 
 		/**
 		 * Converts base64 encoded data to a Uint8Array.
+		 * 
 		 * @param {any} base64
 		 */
 		_base64ToUint8Array: function (base64) {
@@ -204,6 +201,7 @@ qx.Class.define("wisej.ext.WebAuthn", {
 
 		/**
 		 * Parses data from the given authenticator data into a human-readable format.
+		 * 
 		 * @param {any} authData Authenticator data.
 		 */
 		_parseAuthenticatorData: function (authData) {
@@ -252,8 +250,8 @@ qx.Class.define("wisej.ext.WebAuthn", {
 
 		/**
 		 * Parses public key data if it's included.
-		 * @param {any} authData The authenticator data.
 		 * 
+		 * @param {any} authData The authenticator data.
 		 * @returns The public key data including public key and credential id.
 		 */
 		_parseAttestedCredentialData: function (authData) {
@@ -288,6 +286,7 @@ qx.Class.define("wisej.ext.WebAuthn", {
 
 		/**
 		 * Checks whether a particular bit is set.
+		 * 
 		 * @param {any} number
 		 * @param {any} index
 		 */
