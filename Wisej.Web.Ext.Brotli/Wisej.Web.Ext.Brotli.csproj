@@ -10,12 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Native\brolib_x64.dll" />
+    <None Remove="Native\brolib_x86.dll" />
     <None Remove="Platform\brotli_decode.js" />
     <None Remove="Platform\Wisej-Inflate.js" />
     <None Remove="Platform\_polyfill.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Native\brolib_x64.dll" />
+    <EmbeddedResource Include="Native\brolib_x86.dll" />
     <EmbeddedResource Include="Platform\brotli_decode.js" />
     <EmbeddedResource Include="Platform\Wisej-Inflate.js" />
     <EmbeddedResource Include="Platform\_polyfill.js" />
@@ -26,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Wisej-3" Version="3.*-*" />
+    <PackageReference Include="Wisej-3" Version="3.0.*-*" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
 
