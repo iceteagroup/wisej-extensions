@@ -18,15 +18,13 @@
   <ItemGroup>
     <None Remove="Barcode.bmp" />
     <None Remove="Platform\wisej.web.ext.BarcodeReader.js" />
-    <None Remove="Resources\ZXing.Browser.Int32Array.Polyfill.js" />
-    <None Remove="Resources\ZXing.BrowserMultiFormatReader.min.js" />
+    <None Remove="JavaScript\ZXing.BrowserMultiFormatReader.min.js" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Barcode.bmp" />
     <EmbeddedResource Include="Platform\wisej.web.ext.BarcodeReader.js" />
-    <EmbeddedResource Include="Resources\ZXing.Browser.Int32Array.Polyfill.js" />
-    <EmbeddedResource Include="Resources\ZXing.BrowserMultiFormatReader.min.js" />
+    <EmbeddedResource Include="JavaScript\ZXing.BrowserMultiFormatReader.min.js" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net48'">
