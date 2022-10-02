@@ -32,6 +32,18 @@ qx.Class.define("wisej.web.ext.BarcodeReader", {
 	// to provide services to the Wisej core.
 	include: [wisej.mixin.MWisejComponent],
 
+	construct: function () {
+
+		this.base(arguments);
+
+		wisej.utils.Loader.load([
+			{
+				id: "ZXing.BrowserMultiFormatReader",
+				url: "resource.wx/Wisej.Web.Ext.Barcode/JavaScript/ZXing.BrowserMultiFormatReader.min.js"
+			}
+		]);
+	},
+
 	properties: {
 
 		/**
@@ -88,9 +100,13 @@ qx.Class.define("wisej.web.ext.BarcodeReader", {
 		 **/
 		startMonitoring: function () {
 
+			if (!this.codeReader && typeof ZXing == "undefined") {
+				qx.event.Timer.once(this.startMonitoring, this, 100);
+				return;
+			}
+
 			var me = this;
 			var camera = this.getCamera();
-
 			if (!camera)
 				return;
 
@@ -138,6 +154,11 @@ qx.Class.define("wisej.web.ext.BarcodeReader", {
 		 * Fires success / error.
 		 **/
 		scanImage: function () {
+
+			if (!this.cameraReader && typeof ZXing == "undefined") {
+				qx.event.Timer.once(this.scanImage, this, 100);
+				return;
+			}
 
 			var camera = this.getCamera();
 			var video = camera.getMediaObject();
