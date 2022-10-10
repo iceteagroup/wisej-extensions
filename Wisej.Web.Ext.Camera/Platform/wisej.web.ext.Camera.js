@@ -32,47 +32,6 @@ qx.Class.define("wisej.web.ext.Camera", {
 		wisej.mixin.MBorderStyle
 	],
 
-	properties: {
-
-		appearance: { init: "widget", refine: true },
-
-		/**
-		 * Mirror property.
-		 *
-		 * Specifies whether the media stream should be mirrored.
-		 */
-		mirror: { init: false, check: "Boolean", apply: "_applyMirror" },
-
-		/**
-		 * Constraints property.
-		 * 
-		 * See: https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamConstraints
-		 */
-		constraints: { init: null, check: "Map", apply: "_applyConstraints" },
-
-		/**
-		 * Filter property.
-		 * 
-		 * Sets the CSS filter to the video element: https://developer.mozilla.org/en-US/docs/Web/CSS/filter.
-		 */
-		videoFilter: { check: "String", apply: "_applyFilter" },
-
-		/*
-		 * object-fit Property
-		 *
-		 * The CSS object-fit property is used to specify how an video should be resized to fit its container.
-		 * https://www.w3schools.com/css/css3_object-fit.asp
-		 */
-		objectFit: { check: "String", apply: "_applyObjectFit" },
-
-		/**
-		 * SubmitURL property.
-		 *
-		 * The URL to use to send the files to the server.
-		 */
-		submitURL: { init: "", check: "String" }
-	},
-
 	statics: {
 
 		/** 
@@ -143,6 +102,54 @@ qx.Class.define("wisej.web.ext.Camera", {
 		}
 	},
 
+	construct: function () {
+
+		this.base(arguments);
+
+		this.__readDeviceList();
+	},
+
+	properties: {
+
+		appearance: { init: "widget", refine: true },
+
+		/**
+		 * Mirror property.
+		 *
+		 * Specifies whether the media stream should be mirrored.
+		 */
+		mirror: { init: false, check: "Boolean", apply: "_applyMirror" },
+
+		/**
+		 * Constraints property.
+		 * 
+		 * See: https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamConstraints
+		 */
+		constraints: { init: null, check: "Map", apply: "_applyConstraints" },
+
+		/**
+		 * Filter property.
+		 * 
+		 * Sets the CSS filter to the video element: https://developer.mozilla.org/en-US/docs/Web/CSS/filter.
+		 */
+		videoFilter: { check: "String", apply: "_applyFilter" },
+
+		/*
+		 * object-fit Property
+		 *
+		 * The CSS object-fit property is used to specify how an video should be resized to fit its container.
+		 * https://www.w3schools.com/css/css3_object-fit.asp
+		 */
+		objectFit: { check: "String", apply: "_applyObjectFit" },
+
+		/**
+		 * SubmitURL property.
+		 *
+		 * The URL to use to send the files to the server.
+		 */
+		submitURL: { init: "", check: "String" }
+	},
+
 	members: {
 
 		// canvas context.
@@ -151,6 +158,9 @@ qx.Class.define("wisej.web.ext.Camera", {
 		// recorder.
 		recordedBlob: null,
 		mediaRecorder: null,
+
+		// cached device list.
+		deviceList: null,
 
 		/**
 		 * Returns the current snapshot from the camera in base64.
@@ -277,8 +287,26 @@ qx.Class.define("wisej.web.ext.Camera", {
 
 			this.deactivateCamera();
 
+			var constraints = value;
+
+			// convert deviceName to the corresponding deviceId.
+			if (constraints && constraints.video && constraints.video.deviceName) {
+
+				if (!this.deviceList) {
+					this.__readDeviceList(function () {
+						this._applyConstraints(value);
+					});
+					return;
+				}
+
+				var name = constraints.video.deviceName;
+				var device = this.deviceList.find(function (device) { return device.label == name; });
+				if (device)
+					constraints.video.deviceId = device.deviceId;
+			}
+
 			var me = this;
-			navigator.mediaDevices.getUserMedia(value)
+			navigator.mediaDevices.getUserMedia(constraints)
 				.then(function (stream) {
 
 					// bind to the video element.
@@ -305,6 +333,28 @@ qx.Class.define("wisej.web.ext.Camera", {
 					video.src = "";
 					video.srcObject = null;
 				}
+			}
+		},
+
+		/**
+		 * Returns the list of available devices.
+		 * 
+		 * @param {Boolean?} refresh Reloads the device list from the browser.
+		 */
+		getDevices: function (refresh) {
+
+			refresh = refresh == true;
+
+			if (this.deviceList && !refresh) {
+				return this.deviceList.map(function (item) { return item.label; });
+			}
+			else {
+				var me = this;
+				return new Promise(function (resolve) {
+					me.__readDeviceList(function () {
+						resolve(me.deviceList.map(function (item) { return item.label; }));
+					});
+				});
 			}
 		},
 
@@ -377,6 +427,30 @@ qx.Class.define("wisej.web.ext.Camera", {
 					this.fireDataEvent("error", error.message);
 					break;
 			}
+		},
+
+		__readDeviceList: function (callback) {
+
+			if (typeof navigator == "undefined" ||
+				typeof navigator.mediaDevices == "undefined") {
+
+				if (callback)
+					callback();
+
+				return;
+			}
+
+			var me = this;
+			navigator.mediaDevices.enumerateDevices().then(function (list) {
+
+				me.deviceList = list.filter(function (device) {
+					return device.kind == "videoinput" && device.label;
+				});
+
+				if (callback)
+					callback.call(me);
+			});
+
 		}
 	},
 

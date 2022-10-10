@@ -22,7 +22,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
-using System.Web;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;
@@ -142,7 +141,7 @@ namespace Wisej.Web.Ext.Camera
 		/// Specifies the object-fit to apply to the video.
 		/// </summary>
 		/// <remarks>
-		/// See href="https://www.w3schools.com/css/css3_object-fit.asp"/>.
+		/// See <see href="https://www.w3schools.com/css/css3_object-fit.asp"/>.
 		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue(true)]
@@ -229,10 +228,34 @@ namespace Wisej.Web.Ext.Camera
         }
         private bool _mirror = false;
 
-        /// <summary>
-        /// Specifies whether the video is front-facing (mobile-only).
-        /// </summary>
-        [DesignerActionList]
+		/// <summary>
+		/// Specifies the video device to use.
+		/// </summary>
+		/// <remarks>
+		/// If not specified or invalid it will use the first device returned by the browser.
+		/// </remarks>
+		[DefaultValue("")]
+		public string DeviceName
+		{
+			get
+			{
+				return this._deviceName ?? String.Empty;
+			}
+			set
+			{
+				if (this._deviceName != value)
+				{
+					this._deviceName = value;
+					Update();
+				}
+			}
+		}
+		private string _deviceName = null;
+
+		/// <summary>
+		/// Specifies whether the video is front-facing (mobile-only).
+		/// </summary>
+		[DesignerActionList]
 		[DefaultValue(true)]
 		public VideoFacingMode FacingMode
 		{
@@ -332,12 +355,14 @@ namespace Wisej.Web.Ext.Camera
 		/// Returns the current image from the camera.
 		/// </summary>
 		/// <param name="callback">Callback method to receive the <see cref="Image"/> or null.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
 		public void GetImage(Action<Image> callback)
 		{
 			if (callback == null)
 				throw new ArgumentNullException(nameof(callback));
 
-			Call("getImage", (base64) => {
+			Call("getImage", (base64) =>
+			{
 
 				callback(ImageFromBase64(base64));
 
@@ -351,14 +376,14 @@ namespace Wisej.Web.Ext.Camera
 		public Task<Image> GetImageAsync()
 		{
 			var tcs = new TaskCompletionSource<Image>();
-			GetImage((image) => {
+			GetImage((image) =>
+			{
 
 				tcs.SetResult(image);
 
 			});
 			return tcs.Task;
 		}
-
 
 		/// <summary>
 		/// Starts recording.
@@ -378,6 +403,52 @@ namespace Wisej.Web.Ext.Camera
 		public void StopRecording()
 		{
 			Call("stopRecording");
+		}
+
+		/// <summary>
+		/// Returns the names of the available video devices.
+		/// </summary>
+		/// <param name="callback">Callback method to receive the device names.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
+		public void GetDevices(Action<string[]> callback)
+		{
+			GetDevices(false, callback);
+		}
+
+		/// <summary>
+		/// Returns the names of the available video devices.
+		/// </summary>
+		/// <param name="refresh">Refreshes the list of devices from the browser.</param>
+		/// <param name="callback">Callback method to receive the device names.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
+		public void GetDevices(bool refresh, Action<string[]> callback)
+		{
+			if (callback == null)
+				throw new ArgumentNullException(nameof(callback));
+
+			Call("getDevices", (list) =>
+			{
+
+				callback(list);
+
+			}, new object[] { refresh });
+		}
+
+		/// <summary>
+		/// Returns the names of the available video devices.
+		/// </summary>
+		/// <param name="refresh">Refreshes the list of devices from the browser. Default is false.</param>
+		/// <returns>An awaitable <see cref="Task"/>.</returns>
+		public Task<string[]> GetDevicesAsync(bool refresh = false)
+		{
+			var tcs = new TaskCompletionSource<string[]>();
+			GetDevices(refresh, (list) =>
+			{
+
+				tcs.SetResult(list);
+
+			});
+			return tcs.Task;
 		}
 
 		/// <summary>
@@ -455,24 +526,30 @@ namespace Wisej.Web.Ext.Camera
 			config.borderStyle = this.BorderStyle;
 			config.videoFilter = this.VideoFilter;
 			config.submitURL = this.GetPostbackURL();
-			dynamic videoConstraints = false;
 
 			// apply video constraints.
 			if (this.Video)
 			{
-				videoConstraints = new
+				config.constraints = new
 				{
-					width = this._widthCapture,
-					height = this._heightCapture,
-					facingMode = this._facingMode,
+					video = new
+					{
+						width = this._widthCapture,
+						height = this._heightCapture,
+						facingMode = this._facingMode,
+						deviceName = this._deviceName
+					},
+					audio = this.Audio
 				};
 			}
-
-			config.constraints = new
+			else
 			{
-				video = videoConstraints,
-				audio = this.Audio
-			};
+				config.constraints = new
+				{
+					video = false,
+					audio = this.Audio
+				};
+			}
 
 			config.wiredEvents.Add("error(Message)");
 
