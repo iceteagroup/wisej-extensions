@@ -79,24 +79,42 @@ this.init = function () {
 	// hookup the blur event in the child iframe to fire onEditorBlur in the owner window.
 	if (!wisej.web.DesignMode) {
 
-		this.editor.e.body.addEventListener("keydown", function () {
-			var newText = me.getText();
-			if (savedText != newText) {
-				me.setDirty(true);
-				savedText = newText;
+		var editorDocument = this.editor.e;
+
+		editorDocument.addEventListener("input", function (e) {
+
+			me.setDirty(true);
+
+			switch (e.inputType) {
+				case "insertText":
+				case "deleteContentForward":
+				case "deleteContentBackward":
+					// ignore or we get an event on every keystroke.
+					break;
+
+				default: {
+					var newText = me.getText();
+					if (me.__savedText != newText) {
+						me.__savedText = newText;
+						me.fireWidgetEvent("changeText", newText);
+					}
+				}
 			}
+		});
+
+		editorDocument.addEventListener("keydown", function () {
 			me.fireEvent("keydown");
 		});
 
-		this.editor.e.body.addEventListener("keyup", function () {
+		editorDocument.addEventListener("keyup", function () {
 			me.fireEvent("keyup");
 		});
 
-		this.editor.e.body.addEventListener("keypress", function () {
+		editorDocument.addEventListener("keypress", function () {
             me.fireEvent("keypress");
         });
 
-		this.editor.e.body.addEventListener("focus", function () {
+		editorDocument.addEventListener("focus", function () {
 			me.fireWidgetEvent("focus");
 		});
 	}
