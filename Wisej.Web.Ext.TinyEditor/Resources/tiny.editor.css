@@ -8,7 +8,7 @@
 
     .tinyeditor iframe {
         border: none;
-        overflow-x: hidden;
+        
     }
 
     .tinyeditor textarea {
@@ -21,10 +21,11 @@
     }
 
 .tinyeditor-header {
-    height: 31px;
-    overflow: hidden;
+    height:auto;
+    overflow:hidden;
     border-bottom: 1px solid #bbb;
-    background: url(Wisej.Web.Ext.TinyEditor/header-bg.gif) repeat-x;
+    background: url(Wisej.Web.Ext.TinyEditor/header-bg.gif);
+    background-repeat: repeat;
     padding-top: 1px;
 }
 
@@ -46,14 +47,14 @@
 }
 
 .tinyeditor-divider {
-    float: left;
+    display: inline-block;
     width: 1px;
     height: 30px;
     background: #ccc;
 }
 
 .tinyeditor-control {
-    float: left;
+    display: inline-block;
     width: 34px;
     height: 30px;
     cursor: pointer;
