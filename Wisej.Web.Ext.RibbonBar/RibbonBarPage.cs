@@ -329,7 +329,7 @@ namespace Wisej.Web.Ext.RibbonBar
 			config.tabTextColor = this.TabForeColor;
 			config.tabBackgroundColor = this.TabBackColor;
 			config.label = TextUtils.EscapeText(this.Text, false, this.UseMnemonic, false);
-			config.mnemonic = this.UseMnemonic ? TextUtils.GeMnemonic(this.Text) : null;
+			config.mnemonic = this.UseMnemonic ? TextUtils.GetMnemonic(this.Text) : null;
 
 			if (me.DesignMode)
 			{
