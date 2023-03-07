@@ -40,10 +40,14 @@ qx.Class.define("wisej.ext.ClientFileSystem", {
 		},
 
 		/**
-		 * Shows a file picker that allows a user to select a file or multiple files and returns a handle for the file(s).
+		 * Shows a file picker that allows a user to select a file or multiple files and 
+		 * returns a handle for the file(s).
+		 * 
 		 * @param {Boolean} multiple A Boolean. Default false. When set to true multiple files may be selected.
-		 * @param {String} excludeAcceptAllOption True if there's a pattern to apply; otherwise false
-		 * @param {String} filter Represents the MIME type and the file extension
+		 * @param {String} excludeAcceptAllOption True if there's a pattern to apply; otherwise false.
+		 * @param {String} filter Represents the requested MIME types and the file extensions.
+		 *						  Uses a similar syntax as Windows: "Description|Mime type|File Extension;FileExtension;...".
+		 *						  Can specify multiple filters separates by a pipe.
 		 */
 		showOpenFilePicker: function (multiple, excludeAcceptAllOption, filter) {
 			var types = [];
@@ -85,10 +89,14 @@ qx.Class.define("wisej.ext.ClientFileSystem", {
 		},
 
 		/**
-		 * Shows a file picker that allows a user to save a file. Either by selecting an existing file, or entering a name for a new file
-		 * @param {Boolean} excludeAcceptAllOption True if there's a pattern to apply; otherwise false
-		 * @param {String} filter Represents the MIME type and the file extension
-		 * @param {String} suggestedName A name to associate with the file
+		 * Shows a file picker that allows a user to save a file. 
+		 * Either by selecting an existing file, or entering a name for a new file.
+		 * 
+		 * @param {Boolean} excludeAcceptAllOption True if there's a pattern to apply; otherwise false.
+		 * @param {String} filter Represents the requested MIME types and the file extensions.
+		 *						  Uses a similar syntax as Windows: "Description|Mime type|File Extension;FileExtension;...".
+		 *						  Can specify multiple filters separates by a pipe.
+		 * @param {String} suggestedName A name to associate with the file.
 		 */
 		showSaveFilePicker: function (excludeAcceptAllOption, filter, suggestedName) {
 			var types = [];
@@ -126,6 +134,7 @@ qx.Class.define("wisej.ext.ClientFileSystem", {
 
 		/**
 		 * Invoke a function on a FileSystemHandle object.
+		 * 
 		 * @param {any} hash Represents the FileSystemHandle object hash.
 		 * @param {any} name Represents the function name.
 		 * @param {any} args The arguments to pass to the function.
@@ -146,7 +155,8 @@ qx.Class.define("wisej.ext.ClientFileSystem", {
 		},
 
 		/**
-		 * Dispose of a FileSystemHandle object
+		 * Dispose of a FileSystemHandle object.
+		 * 
 		 * @param {any} hash Represents the FileSystemHandle object hash.
 		 */
 		dispose: function (hash) {

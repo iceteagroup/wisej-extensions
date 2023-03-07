@@ -29,7 +29,7 @@ this.init = function (options) {
 	this.editor = this.widget = ace.edit(this.container, options);
 
 	this.widget.on("blur", function () {
-		me.fireWidgetEvent("change", this.editor.getValue());
+		me.fireWidgetEvent("change", me.editor.getValue());
 	});
 
 	this.widget.on("change", function () {

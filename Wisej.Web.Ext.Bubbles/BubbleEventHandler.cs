@@ -33,7 +33,7 @@ namespace Wisej.Web.Ext.Bubbles
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.Bubbles.BubbleNotification.Click" /> events.
 	///</summary>
 	[ApiCategory("Bubbles")]
-    public class BubbleEventArgs : EventArgs
+	public class BubbleEventArgs : EventArgs
 	{
 		#region Constructors
 

@@ -59,7 +59,6 @@
 			this.header.Spacing = 12;
 			this.header.TabIndex = 1;
 			this.header.TabStop = true;
-			this.header.Anonymous = true;
 			// 
 			// icon
 			// 

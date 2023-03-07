@@ -97,6 +97,7 @@ qx.Class.define("wisej.ext.FileSystemFileHandle", {
 
 		/**
 		 * Opens a text file, writes all the text into the file, and then closes the file.
+		 * 
 		 * @param {String} text The text to write.
 		 * @param {Integer} position The cursor's position.
 		 */

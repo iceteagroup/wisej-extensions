@@ -42,12 +42,16 @@ namespace Wisej.Ext.ClientFileSystem
 		internal const string TARGET = "wisej.ext.ClientFileSystem";
 
 		/// <summary>
-		/// Opens a file picker that allows a user to select a file or multiple files
+		/// Opens a file picker that allows a user to select a file or multiple files.
 		/// </summary>
-		/// <param name="multiple">Set this to true to select multiple files; otherwise false</param>
-		/// <param name="excludeAcceptAllOption">True if there's a pattern to apply; otherwise false</param>
-		/// <param name="filter">Represents the MIME type and the file extension</param>
-		/// <param name="callback">Callback method that receives a <see cref="T:Wisej.Ext.ClientFileSystem.File"/>[] object</param>
+		/// <param name="multiple">Set this to true to select multiple files; otherwise false.</param>
+		/// <param name="excludeAcceptAllOption">True if there's a pattern to apply; otherwise false.</param>
+		/// <param name="filter">
+		///		Represents the MIME type and the file extension.
+		///		Uses a similar syntax as Windows: "Description|Mime type|File Extension;FileExtension;...".
+		///		Can specify multiple filters separates by a pipe.
+		/// </param>
+		/// <param name="callback">Callback method that receives a <see cref="File"/>[] object</param>
 		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
 		public static void ShowOpenFilePicker(bool multiple, bool excludeAcceptAllOption, string filter, Action<File[]> callback)
 		{
@@ -70,12 +74,16 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Opens a client file picker that allows a user to select a file or multiple files asynchronously
+		/// Opens a client file picker that allows a user to select a file or multiple files asynchronously.
 		/// </summary>
-		/// <param name="multiple">Set this to true to select multiple files; otherwise false</param>
-		/// <param name="excludeAcceptAllOption">True if there's a pattern to apply; otherwise false</param>
-		/// <param name="filter">Represents the MIME type and the file extension</param>
-		/// <returns>Returns a <see cref="T:Wisej.Ext.ClientFileSystem.File"/>[] that represents a handle for a file system entry</returns>
+		/// <param name="multiple">Set this to true to select multiple files; otherwise false.</param>
+		/// <param name="excludeAcceptAllOption">True if there's a pattern to apply; otherwise false.</param>
+		/// <param name="filter">
+		///		Represents the MIME type and the file extension.
+		///		Uses a similar syntax as Windows: "Description|Mime type|File Extension;FileExtension;...".
+		///		Can specify multiple filters separates by a pipe.
+		/// </param>
+		/// <returns>Returns a <see cref="File"/>[] that represents a handle for a file system entry.</returns>
 		public static async Task<File[]> ShowOpenFilePickerAsync(bool multiple, bool excludeAcceptAllOption, string filter)
 		{
 			if (String.IsNullOrEmpty(filter))
@@ -98,12 +106,16 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Opens a client file picker that allows a user to save a file
+		/// Opens a client file picker that allows a user to save a file.
 		/// </summary>
-		/// <param name="excludeAcceptAllOption">True if there's a pattern to apply; otherwise false</param>
-		/// <param name="filter">Represents the MIME type and the file extension</param>
-		/// <param name="callback">Callback method that receives a <see cref="Wisej.Ext.ClientFileSystem.File"/> object</param>
-		/// <param name="suggestedName">A name to associate with the file</param>
+		/// <param name="excludeAcceptAllOption">True if there's a pattern to apply; otherwise false.</param>
+		/// <param name="filter">
+		///		Represents the MIME type and the file extension.
+		///		Uses a similar syntax as Windows: "Description|Mime type|File Extension;FileExtension;...".
+		///		Can specify multiple filters separates by a pipe.
+		/// </param>
+		/// <param name="callback">Callback method that receives a <see cref="File"/> object.</param>
+		/// <param name="suggestedName">A name to associate with the file.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
 		public static void ShowSaveFilePicker(bool excludeAcceptAllOption, string filter, string suggestedName, Action<File> callback)
 		{
@@ -126,12 +138,16 @@ namespace Wisej.Ext.ClientFileSystem
 		}
 
 		/// <summary>
-		/// Opens a client file picker that allows a user to save a file asynchronously
+		/// Opens a client file picker that allows a user to save a file asynchronously.
 		/// </summary>
-		/// <param name="excludeAcceptAllOption">True if there's a pattern to apply; otherwise false</param>
-		/// <param name="filter">A <see cref="string"/> representing the MIME type and the file extension</param>
+		/// <param name="excludeAcceptAllOption">True if there's a pattern to apply; otherwise false.</param>
+		/// <param name="filter">
+		///		Represents the MIME type and the file extension.
+		///		Uses a similar syntax as Windows: "Description|Mime type|File Extension;FileExtension;...".
+		///		Can specify multiple filters separates by a pipe.
+		/// </param>
 		/// <param name="suggestedName">A name to associate with the file</param>
-		/// <returns>Returns a <see cref="T:Wisej.Ext.ClientFileSystem.File"/> that represents a handle for a file system entry</returns>
+		/// <returns>Returns a <see cref="File"/> that represents a handle for a file system entry.</returns>
 		public async static Task<File> ShowSaveFilePickerAsync(bool excludeAcceptAllOption, string filter, string suggestedName)
 		{
 			if (String.IsNullOrEmpty(filter))
@@ -150,7 +166,7 @@ namespace Wisej.Ext.ClientFileSystem
 		/// <summary>
 		/// Opens a client directory picker that allows the user to select a directory
 		/// </summary>
-		/// <param name="callback">Callback method that receives a <see cref="Wisej.Ext.ClientFileSystem.Directory"/> object</param>
+		/// <param name="callback">Callback method that receives a <see cref="Directory"/> object</param>
 		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
 		public static void ShowDirectoryPicker(Action<Directory> callback)
 		{
@@ -175,7 +191,7 @@ namespace Wisej.Ext.ClientFileSystem
 		/// <summary>
 		/// Opens a client directory picker that allows the user to select a directory asynchronously
 		/// </summary>
-		/// <returns>Returns a <see cref="T:Wisej.Ext.ClientFileSystem.Directory"/> that represents a handle for a file system directory</returns>
+		/// <returns>Returns a <see cref="Directory"/> that represents a handle for a file system directory</returns>
 		public async static Task<Directory> ShowDirectoryPickerAsync()
 		{
 			var config = await Application.CallAsync(

@@ -210,13 +210,13 @@ qx.Class.define("wisej.web.RibbonBar", {
 				this.tabview.setAllowEmptySelection(true);
 				this.setSelectedIndex(-1);
 				this.setZIndex(11);
+				this.getContentElement().setStyle("overflow", "hidden");
 
 				// handle pointer/mouse events globally when in compact view mode.
 				qx.event.Registration.addListener(
 					window.document.documentElement,
 					"pointerdown",
 					this._onCompactViewPointerDown, this, true);
-
 			}
 			else if (old) {
 				this.resetMaxHeight();
@@ -247,7 +247,15 @@ qx.Class.define("wisej.web.RibbonBar", {
 			// check if the click was on menu item.
 			var container = target.isWisejMenu ? target.findContainer() : null;
 			var opener = container ? container.getOpener() : null;
-			if (qx.ui.core.Widget.contains(this, opener))
+			if (opener && qx.ui.core.Widget.contains(this, opener))
+				return;
+
+			// check if the click was on a popup.
+			var popup = target;
+			while (popup && !(popup instanceof qx.ui.popup.Popup)) {
+				popup = popup.getLayoutParent();
+			}
+			if (popup)
 				return;
 
 			this.setSelectedIndex(-1);

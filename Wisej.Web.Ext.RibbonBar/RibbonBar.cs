@@ -386,7 +386,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// Fired when a <see cref="T:Wisej.Web.ComponentTool" /> is clicked.
+		/// Fired when a <see cref="Wisej.Web.ComponentTool" /> is clicked.
 		///</summary>
 		[SRCategory("CatBehavior")]
 		[SRDescription("ToolClickDescr")]
@@ -405,6 +405,26 @@ namespace Wisej.Web.Ext.RibbonBar
 		protected virtual void OnToolClick(ToolClickEventArgs e)
 		{
 			((ToolClickEventHandler)base.Events[nameof(ToolClick)])?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Fired when the property <see cref="CompactView"/> changes value.
+		///</summary>
+		[SRCategory("CatBehavior")]
+		[Description("Fired when the property CompactView changes value.")]
+		public event EventHandler CompactViewChanged
+		{
+			add { base.AddHandler(nameof(CompactViewChanged), value); }
+			remove { base.RemoveHandler(nameof(CompactViewChanged), value); }
+		}
+
+		/// <summary>
+		/// Fires the <see cref="CompactViewChanged" /> event.
+		/// </summary>
+		/// <param name="e">A <see cref="EventArgs" /> that contains the event data. </param>
+		protected virtual void OnCompactViewChanged(EventArgs e)
+		{
+			((EventHandler)base.Events[nameof(CompactViewChanged)])?.Invoke(this, e);
 		}
 
 		#endregion
@@ -778,7 +798,7 @@ namespace Wisej.Web.Ext.RibbonBar
 
 					this._compactView = value;
 
-					// OnCompactViewChanged(EventArgs.Empty);
+					OnCompactViewChanged(EventArgs.Empty);
 					Update();
 				}
 			}
@@ -973,8 +993,8 @@ namespace Wisej.Web.Ext.RibbonBar
 			IWisejComponent me = this;
 
 			config.className = "wisej.web.RibbonBar";
-			config.selectedIndex = this.SelectedPageIndex;
 			config.compactView = this.CompactView;
+			config.selectedIndex = this.SelectedPageIndex;
 
 			// Tools.
 			if (this._tools != null)

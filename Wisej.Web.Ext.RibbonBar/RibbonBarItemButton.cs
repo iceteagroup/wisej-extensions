@@ -213,7 +213,8 @@ namespace Wisej.Web.Ext.RibbonBar
 			// determine if the button can be clicked.
 			if (this.Enabled && this.Visible)
 			{
-				this.RibbonBar?.OnMenuButtonItemClick(new RibbonBarMenuItemEventArgs(this, e.Parameters.Item));
+				MenuItem item = e.Parameters.Item;
+				this.RibbonBar?.OnMenuButtonItemClick(new RibbonBarMenuItemEventArgs(this, item));
 			}
 		}
 

@@ -17,10 +17,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-using System.ComponentModel;
-using Wisej.Core;
-using Wisej.Base;
 using System;
+using System.ComponentModel;
+using Wisej.Base;
+using Wisej.Core;
 
 namespace Wisej.Web.Ext.RibbonBar
 {
@@ -73,7 +73,10 @@ namespace Wisej.Web.Ext.RibbonBar
 				if (this._value != value)
 				{
 					this._value = value;
+
 					OnValueChanged(EventArgs.Empty);
+					this.RibbonBar?.OnItemValueChanged(new RibbonBarItemEventArgs(this));
+
 					Update();
 				}
 			}
@@ -167,8 +170,19 @@ namespace Wisej.Web.Ext.RibbonBar
 		private void ProcessChangeValueWebEvent(WisejEventArgs e)
 		{
 			this.Value = e.Parameters.Value ?? string.Empty;
+		}
 
-			this.RibbonBar?.OnItemValueChanged(new RibbonBarItemEventArgs(this));
+		/// <summary>
+		/// Updates the client component using the state information.
+		/// </summary>
+		/// <param name="state">Dynamic state object.</param>
+		protected override void OnWebUpdate(dynamic state)
+		{
+			string value = state.value;
+			if (value != null)
+				this.Value = value;
+
+			base.OnWebUpdate((object)state);
 		}
 
 		/// <summary>

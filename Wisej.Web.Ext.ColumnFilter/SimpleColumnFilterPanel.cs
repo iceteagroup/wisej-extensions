@@ -59,8 +59,11 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		private void SimpleColumnFilterPanel_Disposed(object sender, EventArgs e)
 		{
-			this.DataGridViewColumn.DataGridView.Sorted -= Rows_Sorted;
-			this.DataGridViewColumn.DataGridView.Rows.CollectionChanged -= Rows_CollectionChanged;
+			if (this.DataGridViewColumn != null && this.DataGridViewColumn.DataGridView != null)
+			{
+				this.DataGridViewColumn.DataGridView.Sorted -= Rows_Sorted;
+				this.DataGridViewColumn.DataGridView.Rows.CollectionChanged -= Rows_CollectionChanged;
+			}
 		}
 
 		private void Rows_Sorted(object sender, EventArgs e)

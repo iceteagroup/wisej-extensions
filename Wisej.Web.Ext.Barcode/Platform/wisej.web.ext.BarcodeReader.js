@@ -105,31 +105,27 @@ qx.Class.define("wisej.web.ext.BarcodeReader", {
 				return;
 			}
 
-			var me = this;
 			var camera = this.getCamera();
 			if (!camera)
 				return;
 
 			var video = camera.getMediaObject();
+			var videoId = video.id;
+			var stream = video.srcObject;
 
 			// if the video source isn't ready yet, schedule a callback.
-			var stream = video.srcObject;
 			if (!stream) {
-
-				var play = function (e) {
-					me.startMonitoring();
-					video.onplay = null;
-				}
-				video.onplay = play;
+				qx.event.Timer.once(this.startMonitoring, this, 100);
 				return;
 			}
 
-			if (!this.codeReader)
-				this.codeReader = new ZXing.BrowserMultiFormatReader();
-
+			var me = this;
 			var deviceId = stream.getTracks()[0].getCapabilities().deviceId;
+			this.codeReader = this.codeReader || new ZXing.BrowserMultiFormatReader();
 
-			this.codeReader.decodeFromVideoDevice(deviceId, video.id, function (result, error) {
+			camera.deactivateCamera();
+			this.codeReader.decodeFromVideoDevice(deviceId, videoId, function (result, error) {
+
 				if (result) {
 
 					me.fireDataEvent("scanSuccess", result.text);

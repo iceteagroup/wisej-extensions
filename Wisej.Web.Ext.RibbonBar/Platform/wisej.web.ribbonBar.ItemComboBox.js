@@ -34,6 +34,9 @@ qx.Class.define("wisej.web.ribbonBar.ItemComboBox", {
 
 		this.base(arguments, layout);
 
+		// add local state properties.
+		this.setStateProperties(this.getStateProperties().concat(["value"]));
+
 		this.addListener("tap", this._onTap, this);
 		this.addListener("keypress", this._onKeyPress, this);
 	},
@@ -121,6 +124,18 @@ qx.Class.define("wisej.web.ribbonBar.ItemComboBox", {
 						this.getParent().focusNext(this);
 
 					e.stop();
+					break;
+
+				case "Up":
+				case "Down":
+				case "Left":
+				case "Right":
+				case "Home":
+				case "End":
+					break;
+
+				default:
+					this.setDirty(true);
 					break;
 			}
 		},
