@@ -6,6 +6,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
