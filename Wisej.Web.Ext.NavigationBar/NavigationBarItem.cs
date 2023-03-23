@@ -865,6 +865,7 @@ namespace Wisej.Web.Ext.NavigationBar
 			if (this.ExpandOnClick)
 				this.Expanded = !this.Expanded;
 
+			OnClick(e);
 			this.NavigationBar?.FireItemClick(this);
 		}
 
@@ -933,7 +934,10 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		private static void Menu_Click(object sender, EventArgs e)
 		{
-			((NavigationBarMenuItem)sender).Item.OnClick(e);
+			var item = ((NavigationBarMenuItem)sender).Item;
+
+			item.OnClick(e);
+			item.NavigationBar?.FireItemClick(item);
 		}
 
 		#endregion
