@@ -45,9 +45,9 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// </remarks>
 	[ToolboxItem(true)]
 	[DefaultEvent("Load")]
+	[ApiCategory("RibbonBar")]
 	[ToolboxBitmap(typeof(RibbonBar))]
 	[Description("The RibbonBar organizes the features of an application into a series of tabs.")]
-	[ApiCategory("RibbonBar")]
 	public class RibbonBar : Control, IWisejControl, IWisejDesignTarget2
 	{
 		// autosize height
