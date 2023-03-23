@@ -551,7 +551,6 @@ namespace Wisej.Web.Ext.RibbonBar
 
 		#endregion
 
-
 		/// <summary>
 		/// Returns or sets a value that indicates whether the control resizes based on its contents.
 		/// </summary>
@@ -830,15 +829,13 @@ namespace Wisej.Web.Ext.RibbonBar
 		// Returns the height of the RibbonBar as defined in the theme.
 		private int GetRibbonBarThemeHeight()
 		{
-			// retrieve the current active theme.
-			ClientTheme theme = ((IWisejControl)this).Theme;
+			var theme = ((IWisejControl)this).Theme;
+			var height = theme.GetProperty<int>("ribbonbar", "height", "default");
 
-			object height = theme.GetProperty<int>("ribbonbar", "height", "default");
-
-			if (height is int)
-				return (int)height;
-
-			return 80;
+			return
+				height > 0
+					? height
+					: 33;
 		}
 
 		/// <summary>
@@ -1077,13 +1074,13 @@ namespace Wisej.Web.Ext.RibbonBar
 			int tabCount = tabRects?.Length ?? 0;
 			if (tabCount > 0)
 			{
-				Point mouseLoc = new Point(
+				var mouseLoc = new Point(
 					(short)(lParam & 65535),
 					(short)(lParam >> 16 & 65535));
 
 				for (int i = 0; i < tabCount; i++)
 				{
-					Rectangle tabRect = tabRects[i];
+					var tabRect = tabRects[i];
 					if (tabRect.Contains(mouseLoc))
 					{
 						this.SelectedPage = this.Pages[i];
