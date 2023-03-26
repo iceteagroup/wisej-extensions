@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.header = new Wisej.Web.FlexLayoutPanel();
+			this.header = new NavigationBarItem.Header();
 			this.icon = new Wisej.Web.PictureBox();
 			this.title = new Wisej.Web.Label();
 			this.shortcut = new Wisej.Web.PictureBox();
@@ -166,8 +166,8 @@
 
 		#endregion
 
-		protected FlexLayoutPanel items;
-		protected FlexLayoutPanel header;
+		protected Wisej.Web.FlexLayoutPanel items;
+		protected NavigationBarItem.Header header;
 		protected PictureBox shortcut;
 		protected Label info;
 		protected PictureBox open;

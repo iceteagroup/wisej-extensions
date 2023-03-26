@@ -75,6 +75,18 @@ namespace Wisej.Web.Ext.NavigationBar
 		public event NavigationBarItemClickEventHandler ItemClick;
 
 		/// <summary>
+		/// Fired when the user clicks the <see cref="NavigationBarItem.InfoText"/> in a <see cref="NavigationBarItem"/>.
+		/// </summary>
+		[Description("Fired when the user clicks the info text in a NavigationBarItem.")]
+		public event NavigationBarItemClickEventHandler ItemInfoClick;
+
+		/// <summary>
+		/// Fired when the user clicks the <see cref="NavigationBarItem.ShortcutIcon"/> in a <see cref="NavigationBarItem"/>.
+		/// </summary>
+		[Description("Fired when the user clicks the shortcut icon in a NavigationBarItem.")]
+		public event NavigationBarItemClickEventHandler ItemShortcutClick;
+
+		/// <summary>
 		/// Fired when the value of the property <see cref="CompactView"/> changes.
 		/// </summary>
 		[Description("Fired when the value of the property CompactView changes.")]
@@ -120,6 +132,24 @@ namespace Wisej.Web.Ext.NavigationBar
 		protected virtual void OnItemClick(NavigationBarItemClickEventArgs e)
 		{
 			this.ItemClick?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Fires the <see cref="ItemInfoClick"/> event.
+		/// </summary>
+		/// <param name="e">A <see cref="NavigationBarItemClickEventArgs"/> containing the event data.</param>
+		protected virtual void OnItemInfoClick(NavigationBarItemClickEventArgs e)
+		{
+			this.ItemInfoClick?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Fires the <see cref="ItemShortcutClick"/> event.
+		/// </summary>
+		/// <param name="e">A <see cref="NavigationBarItemClickEventArgs"/> containing the event data.</param>
+		protected virtual void OnItemShortcutClick(NavigationBarItemClickEventArgs e)
+		{
+			this.ItemShortcutClick?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -179,6 +209,19 @@ namespace Wisej.Web.Ext.NavigationBar
 		{
 			get => this.user.Visible;
 			set => this.user.Visible = value;
+		}
+
+		/// <summary>
+		/// Shows or hides the header panel.
+		/// </summary>
+		[DesignerActionList]
+		[ResponsiveProperty]
+		[SRCategory("CatAppearance")]
+		[Description("Shows or hides the header panel.")]
+		public override bool ShowHeader
+		{
+			get => this.header.Visible;
+			set => this.header.Visible = value;
 		}
 
 		/// <summary>
@@ -510,11 +553,6 @@ namespace Wisej.Web.Ext.NavigationBar
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public override bool ShowHeader { get => base.ShowHeader; set { } }
-		/// <exclude/>
-		[Browsable(false)]
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override bool Collapsed { get => base.Collapsed; set { } }
 		/// <exclude/>
 		[Browsable(false)]
@@ -759,6 +797,20 @@ namespace Wisej.Web.Ext.NavigationBar
 			OnItemClick(new NavigationBarItemClickEventArgs(item));
 
 			this.SelectedItem = item;
+		}
+
+		internal void FireItemShortcutClick(NavigationBarItem item)
+		{
+			Debug.Assert(item != null);
+
+			OnItemShortcutClick(new NavigationBarItemClickEventArgs(item));
+		}
+
+		internal void FireItemInfoClick(NavigationBarItem item)
+		{
+			Debug.Assert(item != null);
+
+			OnItemInfoClick(new NavigationBarItemClickEventArgs(item));
 		}
 
 		private void user_Click(object sender, EventArgs e)

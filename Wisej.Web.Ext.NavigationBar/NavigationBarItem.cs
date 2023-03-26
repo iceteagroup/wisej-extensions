@@ -103,58 +103,61 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		#region Redirect pointer events from the header panel
 
-		public new event EventHandler Click
-		{
-			add { this.header.Click += value; }
-			remove { this.header.Click -= value; }
-		}
-
-		public new event EventHandler Tap
-		{
-			add { this.header.Tap += value; }
-			remove { this.header.Tap -= value; }
-		}
-
-		public new event EventHandler LongTap
-		{
-			add { this.header.LongTap += value; }
-			remove { this.header.LongTap -= value; }
-		}
-
 		public new event SwipeEventHandler Swipe
 		{
-			add { this.header.Swipe += value; }
-			remove { this.header.Swipe -= value; }
+			add
+			{
+				base.Swipe += value;
+				this.header.Swipe += this.header_Swipe;
+			}
+			remove
+			{
+				base.Swipe -= value;
+				this.header.Swipe -= this.header_Swipe;
+			}
 		}
 
-		public new event MouseEventHandler MouseClick
+		private void header_Swipe(object sender, SwipeEventArgs e)
 		{
-			add { this.header.MouseClick += value; }
-			remove { this.header.MouseClick -= value; }
-		}
-
-		public new event MouseEventHandler MouseDown
-		{
-			add { this.header.MouseDown += value; }
-			remove { this.header.MouseDown -= value; }
-		}
-
-		public new event MouseEventHandler MouseUp
-		{
-			add { this.header.MouseUp += value; }
-			remove { this.header.MouseUp -= value; }
+			// empty, used to enable the Swipe lazy event.
 		}
 
 		public new event EventHandler MouseEnter
 		{
-			add { this.header.MouseEnter += value; }
-			remove { this.header.MouseEnter -= value; }
+			add
+			{
+				base.MouseEnter += value;
+				this.header.MouseEnter += this.header_MouseEnter;
+			}
+			remove
+			{
+				base.MouseEnter -= value;
+				this.header.MouseEnter -= this.header_MouseEnter;
+			}
+		}
+
+		private void header_MouseEnter(object sender, EventArgs e)
+		{
+			// empty, used to enable the MouseEnter lazy event.
 		}
 
 		public new event EventHandler MouseLeave
 		{
-			add { this.header.MouseLeave += value; }
-			remove { this.header.MouseLeave -= value; }
+			add
+			{
+				base.MouseLeave += value;
+				this.header.MouseLeave += this.header_MouseLeave;
+			}
+			remove
+			{
+				base.MouseLeave -= value;
+				this.header.MouseLeave -= this.header_MouseLeave;
+			}
+		}
+
+		private void header_MouseLeave(object sender, EventArgs e)
+		{
+			// empty, used to enable the MouseLeave lazy event.
 		}
 
 		#endregion
@@ -845,19 +848,23 @@ namespace Wisej.Web.Ext.NavigationBar
 				this.header.ToolTipText = compactView ? this.title.Text : null;
 		}
 
+		private void open_Click(object sender, EventArgs e)
+		{
+			this.Expanded = !this.Expanded;
+		}
+
 		private void shortcut_Click(object sender, EventArgs e)
 		{
 			OnShortcutClick(e);
+
+			this.NavigationBar?.FireItemShortcutClick(this);
 		}
 
 		private void info_Click(object sender, EventArgs e)
 		{
 			OnInfoClick(e);
-		}
 
-		private void open_Click(object sender, EventArgs e)
-		{
-			this.Expanded = !this.Expanded;
+			this.NavigationBar?.FireItemInfoClick(this);
 		}
 
 		private void NavigationBarItem_Click(object sender, System.EventArgs e)
@@ -865,7 +872,6 @@ namespace Wisej.Web.Ext.NavigationBar
 			if (this.ExpandOnClick)
 				this.Expanded = !this.Expanded;
 
-			OnClick(e);
 			this.NavigationBar?.FireItemClick(this);
 		}
 
