@@ -94,8 +94,11 @@ namespace Wisej.Web.Ext.ColumnFilter
 					row.Visible = true;
 				}
 
-				// remove all summary rows.
-				dataGrid.Rows
+                // reset current cell 
+                dataGrid.CurrentCell = null;
+
+                // remove all summary rows.
+                dataGrid.Rows
 					.Where(r => r is DataGridViewSummaryRow)
 					.ToList().ForEach(r => dataGrid.Rows.Remove(r));
 

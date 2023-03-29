@@ -172,6 +172,9 @@ namespace Wisej.Web.Ext.ColumnFilter
 				{
 					row.Visible = true;
 				}
+				
+				// reset current cell 
+				dataGrid.CurrentCell = null;
 
 				// remove all summary rows.
 				dataGrid.Rows
