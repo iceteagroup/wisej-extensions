@@ -94,11 +94,11 @@ namespace Wisej.Web.Ext.ColumnFilter
 					row.Visible = true;
 				}
 
-                // reset current cell 
-                dataGrid.CurrentCell = null;
+				// reset current cell 
+				dataGrid.CurrentCell = null;
 
-                // remove all summary rows.
-                dataGrid.Rows
+				// remove all summary rows.
+				dataGrid.Rows
 					.Where(r => r is DataGridViewSummaryRow)
 					.ToList().ForEach(r => dataGrid.Rows.Remove(r));
 
@@ -115,9 +115,9 @@ namespace Wisej.Web.Ext.ColumnFilter
 					var indexes = dataGrid.Rows.AsQueryable().Where(combinedWhere).Select(r => r.Index).ToArray();
 					foreach (var row in dataGrid.Rows)
 					{
-						if (Array.BinarySearch(indexes, row.Index) < 0)						
-							row.Visible = false;						
-					}					
+						if (Array.BinarySearch(indexes, row.Index) < 0)
+							row.Visible = false;
+					}
 				}
 
 				if (this.ColumnFilter != null)
@@ -156,10 +156,10 @@ namespace Wisej.Web.Ext.ColumnFilter
 			else if (type == typeof(System.Int32) ||
 					 type == typeof(System.Decimal) ||
 					 type == typeof(System.Double) ||
-					 type == typeof(System.Int64))				 
+					 type == typeof(System.Int64))
 			{
 				where = GetWhereForNumber();
-			}			
+			}
 			else if (type == typeof(System.Boolean))
 			{
 				where = GetWhereForBool();
@@ -190,7 +190,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			if (Nullable.GetUnderlyingType(type) != null)
 				type = Nullable.GetUnderlyingType(type);
 
-			string Type = type.ToString().Replace("System.", "");			
+			string Type = type.ToString().Replace("System.", "");
 			string Value1 = Value1 = "Convert.To" + Type + "(Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value)";
 
 			if (cmbOperator.SelectedIndex > -1)
@@ -250,7 +250,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			// only check cloned fields when the first condition is valid.
 			if (where.Length > 0)
 			{
-				ComboBox cmb = null;				
+				ComboBox cmb = null;
 
 				// iterate clones
 				foreach (Control c in this.flowLayoutPanel.Controls)
@@ -263,7 +263,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 							condition = GetBoolCondition(Value1, cmb.SelectedItem.ToString());
 							where = AppendCondition(condition, LogicalOperator, where);
 						}
-					}					
+					}
 					else if (c is lblANDOR && c != labelLogicalOperator)
 					{
 						// save logical operator for next condition
@@ -472,8 +472,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 			}
 			if (applyFilters)
 			{
-				ApplyFilters();				
-			}			
+				ApplyFilters();
+			}
 		}
 
 		private void WhereColumnFilterPanel_Load(object sender, EventArgs e)
@@ -522,7 +522,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 				startIndex = 16;
 				count = 4;
 			}
-			else 
+			else
 			{
 				startIndex = 10;
 				count = 6;
@@ -545,7 +545,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			int count = 4;
 			for (int i = 0; i < count; i++)
-			{				
+			{
 				this.flowLayoutPanel.Controls.Add(CloneCombo(this.cmbOperator));
 				this.flowLayoutPanel.Controls.Add(CloneTextBox(this.txtValue));
 				this.flowLayoutPanel.Controls.Add(CloneDateTimePicker(this.dateTimePicker1));

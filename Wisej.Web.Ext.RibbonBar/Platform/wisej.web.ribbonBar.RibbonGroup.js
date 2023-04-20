@@ -141,7 +141,8 @@ qx.Class.define("wisej.web.ribbonBar.RibbonGroup", {
 			
 			for (var i = index + 1; i < children.length; i++) {
 				if (this.__isFocusable(children[i])) {
-					children[i].focus();
+					children[i].control.focus();
+					break;
 				}
 			}
 		},
@@ -150,7 +151,15 @@ qx.Class.define("wisej.web.ribbonBar.RibbonGroup", {
 		 * Focuses the previous focusable ribbon item (ItemTextBox or ItemComboBox) in the RibbonGroup.
 		 */
 		focusPrev: function (current) {
+			var children = this.getChildren();
+			var index = children.indexOf(current);
 
+			for (var i = index - 1; i >= 0; i--) {
+				if (this.__isFocusable(children[i])) {
+					children[i].control.focus();
+					break;
+				}
+			}
 		},
 
 		// checks if the ribbonbar.Item is focusable.

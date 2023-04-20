@@ -18,37 +18,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 /**
- * Extends the wisej.web.menu.ContextMenu class to change the appearance of the context menu,
+ * Extends the wisej.web.menu.ContextMenu class to change the appearance of the context menu.
  */
 qx.Class.define("wisej.web.ext.NavigationBarMenu", {
 
 	extend: wisej.web.menu.ContextMenu,
 
-	construct: function () {
-
-		this.base(arguments);
-
-		this.setAppearance("navbar-menu");
-	},
-
-	members: {
-
-		/**
-		 * Shows the context menu at the position.
-		 *
-		 * @param opener {Widget} the widget used to position the context menu.
-		 * @param offset {Array} shorthand "offsetTop", "offsetRight", "offsetBottom", "offsetLeft",
-		 * @param position {String} on of the placement values defined in {@link qx.ui.core.MPlacement.position}.
-		 */
-		show: function (opener, offset, position) {
-			this.setOffset(offset || 0);
-			this.setOpener(opener);
-			this.setPosition(qx.lang.String.hyphenate(position));
-			this.placeToWidget(opener, true);
-			this.setVisibility("visible");
-		}
+	properties: {
+		appearance: { init: "navbar-menu", refine: true }
 	}
-})
+});
 
 /**
  * Extends the wisej.web.menu.MenuItem class to change the appearance of the menu items.
@@ -57,11 +36,8 @@ qx.Class.define("wisej.web.ext.NavigationBarMenuItem", {
 
 	extend: wisej.web.menu.MenuItem,
 
-	construct: function () {
-
-		this.base(arguments);
-
-		this.setAppearance("navbar-menu/item");
+	properties: {
+		appearance: { init: "navbar-menu/item", refine: true }
 	},
 
 	members: {

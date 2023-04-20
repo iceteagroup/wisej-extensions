@@ -104,7 +104,7 @@ namespace Wisej.Web.Ext.Speech
 		{
 			ProcessListeners(e);
 
-			((SpeechRecognitionEventHandler)base.Events[nameof(Result)])?.Invoke(this,e);			
+			((SpeechRecognitionEventHandler)base.Events[nameof(Result)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -113,7 +113,7 @@ namespace Wisej.Web.Ext.Speech
 		/// <param name="e">A <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognitionEventArgs" /> that contains the event data. </param>
 		protected virtual void OnError(SpeechRecognitionEventArgs e)
 		{
-			((SpeechRecognitionEventHandler)base.Events[nameof(Error)])?.Invoke(this,e);			
+			((SpeechRecognitionEventHandler)base.Events[nameof(Error)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -122,7 +122,7 @@ namespace Wisej.Web.Ext.Speech
 		/// <param name="e"></param>
 		protected virtual void OnNoMatch(EventArgs e)
 		{
-			((EventHandler)base.Events[nameof(NoMatch)])?.Invoke(this,e);			
+			((EventHandler)base.Events[nameof(NoMatch)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -131,7 +131,7 @@ namespace Wisej.Web.Ext.Speech
 		/// <param name="e"></param>
 		protected virtual void OnSpeechStart(EventArgs e)
 		{
-			((EventHandler)base.Events[nameof(SpeechStart)])?.Invoke(this,e);			
+			((EventHandler)base.Events[nameof(SpeechStart)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -140,7 +140,7 @@ namespace Wisej.Web.Ext.Speech
 		/// <param name="e"></param>
 		protected virtual void OnSpeechEnd(EventArgs e)
 		{
-			((EventHandler)base.Events[nameof(SpeechEnd)])?.Invoke(this,e);			
+			((EventHandler)base.Events[nameof(SpeechEnd)])?.Invoke(this, e);
 		}
 
 		#endregion
@@ -255,7 +255,7 @@ namespace Wisej.Web.Ext.Speech
 		/// </summary>
 		[Localizable(true)]
 		[Description("Gets and sets a collection of grammar definitions - using the JSpeech Grammar Format (JSGF) https://www.w3.org/TR/jsgf/.")]
-		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string[] Grammars
 		{
@@ -369,7 +369,8 @@ namespace Wisej.Web.Ext.Speech
 		{
 			lock (this.listeners)
 			{
-				this.listeners.ToList().ForEach((o) => {
+				this.listeners.ToList().ForEach((o) =>
+				{
 					o.Key.Disposed -= this.Control_Disposed;
 				});
 
@@ -589,9 +590,10 @@ namespace Wisej.Web.Ext.Speech
 			{
 				if (this.Enabled)
 				{
-					TextBoxBase textBox = this.control as TextBoxBase;
+					var textBox = this.control as TextBoxBase;
 					if (textBox != null)
-						if (this.control.Focused)
+					{
+						if (textBox.Focused)
 						{
 							SpeechRecognitionResult bestResult = null;
 							foreach (var r in results)
@@ -602,6 +604,7 @@ namespace Wisej.Web.Ext.Speech
 							if (bestResult != null)
 							{
 								textBox.Text = bestResult.Transcript;
+								textBox.SelectionStart = textBox.Text.Length;
 
 								// disable for the next time around.
 								if (this.RecognitionMode == RecognitionMode.WhenFocusedOnce)
@@ -610,6 +613,7 @@ namespace Wisej.Web.Ext.Speech
 								return true;
 							}
 						}
+					}
 				}
 
 				return false;

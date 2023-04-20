@@ -85,6 +85,33 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		#region Implementation
 
+
+		/// <summary>
+		/// Performs initialization tasks when the panel is created.
+		/// </summary>
+		/// <param name="e">Event arguments</param>
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+
+			if (!this.DesignMode && this.DataGridViewColumn != null)
+			{
+				this.DataGridViewColumn.DataGridView.Sorted += this.Rows_Sorted;
+			}
+		}
+
+		private void Rows_Sorted(object sender, EventArgs e)
+		{
+			// re-apply the filter if the datasource did its own sorting.
+			var grid = (DataGridView)sender;
+			var dataSource = grid.BindingContext[grid.DataSource, grid.DataMember];
+			if (dataSource is CurrencyManager manager &&
+				manager.List is IBindingList bindingList && bindingList.SupportsSorting)
+			{
+				ApplyFilters();
+			}
+		}
+
 		/// <summary>
 		/// Returns all the <see cref="ColumnFilterPanel"/> panels
 		/// associated to the columns of the <see cref="DataGridView"/> that
@@ -248,6 +275,9 @@ namespace Wisej.Web.Ext.ColumnFilter
 				var column = this.DataGridViewColumn;
 				if (column != null)
 				{
+					if (column.DataGridView != null)
+						column.DataGridView.Sorted -= this.Rows_Sorted;
+
 					column.HeaderCell.Control?.Dispose();
 					column.HeaderCell.Control = null;
 					column.UserData.FilterPanel = null;

@@ -52,17 +52,17 @@ namespace Wisej.Web.Ext.ColumnFilter
 			base.OnLoad(e);
 
 			this.items.Items.Clear();
-			this.Disposed += SimpleColumnFilterPanel_Disposed;
-			this.DataGridViewColumn.DataGridView.Sorted += Rows_Sorted;
-			this.DataGridViewColumn.DataGridView.Rows.CollectionChanged += Rows_CollectionChanged;
+			this.Disposed += this.SimpleColumnFilterPanel_Disposed;
+			this.DataGridViewColumn.DataGridView.Sorted += this.Rows_Sorted;
+			this.DataGridViewColumn.DataGridView.Rows.CollectionChanged += this.Rows_CollectionChanged;
 		}
 
 		private void SimpleColumnFilterPanel_Disposed(object sender, EventArgs e)
 		{
 			if (this.DataGridViewColumn != null && this.DataGridViewColumn.DataGridView != null)
 			{
-				this.DataGridViewColumn.DataGridView.Sorted -= Rows_Sorted;
-				this.DataGridViewColumn.DataGridView.Rows.CollectionChanged -= Rows_CollectionChanged;
+				this.DataGridViewColumn.DataGridView.Sorted -= this.Rows_Sorted;
+				this.DataGridViewColumn.DataGridView.Rows.CollectionChanged -= this.Rows_CollectionChanged;
 			}
 		}
 

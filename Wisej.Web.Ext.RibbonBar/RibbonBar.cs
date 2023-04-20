@@ -61,6 +61,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		public RibbonBar()
 		{
 			base.AutoSize = true;
+			base.Focusable = false;
 			this.Dock = DockStyle.Top;
 			base.CausesValidation = false;
 		}
