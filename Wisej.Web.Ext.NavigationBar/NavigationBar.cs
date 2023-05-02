@@ -203,6 +203,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		[DesignerActionList]
 		[ResponsiveProperty]
+		[DefaultValue(true)]
 		[SRCategory("CatAppearance")]
 		[Description("Shows or hides the user panel.")]
 		public bool ShowUser
@@ -216,9 +217,10 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		[DesignerActionList]
 		[ResponsiveProperty]
+		[DefaultValue(true)]
 		[SRCategory("CatAppearance")]
 		[Description("Shows or hides the header panel.")]
-		public override bool ShowHeader
+		public new bool ShowHeader
 		{
 			get => this.header.Visible;
 			set => this.header.Visible = value;
