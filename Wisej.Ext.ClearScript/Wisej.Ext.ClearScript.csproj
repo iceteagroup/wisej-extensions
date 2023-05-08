@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ClearScript\V8\V8\x64\ClearScriptV8-64.dll" />
+    <None Remove="ClearScript\V8\V8\x64\v8-base-x64.dll" />
+    <None Remove="ClearScript\V8\V8\x64\v8-x64.dll" />
+    <None Remove="ClearScript\V8\V8\x86\ClearScriptV8-32.dll" />
+    <None Remove="ClearScript\V8\V8\x86\v8-base-ia32.dll" />
+    <None Remove="ClearScript\V8\V8\x86\v8-ia32.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ClearScript\V8\V8\x64\ClearScriptV8-64.dll" />
+    <EmbeddedResource Include="ClearScript\V8\V8\x64\v8-base-x64.dll" />
+    <EmbeddedResource Include="ClearScript\V8\V8\x64\v8-x64.dll" />
+    <EmbeddedResource Include="ClearScript\V8\V8\x86\ClearScriptV8-32.dll" />
+    <EmbeddedResource Include="ClearScript\V8\V8\x86\v8-base-ia32.dll" />
+    <EmbeddedResource Include="ClearScript\V8\V8\x86\v8-ia32.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Wisej-3" Version="3.2.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin&quot; /s /y&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\&quot; /y&#xD;&#xA;" />
+  </Target>
+
+</Project>
