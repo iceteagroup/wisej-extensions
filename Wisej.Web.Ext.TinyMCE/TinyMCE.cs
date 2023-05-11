@@ -72,6 +72,29 @@ namespace Wisej.Web.Ext.TinyMCE
 		#region Properties
 
 		/// <summary>
+		/// Gets or sets whether the editor is enabled.
+		/// </summary>
+		public new bool Enabled
+		{
+			get
+			{
+				return this._enabled;
+			}
+			set
+			{
+				if (this._enabled != value) 
+				{
+					this._enabled = value;
+					OnEnabledChanged(EventArgs.Empty);
+
+					if (!((IWisejControl)this).IsNew /* cannot call setMode until the widget is created.*/ )
+						Call("setEnabled", value);
+				}
+			}
+		}
+		private bool _enabled = true;
+
+		/// <summary>
 		/// Returns or sets the HTML text associated with this control.
 		/// </summary>
 		/// <returns>The HTML text associated with this control.</returns>
@@ -421,24 +444,13 @@ namespace Wisej.Web.Ext.TinyMCE
 			return script;
 		}
 
-		/// <summary>
-		/// Updates the client component using the state information.
-		/// </summary>
-		/// <param name="state">Dynamic state object.</param>
-		protected override void OnWebUpdate(dynamic state)
+		private void ProcessLoad()
 		{
-			if (state.text != null && this.initialized)
-			{
-				if (this._text != state.text)
-				{
-					this._text = state.text;
-					OnTextChanged(EventArgs.Empty);
-				}
-			}
+			this.initialized = true;
+			if (!String.IsNullOrEmpty(this.Text))
+				Call("setText", TextUtils.EscapeText(this.Text, true));
 
-			state.Delete("text");
-
-			base.OnWebUpdate((object)state);
+			Call("setEnabled", this.Enabled);
 		}
 
 		/// <summary>
@@ -450,13 +462,16 @@ namespace Wisej.Web.Ext.TinyMCE
 			switch (e.Type)
 			{
 				case "load":
-					this.initialized = true;
-					if (!String.IsNullOrEmpty(this.Text))
-						Call("setText", TextUtils.EscapeText(this.Text, true));
+					ProcessLoad();
 					break;
 
-				case "changeText":
-					this.Text = e.Data ?? "";
+				case "blur":
+					this._text = e.Data ?? "";
+					OnTextChanged(EventArgs.Empty);
+					break;
+
+				case "change":
+					this._text = e.Data ?? "";
 					break;
 
 				case "command":

@@ -2,9 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net48;net6.0</TargetFrameworks>
-    <SignAssembly>true</SignAssembly>
+		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
 	</PropertyGroup>
@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.15" />
-    <PackageReference Include="Wisej-3" Version="3.1.*-*" />
+    <PackageReference Include="Wisej-3" Version="3.2.*-*" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
 

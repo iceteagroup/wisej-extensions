@@ -942,7 +942,6 @@ namespace Wisej.Web.Ext.NavigationBar
 		{
 			var item = ((NavigationBarMenuItem)sender).Item;
 
-			item.OnClick(e);
 			item.NavigationBar?.FireItemClick(item);
 		}
 
