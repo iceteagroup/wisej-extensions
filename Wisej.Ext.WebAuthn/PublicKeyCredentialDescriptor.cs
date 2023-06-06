@@ -17,14 +17,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
 	/// <summary>
 	/// Identifies the credential to be retrieved from the client.
 	/// </summary>
 	/// <remarks>
-	/// See: https://www.w3.org/TR/webauthn-2/#dictdef-publickeycredentialdescriptor.
+	/// <See href="https://www.w3.org/TR/webauthn-2/#dictdef-publickeycredentialdescriptor"/>
 	/// </remarks>
+	[ApiCategory("WebAuthn")]
 	public class PublicKeyCredentialDescriptor
 	{
 		/// <summary>

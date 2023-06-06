@@ -17,15 +17,18 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
-    /// <summary>
-    /// Names and identifier for the user account performing the registration.
-    /// </summary>
-    /// <remarks>
-    /// See: https://w3c.github.io/webauthn/#dom-publickeycredentialcreationoptions-user.
-    /// </remarks>
-    public class PublicKeyCredentialUserEntity
+	/// <summary>
+	/// Names and identifier for the user account performing the registration.
+	/// </summary>
+	/// <remarks>
+	/// <See href="https://w3c.github.io/webauthn/#dom-publickeycredentialcreationoptions-user"/>
+	/// </remarks>
+	[ApiCategory("WebAuthn")]
+	public class PublicKeyCredentialUserEntity
     {
         /// <summary>
         /// The user handle of the user account.

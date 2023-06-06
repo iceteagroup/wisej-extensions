@@ -23,7 +23,7 @@ namespace Wisej.Web.Ext.ChartJS
 {
 	/// <summary>
 	/// Specifies the alignment of the text in a data label.
-	/// See: https://v1_0_0--chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment.
+	/// See: <see href="https://v1_0_0--chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment"/>.
 	/// </summary>
 	[ApiCategory("ChartJS")]
 	public enum DataLabelTextAlignment

@@ -17,14 +17,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 using System;
 
 namespace Wisej.Ext.WebAuthn
 {
-    /// <summary>
-    /// Represents information about a public key retrieved from the client.
-    /// </summary>
-    public class PublicKey
+	/// <summary>
+	/// Represents information about a public key retrieved from the client.
+	/// </summary>
+	[ApiCategory("WebAuthn")]
+	public class PublicKey
     {
         /// <summary>
         /// The credential ID returned from the client.

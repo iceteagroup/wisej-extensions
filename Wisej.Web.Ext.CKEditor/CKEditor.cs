@@ -179,8 +179,8 @@ namespace Wisej.Web.Ext.CKEditor
 		private bool _showFooter = true;
 
 		/// <summary>
-		/// Returns or sets the CKEDITOR.config to use for this instance of the editor: http://docs.ckeditor.com/#!/api/CKEDITOR.config.
-		/// Use the toolbar configuration tool at http://ckeditor.com/tmp/4.5.0-beta/ckeditor/samples/toolbarconfigurator/index.html#basic
+		/// Returns or sets the CKEDITOR.config to use for this instance of the editor: <see href="http://docs.ckeditor.com/#!/api/CKEDITOR.config"/>.
+		/// Use the toolbar configuration tool at <see href="http://ckeditor.com/tmp/4.5.0-beta/ckeditor/samples/toolbarconfigurator/index.html#basic"/>
 		/// and copy the json into the Options definition.
 		/// </summary>
 		[DesignerActionList]
@@ -275,7 +275,7 @@ namespace Wisej.Web.Ext.CKEditor
 		/// <summary>
 		/// Executes commands to manipulate the contents of the editable region. 
 		/// </summary>
-		/// <param name="command">The name of the command to execute. See https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand for a list of commands.</param>
+		/// <param name="command">The name of the command to execute. See <see href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand"/> for a list of commands.</param>
 		/// <param name="argument">For commands which require an input argument (such as insertImage, for which this is the URL of the image to insert), this is a string providing that information. Specify null if no argument is needed.</param>
 		/// <remarks>
 		/// Most commands affect the document's selection (bold, italics, etc.), while others insert new elements (adding a link) or 

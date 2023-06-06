@@ -30,15 +30,15 @@ namespace Wisej.Web.Ext.FullCalendar
 {
 	/// <summary>
 	/// FullCalendar is a drag-n-drop widget for displaying events on a full-sized calendar based on
-	/// the open-source fullcalendar.io. See http://fullcalendar.io/.
+	/// the open-source fullcalendar.io. See <see href="http://fullcalendar.io/"/>.
 	/// </summary>
 	/// <remarks>
-	/// The FullCalendar JavaScript component is developed by Adam Shaw and released under the MIT license: http://fullcalendar.io/license/.
+	/// The FullCalendar JavaScript component is developed by Adam Shaw and released under the MIT license: <see href="http://fullcalendar.io/license/"/>.
 	/// </remarks>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(FullCalendar))]
 	[DefaultEvent("EventClick")]
-	[Description("FullCalendar is a drag-n-drop widget for displaying events on a full-sized calendar based on the open-source fullcalendar.io. See http://fullcalendar.io/.")]
+	[Description("FullCalendar is a drag-n-drop widget for displaying events on a full-sized calendar based on the open-source fullcalendar.io. See <see href=\"http://fullcalendar.io\"/>")]
 	[ApiCategory("FullCalendar")]
 	public class FullCalendar : Widget, IWisejDataStore, IWisejControl
 	{
@@ -645,7 +645,7 @@ namespace Wisej.Web.Ext.FullCalendar
 
 		/// <summary>
 		/// Determines the time-text that will be displayed on the vertical axis of the agenda views
-		/// using momentjs format patterns: http://momentjs.com/docs/#/displaying/format/.
+		/// using momentjs format patterns: <see href="http://momentjs.com/docs/#/displaying/format/"/>.
 		/// </summary>
 		[Description("Determines the time-text that will be displayed on the vertical axis of the agenda views.")]
 		public string SlotLabelFormat
@@ -677,7 +677,7 @@ namespace Wisej.Web.Ext.FullCalendar
 
 		/// <summary>
 		/// Determines the formatting of the column headers in the different views
-		/// using momentjs format patterns: http://momentjs.com/docs/#/displaying/format/.
+		/// using momentjs format patterns: <see href="http://momentjs.com/docs/#/displaying/format/"/>.
 		/// </summary>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[Description("Determines the formatting of the column headers in the different views.")]
@@ -935,7 +935,7 @@ namespace Wisej.Web.Ext.FullCalendar
 
 		/// <summary>
 		/// Determines the time-text that will be displayed on each event
-		/// using momentjs format patterns: http://momentjs.com/docs/#/displaying/format/.
+		/// using momentjs format patterns: <see href="http://momentjs.com/docs/#/displaying/format/"/>.
 		/// </summary>
 		/// <remarks>
 		/// Sets time format to display on the events.

@@ -17,15 +17,18 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
-    /// <summary>
-    /// Identifies a cryptographic algorithm.
-    /// </summary>
-    /// <remarks>
-    /// See: https://www.w3.org/TR/webauthn-2/#typedefdef-cosealgorithmidentifier
-    /// </remarks>
-    public enum COSEAlgorithmIdentifier
+	/// <summary>
+	/// Identifies a cryptographic algorithm.
+	/// </summary>
+	/// <remarks>
+	/// href="https://www.w3.org/TR/webauthn-2/#typedefdef-cosealgorithmidentifier"
+	/// </remarks>	
+	[ApiCategory("WebAuthn")]
+	public enum COSEAlgorithmIdentifier
     {
         /// <summary>
         /// ES256 algorithm.

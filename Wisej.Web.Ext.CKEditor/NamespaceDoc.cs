@@ -25,7 +25,7 @@ namespace Wisej.Web.Ext.CKEditor
 	/// CKEditor (formerly FCKeditor) is an open source WYSIWYG text editor designed to bring common word processor 
 	/// features directly to web pages, simplifying their content creation.
 	/// 
-	/// from: http://ckeditor.com/
+	/// from: <see href="http://ckeditor.com/"/>
 	/// </para>
 	/// </summary>
 	internal class NamespaceDoc

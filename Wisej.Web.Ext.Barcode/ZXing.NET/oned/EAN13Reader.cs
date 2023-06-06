@@ -28,36 +28,36 @@ namespace ZXing.OneD
    /// </summary>
    public sealed class EAN13Reader : UPCEANReader
    {
-      // For an EAN-13 barcode, the first digit is represented by the parities used
-      // to encode the next six digits, according to the table below. For example,
-      // if the barcode is 5 123456 789012 then the value of the first digit is
-      // signified by using odd for '1', even for '2', even for '3', odd for '4',
-      // odd for '5', and even for '6'. See http://en.wikipedia.org/wiki/EAN-13
-      //
-      //                Parity of next 6 digits
-      //    Digit   0     1     2     3     4     5
-      //       0    Odd   Odd   Odd   Odd   Odd   Odd
-      //       1    Odd   Odd   Even  Odd   Even  Even
-      //       2    Odd   Odd   Even  Even  Odd   Even
-      //       3    Odd   Odd   Even  Even  Even  Odd
-      //       4    Odd   Even  Odd   Odd   Even  Even
-      //       5    Odd   Even  Even  Odd   Odd   Even
-      //       6    Odd   Even  Even  Even  Odd   Odd
-      //       7    Odd   Even  Odd   Even  Odd   Even
-      //       8    Odd   Even  Odd   Even  Even  Odd
-      //       9    Odd   Even  Even  Odd   Even  Odd
-      //
-      // Note that the encoding for '0' uses the same parity as a UPC barcode. Hence
-      // a UPC barcode can be converted to an EAN-13 barcode by prepending a 0.
-      //
-      // The encoding is represented by the following array, which is a bit pattern
-      // using Odd = 0 and Even = 1. For example, 5 is represented by:
-      //
-      //              Odd Even Even Odd Odd Even
-      // in binary:
-      //                0    1    1   0   0    1   == 0x19
-      //
-      internal static int[] FIRST_DIGIT_ENCODINGS = {
+		// For an EAN-13 barcode, the first digit is represented by the parities used
+		// to encode the next six digits, according to the table below. For example,
+		// if the barcode is 5 123456 789012 then the value of the first digit is
+		// signified by using odd for '1', even for '2', even for '3', odd for '4',
+		// odd for '5', and even for '6'. See <see href="http://en.wikipedia.org/wiki/EAN-13"/>
+		//
+		//                Parity of next 6 digits
+		//    Digit   0     1     2     3     4     5
+		//       0    Odd   Odd   Odd   Odd   Odd   Odd
+		//       1    Odd   Odd   Even  Odd   Even  Even
+		//       2    Odd   Odd   Even  Even  Odd   Even
+		//       3    Odd   Odd   Even  Even  Even  Odd
+		//       4    Odd   Even  Odd   Odd   Even  Even
+		//       5    Odd   Even  Even  Odd   Odd   Even
+		//       6    Odd   Even  Even  Even  Odd   Odd
+		//       7    Odd   Even  Odd   Even  Odd   Even
+		//       8    Odd   Even  Odd   Even  Even  Odd
+		//       9    Odd   Even  Even  Odd   Even  Odd
+		//
+		// Note that the encoding for '0' uses the same parity as a UPC barcode. Hence
+		// a UPC barcode can be converted to an EAN-13 barcode by prepending a 0.
+		//
+		// The encoding is represented by the following array, which is a bit pattern
+		// using Odd = 0 and Even = 1. For example, 5 is represented by:
+		//
+		//              Odd Even Even Odd Odd Even
+		// in binary:
+		//                0    1    1   0   0    1   == 0x19
+		//
+		internal static int[] FIRST_DIGIT_ENCODINGS = {
                                                       0x00, 0x0B, 0x0D, 0xE, 0x13, 0x19, 0x1C, 0x15, 0x16, 0x1A
                                                    };
 

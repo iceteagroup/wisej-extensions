@@ -323,9 +323,9 @@ namespace ZXing.QrCode.Internal
       /// </summary>
       private float sizeOfBlackWhiteBlackRun(int fromX, int fromY, int toX, int toY)
       {
-         // Mild variant of Bresenham's algorithm;
-         // see http://en.wikipedia.org/wiki/Bresenham's_line_algorithm
-         bool steep = Math.Abs(toY - fromY) > Math.Abs(toX - fromX);
+		// Mild variant of Bresenham's algorithm;
+		// see <see href="http://en.wikipedia.org/wiki/Bresenham's_line_algorithm"/>
+		bool steep = Math.Abs(toY - fromY) > Math.Abs(toX - fromX);
          if (steep)
          {
             int temp = fromX;

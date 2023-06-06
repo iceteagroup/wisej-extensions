@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Ext.WebAuthn
 {
@@ -25,8 +26,9 @@ namespace Wisej.Ext.WebAuthn
 	/// Contains information about the desired properties of the credential to be created.
 	/// </summary>
 	/// <remarks>
-	/// See: https://www.w3.org/TR/webauthn-2/#dictdef-publickeycredentialparameters.
+	/// <See href="https://www.w3.org/TR/webauthn-2/#dictdef-publickeycredentialparameters"/>
 	/// </remarks>
+	[ApiCategory("WebAuthn")]
 	public class PublicKeyCredentialParameters
 	{
 		/// <summary>

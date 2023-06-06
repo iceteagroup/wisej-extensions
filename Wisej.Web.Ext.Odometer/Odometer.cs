@@ -30,7 +30,7 @@ namespace Wisej.Web.Ext.Odometer
 	/// <summary>
 	/// Represents an odometer widget to display smoothly transitioning numbers. 
 	/// 
-	/// See: http://github.hubspot.com/odometer/
+	/// See: <see href="http://github.hubspot.com/odometer/"/>
 	/// 
 	/// </summary>
 	public class Odometer : Widget

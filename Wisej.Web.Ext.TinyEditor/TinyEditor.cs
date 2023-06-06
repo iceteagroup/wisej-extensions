@@ -31,7 +31,7 @@ namespace Wisej.Web.Ext.TinyEditor
 {
 	/// <summary>
 	/// TinyEditor is a simple JavaScript WYSIWYG editor that is both lightweight (8KB) and standalone
-	/// from: https://github.com/jessegreathouse/TinyEditor.
+	/// from: <see href="https://github.com/jessegreathouse/TinyEditor"/>.
 	/// 
 	/// It can easily be customized to integrate with any website through CSS and the multitude of parameters. 
 	/// It handles most of the basic formatting needs and has some functionality built in to help keep the 
@@ -277,7 +277,7 @@ namespace Wisej.Web.Ext.TinyEditor
 		/// <summary>
 		/// Executes commands to manipulate the contents of the editable region. 
 		/// </summary>
-		/// <param name="command">The name of the command to execute. See https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand for a list of commands.</param>
+		/// <param name="command">The name of the command to execute. See <see href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand"/> for a list of commands.</param>
 		/// <param name="showDefaultUI">Indicates whether the default user interface should be shown. This is not implemented in Mozilla.</param>
 		/// <param name="argument">For commands which require an input argument (such as insertImage, for which this is the URL of the image to insert), this is a string providing that information. Specify null if no argument is needed.</param>
 		/// <remarks>
@@ -293,7 +293,7 @@ namespace Wisej.Web.Ext.TinyEditor
 		/// <summary>
 		/// Executes commands to manipulate the contents of the editable region. 
 		/// </summary>
-		/// <param name="command">The name of the command to execute. See https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand for a list of commands.</param>
+		/// <param name="command">The name of the command to execute. See <see href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand"/> for a list of commands.</param>
 		/// <param name="argument">For commands which require an input argument (such as insertImage, for which this is the URL of the image to insert), this is a string providing that information. Specify null if no argument is needed.</param>
 		/// <remarks>
 		/// Most commands affect the document's selection (bold, italics, etc.), while others insert new elements (adding a link) or 

@@ -28,7 +28,7 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.jQueryKnob
 {
 	/// <summary>
-	/// Nice, downward compatible, touchable, jQuery dial from https://github.com/aterrien/jQuery-Knob.
+	/// Nice, downward compatible, touchable, jQuery dial from <see href="https://github.com/aterrien/jQuery-Knob"/>.
 	/// </summary>
 	[ToolboxBitmap(typeof(Knob))]
 	[DefaultEvent("ValueChanged")]

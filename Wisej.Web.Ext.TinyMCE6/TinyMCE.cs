@@ -158,7 +158,7 @@ namespace Wisej.Web.Ext.TinyMCE6
 		private bool _showFooter = true;
 
 		/// <summary>
-		/// Returns or sets the configuration to use for this instance of the editor: https://www.tinymce.com/docs/configure/.
+		/// Returns or sets the configuration to use for this instance of the editor: <see href="https://www.tinymce.com/docs/configure/"/>.
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
@@ -252,7 +252,7 @@ namespace Wisej.Web.Ext.TinyMCE6
 		/// <summary>
 		/// Executes commands to manipulate the contents of the editable region. 
 		/// </summary>
-		/// <param name="command">The name of the command to execute. See https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand and http://archive.tinymce.com/wiki.php/TinyMCE3x:Command_identifiers for a list of commands.</param>
+		/// <param name="command">The name of the command to execute. See <see href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand and http://archive.tinymce.com/wiki.php/TinyMCE3x:Command_identifiers"/> for a list of commands.</param>
 		/// <param name="showDefaultUI">Indicates whether the default user interface should be shown. This is not implemented in Mozilla.</param>
 		/// <param name="argument">For commands which require an input argument (such as insertImage, for which this is the URL of the image to insert), this is a string providing that information. Specify null if no argument is needed.</param>
 		/// <remarks>
@@ -268,7 +268,7 @@ namespace Wisej.Web.Ext.TinyMCE6
 		/// <summary>
 		/// Executes commands to manipulate the contents of the editable region. 
 		/// </summary>
-		/// <param name="command">The name of the command to execute. See https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand and http://archive.tinymce.com/wiki.php/TinyMCE3x:Command_identifiers for a list of commands.</param>
+		/// <param name="command">The name of the command to execute. See <see href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand"/> and <see href="http://archive.tinymce.com/wiki.php/TinyMCE3x:Command_identifiers"/> for a list of commands.</param>
 		/// <param name="argument">For commands which require an input argument (such as insertImage, for which this is the URL of the image to insert), this is a string providing that information. Specify null if no argument is needed.</param>
 		/// <remarks>
 		/// Most commands affect the document's selection (bold, italics, etc.), while others insert new elements (adding a link) or 

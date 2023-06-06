@@ -20,7 +20,7 @@
 namespace Wisej.Web.Ext.OfficeViewer
 {
 	/// <summary>
-	/// Microsoft Office Viewer panel. Uses https://products.office.com/en-us/office-online/view-office-documents-online.
+	/// Microsoft Office Viewer panel. Uses <see href="https://products.office.com/en-us/office-online/view-office-documents-online"/>.
 	/// </summary>
 	internal class NamespaceDoc
 	{

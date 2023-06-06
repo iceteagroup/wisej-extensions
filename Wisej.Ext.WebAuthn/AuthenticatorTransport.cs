@@ -17,12 +17,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
-    /// <summary>
-    /// Available transport types.
-    /// </summary>
-    public enum AuthenticatorTransport
+	/// <summary>
+	/// Available transport types.
+	/// </summary>	
+	[ApiCategory("WebAuthn")]
+	public enum AuthenticatorTransport
     {
         /// <summary>
         /// Indicates the respective authenticator can be contacted over removable USB.

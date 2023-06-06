@@ -23,7 +23,7 @@ namespace Wisej.Web.Ext.ChartJS3
 {
 	/// <summary>
 	/// Anchor configuration for ChartJS datalabel. 
-	/// See: https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#anchoring.
+	/// See: <see href="https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#anchoring"/>.
 	/// </summary>
 	[ApiCategory("ChartJS3")]
 	public enum DataLabelAnchor

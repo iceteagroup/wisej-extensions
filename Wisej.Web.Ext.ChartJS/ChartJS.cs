@@ -30,12 +30,12 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.ChartJS
 {
 	/// <summary>
-	/// ChartJS is a simple yet flexible JavaScript charting for designers and developers from http://www.chartjs.org/. 
+	/// ChartJS is a simple yet flexible JavaScript charting for designers and developers from <see href="http://www.chartjs.org/"/>. 
 	/// </summary>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(ChartJS))]
 	[DefaultEvent("ChartClick")]
-	[Description("ChartJS is a simple yet flexible JavaScript charting for designers & developers from http://www.chartjs.org/.")]
+	[Description("ChartJS is a simple yet flexible JavaScript charting for designers & developers from <see href=\"http://www.chartjs.org/.\"/>")]
 	[ApiCategory("ChartJS")]
     public class ChartJS : Widget, IWisejControl
 	{

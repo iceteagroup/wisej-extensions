@@ -17,15 +17,18 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
-    /// <summary>
-    /// This enumeration’s values describe authenticators' attachment modalities.
-    /// </summary>
-    /// <remarks>
-    /// See: https://w3c.github.io/webauthn/#enum-attachment.
-    /// </remarks>
-    public enum AuthenticatorAttachment
+	/// <summary>
+	/// This enumeration’s values describe authenticators' attachment modalities.
+	/// </summary>
+	/// <remarks>
+	/// <See href="https://w3c.github.io/webauthn/#enum-attachment."/>
+	/// </remarks>
+	[ApiCategory("WebAuthn")]
+	public enum AuthenticatorAttachment
     {
         /// <summary>
         /// A platform authenticator is attached using a client device-specific transport, called platform attachment, and is usually not removable from the client device.

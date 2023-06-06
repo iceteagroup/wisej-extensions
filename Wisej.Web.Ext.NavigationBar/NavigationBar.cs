@@ -478,7 +478,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		#region Methods
 
 		/// <summary>
-		/// Returns the URL for the https://en.gravatar.com associated
+		/// Returns the URL for the <see href="https://en.gravatar.com"/> associated
 		/// to specified <paramref name="email"/> address.
 		/// </summary>
 		/// <param name="email">Email address for which to retrieve the gravatar URL.</param>

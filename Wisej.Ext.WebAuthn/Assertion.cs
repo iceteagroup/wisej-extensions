@@ -17,14 +17,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
 	/// <summary>
 	/// An authenticator's response to a client's request for generation of a new authentication assertion.
 	/// </summary>
 	/// <remarks>
-	/// See: https://w3c.github.io/webauthn/#iface-authenticatorassertionresponse.
+	/// See <see href="https://w3c.github.io/webauthn/#iface-authenticatorassertionresponse"/>
 	/// </remarks>
+	[ApiCategory("WebAuthn")]
 	public class Assertion
 	{
 		/// <summary>

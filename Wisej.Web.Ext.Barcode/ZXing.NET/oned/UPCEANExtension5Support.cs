@@ -176,8 +176,8 @@ namespace ZXing.OneD
                currency = "$";
                break;
             case '9':
-               // Reference: http://www.jollytech.com
-               if ("90000".Equals(raw))
+					// Reference: <see href="http://www.jollytech.com"/>
+					if ("90000".Equals(raw))
                {
                   // No suggested retail price
                   return null;

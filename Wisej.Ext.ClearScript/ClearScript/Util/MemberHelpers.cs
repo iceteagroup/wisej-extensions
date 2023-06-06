@@ -125,7 +125,7 @@ namespace Microsoft.ClearScript.Util
                 if (inherit)
                 {
                     // this affects SqlDataReader and is indicative of a .NET issue described here:
-                    // http://connect.microsoft.com/VisualStudio/feedback/details/646399/attribute-isdefined-throws-ambiguousmatchexception-for-indexer-properties-and-inherited-attributes
+                    // href="http://connect.microsoft.com/VisualStudio/feedback/details/646399/attribute-isdefined-throws-ambiguousmatchexception-for-indexer-properties-and-inherited-attributes"
 
                     return Attribute.GetCustomAttributes(member, typeof(T), false).SingleOrDefault() as T;
                 }

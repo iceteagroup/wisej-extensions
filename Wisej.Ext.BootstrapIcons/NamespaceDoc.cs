@@ -22,7 +22,7 @@ namespace Wisej.Ext.BootsrapIcons
 {
 	/// <summary>
 	/// <para>
-	/// Bootstrap IconPack. Adds the full set of icons published by Bootstrap (https://icons.getbootstrap.com/#icons) in a single assembly.
+	/// Bootstrap IconPack. Adds the full set of icons published by Bootstrap (href="https://icons.getbootstrap.com/#icons") in a single assembly.
 	/// </para>
 	/// </summary>
 	internal class NamespaceDoc

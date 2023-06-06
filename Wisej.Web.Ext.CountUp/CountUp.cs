@@ -29,7 +29,7 @@ namespace Wisej.Web.Ext.CountUp
 	/// <summary>
 	/// CountUp.js is a dependency-free, lightweight JavaScript widget that can be used to 
 	/// create animations that display numerical data in a more interesting way.
-	/// https://github.com/inorganik/countUp.js.
+	/// <see href="https://github.com/inorganik/countUp.js"/>.
 	/// </summary>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(CountUp))]

@@ -28,7 +28,7 @@ namespace Wisej.Ext.ClientFileSystem
 {
 	/// <summary>
 	/// Specifies the type of action to perform on the writable.
-	/// See: https://developer.mozilla.org/en-US/docs/Web/API/FileSystemWritableFileStream/write.
+	/// <See: href="https://developer.mozilla.org/en-US/docs/Web/API/FileSystemWritableFileStream/write."/>
 	/// </summary>
 	public enum WritableType
 	{

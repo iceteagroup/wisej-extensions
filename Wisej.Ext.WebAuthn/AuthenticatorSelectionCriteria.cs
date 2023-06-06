@@ -17,15 +17,18 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
-    /// <summary>
-    /// Manages requirements regarding authenticator attributes.
-    /// </summary>
-    /// <remarks>
-    /// See: https://w3c.github.io/webauthn/#dom-authenticatorselectioncriteria-authenticatorattachment.
-    /// </remarks>
-    public class AuthenticatorSelectionCriteria
+	/// <summary>
+	/// Manages requirements regarding authenticator attributes.
+	/// </summary>
+	/// <remarks>
+	/// <See href="https://w3c.github.io/webauthn/#dom-authenticatorselectioncriteria-authenticatorattachment"/>
+	/// </remarks>	
+	[ApiCategory("WebAuthn")]
+	public class AuthenticatorSelectionCriteria
     {
         /// <summary>
         /// If this member is present, eligible authenticators are filtered to be only 

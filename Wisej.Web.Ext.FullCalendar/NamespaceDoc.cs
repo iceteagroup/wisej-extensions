@@ -22,7 +22,7 @@ namespace Wisej.Web.Ext.FullCalendar
 {
 	/// <summary>
 	/// <para>
-	/// FullCalendar component. Implements a a full scheduler using the http://fullcalendar.io/. widget.
+	/// FullCalendar component. Implements a a full scheduler using the <see href="http://fullcalendar.io/"/> widget.
 	/// </para>
 	/// </summary>
 	internal class NamespaceDoc

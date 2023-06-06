@@ -30,7 +30,7 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.jSequence
 {
 	/// <summary>
-	/// The Sequence control turns text into UML sequence diagrams: https://bramp.github.io/js-sequence-diagrams/.
+	/// The Sequence control turns text into UML sequence diagrams: <see href="https://bramp.github.io/js-sequence-diagrams/"/>.
 	/// </summary>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Sequence))]
@@ -71,7 +71,7 @@ namespace Wisej.Web.Ext.jSequence
 		#region Properties
 
 		/// <summary>
-		/// Returns or sets the UML definition of the diagram using this syntax: https://github.com/bramp/js-sequence-diagrams/blob/master/src/grammar.jison.
+		/// Returns or sets the UML definition of the diagram using this syntax: <see href="https://github.com/bramp/js-sequence-diagrams/blob/master/src/grammar.jison"/>.
 		/// </summary>
 		[DefaultValue("")]
 		[DesignerActionList]

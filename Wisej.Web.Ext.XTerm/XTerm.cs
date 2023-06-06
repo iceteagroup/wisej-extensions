@@ -30,7 +30,7 @@ namespace Wisej.Web.Ext.XTerm
 {
 	/// <summary>
 	/// Xterm is a lightweight, free, and open source terminal viewer for the web.
-	/// Built using HTML5, CSS3, JavaScript, and WebGL. See https://xtermjs.org/.
+	/// Built using HTML5, CSS3, JavaScript, and WebGL. See <see href="https://xtermjs.org/"/>.
 	/// </summary>
 	[ToolboxBitmapAttribute(typeof(XTerm))]
 	[Description("XTerm is a lightweight, free, and open source terminal for the web.")]

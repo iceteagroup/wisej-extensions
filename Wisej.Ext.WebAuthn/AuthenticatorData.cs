@@ -17,14 +17,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
 	/// <summary>
 	/// Information about the authenticator.
 	/// </summary>
 	/// <remarks>
-	/// See: https://w3c.github.io/webauthn/#sctn-authenticator-data.
-	/// </remarks>
+	/// <See href="https://w3c.github.io/webauthn/#sctn-authenticator-data."/>
+	/// </remarks>	
+	[ApiCategory("WebAuthn")]
 	public class AuthenticatorData
 	{
 		/// <summary>

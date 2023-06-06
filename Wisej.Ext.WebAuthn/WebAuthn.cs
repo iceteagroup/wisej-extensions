@@ -23,6 +23,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Wisej.Web;
+using System.ComponentModel;
 
 namespace Wisej.Ext.WebAuthn
 {
@@ -30,6 +31,7 @@ namespace Wisej.Ext.WebAuthn
 	/// Provides methods for creating and retrieving credentials from the client following
 	/// the Web Authorization API standards.
 	/// </summary>
+	[ApiCategory("WebAuthn")]
 	public static class WebAuthn
 	{
 		/// <summary>
@@ -37,51 +39,51 @@ namespace Wisej.Ext.WebAuthn
 		/// </summary>
 		/// <returns>True if the device has a user-verifying platform authenticator.</returns>
 		public static async Task<bool> IsUserVerifyingPlatformAuthenticatorAvailableAsync()
-        {
+		{
 			return await CallAsync("isUserVerifyingPlatformAuthenticatorAvailable");
-        }
+		}
 
-        /// <summary>
-        /// Creates new credentials for the client.
-        /// </summary>
-        /// <param name="challenge"></param>
-        /// <param name="rp"></param>
-        /// <param name="user"></param>
-        /// <param name="publicKeyCredentialParameters"></param>
-        /// <param name="authenticatorSelection"></param>
-        /// <param name="timeout"></param>
-        /// <param name="attestation"></param>
-        /// <returns>The client's credentials.</returns>
-        public static async Task<CredentialsResponse> CreateAsync(
-			string challenge, 
-			RelyingParty rp, 
+		/// <summary>
+		/// Creates new credentials for the client.
+		/// </summary>
+		/// <param name="challenge">Random string for validating the request.</param>
+		/// <param name="rp">Relaying Party (rp), the organization responsible for registering and authenticating the user.</param>
+		/// <param name="user">Information about the user currently registering.</param>
+		/// <param name="publicKeyCredentialParameters">Array describing what public key types are acceptable to the server.</param>
+		/// <param name="authenticatorSelection">"platform" (Windows Hello) vs "cross-platform" (Yubikey) required.</param>
+		/// <param name="timeout">The time in milliseconds that the user has to respond to a prompt for registration.</param>
+		/// <param name="attestation">allows servers to indicate how important the attestation data is to this registration event.</param>
+		/// <returns>The client's credentials.</returns>
+		public static async Task<CredentialsResponse> CreateAsync(
+			string challenge,
+			RelyingParty rp,
 			PublicKeyCredentialUserEntity user,
-			PublicKeyCredentialParameters[] publicKeyCredentialParameters, 
-			AuthenticatorSelectionCriteria authenticatorSelection, 
-			int timeout, 
+			PublicKeyCredentialParameters[] publicKeyCredentialParameters,
+			AuthenticatorSelectionCriteria authenticatorSelection,
+			int timeout,
 			AttestationConveyancePreference attestation)
-        {
-            var result = await CallAsync("create", 
-				challenge, 
-				rp, 
-				user, 
-				publicKeyCredentialParameters.Select((entry) => new { type = entry.Type, alg = (int)entry.Alg }), 
-				authenticatorSelection, 
+		{
+			var result = await CallAsync("create",
+				challenge,
+				rp,
+				user,
+				publicKeyCredentialParameters.Select((entry) => new { type = entry.Type, alg = (int)entry.Alg }),
+				authenticatorSelection,
 				timeout,
 				attestation);
-			
+
 			if (result is string)
-            {
+			{
 				throw new Exception(result);
 			}
 			else
-            {
+			{
 				return new CredentialsResponse
 				{
 					AuthenticatorData = new AuthenticatorData
 					{
 						PublicKey = new PublicKey
-                        {
+						{
 							CredentialID = result.authenticatorData.attestedCredentialData.credentialId,
 							Data = result.authenticatorData.attestedCredentialData.publicKey
 						}
@@ -96,26 +98,26 @@ namespace Wisej.Ext.WebAuthn
 			}
 		}
 
-        /// <summary>
-        /// Gets the requested credentials from the client.
-        /// </summary>
-        /// <param name="challenge"></param>
-        /// <param name="allowCredentials"></param>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
-        public static async Task<CredentialsResponse> GetAsync(
-			string challenge, 
-			PublicKeyCredentialDescriptor allowCredentials, 
+		/// <summary>
+		/// Gets the requested credentials from the client.
+		/// </summary>
+		/// <param name="challenge">Random string for validating the request.</param>
+		/// <param name="allowCredentials">Which credential the server would like the user to authenticate with.</param>
+		/// <param name="timeout">The time in milliseconds that the user has to respond to a prompt for registration.</param>
+		/// <returns></returns>
+		public static async Task<CredentialsResponse> GetAsync(
+			string challenge,
+			PublicKeyCredentialDescriptor allowCredentials,
 			int timeout)
-        {
+		{
 			var result = await CallAsync("get", challenge, allowCredentials, timeout);
 
 			if (result is string)
-            {
+			{
 				throw new Exception(result);
-            }
+			}
 			else
-            {
+			{
 				return new CredentialsResponse
 				{
 					AuthenticatorData = new AuthenticatorData
@@ -139,21 +141,21 @@ namespace Wisej.Ext.WebAuthn
 			}
 		}
 
-        /// <summary>
-        /// Validates the given attestation against the provided public key.
-        /// </summary>
-        /// <param name="publicKey">The public key generated during registration.</param>
-        /// <param name="authenticatorDataBase64"></param>
-        /// <param name="clientDataBase64"></param>
-        /// <param name="signature"></param>
-        /// <returns>The success of the validation.</returns>
-        /// <exception cref="Exception"></exception>
-        public static bool Validate(
-			PublicKey publicKey, 
+		/// <summary>
+		/// Validates the given attestation against the provided public key.
+		/// </summary>
+		/// <param name="publicKey">The public key generated during registration.</param>
+		/// <param name="authenticatorDataBase64">"platform" (Windows Hello) vs "cross-platform" (Yubikey) required.</param>
+		/// <param name="clientDataBase64">Client data base64 encoded.</param>
+		/// <param name="signature">Authentication signature.</param>
+		/// <returns>The success of the validation.</returns>
+		/// <exception cref="Exception"></exception>
+		public static bool Validate(
+			PublicKey publicKey,
 			string authenticatorDataBase64,
 			string clientDataBase64,
 			byte[] signature)
-        {
+		{
 			switch (publicKey.Algorithm)
 			{
 				case COSEAlgorithmIdentifier.ES256:
@@ -170,19 +172,19 @@ namespace Wisej.Ext.WebAuthn
 			}
 		}
 
-        /// <summary>
-        /// Validates an ES256 signature.
-        /// </summary>
-        /// <param name="publicKey"></param>
-        /// <param name="clientDataBase64"></param>
-        /// <param name="authenticatorDataBase64"></param>
-        /// <param name="signature"></param>
-        /// <returns></returns>
-        private static bool ValidateES256Signature(
-			PublicKey publicKey, 
-			string clientDataBase64, 
+		/// <summary>
+		/// Validates an ES256 signature.
+		/// </summary>
+		/// <param name="publicKey">The public key generated during registration.</param>
+		/// <param name="clientDataBase64">Client data base64 encoded.</param>
+		/// <param name="authenticatorDataBase64">"platform" (Windows Hello) vs "cross-platform" (Yubikey) required.</param>
+		/// <param name="signature">Authentication signature.</param>
+		/// <returns></returns>
+		private static bool ValidateES256Signature(
+			PublicKey publicKey,
+			string clientDataBase64,
 			string authenticatorDataBase64,
-            byte[] signature)
+			byte[] signature)
 		{
 			// parse public key data from client.
 			var x = publicKey.Data["-2"];
@@ -213,16 +215,16 @@ namespace Wisej.Ext.WebAuthn
 			return ecDsa.VerifyData(signatureBase, DeserializeSignature(signature), HashAlgorithmName.SHA256);
 		}
 
-        /// <summary>
-        /// TODO: Valide an EdDSA signature.
-        /// </summary>
-        /// <param name="publicKey"></param>
-        /// <param name="clientDataBase64"></param>
-        /// <param name="authenticatorDataBase64"></param>
-        /// <param name="signature"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private static bool ValidateEdDSA(
+		/// <summary>
+		/// TODO: Validates an EdDSA signature.
+		/// </summary>
+		/// <param name="publicKey">The public key generated during registration.</param>
+		/// <param name="clientDataBase64">Client data base64 encoded.</param>
+		/// <param name="authenticatorDataBase64">"platform" (Windows Hello) vs "cross-platform" (Yubikey) required.</param>
+		/// <param name="signature">Authentication signature.</param>
+		/// <returns></returns>
+		/// <exception cref="NotImplementedException"></exception>
+		private static bool ValidateEdDSA(
 			PublicKey publicKey,
 			string clientDataBase64,
 			string authenticatorDataBase64,
@@ -231,15 +233,15 @@ namespace Wisej.Ext.WebAuthn
 			throw new NotImplementedException();
 		}
 
-        /// <summary>
-        /// Validates an RS256 signature.
-        /// </summary>
-        /// <param name="publicKey">The public key data received from the client upon registration.</param>
-        /// <param name="clientDataBase64"></param>
-        /// <param name="authenticatorDataBase64"></param>
-        /// <param name="signature"></param>
-        /// <returns></returns>
-        private static bool ValidateRS256(
+		/// <summary>
+		/// Validates an RS256 signature.
+		/// </summary>
+		/// <param name="publicKey">The public key data received from the client upon registration.</param>
+		/// <param name="clientDataBase64">Client data base64 encoded.</param>
+		/// <param name="authenticatorDataBase64">"platform" (Windows Hello) vs "cross-platform" (Yubikey) required.</param>
+		/// <param name="signature">Authentication signature.</param>
+		/// <returns></returns>
+		private static bool ValidateRS256(
 			PublicKey publicKey,
 			string clientDataBase64,
 			string authenticatorDataBase64,
@@ -328,7 +330,7 @@ namespace Wisej.Ext.WebAuthn
 			return Application.CallAsync($"wisej.ext.WebAuthn.{method}", args);
 		}
 
-        #endregion
+		#endregion
 
-    }
+	}
 }

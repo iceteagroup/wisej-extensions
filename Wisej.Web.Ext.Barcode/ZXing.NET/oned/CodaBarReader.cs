@@ -54,14 +54,14 @@ namespace ZXing.OneD
 
       // official start and end patterns
       private static readonly char[] STARTEND_ENCODING = { 'A', 'B', 'C', 'D' };
-      // some codabar generator allow the codabar string to be closed by every
-      // character. This will cause lots of false positives!
+		// some codabar generator allow the codabar string to be closed by every
+		// character. This will cause lots of false positives!
 
-      // some industries use a checksum standard but this is not part of the original codabar standard
-      // for more information see : http://www.mecsw.com/specs/codabar.html
+		// some industries use a checksum standard but this is not part of the original codabar standard
+		// for more information see: <see href="http://www.mecsw.com/specs/codabar.html"/>
 
-      // Keep some instance variables to avoid reallocations
-      private readonly StringBuilder decodeRowResult;
+		// Keep some instance variables to avoid reallocations
+		private readonly StringBuilder decodeRowResult;
       private int[] counters;
       private int counterLength;
 

@@ -182,18 +182,18 @@ namespace ZXing.Common
          }
       }
 
-      /// <summary>
-      /// Calculates a single black point for each 8x8 block of pixels and saves it away.
-      /// See the following thread for a discussion of this algorithm:
-      /// http://groups.google.com/group/zxing/browse_thread/thread/d06efa2c35a7ddc0
-      /// </summary>
-      /// <param name="luminances">The luminances.</param>
-      /// <param name="subWidth">Width of the sub.</param>
-      /// <param name="subHeight">Height of the sub.</param>
-      /// <param name="width">The width.</param>
-      /// <param name="height">The height.</param>
-      /// <returns></returns>
-      private static int[][] calculateBlackPoints(byte[] luminances, int subWidth, int subHeight, int width, int height)
+		/// <summary>
+		/// Calculates a single black point for each 8x8 block of pixels and saves it away.
+		/// See the following thread for a discussion of this algorithm:
+		/// <see href="http://groups.google.com/group/zxing/browse_thread/thread/d06efa2c35a7ddc0"/>
+		/// </summary>
+		/// <param name="luminances">The luminances.</param>
+		/// <param name="subWidth">Width of the sub.</param>
+		/// <param name="subHeight">Height of the sub.</param>
+		/// <param name="width">The width.</param>
+		/// <param name="height">The height.</param>
+		/// <returns></returns>
+		private static int[][] calculateBlackPoints(byte[] luminances, int subWidth, int subHeight, int width, int height)
       {
          int[][] blackPoints = new int[subHeight][];
          for (int i = 0; i < subHeight; i++)

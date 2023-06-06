@@ -195,7 +195,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		private string _apiKey;
 
 		/// <summary>
-		/// Returns or sets the specified MapOptions: https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapOptions.
+		/// Returns or sets the specified MapOptions: <see href="https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapOptions"/>
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
@@ -290,7 +290,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// The Google Maps version to load.
 		/// </summary>
 		/// <remarks>
-		/// See: https://developers.google.com/maps/documentation/javascript/versions.
+		/// See: <see href="https://developers.google.com/maps/documentation/javascript/versions"/>.
 		/// </remarks>
 		public static string Version
 		{
@@ -301,7 +301,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 
 		/// <summary>
 		/// Gets or sets the Google Maps libraries to load.
-		/// See: https://developers.google.com/maps/documentation/javascript/libraries.
+		/// See: <see href="https://developers.google.com/maps/documentation/javascript/libraries"/>.
 		/// </summary>
 		public static string Libraries
 		{
@@ -320,7 +320,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// <param name="markerId">The unique ID that identifies the marker.</param>
 		/// <param name="lat">The latitude of the marker.</param>
 		/// <param name="lng">The longitude of the marker.</param>
-		/// <param name="options">An optional dynamic object that specifies the marker options: https://developers.google.com/maps/documentation/javascript/3.exp/reference#MarkerOptions. </param>
+		/// <param name="options">An optional dynamic object that specifies the marker options: <see href="https://developers.google.com/maps/documentation/javascript/3.exp/reference#MarkerOptions"/>. </param>
 		/// <param name="center">True to center the map after setting the marker.</param>
 		public void AddMarker(string markerId, double lat, double lng, dynamic options = null, bool center = false)
 		{
@@ -332,7 +332,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// </summary>
 		/// <param name="markerId">The unique ID that identifies the marker.</param>
 		/// <param name="location">An instance of <see cref="T:Wisej.Web.Ext.GoogleMaps.LatLng"/> than identifies the location of the marker.</param>
-		/// <param name="options">An optional dynamic object that specifies the marker options: https://developers.google.com/maps/documentation/javascript/3.exp/reference#MarkerOptions. </param>
+		/// <param name="options">An optional dynamic object that specifies the marker options: <see href="https://developers.google.com/maps/documentation/javascript/3.exp/reference#MarkerOptions"/>. </param>
 		/// <param name="center">True to center the map after setting the marker.</param>
 		public void AddMarker(string markerId, LatLng location, dynamic options = null, bool center = false)
 		{
@@ -344,7 +344,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// </summary>
 		/// <param name="markerId">The unique ID that identifies the marker.</param>
 		/// <param name="address">The address - to be geocoded - of the marker.</param>
-		/// <param name="options">An optional dynamic object that specifies the marker options: https://developers.google.com/maps/documentation/javascript/3.exp/reference#MarkerOptions. </param>
+		/// <param name="options">An optional dynamic object that specifies the marker options: <see href="https://developers.google.com/maps/documentation/javascript/3.exp/reference#MarkerOptions"/>. </param>
 		/// <param name="center">True to center the map after setting the marker.</param>
 		public void AddMarker(string markerId, string address, dynamic options = null, bool center = false)
 		{
@@ -370,7 +370,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 
 		/// <summary>
 		/// Uses GoogleMaps DirectionService to route and display a path between the origin and destination.
-		/// See https://developers.google.com/maps/documentation/javascript/directions.
+		/// See <see href="https://developers.google.com/maps/documentation/javascript/directions"/>.
 		/// </summary>
 		/// <param name="origin">The latitude and longitude of the origin.</param>
 		/// <param name="destination">The latitude and longitude of the destination.</param>
@@ -382,7 +382,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 
 		/// <summary>
 		/// Uses GoogleMaps DirectionService to route and display a path between the origin and destination.
-		/// See https://developers.google.com/maps/documentation/javascript/directions.
+		/// See <see href="https://developers.google.com/maps/documentation/javascript/directions"/>.
 		/// </summary>
 		/// <param name="origin">The name of the origin.</param>
 		/// <param name="destination">The name of the destination.</param>
@@ -451,7 +451,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// Shows an instance of the google.maps.InfoWindow class in relation to the marker.
 		/// </summary>
 		/// <param name="markerId">The marker unique ID.</param>
-		/// <param name="options">Options for the creation of the InfoWindow. See https://developers.google.com/maps/documentation/javascript/infowindows. </param>
+		/// <param name="options">Options for the creation of the InfoWindow. See <see href="https://developers.google.com/maps/documentation/javascript/infowindows"/>. </param>
 		public void ShowInfoWindow(string markerId, object options)
 		{
 			Call("showInfoWindow", markerId, options);

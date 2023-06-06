@@ -18,23 +18,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
-using System.Net;
 using Wisej.Base;
 using Wisej.Core;
 
 namespace Wisej.Web.Ext.Notification
 {
 	/// <summary>
-	/// Adds support for the Notification API: https://developer.mozilla.org/en-US/docs/Web/API/notification.
+	/// Adds support for the Notification API: <see href="https://developer.mozilla.org/en-US/docs/Web/API/notification"/>.
 	/// </summary>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Notification))]
 	[ApiCategory("Notification")]
-	[SRDescription("Adds support for the Notification API: https://developer.mozilla.org/en-US/docs/Web/API/notification.")]
+	[SRDescription("Adds support for the Notification API: <see href=\"https://developer.mozilla.org/en-US/docs/Web/API/notification.\"/>")]
 	public class Notification : Wisej.Web.Component
 	{
 		#region Constructors
@@ -109,24 +107,24 @@ namespace Wisej.Web.Ext.Notification
 		/// <param name="icon">The URL of the image used as an icon of the notification.</param>
 		/// <param name="showOnClick">Indicates whether to activate the browser when the user clicks the notification.</param>
 		/// <param name="image">URL of an image to show at the top of the notification window.</param>
-		/// <param name="actions">An array of <see cref="Notification.Action"/> items representing the actions available to the user when the notification is presented.</param>
+		/// <param name="id">Optional unique id, returned in <see cref="NotificationClickEventArgs"/>.</param>
 		/// <param name="requireInteraction">Indicates that a notification should remain active until the user clicks or dismisses it, rather than closing automatically.</param>
 		public void Show(
-			string title, 
-			string body = null, 
-			string icon = null, 
+			string title,
+			string body = null,
+			string icon = null,
 			bool showOnClick = false,
-			string image = null, 
-			Action[] actions = null,
+			string image = null,
+			string id = null,
 			bool requireInteraction = false)
 		{
 			Call("show", new
 			{
+				id = id,
 				title = title,
 				body = body,
 				icon = icon,
 				image = image,
-				actions = actions,
 				showOnClick = showOnClick,
 				requireInteraction = requireInteraction,
 				Language = CultureInfo.CurrentCulture.Name
@@ -147,7 +145,8 @@ namespace Wisej.Web.Ext.Notification
 			{
 
 				case "click":
-					OnClick(new NotificationClickEventArgs(e.Parameters.Title));
+					var data = e.Parameters.Data;
+					OnClick(new NotificationClickEventArgs(data.title, data.id));
 					break;
 
 				default:
@@ -172,9 +171,8 @@ namespace Wisej.Web.Ext.Notification
 			if (base.Events[nameof(Click)] != null)
 			{
 				config.wiredEvents = new WiredEvents();
-				config.wiredEvents.Add("click(Title)");
+				config.wiredEvents.Add("click(Data)");
 			}
-
 		}
 
 		#endregion

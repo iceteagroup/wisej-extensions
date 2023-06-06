@@ -15,7 +15,7 @@ namespace Microsoft.ClearScript.Windows
 
         private static readonly Dictionary<int, string> runtimeErrorMap = new Dictionary<int, string>
         {
-            // https://msdn.microsoft.com/en-us/library/1dk3k160(v=vs.84).aspx
+            // href="https://msdn.microsoft.com/en-us/library/1dk3k160(v=vs.84).aspx"
             { 5029, "Array length must be a finite positive integer" },
             { 5030, "Array length must be assigned a finite positive number" },
             { 5028, "Array or arguments object expected" },
@@ -51,7 +51,7 @@ namespace Microsoft.ClearScript.Windows
 
         private static readonly Dictionary<int, string> syntaxErrorMap = new Dictionary<int, string>
         {
-            // https://msdn.microsoft.com/en-us/library/6bby3x2e(v=vs.84).aspx
+            // href="https://msdn.microsoft.com/en-us/library/6bby3x2e(v=vs.84).aspx"
             { 1019, "Can't have 'break' outside of loop" },
             { 1020, "Can't have 'continue' outside of loop" },
             { 1030, "Conditional compilation is turned off" },

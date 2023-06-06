@@ -40,7 +40,7 @@ namespace Wisej.Web.Ext.FullCalendar
 
 		/// <summary>
 		/// Determines the text that will be displayed on the day column headings in day view
-		/// using momentjs format patterns: http://momentjs.com/docs/#/displaying/format/.
+		/// using momentjs format patterns: <see href="http://momentjs.com/docs/#/displaying/format/"/>.
 		/// </summary>
 		[Description("Determines the text that will be displayed on the month column headings.")]
 		public string DayViewFormat
@@ -72,7 +72,7 @@ namespace Wisej.Web.Ext.FullCalendar
 
 		/// <summary>
 		/// Determines the text that will be displayed on the day column headings in week view
-		/// using momentjs format patterns: http://momentjs.com/docs/#/displaying/format/.
+		/// using momentjs format patterns: <see href="http://momentjs.com/docs/#/displaying/format/"/>.
 		/// </summary>
 		[Description("Determines the text that will be displayed on the month column headings.")]
 		public string WeekViewFormat
@@ -104,7 +104,7 @@ namespace Wisej.Web.Ext.FullCalendar
 
 		/// <summary>
 		/// Determines the text that will be displayed on the month column headings
-		/// using momentjs format patterns: http://momentjs.com/docs/#/displaying/format/.
+		/// using momentjs format patterns: <see href="http://momentjs.com/docs/#/displaying/format/"/>.
 		/// </summary>
 		[Description("Determines the text that will be displayed on the month column headings.")]
 		public string MonthViewFormat

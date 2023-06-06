@@ -248,21 +248,21 @@ namespace ZXing.OneD
          return startPattern;
       }
 
-      /// <summary>
-      /// The start &amp; end patterns must be pre/post fixed by a quiet zone. This
-      /// zone must be at least 10 times the width of a narrow line.  Scan back until
-      /// we either get to the start of the barcode or match the necessary number of
-      /// quiet zone pixels.
-      ///
-      /// Note: Its assumed the row is reversed when using this method to find
-      /// quiet zone after the end pattern.
-      ///
-      /// ref: http://www.barcode-1.net/i25code.html
-      /// </summary>
-      /// <param name="row">bit array representing the scanned barcode.</param>
-      /// <param name="startPattern">index into row of the start or end pattern.</param>
-      /// <returns>false, if the quiet zone cannot be found</returns>
-      private bool validateQuietZone(BitArray row, int startPattern)
+		/// <summary>
+		/// The start &amp; end patterns must be pre/post fixed by a quiet zone. This
+		/// zone must be at least 10 times the width of a narrow line.  Scan back until
+		/// we either get to the start of the barcode or match the necessary number of
+		/// quiet zone pixels.
+		///
+		/// Note: Its assumed the row is reversed when using this method to find
+		/// quiet zone after the end pattern.
+		///
+		/// ref: <see href="http://www.barcode-1.net/i25code.html"/>
+		/// </summary>
+		/// <param name="row">bit array representing the scanned barcode.</param>
+		/// <param name="startPattern">index into row of the start or end pattern.</param>
+		/// <returns>false, if the quiet zone cannot be found</returns>
+		private bool validateQuietZone(BitArray row, int startPattern)
       {
          int quietCount = this.narrowLineWidth * 10;  // expect to find this many pixels of quiet zone
 
@@ -323,10 +323,10 @@ namespace ZXing.OneD
             return null;
          }
 
-         // The start & end patterns must be pre/post fixed by a quiet zone. This
-         // zone must be at least 10 times the width of a narrow line.
-         // ref: http://www.barcode-1.net/i25code.html
-         if (!validateQuietZone(row, endPattern[0]))
+			// The start & end patterns must be pre/post fixed by a quiet zone. This
+			// zone must be at least 10 times the width of a narrow line.
+			// ref: <see href="http://www.barcode-1.net/i25code.html"/>
+			if (!validateQuietZone(row, endPattern[0]))
          {
             row.reverse();
             return null;

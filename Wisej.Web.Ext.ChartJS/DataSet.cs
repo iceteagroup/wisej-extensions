@@ -27,7 +27,7 @@ namespace Wisej.Web.Ext.ChartJS
 {
 	/// <summary>
 	/// Represents the data used by the <see cref="T: Wisej.Web.Ext.ChartJS.ChartJS"/> control to plot the chart.
-	/// See http://www.chartjs.org/docs/#line-chart-data-structure for additional information regarding the data structure of ChartJS.
+	/// See <see href="http://www.chartjs.org/docs/#line-chart-data-structure"/> for additional information regarding the data structure of ChartJS.
 	/// </summary>
 	[ApiCategory("ChartJS")]
 	[TypeConverter(typeof(DataSet.Converter))]
@@ -246,7 +246,7 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
-		/// Length and spacing of dashes. See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash.
+		/// Length and spacing of dashes. See <see href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash"/>.
 		/// </summary>
 		[DefaultValue(null)]
 		[Description("Length and spacing of dashes.")]

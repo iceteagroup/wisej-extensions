@@ -113,9 +113,9 @@ namespace ZXing.PDF417
          int upto = SYMBOL_TABLE.Length;
          while (first < upto)
          {
-            // NOTE: Converted Java's '>>>' to '(int)((unit)x >>y)' in C#
-            // http://stackoverflow.com/q/1880172/266252
-            int mid = (int) ((uint) (first + upto) >> 1); // Compute mid point. (i.e. bitshift == divide by 2)
+				// NOTE: Converted Java's '>>>' to '(int)((unit)x >>y)' in C#
+				// <see href="http://stackoverflow.com/q/1880172/266252"/>
+				int mid = (int) ((uint) (first + upto) >> 1); // Compute mid point. (i.e. bitshift == divide by 2)
             if (symbol < SYMBOL_TABLE[mid])
             {
                upto = mid; // continue search in bottom half.

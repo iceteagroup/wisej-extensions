@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.ComponentModel;
 
 namespace Wisej.Ext.WebAuthn
 {
@@ -25,8 +26,9 @@ namespace Wisej.Ext.WebAuthn
 	/// User account parameters for credential generation.
 	/// </summary>
 	/// <remarks>
-	/// See: https://w3c.github.io/webauthn/#dictionary-rp-credential-params.
+	/// <See href="https://w3c.github.io/webauthn/#dictionary-rp-credential-params"/>
 	/// </remarks>
+	[ApiCategory("WebAuthn")]
 	public class RelyingParty
 	{
 		/// <summary>

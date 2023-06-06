@@ -33,9 +33,9 @@ namespace ZXing.PDF417.Internal
       /// </summary>
       static PDF417CodewordDecoder()
       {
-         // Jagged arrays in Java assign the memory automatically, but C# has no equivalent. (Jon Skeet says so!)
-         // http://stackoverflow.com/a/5313879/266252
-         RATIOS_TABLE = new float[PDF417Common.SYMBOL_TABLE.Length][];
+		// Jagged arrays in Java assign the memory automatically, but C# has no equivalent. (Jon Skeet says so!)
+		// <see href="http://stackoverflow.com/a/5313879/266252"/>
+		RATIOS_TABLE = new float[PDF417Common.SYMBOL_TABLE.Length][];
          for (int s = 0; s < RATIOS_TABLE.Length; s++)
          {
             RATIOS_TABLE[s] = new float[PDF417Common.BARS_IN_MODULE];

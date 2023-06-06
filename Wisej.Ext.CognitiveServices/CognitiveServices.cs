@@ -105,7 +105,7 @@ namespace Wisej.Ext.CognitiveServices
 
 		/// <summary>
 		/// Base Uri for Cognitive Services. Depends on region server. Please note that the region must match with your subscription.
-		/// e.g. https://eastus.api.cognitive.microsoft.com/vision/v1.0/analyze
+		/// e.g. href="https://eastus.api.cognitive.microsoft.com/vision/v1.0/analyze"
 		/// </summary>
 		[DefaultValue("")]
 		[Description("Base Uri for Cognitive Services. Depends on region server. Please note that the region must match with your subscription.")]

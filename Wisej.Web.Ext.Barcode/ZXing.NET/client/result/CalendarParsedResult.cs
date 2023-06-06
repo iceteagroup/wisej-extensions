@@ -259,14 +259,14 @@ namespace ZXing.Client.Result
 
       private static string buildDateFormat()
       {
-         //DateFormat format = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH);
-         //// For dates without a time, for purposes of interacting with Android, the resulting timestamp
-         //// needs to be midnight of that day in GMT. See:
-         //// http://code.google.com/p/android/issues/detail?id=8330
-         //format.setTimeZone(TimeZone.getTimeZone("GMT"));
-         //return format;
-         // not sure how to handle this correctly in .Net
-         return "yyyyMMdd";
+			//DateFormat format = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH);
+			//// For dates without a time, for purposes of interacting with Android, the resulting timestamp
+			//// needs to be midnight of that day in GMT. See:
+			//// <see href="http://code.google.com/p/android/issues/detail?id=8330"/>
+			//format.setTimeZone(TimeZone.getTimeZone("GMT"));
+			//return format;
+			// not sure how to handle this correctly in .Net
+			return "yyyyMMdd";
       }
 
       private static string buildDateTimeFormat()

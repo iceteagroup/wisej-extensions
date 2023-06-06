@@ -21,20 +21,21 @@ using Microsoft.AspNetCore.StaticFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Wisej.Web;
+using System.ComponentModel;
 
 namespace Wisej.Ext.WebShare
 {
-    /// <summary>
-    /// Provides methods for sharing text, links, files, and other content to an arbitrary share target selected by the user.
-    /// </summary>
+	/// <summary>
+	/// Provides methods for sharing text, links, files, and other content to an arbitrary share target selected by the user.
+	/// </summary>
 	/// <remarks>
 	/// Can only be used from https or localhost.
-	/// See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API.
+	/// See: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API">Web Share API.</a>
 	/// </remarks>
-    public static class WebShare
+	[ApiCategory("WebShare")]
+	public static class WebShare
 	{
 		/// <summary>
 		/// Returns whether the browser is capable of performing a share operation.
@@ -104,7 +105,7 @@ namespace Wisej.Ext.WebShare
 		/// <summary>
 		/// Gets a base64 representation of the given <see cref="FileStream"/>.
 		/// </summary>
-		/// <param name="fileStream"></param>
+		/// <param name="fileStream">Filestream to get the 64 representation of.</param>
 		/// <returns></returns>
 		private static string GetFileStreamBase64(FileStream fileStream)
 		{
@@ -122,7 +123,7 @@ namespace Wisej.Ext.WebShare
 		/// <summary>
 		/// Gets the mime type for a given file.
 		/// </summary>
-		/// <param name="file"></param>
+		/// <param name="file">File to get the mime type for.</param>
 		/// <returns></returns>
 		private static string GetMimeTypeForFileExtension(string file)
 		{

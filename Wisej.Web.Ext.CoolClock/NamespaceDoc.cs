@@ -22,7 +22,7 @@ namespace Wisej.Web.Ext.CoolClock
 {
 	/// <summary>
 	/// <para>
-	/// CoolClock component. Uses the http://randomibis.com/coolclock widget as Wisej control.
+	/// CoolClock component. Uses the <see href="http://randomibis.com/coolclock"/> widget as Wisej control.
 	/// </para>
 	/// </summary>
 	internal class NamespaceDoc

@@ -17,15 +17,18 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
-    /// <summary>
-    /// The client data represents the contextual bindings of both the WebAuthn Relying Party and the client.
-    /// </summary>
-    /// <remarks>
-    /// See: https://w3c.github.io/webauthn/#dictionary-client-data.
-    /// </remarks>
-    public class ClientData
+	/// <summary>
+	/// The client data represents the contextual bindings of both the WebAuthn Relying Party and the client.
+	/// </summary>
+	/// <remarks>
+	/// <See href="https://w3c.github.io/webauthn/#dictionary-client-data"/>
+	/// </remarks>	
+	[ApiCategory("WebAuthn")]
+	public class ClientData
     {
         /// <summary>
         /// This member contains the string "webauthn.create" when creating new credentials, 

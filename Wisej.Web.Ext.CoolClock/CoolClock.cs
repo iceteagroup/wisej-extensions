@@ -27,7 +27,7 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.CoolClock
 {
 	/// <summary>
-	/// CoolClock is a customizable javascript analog clock from http://randomibis.com/coolclock.
+	/// CoolClock is a customizable javascript analog clock from <see href="http://randomibis.com/coolclock"/>.
 	/// </summary>
 	[ToolboxBitmap(typeof(CoolClock))]
 	[ApiCategory("CoolClock")]

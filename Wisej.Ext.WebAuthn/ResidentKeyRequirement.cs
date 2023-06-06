@@ -17,15 +17,18 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
-    /// <summary>
-    /// Relying Party's requirements for client-side discoverable credentials.
-    /// </summary>
-    /// <remarks>
-    /// See: https://www.w3.org/TR/webauthn-2/#enum-residentKeyRequirement.
-    /// </remarks>
-    public enum ResidentKeyRequirement
+	/// <summary>
+	/// Relying Party's requirements for client-side discoverable credentials.
+	/// </summary>
+	/// <remarks>
+	/// <See href="https://www.w3.org/TR/webauthn-2/#enum-residentKeyRequirement"/>
+	/// </remarks>
+	[ApiCategory("WebAuthn")]
+	public enum ResidentKeyRequirement
     {
         /// <summary>
         /// This value indicates the Relying Party prefers creating a server-side credential, 

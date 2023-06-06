@@ -53,7 +53,7 @@ namespace Wisej.Web.Ext.ChartJS3
 
 		/// <summary>
 		/// Length and spacing of dashes on grid lines. 
-		/// See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash.
+		/// See <see href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash"/>.
 		/// </summary>
 		[DefaultValue(null)]
 		[Description("Length and spacing of dashes on grid lines.")]
@@ -73,7 +73,7 @@ namespace Wisej.Web.Ext.ChartJS3
 
 		/// <summary>
 		/// Offset for line dashes.
-		/// See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset.
+		/// See <see href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset"/>.
 		/// </summary>
 		[DefaultValue(0F)]
 		[Description("Offset for line dashes.")]
@@ -316,7 +316,7 @@ namespace Wisej.Web.Ext.ChartJS3
 
 		/// <summary>
 		/// Length and spacing of dashes of the grid line for the first index (index 0). 
-		/// See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash.
+		/// See <see href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash"/>.
 		/// </summary>
 		[DefaultValue(null)]
 		[Description("Length and spacing of dashes of the grid line for the first index (index 0).")]
@@ -336,7 +336,7 @@ namespace Wisej.Web.Ext.ChartJS3
 
 		/// <summary>
 		/// Offset for line dashes of the grid line for the first index (index 0). 
-		/// See https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset.
+		/// See <see href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset"/>.
 		/// </summary>
 		[DefaultValue(0F)]
 		[Description("Offset for line dashes of the grid line for the first index (index 0).")]

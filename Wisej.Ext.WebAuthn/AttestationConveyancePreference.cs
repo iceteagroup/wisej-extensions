@@ -17,14 +17,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
 	/// <summary>
 	/// Attestation conveyance preferences.
 	/// </summary>
 	/// <remarks>
-	/// See: https://w3c.github.io/webauthn/#attestation-conveyance
+	/// <See: href="https://w3c.github.io/webauthn/#attestation-conveyance"/>
 	/// </remarks>
+	[ApiCategory("WebAuthn")]
 	public enum AttestationConveyancePreference
 	{
 		/// <summary>

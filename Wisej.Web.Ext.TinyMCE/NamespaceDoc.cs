@@ -26,7 +26,7 @@ namespace Wisej.Web.Ext.TinyMCE
 	/// in JavaScript and released as open-source software under the LGPL by Ephox.
 	/// It has the ability to convert HTML textarea fields or other HTML elements to editor instances.
 	/// 
-	/// from: https://www.tinymce.com/
+	/// from: <see href="https://www.tinymce.com/"/>
 	/// </para>
 	/// </summary>
 	internal class NamespaceDoc

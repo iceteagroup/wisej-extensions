@@ -17,18 +17,21 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Ext.WebAuthn
 {
 	/// <summary>
 	/// Represents the result of a request for credentials from the client.
 	/// </summary>
+	[ApiCategory("WebAuthn")]
 	public class CredentialsResponse
 	{
 		/// <summary>
 		/// The authenticator data provided by the client.
 		/// </summary>
 		/// <remarks>
-		/// See: https://w3c.github.io/webauthn/#authenticator-data.
+		/// <See href="https://w3c.github.io/webauthn/#authenticator-data"/>
 		/// </remarks>
 		public AuthenticatorData AuthenticatorData { get; set; }
 
@@ -36,7 +39,7 @@ namespace Wisej.Ext.WebAuthn
 		/// The client data provided by the client.
 		/// </summary>
 		/// <remarks>
-		/// See: https://w3c.github.io/webauthn/#dictdef-collectedclientdata.
+		/// See: <see href="https://w3c.github.io/webauthn/#dictdef-collectedclientdata"/>.
 		/// </remarks>
 		public ClientData ClientData { get; set; }
 
@@ -44,7 +47,7 @@ namespace Wisej.Ext.WebAuthn
 		/// Represents an assertion by the authenticator that the user has consented to a specific transaction.
 		/// </summary>
 		/// <remarks>
-		/// See: https://w3c.github.io/webauthn/#webauthn-signature.
+		/// See: <see href="https://w3c.github.io/webauthn/#webauthn-signature"/>.
 		/// </remarks>
 		public byte[] Signature { get; set; }
 
@@ -52,7 +55,7 @@ namespace Wisej.Ext.WebAuthn
 		/// The user handle associated when this public key credential source was created.
 		/// </summary>
 		/// <remarks>
-		/// See: https://w3c.github.io/webauthn/#public-key-credential-source-userhandle.
+		/// See: <see href="https://w3c.github.io/webauthn/#public-key-credential-source-userhandle"/>
 		/// </remarks>
 		public string UserHandle { get; set; }
 
@@ -60,7 +63,7 @@ namespace Wisej.Ext.WebAuthn
 		/// The number of successful calls to authenticatorGetAssertion(). Used for detecting cloned authenticators.
 		/// </summary>
 		/// <remarks>
-		/// See: https://w3c.github.io/webauthn/#signature-counter.
+		/// See: <see href="https://w3c.github.io/webauthn/#signature-counter"/>.
 		/// </remarks>
 		public int SignatureCounter { get; set; }
 	}

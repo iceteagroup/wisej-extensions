@@ -16,7 +16,7 @@ namespace Microsoft.ClearScript.Windows
 
         private static readonly Dictionary<int, string> runtimeErrorMap = new Dictionary<int, string>
         {
-            // https://msdn.microsoft.com/en-us/library/xe43cc8d(v=vs.84).aspx
+            // href="https://msdn.microsoft.com/en-us/library/xe43cc8d(v=vs.84).aspx"
             { 429, "ActiveX component can't create object" },
             { 507, "An exception occurred" },
             { 449, "Argument not optional" },
@@ -64,7 +64,7 @@ namespace Microsoft.ClearScript.Windows
 
         private static readonly Dictionary<int, string> syntaxErrorMap = new Dictionary<int, string>
         {
-            // https://msdn.microsoft.com/en-us/library/2z84dwk8(v=vs.84).aspx
+            // href="https://msdn.microsoft.com/en-us/library/2z84dwk8(v=vs.84).aspx"
             { 1052, "Cannot have multiple default property/method in a Class" },
             { 1044, "Cannot use parentheses when calling a Sub" },
             { 1053, "Class initialize or terminate do not have arguments" },

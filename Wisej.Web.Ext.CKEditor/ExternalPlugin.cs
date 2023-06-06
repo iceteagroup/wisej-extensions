@@ -24,7 +24,7 @@ namespace Wisej.Web.Ext.CKEditor
 	/// <summary>
 	/// Represents a local plugin that can be used with a CDN installation of the CKEditor or
 	/// a local installation, although for local installations, it is not necessary to register
-	/// local plugins. See https://cdn.ckeditor.com/ under "Enabling Local Plugins.
+	/// local plugins. See <see href="https://cdn.ckeditor.com/"/> under "Enabling Local Plugins.
 	/// </summary>
 	[ApiCategory("CKEditor")]
 	public class ExternalPlugin

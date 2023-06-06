@@ -251,10 +251,10 @@ namespace Wisej.Web.Ext.Speech
 		private bool _enabled = false;
 
 		/// <summary>
-		/// Returns and sets a collection of grammar definitions - using the JSpeech Grammar Format (JSGF) https://www.w3.org/TR/jsgf/.
+		/// Returns and sets a collection of grammar definitions - using the JSpeech Grammar Format (JSGF) <see href="https://www.w3.org/TR/jsgf/"/>.
 		/// </summary>
 		[Localizable(true)]
-		[Description("Gets and sets a collection of grammar definitions - using the JSpeech Grammar Format (JSGF) https://www.w3.org/TR/jsgf/.")]
+		[Description("Gets and sets a collection of grammar definitions - using the JSpeech Grammar Format (JSGF) <see href=\"https://www.w3.org/TR/jsgf/.\"/>")]
 		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string[] Grammars

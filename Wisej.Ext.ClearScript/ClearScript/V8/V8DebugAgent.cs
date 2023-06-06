@@ -146,8 +146,8 @@ namespace Microsoft.ClearScript.V8
 
         private void HandleWebRequest(WebContext webContext)
         {
-            // https://github.com/buggerjs/bugger-daemon/blob/master/README.md#api,
-            // https://github.com/nodejs/node/blob/master/src/inspector_socket_server.cc
+            // href="https://github.com/buggerjs/bugger-daemon/blob/master/README.md#api"
+            // href="https://github.com/nodejs/node/blob/master/src/inspector_socket_server.cc"
 
             if (webContext.Request.RawUrl.Equals("/json", StringComparison.OrdinalIgnoreCase) ||
                 webContext.Request.RawUrl.Equals("/json/list", StringComparison.OrdinalIgnoreCase))

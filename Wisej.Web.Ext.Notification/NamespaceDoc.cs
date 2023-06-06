@@ -22,7 +22,7 @@ namespace Wisej.Web.Ext.Notification
 {
 	/// <summary>
 	/// <para>
-	/// Notification component. Adds desktop notification functionality using the notification API https://developer.mozilla.org/en-US/docs/Web/API/notification.
+	/// Notification component. Adds desktop notification functionality using the notification API <see href="https://developer.mozilla.org/en-US/docs/Web/API/notification"/>.
 	/// </para>
 	/// </summary>
 	internal class NamespaceDoc

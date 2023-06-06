@@ -35,7 +35,7 @@ namespace Wisej.Ext.Translation
 	/// Yandex translation provider.
 	/// </summary>
 	/// <remarks>
-	/// See https://tech.yandex.com/translate/.
+	/// <See href="https://tech.yandex.com/translate/."/>
 	/// </remarks>
 	[ApiCategory("Translation")]
 	public class TranslationProviderYandex : TranslationProviderBase

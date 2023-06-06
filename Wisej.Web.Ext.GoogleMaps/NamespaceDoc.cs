@@ -22,7 +22,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 {
 	/// <summary>
 	/// <para>
-	/// GoogleMap component. Integrates the https://developers.google.com/maps/ widget as a Wisej component.
+	/// GoogleMap component. Integrates the <see href="https://developers.google.com/maps/"/> widget as a Wisej component.
 	/// </para>
 	/// </summary>
 	internal class NamespaceDoc

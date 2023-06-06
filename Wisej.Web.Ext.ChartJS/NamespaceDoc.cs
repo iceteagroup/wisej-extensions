@@ -22,7 +22,7 @@ namespace Wisej.Web.Ext.ChartJS
 {
 	/// <summary>
 	/// <para>
-	/// ChartJS component. Displays beautiful http://www.chartjs.org/ charts.
+	/// ChartJS component. Displays beautiful <see href="http://www.chartjs.org/"/> charts.
 	/// </para>
 	/// </summary>
 	internal class NamespaceDoc
