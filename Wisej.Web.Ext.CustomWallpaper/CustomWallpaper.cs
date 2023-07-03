@@ -19,10 +19,10 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Web;
 using Wisej.Base;
 using Wisej.Core;
 
@@ -131,6 +131,26 @@ namespace Wisej.Web.Ext.CustomWallpaper
 		private int _rotationInterval = 60000;
 
 		/// <summary>
+		/// Returns or sets if the images will be displayed in random order.
+		/// </summary>
+		[DefaultValue(false)]
+		[SRCategory("CatBehavior")]
+		[Description("Returns or sets if the images will be displayed in random order.")]
+		public bool RandomOrder
+		{
+			get { return this._randomOrder; }
+			set
+			{				
+				if (this._randomOrder != value)
+				{
+					this._randomOrder = value;
+					Update();
+				}
+			}
+		}
+		private bool _randomOrder = false;
+
+		/// <summary>
 		/// Returns or sets the control that will receive the background images. If left to null it will
 		/// automatically use the current Desktop.
 		/// </summary>
@@ -194,7 +214,7 @@ namespace Wisej.Web.Ext.CustomWallpaper
 		private string[] GetImageList()
 		{
 			if (this._images == null || this._images.Length == 0)
-				return null;
+				return null;			
 
 			string[] list = new string[this._images.Length];
 			for (int i = 0; i < list.Length; i++)
@@ -205,6 +225,9 @@ namespace Wisej.Web.Ext.CustomWallpaper
 				else if (entry.ImageSource != null)
 					list[i] = entry.ImageSource.Replace("\\", "/");
 			}
+
+			if (RandomOrder)
+				Shuffle(list);
 
 			return list;
 		}
@@ -337,6 +360,25 @@ namespace Wisej.Web.Ext.CustomWallpaper
 			config.rotationInterval = this.RotationInterval;
 			config.enableAnimation = this.EnableAnimation;
 
+		}
+
+		/// <summary>
+		/// Shuffles the list of images for random display
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="images"></param>
+		private void Shuffle<T>(IList<T> images)
+		{
+			Random random = new Random();
+
+			for (int i = images.Count - 1; i > 0; i--)
+			{
+				int rnd = random.Next(i + 1);
+
+				T value = images[rnd];
+				images[rnd] = images[i];
+				images[i] = value;
+			}
 		}
 
 		#endregion
