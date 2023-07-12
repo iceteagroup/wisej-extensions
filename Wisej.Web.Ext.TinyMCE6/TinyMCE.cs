@@ -68,6 +68,29 @@ namespace Wisej.Web.Ext.TinyMCE6
 		#region Properties
 
 		/// <summary>
+		/// Gets or sets whether the editor is enabled.
+		/// </summary>
+		public new bool Enabled
+		{
+			get
+			{
+				return this._enabled;
+			}
+			set
+			{
+				if (this._enabled != value)
+				{
+					this._enabled = value;
+					OnEnabledChanged(EventArgs.Empty);
+
+					if (!((IWisejControl)this).IsNew /* cannot call setMode until the widget is created.*/ )
+						Call("setEnabled", value);
+				}
+			}
+		}
+		private bool _enabled = true;
+
+		/// <summary>
 		/// Returns or sets the HTML text associated with this control.
 		/// </summary>
 		/// <returns>The HTML text associated with this control.</returns>
@@ -379,6 +402,16 @@ namespace Wisej.Web.Ext.TinyMCE6
 			base.OnWebUpdate((object)state);
 		}
 
+		//Process the load event.
+		private void ProcessLoad()
+		{
+			this.initialized = true;
+			if (!String.IsNullOrEmpty(this.Text))
+				Call("setText", TextUtils.EscapeText(this.Text, true));
+
+			Call("setEnabled", this.Enabled);
+		}
+
 		/// <summary>
 		/// Fires the <see cref="E:Wisej.Web.Control.WidgetEvent" /> event.
 		/// </summary>
@@ -388,9 +421,7 @@ namespace Wisej.Web.Ext.TinyMCE6
 			switch (e.Type)
 			{
 				case "load":
-					this.initialized = true;
-					if (!String.IsNullOrEmpty(this.Text))
-						Call("setText", TextUtils.EscapeText(this.Text, true));
+					ProcessLoad();
 					break;
 
 				case "changeText":
