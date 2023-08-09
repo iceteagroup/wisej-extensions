@@ -57,7 +57,7 @@ qx.Class.define("wisej.ext.WebAuthn", {
 			return (async function () {
 				var configuration = {
 					publicKey: {
-						challenge: me._formatChallenge(challenge),
+						challenge: me._base64ToUint8Array(challenge),
 						rp: rp,
 						user: {
 							id: Uint8Array.from(user.id, c => c.charCodeAt(0)),
@@ -84,25 +84,22 @@ qx.Class.define("wisej.ext.WebAuthn", {
 		 * Gets an assertion that verifies the user has a private key.
 		 * 
 		 * @param {any} challenge Random string for validating the request.
-		 * @param {any} credential Which credential the server would like the user to authenticate with.
+		 * @param {any} credentials Which credential the server would like the user to authenticate with.
 		 * @param {any} timeout The time in milliseconds that the user has to respond to a prompt for registration.
 		 */
-		get: function (challenge, credential, timeout) {
+		get: function (challenge, credentials, timeout) {
 			var me = this;
 			return (async function () {
 
-				var allowCredentials =
-					credential
-						? [{
-							type: credential.type,
-							transports: credential.transports ?? [],
-							id: me._base64ToUint8Array(credential.id)
-						}]
-						: undefined;
+				var allowCredentials = undefined;
+				if (credentials) {
+					allowCredentials =
+						credentials.map(c => ({ type: c.type, transports: c.transports ?? [], id: me._base64ToUint8Array(c.id) }))
+				}
 
 				var assertion = await navigator.credentials.get({
 					publicKey: {
-						challenge: me._formatChallenge(challenge),
+						challenge: me._base64ToUint8Array(challenge),
 						allowCredentials,
 						timeout: timeout
 					}
@@ -110,20 +107,6 @@ qx.Class.define("wisej.ext.WebAuthn", {
 
 				return me._processResponse(assertion);
 			})();
-		},
-
-		/**
-		 * Converts the given challenge into a Uint8Array for use with the authenticator.
-		 * 
-		 * @param {any} challenge The request challenge.
-		 */
-		_formatChallenge: function (challenge) {
-			// var byteCharacters = atob(challenge);
-			var byteNumbers = new Array(challenge.length);
-			for (var i = 0; i < challenge.length; i++) {
-				byteNumbers[i] = challenge.charCodeAt(i);
-			}
-			return new Uint8Array(byteNumbers);
 		},
 
 		/**

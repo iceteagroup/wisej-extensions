@@ -32,4 +32,4 @@ using Wisej.Core;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.2.3.9")]
+[assembly: AssemblyFileVersion("3.2.4.15")]

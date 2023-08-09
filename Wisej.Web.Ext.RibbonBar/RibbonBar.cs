@@ -992,7 +992,6 @@ namespace Wisej.Web.Ext.RibbonBar
 
 			config.className = "wisej.web.RibbonBar";
 			config.compactView = this.CompactView;
-			config.selectedIndex = this.SelectedPageIndex;
 
 			// Tools.
 			if (this._tools != null)
@@ -1024,7 +1023,7 @@ namespace Wisej.Web.Ext.RibbonBar
 					"toolClick(Tool)",
 					"resize(Size)");
 			}
-
+			config.selectedIndex = this.SelectedPageIndex;
 		}
 
 		#endregion

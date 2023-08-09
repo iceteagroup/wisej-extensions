@@ -54,8 +54,13 @@ this.init = function () {
 	}
 	else {
 		// or update the existing map object.
-		this.map.setValues(options);
+		//this.map.setValues(options);
 	}
+}
+
+this.update = function (options, old) {
+	this.map.setValues(options);
+	//this.map.setOptions(options);
 }
 
 /**
@@ -433,12 +438,8 @@ this.addRoute = function (origin, destination, travelMode) {
 
 	this._directionsService.route(
 		{
-			origin: {
-				query: origin
-			},
-			destination: {
-				query: destination
-			},
+			origin: origin,
+			destination: destination,
 			travelMode: travelMode.toUpperCase(),
 		}, function(response, status) {
 			if (status === "OK") {

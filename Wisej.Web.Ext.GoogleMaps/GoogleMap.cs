@@ -195,31 +195,6 @@ namespace Wisej.Web.Ext.GoogleMaps
 		private string _apiKey;
 
 		/// <summary>
-		/// Returns or sets the specified MapOptions: <see href="https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapOptions"/>
-		/// </summary>
-		[DesignerActionList]
-		[MergableProperty(false)]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
-				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-		public new virtual dynamic Options
-		{
-			get
-			{
-				if (this._options == null)
-					this._options = new DynamicObject();
-
-				return this._options;
-			}
-			set
-			{
-				this._options = value;
-				Update();
-			}
-		}
-
-		private dynamic _options;
-
-		/// <summary>
 		/// Overridden to create our initialization script.
 		/// </summary>
 		[Browsable(false)]

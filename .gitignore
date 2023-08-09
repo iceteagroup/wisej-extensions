@@ -17,3 +17,8 @@ Thumbs.db
 /Wisej.Ext.Geolocation/.vs/config/applicationhost.config
 *.pdb
 /*.db
+/Wisej.Ext.IonicIcons/Resources
+/Wisej.Ext.TablerIcons/Resources
+/Wisej.Ext.CssGgIcons/Resources
+/Wisej.Ext.FeatherIcons/Resources
+/Wisej.Ext.PlayWright/Wisej.Automation.NUnit.Test
