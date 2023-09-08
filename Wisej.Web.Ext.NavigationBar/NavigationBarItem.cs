@@ -926,6 +926,7 @@ namespace Wisej.Web.Ext.NavigationBar
 			var item = ((NavigationBarMenuItem)e.MenuItem).Item;
 
 			item.NavigationBarItem_Click(item, e);
+			item.OnClick(e);
 		}
 
 		private void CreateMenuItems(Menu.MenuItemCollection items)

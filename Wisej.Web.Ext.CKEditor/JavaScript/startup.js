@@ -130,6 +130,14 @@ this.init = function () {
 			me.fireWidgetEvent("command", e.data.name);
 		}
 	});
+
+	me.editor.on('mode', function () {
+		if (this.mode === 'source') {
+			var editable = me.editor.editable();
+			editable.removeListener(editable, "input", function () { me.setDirty(true) });
+			editable.attachListener(editable, 'input', function () { me.setDirty(true) });
+		}
+	});
 }
 
 /**
@@ -206,6 +214,7 @@ this.__registerPlugins = function (plugins) {
 		}
 	}
 }
+
 
 /**
  * Executes commands to manipulate the contents of the editable region.
