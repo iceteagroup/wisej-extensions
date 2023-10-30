@@ -12,6 +12,7 @@
  * be used referring to this.container.
  *
  */
+
 this.init = function () {
 
 	var me = this;
@@ -423,8 +424,12 @@ Google Maps Directions
  * Uses google.maps.DirectionsService to map a route between the origin and destination.
  * @param {any} origin
  * @param {any} destination
+ * @param {any} travelMode
  */
 this.addRoute = function (origin, destination, travelMode) {
+	this.addRoute(origin, destination, travelMode, null, null, false, false, false, false, false, "")
+}
+this.addRoute = function (origin, destination, travelMode, unitSystem, waypoints, optimizeWaypoints, provideRouteAlternatives, avoidFerries, avoidHighways, avoidTolls, region) {
 
 	var me = this;
 
@@ -433,14 +438,27 @@ this.addRoute = function (origin, destination, travelMode) {
 
 	if (!this._directionsRenderer) {
 		this._directionsRenderer = new google.maps.DirectionsRenderer();
-		this._directionsRenderer.setMap(this.map);
 	}
+
+	if (this.markersSuppressed && this._directionsRenderer) {
+		this._directionsRenderer.setOptions({ suppressMarkers: this.markersSuppressed });
+	}
+
+	this._directionsRenderer.setMap(this.map);
 
 	this._directionsService.route(
 		{
 			origin: origin,
 			destination: destination,
 			travelMode: travelMode.toUpperCase(),
+			unitSystem: unitSystem,
+			waypoints: me._transformWaypoints(waypoints),
+			optimizeWaypoints: optimizeWaypoints,
+			provideRouteAlternatives: provideRouteAlternatives,
+			avoidFerries: avoidFerries,
+			avoidHighways: avoidHighways,
+			avoidTolls: avoidTolls,
+			region: region
 		}, function(response, status) {
 			if (status === "OK") {
 				me._directionsRenderer.setDirections(response);
@@ -450,13 +468,65 @@ this.addRoute = function (origin, destination, travelMode) {
 	});
 }
 
+// Make the waypoints object coming from the server compatible with the google.maps.DirectionsWaypoint object
+// this is to make sure that you can pass the address as a string or a google.maps.LatLng object.
+this._transformWaypoints = function (waypoints) {
+
+	// Create a new array to store the modified objects.
+	var newArray = [];
+
+	if (waypoints) {
+		// Iterate through the original array.
+		for (let i = 0; i < waypoints.length; i++) {
+			var originalWaypoint = waypoints[i];
+
+			if (!originalWaypoint.location && originalWaypoint.address) {
+				// Create a new object with "location" set to the value of "address".
+				var newWaypoint = {
+					location: originalWaypoint.address,
+				};
+			} else {
+				// Create a new object with "location" set to the value of "address".
+				var newWaypoint = {
+					location: originalWaypoint.location,
+				};
+			}
+
+			newWaypoint.stopover = originalWaypoint.stopover;
+
+			// Push the new object to the new array.
+			newArray.push(newWaypoint);
+		}
+	}
+
+	return newArray;
+},
+
+
 /**
  * Clears any routes, if they exist. 
  **/
 this.clearRoutes = function () {
 
 	if (this._directionsRenderer) {
+
+		if (this._directionsRenderer.suppressMarkers)
+			this.markersSuppressed = this._directionsRenderer.suppressMarkers;
+
 		this._directionsRenderer.setMap(null);
 		this._directionsRenderer = null;
+	}
+}
+
+this.markersSuppressed = false;
+
+this.suppressMarkers = function (suppress) {
+	this.markersSuppressed = suppress;
+
+	if (!this._directionsRenderer) {
+		this._directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers: suppress });
+		this._directionsRenderer.setMap(this.map);
+	} else {
+		this._directionsRenderer.setOptions({ suppressMarkers: this.suppress });
 	}
 }

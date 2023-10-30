@@ -214,6 +214,18 @@ namespace Wisej.Web.Ext.ColumnFilter
 			if (this._filteredImageSettings != null) this._filteredImageSettings.ResetImageSource();
 		}
 
+		/// <summary>
+		/// Sort items before displaying them.
+		/// </summary>
+		/// <remarks>If supported by filter type</remarks>
+		/// <since>3.2.6</since>
+		[DefaultValue(false)]
+		public bool SortItems
+		{
+			get;
+			set;
+		} = false;
+
 		#endregion
 
 		#region Methods
@@ -283,9 +295,12 @@ namespace Wisej.Web.Ext.ColumnFilter
 			column.UserData.ColumnFilter?.SetShowFilter(column, false);
 		}
 
-		// Creates the filter button to add to the target
-		// column's header.
-		private Control CreateFilterButton(DataGridViewColumn column)
+		/// <summary>
+		/// Creates the filter button to add to the target column's header.
+		/// </summary>
+		/// <param name="column"></param>
+		/// <returns></returns>
+		public virtual Control CreateFilterButton(DataGridViewColumn column)
 		{
 			var search = new PictureBox()
 			{
@@ -317,6 +332,9 @@ namespace Wisej.Web.Ext.ColumnFilter
 				filterPanel.ColumnFilter = this;
 				filterPanel.DataGridViewColumn = column;
 				column.UserData.FilterPanel = filterPanel;
+
+				if (filterPanel.GetType() == typeof(SimpleColumnFilterPanel))
+					((SimpleColumnFilterPanel)filterPanel).SortItems = SortItems;
 			}
 
 			if (filterPanel.Visible)
