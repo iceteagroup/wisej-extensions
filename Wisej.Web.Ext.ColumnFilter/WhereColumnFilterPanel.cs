@@ -48,16 +48,17 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// </summary>
 		protected override void OnBeforeShow()
 		{
+			var type = this.DataGridViewColumn.ValueType ?? typeof(System.String);
 			foreach (Control c in this.flowLayoutPanel.Controls)
 			{
-				if (this.DataGridViewColumn.ValueType == typeof(System.DateTime))
+				if (type == typeof(System.DateTime))
 				{
 					if (c is TextBox)
 						c.Hide();
 					else if (c is DateTimePicker)
 						c.Show();
 				}
-				else if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
+				else if (type == typeof(System.Boolean))
 				{
 					if (c is TextBox)
 						c.Hide();
@@ -73,7 +74,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 				}
 			}
 			// Match case only visible for strings
-			if (this.DataGridViewColumn.ValueType == typeof(System.String))
+			if (type == typeof(System.String))
 				cbMatchCase.Show();
 			else
 				cbMatchCase.Hide();
@@ -141,7 +142,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			string where = "";
 
-			Type type = this.DataGridViewColumn.ValueType;
+			Type type = this.DataGridViewColumn.ValueType ?? typeof(System.String);
 			if (Nullable.GetUnderlyingType(type) != null)
 				type = Nullable.GetUnderlyingType(type);
 
@@ -512,12 +513,13 @@ namespace Wisej.Web.Ext.ColumnFilter
 			// String =  0-9
 			// Number/Date = 10-15
 			// Bool = 16-19
-			if (this.DataGridViewColumn.ValueType == typeof(string) || this.DataGridViewColumn is DataGridViewComboBoxColumn)
+			var type = this.DataGridViewColumn.ValueType ?? typeof(System.String);
+			if (type == typeof(System.String) || this.DataGridViewColumn is DataGridViewComboBoxColumn)
 			{
 				startIndex = 0;
 				count = 10;
 			}
-			else if (this.DataGridViewColumn.ValueType == typeof(bool))
+			else if (type == typeof(bool))
 			{
 				startIndex = 16;
 				count = 4;
