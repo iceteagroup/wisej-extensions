@@ -852,7 +852,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		///	Max Rotation value of the tick.
 		/// </summary>
-		[DefaultValue(0)]
+		[DefaultValue(360)]
 		[Description("Max Rotation value the tick")]
 		public int MaxRotation
 		{
@@ -865,7 +865,7 @@ namespace Wisej.Web.Ext.ChartJS3
 				}
 			}
 		}
-		private int _maxRotation = 0;
+		private int _maxRotation = 360;
 
 		/// <summary>
 		/// If True, automatically calculates how many labels can be shown and hides labels accordingly.

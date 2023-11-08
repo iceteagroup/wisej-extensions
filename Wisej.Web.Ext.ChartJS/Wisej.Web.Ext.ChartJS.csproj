@@ -14,7 +14,7 @@
     <None Remove="JavaScript\chart-2.7.2.js" />
     <None Remove="JavaScript\chartjs-plugin-datalabels.js" />
     <None Remove="JavaScript\dataLabelPlugin.js" />
-    <None Remove="JavaScript\moment-with-locales-2.17.1.js" />
+    <None Remove="JavaScript\moment-with-locales-2.29.4.js" />
     <None Remove="JavaScript\startup.js" />
   </ItemGroup>
 
@@ -22,7 +22,7 @@
     <EmbeddedResource Include="ChartJS.bmp" />
     <EmbeddedResource Include="JavaScript\chart-2.7.2.js" />
     <EmbeddedResource Include="JavaScript\chartjs-plugin-datalabels.js" />
-    <EmbeddedResource Include="JavaScript\moment-with-locales-2.17.1.js" />
+    <EmbeddedResource Include="JavaScript\moment-with-locales-2.29.4.js" />
     <EmbeddedResource Include="JavaScript\startup.js" />
   </ItemGroup>
 
