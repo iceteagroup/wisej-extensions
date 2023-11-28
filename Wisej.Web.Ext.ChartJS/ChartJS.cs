@@ -37,7 +37,7 @@ namespace Wisej.Web.Ext.ChartJS
 	[DefaultEvent("ChartClick")]
 	[Description("ChartJS is a simple yet flexible JavaScript charting for designers & developers from <see href=\"http://www.chartjs.org/.\"/>")]
 	[ApiCategory("ChartJS")]
-	public class ChartJS : Widget, IWisejControl
+    public class ChartJS : Widget, IWisejControl
 	{
 		/// <summary>
 		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control.
@@ -219,12 +219,10 @@ namespace Wisej.Web.Ext.ChartJS
 				if (base.Packages.Count == 0)
 				{
 					// initialize the loader with the required libraries.
-					base.Packages.AddRange(new[]
-					{
-						new Package()
-						{
+					base.Packages.AddRange(new[] {
+						new Package() {
 							Name = "moment.js",
-							Source = GetResourceURL("Wisej.Web.Ext.ChartJS.JavaScript.moment-with-locales-2.29.4.js")
+							Source = GetResourceURL("Wisej.Web.Ext.ChartJS.JavaScript.moment-with-locales-2.17.1.js")
 						},
 						new Package()
 						{

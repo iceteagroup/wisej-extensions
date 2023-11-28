@@ -28,11 +28,6 @@ this.init = function (options) {
 
 	this.editor = this.widget = ace.edit(this.container, options);
 
-	if (options.text)
-		this.editor.setValue(options.text);
-
-	this.editor.clearSelection();
-
 	this.widget.on("blur", function () {
 		me.fireWidgetEvent("change", me.editor.getValue());
 	});
@@ -71,10 +66,5 @@ this.update = function (options, old) {
 	if (this.widget) {
 
 		this.widget.setOptions(options);
-
-		if (this.widget.getValue() != options.text) {
-			this.widget.setValue(options.text);	
-			this.widget.clearSelection();
-		}
 	}
 }

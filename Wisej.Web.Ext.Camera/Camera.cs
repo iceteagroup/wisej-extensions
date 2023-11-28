@@ -347,30 +347,6 @@ namespace Wisej.Web.Ext.Camera
 		}
 		private BorderStyle _borderStyle = BorderStyle.Solid;
 
-		/// <summary>
-		/// Gets or sets the zoom value for the camera.
-		/// </summary>
-		/// <remarks>
-		/// Not all cameras support zooming.
-		/// </remarks>
-		public int Zoom
-		{
-			get
-			{
-				return this._zoom;
-			}
-			set
-			{
-				if (this._zoom != value)
-				{
-					this._zoom = value;
-
-					Update();
-				}
-			}
-		}
-		private int _zoom = 0;
-
 		#endregion
 
 		#region Methods
@@ -545,7 +521,6 @@ namespace Wisej.Web.Ext.Camera
 
 			config.className = "wisej.web.ext.Camera";
 
-			config.zoom = this.Zoom;
 			config.mirror = this.Mirror;
 			config.objectFit = this.ObjectFit;
 			config.borderStyle = this.BorderStyle;

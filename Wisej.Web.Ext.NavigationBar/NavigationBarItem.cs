@@ -346,6 +346,7 @@ namespace Wisej.Web.Ext.NavigationBar
 			{
 				if (this._expanded != value)
 				{
+
 					// ignore if in compact view. show a context menu instead.
 					if (value && this.NavigationBar != null && this.NavigationBar.CompactView)
 					{
@@ -868,13 +869,10 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		private void NavigationBarItem_Click(object sender, System.EventArgs e)
 		{
-			if (this.NavigationBar != null)
-			{
-				if (this.ExpandOnClick && !this.NavigationBar.Collapsed)
-					this.Expanded = !this.Expanded;
+			if (this.ExpandOnClick)
+				this.Expanded = !this.Expanded;
 
-				this.NavigationBar.FireItemClick(this);
-			}
+			this.NavigationBar?.FireItemClick(this);
 		}
 
 		private void items_ControlAdded(object sender, ControlEventArgs e)
@@ -917,15 +915,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		{
 			var contextMenu = new NavigationBarMenu();
 			CreateMenuItems(contextMenu.MenuItems);
-			contextMenu.MenuItemClicked += ContextMenu_MenuItemClick;
 			return contextMenu;
-		}
-
-		private static void ContextMenu_MenuItemClick(object sender, MenuItemEventArgs e)
-		{
-			var item = ((NavigationBarMenuItem)e.MenuItem).Item;
-
-			item.OnClick(e);
 		}
 
 		private void CreateMenuItems(Menu.MenuItemCollection items)
@@ -940,11 +930,19 @@ namespace Wisej.Web.Ext.NavigationBar
 					IconSource = item.Icon,
 					Enabled = item.Enabled
 				};
+				menu.Click += Menu_Click;
 				items.Add(menu);
 
 				if (item.HasChildren)
 					item.CreateMenuItems(menu.MenuItems);
 			}
+		}
+
+		private static void Menu_Click(object sender, EventArgs e)
+		{
+			var item = ((NavigationBarMenuItem)sender).Item;
+
+			item.NavigationBar?.FireItemClick(item);
 		}
 
 		#endregion

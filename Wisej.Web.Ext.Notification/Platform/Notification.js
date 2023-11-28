@@ -39,7 +39,6 @@ qx.Class.define("wisej.web.ext.Notification", {
 		 *
 		 * @param options {Map} Defines the following options:
 		 *
-		 *			id {String} Defines a unique id for the notification.
 		 *			title {String} Defines a title for the notification, which will be shown at the top of the notification window when it is fired.
 		 *			body {String} The body text of the notification, which will be displayed below the title.
 		 *			icon {String} The URL of an icon to be displayed as part of the notification.
@@ -99,8 +98,8 @@ qx.Class.define("wisej.web.ext.Notification", {
 				if (showOnClick)
 					window.focus();
 
-				me.fireDataEvent("click", { title: options.title, id: options.id });
-			};
+				me.fireDataEvent("click", title);
+			};		
 		}
 	}
 });

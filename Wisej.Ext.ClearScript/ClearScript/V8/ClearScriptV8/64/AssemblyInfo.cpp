@@ -14,4 +14,4 @@ using namespace System::Runtime::InteropServices;
 [assembly:ComVisible(false)];
 [assembly:AssemblyVersion(CLEARSCRIPT_VERSION_STRING)];
 [assembly:AssemblyFileVersion(CLEARSCRIPT_VERSION_STRING)];
-[assembly: AssemblyFileVersionAttribute("3.2.8.5")];
+[assembly: AssemblyFileVersionAttribute("3.2.2.2")];

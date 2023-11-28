@@ -147,12 +147,7 @@ qx.Class.define("wisej.web.ext.Camera", {
 		 *
 		 * The URL to use to send the files to the server.
 		 */
-		submitURL: { init: "", check: "String" },
-
-		/**
-		 * Applies a zoom level to the camera.
-		 */
-		zoom: { init: 0, apply: "_applyZoom" }
+		submitURL: { init: "", check: "String" }
 	},
 
 	members: {
@@ -280,20 +275,7 @@ qx.Class.define("wisej.web.ext.Camera", {
 			var media = this._media.getMediaObject();
 
 			media.style.transform = `scaleX(${scaleFactor})`;
-		},
-
-		_applyZoom: function (value, old) {
-
-			var media = this._media.getMediaObject();
-			var stream = media.srcObject;
-			if (stream != null) {
-				var track = stream.getVideoTracks()[0];
-				var capabilities = track.getCapabilities();
-				if (capabilities.zoom) {
-					track.applyConstraints({ advanced: [{ zoom: value }] });
-				}
-			}
-		},
+        },
 
 		/**
 		 * Applies the Constraints property.
@@ -424,9 +406,6 @@ qx.Class.define("wisej.web.ext.Camera", {
 			var video = this._media.getMediaObject();
 			if (video) {
 				video.srcObject = stream;
-
-				this._applyZoom(this.getZoom());
-
 				video.setAttribute("playsinline", "");
 				video.play();
 			}

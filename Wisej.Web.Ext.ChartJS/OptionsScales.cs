@@ -466,29 +466,6 @@ namespace Wisej.Web.Ext.ChartJS
 			get { return base.Type; }
 			set { base.Type = value; }
 		}
-
-		/// <summary>
-		///	Rotation value of the X Axis.
-		/// </summary>
-		[DefaultValue(0)]
-		[Description("Rotation value of the X Axis")]
-		public int LabelRotation
-		{
-			get { return this._labelRotation; }
-			set
-			{
-				if (value != this._labelRotation)
-				{
-					this.Ticks.MaxRotation = value;
-					this.Ticks.MinRotation = value;
-					this.Ticks.AutoSkip = false;
-
-					this._labelRotation = value;
-					Update();
-				}
-			}
-		}
-		private int _labelRotation = 0;
 	}
 
 	/// <summary>
@@ -531,28 +508,6 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 		private HeaderPosition _position = HeaderPosition.Left;
 
-		/// <summary>
-		///	Rotation value of the Y Axis.
-		/// </summary>
-		[DefaultValue(0)]
-		[Description("Rotation value of the X Axis")]
-		public int LabelRotation
-		{
-			get { return this._labelRotation; }
-			set
-			{
-				if (value != this._labelRotation)
-				{
-					this.Ticks.MaxRotation = value;
-					this.Ticks.MinRotation = value;
-					this.Ticks.AutoSkip = false;
-
-					this._labelRotation = value;
-					Update();
-				}
-			}
-		}
-		private int _labelRotation = 0;
 	}
 
 	/// <summary>
@@ -782,66 +737,6 @@ namespace Wisej.Web.Ext.ChartJS
 			}
 		}
 		private bool _beginAtZero = true;
-
-		/// <summary>
-		///	Min Rotation value of the tick.
-		/// </summary>
-		[DefaultValue(0)]
-		[Description("Min Rotation value of the tick")]
-		public int MinRotation
-		{
-			get { return this._minRotation; }
-			set
-			{
-				if (this._minRotation != value)
-				{
-					this._minRotation = value;
-				}
-			}
-		}
-		private int _minRotation = 0;
-
-		/// <summary>
-		///	Max Rotation value of the tick.
-		/// </summary>
-		[DefaultValue(360)]
-		[Description("Max Rotation value of the tick")]
-		public int MaxRotation
-		{
-			get { return this._maxRotation; }
-			set
-			{
-				if (this._maxRotation != value)
-				{
-					this._maxRotation = value;
-				}
-			}
-		}
-		private int _maxRotation = 360;
-
-		/// <summary>
-		/// If True, automatically calculates how many labels can be shown and hides labels accordingly.
-		/// Labels will be rotated up to <see cref="MaxRotation"/> before skipping any.
-		/// Turn AutoSkip off to show all labels no matter what.
-		/// </summary>
-		[DefaultValue(true)]
-		[Description("Automatically calculates how many labels can be shown and hides labels accordingly")]
-		public bool AutoSkip
-		{
-			get
-			{
-				return this._autoSkip;
-			}
-
-			set
-			{
-				if (value != this._autoSkip)
-				{
-					this._autoSkip = value;
-				}
-			}
-		}
-		private bool _autoSkip = true;
 	}
 
 	/// <summary>

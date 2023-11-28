@@ -307,7 +307,6 @@ namespace Wisej.Web.Ext.RibbonBar
 
 			protected override void Update()
 			{
-				base.Update();
 				this.item?.Update();
 			}
 		}

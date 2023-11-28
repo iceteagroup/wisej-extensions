@@ -38,6 +38,22 @@ qx.Class.define("wisej.web.extender.speech.SpeechSynthesis", {
 		this.__speechByComponentId = {};
 	},
 
+	defer: function (statics) {
+
+		// try to preload the list of voices.
+		var speech = window.speechSynthesis;
+		if (speech && speech.getVoices)
+			statics.voices = speech.getVoices();
+	},
+
+	statics: {
+
+		/**
+		 * Preloaded list of voices.
+		 */
+		voices: null
+	},
+
 	properties: {
 
 		/**
@@ -165,15 +181,10 @@ qx.Class.define("wisej.web.extender.speech.SpeechSynthesis", {
 		 */
 		getVoices: function () {
 
-			var speech = window.speechSynthesis;
-			if (speech && speech.getVoices) {
-				var voices = speech.getVoices();
-
-				if (voices && voices.length > 0) {
-					return voices.map(function (x) { return x.name; });
-				}
+			var voices = wisej.web.extender.speech.SpeechSynthesis.voices;
+			if (voices) {
+				return voices.map(function (x) { return x.name; });
 			}
-
 			return null;
 		},
 
@@ -183,15 +194,13 @@ qx.Class.define("wisej.web.extender.speech.SpeechSynthesis", {
 
 			// find the voice that matches the name.
 			var speech = window.speechSynthesis;
-			if (speech && speech.getVoices) {
-				var voices = speech.getVoices();
+			var voices = wisej.web.extender.speech.SpeechSynthesis.voices;
 
-				if (speech && voices) {
-					for (var i = 0; i < voices.length; i++) {
-						if (voices[i].name == value) {
-							this.__voice = voices[i];
-							break;
-						}
+			if (speech && voices) {
+				for (var i = 0; i < voices.length; i++) {
+					if (voices[i].name == value) {
+						this.__voice = voices[i];
+						break;
 					}
 				}
 			}

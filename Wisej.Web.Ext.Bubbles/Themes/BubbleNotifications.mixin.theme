@@ -20,7 +20,7 @@
         "default": {
           "styles": {
             "backgroundColor": "bubble-alert-background",
-            "radius": 100,
+            "radius": [ 8, 8, 8, 8 ],
             "width": 1,
             "color": "bubble-alert-background"
           },
@@ -28,7 +28,8 @@
             "cursor": "pointer",
             "textColor": "bubble-alert-text",
             "font": "bubble-small",
-            "padding": [ 4, 4, 4, 4 ]
+            "padding": [ 2, 6, 2, 6 ],
+            "margin": [ 0, 0, 0, -16 ]
           }
         },
         "warning": {

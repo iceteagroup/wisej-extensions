@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Platform\wisej.WebDriver.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Platform\wisej.WebDriver.js" name="Wisej.Ext.PlayWright.wisej.WebDriver.js"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Playwright" Version="1.32.0" />
+  </ItemGroup>
+
+</Project>

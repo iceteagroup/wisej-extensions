@@ -38,16 +38,16 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// <summary>
 		/// Initializes a new instance of <see cref="Wisej.Web.Ext.FullCalendar.ResourceEventArgs"/>.
 		/// </summary>
-		/// <param name="resource">The <see cref="Wisej.Web.Ext.FullCalendar.Resource"/> that has changed.</param>
-		public ResourceEventArgs(Resource resource)
+		/// <param name="resource">The <see cref="Wisej.Web.Ext.FullCalendar.FCResource"/> that has changed.</param>
+		public ResourceEventArgs(FCResource resource)
 		{
 			this.Resource = resource;
 		}
 
 		/// <summary>
-		/// Returns the <see cref="Wisej.Web.Ext.FullCalendar.Resource"/> that has changed.
+		/// Returns the <see cref="Wisej.Web.Ext.FullCalendar.FCResource"/> that has changed.
 		/// </summary>
-		public Resource Resource
+		public FCResource Resource
 		{
 			get;
 			private set;

@@ -39,20 +39,9 @@ namespace Wisej.Web.Ext.Notification
 		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Notification.NotificationClickEventArgs" /> class.
 		///</summary>
 		/// <param name="title">Title of the clicked notification.</param>
-		/// <param name="id">Id of the clicked notification.</param>
-		public NotificationClickEventArgs(string title, string id = null) {
+		public NotificationClickEventArgs(string title) {
 
-			this.Id = id;
 			this.Title = title;
-		}
-
-		/// <summary>
-		/// Returns the ID of the notification that was clicked.
-		/// </summary>
-		public string Id
-		{
-			get;
-			private set;
 		}
 
 		/// <summary>

@@ -37,9 +37,6 @@ namespace Wisej.Web.Ext.GoogleMaps
 	[ApiCategory("GoogleMaps")]
 	public class GoogleMap : Widget
 	{
-
-		#region Constructors
-
 		/// <summary>
 		/// Constructs a new <see cref="T: Wisej.Web.Ext.GoogleMaps.GoogleMap"/> control.
 		/// </summary>
@@ -48,8 +45,6 @@ namespace Wisej.Web.Ext.GoogleMaps
 			this.Options.zoom = 4;
 			this.Options.center = new LatLng(0, 0);
 		}
-
-		#endregion
 
 		#region Events
 
@@ -200,6 +195,31 @@ namespace Wisej.Web.Ext.GoogleMaps
 		private string _apiKey;
 
 		/// <summary>
+		/// Returns or sets the specified MapOptions: <see href="https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapOptions"/>
+		/// </summary>
+		[DesignerActionList]
+		[MergableProperty(false)]
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+		public new virtual dynamic Options
+		{
+			get
+			{
+				if (this._options == null)
+					this._options = new DynamicObject();
+
+				return this._options;
+			}
+			set
+			{
+				this._options = value;
+				Update();
+			}
+		}
+
+		private dynamic _options;
+
+		/// <summary>
 		/// Overridden to create our initialization script.
 		/// </summary>
 		[Browsable(false)]
@@ -290,34 +310,6 @@ namespace Wisej.Web.Ext.GoogleMaps
 		}
 		private static string _libraries;
 
-		/// <summary>
-		/// Suppress the rendering of route markers. If SuppressMarkers is set to true, and a route is created using 
-		///  <see cref="AddRoute(string, string, TravelMode)"/>, the default markers will not be rendered 
-		///  at the beginning and end of the route.
-		///  
-		/// Markers created using <see cref="AddMarker(string, LatLng, dynamic, bool)"/> will not be affected.
-		/// </summary>
-		[DefaultValue(false)]
-		[Description("Suppress the rendering of route markers.")]
-		public bool SuppressMarkers
-		{
-			get
-			{
-				return this._suppressMarkers;
-			}
-
-			set
-			{
-				if (this._suppressMarkers != value)
-				{
-					this._suppressMarkers = value;
-					Call("suppressMarkers", this._suppressMarkers);
-					Update();
-				}
-			}
-		}
-		private bool _suppressMarkers;
-
 		#endregion
 
 		#region Methods
@@ -398,76 +390,6 @@ namespace Wisej.Web.Ext.GoogleMaps
 		public void AddRoute(string origin, string destination, TravelMode travelMode)
 		{
 			Call("addRoute", origin, destination, travelMode);
-		}
-
-		/// <summary>
-		/// Uses GoogleMaps DirectionService to route and display a path between the origin and destination.
-		/// See <see href="https://developers.google.com/maps/documentation/javascript/directions"/>.
-		/// </summary>
-		/// <param name="origin">The name of the origin.</param>
-		/// <param name="destination">The name of the destination.</param>
-		/// <param name="travelMode">The type of routing requested.</param>
-		/// <param name="unitSystem">(optional)  Specifies what unit system to use when displaying results. Note: This unit system setting 
-		/// only affects the text displayed to the user. The directions result (returned by google maps API) also contains distance values, not shown to the user, 
-		/// which are always expressed in meters.</param>
-		/// <param name="waypoints">Specifies an array of <see cref="Waypoint"/>s. Waypoints alter a route by routing it through the specified location(s).</param>
-		/// <param name="optimizeWaypoints">(optional) specifies that the route using the supplied waypoints may be 
-		/// optimized by rearranging the waypoints in a more efficient order. If true, the Directions service will 
-		/// return the reordered waypoints in a waypoint_order field.</param>
-		/// <param name="provideRouteAlternatives">(optional) when set to true specifies that the Directions service may provide more 
-		/// than one route alternative in the response. Note that providing route alternatives may increase the response time 
-		/// from the server. This is only available for requests without intermediate waypoints.</param>
-		/// <param name="avoidFerries">(optional) when set to true indicates that the calculated route(s) should avoid ferries, if possible.</param>
-		/// <param name="avoidHighways">(optional) when set to true indicates that the calculated route(s) should avoid major highways, if possible.</param>
-		/// <param name="avoidTolls">(optional) when set to true indicates that the calculated route(s) should avoid toll roads, if possible.</param>
-		/// <param name="region">(optional) Return results biased to a particular region. This parameter takes a region code, specified as a two-character (non-numeric) Unicode region subtag.</param>
-		public void AddRoute(string origin, string destination, TravelMode travelMode, UnitSystem unitSystem=UnitSystem.Default, Waypoint[] waypoints = null, bool optimizeWaypoints=false, bool provideRouteAlternatives=false, bool avoidFerries=false, bool avoidHighways=false, bool avoidTolls=false, string region="")
-		{
-			if (unitSystem == UnitSystem.Default)
-			{
-				// Don't send the unitSytem in the API request (send null instead), so that we get the default behavior.
-				Call("addRoute", origin, destination, travelMode, null, waypoints, optimizeWaypoints, provideRouteAlternatives, avoidFerries, avoidHighways, avoidTolls, region);
-			}
-			else
-			{
-				// For unitSystem, The googlemaps API accepts 0 for metric and 1 for imperial
-				Call("addRoute", origin, destination, travelMode, (int)unitSystem, waypoints, optimizeWaypoints, provideRouteAlternatives, avoidFerries, avoidHighways, avoidTolls, region);
-			}
-		}
-
-		/// <summary>
-		/// Uses GoogleMaps DirectionService to route and display a path between the origin and destination.
-		/// See <see href="https://developers.google.com/maps/documentation/javascript/directions"/>.
-		/// </summary>
-		/// <param name="origin">The latitude and longitude of the origin.</param>
-		/// <param name="destination">The latitude and longitude of the destination.</param>
-		/// <param name="travelMode">The type of routing requested.</param>
-		/// <param name="unitSystem">(optional)  Specifies what unit system to use when displaying results. Note: This unit system setting 
-		/// only affects the text displayed to the user. The directions result (returned by google maps API) also contains distance values, not shown to the user, 
-		/// which are always expressed in meters.</param>
-		/// <param name="waypoints">Specifies an array of <see cref="Waypoint"/>s. Waypoints alter a route by routing it through the specified location(s).</param>
-		/// <param name="optimizeWaypoints">(optional) specifies that the route using the supplied waypoints may be 
-		/// optimized by rearranging the waypoints in a more efficient order. If true, the Directions service will 
-		/// return the reordered waypoints in a waypoint_order field.</param>
-		/// <param name="provideRouteAlternatives">(optional) when set to true specifies that the Directions service may provide more 
-		/// than one route alternative in the response. Note that providing route alternatives may increase the response time 
-		/// from the server. This is only available for requests without intermediate waypoints.</param>
-		/// <param name="avoidFerries">(optional) when set to true indicates that the calculated route(s) should avoid ferries, if possible.</param>
-		/// <param name="avoidHighways">(optional) when set to true indicates that the calculated route(s) should avoid major highways, if possible.</param>
-		/// <param name="avoidTolls">(optional) when set to true indicates that the calculated route(s) should avoid toll roads, if possible.</param>
-		/// <param name="region">(optional) Return results biased to a particular region. This parameter takes a region code, specified as a two-character (non-numeric) Unicode region subtag.</param>
-		public void AddRoute(LatLng origin, LatLng destination, TravelMode travelMode, UnitSystem unitSystem=UnitSystem.Default, Waypoint[] waypoints=null, bool optimizeWaypoints = false, bool provideRouteAlternatives = false, bool avoidFerries = false, bool avoidHighways = false, bool avoidTolls = false, string region="")
-		{
-			if (unitSystem == UnitSystem.Default)
-			{
-				// Don't send the unitSytem in the API request (send null instead), so that we get the default behavior.
-				Call("addRoute", origin, destination, travelMode, null, waypoints, optimizeWaypoints, provideRouteAlternatives, avoidFerries, avoidHighways, avoidTolls, region);
-			}
-			else
-			{
-				// For unitSystem, The googlemaps API accepts 0 for metric and 1 for imperial
-				Call("addRoute", origin, destination, travelMode, (int)unitSystem, waypoints, optimizeWaypoints, provideRouteAlternatives, avoidFerries, avoidHighways, avoidTolls, region);
-			}
 		}
 
 		/// <summary>

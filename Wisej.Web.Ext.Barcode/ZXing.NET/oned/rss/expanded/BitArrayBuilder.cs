@@ -19,9 +19,9 @@
  * Tourism and Trade, for the support in the project TSI020301-2008-2
  * "PIRAmIDE: Personalizable Interactions with Resources on AmI-enabled
  * Mobile Dynamic Environments", led by Treelogic
- * ( <see href="http://www.treelogic.com/"/> ):
+ * ( http://www.treelogic.com/ ):
  *
- *   <see href="http://www.piramidepse.com/"/>
+ *   http://www.piramidepse.com/
  */
 
 using System.Collections.Generic;

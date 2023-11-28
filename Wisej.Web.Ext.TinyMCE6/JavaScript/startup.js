@@ -121,17 +121,6 @@ this.init = function () {
 }
 
 /**
- * Enabled property.
- *
- * Enables or Disabled the widget.
- */
-this.setEnabled = function (enabled) {
-	try {
-		this.editor.mode.set(enabled ? "design" : "readonly");
-	} catch (e) { }
-}
-
-/**
  * Text property.
  *
  * Returns or sets the html text in the editable area.

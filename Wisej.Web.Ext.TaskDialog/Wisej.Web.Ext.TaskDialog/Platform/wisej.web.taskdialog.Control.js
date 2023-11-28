@@ -1,0 +1,53 @@
+﻿///////////////////////////////////////////////////////////////////////////////
+//
+// (C) 2023 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
+//
+//
+//
+// ALL INFORMATION CONTAINED HEREIN IS, AND REMAINS
+// THE PROPERTY OF ICE TEA GROUP LLC AND ITS SUPPLIERS, IF ANY.
+// THE INTELLECTUAL PROPERTY AND TECHNICAL CONCEPTS CONTAINED
+// HEREIN ARE PROPRIETARY TO ICE TEA GROUP LLC AND ITS SUPPLIERS
+// AND MAY BE COVERED BY U.S. AND FOREIGN PATENTS, PATENT IN PROCESS, AND
+// ARE PROTECTED BY TRADE SECRET OR COPYRIGHT LAW.
+//
+// DISSEMINATION OF THIS INFORMATION OR REPRODUCTION OF THIS MATERIAL
+// IS STRICTLY FORBIDDEN UNLESS PRIOR WRITTEN PERMISSION IS OBTAINED
+// FROM ICE TEA GROUP LLC.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+/**
+ * wisej.web.taskdialog.Control
+ *
+ * Represents a TaskDialog Control component.
+ */
+qx.Class.define("wisej.web.taskdialog.Control", {
+
+    extend: wisej.web.Control,
+
+    construct: function () {
+
+        //TODO: Implement
+
+    },
+
+    properties: {
+
+        //TODO: Implement
+
+    },
+
+    members: {
+
+        //TODO: Implement
+
+    },
+
+    destruct: function () {
+        qx.event.Registration.removeListener(
+            window.document.documentElement,
+            "pointerdown",
+            this._onCompactViewPointerDown, this, true);
+    }
+});

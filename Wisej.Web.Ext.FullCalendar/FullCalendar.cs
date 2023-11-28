@@ -150,9 +150,9 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
-		/// Triggered when the a <see cref="Resource"/> object changes.
+		/// Triggered when the a <see cref="FCResource"/> object changes.
 		/// </summary>
-		[Description("Triggered when the a Resource object changes.")]
+		[Description("Triggered when the a FCResource object changes.")]
 		public event ResourceEventHandler ResourceChanged
 		{
 			add { base.Events.AddHandler(nameof(ResourceChanged), value); }
@@ -1107,7 +1107,7 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// </summary>
 		[DefaultValue(null)]
 		[Description("Returns or sets the scheduler resources.")]
-		public Resource[] Resources
+		public FCResource[] Resources
 		{
 			get { return this._resources; }
 			set
@@ -1136,7 +1136,7 @@ namespace Wisej.Web.Ext.FullCalendar
 				}
 			}
 		}
-		private Resource[] _resources;
+		private FCResource[] _resources;
 
 		/// <summary>
 		/// Returns or sets the text that will appear above the list of resources.
@@ -1286,7 +1286,7 @@ namespace Wisej.Web.Ext.FullCalendar
 			ClientRefetchEvents();
 		}
 
-		internal void OnResourceChanged(Resource resource)
+		internal void OnResourceChanged(FCResource resource)
 		{
 			OnResourceChanged(new ResourceEventArgs(resource));
 		}

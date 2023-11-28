@@ -102,15 +102,10 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		private void Rows_Sorted(object sender, EventArgs e)
 		{
-
 			// re-apply the filter if the datasource did its own sorting.
-
 			var grid = (DataGridView)sender;
-			var dataSource = grid.DataSource != null
-				? grid.BindingContext[grid.DataSource, grid.DataMember]
-				: null;
-
-			if (dataSource != null && dataSource is CurrencyManager manager &&
+			var dataSource = grid.BindingContext[grid.DataSource, grid.DataMember];
+			if (dataSource is CurrencyManager manager &&
 				manager.List is IBindingList bindingList && bindingList.SupportsSorting)
 			{
 				ApplyFilters();

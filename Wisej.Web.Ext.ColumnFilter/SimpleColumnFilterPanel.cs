@@ -80,17 +80,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 		private bool reloadItems = false;
 
 		/// <summary>
-		/// If true sorts the items alphabetically.
-		/// </summary>
-		/// <since>3.2.6</since>
-		[DefaultValue(false)]
-		public bool SortItems
-		{
-			get; 
-			set;
-		} = false;
-
-		/// <summary>
 		/// Invoked when the <see cref="ColumnFilterPanel"/> is shown
 		/// but before it is visible on the client.
 		/// </summary>
@@ -167,7 +156,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 					}
 				}
 			}
-			this.items.Sorted = SortItems;
 		}
 
 		/// <summary>

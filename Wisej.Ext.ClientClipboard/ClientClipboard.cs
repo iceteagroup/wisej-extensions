@@ -115,7 +115,7 @@ namespace Wisej.Ext.ClientClipboard
 		/// <param name="callback">Optional callback method, invoked the client's clipboard has been updated successfully.</param>
 		/// <exception cref="Exception">The client's cliboard couldn't be updated.</exception>
 		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
-		public static void WriteText(string text, Action callback)
+		public static void WriteText(string text, Action callback = null)
 		{
 			if (callback == null)
 				throw new ArgumentNullException(nameof(callback));
@@ -133,15 +133,6 @@ namespace Wisej.Ext.ClientClipboard
 						callback();
 				});
 			});
-		}
-
-		/// <summary>
-		/// Writes the specified <paramref name="text"/> string to the client clipboard.
-		/// </summary>
-		/// <param name="text">The text to write to the client's clipboard.</param>
-		public static void WriteText(string text)
-		{
-			Instance.Call("writeText", text);
 		}
 
 		/// <summary>
