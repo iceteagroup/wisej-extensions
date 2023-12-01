@@ -2969,6 +2969,7 @@
                     wrapper.style.top = container.bounds.top + 'px';
                     if (!allowLinebreak) {
                         wrapper.style.whiteSpace = 'nowrap';
+                        wrapper.style.lineHeight = container.bounds.height + 'px';
                     }
                     var text = node.ownerDocument.createTextNode(value);
                     wrapper.appendChild(text);
