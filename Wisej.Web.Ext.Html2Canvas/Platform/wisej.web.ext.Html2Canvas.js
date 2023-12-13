@@ -40,14 +40,16 @@ qx.Class.define("wisej.web.ext.Html2Canvas", {
 		 *
 		 * @param widget {Widget?} The widget to capture. If null, it captures the entire body.
 		 * @param options {Map?} Set of options, defined here http://html2canvas.hertzen.com/configuration.
+		 * @param version {String} Version of the Html2Canvas js file.
 		 */
-		screenshot: function (widget, options) {
+		screenshot: function (widget, options, version) {
 
 			var dom = document.body;
 			if (widget)
 				dom = wisej.utils.Widget.ensureDomElement(widget);
 
 			options = options || {};
+			version = version || Wisej.Core.version;
 
 			// need allowTaint to render svg icons.
 			// https://github.com/niklasvh/html2canvas/issues/95
@@ -59,7 +61,7 @@ qx.Class.define("wisej.web.ext.Html2Canvas", {
 				wisej.utils.Loader.load([
 					{
 						id: "html2canvas.js",
-						url: "resource.wx/Wisej.Web.Ext.Html2Canvas.JavaScript.Html2Canvas.js"
+						url: "resource.wx/Wisej.Web.Ext.Html2Canvas.JavaScript.Html2Canvas.js?v=" + version
 					}], function () {
 
 						html2canvas(dom, options).then(function (canvas) {

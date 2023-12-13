@@ -78,6 +78,22 @@ namespace Wisej.Web.Ext.RibbonBar
 		private RibbonBarGroupCollection _groups;
 
 		/// <summary>
+		/// Returns or sets the object that contains data about the control.
+		/// </summary>
+		/// <return>An object that contains user-defined data about the control. The default is null.</return>
+		[Bindable(true)]
+		[DefaultValue(null)]
+		[Localizable(false)]
+		[SRCategory("CatData")]
+		[SRDescription("ControlTagDescr")]
+		[TypeConverter(typeof(StringConverter))]
+		public object Tag
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Returns or sets the title of the <see cref="RibbonBarPage"/>.
 		///</summary>
 		/// <returns>The text displayed in the button that corresponds to this page.</returns>

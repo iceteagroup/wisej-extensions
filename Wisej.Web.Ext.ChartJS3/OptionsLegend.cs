@@ -155,16 +155,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 		private Font _font;
 
-		private bool ShouldSerializeFont()
-		{
-			return this._font != null;
-		}
-
-		private void ResetFont()
-		{
-			this.Font = null;
-		}
-
+		
 		/// <summary>
 		/// Padding between labels (rows of colored boxes.)
 		/// </summary>
@@ -183,5 +174,81 @@ namespace Wisej.Web.Ext.ChartJS3
 			}
 		}
 		private int _padding = 10;
+		
+		/// <summary>
+		/// Point style in the legend instead of a rectangle to identify each dataset.
+		/// </summary>
+		[DefaultValue(false)]
+		[Description("Point style in the legend instead of a rectangle to identify each dataset.")]
+		public bool UsePointStyle 
+		{
+			get
+			{
+				return this._usePointStyle;
+			}
+			set
+			{
+				if (this._usePointStyle != value)
+				{
+					this._usePointStyle = value;
+					Update();
+				}
+			} 
+		}
+		private bool _usePointStyle;
+
+		/// <summary>
+		/// Width of colored box.
+		/// </summary>
+		[DefaultValue(40)]
+		[Description("Width of colored box. Default 40")]
+		public int BoxWidth
+		{
+			get
+			{
+				return this._boxWidth;
+			}
+			set
+			{
+				if (this._boxWidth != value)
+				{
+					this._boxWidth = value;
+					Update();
+				}
+			}
+		}
+		private int _boxWidth;
+
+		/// <summary>
+		/// Color of the label
+		/// </summary>
+		[DefaultValue("black")]
+		[Description("Clor of the label")]
+		public string Color
+		{
+			get
+			{
+				return this._color;
+			}
+			set
+			{
+				if (this._color != value)
+				{
+					this._color = value;
+					Update();
+				}
+			}
+		}
+		private string _color;
+		
+		private bool ShouldSerializeFont()
+		{
+			return this._font != null;
+		}
+
+		private void ResetFont()
+		{
+			this.Font = null;
+		}
 	}
 }

@@ -19,8 +19,10 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Wisej.Web.Ext.Html2Canvas
@@ -67,13 +69,14 @@ namespace Wisej.Web.Ext.Html2Canvas
 		{
 			get
 			{
+				var key = typeof(Html2Canvas).FullName;
 				lock (typeof(Html2Canvas))
 				{
-					var instance = (Html2Canvas)Application.Session[typeof(Html2Canvas).FullName];
+					var instance = (Html2Canvas)Application.Session[key];
 					if (instance == null)
 					{
 						instance = new Html2Canvas();
-						Application.Session[typeof(Html2Canvas).FullName] = instance;
+						Application.Session[key] = instance;
 					}
 					return instance;
 				}
@@ -83,6 +86,30 @@ namespace Wisej.Web.Ext.Html2Canvas
 		#endregion
 
 		#region Methods
+
+		// Returns the FileVersion for this extension.
+		private string GetVersion()
+		{
+			if (_version == null)
+			{
+				var assembly = typeof(Html2Canvas).Assembly;
+				try
+				{
+					// retrieve the file version to manage the cache on the client.
+					var fileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
+					_version = fileVersion == null
+						? assembly.GetName().Version.ToString()
+						: fileVersion.Version;
+				}
+				catch (Exception ex)
+				{
+					_version = assembly.GetName().Version.ToString();
+				}
+			}
+
+			return _version;
+		}
+		private string _version;
 
 		/// <summary>
 		/// Takes a screenshot of the browser.
@@ -237,7 +264,7 @@ namespace Wisej.Web.Ext.Html2Canvas
 
 					callback(result);
 				},
-				new object[] { target, options });
+				new object[] { target, options, GetVersion() });
 		}
 
 		/// <summary>
