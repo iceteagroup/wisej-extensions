@@ -30,10 +30,10 @@ this.init = function (config) {
 	this.__setFontAndColors(config.options);
 
 	// convert color arrays with 1 element to single values.
-    this.__normalizeColorArrays(config.data.datasets);
+	this.__normalizeColorArrays(config.data.datasets);
 
-    // convert point style and colour arrays in line chart datasets into single values
-    this.__normalizeLineChartDataSetArrays(config.data.datasets);
+	// convert point style and colour arrays in line chart datasets into single values
+	this.__normalizeChartDataSetArrays(config.data.datasets);
 
 	// Design Mode Only:
 	// Turn off animation and attach the animationComplete callback to fire "render" to the designer.
@@ -166,10 +166,10 @@ this.updateData = function (datasets, labels, duration) {
 		for (var i = 0; i < datasets.length; i++) {
 			this.chart.data.datasets[i].data = datasets[i].data;
 			this.chart.data.datasets[i].formatted = datasets[i].formatted;
-        }
+		}
 
 		if (labels)
-		    this.chart.config.data.labels = labels;
+			this.chart.config.data.labels = labels;
 
 		this.chart.update(duration);
 	}
@@ -177,6 +177,7 @@ this.updateData = function (datasets, labels, duration) {
 
 /**
  * Processes embedded font syntax.
+ * 
  * @param {any} options
  */
 this.__setEmbeddedFont = function (options) {
@@ -196,6 +197,7 @@ this.__setEmbeddedFont = function (options) {
 
 /**
  * Applies the tooltip with the formatted data label, if applicable.
+ * 
  * @param {any} config
  */
 this.__applyTooltips = function (config) {
@@ -221,6 +223,7 @@ this.__applyTooltips = function (config) {
 
 /**
  * Applies the data label configuration to the chart.
+ * 
  * @param {any} options
  */
 this.__applyDataLabel = function (options) {
@@ -324,30 +327,43 @@ this.__normalizeColorArrays = function (datasets) {
 
 
 /**
- * Various fix ups for line datasets
+ * Various fix ups for datasets
  */
-this.__normalizeLineChartDataSetArrays = function (datasets) {
+this.__normalizeChartDataSetArrays = function (datasets) {
 
-    if (datasets == null || datasets.length == 0)
-        return;
+	if (datasets == null || datasets.length == 0)
+		return;
 
-    for (var i = 0; i < datasets.length; i++) {
+	for (var i = 0; i < datasets.length; i++) {
 
-        if (datasets[i].type == 'line') {
+		if (datasets[i].type == "line") {
 
-            var ds = datasets[i];
+			var ds = datasets[i];
 
-            if (ds.pointStyle && ds.pointStyle.length == 1)
-                ds.pointStyle = ds.pointStyle[0];
+			if (ds.pointStyle && ds.pointStyle.length == 1)
+				ds.pointStyle = ds.pointStyle[0];
 
-            if (ds.pointRadius && ds.pointRadius.length == 1)
-                ds.pointRadius = ds.pointRadius[0];
+			if (ds.pointRadius && ds.pointRadius.length == 1)
+				ds.pointRadius = ds.pointRadius[0];
 
-            if (ds.pointHoverRadius && ds.pointHoverRadius.length == 1)
-                ds.pointHoverRadius = ds.pointHoverRadius[0];
+			if (ds.pointHoverRadius && ds.pointHoverRadius.length == 1)
+				ds.pointHoverRadius = ds.pointHoverRadius[0];
 
-            if (ds.steppedLine == 'false')
-                ds.steppedLine = false;
-        }
-    }
+			if (ds.steppedLine == "false")
+				ds.steppedLine = false;
+			else if (ds.steppedLine == "true")
+				ds.steppedLine = true;
+		}
+	}
+}
+
+/**
+ * Fixes the options map as required.
+ */
+this.__fixOptions = function (options) {
+
+	if (options.type == "horizontalBar") {
+		options.type = "bar";
+		options.indexAxis = "y";
+	}
 }

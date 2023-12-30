@@ -39,7 +39,6 @@ namespace Wisej.Web.Ext.ChartJS3
 		public DataSet()
 		{
 			this.Label = "Data Set";
-			this.BorderWidth = 0;
 			this.BorderColor = Color.FromArgb(76, 0, 0, 0);
 			this.BackgroundColor = Color.FromArgb(76, 0, 0, 0);
 		}
@@ -136,9 +135,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// Binds the <see cref="DataSet"/> to the specified y axis
 		/// </summary>
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Description("Binds the dataset to the specified y axis")]
-		public String yAxisID
+		public string yAxisID
 		{
 			get;
 			set;
@@ -147,9 +146,9 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// Binds the <see cref="DataSet"/> to the specified x axis
 		/// </summary>
-		[DefaultValue("")]
+		[DefaultValue(null)]
 		[Description("Binds the dataset to the specified x axis")]
-		public String xAxisID
+		public string xAxisID
 		{
 			get;
 			set;
@@ -363,7 +362,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// Specifies the background color when hovered.
 		/// </summary>
-		[DefaultValue(null)]
+		[DefaultValue(typeof(Color), "")]
 		[MergableProperty(false)]
 		[Description("Specifies the background color when hovered.")]
 		public Color PointHoverBackgroundColor
@@ -375,7 +374,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// Specifies the point border color when hovered.
 		/// </summary>
-		[DefaultValue(null)]
+		[DefaultValue(typeof(Color), "")]
 		[MergableProperty(false)]
 		[Description("Specifies the point border color when hovered.")]
 		public Color PointHoverBorderColor
@@ -483,7 +482,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// Specifies the border color when hovered.
 		/// </summary>
-		[DefaultValue(null)]
+		[DefaultValue(typeof(Color), "")]
 		[MergableProperty(false)]
 		[Description("Specifies the border color when hovered.")]
 		public Color HoverBorderColor
@@ -741,7 +740,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// Bezier curve tension of the line. Set to 0 to draw straight lines.
 		/// </summary>
-		[DefaultValue(0)]
+		[DefaultValue(0d)]
 		[MergableProperty(false)]
 		[Description("Bezier curve tension of the line. Set to 0 to draw straight lines.")]
 		public double LineTension

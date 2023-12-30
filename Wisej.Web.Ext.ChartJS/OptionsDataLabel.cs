@@ -99,7 +99,7 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// The background color of the data label.
 		/// </summary>
-		[DefaultValue(null)]
+		[DefaultValue(typeof(Color), "")]
 		[Description("The background color of the data label.")]
 		public Color BackgroundColor
 		{
@@ -121,7 +121,7 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// The border color of the data label.
 		/// </summary>
-		[DefaultValue(null)]
+		[DefaultValue(typeof(Color), "")]
 		[Description("The border color of the data label.")]
 		public Color BorderColor
 		{
@@ -231,6 +231,7 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Color of the data label.
 		/// </summary>
+		[DefaultValue(typeof(Color), "")]
 		[Description("The color of the data label.")]
 		public Color Color
 		{
@@ -247,17 +248,7 @@ namespace Wisej.Web.Ext.ChartJS
 				}
 			}
 		}
-		private Color _color = Color.Black;
-
-		private bool ShouldSerializeColor()
-		{
-			return this._color != null;
-		}
-
-		private void ResetColor()
-		{
-			this.Color = Color.Black;
-		}
+		private Color _color;
 
 		/// <summary>
 		/// Show the data label.
@@ -281,6 +272,7 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Font of the data label.
 		/// </summary>
+		[DefaultValue(null)]
 		[Description("The font used to display the data label.")]
 		public Font Font
 		{
@@ -302,16 +294,6 @@ namespace Wisej.Web.Ext.ChartJS
 			}
 		}
 		private Font _font;
-
-		private bool ShouldSerializeFont()
-		{
-			return this._font != null;
-		}
-
-		private void ResetFont()
-		{
-			this.Font = null;
-		}
 
 		/// <summary>
 		/// Specifies the distance (in pixels) to pull the label away from the anchor point.
@@ -338,6 +320,8 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Specifies the opacity of the data labels.
 		/// </summary>
+		[DefaultValue(1f)]
+		[Description("Specifies the opacity of the data labels.")]
 		public float Opacity
 		{
 			get
@@ -411,6 +395,8 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Specifies the text alignment for the data labels.
 		/// </summary>
+		[DefaultValue(DataLabelTextAlignment.Start)]
+		[Description("Specifies the text alignment for the data labels.")]
 		public DataLabelTextAlignment TextAlign
 		{
 			get
@@ -431,7 +417,7 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Specifies the stroke color of the data label text.
 		/// </summary>
-		[DefaultValue(null)]
+		[DefaultValue(typeof(Color), "")]
 		[Description("The stroke color of the data label text.")]
 		public Color TextStrokeColor
 		{
@@ -497,7 +483,7 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Specifies the color of the text's shadow.
 		/// </summary>
-		[DefaultValue(null)]
+		[DefaultValue(typeof(Color),"")]
 		[Description("Specifies the color of the text's shadow.")]
 		public Color TextShadowColor
 		{

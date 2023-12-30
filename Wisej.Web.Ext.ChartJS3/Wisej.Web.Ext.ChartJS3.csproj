@@ -1,54 +1,54 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	<TargetFrameworks>net48;net7.0;net7.0-android;net7.0-ios;net7.0-maccatalyst;net7.0-windows10.0.19041.0</TargetFrameworks>
-	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	<SignAssembly>true</SignAssembly>
-	<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-	<EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net48;net7.0;net7.0-android;net7.0-ios;net7.0-maccatalyst;net7.0-windows10.0.19041.0</TargetFrameworks>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<SignAssembly>true</SignAssembly>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+		<EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+	</PropertyGroup>
 
-  <ItemGroup>
-	<None Remove="ChartJS3.bmp" />
-	<None Remove="JavaScript\chart.js" />
-	<None Remove="JavaScript\chartjs-plugin-datalabels.js" />
-	<None Remove="JavaScript\moment.js" />
-	<None Remove="JavaScript\startup.js" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="ChartJS3.bmp" />
+		<None Remove="JavaScript\chart-3.5.0.js" />
+		<None Remove="JavaScript\chartjs-plugin-datalabels.js" />
+		<None Remove="JavaScript\moment-with-locales-2.29.4.js" />
+		<None Remove="JavaScript\startup.js" />
+	</ItemGroup>
 
-  <ItemGroup>
-	<EmbeddedResource Include="ChartJS3.bmp" />
-	<EmbeddedResource Include="JavaScript\chart.js" />
-	<EmbeddedResource Include="JavaScript\chartjs-plugin-datalabels.js" />
-	<EmbeddedResource Include="JavaScript\moment.js" />
-	<EmbeddedResource Include="JavaScript\startup.js" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="ChartJS3.bmp" />
+		<EmbeddedResource Include="JavaScript\chart-3.5.0.js" />
+		<EmbeddedResource Include="JavaScript\chartjs-plugin-datalabels.js" />
+		<EmbeddedResource Include="JavaScript\moment-with-locales-2.29.4.js" />
+		<EmbeddedResource Include="JavaScript\startup.js" />
+	</ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)'=='net48' ">
-	<Reference Include="System.Windows.Forms" />
-	<Reference Include="System.Design" />
-  </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)'=='net48' ">
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Design" />
+	</ItemGroup>
 
-  <ItemGroup>
-	<PackageReference Include="Wisej-3" Version="3.5.*-*" />
-	<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Wisej-3" Version="3.5.*-*" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+	</ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'!='net48' AND '$(TargetFramework)'!='net7.0'">
-<PackageReference Include="System.Drawing.Common" Version="7.0.0" Aliases="sdc" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)'!='net48' AND '$(TargetFramework)'!='net7.0'">
+		<PackageReference Include="System.Drawing.Common" Version="7.0.0" Aliases="sdc" />
+	</ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net48' OR '$(TargetFramework)'=='net7.0'">
-	<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)'=='net48' OR '$(TargetFramework)'=='net7.0'">
+		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+	</ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'!='net48'">
-	<Compile Remove="Design\**" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)'!='net48'">
+		<Compile Remove="Design\**" />
+	</ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	<Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
-  </Target>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
+	</Target>
 
 </Project>

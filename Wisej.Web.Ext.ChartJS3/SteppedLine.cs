@@ -33,6 +33,11 @@ namespace Wisej.Web.Ext.ChartJS3
 		False,
 
 		/// <summary>
+		/// Step-before Interpolation, same as Before.
+		/// </summary>
+		True,
+
+		/// <summary>
 		/// Step-before interpolation.
 		/// </summary>
 		Before,

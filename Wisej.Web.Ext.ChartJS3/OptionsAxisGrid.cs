@@ -360,7 +360,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// Stroke color of the grid line for the first index (index 0).
 		/// </summary>
-		[DefaultValue(null)]
+		[DefaultValue(typeof(Color), "")]
 		[Description("Stroke color of the grid line for the first index (index 0).")]
 		public Color ZeroLineColor
 		{

@@ -137,6 +137,8 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Font of the title.
 		/// </summary>
+		[DefaultValue(null)]
+		[Description("Font of the title.")]
 		public Font Font
 		{
 			get
@@ -177,7 +179,7 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 		private int _padding = 10;
 
-				/// <summary>
+		/// <summary>
 		/// Point style in the legend instead of a rectangle to identify each dataset.
 		/// </summary>
 		[DefaultValue(false)]
@@ -219,14 +221,14 @@ namespace Wisej.Web.Ext.ChartJS
 				}
 			}
 		}
-		private int _boxWidth;
+		private int _boxWidth = 40;
 
 		/// <summary>
-		/// Color of the label
+		/// Color of the label.
 		/// </summary>
-		[DefaultValue("black")]
-		[Description("Clor of the label")]
-		public string Color
+		[DefaultValue(typeof(Color), "")]
+		[Description("Color of the label")]
+		public Color Color
 		{
 			get
 			{
@@ -241,16 +243,6 @@ namespace Wisej.Web.Ext.ChartJS
 				}
 			}
 		}
-		private string _color;
-		
-		private bool ShouldSerializeFont()
-		{
-			return this._font != null;
-		}
-
-		private void ResetFont()
-		{
-			this.Font = null;
-		}
+		private Color _color;
 	}
 }

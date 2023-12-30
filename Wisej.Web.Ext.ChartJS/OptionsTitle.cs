@@ -86,6 +86,8 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Font of the title.
 		/// </summary>
+		[DefaultValue(null)]
+		[Description("Font of the title.")]
 		public Font Font
 		{
 			get
@@ -106,16 +108,6 @@ namespace Wisej.Web.Ext.ChartJS
 			}
 		}
 		private Font _font;
-
-		private bool ShouldSerializeFont()
-		{
-			return this._font != null;
-		}
-
-		private void ResetFont()
-		{
-			this.Font = null;
-		}
 
 		/// <summary>
 		/// Show the title block.
@@ -178,6 +170,7 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Title color.
 		/// </summary>
+		[DefaultValue(typeof(Color),"")]
 		[Description("Title color.")]
 		public Color FontColor
 		{
@@ -199,15 +192,5 @@ namespace Wisej.Web.Ext.ChartJS
 			}
 		}
 		private Color _fontColor;
-
-		private bool ShouldSerializeFontColor()
-		{
-			return !this._fontColor.IsEmpty;
-		}
-
-		private void ResetFontColor()
-		{
-			this.FontColor = Color.Empty;
-		}
 	}
 }

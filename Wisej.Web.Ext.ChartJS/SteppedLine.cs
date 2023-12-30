@@ -28,15 +28,22 @@ namespace Wisej.Web.Ext.ChartJS
 	public enum SteppedLine
 	{
 		/// <summary>
-		/// Stepped lines are not used
+		/// Stepped lines are not used.
 		/// </summary>
 		False,
+
 		/// <summary>
-		/// Step-before interpolation
+		/// Step-before Interpolation, same as Before.
+		/// </summary>
+		True,
+
+		/// <summary>
+		/// Step-before interpolation.
 		/// </summary>
 		Before,
+
 		/// <summary>
-		/// Step-after interpolation
+		/// Step-after interpolation.
 		/// </summary>
 		After
 	}

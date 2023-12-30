@@ -127,20 +127,20 @@ namespace Wisej.Web.Ext.ChartJS3
 		public OptionsTooltips Tooltip
 		{
 			get
-            {
+			{
 				if (this._tooltip == null)
 					this._tooltip = new OptionsTooltips(this);
 
 				return this._tooltip;
-            }
+			}
 			set
-            {
+			{
 				if (value == null)
 					throw new ArgumentNullException("value");
 
 				value.Owner = this;
 				this._tooltip = value;
-            }
+			}
 		}
 		private OptionsTooltips _tooltip;
 	}

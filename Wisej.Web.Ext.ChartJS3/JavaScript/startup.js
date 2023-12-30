@@ -20,13 +20,9 @@ this.init = function (config) {
 
 	config.options.responsive = true;
 	config.options.maintainAspectRatio = false;
-	config.type = config.type === "horizontalBar" ? "bar" : config.type;
 
+	// processes the plugin options.
 	this.__processPlugins(config);
-
-	// process the datasets.
-	if (config.data.datasets)
-		this.__processDataSets(config.data.datasets);
 
 	// processes the scales format.
 	this.__processScales(config.options);
@@ -160,23 +156,11 @@ this.updateData = function (datasets, labels, duration) {
 			this.chart.data.datasets[i].data = datasets[i].data;
 
 		if (labels)
-		    this.chart.config.data.labels = labels;
+			this.chart.config.data.labels = labels;
 
 		this.chart.update(duration);
 	}
 }
-
-/**
- * Applies a transformation to the datasets.
- * @param {any} datasets
- */
-this.__processDataSets = function (datasets) {
-
-	datasets.forEach(dataset => {
-		if (dataset.stepped == "false")
-			dataset.stepped = false;
-	});
-},
 
 /**
  * Moves the scales to the correct location.
@@ -246,7 +230,7 @@ this.__setFontAndColors = function (options) {
 		if (name == "color" || name == "fontColor") {
 			options[name] = colorMgr.resolve(options[name]);
 			continue;
-        }
+		}
 
 		// it's an array, go through all elements.
 		var array = options[name];
@@ -290,32 +274,33 @@ this.__normalizeColorArrays = function (datasets) {
 	}
 }
 
-
 /**
  * Various fix ups for line datasets
  */
 this.__normalizeLineChartDataSetArrays = function (datasets) {
 
-    if (datasets == null || datasets.length == 0)
-        return;
+	if (datasets == null || datasets.length == 0)
+		return;
 
-    for (var i = 0; i < datasets.length; i++) {
+	for (var i = 0; i < datasets.length; i++) {
 
-        if (datasets[i].type == 'line') {
+		if (datasets[i].type == "line") {
 
-            var ds = datasets[i];
+			var ds = datasets[i];
 
-            if (ds.pointStyle.length == 1)
-                ds.pointStyle = ds.pointStyle[0];
+			if (ds.pointStyle.length == 1)
+				ds.pointStyle = ds.pointStyle[0];
 
-            if (ds.pointRadius.length == 1)
-                ds.pointRadius = ds.pointRadius[0];
+			if (ds.pointRadius.length == 1)
+				ds.pointRadius = ds.pointRadius[0];
 
-            if (ds.pointHoverRadius.length == 1)
-                ds.pointHoverRadius = ds.pointHoverRadius[0];
+			if (ds.pointHoverRadius.length == 1)
+				ds.pointHoverRadius = ds.pointHoverRadius[0];
 
-            if (ds.steppedLine == 'false')
-                ds.steppedLine = false;
-        }
-    }
+			if (ds.steppedLine == "false")
+				ds.steppedLine = false;
+			else if (ds.steppedLine == "true")
+				ds.steppedLine = true;
+		}
+	}
 }

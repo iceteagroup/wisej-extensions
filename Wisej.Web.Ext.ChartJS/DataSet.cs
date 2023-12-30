@@ -31,7 +31,7 @@ namespace Wisej.Web.Ext.ChartJS
 	/// </summary>
 	[ApiCategory("ChartJS")]
 	[TypeConverter(typeof(DataSet.Converter))]
-    public class DataSet
+	public class DataSet
 	{
 		/// <summary>
 		/// Constructs a new instance of <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/>.
@@ -39,8 +39,6 @@ namespace Wisej.Web.Ext.ChartJS
 		public DataSet()
 		{
 			this.Label = "Data Set";
-			this.BorderWidth = 0;
-			this.BackgroundColor = Color.Empty;
 			this.Type = ChartType.Line;
 		}
 
@@ -134,22 +132,22 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
-		/// Binds the <see cref="DataSet"/> to the specified y axis
+		/// Binds the <see cref="DataSet"/> to the specified y axis.
 		/// </summary>
-		[DefaultValue("")]
-		[Description("Binds the dataset to the specified y axis")]
-		public String yAxisID
+		[DefaultValue(null)]
+		[Description("Binds the dataset to the specified y axis.")]
+		public string yAxisID
 		{
 			get;
 			set;
 		}
 
 		/// <summary>
-		/// Binds the <see cref="DataSet"/> to the specified x axis
+		/// Binds the <see cref="DataSet"/> to the specified x axis.
 		/// </summary>
-		[DefaultValue("")]
-		[Description("Binds the dataset to the specified x axis")]
-		public String xAxisID
+		[DefaultValue(null)]
+		[Description("Binds the dataset to the specified x axis.")]
+		public string xAxisID
 		{
 			get;
 			set;
@@ -226,12 +224,12 @@ namespace Wisej.Web.Ext.ChartJS
 		{
 			this.Fill = false;
 			this.ShowLine = true;
-			this.SteppedLine = SteppedLine.False;
 			this.SpanGaps = false;
-			this.PointStyle = new PointStyle[] { Wisej.Web.Ext.ChartJS.PointStyle.Circle };
 			this.PointRadius = new int[] { 5 };
 			this.PointHoverRadius = new int[] { 5 };
 			this.Type = ChartType.Line;
+			this.SteppedLine = SteppedLine.False;
+			this.PointStyle = new PointStyle[] { Wisej.Web.Ext.ChartJS.PointStyle.Circle };
 		}
 
 		/// <summary>
@@ -290,12 +288,10 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
-		/// If true, show the line.
+		/// Style of the stepped line.
 		/// </summary>
 		[DefaultValue(SteppedLine.False)]
 		[Description("Show a stepped line rather than a curve.")]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
-				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public SteppedLine SteppedLine
 		{
 			get;

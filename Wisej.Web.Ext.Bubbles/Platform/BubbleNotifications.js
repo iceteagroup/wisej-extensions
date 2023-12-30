@@ -52,7 +52,7 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 		 *
 		 * Defines the animation frames to use on the bubble when the value changes.
 		 */
-		animation: { init: null, nullable: true, check: "Map" },
+		animation: { init: null, nullable: true, check: "Map", themeable: true },
 
 		/**
 		 * Bubble alignment.
@@ -64,9 +64,9 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 		},
 
 		/*
-		 * Bubble padding (Top, Right, Bottom, Left).
+		 * Bubble marging (Top, Right, Bottom, Left).
 		 */
-		margin: { init: null, check: "Array", apply:"_updateBubbles" }
+		margin: { init: null, check: "Array", apply: "_updateBubbles", transform: "_transformMargin" }
 	},
 
 	members: {
@@ -75,8 +75,39 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 		// associated control.
 		__bubbleWidgets: null,
 
+		__updaterId: null,
+
+		_transformMargin: function (value) {
+
+			if (value instanceof Array) {
+				return {
+					top: value[0],
+					right: value[1],
+					bottom: value[2],
+					left: value[3],
+				};
+			}
+			else if (!isNaN(value)) {
+				return {
+					top: value,
+					right: value,
+					bottom: value,
+					left: value,
+				};
+			}
+			else {
+				return {
+					top: 0,
+					right: 0,
+					bottom: 0,
+					left: 0,
+				};
+			}
+		},
+
 		_applyBubbles: function (value, old) {
 
+			var hasBubbles = false;
 			var bubbles = this.__bubbleWidgets;
 
 			if (old != null && old.length > 0) {
@@ -113,23 +144,12 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 					var bubble = bubbles[id];
 					var comp = Wisej.Core.getComponent(id);
 					if (comp) {
-
-						var container = comp.getLayoutParent();
-
-						// retrieve the TabPage button, if the opener is a TabPage.
-						if (comp instanceof qx.ui.tabview.Page)
-							comp = comp.getButton();
-
+					
 						if (bubble == null) {
 
 							// create the new bubble widget.
 							bubbles[id] = bubble =
-								new wisej.web.extender.bubbles.Bubble(
-									container,
-									comp,
-									this.getAnimation(),
-									this.getAlignment(),
-									this.getMargin());
+								new wisej.web.extender.bubbles.Bubble(this, comp);
 
 							// listen to clicks to fire our "bubbleClick" event.
 							bubble.addListener("click", this._onBubbleClick, this);
@@ -137,6 +157,8 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 
 						bubble.setValue(value[i].value);
 						bubble.setStyle(value[i].style);
+
+						hasBubbles = true;
 					}
 					else {
 						// destroy the bubble in case the component doesn't exist anymore...
@@ -147,19 +169,28 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 					}
 				}
 			}
+
+			// start the automatic updater.
+			if (hasBubbles) {
+				this.__updaterId = this.__updaterId
+					|| qx.event.Idle.getInstance().addListener("interval", this.__livePositionUpdater, this);
+			}
+			else if (this.__updaterId) {
+				qx.event.Idle.getInstance().removeListenerById(this.__updaterId);
+				this.__updaterId = null;
+			}
 		},
 
 		/**
-		 * Applies the Alignment and Margin properties to bubbles that are already created.
+		 * Updates the location of the existing bubbles.
 		 */
-		_updateBubbles: function (value, old) {
-			if (this.__bubbleWidgets) {
-				var bubbles = this.__bubbleWidgets;
-				var alignment = this.getAlignment();
-				var margin = this.getMargin();
+		_updateBubbles: function () {
+
+			var bubbles = this.__bubbleWidgets;
+			if (bubbles != null) {
 
 				for (var id in bubbles) {
-					bubbles[id].updatePosition(alignment, margin);
+					bubbles[id].updatePosition();
 				}
 			}
 		},
@@ -172,14 +203,20 @@ qx.Class.define("wisej.web.extender.bubbles.BubbleNotifications", {
 			this.fireDataEvent("bubbleClick", bubble.getComponent());
 
 		},
+
+		/**
+		 * Keeps the visible error icons aligned with their assigned target component.
+		 */
+		__livePositionUpdater: function () {
+
+			this._updateBubbles();
+		}
 	},
 
 	destruct: function () {
 
 		this.__bubbleWidgets = null;
-	},
-
-
+	}
 });
 
 
@@ -196,54 +233,58 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 
 	extend: qx.ui.basic.Label,
 
-	construct: function (container, component, animation, alignment, margin) {
+	construct: function (owner, component) {
 
 		this.base(arguments);
 
-		// default animation
-		animation = animation ||
-			{
-				"duration": 1000,
-				"keep": "0",
-				"timing": "cubic-bezier(0,1,1,0)",
-				"keyFrames": {
-					"0": { transform: "scale(1)" },
-					"100": { transform: "scale(1.7)" }
-				}
-			};
-
-		// save a reference to the owner.
-		this.__component = component;
-
-		this.__margin = margin;
-		this.__animation = animation;
-		this.__alignment = alignment;
+		if (!owner)
+			throw new Error("Cannot create a bubble without a valid owner");
 
 		if (!component)
 			throw new Error("Cannot create a bubble without a valid component");
 
+		// default animation
+		var animation = owner.getAnimation() ||
+		{
+			"duration": 1000,
+			"keep": "0",
+			"timing": "cubic-bezier(0,1,1,0)",
+			"keyFrames": {
+				"0": { transform: "scale(1)" },
+				"100": { transform: "scale(1.7)" }
+			}
+		};
+
+		// find the target component for composite widgets.
+		// retrieve the TabPage button, if the opener is a TabPage.
+		if (component instanceof wisej.web.tabcontrol.TabPage)
+			component = component.getButton();
+
+		// retrieve the column header widget.
+		if (component instanceof wisej.web.datagrid.ColumnHeader)
+			component = component.getHeaderWidget();
+
+		this.__owner = owner;
+		this.__animation = animation;
+		this.__component = component;
+
 		this.setRich(true);
 		this.setWrap(false);
 		this.setAllowGrowX(true);
+		this.setAllowGrowY(false);
+		this.setTextAlign("center");
 
 		// start hidden.
 		this.exclude();
 
-		// add this widget to the same layout parent.
-		container._add(this);
-		container.getContentElement().setStyle("overflow", "visible");
-
 		// hook our handlers to follow the owner component.
-		component.addListener("move", this.__onComponentMove, this);
-		component.addListener("resize", this.__onComponentResize, this);
-		component.addListener("changeVisibility", this.__onComponentChangeVisibility, this);
+		component.addListener("appear", this._onComponentAppear, this);
+		component.addListener("disappear", this._onComponentDisappear, this);
 
-		// show the animation the first time the dom is created.
-		this.addListenerOnce("appear", function (e) {
-			this.__updatePosition();
-			container.invalidateLayoutChildren();
-			setTimeout(this.animate.bind(this), 300);
-		});
+		// finally create the bubble in the the top container.
+		var container = this.getContainer();
+		if (container)
+			container.add(this);
 	},
 
 	properties: {
@@ -262,19 +303,30 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 
 	members: {
 
-		// the margin of the bubble.
-		__margin: null,
+		// the bubble manager that owns this bubble.
+		__owner: null,
 
-		// the component that owns this bubble.
+		// the component that is attached to this bubble.
 		__component: null,
 
-		// the alignment of the bubble.
-		__alignment: "topRight",
+		// animation for the bubble component.
+		__animation: null,
 
 		// return the component associated with this bubble.
 		getComponent: function () {
 
 			return this.__component;
+		},
+
+		// returns the container for the bubble placement.
+		getContainer: function () {
+
+			var component = this.getComponent();
+			for (container = component.getLayoutParent(); container != null; container = container.getLayoutParent()) {
+				if (container.isWisejControl && container.isTopLevel()) {
+					return container;
+				}
+			}
 		},
 
 		// applies the value. every time the
@@ -285,11 +337,10 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 
 			// hide when the value is 0 or null.
 			if (!value) {
+
 				this.exclude();
 			}
-			else if (this.__component.isVisible()) {
-
-				this.__updatePosition();
+			else if (this.__component.getBounds() != null) {
 
 				this.show();
 				this.animate();
@@ -312,17 +363,110 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 		},
 
 		/**
-		 * Updates the alignment and margin of the bubble.
-		 * @param {String} alignment New alignment.
-		 * @param {Map} margin New margin.
+		 * Updates the positon of the bubble.
 		 */
-		updatePosition: function (alignment, margin) {
+		updatePosition: function () {
 
-			if (this.__alignment != alignment || this.__margin != margin) {
-				this.__alignment = alignment;
-				this.__margin = margin;
-				this.__updatePosition();
+			var component = this.getComponent();
+			var container = this.getLayoutParent();
+			var componentBounds = component.getBounds();
+			var componentLoc = component.getContentLocation();
+			var containerLoc = container.getContentLocation();
+
+			if (componentLoc == null || componentBounds == null || containerLoc == null)
+				return;
+
+			var sizeHint = this.getSizeHint();
+			var bounds = {
+				left: 0, top: 0,
+				width: Math.max(sizeHint.width, sizeHint.height), height: sizeHint.height
+			};
+
+			var x = componentLoc.left;
+			var y = componentLoc.top;
+
+			var margin = this.__owner.getMargin();
+			var alignment = this.__owner.getAlignment();
+
+			switch (alignment) {
+				case "topLeft":
+					x = componentLoc.left;
+					y = componentLoc.top;
+					break;
+
+				case "topCenter":
+					x = componentLoc.left + componentBounds.width / 2;
+					y = componentLoc.top;
+					break;
+
+				case "topRight":
+					x = componentLoc.left + componentBounds.width;
+					y = componentLoc.top;
+					break;
+
+				case "middleLeft":
+					x = componentLoc.left;
+					y = componentLoc.top + componentBounds.height / 2;
+					break;
+
+				case "middleCenter":
+					x = componentLoc.left + componentBounds.width / 2;
+					y = componentLoc.top + componentBounds.height / 2;
+					break;
+
+				case "middleRight":
+					x = componentLoc.left + componentBounds.width;
+					y = componentLoc.top + componentBounds.height / 2;
+					break;
+
+				case "bottomLeft":
+					x = componentLoc.left;
+					y = componentLoc.top + componentBounds.height;
+					break;
+
+				case "bottomCenter":
+					x = componentLoc.left + componentBounds.width / 2;
+					y = componentLoc.top + componentBounds.height;
+					break;
+
+				case "bottomRight":
+					x = componentLoc.left + componentBounds.width;
+					y = componentLoc.top + componentBounds.height;
+					break;
 			}
+
+			x -= bounds.width / 2;
+			y -= bounds.height / 2;
+			x += margin.left - margin.right;
+			y += margin.top - margin.bottom;
+			x -= containerLoc.left;
+			y -= containerLoc.top;
+
+			this.setUserBounds(x, y, bounds.width, bounds.height);
+		},
+
+		// hide/show with the component.
+		_onComponentAppear: function (e) {
+
+			if (this.getValue()) {
+
+				// make sure the bubble has a parent.
+				if (this.getLayoutParent() == null) {
+					var container = this.getContainer();
+					if (container)
+						container.add(this);
+				}
+
+				this.show();
+				this.animate();
+				this.updatePosition();
+			}
+		},
+
+		// hide/show with the component.
+		_onComponentDisappear: function (e) {
+
+			this.exclude();
 		},
 
 		/**
@@ -337,114 +481,19 @@ qx.Class.define("wisej.web.extender.bubbles.Bubble", {
 				this.addState(value.toLowerCase());
 			else if (value == null)
 				this.resetStyle();
-		},
-
-		// follow the component position.
-		__onComponentMove: function (e) {
-
-			this.__updatePosition();
-
-		},
-
-		// adjust to the component size.
-		__onComponentResize: function (e) {
-
-			this.__updatePosition();
-
-		},
-
-		// hide/show with the component.
-		__onComponentChangeVisibility: function (e) {
-
-			if (this.getValue() > 0) {
-				this.__component.isVisible()
-					? show()
-					: exclude();
-			}
-		},
-
-		// updates this bubble widget position.
-		__updatePosition: function () {
-
-			var margin = this.__margin;
-			var alignment = this.__alignment;
-			var bounds = this.__component.getBounds();
-
-			if (bounds) {
-
-				var mySize = this.getSizeHint();
-				if (mySize) {
-
-					var y = bounds.top - mySize.height;
-					var x = bounds.left + bounds.width - mySize.width;
-
-					switch (alignment) {
-						case "topLeft":
-							y = bounds.top - mySize.height;
-							x = bounds.left;
-							break;
-
-						case "topCenter":
-							y = bounds.top - mySize.height;
-							x = (bounds.left + bounds.width / 2) - (mySize.width / 2);
-							break;
-
-						case "topRight":
-							break;
-
-						case "middleLeft":
-							y = (bounds.top + (bounds.height / 2)) - (mySize.height / 2);
-							x = bounds.left - mySize.width;
-							break;
-
-						case "middleCenter":
-							y = (bounds.top + (bounds.height / 2)) - (mySize.height / 2);
-							x = (bounds.left + bounds.width / 2) - (mySize.width / 2);
-							break;
-
-						case "middleRight":
-							y = (bounds.top + (bounds.height / 2)) - (mySize.height / 2);
-							x = bounds.left + bounds.width;
-							break;
-
-						case "bottomLeft":
-							y = bounds.top + bounds.height;
-							x = bounds.left;
-							break;
-
-						case "bottomCenter":
-							y = bounds.top + bounds.height;
-							x = (bounds.left + bounds.width / 2) - (mySize.width / 2);
-							break;
-
-						case "bottomRight":
-							y = bounds.top + bounds.height;
-							x = bounds.left + bounds.width - mySize.width;
-							break;
-					}
-
-					// apply margin.
-					if (margin) {
-						var top = margin[0];
-						var left = margin[3];
-						var right = margin[1];
-						var bottom = margin[2];
-
-						x += left;
-						x -= right;
-
-						y += top;
-						y -= bottom;
-					}
-
-					this.setUserBounds(x, y, mySize.width, mySize.height);
-				}
-			}
-		},
+		}
 	},
 
 	destruct: function () {
 
+		// unhook our handlers to follow the owner component.
+		var component = this.getComponent();
+		if (component) {
+			component.removeListener("appear", this._onComponentAppear, this);
+			component.removeListener("disappear", this._onComponentDisappear, this);
+		}
+
+		this.__owner = null;
 		this.__component = null;
 	},
 

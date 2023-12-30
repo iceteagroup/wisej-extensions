@@ -51,7 +51,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// </summary>
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public OptionScalesAxesX[] xAxes
 		{
@@ -104,7 +104,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// Options for the y-axes.
 		/// </summary>
 		[TypeConverter(typeof(ArrayConverter))]
-		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
+		[Editor("System.ComponentModel.Design.ArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public OptionScalesAxesY[] yAxes
 		{
@@ -148,7 +148,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 		private OptionScalesAxesY _defaultOptionScalesAxesY;
 
-		private	bool ShouldSerializeyAxes()
+		private bool ShouldSerializeyAxes()
 		{
 			return this._yAxes != null && this._yAxes.Length > 0 && !Object.Equals(this._yAxes[0], DefaultOptionScalesAxesY);
 		}
@@ -202,7 +202,7 @@ namespace Wisej.Web.Ext.ChartJS3
 
 		/// <summary>
 		/// User defined maximum number for the scale, overrides maximum value from data.
-		/// </summary>                
+		/// </summary>
 		[DefaultValue(null)]
 		[Description("User defined maximum number for the scale, overrides maximum value from data.")]
 		public int? Max
@@ -240,7 +240,7 @@ namespace Wisej.Web.Ext.ChartJS3
 
 		/// <summary>
 		/// Returns or sets the adjustment used when calculating the maximum data value.
-		/// </summary>                
+		/// </summary>
 		[DefaultValue(null)]
 		[Description("Returns or sets the adjustment used when calculating the maximum data value.")]
 		public int? SuggestedMax
@@ -281,7 +281,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// </summary>
 		public OptionsAxisGrid Grid
 		{
-			get 
+			get
 			{
 				return this._gridLines;
 			}
@@ -326,7 +326,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// </summary>
 		[DefaultValue("")]
 		[Description("Used to identify the scale options for multi-axes charts")]
-		public String id
+		public string Id
 		{
 			get
 			{
@@ -337,7 +337,7 @@ namespace Wisej.Web.Ext.ChartJS3
 				this._id = value;
 			}
 		}
-		private String _id;
+		private string _id = "";
 
 		/// <summary>
 		/// Options for the chart ticks on the axes.
@@ -519,7 +519,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// </summary>
 		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS3.ChartJS3"/> that owns this set of options.</param>
 		public OptionScalesAxesX(OptionsBase owner)
-			:base (owner)
+			: base(owner)
 		{
 			this.Type = ScaleType.Category;
 		}
@@ -553,7 +553,7 @@ namespace Wisej.Web.Ext.ChartJS3
 			get { return base.Type; }
 			set { base.Type = value; }
 		}
-		
+
 		/// <summary>
 		///	Rotation value of the X Axis.
 		/// </summary>
@@ -569,7 +569,7 @@ namespace Wisej.Web.Ext.ChartJS3
 					this.Ticks.MaxRotation = value;
 					this.Ticks.MinRotation = value;
 					this.Ticks.AutoSkip = false;
-				
+
 					this._labelRotation = value;
 					Update();
 				}
@@ -633,7 +633,7 @@ namespace Wisej.Web.Ext.ChartJS3
 					this.Ticks.MaxRotation = value;
 					this.Ticks.MinRotation = value;
 					this.Ticks.AutoSkip = false;
-				
+
 					this._labelRotation = value;
 					Update();
 				}
@@ -767,19 +767,10 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 		private Font _font;
 
-		private bool ShouldSerializeFont()
-		{
-			return this._font != null;
-		}
-
-		private void ResetFont()
-		{
-			this.Font = null;
-		}
-
 		/// <summary>
 		/// Tick labels color.
 		/// </summary>
+		[DefaultValue(typeof(Color), "")]
 		[Description("Tick labels color.")]
 		public Color Color
 		{
@@ -801,16 +792,6 @@ namespace Wisej.Web.Ext.ChartJS3
 			}
 		}
 		private Color _color;
-
-		private bool ShouldSerializeColor()
-		{
-			return !this._color.IsEmpty;
-		}
-
-		private void ResetColor()
-		{
-			this.Color = Color.Empty;
-		}
 
 		/// <summary>
 		/// If true, scale will include 0 if it is not already included.
@@ -848,12 +829,12 @@ namespace Wisej.Web.Ext.ChartJS3
 			}
 		}
 		private int _minRotation = 0;
-		
+
 		/// <summary>
 		///	Max Rotation value of the tick.
 		/// </summary>
-		[DefaultValue(360)]
-		[Description("Max Rotation value the tick")]
+		[DefaultValue(50)]
+		[Description("Max Rotation value of the tick")]
 		public int MaxRotation
 		{
 			get { return this._maxRotation; }
@@ -865,7 +846,7 @@ namespace Wisej.Web.Ext.ChartJS3
 				}
 			}
 		}
-		private int _maxRotation = 360;
+		private int _maxRotation = 50;
 
 		/// <summary>
 		/// If True, automatically calculates how many labels can be shown and hides labels accordingly.
@@ -889,7 +870,7 @@ namespace Wisej.Web.Ext.ChartJS3
 				}
 			}
 		}
-		private bool _autoSkip;
+		private bool _autoSkip = true;
 	}
 
 	/// <summary>
@@ -916,6 +897,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// Font of the title.
 		/// </summary>
+		[DefaultValue(null)]
 		[Description("Scale label font.")]
 		public Font Font
 		{
@@ -937,16 +919,6 @@ namespace Wisej.Web.Ext.ChartJS3
 			}
 		}
 		private Font _font;
-
-		private bool ShouldSerializeFont()
-		{
-			return this._font != null;
-		}
-
-		private void ResetFont()
-		{
-			this.Font = null;
-		}
 
 		/// <summary>
 		/// Show the title block.
@@ -1003,6 +975,7 @@ namespace Wisej.Web.Ext.ChartJS3
 		/// <summary>
 		/// Color of label.
 		/// </summary>
+		[DefaultValue(typeof(Color), "")]
 		[Description("Scale label font color.")]
 		public Color Color
 		{
@@ -1024,16 +997,5 @@ namespace Wisej.Web.Ext.ChartJS3
 			}
 		}
 		private Color _color = Color.Empty;
-
-		private bool ShouldSerializeFontColor()
-		{
-			return !this._color.IsEmpty;
-		}
-
-		private void ResetFontColor()
-		{
-			this.Color = Color.Empty;
-		}
-
 	}
 }
