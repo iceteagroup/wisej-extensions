@@ -241,17 +241,19 @@ namespace Wisej.Web.Ext.JustGage
 		}
 		private float _maximum = 100;
 
-		/// <summary>
-		/// Returns or sets the title of the JustGage control.
-		/// </summary>
-		[DesignerActionList]
-		[SRCategory("CatAppearance")]
-		[Description("Returns or sets the title of the JustGage control.")]
-		public override string Text
-		{
-			get { return base.Text; }
-			set { base.Text = value; }
-		}
+        /// <summary>
+        /// Returns or sets the title of the JustGage control. (Deprecated)
+        /// </summary>
+        /// <since>3.5.4</since>
+        [DesignerActionList]
+        [SRCategory("CatAppearance")]
+        [Description("Returns or sets the title of the JustGage control.")]
+        [Obsolete("Use the Label property instead.")]
+        public override string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; }
+        }
 
 		/// <summary>
 		/// Returns or sets a value that indicates whether the title should be above or below the gauge.
@@ -537,28 +539,47 @@ namespace Wisej.Web.Ext.JustGage
 		}
 		private bool _counter = false;
 
-		/// <summary>
-		/// Returns or sets a value that indicates the type of animation used by the gage.
-		/// </summary>
-		[DefaultValue(JustGageAnimationType.EaseIn)]
-		[SRCategory("CatAppearance")]
-		[Description("Returns or sets a value that indicates the type of animation used by the gage.")]
-		public JustGageAnimationType StartAnimationType
-		{
-			get
-			{
-				return this._startAnimationType;
-			}
-			set
-			{
-				if (this._startAnimationType != value)
-				{
-					this._startAnimationType = value;
+        /// <summary>
+        /// Returns or sets a value that indicates whether the Gauge will fill starting from the center, rather than from the min value.
+        /// </summary>
+        [DefaultValue(false)]
+        [SRCategory("CatAppearance")]
+        [Description("Returns or sets a value that indicates whether the Gauge will fill starting from the center, rather than from the min value.")]
+        public bool Differential
+        {
+            get { return this._differential; }
+            set
+            {
+                if (this._differential != value)
+                {
+                    this._differential = value;
 
-					Update();
-				}
-			}
-		}
+                    Update();
+                }
+            }
+        }
+
+        private bool _differential = false;
+
+        /// <summary>
+        /// Returns or sets a value that indicates the type of animation used by the gage.
+        /// </summary>
+        [DefaultValue(JustGageAnimationType.EaseIn)]
+        [SRCategory("CatAppearance")]
+        [Description("Returns or sets a value that indicates the type of animation used by the gage.")]
+        public JustGageAnimationType StartAnimationType
+        {
+            get { return this._startAnimationType; }
+            set
+            {
+                if (this._startAnimationType != value)
+                {
+                    this._startAnimationType = value;
+
+                    Update();
+                }
+            }
+        }
 		private JustGageAnimationType _startAnimationType = JustGageAnimationType.EaseIn;
 
 		/// <summary>
@@ -860,10 +881,9 @@ namespace Wisej.Web.Ext.JustGage
 
 			config.className = "wisej.web.ext.JustGage";
 
-			config.title = this.Text;
-			config.value = this.Value;
-			config.label = this.Label;
-			config.symbol = this.Symbol;
+            config.value = this.Value;
+            config.label = this.Label ?? this.Text;
+            config.symbol = this.Symbol;
 			config.minimum = this.Minimum;
 			config.maximum = this.Maximum;
 			config.showMinMax = this.ShowMinMax;
@@ -875,7 +895,8 @@ namespace Wisej.Web.Ext.JustGage
 			config.valueColor = this.ValueColor;
 			config.ShowGradient = this.Gradient;
 			config.borderStyle = this.BorderStyle;
-			config.customSectors = this.CustomSectors;
+            config.differential = this.Differential;
+            config.customSectors = this.CustomSectors;
 			config.humanFriendly = this.HumanFriendly;
 			config.decimals = this.Decimals;
 			config.formatNumber = this.FormatNumber;

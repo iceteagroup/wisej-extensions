@@ -115,25 +115,40 @@ namespace Wisej.Web.Ext.CKEditor
 		}
 		private string _text = "";
 
-		/// <summary>
-		/// Returns or sets whether the user can interact with the editor.
-		/// </summary>
-		[DesignerActionList]
-		[DefaultValue(false)]
-		[Description("Returns or sets whether the user can interact with the editor.")]
-		public bool ReadOnly
-		{
-			get { return this._readOnly; }
+        /// <summary>
+        /// Returns or sets whether the control is enabled.
+        /// </summary>
+        [DefaultValue(true)]
+        [Description("Returns or sets whether the control is enabled.")]
+        public new bool Enabled
+        {
+            get { return this.ReadOnly; }
+            set
+            {
+                if (this.ReadOnly != !value)
+                    this.ReadOnly = !value;
+            }
+        }
 
-			set
-			{
-				if (this._readOnly != value)
-				{
-					this._readOnly = value;
-					Call("setReadOnly", value);
-				}
-			}
-		}
+        /// <summary>
+        /// Returns or sets whether the user can interact with the editor.
+        /// </summary>
+        [DesignerActionList]
+        [DefaultValue(false)]
+        [Description("Returns or sets whether the user can interact with the editor.")]
+        public bool ReadOnly
+        {
+            get { return this._readOnly; }
+
+            set
+            {
+                if (this._readOnly != value)
+                {
+                    this._readOnly = value;
+                    Call("setReadOnly", value);
+                }
+            }
+        }
 		private bool _readOnly = false;
 
 		/// <summary>

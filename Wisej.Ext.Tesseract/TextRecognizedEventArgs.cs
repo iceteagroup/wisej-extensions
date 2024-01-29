@@ -29,9 +29,9 @@ namespace Wisej.Ext.Tesseract
 		/// <summary>
 		/// Creates a new instance of <see cref="TextRecognizedEventArgs"/> with the given configuration.
 		/// </summary>
-		/// <param name="confidence"></param>
-		/// <param name="text"></param>
-		/// <param name="words"></param>
+		/// <param name="confidence">The confidence of the recognition.</param>
+		/// <param name="text">The text discovered.</param>
+		/// <param name="words">The words discovered.</param>
 		public TextRecognizedEventArgs(int confidence, string text, string[] words)
 		{
 			this.Confidence = confidence;
@@ -42,17 +42,17 @@ namespace Wisej.Ext.Tesseract
 		/// <summary>
 		/// Returns the confidence level of the scan event.
 		/// </summary>
-		public int Confidence { get; private set; }
+		public int Confidence { get; }
 
 		/// <summary>
 		/// Returns the text detected during the scan event.
 		/// </summary>
-		public string Text { get; private set; }
+		public string Text { get; }
 
 		/// <summary>
 		/// Returns a list of words that were detected during the scan event.
 		/// </summary>
-		public string[] Words { get; private set; }
+		public string[] Words { get; }
 
 	}
 }

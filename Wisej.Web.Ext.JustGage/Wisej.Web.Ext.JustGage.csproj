@@ -11,14 +11,14 @@
 
   <ItemGroup>
 	<None Remove="JustGage.bmp" />
-	<None Remove="Platform\justgage.1.2.2.js" />
+	<None Remove="Platform\justgage.1.6.1.js" />
 	<None Remove="Platform\raphael.2.1.4.js" />
 	<None Remove="Platform\wisej.web.ext.JustGage.js" />
   </ItemGroup>
 
   <ItemGroup>
 	<EmbeddedResource Include="JustGage.bmp" />
-	<EmbeddedResource Include="Platform\justgage.1.2.2.js" />
+	<EmbeddedResource Include="Platform\justgage.1.6.1.js" />
 	<EmbeddedResource Include="Platform\raphael.2.1.4.js" />
 	<EmbeddedResource Include="Platform\wisej.web.ext.JustGage.js" />
   </ItemGroup>

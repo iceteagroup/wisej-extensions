@@ -86,7 +86,9 @@ namespace Wisej.Ext.Tesseract
 		/// <summary>
 		/// Returns or sets the Wisej.NET Camera instance to attach to.
 		/// </summary>
+		[Description("Returns or sets the Wisej.NET Camera instance to attach to.")]
 		[TypeConverter(typeof(CameraConverter))]
+		[DefaultValue(null)]
 		public Control Camera
 		{
 			get
@@ -95,9 +97,8 @@ namespace Wisej.Ext.Tesseract
 			}
 			set
 			{
-				if (this._camera != null)
-					if (this._camera.Equals(value))
-						return;
+				if (this._camera != null && this._camera.Equals(value))
+					return;
 
 				this._camera = value;
 
@@ -107,8 +108,10 @@ namespace Wisej.Ext.Tesseract
 		private Control _camera;
 
 		/// <summary>
-		/// Returns or sets whether text-detection is enabled.
+		/// Returns or sets whether text-detection 
+		/// is enabled for the associated <see cref="Camera"/>.
 		/// </summary>
+		[DefaultValue(true)]
 		public bool Enabled
 		{
 			get
@@ -125,14 +128,16 @@ namespace Wisej.Ext.Tesseract
 				}
 			}
 		}
-		private bool _enabled = false;
+		private bool _enabled = true;
 
 		/// <summary>
-		/// Returns or sets the interval to use in between text detection requests.
+		/// Returns or sets the interval to use in between text detection requests
+		/// in the live camera preview.
 		/// </summary>
 		/// <remarks>
 		/// The interval is specified in milliseconds.
 		/// </remarks>
+		[DefaultValue(1500)]
 		public int Interval
 		{
 			get
@@ -152,8 +157,9 @@ namespace Wisej.Ext.Tesseract
 		private int _interval = 1500;
 
 		/// <summary>
-		/// Returns or sets a list of keywords to filter for on the client.
+		/// Returns or sets a list of keywords to filter for.
 		/// </summary>
+		[DefaultValue(null)]
 		public string[] Keywords
 		{
 			get
@@ -170,7 +176,7 @@ namespace Wisej.Ext.Tesseract
 				}
 			}
 		}
-		private string[] _keywords = null;
+		private string[] _keywords;
 
 		/// <summary>
 		/// Returns or sets the detection language to use.
@@ -178,6 +184,7 @@ namespace Wisej.Ext.Tesseract
 		/// <remarks>
 		/// See: https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016
 		/// </remarks>
+		[DefaultValue("eng")]
 		public string Language
 		{
 			get
@@ -197,8 +204,10 @@ namespace Wisej.Ext.Tesseract
 		private string _language = "eng";
 
 		/// <summary>
-		/// Returns or sets whether to show bounding rectangles around detected words.
+		/// Returns or sets whether to show bounding rectangles
+		/// around detected words in the live camera preview.
 		/// </summary>
+		[DefaultValue(true)]
 		public bool ShowWords
 		{
 			get
@@ -220,6 +229,11 @@ namespace Wisej.Ext.Tesseract
 		/// <summary>
 		/// Returns or sets the white listed characters to scan for.
 		/// </summary>
+		/// <remarks>
+		/// Setting white list characters makes the result only contains these characters, 
+		/// useful if content in image is limited.
+		/// </remarks>
+		[DefaultValue(null)]
 		public string Whitelist
 		{
 			get
@@ -236,14 +250,16 @@ namespace Wisej.Ext.Tesseract
 				}
 			}
 		}
-		private string _whitelist = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789";
+		private string _whitelist;
 
 		/// <summary>
-		/// Returns or sets the number of workers used to detect text.
+		/// Returns or sets the number of workers used to detect text
+		/// in the live camera preview.
 		/// </summary>
 		/// <remarks>
 		/// Higher is better, but results in increased CPU and battery consumption.
 		/// </remarks>
+		[DefaultValue(1)]
 		public int WorkerCount
 		{
 			get
@@ -267,41 +283,55 @@ namespace Wisej.Ext.Tesseract
 		#region Methods
 
 		/// <summary>
+		/// Scans a given image source (url) and return the discovered text.
+		/// </summary>
+		/// <param name="imageSource">The input image url.</param>
+		/// <returns>Text discovered in the image.</returns>
+		public async Task<string> ScanImageAsync(string imageSource)
+		{
+			return await this.CallAsync("scanImage", imageSource);
+		}
+
+		/// <summary>
 		/// Scans a given <see cref="Image"/> and return the discovered text.
 		/// </summary>
 		/// <param name="image">The input <see cref="Image"/>.</param>
-		/// <returns>Text discovererd in the image.</returns>
+		/// <returns>Text discovered in the image.</returns>
 		public async Task<string> ScanImageAsync(Image image)
 		{
-			using (var ms = new MemoryStream())
-			{
-				var mime = GetImageMime(image);
+			using var ms = new MemoryStream();
 
-				// Save the image to the memory stream
-				image.Save(ms, image.RawFormat);
+			var mime = GetImageMime(image);
 
-				// Convert image to byte array
-				byte[] imageBytes = ms.ToArray();
+			// Save the image to the memory stream
+			image.Save(ms, image.RawFormat);
 
-				// Convert byte array to Base64 string
-				var base64 = Convert.ToBase64String(imageBytes);
+			// Convert image to byte array
+			byte[] imageBytes = ms.ToArray();
 
-				return await this.CallAsync("scanImage", $"data:{mime};base64,{base64}");
-			}
+			// Convert byte array to Base64 string
+			var base64 = Convert.ToBase64String(imageBytes);
+
+			var base64Url = $"data:{mime};base64,{base64}";
+
+			return await ScanImageAsync(base64Url);
 		}
 
 		private string GetImageMime(Image image)
 		{
-			var codecs = ImageCodecInfo.GetImageDecoders();
-			foreach (var codec in codecs)
-			{
-				if (codec.FormatID == image.RawFormat.Guid)
-				{
-					return codec.MimeType; // or codec.MimeType for MIME type
-				}
-			}
-			return "Unknown";
+			var format = image.RawFormat;
+			if (format.Equals(ImageFormat.Png))
+				return "image/png";
+			if (format.Equals(ImageFormat.Gif))
+				return "image/gif";
+			if (format.Equals(ImageFormat.Jpeg))
+				return "image/jpeg";
+			if (format.Equals(ImageFormat.Bmp))
+				return "image/bmp";
+
+			return "image/png";
 		}
+
 
 		#endregion
 

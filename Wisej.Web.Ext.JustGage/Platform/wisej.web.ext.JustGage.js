@@ -119,6 +119,11 @@ qx.Class.define("wisej.web.ext.JustGage", {
 		decimals: { init: 0, check: "Integer", apply: "_applyProperty" },
 
 		/**
+		* Gauge will fill starting from the center, rather than from the min value.
+		*/
+		differential: { init: false, check: "Boolean", apply: "_applyProperty" },
+
+		/**
         * Display large numbers with thousand separators (commas)
         */
 		formatNumber: { init: false, check: "Boolean", apply: "_applyProperty" },
@@ -233,6 +238,7 @@ qx.Class.define("wisej.web.ext.JustGage", {
 				humanFriendly: this.isHumanFriendly(),
 				humanFriendlyDecimal: Decimals,
 				decimals: Decimals,
+				differential: this.isDifferential(),
 				counter: this.isCounter(),
 				formatNumber: this.isFormatNumber(),
 				startAnimationType: this.getStartAnimationType(),
