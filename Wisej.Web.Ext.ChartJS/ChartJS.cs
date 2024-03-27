@@ -278,16 +278,13 @@ namespace Wisej.Web.Ext.ChartJS
 		/// Returns the chart as a PNG image.
 		/// </summary>
 		/// <returns>An <see cref="Image"/> with a representation of the chart.</returns>
-		public Task<Image> GetImageAsync()
+		public async Task<Image> GetImageAsync()
 		{
 			var tcs = new TaskCompletionSource<Image>();
 
-			GetImage((result) => {
+			GetImage((result) => { tcs.SetResult(result); });
 
-				tcs.SetResult(result);
-			});
-
-			return tcs.Task;
+			return await tcs.Task;
 		}
 
 		/// <summary>

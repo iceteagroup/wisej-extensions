@@ -106,6 +106,7 @@ qx.Class.define("wisej.ext.FileSystemFileHandle", {
 			return (async function () {
 				var writable = await me.handle.createWritable({ keepExistingData: true });
 				await writable.write({
+					type: "write",
 					data: text,
 					position: position,
 				});
@@ -117,6 +118,7 @@ qx.Class.define("wisej.ext.FileSystemFileHandle", {
 		 * Writes an array of bytes starting from a position in the file.
 		 * @param {String} base64 Represents the byte array encoded in base64.
 		 * @param {Integer} position The cursor's position.
+		 * @param {String} type A string that is one of "write", "seek", or "truncate".
 		 */
 		writeBytes: function (base64, position, keepExistingData, type) {
 			var me = this;

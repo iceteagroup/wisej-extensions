@@ -554,29 +554,29 @@ namespace Wisej.Web.Ext.ChartJS3
 			set { base.Type = value; }
 		}
 
-		/// <summary>
-		///	Rotation value of the X Axis.
-		/// </summary>
-		[DefaultValue(0)]
-		[Description("Rotation value of the X Axis")]
-		public int LabelRotation
-		{
-			get { return this._labelRotation; }
-			set
-			{
-				if (value != this._labelRotation)
-				{
-					this.Ticks.MaxRotation = value;
-					this.Ticks.MinRotation = value;
-					this.Ticks.AutoSkip = false;
+        /// <summary>
+        ///	Rotation value of the X Axis.
+        /// </summary>
+        [Description("Rotation value of the X Axis")]
+        public int LabelRotation
+        {
+            get { return this._labelRotation; }
+            set
+            {
+                if (value != this._labelRotation)
+                {
+                    this.Ticks.MaxRotation = value > 0 ? value : this.Ticks.MaxRotation;
+                    this.Ticks.MinRotation = value > 0 ? value : this.Ticks.MinRotation;
+                    this.Ticks.AutoSkip = value == 0 ? true : false;
 
-					this._labelRotation = value;
-					Update();
-				}
-			}
-		}
-		private int _labelRotation = 0;
-	}
+                    this._labelRotation = value;
+                    Update();
+                }
+            }
+        }
+
+        private int _labelRotation;
+    }
 
 	/// <summary>
 	/// Represents the options for the scale X axes.
@@ -618,29 +618,29 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 		private HeaderPosition _position = HeaderPosition.Left;
 
-		/// <summary>
-		///	Rotation value of the Y Axis.
-		/// </summary>
-		[DefaultValue(0)]
-		[Description("Rotation value of the Y Axis")]
-		public int LabelRotation
-		{
-			get { return this._labelRotation; }
-			set
-			{
-				if (value != this._labelRotation)
-				{
-					this.Ticks.MaxRotation = value;
-					this.Ticks.MinRotation = value;
-					this.Ticks.AutoSkip = false;
+        /// <summary>
+        ///	Rotation value of the Y Axis.
+        /// </summary>
+        [Description("Rotation value of the Y Axis")]
+        public int LabelRotation
+        {
+            get { return this._labelRotation; }
+            set
+            {
+                if (value != this._labelRotation)
+                {
+                    this.Ticks.MaxRotation = value > 0 ? value : this.Ticks.MaxRotation;
+                    this.Ticks.MinRotation = value > 0 ? value : this.Ticks.MinRotation;
+                    this.Ticks.AutoSkip = value == 0 ? true : false;
 
-					this._labelRotation = value;
-					Update();
-				}
-			}
-		}
-		private int _labelRotation = 0;
-	}
+                    this._labelRotation = value;
+                    Update();
+                }
+            }
+        }
+
+        private int _labelRotation;
+    }
 
 	/// <summary>
 	/// Represents the options for the ticks element of the axes.
@@ -830,25 +830,26 @@ namespace Wisej.Web.Ext.ChartJS3
 		}
 		private int _minRotation = 0;
 
-		/// <summary>
-		///	Max Rotation value of the tick.
-		/// </summary>
-		[DefaultValue(50)]
-		[Description("Max Rotation value of the tick")]
-		public int MaxRotation
-		{
-			get { return this._maxRotation; }
-			set
-			{
-				if (this._maxRotation != value)
-				{
-					this._maxRotation = value;
-				}
-			}
-		}
-		private int _maxRotation = 50;
+        /// <summary>
+        ///	Max Rotation value of the tick.
+        /// </summary>
+        [DefaultValue(50)]
+        [Description("Max Rotation value of the tick")]
+        public int MaxRotation
+        {
+            get { return this._maxRotation; }
+            set
+            {
+                if (this._maxRotation != value)
+                {
+                    this._maxRotation = value;
+                }
+            }
+        }
 
-		/// <summary>
+        private int _maxRotation = 50;
+
+        /// <summary>
 		/// If True, automatically calculates how many labels can be shown and hides labels accordingly.
 		/// Labels will be rotated up to <see cref="MaxRotation"/> before skipping any.
 		/// Turn AutoSkip off to show all labels no matter what.

@@ -64,7 +64,9 @@ qx.Class.define("wisej.ext.Tesseract", {
 
 		workerCount: { init: 0, apply: "_applyWorkerCount" },
 
-		showWords: { init: false }
+		showWords: { init: false },
+
+		minimumConfidence: { init: 60 }
 	},
 
 	members: {
@@ -247,27 +249,35 @@ qx.Class.define("wisej.ext.Tesseract", {
 				this.canvas.getContext('2d').drawImage(video, 0, 0, width, height);
 
 				(async () => {
-
+					// only continue if there are active workers.
 					if (!this.workers || this.workers.length == 0)
 						return;
 
-					var me = this;
-					var text = await this.getImageText(this.canvas.toDataURL());
-					var keywords = this.getKeywords();
-
+					// clear the canvas.
 					this.overlayCanvas.getContext("2d").clearRect(0, 0, this.overlayCanvas.width, this.overlayCanvas.height);
 
-					if (text && this.getShowWords())
-						this._drawRectangles(result.data.words);
+					// get the image text.
+					var result = await this.getImageTextData(this.canvas.toDataURL());
 
+					// stop if the result is not confident.
+					if (result.confidence <= this.getMinimumConfidence())
+						return;
+
+					// get a list of keywords.
+					var keywords = this.getKeywords();
+
+					if (this.getShowWords())
+						this._drawRectangles(result.words);
+
+					var me = this;
 					if (keywords && keywords.length > 0) {
 						keywords.forEach(function (keyword) {
-							if (text.includes(keyword))
-								me.fireDataEvent("textRecognized", me._transformResult(result));
+							if (result.text.includes(keyword))
+								me.fireDataEvent("textRecognized", result);
 						});
 					}
 					else {
-						me.fireDataEvent("textRecognized", me._transformResult(result));
+						me.fireDataEvent("textRecognized", result);
 					}
 				})();
 
@@ -276,19 +286,30 @@ qx.Class.define("wisej.ext.Tesseract", {
 			}
 		},
 
-		getImageText: async function (image) {
+		getImageTextData: async function (image) {
 
-			if (this.index >= this.workers.length)
+			var waitFor = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+			// wait until Tesseract is defined.
+			while (typeof Tesseract === "undefined" || this.workers == null || this.workers.length == 0) {
+				await waitFor(50); // wait for 50 milliseconds before checking again
+			}
+
+			// once Tesseract is defined, proceed with the recognition.
+			if (this.index >= this.workers.length) {
 				this.index = 0;
+			}
 
-			var result = await this.workers[this.index++].recognize(image);
-			return result.data.text;
+			var result = await this._transformResult(await this.workers[this.index++].recognize(image));
+
+			return result;
 		},
 
 		scanImage: function (image) {
 			var me = this;
 			return (async function () {
-				return me.getImageText(image);
+				var promise = me.getImageTextData(image);
+				return promise;
 			})();
 		},
 
@@ -310,7 +331,7 @@ qx.Class.define("wisej.ext.Tesseract", {
 
 			words.forEach(function (word) {
 
-				if (word.confidence >= 30 && word.text.trim().length > 1) {
+				if (word.text.trim().length > 1) {
 					var bbox = word.bbox;
 					context.beginPath();
 					context.rect(bbox.x0, bbox.y0, bbox.x1 - bbox.x0, bbox.y1 - bbox.y0);
@@ -325,7 +346,10 @@ qx.Class.define("wisej.ext.Tesseract", {
 			return {
 				text: result.data.text,
 				confidence: result.data.confidence,
-				words: result.data.words.map(w => w.text),
+				words: result.data.words.map(word => ({
+					text: word.text,
+					bbox: word.bbox
+				}))
 			}
 		}
 	},
