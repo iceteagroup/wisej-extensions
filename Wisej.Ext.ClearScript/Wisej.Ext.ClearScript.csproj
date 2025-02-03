@@ -7,7 +7,7 @@
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.14.1</FileVersion>
+    <FileVersion>3.5.16.5</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
