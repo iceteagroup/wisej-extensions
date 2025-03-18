@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.16.5</FileVersion>
+    <FileVersion>3.5.17.8</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="JavaScript\pdfjs-2_6_347\build\pdf.js" />

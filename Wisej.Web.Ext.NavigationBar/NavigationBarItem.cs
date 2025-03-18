@@ -346,7 +346,6 @@ namespace Wisej.Web.Ext.NavigationBar
 			{
 				if (this._expanded != value)
 				{
-
 					// ignore if in compact view. show a context menu instead.
 					if (value && this.NavigationBar != null && this.NavigationBar.CompactView)
 					{
@@ -781,7 +780,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Always)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public override bool Visible { get => base.Visible; set => base.Visible = value; }
+		public override bool Visible { get => base.Visible; set => base.Visible = !(this._hidden = !value); }
 		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -869,10 +868,13 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		private void NavigationBarItem_Click(object sender, System.EventArgs e)
 		{
-			if (this.ExpandOnClick)
-				this.Expanded = !this.Expanded;
+			if (this.NavigationBar != null)
+			{
+				if (this.ExpandOnClick && !this.NavigationBar.Collapsed)
+					this.Expanded = !this.Expanded;
 
-			this.NavigationBar?.FireItemClick(this);
+				this.NavigationBar.FireItemClick(this);
+			}
 		}
 
 		private void items_ControlAdded(object sender, ControlEventArgs e)
@@ -915,7 +917,15 @@ namespace Wisej.Web.Ext.NavigationBar
 		{
 			var contextMenu = new NavigationBarMenu();
 			CreateMenuItems(contextMenu.MenuItems);
+			contextMenu.MenuItemClicked += ContextMenu_MenuItemClick;
 			return contextMenu;
+		}
+
+		private static void ContextMenu_MenuItemClick(object sender, MenuItemEventArgs e)
+		{
+			var item = ((NavigationBarMenuItem)e.MenuItem).Item;
+
+			item.OnClick(e);
 		}
 
 		private void CreateMenuItems(Menu.MenuItemCollection items)
@@ -928,21 +938,14 @@ namespace Wisej.Web.Ext.NavigationBar
 					Text = item.Text,
 					Name = item.Name,
 					IconSource = item.Icon,
-					Enabled = item.Enabled
+					Enabled = item.Enabled,
+					Visible = !item.Hidden
 				};
-				menu.Click += Menu_Click;
 				items.Add(menu);
 
 				if (item.HasChildren)
 					item.CreateMenuItems(menu.MenuItems);
 			}
-		}
-
-		private static void Menu_Click(object sender, EventArgs e)
-		{
-			var item = ((NavigationBarMenuItem)sender).Item;
-
-			item.NavigationBar?.FireItemClick(item);
 		}
 
 		#endregion

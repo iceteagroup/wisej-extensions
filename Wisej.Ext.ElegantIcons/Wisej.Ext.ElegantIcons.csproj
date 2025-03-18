@@ -4,7 +4,7 @@
     <SignAssembly>true</SignAssembly>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>3.5.16.5</FileVersion>
+    <FileVersion>3.5.17.8</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\3x3-grid.svg" />
