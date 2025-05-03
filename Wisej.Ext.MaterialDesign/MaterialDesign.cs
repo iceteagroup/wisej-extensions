@@ -17,11 +17,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Wisej.Ext.MaterialDesign
 {
 	/// <summary>
 	/// Defines all the images in the icon set.
 	/// </summary>
+#if NETCOREAPP
+	// Prevent trimming / linking on Wisej.NET Hybrid.
+	[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
+#endif
 	public static class Icons
 	{
 		private const string root = "resource.wx/Wisej.Ext.MaterialDesign/";

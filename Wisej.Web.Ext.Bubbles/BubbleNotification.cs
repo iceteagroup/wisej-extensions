@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using Wisej.Base;
@@ -31,31 +32,40 @@ namespace Wisej.Web.Ext.Bubbles
 	/// <summary>
 	/// Represents a numeric notification bubble that can be displayed next to any control.
 	/// </summary>
+	/// <remarks>
+	/// Since version 3.2.5 it supports <see cref="ToolBarButton"/> components.
+	/// </remarks>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(BubbleNotification))]
 	[ProvideProperty("BubbleValue", typeof(Control))]
 	[ProvideProperty("BubbleStyle", typeof(Control))]
+	[ProvideProperty("BubbleValue", typeof(ToolBarButton))]
+	[ProvideProperty("BubbleStyle", typeof(ToolBarButton))]
 	[Description("Represents a numeric notification bubble that can be displayed next to any control.")]
 	[ApiCategory("Bubbles")]
-    public class BubbleNotification : Wisej.Web.Component, IExtenderProvider
+#if NETCOREAPP
+	// Prevent trimming / linking on Wisej.NET Hybrid.
+	[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
+#endif
+	public class BubbleNotification : Wisej.Web.Component, IExtenderProvider
 	{
 		// collection of controls with the related bubble notification value.
-		private Dictionary<Control, Bubble> bubbles;
+		private Dictionary<IWisejComponent, Bubble> bubbles;
 
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Bubbles.BubbleNotification" /> without a specified container.
+		/// Initializes a new instance of the <see cref="Wisej.Web.Ext.Bubbles.BubbleNotification" /> without a specified container.
 		/// </summary>
 		public BubbleNotification()
 		{
-			this.bubbles = new Dictionary<Control, Bubble>();
+			this.bubbles = new Dictionary<IWisejComponent, Bubble>();
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Bubbles.BubbleNotification" /> class with a specified container.
+		/// Initializes a new instance of the <see cref="Wisej.Web.Ext.Bubbles.BubbleNotification" /> class with a specified container.
 		/// </summary>
-		/// <param name="container">An <see cref="T:System.ComponentModel.IContainer" />container. </param>
+		/// <param name="container">An <see cref="System.ComponentModel.IContainer" />container. </param>
 		public BubbleNotification(IContainer container)
 			: this()
 		{
@@ -81,10 +91,10 @@ namespace Wisej.Web.Ext.Bubbles
 		/// <summary>
 		/// Fires the Click event.
 		/// </summary>
-		/// <param name="e">A <see cref="T:Wisej.Web.Ext.Bubbles.BubbleEventArgs" /> that contains the event data. </param>
+		/// <param name="e">A <see cref="Wisej.Web.Ext.Bubbles.BubbleEventArgs" /> that contains the event data. </param>
 		protected virtual void OnClick(BubbleEventArgs e)
 		{
-			((BubbleEventHandler)base.Events[nameof(Click)])?.Invoke(this,e);			
+			((BubbleEventHandler)base.Events[nameof(Click)])?.Invoke(this, e);
 		}
 
 		#endregion
@@ -148,7 +158,7 @@ namespace Wisej.Web.Ext.Bubbles
 		/// <summary>
 		/// Returns or sets the object that contains programmer-supplied data associated with this component.
 		/// </summary>
-		/// <returns>An <see cref="T:System.Object" /> that contains user data. The default is null.</returns>
+		/// <returns>An <see cref="System.Object" /> that contains user data. The default is null.</returns>
 		[DefaultValue(null)]
 		[Localizable(false)]
 		[SRCategory("CatData")]
@@ -166,13 +176,13 @@ namespace Wisej.Web.Ext.Bubbles
 		#region Methods
 
 		/// <summary>
-		/// Returns true if <see cref="T:Wisej.Web.Ext.Bubbles.BubbleNotification" /> can offer an extender property to the specified target component.
+		/// Returns true if <see cref="Wisej.Web.Ext.Bubbles.BubbleNotification" /> can offer an extender property to the specified target component.
 		/// </summary>
-		/// <returns>true if the <see cref="T:Wisej.Web.Ext.Bubbles.BubbleNotification" /> class can offer one or more extender properties; otherwise, false.</returns>
+		/// <returns>true if the <see cref="Wisej.Web.Ext.Bubbles.BubbleNotification" /> class can offer one or more extender properties; otherwise, false.</returns>
 		/// <param name="target">The target object to add an extender property to. </param>
 		public bool CanExtend(object target)
 		{
-			return (target is Control);
+			return (target is Control || target is ToolBarButton);
 		}
 
 		protected override void Dispose(bool disposing)
@@ -192,9 +202,17 @@ namespace Wisej.Web.Ext.Bubbles
 		{
 			lock (this.bubbles)
 			{
-				this.bubbles.ToList().ForEach((o) => {
-					o.Key.Disposed -= this.Control_Disposed;
-					o.Key.ControlCreated -= this.Control_Created;
+				this.bubbles.ToList().ForEach((o) =>
+				{
+					if (o.Key is Control control)
+					{
+						control.Disposed -= this.Component_Disposed;
+						control.ControlCreated -= this.Control_Created;
+					}
+					else if (o.Key is ToolBarButton button)
+					{
+						button.Disposed -= this.Component_Disposed;
+					}
 				});
 
 				this.bubbles.Clear();
@@ -206,70 +224,70 @@ namespace Wisej.Web.Ext.Bubbles
 		/// <summary>
 		/// Returns the notification value associated with the specified control.
 		/// </summary>
-		/// <returns>A <see cref="T:System.Int32" /> containing the value to display in the bubble; when 0, the bubble is hidden.</returns>
-		/// <param name="control">The <see cref="T:Wisej.Web.Control" /> for which to retrieve the <see cref="T:Wisej.Web.Ext.Bubbles.BubbleNotification" /> value. </param>
+		/// <returns>A <see cref="System.Int32" /> containing the value to display in the bubble; when 0, the bubble is hidden.</returns>
+		/// <param name="component">The <see cref="IWisejComponent" /> for which to retrieve the <see cref="Wisej.Web.Ext.Bubbles.BubbleNotification" /> value. </param>
 		[DefaultValue(0)]
 		[DisplayName("BubbleValue")]
 		[Description("Gets or sets the notification value associated with the specified control.")]
-		public int GetBubbleValue(Control control)
+		public int GetBubbleValue(IWisejComponent component)
 		{
-			if (!HasBubbleEntry(control))
+			if (!HasBubbleEntry(component))
 				return 0;
 
-			return GetBubble(control).Value;
+			return GetBubble(component).Value;
 		}
 
 		/// <summary>
 		/// Shows the bubble notification value with the specified control.
 		/// </summary>
-		/// <param name="control">The <see cref="T:Wisej.Web.Control" /> to associate the JavaScript with. </param>
+		/// <param name="component">The <see cref="IWisejComponent" /> to associate the JavaScript with. </param>
 		/// <param name="value">The value to show in the bubble notification; 0 hides the bubble.</param>
-		public void SetBubbleValue(Control control, int value)
+		public void SetBubbleValue(IWisejComponent component, int value)
 		{
-			GetBubble(control).Value = value;
+			GetBubble(component).Value = value;
 			Update();
 		}
 
 		/// <summary>
 		/// Returns the notification value associated with the specified control.
 		/// </summary>
-		/// <returns>A <see cref="T:System.Int32" /> containing the value to display in the bubble; when 0, the bubble is hidden.</returns>
-		/// <param name="control">The <see cref="T:Wisej.Web.Control" /> for which to retrieve the <see cref="T:Wisej.Web.Ext.Bubbles.BubbleNotification" /> value. </param>
+		/// <returns>A <see cref="System.Int32" /> containing the value to display in the bubble; when 0, the bubble is hidden.</returns>
+		/// <param name="component">The <see cref="IWisejComponent" /> for which to retrieve the <see cref="Wisej.Web.Ext.Bubbles.BubbleNotification" /> value. </param>
 		[DefaultValue(BubbleStyle.Alert)]
 		[DisplayName("BubbleStyle")]
 		[Description("Gets or sets the notification style associated with the specified control.")]
-		public BubbleStyle GetBubbleStyle(Control control)
+		public BubbleStyle GetBubbleStyle(IWisejComponent component)
 		{
-			if (!HasBubbleEntry(control))
+			if (!HasBubbleEntry(component))
 				return BubbleStyle.Alert;
 
-			return GetBubble(control).Style;
+			return GetBubble(component).Style;
 		}
 
 		/// <summary>
 		/// Shows the bubble notification value with the specified control.
 		/// </summary>
-		/// <param name="control">The <see cref="T:Wisej.Web.Control" /> to associate the JavaScript with. </param>
+		/// <param name="component">The <see cref="IWisejComponent" /> to associate the JavaScript with. </param>
 		/// <param name="style">The value to show in the bubble notification; 0 hides the bubble.</param>
-		public void SetBubbleStyle(Control control, BubbleStyle style)
+		public void SetBubbleStyle(IWisejComponent component, BubbleStyle style)
 		{
-			GetBubble(control).Style = style;
+			GetBubble(component).Style = style;
 			Update();
 		}
 
 		/// <summary>
 		/// Returns if the control is associated to the extender.
 		/// </summary>
-		/// <param name="control"></param>
+		/// <param name="component"></param>
 		/// <returns></returns>
-		private bool HasBubbleEntry(Control control)
+		private bool HasBubbleEntry(IWisejComponent component)
 		{
-			if (control == null)
-				throw new ArgumentNullException("control");
+			if (component == null)
+				throw new ArgumentNullException(nameof(component));
 
 			lock (this.bubbles)
 			{
-				return this.bubbles.ContainsKey(control);
+				return this.bubbles.ContainsKey(component);
 			}
 
 		}
@@ -277,40 +295,56 @@ namespace Wisej.Web.Ext.Bubbles
 		/// <summary>
 		/// Creates or retrieves the extender data entry associated with the control.
 		/// </summary>
-		/// <param name="control"></param>
+		/// <param name="component"></param>
 		/// <returns></returns>
-		private Bubble GetBubble(Control control)
+		private Bubble GetBubble(IWisejComponent component)
 		{
-			if (control == null)
-				throw new ArgumentNullException("control");
+			if (component == null)
+				throw new ArgumentNullException(nameof(component));
+
+			if (!(component is Control || component is ToolBarButton))
+				throw new ArgumentNullException(nameof(component), "Invalid control type.");
 
 			lock (this.bubbles)
 			{
 				Bubble bubble = null;
-				if (!this.bubbles.TryGetValue(control, out bubble))
+				if (!this.bubbles.TryGetValue(component, out bubble))
 				{
-					bubble = new Bubble() { Widget = control };
-					this.bubbles[control] = bubble;
+					bubble = new Bubble() { Widget = component };
+					this.bubbles[component] = bubble;
 
 					// remove the control from the extender when it's disposed.
-					control.Disposed -= this.Control_Disposed;
-					control.Disposed += this.Control_Disposed;
-
+					if (component is Control control)
+					{
+						control.Disposed -= this.Component_Disposed;
+						control.Disposed += this.Component_Disposed;
+					}
+					else if (component is ToolBarButton button)
+					{
+						button.Disposed -= this.Component_Disposed;
+						button.Disposed += this.Component_Disposed;
+					}
 				}
 				return bubble;
 			}
 		}
 
-		private void Control_Disposed(object sender, EventArgs e)
+		private void Component_Disposed(object sender, EventArgs e)
 		{
-			Control control = (Control)sender;
-			control.Disposed -= this.Control_Disposed;
-			control.ControlCreated -= this.Control_Created;
+			if (sender is Control control)
+			{
+				control.Disposed -= this.Component_Disposed;
+				control.ControlCreated -= this.Control_Created;
+			}
+			else if (sender is ToolBarButton button)
+			{
+				button.Disposed -= this.Component_Disposed;
+			}
 
 			// remove the extender values associated with the disposed control.
 			lock (this.bubbles)
-			{				
-				this.bubbles.Remove(control);
+			{
+				this.bubbles.Remove((IWisejComponent)sender);
 			}
 		}
 
@@ -328,7 +362,7 @@ namespace Wisej.Web.Ext.Bubbles
 		/// <summary>
 		/// Returns a string representation for this control.
 		/// </summary>
-		/// <returns>A <see cref="T:System.String" /> containing a description of the <see cref="T:Wisej.Web.Ext.Bubbles.BubbleNotification" />.</returns>
+		/// <returns>A <see cref="System.String" /> containing a description of the <see cref="Wisej.Web.Ext.Bubbles.BubbleNotification" />.</returns>
 		public override string ToString()
 		{
 			return base.ToString();
@@ -379,29 +413,32 @@ namespace Wisej.Web.Ext.Bubbles
 					List<object> list = new List<object>();
 					foreach (var entry in this.bubbles)
 					{
-						var control = entry.Key;
 						var settings = entry.Value;
 
-						// skip controls that are not yet created.
-						if (!control.Created)
-							continue;
+						if (entry.Key is Control control)
+						{
+							// skip controls that are not yet created.
+							if (!control.Created)
+							{
+								control.ControlCreated += this.Control_Created;
+								continue;
+							}
+						}
 
 						if (settings.Value > 0)
 						{
 							list.Add(new
 							{
-								id = ((IWisejComponent)control).Id,
+								id = entry.Key.Id,
 								value = settings.Value,
 								style = settings.Style
 							});
 						}
 					}
+
 					config.margin = this._margin;
 					config.alignment = this._alignment;
 					config.bubbles = list.ToArray();
-
-					// register non-created control for delayed registration.
-					this.bubbles.Where(o => !o.Key.Created).ToList().ForEach(o => o.Key.ControlCreated += this.Control_Created);
 				}
 				else
 				{
@@ -429,7 +466,7 @@ namespace Wisej.Web.Ext.Bubbles
 		private class Bubble
 		{
 			public int Value;
-			public Control Widget;
+			public IWisejComponent Widget;
 			public BubbleStyle Style;
 		}
 

@@ -80,6 +80,8 @@ qx.Class.define("wisej.web.ext.BarcodeReader", {
 				var video = value.getMediaObject();
 				var videoID = "camera_" + this.getId();
 				video.id = videoID;
+
+				this._applyScanMode(this.getScanMode());
 			}
 		},
 
@@ -100,6 +102,7 @@ qx.Class.define("wisej.web.ext.BarcodeReader", {
 		 **/
 		startMonitoring: function () {
 
+			// wait for ZXing to be loaded.
 			if (!this.codeReader && typeof ZXing == "undefined") {
 				qx.event.Timer.once(this.startMonitoring, this, 100);
 				return;

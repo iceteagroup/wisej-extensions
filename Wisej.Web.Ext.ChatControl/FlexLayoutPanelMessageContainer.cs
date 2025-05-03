@@ -77,17 +77,8 @@ namespace Wisej.Web.Ext.ChatControl
 		/// </summary>
 		public Color BubbleColor
 		{
-			get
-			{
-				return this.panelContent.BackColor;
-			}
-			set
-			{
-				if (this._bubbleColor != value)
-				{
-					this.panelContent.BackColor = value;
-				}
-			}
+			get => this.panelContent.BackColor;
+			set => this.panelContent.BackColor = value;
 		}
 		private Color _bubbleColor;
 
