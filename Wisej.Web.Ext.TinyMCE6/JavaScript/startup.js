@@ -92,12 +92,15 @@ this.init = function () {
 
 		// fire keyboard events from the editor.
 		me.editor.on('keypress', function (e) {
+			me.setDirty(true);
 			me.fireEvent("keypress");
 		});
 		me.editor.on('keydown', function (e) {
+			me.setDirty(true);
 			me.fireEvent("keydown");
 		});
 		me.editor.on('keyup', function (e) {
+			me.setDirty(true);
 			me.fireEvent("keyup");
 		});
 
@@ -118,6 +121,17 @@ this.init = function () {
 		}
 	});
 
+}
+
+/**
+ * Enabled property.
+ *
+ * Enables or Disabled the widget.
+ */
+this.setEnabled = function (enabled) {
+	try {
+		this.editor.mode.set(enabled ? "design" : "readonly");
+	} catch (e) { }
 }
 
 /**

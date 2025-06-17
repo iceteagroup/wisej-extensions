@@ -62,6 +62,9 @@ this.init = function () {
 		this.addListener("resize", function (e) {
 			this.__resizeEditor();
 		}, this);
+
+		// add the text property to the state variables returned to the server with any event.
+		this.setStateProperties(this.getStateProperties().concat(["text"]));
 	}
 
 	// create the editor instance.
@@ -81,20 +84,23 @@ this.init = function () {
 		// mark the widget as "dirty" when it loses the focus in order to send back the content with the state.
 		// fire the "command" event on the server, when the users presses a toolbar button.
 		me.editor.on('blur', function (e) {
-			me.fireWidgetEvent("blur", me.getText())
+			me.setDirty(true);
 		});
 		me.editor.on('change', function (e) {
-			me.fireWidgetEvent("change", me.getText())
+			me.setDirty(true);
 		});
 
 		// fire keyboard events from the editor.
 		me.editor.on('keypress', function (e) {
+			me.setDirty(true);
 			me.fireEvent("keypress");
 		});
 		me.editor.on('keydown', function (e) {
+			me.setDirty(true);
 			me.fireEvent("keydown");
 		});
 		me.editor.on('keyup', function (e) {
+			me.setDirty(true);
 			me.fireEvent("keyup");
 		});
 
@@ -135,7 +141,8 @@ this.getText = function () {
 }
 this.setText = function (value) {
 	try {
-		this.editor.setContent(value);
+	  this.editor.setContent(value);
+	  this.updateState();
 	} catch (e) { }
 }
 

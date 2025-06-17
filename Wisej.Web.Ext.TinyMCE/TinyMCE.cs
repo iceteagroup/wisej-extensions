@@ -444,9 +444,31 @@ namespace Wisej.Web.Ext.TinyMCE
 			return script;
 		}
 
+		/// <summary>
+		/// Updates the client component using the state information.
+		/// </summary>
+		/// <param name="state">Dynamic state object.</param>
+		protected override void OnWebUpdate(dynamic state)
+		{
+			if (state.text != null && this.initialized)
+			{
+				if (this._text != state.text)
+				{
+					this._text = state.text;
+					OnTextChanged(EventArgs.Empty);
+				}
+			}
+
+			state.Delete("text");
+
+			base.OnWebUpdate((object)state);
+		}
+
+		//Process the load event.
 		private void ProcessLoad()
 		{
 			this.initialized = true;
+
 			if (!String.IsNullOrEmpty(this.Text))
 				Call("setText", TextUtils.EscapeText(this.Text, true));
 
@@ -465,13 +487,8 @@ namespace Wisej.Web.Ext.TinyMCE
 					ProcessLoad();
 					break;
 
-				case "blur":
-					this._text = e.Data ?? "";
-					OnTextChanged(EventArgs.Empty);
-					break;
-
-				case "change":
-					this._text = e.Data ?? "";
+				case "changeText":
+					this.Text = e.Data ?? "";
 					break;
 
 				case "command":
