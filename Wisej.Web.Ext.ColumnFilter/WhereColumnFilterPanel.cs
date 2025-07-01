@@ -191,12 +191,12 @@ namespace Wisej.Web.Ext.ColumnFilter
 			if (Nullable.GetUnderlyingType(type) != null)
 				type = Nullable.GetUnderlyingType(type);
 
-			string Type = type.ToString().Replace("System.", "");
-			string Value1 = Value1 = "Convert.To" + Type + "(Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value)";
+			string typeName = type.ToString().Replace("System.", "");
+			string value = "Convert.To" + typeName + "(Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value)";
 
 			if (cmbOperator.SelectedIndex > -1)
 			{
-				condition = Value1 + cmbOperator.SelectedItem.ToString() + "Convert.To" + Type + "(\"" + txtValue.Text + "\")";
+				condition = value + cmbOperator.SelectedItem.ToString() + "Convert.To" + typeName + "(\"" + txtValue.Text + "\")";
 				where = AppendCondition(condition, "", where);
 			}
 
@@ -219,7 +219,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 						txt = c as TextBox;
 						if (cmb.SelectedIndex > -1 && txt.Text != null)
 						{
-							condition = Value1 + cmb.SelectedItem.ToString() + "Convert.To" + Type + "(\"" + txt.Text + "\")";
+							condition = value + cmb.SelectedItem.ToString() + "Convert.To" + typeName + "(\"" + txt.Text + "\")";
 							where = AppendCondition(condition, LogicalOperator, where);
 						}
 					}
@@ -281,11 +281,11 @@ namespace Wisej.Web.Ext.ColumnFilter
 			string where = "";
 			string condition = "";
 
-			string Value1 = "Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value.ToString().Length > 0 && Convert.ToDateTime(Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value).Date";
+			string value = "Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value.ToString().Length > 0 && Convert.ToDateTime(Cells[" + this.DataGridViewColumn.Index.ToString() + "].Value).Date";
 
 			if (cmbOperator.SelectedIndex > -1)
 			{
-				condition = Value1 + cmbOperator.SelectedItem.ToString() + "Convert.ToDateTime(\"" + dateTimePicker1.Value + "\").Date";
+				condition = value + cmbOperator.SelectedItem.ToString() + "Convert.ToDateTime(\"" + dateTimePicker1.Value + "\").Date";
 				where = AppendCondition(condition, "", where);
 			}
 			string LogicalOperator = this.labelLogicalOperator.GetOperator();
@@ -307,7 +307,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 						dtp = c as DateTimePicker;
 						if (cmb.SelectedIndex > -1 && dtp.NullableValue != null)
 						{
-							condition = Value1 + cmb.SelectedItem.ToString() + "Convert.ToDateTime(\"" + dtp.Value + "\").Date";
+							condition = value + cmb.SelectedItem.ToString() + "Convert.ToDateTime(\"" + dtp.Value + "\").Date";
 							where = AppendCondition(condition, LogicalOperator, where);
 						}
 					}
@@ -529,6 +529,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 				startIndex = 10;
 				count = 6;
 			}
+
 			// fill all Comboboxes (include cmbOperator)
 			foreach (Control c in flowLayoutPanel.Controls)
 			{
@@ -545,8 +546,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		private void CloneControls()
 		{
-			int count = 4;
-			for (int i = 0; i < count; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				this.flowLayoutPanel.Controls.Add(CloneCombo(this.cmbOperator));
 				this.flowLayoutPanel.Controls.Add(CloneTextBox(this.txtValue));
@@ -580,6 +580,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			newLabel.Text = lblOriginal.Text;
 			newLabel.TextAlign = lblOriginal.TextAlign;
 			newLabel.AllowHtml = lblOriginal.AllowHtml;
+			newLabel.Cursor = lblOriginal.Cursor;
 			this.flowLayoutPanel.SetFillWeight(newLabel, this.flowLayoutPanel.GetFillWeight(lblOriginal));
 			return newLabel;
 		}

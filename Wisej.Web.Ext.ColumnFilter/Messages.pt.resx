@@ -124,7 +124,7 @@
     <value>E | &lt;b&gt;OU&lt;/b&gt;</value>
   </data>
   <data name="contains" xml:space="preserve">
-    <value>contém</value>
+    <value>Contém</value>
   </data>
   <data name="does_not_contain" xml:space="preserve">
     <value>não contém</value>
