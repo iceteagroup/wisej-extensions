@@ -1,12 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48;net8.0</TargetFrameworks>
+    <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.20.9</FileVersion>
+    <FileVersion>$(FileVersion)</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="JavaScript\pdfjs-2_6_347\build\pdf.js" />
@@ -744,11 +745,11 @@
     <EmbeddedResource Include="JavaScript\pdfjs-2_6_347\web\viewer.js" />
     <EmbeddedResource Include="JavaScript\pdfjs-2_6_347\web\viewer.js.map" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net48'">
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
+  <!--<ItemGroup Condition="'$(TargetFramework)'=='net48'">
+  <Reference Include="System.Windows.Forms" />
+</ItemGroup>-->
   <ItemGroup>
-    <PackageReference Include="Wisej-3" Version="3.5.*-*" />
+    <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -38,7 +38,7 @@ namespace Wisej.Web.Ext.NavigationBar
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(NavigationBar))]
 	[Description("Responsive vertical navigation bar.")]
-	[Designer("Wisej.Design.ControlDesigner, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+	[Designer("Wisej.Design.ControlDesigner, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
 	[ApiCategory("NavigationBar")]
 	public partial class NavigationBar : Wisej.Web.FlexLayoutPanel, IWisejDesignTarget
 	{
@@ -333,8 +333,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		[DefaultValue("")]
 		[DesignerActionList]
-		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+		[TypeConverter("Wisej.Web.ImageSourceConverter, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the logo to display in the title.")]
@@ -347,8 +347,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the user avatar to display in the user panel.
 		/// </summary>
-		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+		[TypeConverter("Wisej.Web.ImageSourceConverter, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the user avatar to display in the user panel.")]
@@ -829,17 +829,11 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		#region IWisejDesignTarget
 
-		bool IWisejDesignTarget.DesignerWndProc(ref System.Windows.Forms.Message m)
-		{
-			switch (m.Msg)
-			{
-				// WM_LBUTTONDOWN
-				case 0x0201:
-					var lParam = (int)m.LParam.ToInt64();
-					return SelectClickedItem(lParam);
-			}
+		bool IWisejDesignTarget.ShouldDrawBorder() => false;
 
-			return false;
+		bool IWisejDesignTarget.OnMouseClick(Point location)
+		{
+			return SelectClickedItem(location);
 		}
 
 		// Represents the child item that is selected in the designer.
@@ -856,12 +850,10 @@ namespace Wisej.Web.Ext.NavigationBar
 			}
 		}
 
-		// Selects the NavigationBarItem at the coordinate specified in lParam.
-		private bool SelectClickedItem(int lParam)
+		// Selects the NavigationBarItem at the coordinate.
+		private bool SelectClickedItem(Point location)
 		{
-			Point mouseLoc = new Point(
-				(short)(lParam & 65535),
-				(short)(lParam >> 16 & 65535));
+			Point mouseLoc = location;
 
 			// find clicks on a child item.
 			var target = GetChildAtPoint(mouseLoc);

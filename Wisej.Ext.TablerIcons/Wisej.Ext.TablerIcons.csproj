@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48;net8.0</TargetFrameworks>
+    <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>3.5.20.9</FileVersion>
+    <FileVersion>4.0.2.8</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\2fa.svg" />

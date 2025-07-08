@@ -208,7 +208,9 @@ namespace Wisej.Web.Ext.AceEditor
 				if (base.Text != value)
 				{
 					base.Text = value;
-					this.Instance.setValue(value);
+					this.Options.text = value;
+
+					Update();
 				}
 			}
 		}
@@ -260,7 +262,7 @@ namespace Wisej.Web.Ext.AceEditor
 		private void ProcessWidgetChangeEvent(WidgetEventArgs e)
 		{
 			var text = e.Data ?? "";
-			base.Text = text;
+			this.Options.text = this.Text = text;
 		}
 
 		protected override void OnGotFocus(EventArgs e)

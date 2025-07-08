@@ -215,8 +215,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns or sets the icon of the <see cref="NavigationBarItem"/>.
 		/// </summary>
 		[DefaultValue(null)]
-		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+		[TypeConverter("Wisej.Web.ImageSourceConverter, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string Icon
 		{
@@ -479,8 +479,8 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Returns or sets the shortcut icon.
 		/// </summary>
 		[DefaultValue("spinner-plus")]
-		[TypeConverter("Wisej.Design.ImageSourceConverter, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
-		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+		[TypeConverter("Wisej.Web.ImageSourceConverter, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
+		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string ShortcutIcon
 		{
@@ -780,7 +780,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Always)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public override bool Visible { get => base.Visible; set => base.Visible = !(this._hidden = !value); }
+		public override bool Visible { get => base.Visible; set => base.Visible = value; }
 		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -938,8 +938,7 @@ namespace Wisej.Web.Ext.NavigationBar
 					Text = item.Text,
 					Name = item.Name,
 					IconSource = item.Icon,
-					Enabled = item.Enabled,
-					Visible = !item.Hidden
+					Enabled = item.Enabled
 				};
 				items.Add(menu);
 

@@ -48,7 +48,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	[ApiCategory("RibbonBar")]
 	[ToolboxBitmap(typeof(RibbonBar))]
 	[Description("The RibbonBar organizes the features of an application into a series of tabs.")]
-	public class RibbonBar : Control, IWisejControl, IWisejDesignTarget2
+	public class RibbonBar : Control, IWisejControl, IWisejDesignTarget
 	{
 		// autosize height
 		private int _requestedHeight;
@@ -992,7 +992,6 @@ namespace Wisej.Web.Ext.RibbonBar
 
 			config.className = "wisej.web.RibbonBar";
 			config.compactView = this.CompactView;
-			config.selectedIndex = this.SelectedPageIndex;
 
 			// Tools.
 			if (this._tools != null)
@@ -1024,34 +1023,22 @@ namespace Wisej.Web.Ext.RibbonBar
 					"toolClick(Tool)",
 					"resize(Size)");
 			}
-
+			config.selectedIndex = this.SelectedPageIndex;
 		}
 
 		#endregion
 
-		#region IWisejDesignTarget2
+		#region IWisejDesignTarget
 
-		bool IWisejDesignTarget2.ShouldDrawBorder()
+		bool IWisejDesignTarget.ShouldDrawBorder()
 		{
 			return this.Pages.Count == 0;
 		}
 
-		/// <summary>
-		/// Processes Windows mouse messages forwarded by the designer.
-		/// </summary>
-		/// <param name="m">The <see cref="System.Windows.Forms.Message"/> forwarded by the designer.</param>
-		/// <returns>Returns true to prevent the base class from processing the message.</returns>
-		bool IWisejDesignTarget.DesignerWndProc(ref System.Windows.Forms.Message m)
+		// Handles the design-time click on the control.
+		bool IWisejDesignTarget.OnMouseClick(Point location)
 		{
-			switch (m.Msg)
-			{
-				// WM_LBUTTONDOWN
-				case 0x0201:
-					var lParam = (int)m.LParam.ToInt64();
-					return SelectClickedTab(lParam) || SelectClickedItem(lParam);
-			}
-
-			return false;
+			return SelectClickedTab(location) || SelectClickedItem(location);
 		}
 
 		// Represents the child item that is selected in the designer.
@@ -1069,15 +1056,13 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		// Selects the RibbonBarPage at the coordinate specified in lParam.
-		private bool SelectClickedTab(int lParam)
+		private bool SelectClickedTab(Point location)
 		{
 			Rectangle[] tabRects = this.UserData.DesignTabRects;
 			int tabCount = tabRects?.Length ?? 0;
 			if (tabCount > 0)
 			{
-				var mouseLoc = new Point(
-					(short)(lParam & 65535),
-					(short)(lParam >> 16 & 65535));
+				var mouseLoc = location;
 
 				for (int i = 0; i < tabCount; i++)
 				{
@@ -1094,11 +1079,9 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		// Selects the RibbonBarGroup or RibbonBarItem at the coordinates specified in lParam.
-		private bool SelectClickedItem(int lParam)
+		private bool SelectClickedItem(Point location)
 		{
-			Point mouseLoc = new Point(
-				(short)(lParam & 65535),
-				(short)(lParam >> 16 & 65535));
+			Point mouseLoc = location;
 
 			// find clicks on a child item.
 			var target = FindDesignChildComponent(mouseLoc);

@@ -92,16 +92,16 @@ this.init = function () {
 
 		// fire keyboard events from the editor.
 		me.editor.on('keypress', function (e) {
-			me.setDirty(true);
-			me.fireEvent("keypress");
+		  me.setDirty(true);
+		  me.fireEvent("keypress");
 		});
 		me.editor.on('keydown', function (e) {
-			me.setDirty(true);
-			me.fireEvent("keydown");
+		  me.setDirty(true);
+		  me.fireEvent("keydown");
 		});
 		me.editor.on('keyup', function (e) {
-			me.setDirty(true);
-			me.fireEvent("keyup");
+		  me.setDirty(true);
+		  me.fireEvent("keyup");
 		});
 
 		// focus the wrapper wisej widget.

@@ -1,11 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Wisej.Ext.TablerIcons
+﻿namespace Wisej.Ext.TablerIcons
 {
-#if NETCOREAPP
-	// Prevent trimming / linking on Wisej.NET Hybrid.
-	[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
-#endif
 	public static class Icons
 	{
 		private const string root = "resource.wx/Wisej.Ext.TablerIcons/";

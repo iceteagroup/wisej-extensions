@@ -37,7 +37,7 @@ namespace Wisej.Web.Ext.TourPanel
 	[ToolboxItem(false)]
 	[DefaultEvent("Load")]
 	[DesignerCategory("UserControl")]
-	[Designer("Wisej.Design.UserControlDocumentDesigner, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(IRootDesigner))]
+	[Designer("Wisej.Design.UserControlDocumentDesigner, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", typeof(IRootDesigner))]
 	[ApiCategory("TourPanel")]
 	public class TourPanel : ContainerControl, IWisejControl
 	{
@@ -448,7 +448,7 @@ namespace Wisej.Web.Ext.TourPanel
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public override Point AutoScrollOffset
+		public new Point AutoScrollOffset
 		{
 			get { return Point.Empty; }
 			set { }
@@ -1230,7 +1230,7 @@ namespace Wisej.Web.Ext.TourPanel
 
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TourPanel));
+			Wisej.Resources.ComponentResourceManager resources = new Wisej.Resources.ComponentResourceManager(typeof(TourPanel));
 			this.HtmlText = new Wisej.Web.Ext.TourPanel.TourPanel.HtmlPanel();
 			this.TitleLabel = new Wisej.Web.Ext.TourPanel.TourPanel.Label();
 			this.CloseButton = new Wisej.Web.Button();

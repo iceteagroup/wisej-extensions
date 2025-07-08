@@ -107,7 +107,7 @@ namespace Wisej.Ext.WebAuthn
 		/// <returns></returns>
 		public static async Task<CredentialsResponse> GetAsync(
 			string challenge,
-			PublicKeyCredentialDescriptor allowCredentials,
+			PublicKeyCredentialDescriptor[] allowCredentials,
 			int timeout)
 		{
 			var result = await CallAsync("get", challenge, allowCredentials, timeout);

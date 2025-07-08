@@ -139,7 +139,7 @@ qx.Class.define("wisej.web.ext.PullToRefresh", {
 		// returns the control that will receive the pull to refresh.
 		__getTargetControl: function (control) {
 
-			return control.getChildrenContainer().getContentElement().getDomElement();
+			return control.getChildControl("pane").getContentElement().getDomElement(); //getChildrenContainer().getContentElement().getDomElement();
 		},
 
 		// creates and returns a visual loader element.
@@ -147,7 +147,9 @@ qx.Class.define("wisej.web.ext.PullToRefresh", {
 
 			var height = this.getDropDownHeight();
 			var loader = document.createElement("div");
-			
+
+			loader.id = this.getId() + "_ptr";
+			loader.style.zIndex = 9999;
 			loader.style.width = "100%";
 			loader.style.top = `-${height}px`;
 			loader.style.position = "relative";
@@ -172,7 +174,7 @@ qx.Class.define("wisej.web.ext.PullToRefresh", {
 
 			this.__scrollableControls.set(control, loader);
 
-			container.parentElement.insertBefore(loader, container.parentElement.first);
+			container.parentElement.insertBefore(loader, container.parentElement.firstChild);
 
 			control.addListener('pointerdown', this._onPointerDown, this);
 		},
@@ -181,6 +183,10 @@ qx.Class.define("wisej.web.ext.PullToRefresh", {
 		_onPointerDown: function (e) {
 
 			var target = e.getCurrentTarget();
+
+			// only allow pull-to-refresh when at the top of a container.
+			if (target.getScrollY() > 0)
+				return;
 
 			this._focusedControl = target;
 			this._startY = e.getDocumentTop();
@@ -235,6 +241,6 @@ qx.Class.define("wisej.web.ext.PullToRefresh", {
 	},
 
 	destruct: function () {
-
+		this._clear();
 	}
 });

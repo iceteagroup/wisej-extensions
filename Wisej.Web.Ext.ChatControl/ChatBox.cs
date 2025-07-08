@@ -194,8 +194,17 @@ namespace Wisej.Web.Ext.ChatControl
 		[Description("Gets or sets the color of the message text box.")]
 		public override Color ForeColor
 		{
-			get => this.textBoxMessage.BackColor;
-			set => this.textBoxMessage.BackColor = value;
+			get
+			{
+				return this.textBoxMessage.BackColor;
+			}
+			set
+			{
+				if (this.textBoxMessage.BackColor != value)
+				{
+					this.textBoxMessage.BackColor = value;
+				}
+			}
 		}
 
 		/// <summary>

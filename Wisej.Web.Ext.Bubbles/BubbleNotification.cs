@@ -21,7 +21,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using Wisej.Base;
@@ -43,10 +42,6 @@ namespace Wisej.Web.Ext.Bubbles
 	[ProvideProperty("BubbleStyle", typeof(ToolBarButton))]
 	[Description("Represents a numeric notification bubble that can be displayed next to any control.")]
 	[ApiCategory("Bubbles")]
-#if NETCOREAPP
-	// Prevent trimming / linking on Wisej.NET Hybrid.
-	[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
-#endif
 	public class BubbleNotification : Wisej.Web.Component, IExtenderProvider
 	{
 		// collection of controls with the related bubble notification value.

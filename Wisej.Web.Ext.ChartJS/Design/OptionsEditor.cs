@@ -21,7 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms.Design;
-using WinForms = System.Windows.Forms;
+
 
 namespace Wisej.Web.Ext.ChartJS.Design
 {
@@ -68,7 +68,7 @@ namespace Wisej.Web.Ext.ChartJS.Design
 						var clone = ((OptionsBase)value).Clone();
 						editorUI.Value = clone;
 
-						if (service.ShowDialog(editorUI) == WinForms.DialogResult.OK)
+						if (service.ShowDialog(editorUI) == System.Windows.Forms.DialogResult.OK)
 						{
 							value = editorUI.Value;
 						}

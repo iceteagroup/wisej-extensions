@@ -4,11 +4,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
-using Wisej.Core;
 
 namespace Wisej.Web.Ext.Signature
 {
+	/// <summary>
+	/// Signature is a simple control for drawing and exporting user signatures.
+	/// </summary>
 	[ToolboxItem(true)]
+	[Description("Signature is a simple control for drawing and exporting user signatures.")]
 	public class Signature : Control
 	{
 

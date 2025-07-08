@@ -1,11 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Wisej.Ext.CssGgIcons
+﻿namespace Wisej.Ext.CssGgIcons
 {
-#if NETCOREAPP
-	// Prevent trimming / linking on Wisej.NET Hybrid.
-	[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
-#endif
 	public static class Icons
 	{
 		private const string root = "resource.wx/Wisej.Ext.CssGgIcons/";

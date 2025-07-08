@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WhereColumnFilterPanel));
+			Wisej.Resources.ComponentResourceManager resources = new Wisej.Resources.ComponentResourceManager(typeof(WhereColumnFilterPanel));
 			this.clear = new Wisej.Web.LinkLabel();
 			this.line1 = new Wisej.Web.Line();
 			this.cbMatchCase = new Wisej.Web.CheckBox();
@@ -80,26 +80,27 @@
 			// 
 			// labelLogicalOperator
 			// 
-			this.flowLayoutPanel.SetFillWeight(this.labelLogicalOperator, 2);
+			this.labelLogicalOperator.Cursor = Wisej.Web.Cursors.Hand;
+			this.flowLayoutPanel.SetFillWeight(this.labelLogicalOperator, 1);
 			resources.ApplyResources(this.labelLogicalOperator, "labelLogicalOperator");
 			this.labelLogicalOperator.Name = "labelLogicalOperator";
 			// 
 			// flowLayoutPanel
 			// 
+			resources.ApplyResources(this.flowLayoutPanel, "flowLayoutPanel");
 			this.flowLayoutPanel.Controls.Add(this.cbMatchCase);
 			this.flowLayoutPanel.Controls.Add(this.cmbOperator);
 			this.flowLayoutPanel.Controls.Add(this.txtValue);
 			this.flowLayoutPanel.Controls.Add(this.dateTimePicker1);
 			this.flowLayoutPanel.Controls.Add(this.labelLogicalOperator);
-			resources.ApplyResources(this.flowLayoutPanel, "flowLayoutPanel");
 			this.flowLayoutPanel.Name = "flowLayoutPanel";
 			this.flowLayoutPanel.TabStop = true;
 			// 
 			// dateTimePicker1
 			// 
-			resources.ApplyResources(this.dateTimePicker1, "dateTimePicker1");
 			this.dateTimePicker1.Format = Wisej.Web.DateTimePickerFormat.Short;
-			this.dateTimePicker1.Name = "dateTimePicker1";			
+			resources.ApplyResources(this.dateTimePicker1, "dateTimePicker1");
+			this.dateTimePicker1.Name = "dateTimePicker1";
 			// 
 			// WhereColumnFilterPanel
 			// 

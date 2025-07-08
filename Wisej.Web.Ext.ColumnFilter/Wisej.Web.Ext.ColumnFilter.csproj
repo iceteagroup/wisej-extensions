@@ -1,12 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48;net8.0;net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);$(NetCoreVersion)-windows;$(NetCoreVersion)-android;$(NetCoreVersion)-ios;$(NetCoreVersion)-maccatalyst;$(NetCoreVersion)-windows10.0.19041.0</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.20.9</FileVersion>
+    <FileVersion>4.0.2.8</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.cs" />
@@ -22,13 +23,9 @@
     <None Include="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.cs" />
     <None Include="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.Designer.cs" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net48'">
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.7" />
-    <PackageReference Include="Wisej-3" Version="3.5.*-*" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.0.2" />
+    <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Messages.Designer.cs">

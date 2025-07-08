@@ -102,7 +102,6 @@ qx.Class.define("wisej.web.ext.BarcodeReader", {
 		 **/
 		startMonitoring: function () {
 
-			// wait for ZXing to be loaded.
 			if (!this.codeReader && typeof ZXing == "undefined") {
 				qx.event.Timer.once(this.startMonitoring, this, 100);
 				return;

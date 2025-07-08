@@ -15,7 +15,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ColumnFilterPanel));
+			Wisej.Resources.ComponentResourceManager resources = new Wisej.Resources.ComponentResourceManager(typeof(ColumnFilterPanel));
 			this.ok = new Wisej.Web.Button();
 			this.cancel = new Wisej.Web.Button();
 			this.SuspendLayout();

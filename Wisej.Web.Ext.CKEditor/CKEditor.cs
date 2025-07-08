@@ -26,7 +26,6 @@ using System.Runtime.CompilerServices;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;
-using WinForms = System.Windows.Forms;
 
 namespace Wisej.Web.Ext.CKEditor
 {
@@ -37,7 +36,7 @@ namespace Wisej.Web.Ext.CKEditor
 	/// from: http://ckeditor.com/
 	/// </summary>
 	[ToolboxItem(true)]
-	[ToolboxBitmap(typeof(WinForms.Control), "RichTextBox.bmp")]
+	[ToolboxBitmap(typeof(Control), "RichTextBox.bmp")]
 	[DefaultProperty("Text")]
 	[DefaultEvent("TextChanged")]
 	[ApiCategory("CKEditor")]
@@ -204,7 +203,7 @@ namespace Wisej.Web.Ext.CKEditor
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public virtual new dynamic Options
 		{

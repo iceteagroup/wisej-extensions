@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimpleColumnFilterPanel));
+			Wisej.Resources.ComponentResourceManager resources = new Wisej.Resources.ComponentResourceManager(typeof(SimpleColumnFilterPanel));
 			this.items = new Wisej.Web.CheckedListBox();
 			this.selectAll = new Wisej.Web.LinkLabel();
 			this.clear = new Wisej.Web.LinkLabel();

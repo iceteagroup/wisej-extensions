@@ -17,7 +17,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-using Microsoft.AspNetCore.StaticFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,34 +45,34 @@ namespace Wisej.Ext.WebShare
 			return Application.EvalAsync("navigator['share'] != null");
 		}
 
-        /// <summary>
-        /// The <see cref="CanShareAsync"/> method of the Web Share API returns true if the equivalent call to <see cref="ShareAsync"/> would succeed.
-        /// </summary>
-        /// <param name="url">A string representing a URL to be shared.</param>
-        /// <param name="text">A string representing text to be shared.</param>
-        /// <param name="title">A string representing the title to be shared.</param>
-        /// <param name="fileStreams">An array of files representing files to be shared.</param>
-        /// <returns>The result from the client.</returns>
+		/// <summary>
+		/// The <see cref="CanShareAsync"/> method of the Web Share API returns true if the equivalent call to <see cref="ShareAsync"/> would succeed.
+		/// </summary>
+		/// <param name="url">A string representing a URL to be shared.</param>
+		/// <param name="text">A string representing text to be shared.</param>
+		/// <param name="title">A string representing the title to be shared.</param>
+		/// <param name="fileStreams">An array of files representing files to be shared.</param>
+		/// <returns>The result from the client.</returns>
 		public static Task<dynamic> CanShareAsync(string url = "", string text = "", string title = "", FileStream[] fileStreams=null)
 		{
 			return InternalShareOperationAsync("canShare", url, text, title, fileStreams);
 		}
 
-        /// <summary>
-        /// The <see cref="ShareAsync"/> method of the Web Share API invokes the native sharing mechanism of the device to share data such as text, URLs, or files.
-        /// </summary>
-        /// <param name="url">A string representing a URL to be shared.</param>
-        /// <param name="text">A string representing text to be shared.</param>
-        /// <param name="title">A string representing the title to be shared.</param>
-        /// <param name="fileStreams">An array of files representing files to be shared.</param>
-        /// <returns>The result from the client.</returns>
+		/// <summary>
+		/// The <see cref="ShareAsync"/> method of the Web Share API invokes the native sharing mechanism of the device to share data such as text, URLs, or files.
+		/// </summary>
+		/// <param name="url">A string representing a URL to be shared.</param>
+		/// <param name="text">A string representing text to be shared.</param>
+		/// <param name="title">A string representing the title to be shared.</param>
+		/// <param name="fileStreams">An array of files representing files to be shared.</param>
+		/// <returns>The result from the client.</returns>
 		public static Task<dynamic> ShareAsync(string url="", string text="", string title="", FileStream[] fileStreams=null)
 		{
 			return InternalShareOperationAsync("share", url, text, title, fileStreams);
-        }
+		}
 
 		private static Task<dynamic> InternalShareOperationAsync(string operation, string url = "", string text = "", string title = "", FileStream[] fileStreams = null)
-        {
+		{
 			var files = new Dictionary<string, string>();
 			if (fileStreams != null)
 			{
@@ -105,13 +104,13 @@ namespace Wisej.Ext.WebShare
 		/// <summary>
 		/// Gets a base64 representation of the given <see cref="FileStream"/>.
 		/// </summary>
-		/// <param name="fileStream">Filestream to get the 64 representation of.</param>
+		/// <param name="fileStream">File stream to get the 64 representation of.</param>
 		/// <returns></returns>
 		private static string GetFileStreamBase64(FileStream fileStream)
 		{
 			var mime = GetMimeTypeForFileExtension(fileStream.Name);
 			using (var ms = new MemoryStream())
-            {
+			{
 				fileStream.CopyTo(ms);
 
 				var base64 = Convert.ToBase64String(ms.ToArray());
@@ -127,13 +126,7 @@ namespace Wisej.Ext.WebShare
 		/// <returns></returns>
 		private static string GetMimeTypeForFileExtension(string file)
 		{
-			var DefaultContentType = "application/octet-stream";
-			var provider = new FileExtensionContentTypeProvider();
-
-			if (!provider.TryGetContentType(file, out string contentType))
-				contentType = DefaultContentType;
-
-			return contentType;
+			return Wisej.Core.MimeTypes.GetMimeType(file);
 		}
 	}
 }

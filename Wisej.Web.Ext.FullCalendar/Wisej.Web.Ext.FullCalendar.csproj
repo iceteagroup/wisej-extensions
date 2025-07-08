@@ -1,12 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48;net8.0;net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);$(NetCoreVersion)-windows;$(NetCoreVersion)-android;$(NetCoreVersion)-ios;$(NetCoreVersion)-maccatalyst;$(NetCoreVersion)-windows10.0.19041.0</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.20.9</FileVersion>
+    <FileVersion>4.0.2.8</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="FullCalendar.bmp" />
@@ -30,12 +31,8 @@
     <EmbeddedResource Include="JavaScript\startup.js" />
     <EmbeddedResource Include="Themes\FullCalendar.mixin.theme" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)'=='net48' ">
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Wisej-3" Version="3.5.*-*" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />

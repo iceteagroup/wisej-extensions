@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Threading.Tasks;
 using Wisej.Core;
-using WinForms = System.Windows.Forms;
 
 namespace Wisej.Web.Ext.QuillJS
 {
@@ -12,7 +11,7 @@ namespace Wisej.Web.Ext.QuillJS
 	/// QuillJSEditor is a modern WYSIWYG HTML editor with powerful features.
 	/// </summary>
 	[ToolboxItem(true)]
-	[ToolboxBitmap(typeof(WinForms.Control), "RichTextBox.bmp")]
+	[ToolboxBitmap(typeof(Control), "RichTextBox.bmp")]
 	[DefaultProperty("Text")]
 	[DefaultEvent("TextChanged")]
 	[ApiCategory("QuillJSEditor")]
@@ -168,17 +167,9 @@ namespace Wisej.Web.Ext.QuillJS
 		[Description("Determines whether the editor content can be modified.")]
 		public bool ReadOnly
 		{
-			get => this._readOnly;
-			set
-			{
-				if (this._readOnly != value)
-				{
-					this._readOnly = value;
-					this.Options.readOnly = value;
-				}
-			}
+			get => this.Options.readOnly;
+			set => this.Options.readOnly = value;
 		}
-		private bool _readOnly = false;
 
 		/// <summary>
 		/// Gets or sets the placeholder text when the editor is empty.

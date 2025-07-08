@@ -83,7 +83,7 @@ namespace Wisej.Web.Ext.PrintPreview
 
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrintPreviewDialog));
+			Wisej.Resources.ComponentResourceManager resources = new Wisej.Resources.ComponentResourceManager(typeof(PrintPreviewDialog));
 			this.previewControl = new PrintPreviewControl();
 			this.SuspendLayout();
 			// 

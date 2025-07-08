@@ -113,7 +113,12 @@ namespace Wisej.Web.Ext.ColumnFilter
 				string combinedWhere = dataGrid.UserData.columFiltercombinedWhere;
 				if (combinedWhere.Length > 0)
 				{
-					var indexes = dataGrid.Rows.AsQueryable().Where(combinedWhere).Select(r => r.Index).ToArray();
+					var config = new ParsingConfig
+					{
+						AllowEqualsAndToStringMethodsOnObject = true
+					};
+
+					var indexes = dataGrid.Rows.AsQueryable().Where(config, combinedWhere).Select(r => r.Index).ToArray();
 					foreach (var row in dataGrid.Rows)
 					{
 						if (Array.BinarySearch(indexes, row.Index) < 0)
