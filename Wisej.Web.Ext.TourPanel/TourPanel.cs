@@ -448,32 +448,6 @@ namespace Wisej.Web.Ext.TourPanel
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public override Point AutoScrollOffset
-		{
-			get { return Point.Empty; }
-			set { }
-		}
-
-		/// <summary>
-		/// This property is not relevant to this class.
-		/// </summary>
-		/// <exclude/>
-		[Browsable(false)]
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public new Point AutoScrollPosition
-		{
-			get { return Point.Empty; }
-			set { }
-		}
-
-		/// <summary>
-		/// This property is not relevant to this class.
-		/// </summary>
-		/// <exclude/>
-		[Browsable(false)]
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new ScrollBars ScrollBars
 		{
 			get { return ScrollBars.None; }

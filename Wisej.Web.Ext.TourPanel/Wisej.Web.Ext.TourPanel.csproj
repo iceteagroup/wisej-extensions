@@ -6,7 +6,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.20.9</FileVersion>
+    <FileVersion>3.5.21.9</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Templates\**" />
@@ -31,10 +31,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Wisej-3" Version="3.5.*-*" />
+    <PackageReference Include="Wisej-3-RibbonBar" Version="3.5.*-*" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Wisej.Web.Ext.RibbonBar\Wisej.Web.Ext.RibbonBar.csproj" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
