@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.21.9</FileVersion>
+    <FileVersion>3.5.22.4</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Chart.bmp" />
