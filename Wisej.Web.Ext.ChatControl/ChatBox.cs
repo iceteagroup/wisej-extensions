@@ -108,6 +108,68 @@ namespace Wisej.Web.Ext.ChatControl
 		[Description("Fires when the current users posts to the ChatBox.")]
 		public event FormatMessageEventHandler FormatMessage;
 
+		/// <summary>
+		/// Invokes the SendingMessage event. Fires before a message is sent.
+		/// </summary>
+		/// <param name="e">The event data.</param>
+		protected virtual void OnSendingMessage(SendingMessageEventArgs e)
+		{
+			SendingMessage?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Invokes the SentMessage event. Fires after a message has been sent.
+		/// </summary>
+		/// <param name="e">The event data.</param>
+		protected virtual void OnSentMessage(MessageEventArgs e)
+		{
+			SentMessage?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Invokes the TypingStart event. Fires when the user starts typing.
+		/// </summary>
+		/// <param name="e">The event data.</param>
+		protected virtual void OnTypingStart(EventArgs e)
+		{
+			TypingStart?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Invokes the TypingEnd event. Fires when the user stops typing.
+		/// </summary>
+		/// <param name="e">The event data.</param>
+		protected virtual void OnTypingEnd(EventArgs e)
+		{
+			TypingEnd?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Invokes the MessageActionInvoke event. Fires when the user performs an action on a message.
+		/// </summary>
+		/// <param name="e">The dynamic event data.</param>
+		protected virtual void OnMessageActionInvoke(dynamic e)
+		{
+			MessageActionInvoke?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Invokes the RenderMessageControl event. Fires when a Message control is needed.
+		/// </summary>
+		/// <param name="e">The event data.</param>
+		protected virtual void OnRenderMessageControl(RenderMessageControlEventArgs e)
+		{
+			RenderMessageControl?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Invokes the FormatMessage event. Fires when a message is posted to the ChatBox.
+		/// </summary>
+		/// <param name="e">The event data.</param>
+		protected virtual void OnFormatMessage(MessageEventArgs e)
+		{
+			FormatMessage?.Invoke(this, e);
+		}
 		#endregion
 
 		#region Overridden Properties
@@ -301,7 +363,7 @@ namespace Wisej.Web.Ext.ChatControl
 		/// <summary>
 		/// Gets or sets the text to show when the Chat's TextBox is empty.
 		/// </summary>
-		[DefaultValue(null)]
+		[DefaultValue("Type a message...")]
 		public string Watermark
 		{
 			get
@@ -312,6 +374,16 @@ namespace Wisej.Web.Ext.ChatControl
 			{
 				this.textBoxMessage.Watermark = value;
 			}
+		}
+
+		/// <summary>
+		/// Gets or sets whether the message input text box is multiline.
+		/// </summary>
+		[DefaultValue(false)]
+		public bool Multiline
+		{
+			get => this.textBoxMessage.Multiline;
+			set => SetupMultilineTextBox(value);
 		}
 
 		/// <summary>
@@ -335,14 +407,14 @@ namespace Wisej.Web.Ext.ChatControl
 
 		#region Event Handlers
 
-		private void textBoxMessage_KeyUp(object sender, KeyEventArgs e)
+		private void textBoxMessage_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Enter)
+			if (e.KeyCode == Keys.Enter && e.Modifiers == Keys.None)
 			{
 				SendCurrentMessage();
 
 				this._isTyping = false;
-				this.TypingEnd?.Invoke(this, EventArgs.Empty);
+				OnTypingEnd(EventArgs.Empty);
 			}
 			else
 			{
@@ -350,7 +422,7 @@ namespace Wisej.Web.Ext.ChatControl
 				{
 					this._isTyping = true;
 
-					this.TypingStart?.Invoke(this, EventArgs.Empty);
+					OnTypingStart(EventArgs.Empty);
 				}
 			}
 		}
@@ -362,13 +434,70 @@ namespace Wisej.Web.Ext.ChatControl
 			{
 				this._isTyping = false;
 
-				this.TypingEnd?.Invoke(this, EventArgs.Empty);
+				OnTypingEnd(EventArgs.Empty);
 			}
 		}
 
 		private void buttonSend_Click(object sender, EventArgs e)
 		{
 			SendCurrentMessage();
+		}
+
+		private void SetupMultilineTextBox(bool value)
+		{
+			if (value == this.textBoxMessage.Multiline)
+				return;
+
+			if (value)
+			{
+				this.textBoxMessage.Multiline = true;
+				this.textBoxMessage.AcceptsReturn = true;
+
+				// reze the input panel when the text changes.
+				this.textBoxMessage.ClientEvents.Clear();
+				this.textBoxMessage.AddClientEventListener("input",
+	@"
+	debugger;
+
+	let text = this.getValue();
+	text = text.replace(/\n/g, '<br/>');
+	const font = this.getFont();
+	const width = this.getWidth();
+	const insets = this.getInsets();
+	const size = Wisej.Core.measureText(text + '.', font, width);
+
+	const parent = this.getParent();
+	const height = Math.max(30, size.height + insets.top + insets.bottom);
+	this.setHeight(height);
+	parent.setHeight(height + 20);
+");
+
+				// fix for "When TextBox.AcceptsReturn is true, the Enter key doesn't raise KeyDown or KeyUp events on the server. #3575"
+				this.textBoxMessage.Eval(
+@"
+		this.processAccelerator = function (e) {
+
+			if (this.getAcceptsReturn()) {
+				if (e.getModifiers() === 0 && e.getKeyIdentifier() === 'Enter') {
+					return true;
+				}
+			}
+			else {
+
+				if (e.getModifiers() === qx.event.type.Dom.SHIFT_MASK && e.getKeyIdentifier() === 'Enter') {
+					return true;
+				}
+			}
+		}
+");
+
+			}
+			else
+			{
+				this.textBoxMessage.Multiline = false;
+				this.textBoxMessage.AcceptsReturn = false;
+				this.textBoxMessage.ClientEvents.Clear();
+			}
 		}
 
 		#endregion
@@ -395,7 +524,6 @@ namespace Wisej.Web.Ext.ChatControl
 			// dispose of the message container.
 			if (container != null)
 			{
-				container.Controls.Clear();
 				container.Dispose();
 			}
 		}
@@ -407,6 +535,7 @@ namespace Wisej.Web.Ext.ChatControl
 			{
 				// clear text in textbox.
 				this.textBoxMessage.Clear();
+				this.panelMessageInput.Height = 50;
 
 				// create a new message.
 				var message = new Message
@@ -424,8 +553,9 @@ namespace Wisej.Web.Ext.ChatControl
 		/// Posts a message to the chat box with the provided message.
 		/// </summary>
 		/// <param name="message">The message to post</param>
+		/// <param name="index">Index of the new message.</param>
 		/// <exception cref="ArgumentNullException"></exception>
-		internal void AddInternal(Message message)
+		internal void AddInternal(Message message, int index)
 		{
 			if (message == null)
 				throw new ArgumentNullException("message");
@@ -439,7 +569,7 @@ namespace Wisej.Web.Ext.ChatControl
 			var isChatBoxUser = this.User == message.User;
 
 			// pre-format messages.
-			this.FormatMessage?.Invoke(new MessageEventArgs(isChatBoxUser, message));
+			OnFormatMessage(new MessageEventArgs(isChatBoxUser, message));
 
 			message.RenderMessageControl += Message_RenderMessageControl;
 
@@ -447,18 +577,20 @@ namespace Wisej.Web.Ext.ChatControl
 			if (message.Timestamp == null)
 			{
 				var args = new SendingMessageEventArgs(isChatBoxUser, message);
-				SendingMessage?.Invoke(this, args);
+				OnSendingMessage(args);
 
 				if (args.Cancel)
 					return;
 			}
 
-			var container = new FlexLayoutPanelMessageContainer(message, this);
-			var alignment = GetAlignment(message.User);
-			AddToContainer(container, alignment);
+			var messageContainer = new FlexLayoutPanelMessageContainer(message, this)
+			{
+				HorizontalAlign = GetAlignment(message.User)
+			};
+			AddToContainer(messageContainer, index);
 
 			// the message has been sent.
-			SentMessage?.Invoke(this, new MessageEventArgs(isChatBoxUser, message));
+			OnSentMessage(new MessageEventArgs(isChatBoxUser, message));
 		}
 
 		private HorizontalAlignment GetAlignment(User user)
@@ -466,16 +598,16 @@ namespace Wisej.Web.Ext.ChatControl
 			return user.Id == this.User.Id ? HorizontalAlignment.Right : HorizontalAlignment.Left;
 		}
 
-		private void Message_RenderMessageControl(RenderMessageControlEventArgs e)
+		private void Message_RenderMessageControl(object sender, RenderMessageControlEventArgs e)
 		{
-			this.RenderMessageControl?.Invoke(e);
+			OnRenderMessageControl(e);
 		}
 
 		// adds the container to the list.
-		private void AddToContainer(FlexLayoutPanelMessageContainer container, HorizontalAlignment alignment)
+		private void AddToContainer(FlexLayoutPanelMessageContainer messageContainer, int index)
 		{
-			container.HorizontalAlign = alignment;
-			this.flexLayoutPanelMessages.Controls.Add(container);
+			this.flexLayoutPanelMessages.Controls.Add(messageContainer);
+			this.flexLayoutPanelMessages.Controls.SetChildIndex(messageContainer, index);
 		}
 
 		#endregion
@@ -490,7 +622,7 @@ namespace Wisej.Web.Ext.ChatControl
 			{
 				case NotifyCollectionChangedAction.Add:
 					if (e.NewItems != null)
-						ProcessAdd(e.NewItems);
+						ProcessAdd(e.NewItems, e.NewStartingIndex);
 					break;
 
 				case NotifyCollectionChangedAction.Remove:
@@ -515,10 +647,10 @@ namespace Wisej.Web.Ext.ChatControl
 			this.ResumeLayout();
 		}
 
-		private void ProcessAdd(IList newItems)
+		private void ProcessAdd(IList newItems, int index)
 		{
 			foreach (Message message in newItems)
-				AddInternal(message);
+				AddInternal(message, index);
 
 			// scroll the last message into view.
 			if (this.flexLayoutPanelMessages.Controls.Count > 0)
@@ -533,7 +665,7 @@ namespace Wisej.Web.Ext.ChatControl
 
 		private void ProcessReset()
 		{
-			this.flexLayoutPanelMessages.Controls.Clear();
+			this.flexLayoutPanelMessages.Controls.Clear(true);
 		}
 
 		private void ProcessReplace(IList oldItems, IList newItems)

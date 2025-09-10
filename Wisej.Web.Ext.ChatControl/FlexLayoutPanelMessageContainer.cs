@@ -92,9 +92,11 @@ namespace Wisej.Web.Ext.ChatControl
 
 			this.ChatBox.Resize += (s, e) => UpdatePreferredSize();
 
-			this.labelName.Text = this.Message.User.Name;
-			this.pictureBoxUser.ImageSource = this.Message.User.ImageSource;
-
+			var message = this.Message;
+			var user = message.User;
+			
+			this.labelName.Text = user?.Name;
+			this.pictureBoxUser.ImageSource = user?.ImageSource;
 			this.MessageControl = this.Message.RequestControl();
 			this.MessageControl.Location = new Point(8, 8);
 

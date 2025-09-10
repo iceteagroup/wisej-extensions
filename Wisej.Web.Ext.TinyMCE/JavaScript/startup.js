@@ -30,6 +30,8 @@ this.init = function () {
 
 	config.selector = "#" + id;
 	config.resize = false;
+	config.min_height = 0;
+	config.min_width = 0;
 
 	if (!options.showToolbar)
 		config.toolbar = false;
@@ -86,6 +88,7 @@ this.init = function () {
 		me.editor.on('blur', function (e) {
 			me.setDirty(true);
 		});
+
 		me.editor.on('change', function (e) {
 			me.setDirty(true);
 		});
@@ -95,10 +98,12 @@ this.init = function () {
 			me.setDirty(true);
 			me.fireEvent("keypress");
 		});
+
 		me.editor.on('keydown', function (e) {
 			me.setDirty(true);
 			me.fireEvent("keydown");
 		});
+
 		me.editor.on('keyup', function (e) {
 			me.setDirty(true);
 			me.fireEvent("keyup");
@@ -125,6 +130,11 @@ this.init = function () {
 
 this.setEnabled = function (enabled) {
 	try {
+		if (!this.editor) {
+			this.addListenerOnce("load", () => this.setEnabled(enabled));
+			return;
+		}
+
 		this.widget.setMode(enabled ? "design" : "readonly");
 	} catch (e) { }
 }
@@ -141,6 +151,12 @@ this.getText = function () {
 }
 this.setText = function (value) {
 	try {
+
+		if (!this.editor) {
+			this.addListenerOnce("load", () => this.setText(value));
+			return;
+		}
+
 	  this.editor.setContent(value);
 	  this.updateState();
 	} catch (e) { }

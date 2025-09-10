@@ -176,7 +176,7 @@ namespace Wisej.Web.Ext.jSequence
 			options.uml = this.UML;
 			options.theme = this.Theme.ToLower();
 
-			script = script.Replace("$options", options.ToString());
+			script = script.Replace("$options", options.ToJSON(WisejSerializerOptions.CamelCase));
 
 			return script;
 		}

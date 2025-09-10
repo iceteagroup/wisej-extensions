@@ -68,9 +68,7 @@ namespace Wisej.Web.Ext.TinyEditor
 				{
 					this._text = value;
 					OnTextChanged(EventArgs.Empty);
-
-					if (!((IWisejControl)this).IsNew /* cannot call setText until the widget is created.*/ )
-						Call("setText", TextUtils.EscapeText(value, true));
+					Call("setText", TextUtils.EscapeText(value, true));
 				}
 			}
 		}
@@ -380,7 +378,7 @@ namespace Wisej.Web.Ext.TinyEditor
 			options.header = this.ShowToolbar;
 			options.footer = this.ShowFooter;
 			options.cssfile = this.StyleSheetSource;
-			script = script.Replace("$options", options.ToString());
+			script = script.Replace("$options", options.ToJSON(WisejSerializerOptions.CamelCase));
 
 			return script;
 		}
@@ -415,12 +413,8 @@ namespace Wisej.Web.Ext.TinyEditor
 			{
 				case "load":
 					this.initialized = true;
-					if (!String.IsNullOrEmpty(this.Text))
-						Call("setText", TextUtils.EscapeText(this.Text, true));
-
-					if (!this.Enabled)
-						Call("setEditable", this.Enabled);
-
+					Call("setEditable", this.Enabled);
+					Call("setText", TextUtils.EscapeText(this.Text, true));
 					break;
 
 				case "changeText":
@@ -461,6 +455,8 @@ namespace Wisej.Web.Ext.TinyEditor
 			IWisejComponent me = this;
 			if (me.IsNew)
 			{
+				this.initialized = false;
+
 				Call("setText", TextUtils.EscapeText(this.Text, true));
 			}
 

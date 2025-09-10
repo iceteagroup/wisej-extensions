@@ -188,10 +188,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 				// reset current cell 
 				dataGrid.CurrentCell = null;
 
-				// remove all summary rows.
-				dataGrid.Rows
-					.Where(r => r is DataGridViewSummaryRow)
-					.ToList().ForEach(r => dataGrid.Rows.Remove(r));
+				// remove all summary rows.				
+				dataGrid.RemoveSummaryRows();				
 
 				// apply all the filters.
 				base.ApplyFilters();

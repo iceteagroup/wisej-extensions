@@ -86,9 +86,7 @@ namespace Wisej.Web.Ext.TinyMCE
 				{
 					this._enabled = value;
 					OnEnabledChanged(EventArgs.Empty);
-
-					if (!((IWisejControl)this).IsNew /* cannot call setMode until the widget is created.*/ )
-						Call("setEnabled", value);
+					Call("setEnabled", value);
 				}
 			}
 		}
@@ -113,9 +111,7 @@ namespace Wisej.Web.Ext.TinyMCE
 				{
 					this._text = value;
 					OnTextChanged(EventArgs.Empty);
-
-					if (!((IWisejControl)this).IsNew /* cannot call setText until the widget is created.*/ )
-						Call("setText", TextUtils.EscapeText(value, true));
+					Call("setText", TextUtils.EscapeText(value, true));
 				}
 			}
 		}
@@ -351,6 +347,10 @@ namespace Wisej.Web.Ext.TinyMCE
 		public override void Update()
 		{
 			IWisejControl me = this;
+
+			if (me.IsNew)
+				this.initialized = false;
+
 			if (me.IsNew && this._commands != null)
 			{
 				var enabled = this._commands.Where(o => o.Value == true).Select(o => o.Key);
@@ -434,12 +434,13 @@ namespace Wisej.Web.Ext.TinyMCE
 			string script = GetResourceString("Wisej.Web.Ext.TinyMCE.JavaScript.startup.js");
 
 			options.config = this.Options;
+
 			options.fonts = this.FontNames;
 			options.showFooter = this.ShowFooter;
 			options.showMenubar = this.ShowMenuBar;
 			options.showToolbar = this.ShowToolbar;
 			options.externalPlugins = this.ExternalPlugins;
-			script = script.Replace("$options", options.ToString());
+			script = script.Replace("$options", options.ToJSON(WisejSerializerOptions.CamelCase));
 
 			return script;
 		}
@@ -469,10 +470,8 @@ namespace Wisej.Web.Ext.TinyMCE
 		{
 			this.initialized = true;
 
-			if (!String.IsNullOrEmpty(this.Text))
-				Call("setText", TextUtils.EscapeText(this.Text, true));
-
 			Call("setEnabled", this.Enabled);
+			Call("setText", TextUtils.EscapeText(this.Text, true));
 		}
 
 		/// <summary>

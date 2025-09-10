@@ -406,7 +406,7 @@ namespace Wisej.Web.Ext.jQueryKnob
 					? 0
 					: this.CursorSize;
 
-			script = script.Replace("$options", options.ToString());
+			script = script.Replace("$options", options.ToJSON(WisejSerializerOptions.CamelCase));
 
 			return script;
 		}

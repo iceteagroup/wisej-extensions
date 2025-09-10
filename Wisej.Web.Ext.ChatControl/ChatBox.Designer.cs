@@ -37,20 +37,20 @@
 			// 
 			// textBoxMessage
 			// 
-			this.textBoxMessage.AllowDrop = true;
-			this.textBoxMessage.AppearanceKey = "messageTextBox";
 			this.textBoxMessage.AutoSize = false;
+			this.textBoxMessage.AllowDrop = true;
+			this.textBoxMessage.Anchor = AnchorStyles.None;
+			this.textBoxMessage.AppearanceKey = "messageTextBox";
 			this.textBoxMessage.BackColor = System.Drawing.Color.FromName("@toolbar");
 			this.textBoxMessage.BorderStyle = Wisej.Web.BorderStyle.None;
-			this.textBoxMessage.Dock = Wisej.Web.DockStyle.Fill;
-			this.textBoxMessage.Location = new System.Drawing.Point(0, 0);
 			this.textBoxMessage.Name = "textBoxMessage";
 			this.textBoxMessage.Padding = new Wisej.Web.Padding(8, 0, 0, 0);
-			this.textBoxMessage.Size = new System.Drawing.Size(416, 50);
 			this.textBoxMessage.TabIndex = 0;
+			this.textBoxMessage.Dock = Wisej.Web.DockStyle.Fill;
 			this.textBoxMessage.Watermark = "Type a message...";
 			this.textBoxMessage.LostFocus += new System.EventHandler(this.textBoxMessage_LostFocus);
-			this.textBoxMessage.KeyUp += new Wisej.Web.KeyEventHandler(this.textBoxMessage_KeyUp);
+			this.textBoxMessage.Size  = new System.Drawing.Size(466, 30);
+			this.textBoxMessage.KeyDown += new Wisej.Web.KeyEventHandler(this.textBoxMessage_KeyDown);
 			// 
 			// flexLayoutPanelMessages
 			// 
@@ -76,6 +76,9 @@
 			this.panelMessageInput.Name = "panelMessageInput";
 			this.panelMessageInput.Size = new System.Drawing.Size(466, 50);
 			this.panelMessageInput.TabIndex = 2;
+			this.panelMessageInput.Padding = new Wisej.Web.Padding(10);
+			this.panelMessageInput.MinimumSize = new System.Drawing.Size(0, 50);
+			this.panelMessageInput.MaximumSize = new System.Drawing.Size(0, 150);
 			// 
 			// buttonSend
 			// 

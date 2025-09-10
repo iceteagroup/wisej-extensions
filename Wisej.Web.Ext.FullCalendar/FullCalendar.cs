@@ -150,6 +150,24 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
+		/// Triggered when the mouse enters the event control.
+		/// </summary>
+		public event EventMouseEnterHandler EventMouseEnter
+		{
+			add { base.Events.AddHandler(nameof(EventMouseEnter), value); }
+			remove { base.Events.RemoveHandler(nameof(EventMouseEnter), value); }
+		}
+
+		/// <summary>
+		/// Triggered when the mouse leaves the event control.
+		/// </summary>
+		public event EventMouseLeaveHandler EventMouseLeave
+		{
+			add { base.Events.AddHandler(nameof(EventMouseLeave), value); }
+			remove { base.Events.RemoveHandler(nameof(EventMouseLeave), value); }
+		}
+
+		/// <summary>
 		/// Triggered when the a <see cref="SchedulerResource"/> object changes.
 		/// </summary>
 		[Description("Triggered when the a Resource object changes.")]
@@ -193,6 +211,30 @@ namespace Wisej.Web.Ext.FullCalendar
 		protected virtual void OnItemDrop(ItemDropEventArgs e)
 		{
 			((ItemDropEventHandler)base.Events[nameof(ItemDrop)])?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Raises the <see cref="EventMouseEnter"/> event.
+		/// </summary>
+		/// <remarks>This method is called to invoke the <see cref="EventMouseEnter"/> event handlers.  Derived
+		/// classes can override this method to provide custom handling for the event. When overriding, ensure to call the
+		/// base implementation to maintain event invocation.</remarks>
+		/// <param name="e">The event data associated with the mouse enter event.</param>
+		protected virtual void OnEventMouseEnter(EventMouseEnterArgs e)
+		{
+			((EventMouseEnterHandler)base.Events[nameof(EventMouseEnter)])?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Raises the <see cref="EventMouseLeave"/> event.
+		/// </summary>
+		/// <remarks>This method is called to invoke the <see cref="EventMouseLeave"/> event handlers.  Derived
+		/// classes can override this method to provide custom handling for the event. When overriding, ensure to call the
+		/// base implementation to maintain event invocation.</remarks>
+		/// <param name="e">The event data associated with the mouse enter event.</param>
+		protected virtual void OnEventMouseLeave(EventMouseLeaveArgs e)
+		{
+			((EventMouseLeaveHandler)base.Events[nameof(EventMouseLeave)])?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -1420,7 +1462,7 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		// Handles clicks on event items.
-		private void ProcessEventClickWebEvent(WidgetEventArgs e)
+		private void ProcessEventMouseWebEvent(WidgetEventArgs e)
 		{
 			dynamic data = e.Data;
 			var id = data.id ?? "";
@@ -1435,10 +1477,21 @@ namespace Wisej.Web.Ext.FullCalendar
 					var location = PointToClient(new Point(x, y));
 					MouseButtons button = GetMouseButton(data.button ?? 0);
 
-					if (e.Type == "eventClick")
-						OnEventClick(new EventClickEventArgs(ev, button, 1, location));
-					else if (e.Type == "eventDblClick")
-						OnEventDoubleClick(new EventClickEventArgs(ev, button, 2, location));
+					switch (e.Type)
+					{
+						case "eventClick":
+							OnEventClick(new EventClickEventArgs(ev, button, 1, location));
+							break;
+						case "eventDblClick":
+							OnEventDoubleClick(new EventClickEventArgs(ev, button, 2, location));
+							break;
+						case "eventMouseEnter":
+							OnEventMouseEnter(new EventMouseEnterArgs(ev,button, location));
+							break;
+						case "eventMouseLeave":
+							OnEventMouseLeave(new EventMouseLeaveArgs(ev, button, location));
+							break;
+					}
 				}
 			}
 		}
@@ -1484,7 +1537,9 @@ namespace Wisej.Web.Ext.FullCalendar
 			{
 				case "eventClick":
 				case "eventDblClick":
-					ProcessEventClickWebEvent(e);
+				case "eventMouseEnter":
+				case "eventMouseLeave":
+					ProcessEventMouseWebEvent(e);
 					break;
 
 				case "dayClick":
@@ -1625,7 +1680,7 @@ namespace Wisej.Web.Ext.FullCalendar
 				options.schedulerLicenseKey = this.SchedulerLicenseKey;
 			}
 
-			script = script.Replace("$options", options.ToString());
+			script = script.Replace("$options", options.ToJSON(WisejSerializerOptions.CamelCase));
 			return script;
 		}
 

@@ -76,7 +76,7 @@ this.init = function () {
 		// hide the toolbar.
 		if (!options.showToolbar)
 			me.hideToolbar();
-			
+
 		// inform the server widget that the editor is ready.
 		me.fireWidgetEvent("load");
 
@@ -95,15 +95,16 @@ this.init = function () {
 		me.editor.editable().on('keypress', function (e) {
 			me.fireEvent("keypress");
 		});
+
 		// fire keyboard events from the editor.
 		me.editor.editable().on('keydown', function (e) {
 			me.fireEvent("keydown");
 		});
+
 		// fire keyboard events from the editor.
 		me.editor.editable().on('keyup', function (e) {
 			me.fireEvent("keyup");
 		});
-
 
 		me.fireEvent("initialized");
 	});
@@ -112,6 +113,7 @@ this.init = function () {
 	me.editor.on("blur", function () {
 		me.setDirty(true);
 	});
+
 	me.editor.on("change", function () {
 		me.setDirty(true);
 	});
@@ -130,6 +132,14 @@ this.init = function () {
 			me.fireWidgetEvent("command", e.data.name);
 		}
 	});
+
+	me.editor.on('mode', function () {
+		if (this.mode === 'source') {
+			var editable = me.editor.editable();
+			editable.removeListener(editable, "input", function () { me.setDirty(true) });
+			editable.attachListener(editable, 'input', function () { me.setDirty(true) });
+		}
+	});
 }
 
 /**
@@ -145,6 +155,12 @@ this.getText = function () {
 }
 this.setText = function (value) {
 	try {
+
+		if (!this.editor) {
+			this.addListenerOnce("load", () => this.setText(value));
+			return;
+		}
+
 		this.editor.editable().setHtml(value);
 		this.updateState();
 	} catch (e) { }
@@ -153,6 +169,12 @@ this.setText = function (value) {
 // applies the read only state.
 this.setReadOnly = function (value) {
 	try {
+
+		if (!this.editor) {
+			this.addListenerOnce("load", () => this.setReadOnly(value));
+			return;
+		}
+
 		if (this.editor.readOnly != value)
 			this.editor.setReadOnly(value);
 			
@@ -206,6 +228,7 @@ this.__registerPlugins = function (plugins) {
 		}
 	}
 }
+
 
 /**
  * Executes commands to manipulate the contents of the editable region.

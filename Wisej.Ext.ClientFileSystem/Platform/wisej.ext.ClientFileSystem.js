@@ -39,7 +39,7 @@ qx.Class.define("wisej.ext.ClientFileSystem", {
 				if (startIn != undefined && startIn != "none")
 					options.startIn = startIn;
 
-				var handle = await window.showDirectoryPicker();
+				var handle = await window.showDirectoryPicker(options);
 				return {
 					name: handle.name,
 					hash: new wisej.ext.FileSystemDirectoryHandle(handle).$$hash,
