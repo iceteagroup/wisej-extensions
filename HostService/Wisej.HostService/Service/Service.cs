@@ -65,7 +65,7 @@ namespace Wisej.HostService.Service
 
 				this.host = WisejHost.Create();
 				this.host.Shutdown += Host_Shutdown;
-				this.host.Start(GetDomainName(args), GetPortNumber(args));
+				this.host.Start(GetDomainName(args), GetPortNumber(args), GetSSL(args));
 			}
 			catch (Exception ex)
 			{
@@ -124,6 +124,34 @@ namespace Wisej.HostService.Service
 			}
 
 			return port;
+		}
+
+		/// <summary>
+		/// Returns whether to use SSL specified in the command line.
+		/// </summary>
+		/// <param name="args">Startup arguments</param>
+		/// <returns></returns>
+		internal static bool GetSSL(string[] args)
+		{
+			Debug.Assert(args != null);
+
+			bool ssl = false;
+
+			foreach (var a in args)
+			{
+				if (a.StartsWith("-s:", StringComparison.InvariantCultureIgnoreCase))
+				{
+					bool.TryParse(a.Substring(3), out ssl);
+					break;
+				}
+				if (a.StartsWith("-ssl:", StringComparison.InvariantCultureIgnoreCase))
+				{
+					bool.TryParse(a.Substring(5), out ssl);
+					break;
+				}
+			}
+
+			return ssl;
 		}
 
 		/// <summary>

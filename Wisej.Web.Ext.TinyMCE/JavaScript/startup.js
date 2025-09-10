@@ -14,117 +14,127 @@
  */
 this.init = function () {
 
-  var me = this;
+	var me = this;
 
-  // get the unique editor id.
-  // replace - with _ to make it a valid identified when used
-  // directly.
-  var id = this.getId() + "_tinymce";
+	// get the unique editor id.
+	// replace - with _ to make it a valid identified when used
+	// directly.
+	var id = this.getId() + "_tinymce";
 
-  // create the dom child.
-  this.container.innerHTML = "<textarea id=\"" + id + "\"></textarea>";
+	// create the dom child.
+	this.container.innerHTML = "<textarea id=\"" + id + "\"></textarea>";
 
-  // create the tinyMCE instance using the options map generated on the server.
-  var options = $options;
-  var config = options.config;
+	// create the tinyMCE instance using the options map generated on the server.
+	var options = $options;
+	var config = options.config;
 
-  config.selector = "#" + id;
-  config.resize = false;
+	config.selector = "#" + id;
+	config.resize = false;
+	config.min_height = 0;
+	config.min_width = 0;
 
-  if (!options.showToolbar)
-	config.toolbar = false;
-  if (!options.showFooter)
-	config.statusbar = false;
-  if (!options.showMenubar)
-	config.menubar = false;
+	if (!options.showToolbar)
+		config.toolbar = false;
+	if (!options.showFooter)
+		config.statusbar = false;
+	if (!options.showMenubar)
+		config.menubar = false;
 
-  // register the external plugins, if any.
-  if (options.externalPlugins)
-	this.__registerPlugins(options.externalPlugins);
+	// register the external plugins, if any.
+	if (options.externalPlugins)
+		this.__registerPlugins(options.externalPlugins);
 
-  // destroy all instance when in design mode, otherwise the library holds on the previously created instance.
-  if (wisej.web.DesignMode) {
-	tinymce.remove();
-  }
-
-  // destroy the previous instance, tinyMCE cannot be altered after creation.
-  if (this.editor) {
-
-	this.editor.destroy();
-	this.editor = null;
-
-  }
-  else {
-
-	// perform stuff that has to be done only once.
-
-	// resize the tinyMCE editor when the widget is resized.
-	this.addListener("resize", function (e) {
-	  this.__resizeEditor();
-	}, this);
-
-	// add the text property to the state variables returned to the server with any event.
-	this.setStateProperties(this.getStateProperties().concat(["text"]));
-  }
-
-  // create the editor instance.
-  tinymce.init(config).then(function (editors) {
-
-	me.editor = me.widget = editors[0];
-
-	me.__resizeEditor();
-
-	// inform the server widget that the editor is ready.
-	me.fireWidgetEvent("load");
-
-	me.editor.once('init', function (e) {
-	  me.fireEvent("initialized");
-	});
-
-	// mark the widget as "dirty" when it loses the focus in order to send back the content with the state.
-	// fire the "command" event on the server, when the users presses a toolbar button.
-	me.editor.on('blur', function (e) {
-	  me.setDirty(true);
-	});
-	me.editor.on('change', function (e) {
-	  me.setDirty(true);
-	});
-
-	// fire keyboard events from the editor.
-	me.editor.on('keypress', function (e) {
-	  me.setDirty(true);
-	  me.fireEvent("keypress");
-	});
-	me.editor.on('keydown', function (e) {
-	  me.setDirty(true);
-	  me.fireEvent("keydown");
-	});
-	me.editor.on('keyup', function (e) {
-	  me.setDirty(true);
-	  me.fireEvent("keyup");
-	});
-
-	// focus the wrapper wisej widget.
-	// IFrame editors cannot propagate pointer events to their container.
-	me.editor.on('focus', function (e) {
-	  me.fireWidgetEvent("focus");
-	});
-
-	// fire the "command" event on the server, when the users presses a toolbar button.
-	me.editor.on('ExecCommand', function (e) {
-	  me.fireWidgetEvent("command", e.command);
-	});
-
-	// inform the designer that we are ready to be rendered.
+	// destroy all instance when in design mode, otherwise the library holds on the previously created instance.
 	if (wisej.web.DesignMode) {
-	  me.fireEvent("render");
+		tinymce.remove();
 	}
-  });
+
+	// destroy the previous instance, tinyMCE cannot be altered after creation.
+	if (this.editor) {
+
+		this.editor.destroy();
+		this.editor = null;
+
+	}
+	else {
+
+		// perform stuff that has to be done only once.
+
+		// resize the tinyMCE editor when the widget is resized.
+		this.addListener("resize", function (e) {
+			this.__resizeEditor();
+		}, this);
+
+		// add the text property to the state variables returned to the server with any event.
+		this.setStateProperties(this.getStateProperties().concat(["text"]));
+	}
+
+	// create the editor instance.
+	tinymce.init(config).then(function (editors) {
+
+		me.editor = me.widget = editors[0];
+
+		me.__resizeEditor();
+
+		// inform the server widget that the editor is ready.
+		me.fireWidgetEvent("load");
+
+		me.editor.once('init', function (e) {
+			me.fireEvent("initialized");
+		});
+
+		// mark the widget as "dirty" when it loses the focus in order to send back the content with the state.
+		// fire the "command" event on the server, when the users presses a toolbar button.
+		me.editor.on('blur', function (e) {
+			me.setDirty(true);
+		});
+
+		me.editor.on('change', function (e) {
+			me.setDirty(true);
+		});
+
+		// fire keyboard events from the editor.
+		me.editor.on('keypress', function (e) {
+			me.setDirty(true);
+			me.fireEvent("keypress");
+		});
+
+		me.editor.on('keydown', function (e) {
+			me.setDirty(true);
+			me.fireEvent("keydown");
+		});
+
+		me.editor.on('keyup', function (e) {
+			me.setDirty(true);
+			me.fireEvent("keyup");
+		});
+
+		// focus the wrapper wisej widget.
+		// IFrame editors cannot propagate pointer events to their container.
+		me.editor.on('focus', function (e) {
+			me.fireWidgetEvent("focus");
+		});
+
+		// fire the "command" event on the server, when the users presses a toolbar button.
+		me.editor.on('ExecCommand', function (e) {
+			me.fireWidgetEvent("command", e.command);
+		});
+
+		// inform the designer that we are ready to be rendered.
+		if (wisej.web.DesignMode) {
+			me.fireEvent("render");
+		}
+	});
 
 }
 
 this.setEnabled = function (enabled) {
 	try {
+		if (!this.editor) {
+			this.addListenerOnce("load", () => this.setEnabled(enabled));
+			return;
+		}
+
 		this.widget.setMode(enabled ? "design" : "readonly");
 	} catch (e) { }
 }
@@ -141,7 +151,14 @@ this.getText = function () {
 }
 this.setText = function (value) {
 	try {
-		this.editor.setContent(value);
+
+		if (!this.editor) {
+			this.addListenerOnce("load", () => this.setText(value));
+			return;
+		}
+
+	  this.editor.setContent(value);
+	  this.updateState();
 	} catch (e) { }
 }
 

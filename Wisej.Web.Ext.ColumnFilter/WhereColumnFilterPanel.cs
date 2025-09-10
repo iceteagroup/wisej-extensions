@@ -99,9 +99,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 				dataGrid.CurrentCell = null;
 
 				// remove all summary rows.
-				dataGrid.Rows
-					.Where(r => r is DataGridViewSummaryRow)
-					.ToList().ForEach(r => dataGrid.Rows.Remove(r));
+				dataGrid.RemoveSummaryRows();
 
 				// reset Combined where
 				dataGrid.UserData.columFiltercombinedWhere = "";

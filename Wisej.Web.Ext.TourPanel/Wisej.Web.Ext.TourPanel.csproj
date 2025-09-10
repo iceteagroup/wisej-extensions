@@ -7,7 +7,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.2.8</FileVersion>
+    <FileVersion>4.0.2.30</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Templates\**" />
@@ -29,9 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Wisej.Web.Ext.RibbonBar\Wisej.Web.Ext.RibbonBar.csproj" />
+    <PackageReference Include="$(WisejPackageName)-RibbonBar" Version="$(WisejVersion)" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />

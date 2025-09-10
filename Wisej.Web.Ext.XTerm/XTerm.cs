@@ -133,7 +133,7 @@ namespace Wisej.Web.Ext.XTerm
 			dynamic options = new DynamicObject();
 			string script = GetResourceString("Wisej.Web.Ext.XTerm.JavaScript.startup.js");
             options.DebugScript = DebugScript;
-            script = script.Replace("$options", options.ToString());
+            script = script.Replace("$options", options.ToJSON(WisejSerializerOptions.CamelCase));
             return script;
 		}
 

@@ -116,6 +116,15 @@ namespace Wisej.HostService.Owin
 		}
 
 		/// <summary>
+		/// Returns whether SSL is used.
+		/// </summary>
+		public bool SSL
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
 		/// Returns the reason why this instance of <see cref="WisejHost"/> was terminated.
 		/// </summary>
 		public ApplicationShutdownReason ShutdownReason
@@ -158,7 +167,8 @@ namespace Wisej.HostService.Owin
 		/// </summary>
 		/// <param name="domain">The domain recognized by the server. Use * for all domains.</param>
 		/// <param name="port">The port to listen to. If set to 0 it will use the first available port.</param>
-		public void Start(string domain, int port)
+		/// <param name="ssl">True if SSL is being used</param>
+		public void Start(string domain, int port, bool ssl)
 		{
 			if (domain == null || domain == "")
 				throw new ArgumentException("Invalid domain: " + domain);
@@ -172,7 +182,8 @@ namespace Wisej.HostService.Owin
 			// save the domain we are listening to.
 			this.Port = port;
 			this.Domain = domain;
-			this.Url = "http://" + domain + ":" + port;
+			this.SSL = ssl;
+			this.Url = (ssl ? "https://" : "http://" ) + domain + ":" + port;
 
 			Trace.TraceInformation("Starting Wisej.Host: Domain={0}, Port={1}, Reason={2}", this.Domain, this.Port, HostingEnvironment.ShutdownReason);
 

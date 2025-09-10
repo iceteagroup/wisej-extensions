@@ -77,17 +77,8 @@ namespace Wisej.Web.Ext.ChatControl
 		/// </summary>
 		public Color BubbleColor
 		{
-			get
-			{
-				return this.panelContent.BackColor;
-			}
-			set
-			{
-				if (this._bubbleColor != value)
-				{
-					this.panelContent.BackColor = value;
-				}
-			}
+			get => this.panelContent.BackColor;
+			set => this.panelContent.BackColor = value;
 		}
 		private Color _bubbleColor;
 
@@ -101,9 +92,11 @@ namespace Wisej.Web.Ext.ChatControl
 
 			this.ChatBox.Resize += (s, e) => UpdatePreferredSize();
 
-			this.labelName.Text = this.Message.User.Name;
-			this.pictureBoxUser.ImageSource = this.Message.User.ImageSource;
-
+			var message = this.Message;
+			var user = message.User;
+			
+			this.labelName.Text = user?.Name;
+			this.pictureBoxUser.ImageSource = user?.ImageSource;
 			this.MessageControl = this.Message.RequestControl();
 			this.MessageControl.Location = new Point(8, 8);
 

@@ -86,22 +86,25 @@ this.init = function () {
 		me.editor.on('blur', function (e) {
 			me.setDirty(true);
 		});
+
 		me.editor.on('change', function (e) {
 			me.setDirty(true);
 		});
 
 		// fire keyboard events from the editor.
 		me.editor.on('keypress', function (e) {
-		  me.setDirty(true);
-		  me.fireEvent("keypress");
+			me.setDirty(true);
+			me.fireEvent("keypress");
 		});
+
 		me.editor.on('keydown', function (e) {
-		  me.setDirty(true);
-		  me.fireEvent("keydown");
+			me.setDirty(true);
+			me.fireEvent("keydown");
 		});
+
 		me.editor.on('keyup', function (e) {
-		  me.setDirty(true);
-		  me.fireEvent("keyup");
+			me.setDirty(true);
+			me.fireEvent("keyup");
 		});
 
 		// focus the wrapper wisej widget.
@@ -118,7 +121,7 @@ this.init = function () {
 		// inform the designer that we are ready to be rendered.
 		if (wisej.web.DesignMode) {
 			me.fireEvent("render");
-		}
+	  }
 	});
 
 }
@@ -130,6 +133,10 @@ this.init = function () {
  */
 this.setEnabled = function (enabled) {
 	try {
+		if (!this.editor) {
+			this.addListenerOnce("load", () => this.setEnabled(enabled));
+			return;
+		}
 		this.editor.mode.set(enabled ? "design" : "readonly");
 	} catch (e) { }
 }
@@ -146,6 +153,12 @@ this.getText = function () {
 }
 this.setText = function (value) {
 	try {
+
+		if (!this.editor) {
+			this.addListenerOnce("load", () => this.setText(value));
+			return;
+		}
+
 		this.editor.setContent(value);
 		this.updateState();
 	} catch (e) { }

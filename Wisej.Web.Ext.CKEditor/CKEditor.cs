@@ -106,9 +106,7 @@ namespace Wisej.Web.Ext.CKEditor
 				{
 					this._text = value;
 					OnTextChanged(EventArgs.Empty);
-
-					if (!((IWisejControl)this).IsNew /* cannot call setText until the widget is created.*/ )
-						Call("setText", TextUtils.EscapeText(value, true));
+					Call("setText", TextUtils.EscapeText(value, true));
 				}
 			}
 		}
@@ -203,7 +201,7 @@ namespace Wisej.Web.Ext.CKEditor
 		/// </summary>
 		[DesignerActionList]
 		[MergableProperty(false)]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
+		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public virtual new dynamic Options
 		{
@@ -374,6 +372,10 @@ namespace Wisej.Web.Ext.CKEditor
 		public override void Update()
 		{
 			IWisejControl me = this;
+
+			if (me.IsNew)
+				this.initialized = false;
+
 			if (me.IsNew && this._commands != null)
 			{
 				var enabled = this._commands.Where(o => o.Value == true).Select(o => o.Key);
@@ -460,6 +462,7 @@ namespace Wisej.Web.Ext.CKEditor
 
 			options.config = this.Options;
 			options.config.versionCheck = this.VersionCheck;
+
 			options.fonts = this.FontNames;
 			options.basePath = CKEditor.BaseUrl;
 			options.showFooter = this.ShowFooter;
@@ -527,10 +530,8 @@ namespace Wisej.Web.Ext.CKEditor
 		{
 			this.initialized = true;
 
-			if (!String.IsNullOrEmpty(this.Text))
-				Call("setText", TextUtils.EscapeText(this.Text, true));
-
 			Call("setReadOnly", this.ReadOnly);
+			Call("setText", TextUtils.EscapeText(this.Text, true));
 		}
 
 		// Handles the "focus" event from the client.

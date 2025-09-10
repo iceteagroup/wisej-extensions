@@ -23,6 +23,8 @@ this.init = function (options) {
 	options.timezone = "local";
 	options.height = this.getHeight();
 
+	var me = this;
+
 	if (qx.core.Environment.get("qx.rtl.supported"))
 		options.isRTL = this.getRtl() == true;
 
@@ -40,11 +42,19 @@ this.init = function (options) {
 		options.dayClick = this.onDayClick.bind(this);
 		options.eventDrop = this.onEventDrop.bind(this);
 		options.eventClick = this.onEventClick.bind(this);
+		options.eventMouseover = this.onEventMouseEnter.bind(this);
+		options.eventMouseout = this.onEventMouseLeave.bind(this);
 		options.eventResize = this.onEventResize.bind(this);
 
 		// in case the widget is not visible, wait for the "appear" event and render again.
 		if (this.calendar == null)
-			this.addListener("appear", function (e) { this.calendar.render(); }, this);
+		  this.addListener("appear", function (e) {
+			this.calendar.render();
+
+			// force the calendar to scroll, because it's ignored the second time it's rendered.
+			if (options.scrollTime)
+			  this.forceScrollTime(options.scrollTime)
+		  }, this);
 	}
 
 	// use our localized day and month names.
@@ -55,9 +65,7 @@ this.init = function (options) {
 	options.monthNamesShort = qx.util.Serializer.toNativeObject(qx.locale.Date.getMonthNames("abbreviated", locale));
 
 	// first creation?
-	if (this.calendar == null) {
-
-		var me = this;
+  	if (this.calendar == null) {
 
 		// attach to "resize" to autoresize the calendar to fill the widget container.
 		this.addListener("resize", function (e) {
@@ -106,6 +114,22 @@ this.init = function (options) {
 
 	// notify that the calendar is created.
 	this.fireEvent("initialized");
+
+}
+
+this.forceScrollTime = function (time) {
+	var scroller = $(this.container).find('.fc-scroller'); // the scrollable container
+	var parts = time.split(':');
+	var hours = parseInt(parts[0], 10) || 0;
+	var minutes = parseInt(parts[1], 10) || 0;
+
+	// calculate scrollTop based on slot height
+	var slotHeight = $(this.container).find('.fc-slats tr:first').height(); // pixel height of one 30-min slot
+	var minutesFromMidnight = (hours * 60) + minutes;
+	var pixelsPerMinute = slotHeight / 30; // default slot is 30 minutes
+	var scrollTop = minutesFromMidnight * pixelsPerMinute;
+
+	scroller.scrollTop(scrollTop);
 }
 
 /**
@@ -403,6 +427,36 @@ this.onEventClick = function (calEvent, ev, view) {
 
 		}, 250);
 	}
+}
+
+/**
+ * Fires "eventClick" or "eventDblClick" when an event is clicked.
+ */
+this.onEventMouseEnter = function (calEvent, ev, view) {
+
+	var me = this;
+	var type = "eventMouseEnter";
+	var data = {
+	  id: calEvent.id,
+	  button: ev.button, x: ev.pageX, y: ev.pageY
+	};
+
+	me.fireWidgetEvent(type, data);
+}
+
+/**
+ * Fires "eventClick" or "eventDblClick" when an event is clicked.
+ */
+this.onEventMouseLeave = function (calEvent, ev, view) {
+
+  var me = this;
+  var type = "eventMouseLeave";
+  var data = {
+	id: calEvent.id,
+	button: ev.button, x: ev.pageX, y: ev.pageY
+  };
+
+  me.fireWidgetEvent(type, data);
 }
 
 /**

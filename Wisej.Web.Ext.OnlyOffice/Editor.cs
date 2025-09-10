@@ -100,7 +100,7 @@ namespace Wisej.Web.Ext.OnlyOffice
 			dynamic options = new DynamicObject();
 			string script = GetResourceString("Wisej.Web.Ext.OnlyOffice.JavaScript.startup.js");
 
-			// script = script.Replace("$options", options.ToString());
+			// script = script.Replace("$options", options.ToJSON(WisejSerializerOptions.CamelCase));
 
 			return script;
 		}

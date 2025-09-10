@@ -98,6 +98,7 @@ qx.Class.define("wisej.web.RibbonBar", {
 			return this.tabview.getControls();
 		},
 		setPages: function (value) {
+			this.tabview.setControls([]);
 			this.tabview.setControls(value);
 		},
 

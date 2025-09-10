@@ -73,9 +73,6 @@ this.init = function () {
 		this.editor.t.style.height =
 			(this.getHeight() - gap) + "px";
 
-
-	var savedText = this.getText();
-
 	// hookup the blur event in the child iframe to fire onEditorBlur in the owner window.
 	if (!wisej.web.DesignMode) {
 
@@ -111,8 +108,8 @@ this.init = function () {
 		});
 
 		editorDocument.addEventListener("keypress", function () {
-            me.fireEvent("keypress");
-        });
+			me.fireEvent("keypress");
+		});
 
 		editorDocument.addEventListener("focus", function () {
 			me.fireWidgetEvent("focus");
@@ -138,16 +135,15 @@ this.setText = function (value) {
 	try {
 		if (this.editor) {
 			this.editor.e.body.innerHTML = value;
-            this.updateState();
-            
-        } else {
+			this.updateState();
+			
+		} else {
 
-			var me = this;
 			this.addListenerOnce("initialized", function () {
-				me.setText(value);
+				this.setText(value);
 			});
-        }
-        
+		}
+		
 	} catch (e) { }
 }
 
@@ -199,7 +195,13 @@ this.focus = function () {
  * Sets the widget to be ReadOnly.
  */
 this.setEditable = function (editable) {
-	if (this.editor)
+	if (this.editor) {
 		if (this.editor.e.body)
 			this.editor.e.body.setAttribute('contenteditable', editable);
+	}
+	else {
+		this.addListenerOnce("initialized", function () {
+			this.setEditable(editable);
+		});
+	}
 }

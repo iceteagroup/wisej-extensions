@@ -160,7 +160,7 @@
     <value>301, 10</value>
   </data>
   <data name="clear.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 17</value>
+    <value>43, 24</value>
   </data>
   <data name="clear.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -205,7 +205,7 @@
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="cmbOperator.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 29</value>
+    <value>3, 36</value>
   </data>
   <data name="cmbOperator.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>110, 0</value>
@@ -232,7 +232,7 @@
     <value>False</value>
   </data>
   <data name="txtValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>152, 29</value>
+    <value>152, 36</value>
   </data>
   <data name="txtValue.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>100, 0</value>
@@ -256,7 +256,7 @@
     <value>2</value>
   </data>
   <data name="dateTimePicker1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 65</value>
+    <value>3, 72</value>
   </data>
   <data name="dateTimePicker1.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 30</value>
@@ -277,7 +277,7 @@
     <value>3</value>
   </data>
   <data name="labelLogicalOperator.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 65</value>
+    <value>109, 72</value>
   </data>
   <data name="labelLogicalOperator.Size" type="System.Drawing.Size, System.Drawing">
     <value>236, 20</value>
@@ -325,7 +325,7 @@
     <value>3, 3</value>
   </data>
   <data name="cbMatchCase.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>114, 27</value>
   </data>
   <data name="cbMatchCase.TabIndex" type="System.Int32, mscorlib">
     <value>27</value>

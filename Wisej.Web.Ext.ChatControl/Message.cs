@@ -107,6 +107,26 @@ namespace Wisej.Web.Ext.ChatControl
 		/// </summary>
 		public event EventHandler MessageControlAssigned;
 
+		/// <summary>
+		/// Invokes the RenderMessageControl event. 
+		/// Fires when the Message's control is requested.
+		/// </summary>
+		/// <param name="e">The event data.</param>
+		internal void OnRenderMessageControl(RenderMessageControlEventArgs e)
+		{
+			RenderMessageControl?.Invoke(this, e);
+		}
+
+		/// <summary>
+		/// Invokes the MessageControlAssigned event.
+		/// Fires when the Message.Control is assigned.
+		/// </summary>
+		/// <param name="e">The event data.</param>
+		protected virtual void OnMessageControlAssigned(EventArgs e)
+		{
+			MessageControlAssigned?.Invoke(this, e);
+		}
+
 		#endregion
 
 		#region Methods
@@ -119,7 +139,7 @@ namespace Wisej.Web.Ext.ChatControl
 				// request a control from the user.
 				var args = new RenderMessageControlEventArgs(this);
 
-				RenderMessageControl?.Invoke(args);
+				OnRenderMessageControl(args);
 
 				// if the user didn't provide a control, use the default one.
 				if (args.Control == null)
@@ -135,7 +155,7 @@ namespace Wisej.Web.Ext.ChatControl
 				}
 			}
 
-			MessageControlAssigned?.Invoke(this, EventArgs.Empty);
+			OnMessageControlAssigned(EventArgs.Empty);
 
 			return this.Control;
 		}

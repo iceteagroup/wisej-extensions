@@ -24,8 +24,9 @@ namespace Wisej.Web.Ext.ChatControl
 	/// <summary>
 	/// Event handler for providing message controls.
 	/// </summary>
-	/// <param name="e"></param>
-	public delegate void RenderMessageControlEventHandler(RenderMessageControlEventArgs e);
+	/// <param name="sender">The source of the event.</param>
+	/// <param name="e">An instance of <see cref="MessageEventArgs"/> containing the message event data.</param>
+	public delegate void RenderMessageControlEventHandler(object sender, RenderMessageControlEventArgs e);
 
 	/// <summary>
 	/// Event args for providing message controls.
@@ -36,7 +37,10 @@ namespace Wisej.Web.Ext.ChatControl
 		/// Creates a new instance of <see cref="RenderMessageControlEventArgs"/> with the given Message.
 		/// </summary>
 		/// <param name="message"></param>
-		public RenderMessageControlEventArgs(Message message) => Message = message;
+		public RenderMessageControlEventArgs(Message message)
+		{
+			this.Message = message;
+		}
 
 		/// <summary>
 		/// Gets the Message that is requesting a control.

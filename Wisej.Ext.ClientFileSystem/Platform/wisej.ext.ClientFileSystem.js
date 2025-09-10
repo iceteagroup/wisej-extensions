@@ -27,10 +27,19 @@ qx.Class.define("wisej.ext.ClientFileSystem", {
 	statics: {
 		/**
 		 * Displays a directory picker which allows the user to select a directory.
+		 * 
+		 * @param {String} startIn A well known folder to open the dialog in.
 		 */
-		showDirectoryPicker: function () {
+		showDirectoryPicker: function (startIn) {
 			return (async function () {
-				var handle = await window.showDirectoryPicker();
+
+				var options = {
+				};
+
+				if (startIn != undefined && startIn != "none")
+					options.startIn = startIn;
+
+				var handle = await window.showDirectoryPicker(options);
 				return {
 					name: handle.name,
 					hash: new wisej.ext.FileSystemDirectoryHandle(handle).$$hash,
@@ -47,8 +56,9 @@ qx.Class.define("wisej.ext.ClientFileSystem", {
 		 * @param {String} filter Represents the requested MIME types and the file extensions.
 		 *						  Uses a similar syntax as Windows: "Description|Mime type|File Extension;FileExtension;...".
 		 *						  Can specify multiple filters separates by a pipe.
+		 * @param {String} startIn A well known folder to open the dialog in.
 		 */
-		showOpenFilePicker: function (multiple, excludeAcceptAllOption, filter) {
+		showOpenFilePicker: function (multiple, excludeAcceptAllOption, filter, startIn) {
 			var types = [];
 			var parts = filter.split("|");
 			if (parts.length > 2) {
@@ -68,6 +78,9 @@ qx.Class.define("wisej.ext.ClientFileSystem", {
 					multiple,
 					excludeAcceptAllOption,
 				};
+
+				if (startIn != undefined && startIn != "none")
+					options.startIn = startIn;
 
 				var array = [];
 				var handles = await window.showOpenFilePicker(options);
@@ -96,8 +109,9 @@ qx.Class.define("wisej.ext.ClientFileSystem", {
 		 *						  Uses a similar syntax as Windows: "Description|Mime type|File Extension;FileExtension;...".
 		 *						  Can specify multiple filters separates by a pipe.
 		 * @param {String} suggestedName A name to associate with the file.
+		 * @param {String} startIn A well known folder to open the dialog in.
 		 */
-		showSaveFilePicker: function (excludeAcceptAllOption, filter, suggestedName) {
+		showSaveFilePicker: function (excludeAcceptAllOption, filter, suggestedName, startIn) {
 			var types = [];
 			var parts = filter.split("|");
 			if (parts.length > 2) {
@@ -117,6 +131,9 @@ qx.Class.define("wisej.ext.ClientFileSystem", {
 					excludeAcceptAllOption,
 					suggestedName,
 				};
+
+				if (startIn != undefined && startIn != "none")
+					options.startIn = startIn;
 
 				var handle = await window.showSaveFilePicker(options);
 				var file = await handle.getFile();
