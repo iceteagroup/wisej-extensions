@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.TinyMCE6", "Wisej.Web.Ext.TinyMCE6.csproj", "{D6527BF6-F562-4817-8521-D85959AC883E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		WisejWinForms|Any CPU = WisejWinForms|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6527BF6-F562-4817-8521-D85959AC883E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6527BF6-F562-4817-8521-D85959AC883E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6527BF6-F562-4817-8521-D85959AC883E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6527BF6-F562-4817-8521-D85959AC883E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6527BF6-F562-4817-8521-D85959AC883E}.WisejWinForms|Any CPU.ActiveCfg = WisejWinForms|Any CPU
+		{D6527BF6-F562-4817-8521-D85959AC883E}.WisejWinForms|Any CPU.Build.0 = WisejWinForms|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {63D0C4EF-7071-4689-9F22-7AC5563929F3}
+	EndGlobalSection
+EndGlobal

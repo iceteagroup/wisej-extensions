@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);$(NetCoreVersion)-windows;$(NetCoreVersion)-android;$(NetCoreVersion)-ios;$(NetCoreVersion)-maccatalyst;$(NetCoreVersion)-windows10.0.19041.0</TargetFrameworks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+    <FileVersion>4.0.2.30</FileVersion>
+    <NoWarn>CA1416</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="JavaScript\startup.js" />
+    <None Remove="JavaScript\tiny.editor.js" />
+    <None Remove="Resources\header-bg.gif" />
+    <None Remove="Resources\icons.png" />
+    <None Remove="Resources\resize.gif" />
+    <None Remove="Resources\tiny.editor.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JavaScript\startup.js" />
+    <EmbeddedResource Include="JavaScript\tiny.editor.js" />
+    <EmbeddedResource Include="Resources\header-bg.gif" />
+    <EmbeddedResource Include="Resources\icons.png" />
+    <EmbeddedResource Include="Resources\resize.gif" />
+    <EmbeddedResource Include="Resources\tiny.editor.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
+  </Target>
+</Project>

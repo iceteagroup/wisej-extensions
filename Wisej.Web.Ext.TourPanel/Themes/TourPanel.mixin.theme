@@ -1,0 +1,162 @@
+{
+	"name": "TourPanel.mixin",
+	"fonts": {
+		"tourstep-title": {
+			"size": 18,
+			"family": [ "helvetica", "arial", "verdana", "sans-serif" ]
+		}
+	},
+	"images": {
+		"icon-play": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB3aWR0aD0iMTc5MiIgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xNTc2IDkyN2wtMTMyOCA3MzhxLTIzIDEzLTM5LjUgM3QtMTYuNS0zNnYtMTQ3MnEwLTI2IDE2LjUtMzZ0MzkuNSAzbDEzMjggNzM4cTIzIDEzIDIzIDMxdC0yMyAzMXoiLz48L3N2Zz4=",
+		"icon-pause": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB3aWR0aD0iMTc5MiIgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xNjY0IDE5MnYxNDA4cTAgMjYtMTkgNDV0LTQ1IDE5aC01MTJxLTI2IDAtNDUtMTl0LTE5LTQ1di0xNDA4cTAtMjYgMTktNDV0NDUtMTloNTEycTI2IDAgNDUgMTl0MTkgNDV6bS04OTYgMHYxNDA4cTAgMjYtMTkgNDV0LTQ1IDE5aC01MTJxLTI2IDAtNDUtMTl0LTE5LTQ1di0xNDA4cTAtMjYgMTktNDV0NDUtMTloNTEycTI2IDAgNDUgMTl0MTkgNDV6Ii8+PC9zdmc+"
+	},
+	"appearances": {
+		"tourpanel": {
+			"states": {
+				"default": {
+					"styles": {
+						"radius": 5,
+						"backgroundColor": "window",
+						"shadowLength": [ 2, 2 ],
+						"shadowColor": "buttonShadow",
+						"shadowBlurRadius": 15,
+						"transition": "top 200ms, left 200ms"
+					},
+					"properties": {
+						"offset": 0,
+						"textColor": "windowText",
+						"highlightColor": "rgba(0,0,0,0.5)"
+					}
+				},
+				"placementLeft": {
+					"properties": {
+						"offset": [ 0, 16, 0, 0 ]
+					}
+				},
+				"placementRight": {
+					"properties": {
+						"offset": [ 0, 0, 0, 16 ]
+					}
+				},
+				"placementAbove": {
+					"properties": {
+						"offset": [ 0, 0, 16, 0 ]
+					}
+				},
+				"placementBelow": {
+					"properties": {
+						"offset": [ 16, 0, 0, 0 ]
+					}
+				}
+			},
+			"components": {
+				"close": {
+					"inherit": "button",
+					"states": {
+						"default": {
+							"styles": {
+								"width": 0,
+								"backgroundColor": "transparent"
+							}
+						}
+					},
+					"components": {
+						"icon": {
+							"inherit": "icon-dark",
+							"states": {
+								"default": {
+									"properties": {
+										"width": 32,
+										"height": 32,
+										"scale": true
+									}
+								}
+							}
+						}
+					}
+				},
+				"title": {
+					"states": {
+						"default": {
+							"properties": {
+								"font": "tourstep-title"
+							}
+						}
+					}
+				},
+				"play": {
+					"inherit": "button-cancel"
+				},
+				"exit": {
+					"inherit": "button-cancel"
+				},
+				"back": {
+					"inherit": "button-info"
+				},
+				"next": {
+					"inherit": "button-ok"
+				},
+				"arrow": {
+					"states": {
+						"default": {
+							"properties": {
+								"width": 32,
+								"height":  32
+							},
+							"styles": {
+								"width": 0,
+								"color": "transparent",
+								"colorRight": "window",
+								"transition": "top 0ms, left 0ms"
+							}
+						},
+						"placementLeft": {
+							"properties": {
+								"alignY": "middle",
+								"alignX": "right",
+								"margin": [ 0, -32, 0, 0 ]
+							},
+							"styles": {
+								"width": 16,
+								"transform": "rotate(180deg)"
+							}
+						},
+						"placementRight": {
+							"properties": {
+								"alignY": "middle",
+								"alignX": "left",
+								"margin": [ 0, 0, 0, -32 ]
+							},
+							"styles": {
+								"width": 16,
+								"transform": "rotate(0deg)"
+							}
+						},
+						"placementAbove": {
+							"properties": {
+								"alignY": "bottom",
+								"alignX": "center",
+								"margin": [ 0, 0, -32, 0 ]
+							},
+							"styles": {
+								"width": 16,
+								"transform": "rotate(-90deg)"
+							}
+						},
+						"placementBelow": {
+							"properties": {
+								"alignY": "top",
+								"alignX": "center",
+								"margin": [ -32, 0, 0, 0 ]
+							},
+							"styles": {
+								"width": 16,
+								"transform": "rotate(90deg)"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+		<Wisej.Automation>
+				<BrowserName>firefox</BrowserName>
+			<LaunchOptions>
+					<SlowMo>200</SlowMo>
+					<TraceDir>./trace</TraceDir>
+					<Headless>false</Headless>
+			</LaunchOptions>
+				<URL>
+					https://wisej-demobrowser.azurewebsites.net
+				</URL>
+		</Wisej.Automation>
+</RunSettings>

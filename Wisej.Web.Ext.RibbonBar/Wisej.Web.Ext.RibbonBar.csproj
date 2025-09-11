@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);$(NetCoreVersion)-windows;$(NetCoreVersion)-android;$(NetCoreVersion)-ios;$(NetCoreVersion)-maccatalyst;$(NetCoreVersion)-windows10.0.19041.0</TargetFrameworks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+    <FileVersion>4.0.2.30</FileVersion>
+    <NoWarn>CA1416</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Platform\wisej.web.ribbonBar.AppButton.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.Item.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemButton.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemButtonGroup.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemCheckBox.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemComboBox.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemControl.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemRadioButton.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemSeparator.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemSplitButton.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.ItemTextBox.js" />
+    <None Remove="Platform\wisej.web.RibbonBar.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.RibbonGroup.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.RibbonGroupLayout.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.RibbonPage.js" />
+    <None Remove="Platform\wisej.web.ribbonBar.TabView.js" />
+    <None Remove="RibbonBar.bmp" />
+    <None Remove="Themes\RibbonBar.mixin.theme" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.AppButton.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.Item.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemButton.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemButtonGroup.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemCheckBox.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemComboBox.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemControl.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemRadioButton.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemSeparator.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemSplitButton.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.ItemTextBox.js" />
+    <EmbeddedResource Include="Platform\wisej.web.RibbonBar.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.RibbonGroup.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.RibbonGroupLayout.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.RibbonPage.js" />
+    <EmbeddedResource Include="Platform\wisej.web.ribbonBar.TabView.js" />
+    <EmbeddedResource Include="RibbonBar.bmp" />
+    <EmbeddedResource Include="Themes\RibbonBar.mixin.theme" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
+  </Target>
+</Project>

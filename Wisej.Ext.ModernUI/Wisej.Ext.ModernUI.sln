@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.ModernUI", "Wisej.Ext.ModernUI.csproj", "{FAF1DC21-5EBA-4A6F-A5F0-747BC1AC121C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAF1DC21-5EBA-4A6F-A5F0-747BC1AC121C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAF1DC21-5EBA-4A6F-A5F0-747BC1AC121C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAF1DC21-5EBA-4A6F-A5F0-747BC1AC121C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAF1DC21-5EBA-4A6F-A5F0-747BC1AC121C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {164F4F0E-20DE-4776-A26A-6B196FB16A0B}
+	EndGlobalSection
+EndGlobal

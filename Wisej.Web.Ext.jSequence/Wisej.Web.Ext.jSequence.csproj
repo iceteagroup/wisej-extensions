@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);$(NetCoreVersion)-windows;$(NetCoreVersion)-android;$(NetCoreVersion)-ios;$(NetCoreVersion)-maccatalyst;$(NetCoreVersion)-windows10.0.19041.0</TargetFrameworks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+    <FileVersion>4.0.2.30</FileVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="JavaScript\jquery-3.1.1.js" />
+    <None Remove="JavaScript\sequence-diagram-min.js" />
+    <None Remove="JavaScript\snap.svg-min.js" />
+    <None Remove="JavaScript\startup.js" />
+    <None Remove="JavaScript\underscore-min.js" />
+    <None Remove="JavaScript\webfont-min.js" />
+    <None Remove="Sequence.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JavaScript\jquery-3.1.1.js" />
+    <EmbeddedResource Include="JavaScript\sequence-diagram-min.js" />
+    <EmbeddedResource Include="JavaScript\snap.svg-min.js" />
+    <EmbeddedResource Include="JavaScript\startup.js" />
+    <EmbeddedResource Include="JavaScript\underscore-min.js" />
+    <EmbeddedResource Include="JavaScript\webfont-min.js" />
+    <EmbeddedResource Include="Sequence.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
+  </Target>
+</Project>

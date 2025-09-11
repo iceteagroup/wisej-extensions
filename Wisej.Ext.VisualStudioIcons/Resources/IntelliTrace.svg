@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px"
+	 height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.icon-canvas-transparent{opacity:0;fill:#F6F6F6;}
+	.icon-vs-out{fill:#F6F6F6;}
+	.icon-vs-bg{fill:#424242;}
+	.icon-vs-fg{fill:#F0EFF1;}
+</style>
+<g id="canvas">
+	<path class="icon-canvas-transparent" d="M16,16H0V0h16V16z"/>
+</g>
+<g id="outline">
+	<path class="icon-vs-out" d="M16,15h-5.845C9.19,15.622,8.038,15.986,6.8,15.986c-1.155,0-2.275-0.356-3.24-0.986H2
+		v-1.771l-2-2.021V6.793l1.198,1.158C1.398,7.426,1.674,6.942,2,6.496V0h14V15z"/>
+</g>
+<g id="iconBg">
+	<path class="icon-vs-bg" d="M3,5h0.56C3.364,5.131,3.18,5.276,3,5.429V5z M15,1v13h-3.661
+		c0.283-0.307,0.534-0.641,0.748-1H14V2H5v2.282C4.651,4.398,4.32,4.554,4,4.731V4H3V3h1V2H3V1H15z M13,3v2H8V3H13z M9,10.004V11H6
+		V7h1v3.004H9z M11.925,9.986c0,2.762-2.363,5-5.125,5c-1.231,0-2.351-0.452-3.218-1.193l1.075-0.537
+		C5.27,13.702,6.005,13.99,6.8,13.99c2.143,0,4.125-1.861,4.125-4.004c0-2.143-1.982-3.996-4.125-3.996
+		c-2.078,0-3.761,2.079-3.861,4.132L5,8.708v1.214l-2.638,2.251L0,9.787V8.184l1.8,1.74C1.909,7.26,4.109,4.99,6.8,4.99
+		C9.562,4.99,11.925,7.225,11.925,9.986z"/>
+</g>
+<g id="iconFg">
+	<path class="icon-vs-fg" d="M14,2v11h-1.913c0.529-0.887,0.837-1.915,0.837-3.014c0-2.077-1.085-3.91-2.729-4.986H13V3
+		H8v1.107C7.612,4.032,7.211,3.99,6.8,3.99c-0.624,0-1.229,0.103-1.8,0.292V2H14z M3.261,11.384
+		c0.548,1.478,1.935,2.538,3.589,2.601c2.123-0.029,4.075-1.873,4.075-3.999c0-2.093-1.894-3.898-3.98-3.981
+		c-0.69,0.009-1.329,0.204-1.892,0.52C4.09,7.123,3.359,8.154,3.072,9.281C3.03,9.515,3,9.754,3,10c0,0.025,0.007,0.048,0.007,0.073
+		L5,8.708v1.214L3.261,11.384z M6,7h1v3h2v1H6V7z"/>
+</g>
+</svg>

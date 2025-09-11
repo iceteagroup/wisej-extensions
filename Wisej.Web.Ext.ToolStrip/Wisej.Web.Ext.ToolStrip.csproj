@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);;net8.0-android;net8.0-ios;net8.0-windows10.0.19041.0</TargetFrameworks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace("-", "_"))</RootNamespace>
+    <NoWarn>CA1416</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="ToolStripSplitButton.ToolStripSplitButtonButtonLayout.cs" />
+  </ItemGroup>
+  <!--<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))'=='net'">
+  <Reference Include="Microsoft.CSharp" />
+  <Reference Include="System.Windows.Forms">
+    <Aliases>swf</Aliases>
+  </Reference>
+  <Reference Include="System.Data.DataSetExtensions" />
+</ItemGroup>-->
+  <ItemGroup>
+    <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Platform\" />
+  </ItemGroup>
+</Project>

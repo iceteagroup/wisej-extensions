@@ -1,0 +1,13 @@
+﻿/**
+ * FullCalendar mixin theme.
+ * Should be compatible with all themes.
+ */
+{
+	"name": "FullCalendar",
+
+	"appearances": {
+		"fullcalendar": {
+			"inherit": "widget"
+		}
+	}
+}

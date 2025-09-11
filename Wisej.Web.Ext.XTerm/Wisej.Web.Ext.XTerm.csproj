@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);$(NetCoreVersion)-windows;$(NetCoreVersion)-android;$(NetCoreVersion)-ios;$(NetCoreVersion)-maccatalyst;$(NetCoreVersion)-windows10.0.19041.0</TargetFrameworks>
+    <SignAssembly>true</SignAssembly>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+    <FileVersion>4.0.2.30</FileVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="JavaScript\addons\attach\attach.js" />
+    <None Remove="JavaScript\addons\fit\fit.js" />
+    <None Remove="JavaScript\addons\fullscreen\fullscreen.css" />
+    <None Remove="JavaScript\addons\fullscreen\fullscreen.js" />
+    <None Remove="JavaScript\addons\search\search.js" />
+    <None Remove="JavaScript\addons\search\SearchHelper.js" />
+    <None Remove="JavaScript\addons\terminado\terminado.js" />
+    <None Remove="JavaScript\addons\webLinks\webLinks.js" />
+    <None Remove="JavaScript\addons\winptyCompat\winptyCompat.js" />
+    <None Remove="JavaScript\addons\zmodem\zmodem.js" />
+    <None Remove="JavaScript\startup.js" />
+    <None Remove="JavaScript\xterm.css" />
+    <None Remove="JavaScript\xterm.js" />
+    <None Remove="XTerm.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JavaScript\addons\attach\attach.js" />
+    <EmbeddedResource Include="JavaScript\addons\fit\fit.js" />
+    <EmbeddedResource Include="JavaScript\addons\fullscreen\fullscreen.css" />
+    <EmbeddedResource Include="JavaScript\addons\fullscreen\fullscreen.js" />
+    <EmbeddedResource Include="JavaScript\addons\search\search.js" />
+    <EmbeddedResource Include="JavaScript\addons\search\SearchHelper.js" />
+    <EmbeddedResource Include="JavaScript\addons\terminado\terminado.js" />
+    <EmbeddedResource Include="JavaScript\addons\webLinks\webLinks.js" />
+    <EmbeddedResource Include="JavaScript\addons\winptyCompat\winptyCompat.js" />
+    <EmbeddedResource Include="JavaScript\addons\zmodem\zmodem.js" />
+    <EmbeddedResource Include="JavaScript\startup.js" />
+    <EmbeddedResource Include="JavaScript\xterm.css" />
+    <EmbeddedResource Include="JavaScript\xterm.js" />
+    <EmbeddedResource Include="XTerm.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
+  </Target>
+</Project>
