@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net48;net8.0;net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0-windows10.0.19041.0</TargetFrameworks>
+    <SignAssembly>true</SignAssembly>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+    <FileVersion>3.5.23.10</FileVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Native\brolib_x64.dll" />
+    <None Remove="Native\brolib_x86.dll" />
+    <None Remove="Platform\brotli_decode.js" />
+    <None Remove="Platform\Wisej-Inflate.js" />
+    <None Remove="Platform\_polyfill.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Native\brolib_x64.dll" />
+    <EmbeddedResource Include="Native\brolib_x86.dll" />
+    <EmbeddedResource Include="Platform\brotli_decode.js" />
+    <EmbeddedResource Include="Platform\Wisej-Inflate.js" />
+    <EmbeddedResource Include="Platform\_polyfill.js" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net48'">
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Wisej-3" Version="3.5.*-*" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
+  </Target>
+</Project>

@@ -1,0 +1,11 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".h" #>
+<#@ include file="..\..\Version.tt" #>
+
+#pragma once
+
+#define CLEARSCRIPT_VERSION_STRING "<#= version #>"
+#define CLEARSCRIPT_VERSION_COMMA_SEPARATED <#= version.Major #>,<#= version.Minor #>,<#= version.Build #>,<#= version.Revision #>

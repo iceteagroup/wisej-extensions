@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px"
+	 height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.icon-canvas-transparent{opacity:0;fill:#F6F6F6;}
+	.icon-vs-out{fill:#F6F6F6;}
+	.icon-vs-bg{fill:#424242;}
+	.icon-vs-fg{fill:#F0EFF1;}
+	.icon-vs-action-blue{fill:#00539C;}
+</style>
+<g id="canvas">
+	<path class="icon-canvas-transparent" d="M16,16H0V0h16V16z"/>
+</g>
+<g id="outline">
+	<path class="icon-vs-out" d="M16,15h-6v1H0V1h16V15z"/>
+</g>
+<g id="iconBg">
+	<polygon class="icon-vs-bg" points="1,2 1,6 2,6 2,5 14,5 14,13 10,13 10,14 15,14 15,2 	"/>
+</g>
+<g id="iconFg">
+	<path class="icon-vs-fg" d="M14,5v8h-4V6H2V5H14z M8,9v5H2V9H8z M4,12H3v1h1V12z M4,10H3v1h1V10z M7,12H5v1h2V12z
+		 M7,10H5v1h2V10z"/>
+</g>
+<g id="colorImportance">
+	<path class="icon-vs-action-blue" d="M7,13H5v-1h2V13z M7,10H5v1h2V10z M9,7v8H1V7H9z M8,9H2v5h6V9z M4,10H3v1h1
+		V10z M4,12H3v1h1V12z"/>
+</g>
+</svg>

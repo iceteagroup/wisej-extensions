@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net48;net8.0;net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0-windows10.0.19041.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+    <FileVersion>3.5.23.10</FileVersion>
+    <NoWarn>CA1416</NoWarn>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))'=='net'">
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Images\Link.svg" />
+    <None Remove="Images\loading.svg" />
+    <None Remove="Images\person-fill.svg" />
+    <None Remove="Images\person.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\loading.svg" />
+    <EmbeddedResource Include="Images\person-fill.svg" />
+    <EmbeddedResource Include="Images\person.svg" />
+    <EmbeddedResource Include="Themes\Chat.mixin.theme" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Wisej-3" Version="3.5.*-*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="FileMessageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
+  </Target>
+</Project>

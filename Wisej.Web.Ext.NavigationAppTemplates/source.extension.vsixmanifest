@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+	<Metadata>
+		<Identity Id="wisej-3-navigationapp-templates" Version="1.0" Language="en-US" Publisher="Ice Tea Group" />
+		<DisplayName>Wisej.NET 3 Navigation App Templates</DisplayName>
+		<Description xml:space="preserve">A project template for building a Wisej app with navigation. Similar to the Blazor app template.</Description>
+		<MoreInfo>https://docs.wisej.com/extensions</MoreInfo>
+		<Icon>wisej.png</Icon>
+	</Metadata>
+	<Installation>
+		<InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
+			<ProductArchitecture>amd64</ProductArchitecture>
+		</InstallationTarget>
+		<InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Pro">
+			<ProductArchitecture>amd64</ProductArchitecture>
+		</InstallationTarget>
+		<InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Enterprise">
+			<ProductArchitecture>amd64</ProductArchitecture>
+		</InstallationTarget>
+		<InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)">
+			<ProductArchitecture>x86</ProductArchitecture>
+		</InstallationTarget>
+		<InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.Pro">
+			<ProductArchitecture>x86</ProductArchitecture>
+		</InstallationTarget>
+		<InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.Enterprise">
+			<ProductArchitecture>x86</ProductArchitecture>
+		</InstallationTarget>
+	</Installation>
+	<Prerequisites>
+		<Prerequisite Id="Microsoft.Net.Component.4.8.SDK" Version="[16.0,18.0)" DisplayName=".NET Framework 4.8 SDK" />
+	</Prerequisites>
+	<Assets>
+		<Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Wisej 3\WisejNavigationApplication-CSharp.zip" />
+		<Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Wisej 3\WisejNavigationApplication-VB.zip" />
+	</Assets>
+</PackageManifest>

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wisej.Web.Ext.ColumnFilter", "Wisej.Web.Ext.ColumnFilter.csproj", "{DDCD888E-8FBE-430C-9858-DFB144FB8875}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		WisejWinForms|Any CPU = WisejWinForms|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDCD888E-8FBE-430C-9858-DFB144FB8875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDCD888E-8FBE-430C-9858-DFB144FB8875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDCD888E-8FBE-430C-9858-DFB144FB8875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDCD888E-8FBE-430C-9858-DFB144FB8875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDCD888E-8FBE-430C-9858-DFB144FB8875}.WisejWinForms|Any CPU.ActiveCfg = WisejWinForms|Any CPU
+		{DDCD888E-8FBE-430C-9858-DFB144FB8875}.WisejWinForms|Any CPU.Build.0 = WisejWinForms|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0FE23578-A514-41E7-922A-87874E24821B}
+	EndGlobalSection
+EndGlobal

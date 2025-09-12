@@ -1,0 +1,66 @@
+﻿{
+  "name": "SideButton",
+  "images": {
+  },
+  "colors": {
+  },
+  "appearances": {
+    "side-button": {
+      "states": {
+        "default": {
+          "styles": {
+            "transition": "width 150ms, transform 150ms"
+          },
+          "properties": {
+            "height": 40
+          }
+        },
+        "left": {
+          "styles": {
+            "radius": [ 0, 40, 40, 0 ]
+          }
+        },
+        "right": {
+          "styles": {
+            "radius": [ 40, 0, 0, 40 ]
+          }
+        },
+        "hovered": {
+          "properties": {
+            "cursor": "pointer"
+          }
+        },
+        "collapsed": {
+          "styles": {
+            "css": "{\"box-shadow\":\"0 1px 1px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)\"}"
+          },
+          "properties": {
+            "width": 20
+          }
+        }
+      },
+      "components": {
+        "icon": {
+          "states": {
+            "default": {
+              "styles": {
+                "transform": "rotateZ(180deg)",
+                "transition": "left 150ms, transform 150ms"
+              },
+              "properties": {
+                "scale": true,
+                "width": 24,
+                "height": 24
+              }
+            },
+            "collapsed": {
+              "styles": {
+                "transform": "rotateZ(0deg)"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

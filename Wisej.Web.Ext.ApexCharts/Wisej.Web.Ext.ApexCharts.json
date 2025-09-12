@@ -1,0 +1,43 @@
+﻿//
+// Extension configuration file.
+//
+// Use this file to select where to download the JavaScript and CSS
+// assets for the extension widgets. Select between "cdn", "local" or "embedded".
+//
+// Deploy this file with your application or change the Build Action to "Embedded Resource"
+// to embed it within the assembly.
+//
+
+{
+  //
+  // Specifies which set of packages to use from the "sources" map below.
+  //
+  "source": "cdn",
+
+  //
+  // Widget packages.
+  //
+  "sources": {
+    "cdn": {
+      "root": "https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.52.0",
+      "packages": {
+        "apexcharts.js": "%root%/apexcharts.min.js",
+        "apexcharts.css": "%root%/apexcharts.min.css"
+      }
+    },
+    "local": {
+      "root": "ApexCharts",
+      "packages": {
+        "apexcharts.js": "%root%/apexcharts.js",
+        "apexcharts.css": "%root%/apexcharts.css"
+      }
+    },
+    "embedded": {
+      "root": "resource.wx",
+      "packages": {
+        "apexcharts.js": "%root%/apexcharts.js",
+        "apexcharts.css": "%root%/apexcharts.css"
+      }
+    }
+  }
+}

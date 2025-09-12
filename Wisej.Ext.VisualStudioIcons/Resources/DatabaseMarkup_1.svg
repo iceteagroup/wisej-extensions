@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0;fill:#FFFFFF;}
+	.st1{fill:#F6F6F6;}
+	.st2{fill:#424242;}
+	.st3{fill:#1BA1E2;}
+	.st4{fill:#F0EFF1;}
+</style>
+<g id="outline">
+	<rect class="st0" width="16" height="16"/>
+	<path class="st1" d="M9,2C6.149,2,4,3.289,4,5v3.662L0.662,12L4.5,15.839l1.5-1.5l1.5,1.5l1.859-1.859
+		C12.025,13.874,14,12.637,14,11V5C14,3.289,11.851,2,9,2z"/>
+</g>
+<g id="icon_x5F_bg">
+	<polygon class="st2" points="4.5,10 2.5,12 4.5,14 5,13.5 3.5,12 5,10.5 	"/>
+	<polygon class="st2" points="7.5,10 7,10.5 8.5,12 7,13.5 7.5,14 9.5,12 	"/>
+	<path class="st3" d="M9,3C6.791,3,5,3.896,5,5v3.662l1,1l1.5-1.5L11.339,12l-0.844,0.844C11.96,12.547,13,11.838,13,11V5
+		C13,3.896,11.209,3,9,3z M9,6.325C7.001,6.325,5.675,5.527,5.675,5S7.001,3.675,9,3.675c1.999,0,3.325,0.798,3.325,1.325
+		S10.999,6.325,9,6.325z"/>
+</g>
+<g id="icon_x5F_fg">
+	<path class="st4" d="M9,3.675C7.001,3.675,5.675,4.473,5.675,5S7.001,6.325,9,6.325c1.999,0,3.325-0.798,3.325-1.325
+		S10.999,3.675,9,3.675z"/>
+</g>
+</svg>

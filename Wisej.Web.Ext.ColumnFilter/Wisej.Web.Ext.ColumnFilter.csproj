@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net48;net8.0;net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0-windows10.0.19041.0</TargetFrameworks>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+    <FileVersion>3.5.23.10</FileVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.cs" />
+    <Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ColumnFilter.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ColumnFilter.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.cs" />
+    <None Include="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net48'">
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.7" />
+    <PackageReference Include="Wisej-3" Version="3.5.*-*" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Messages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetDir)Wisej.Web.Ext.*.dll&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
+  </Target>
+</Project>

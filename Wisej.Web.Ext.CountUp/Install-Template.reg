@@ -1,0 +1,19 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\11.0_Config\ToolboxControlsInstaller\Wisej.Web.Ext.CountUp]
+@="{Tab Name}"
+"CodeBase"="{Path}\\Wisej.Web.Ext.CountUp.dll"
+"TargetFramework"=".NETFramework,Version=v4.5"
+"Index"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\12.0_Config\ToolboxControlsInstaller\Wisej.Web.Ext.CountUp]
+@="{Tab Name}"
+"CodeBase"="{Path}\\Wisej.Web.Ext.CountUp.dll"
+"TargetFramework"=".NETFramework,Version=v4.5"
+"Index"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\14.0_Config\ToolboxControlsInstaller\Wisej.Web.Ext.CountUp]
+@="{Tab Name}"
+"CodeBase"="{Path}\\Wisej.Web.Ext.CountUp.dll"
+"TargetFramework"=".NETFramework,Version=v4.5"
+"Index"=dword:00000001
