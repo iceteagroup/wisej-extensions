@@ -7,6 +7,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
     <FileVersion>3.5.23.10</FileVersion>
+    <NoWarn>CA1416</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.cs" />
@@ -26,7 +27,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.7" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.7" />
     <PackageReference Include="Wisej-3" Version="3.5.*-*" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>

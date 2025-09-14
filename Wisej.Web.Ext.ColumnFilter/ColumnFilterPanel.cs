@@ -162,8 +162,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 						panel.FilterButton.Image = columnFilter.Image;
 					else if (columnFilter.ImageSource.Length > 0)
 						panel.FilterButton.ImageSource = columnFilter.ImageSource;
-				}				
-			}			
+				}
+			}
 		}
 
 		/// <summary>
