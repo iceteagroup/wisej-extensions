@@ -18,12 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Wisej.Web;
 using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Linq.Dynamic;
 
 namespace Wisej.Web.Ext.ColumnFilter
 {
@@ -86,7 +81,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		[DefaultValue(false)]
 		public bool SortItems
 		{
-			get; 
+			get;
 			set;
 		} = false;
 
@@ -184,12 +179,12 @@ namespace Wisej.Web.Ext.ColumnFilter
 				{
 					row.Visible = true;
 				}
-				
+
 				// reset current cell 
 				dataGrid.CurrentCell = null;
 
 				// remove all summary rows.				
-				dataGrid.RemoveSummaryRows();				
+				dataGrid.RemoveSummaryRows();
 
 				// apply all the filters.
 				base.ApplyFilters();
@@ -201,7 +196,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 				}
 			}
 			finally
-			{				
+			{
 				Close();
 			}
 		}
