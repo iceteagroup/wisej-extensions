@@ -25,12 +25,11 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet }}
 
-      - name: Restore and Build all solutions
-        shell: pwsh
-        run: |
-          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
-            Write-Host "📦 Restoring $_"
-            dotnet restore $_.FullName
-            Write-Host "🔨 Building $_"
-            dotnet build $_.FullName --configuration Release --no-restore
-          }
+      - name: Restore NuGet packages for Wisej.NET
+        run: dotnet restore StandardExtensions/Wisej.Extensions.sln
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build with MSBuild
+        run: msbuild StandardExtensions/Wisej.Extensions.sln /m /p:Configuration=Release /p:Platform="Any CPU"
