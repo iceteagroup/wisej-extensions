@@ -1,0 +1,36 @@
+name: Build Wisej.NET and Run QA Tests 
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    # ensure the job has permission to create check runs
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
+        
+    steps:
+      - name: Checkout Standard Extentions Source
+        uses: actions/checkout@v4
+        with:
+          path: StandardExtensions
+
+      - name: Setup .NET ${{ matrix.dotnet }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+
+      - name: Restore and Build all solutions
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+            Write-Host "📦 Restoring $_"
+            dotnet restore $_.FullName
+            Write-Host "🔨 Building $_"
+            dotnet build $_.FullName --configuration Release --no-restore
+          }
