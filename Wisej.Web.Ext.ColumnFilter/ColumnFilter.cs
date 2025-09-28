@@ -312,7 +312,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 			var me = this;
 			search.Click += FilterButton_Click;
 			search.UserData.FilterColumn = column;
-			search.Image = me.Image;
+			if (me.Image != null)
+				search.Image = new Bitmap(me.Image);
 			search.ImageSource = me.ImageSource;
 
 			return search;
