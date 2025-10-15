@@ -1,35 +1,259 @@
-name: Build Wisej.NET and Run QA Tests 
+name: Build & Pack Wisej.NET Standard Extensions
 
 on:
   push:
   pull_request:
+  workflow_dispatch:
+    inputs:
+      pack:
+        description: "Build and publish NuGet package?"
+        required: false
+        default: "false"
+      assembly_version:
+        description: "Optional AssemblyFileVersion (e.g. 1.2.3.4)"
+        required: false
+        default: ""
+      package_channel:
+        description: "Channel appended to filename (test/preview/release)"
+        required: false
+        default: "test"
+        type: choice
+        options:
+          - test
+          - preview
+          - release
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build-and-test:
+  build:
     runs-on: windows-latest
+    timeout-minutes: 20
 
-    # ensure the job has permission to create check runs
     permissions:
-      contents: read
+      contents: write
       checks: write
       pull-requests: write
-        
+      packages: write
+
     steps:
-      - name: Checkout Standard Extentions Source
+      - name: Checkout Standard Extensions
         uses: actions/checkout@v4
         with:
           path: StandardExtensions
+          fetch-depth: 0
+          persist-credentials: true
 
-      - name: Setup .NET ${{ matrix.dotnet }}
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{ matrix.dotnet }}
+          dotnet-version: "8.x"
 
-      - name: Restore NuGet packages for Wisej.NET
+      - name: Configure NuGet sources (GitHub + nuget.org)
+        shell: bash
+        run: |
+          OWNER="${{ github.repository_owner }}"
+          SRC="https://nuget.pkg.github.com/${OWNER}/index.json"
+          dotnet nuget remove source github || true
+          dotnet nuget add source "$SRC" \
+            --name "github" \
+            --username "$OWNER" \
+            --password "${{ secrets.GITHUB_TOKEN }}" \
+            --store-password-in-clear-text
+          dotnet nuget remove source nuget.org || true
+          dotnet nuget add source "https://api.nuget.org/v3/index.json" --name "nuget.org"
+          dotnet nuget list source
+
+      - name: Restore
         run: dotnet restore StandardExtensions/Wisej.Extensions.sln
+
+      - name: (Optional) Bump AssemblyInfo version
+        if: ${{ github.event.inputs.assembly_version != '' }}
+        shell: pwsh
+        run: |
+          $newVersion = "${{ github.event.inputs.assembly_version }}"
+          Write-Host "Setting AssemblyInfo versions to $newVersion"
+
+          Get-ChildItem -Path "StandardExtensions" -Recurse -Filter "AssemblyInfo.cs" | ForEach-Object {
+            $path = $_.FullName
+            $content = Get-Content $path -Raw
+            $updated = $content `
+              -replace '(?<=\[assembly:\s*AssemblyFileVersion\(")[^"]+(?="\)\s*\])', $newVersion `
+              -replace '(?<=\[assembly:\s*AssemblyInformationalVersion\(")[^"]+(?="\)\s*\])', $newVersion
+            if ($updated -ne $content) {
+              Set-Content -Path $path -Value $updated -Encoding UTF8
+              Write-Host "Updated: $path"
+            }
+          }
+
+          $propsPath = "StandardExtensions/Directory.Build.props"
+          if (Test-Path $propsPath) {
+            $propsContent = Get-Content $propsPath -Raw
+            $propsUpdated = $propsContent -replace '(?<=<FileVersion>)[^<]+(?=</FileVersion>)', $newVersion
+            if ($propsUpdated -ne $propsContent) {
+              Set-Content -Path $propsPath -Value $propsUpdated -Encoding UTF8
+              Write-Host "Updated: $propsPath"
+            }
+          }
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Build with MSBuild
+      - name: Build (Release)
         run: msbuild StandardExtensions/Wisej.Extensions.sln /m /p:Configuration=Release /p:Platform="Any CPU"
+
+      - name: Install NuGet.exe
+        if: ${{ github.event.inputs.pack == 'true' }}
+        shell: pwsh
+        run: |
+          if (-not (Get-Command nuget.exe -ErrorAction SilentlyContinue)) {
+            Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "nuget.exe"
+            $env:PATH = "$pwd;$env:PATH"
+          }
+
+      - name: Pack NuGet
+        if: ${{ github.event.inputs.pack == 'true' }}
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path ./artifacts | Out-Null
+
+          $version = "${{ github.event.inputs.assembly_version }}"
+          if ([string]::IsNullOrWhiteSpace($version)) {
+            $propsPath = "StandardExtensions/Directory.Build.props"
+            if (Test-Path $propsPath) {
+              try {
+                [xml]$propsXml = Get-Content $propsPath -Raw
+                $propsVersion = $propsXml.Project.PropertyGroup.FileVersion
+                if (-not [string]::IsNullOrWhiteSpace($propsVersion)) {
+                  $version = $propsVersion
+                  Write-Host "Using version from Directory.Build.props: $version"
+                }
+              } catch {
+                Write-Warning "Failed to parse Directory.Build.props for version: $_"
+              }
+            }
+          }
+
+          if ([string]::IsNullOrWhiteSpace($version)) {
+            $version = "1.0.0.0"
+            Write-Host "Version not provided, using default: $version"
+          }
+
+          $channel = "${{ github.event.inputs.package_channel }}"
+          if ([string]::IsNullOrWhiteSpace($channel)) {
+            $channel = 'release'
+          }
+          $validChannels = @('test','preview','release')
+          if ($validChannels -notcontains $channel) {
+            Write-Host "Invalid channel '$channel' provided. Falling back to 'release'."
+            $channel = 'release'
+          }
+
+          $nuspecs = Get-ChildItem -Path "StandardExtensions" -Recurse -Include *.nuspec,*.NuSpec -File
+          if (-not $nuspecs) {
+            Write-Error "No .nuspec files found to pack."
+            exit 1
+          }
+
+          foreach ($nuspec in $nuspecs) {
+            Write-Host "Packing $($nuspec.FullName) with version $version"
+            nuget.exe pack $nuspec.FullName -Version $version -OutputDirectory ./artifacts -Properties "version=$version"
+
+            try {
+              [xml]$nuspecXml = Get-Content $nuspec.FullName -Raw
+              $pkgId = $nuspecXml.package.metadata.id
+            } catch {
+              Write-Warning "Unable to parse package id for $($nuspec.Name): $_"
+              $pkgId = $nuspec.BaseName
+            }
+
+            if ([string]::IsNullOrWhiteSpace($pkgId)) {
+              $pkgId = $nuspec.BaseName
+            }
+
+            $expected = Join-Path "./artifacts" "$pkgId.$version.nupkg"
+            if (-not (Test-Path $expected)) {
+              $built = Get-ChildItem "./artifacts" -Filter "$pkgId*.nupkg" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+              if ($built) {
+                $expected = $built.FullName
+              } else {
+                Write-Warning "No package file found for $pkgId after packing."
+                continue
+              }
+            }
+
+            $destPath = Join-Path "./artifacts" ("$pkgId-$channel-$version.nupkg")
+            Move-Item -Force $expected $destPath
+            Write-Host "Renamed package to $destPath"
+          }
+
+      - name: Publish to GitHub Packages
+        if: ${{ github.event.inputs.pack == 'true' && github.event_name != 'pull_request' }}
+        shell: bash
+        run: |
+          OWNER="${{ github.repository_owner }}"
+          SRC="https://nuget.pkg.github.com/${OWNER}/index.json"
+          for pkg in ./artifacts/*.nupkg; do
+            echo "Pushing $pkg"
+            dotnet nuget push "$pkg" \
+              --api-key "${{ secrets.GITHUB_TOKEN }}" \
+              --source "$SRC" \
+              --skip-duplicate
+          done
+
+      - name: Commit version bump
+        if: ${{ github.event_name != 'pull_request' && github.event.inputs.assembly_version != '' }}
+        shell: bash
+        working-directory: ${{ github.workspace }}/StandardExtensions
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE/StandardExtensions"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: bump AssemblyInfo version to ${{ github.event.inputs.assembly_version }} [skip ci]"
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo "No version changes to commit."
+          fi
+
+  trigger-qa:
+    name: Trigger QA Unit Tests
+    needs: build
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Dispatch QA workflow (run-unit-tests.yml)
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}   # PAT with repo + workflow scopes
+          OWNER: iceteagrouplab
+          QA_REPO: QA
+          QA_WORKFLOW_FILE: run-unit-tests.yml
+          REF: ${{ github.ref_name }}
+          PACKAGE_OWNER: iceteagroup
+          WISEJ_VERSION: ""
+        run: |
+          set -euo pipefail
+
+          echo "Triggering QA workflow for branch '${REF}' ..."
+
+          json_payload=$(jq -n \
+            --arg ref "$REF" \
+            --arg package_owner "$PACKAGE_OWNER" \
+            --arg wisej_version "$WISEJ_VERSION" \
+            '{
+              ref: $ref,
+              inputs: {
+                package_owner: $package_owner,
+                wisej_version: $wisej_version
+              }
+            }')
+
+          curl -sS -X POST \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${OWNER}/${QA_REPO}/actions/workflows/${QA_WORKFLOW_FILE}/dispatches" \
+            -d "${json_payload}"
