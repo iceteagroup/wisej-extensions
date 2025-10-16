@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>Wisej-4-ColumnFilter</id>
+    <title>Wisej.NET 4 – ColumnFilter Extension</title>
+    <tags>Real-Time-Web Full-Stack-Web-Development WinForms-to-Web VisualStudio-Web-Development Wisej-4 NETCore NETFramework Component iOs Android MacCatalyst Windows10</tags>
+    <copyright>Copyright (C) Ice Tea Group LLC, All Rights Reserved.</copyright>
+    <authors>Ice Tea Group LLC</authors>
+    <owners>Wisej</owners>
+    <version>$version$</version>
+    <projectUrl>http://wisej.com/</projectUrl>
+    <repository type="git" url="https://github.com/iceteagroup/wisej-extensions/tree/4.0/Wisej.Web.Ext.ColumnFilter" />
+    <icon>images\Wisej.png</icon>
+    <description>
+        The ColumnFilter extender component allows you to add row filtering to your DataGridViews. It includes 2 ready made FilterPanels.
+    </description>
+    <summary>
+        ColumnFilter extender integration for Wisej.NET.
+    </summary>
+    <releaseNotes>
+        Please visit https://wisej.com/release-notes/?milestone=$version$ to view the release notes.
+    </releaseNotes>
+    <language>en-US</language>
+    <!--
+      Under dependencies include only other NuGet packages.
+    -->
+    <dependencies>
+      <dependency id="Wisej-4" version="$version$" />
+      <dependency id="System.Linq.Dynamic.Core" version="1.6.0.2" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\Wisej.png" target="images/" />
+    
+    <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net48" />
+    <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net48" />
+    <file src="..\..\Distro\bin\net48\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net48" />
+    
+    <file src="..\..\Distro\bin\net8.0\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0" />
+    <file src="..\..\Distro\bin\net8.0\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0" />
+    <file src="..\..\Distro\bin\net8.0\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0" />
+    
+    <file src="..\..\Distro\bin\net8.0-windows\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-windows7.0" />
+    <file src="..\..\Distro\bin\net8.0-windows\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-windows7.0" />
+    <file src="..\..\Distro\bin\net8.0\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-windows7.0" />
+    
+    <file src="..\..\Distro\bin\net8.0-ios\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-ios14.2" />
+    <file src="..\..\Distro\bin\net8.0-ios\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-ios14.2" />
+    <file src="..\..\Distro\bin\net8.0-ios\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-ios14.2" />
+    
+    <file src="..\..\Distro\bin\net8.0-android\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-android21.0" />
+    <file src="..\..\Distro\bin\net8.0-android\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-android21.0" />
+    <file src="..\..\Distro\bin\net8.0-android\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-android21.0" />
+    
+    <file src="..\..\Distro\bin\net8.0-maccatalyst\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-maccatalyst14.0" />
+    <file src="..\..\Distro\bin\net8.0-maccatalyst\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-maccatalyst14.0" />
+    <file src="..\..\Distro\bin\net8.0-maccatalyst\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-maccatalyst14.0" />
+    
+    <file src="..\..\Distro\bin\net8.0-windows10.0.19041.0\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-windows10.0.19041.0" />
+    <file src="..\..\Distro\bin\net8.0-windows10.0.19041.0\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-windows10.0.19041.0" />
+    <file src="..\..\Distro\bin\net8.0-windows10.0.19041.0\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-windows10.0.19041.0" />
+    
+  </files>
+</package>
