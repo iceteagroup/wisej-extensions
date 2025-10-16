@@ -32,3 +32,45 @@ Note that most published extensions are also already precompiled and included in
 License
 -------
 Wisej is Copyright Ice Tea Group LLC, 2018
+
+## GitHub Workflow Usage
+
+The repository includes a **Build & Pack Wisej.NET Standard Extensions** workflow that restores, builds, and optionally packs the NuGet specifications.
+
+To queue a manual run from the GitHub UI:
+
+1. Navigate to **Actions** in this repository.
+2. Select **Build & Pack Wisej.NET Standard Extensions**.
+3. Click **Run workflow** and fill in the inputs:
+   * `pack` &ndash; set to `true` when you want `.nupkg` packages produced and published.
+   * `assembly_version` &ndash; optional override for the assembly version baked into the packages.
+   * `package_channel` &ndash; choose `test`, `preview`, or `release` to control the package filename suffix.
+4. Confirm by pressing **Run workflow**.
+
+You can also trigger the same workflow from the command line with the GitHub CLI:
+
+```bash
+gh workflow run "Build & Pack Wisej.NET Standard Extensions" \
+  --field pack=true \
+  --field assembly_version=1.2.3.4 \
+  --field package_channel=preview
+```
+
+If automation is required, issue a `workflow_dispatch` call with `curl`:
+
+```bash
+curl -X POST \
+  -H "Authorization: Bearer <GH_TOKEN_WITH_WORKFLOW_SCOPE>" \
+  -H "Accept: application/vnd.github+json" \
+  https://api.github.com/repos/iceteagroup/Wisej.NET-Standard-Extensions/actions/workflows/build-and-test.yml/dispatches \
+  -d '{
+    "ref": "main",
+    "inputs": {
+      "pack": "true",
+      "assembly_version": "1.2.3.4",
+      "package_channel": "preview"
+    }
+  }'
+```
+
+Replace `<GH_TOKEN_WITH_WORKFLOW_SCOPE>` and `ref` with your token and branch respectively. The downstream QA workflow will trigger automatically after the build job completes.
