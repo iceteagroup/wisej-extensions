@@ -8,7 +8,7 @@ on:
       pack:
         description: "Build and publish NuGet package?"
         required: false
-        default: "false"
+        default: "true"
       assembly_version:
         description: "Optional AssemblyFileVersion (e.g. 1.2.3.4)"
         required: false
@@ -31,6 +31,8 @@ jobs:
   build:
     runs-on: windows-latest
     timeout-minutes: 20
+    env:
+      PACK_INPUT: ${{ github.event.inputs.pack || 'true' }}
 
     permissions:
       contents: write
@@ -105,7 +107,7 @@ jobs:
         run: msbuild StandardExtensions/Wisej.Extensions.sln /m /p:Configuration=Release /p:Platform="Any CPU"
 
       - name: Install NuGet.exe
-        if: ${{ github.event.inputs.pack == 'true' }}
+        if: ${{ env.PACK_INPUT == 'true' }}
         shell: pwsh
         run: |
           if (-not (Get-Command nuget.exe -ErrorAction SilentlyContinue)) {
@@ -114,7 +116,7 @@ jobs:
           }
 
       - name: Pack NuGet
-        if: ${{ github.event.inputs.pack == 'true' }}
+        if: ${{ env.PACK_INPUT == 'true' }}
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path ./artifacts | Out-Null
@@ -189,8 +191,16 @@ jobs:
             Write-Host "Renamed package to $destPath"
           }
 
+      - name: Upload NuGet artifacts
+        if: ${{ env.PACK_INPUT == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages
+          path: ./artifacts/*.nupkg
+          if-no-files-found: error
+
       - name: Publish to GitHub Packages
-        if: ${{ github.event.inputs.pack == 'true' && github.event_name != 'pull_request' }}
+        if: ${{ env.PACK_INPUT == 'true' && github.event_name != 'pull_request' }}
         shell: bash
         run: |
           OWNER="${{ github.repository_owner }}"
