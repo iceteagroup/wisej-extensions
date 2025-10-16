@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>Wisej-4-AspNetControl</id>
+    <title>Wisej.NET 4 – AspNetControl Extension</title>
+    <tags>Real-Time-Web Full-Stack-Web-Development WinForms-to-Web VisualStudio-Web-Development Wisej-4 NETCore NETFramework iOs Android MacCatalyst Windows10 Component</tags>
+    <copyright>Copyright (C) Ice Tea Group LLC, All Rights Reserved.</copyright>
+    <authors>Ice Tea Group LLC</authors>
+    <owners>Wisej</owners>
+    <version>$version$</version>
+    <projectUrl>http://wisej.com/</projectUrl>
+    <repository type="git" url="https://github.com/iceteagroup/wisej-extensions/tree/4.0/Wisej.Web.Ext.AspNetControl" />
+    <icon>images\Wisej.png</icon>
+    <description>
+        AspNetControl wrapper. This control is a generic class capable of wrapping most ASP.NET controls using a very simple syntax. 
+    </description>
+    <summary>
+        AspNetControl for Wisej.NET.
+    </summary>
+    <releaseNotes>
+        Please visit https://wisej.com/release-notes/?milestone=$version$ to view the release notes.
+    </releaseNotes>
+    <language>en-US</language>
+    <!--
+      Under dependencies include only other NuGet packages.
+    -->
+    <dependencies>
+      <dependency id="Wisej-4" version="$version$" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\Wisej.png" target="images/" />
+    
+    <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.AspNetControl.dll" target="lib/net48" />
+    <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.AspNetControl.xml" target="lib/net48" />
+  </files>
+</package>
