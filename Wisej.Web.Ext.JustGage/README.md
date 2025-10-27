@@ -5,7 +5,7 @@ JustGage
 
 The JustGage extension component uses the cool JustGage widget to render animated, nice and clean gauges. It is based on Raphaël library for vector drawing, so it’s completely resolution independent and self-adjusting. As a Wisej Real Time widget you can set several properties: value, label, colors, range and more.
 
-Uses 3rd party JavaScript library [JustGage](http://justgage.com/)
+Uses 3rd party JavaScript library [JustGage](https://github.com/toorshia/justgage)
 
 License
 -------
