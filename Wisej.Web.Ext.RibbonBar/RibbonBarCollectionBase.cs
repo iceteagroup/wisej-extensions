@@ -56,7 +56,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		public event CollectionChangeEventHandler CollectionChanged;
 
 		/// <summary>
-		/// Returns the <see cref="TOwner"/> object.
+		/// Returns the <typeparamref name="TOwner"/> object.
 		/// </summary>
 		internal TOwner Owner
 		{
@@ -79,11 +79,11 @@ namespace Wisej.Web.Ext.RibbonBar
 		internal bool IsNew { get; set; }
 
 		/// <summary>
-		/// Returns the <see cref="TElement"/> at the specified location.
+		/// Returns the <typeparamref name="TElement"/> at the specified location.
 		/// </summary>
-		/// <param name="index">The index of the <see cref="TElement"/> to retrieve.</param>
-		/// <returns>The <see cref="TElement"/> at the specified index.</returns>
-		/// <exception cref="NotSupportedException">Cannot assign a <see cref="TElement"/> item.</exception>
+		/// <param name="index">The index of the <typeparamref name="TElement"/> to retrieve.</param>
+		/// <returns>The <typeparamref name="TElement"/> at the specified index.</returns>
+		/// <exception cref="NotSupportedException">Cannot assign a <typeparamref name="TElement"/> item.</exception>
 		public TElement this[int index]
 		{
 			get { return this.items[index]; }
@@ -91,7 +91,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// Returns the number of <see cref="TElement"/> items in the collection.
+		/// Returns the number of <typeparamref name="TElement"/> items in the collection.
 		/// </summary>
 		public int Count
 		{
@@ -111,7 +111,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Adds the specified <para>item</para> to the collection.
 		/// </summary>
-		/// <param name="item">The <see cref="TElement"/> to add to the collection.</param>
+		/// <param name="item">The <typeparamref name="TElement"/> to add to the collection.</param>
 		public virtual void Add(TElement item)
 		{
 			this.items.Add(item);
@@ -156,7 +156,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Checks whether the specified <para>item</para> exists in the collection.
 		/// </summary>
-		/// <param name="item">The <see cref="TElement"/> to find in the collection.</param>
+		/// <param name="item">The <typeparamref name="TElement"/> to find in the collection.</param>
 		/// <returns>True if the specified <para>item</para> exists in the collection, otherwise false.</returns>
 		public virtual bool Contains(TElement item)
 		{
@@ -186,7 +186,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns the position of the specified <para>item</para> in the collection.
 		/// </summary>
-		/// <param name="item">The <see cref="TElement"/> to find in the collection.</param>
+		/// <param name="item">The <typeparamref name="TElement"/> to find in the collection.</param>
 		/// <returns>The index of the <para>item</para> or -1 if not found.</returns>
 		public virtual int IndexOf(TElement item)
 		{
@@ -197,8 +197,8 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Inserts the specified <para>item</para> in the collection at the
 		/// specified <para>index</para>.
 		/// </summary>
-		/// <param name="index">The position to insert the specified <see cref="TElement"/> at.</param>
-		/// <param name="item">The <see cref="TElement"/> to insert in the collection.</param>
+		/// <param name="index">The position to insert the specified <typeparamref name="TElement"/> at.</param>
+		/// <param name="item">The <typeparamref name="TElement"/> to insert in the collection.</param>
 		public virtual void Insert(int index, TElement item)
 		{
 			this.items.Insert(index, item);
@@ -208,9 +208,9 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// Removes the specified <see cref="TElement"/> from the collection.
+		/// Removes the specified <typeparamref name="TElement"/> from the collection.
 		/// </summary>
-		/// <param name="item">The <see cref="TElement"/> to remove from the collection.</param>
+		/// <param name="item">The <typeparamref name="TElement"/> to remove from the collection.</param>
 		/// <returns>True if the specified <para>item</para> has been removed from the collection.</returns>
 		public virtual bool Remove(TElement item)
 		{
@@ -223,9 +223,9 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// Returns the <see cref="TElement"/> at the specified position.
+		/// Returns the <typeparamref name="TElement"/> at the specified position.
 		/// </summary>
-		/// <param name="index">The index of the <see cref="TElement"/> to removed from the collection.</param>
+		/// <param name="index">The index of the <typeparamref name="TElement"/> to removed from the collection.</param>
 		public virtual void RemoveAt(int index)
 		{
 			var item = this[index];

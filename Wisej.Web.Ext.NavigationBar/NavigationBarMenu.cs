@@ -17,12 +17,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System.ComponentModel;
+
 namespace Wisej.Web.Ext.NavigationBar
 {
 	/// <summary>
 	/// Implements the context menu to show when the <see cref="NavigationBar.CompactView"/> is true
 	/// and the user selects an item with child items.
 	/// </summary>
+	[ToolboxItem(false)]
 	public class NavigationBarMenu : ContextMenu
 	{
 		#region Wisej Implementation

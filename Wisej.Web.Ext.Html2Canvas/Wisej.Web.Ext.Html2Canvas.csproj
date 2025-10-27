@@ -7,7 +7,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.2.30</FileVersion>
+    <FileVersion>4.0.3.23</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Wisej.Web.Ext.Html2Canvas\**" />
