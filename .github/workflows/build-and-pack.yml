@@ -50,8 +50,6 @@ jobs:
         with:
           dotnet-version: '8.0.303'   # pin to your global.json version
       - run: dotnet --info
-      - run: dotnet workload restore
-      - run: dotnet build -c Release
 
       - name: Configure NuGet sources (GitHub + nuget.org)
         shell: bash
