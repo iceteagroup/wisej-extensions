@@ -29,7 +29,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: macos-latest
     timeout-minutes: 20
     permissions:
       contents: write
@@ -98,11 +98,8 @@ jobs:
             }
           }
 
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
       - name: Build (Release)
-        run: msbuild StandardExtensions/Wisej.Extensions.sln /m /p:Configuration=Release /p:Platform="Any CPU"
+        run: dotnet build StandardExtensions/Wisej.Extensions.sln --configuration Release
 
       - name: Install NuGet.exe
         if: ${{ github.event.inputs.pack == 'true' }}
