@@ -97,7 +97,7 @@ jobs:
 
       - name: Restore workloads for mobile builds
         run: |
-          dotnet workload restore
+          dotnet workload restore StandardExtensions/Wisej.Extensions.sln
 
       - name: Restore dependencies
         run: dotnet restore StandardExtensions/Wisej.Extensions.sln
