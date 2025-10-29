@@ -66,9 +66,6 @@ jobs:
           dotnet nuget add source "https://api.nuget.org/v3/index.json" --name "nuget.org"
           dotnet nuget list source
 
-      - name: Restore
-        run: dotnet restore StandardExtensions/Wisej.Extensions.sln
-
       - name: (Optional) Bump AssemblyInfo version
         if: ${{ github.event.inputs.assembly_version != '' }}
         shell: pwsh
@@ -100,6 +97,13 @@ jobs:
 
       - name: Build (Release)
         run: dotnet build StandardExtensions/Wisej.Extensions.sln --configuration Release
+
+      - name: Restore workloads for mobile builds
+        run: |
+          dotnet workload restore
+
+      - name: Restore dependencies
+        run: dotnet restore StandardExtensions/Wisej.Extensions.sln
 
       - name: Install NuGet.exe
         if: ${{ github.event.inputs.pack == 'true' }}
