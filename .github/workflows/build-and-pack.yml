@@ -41,7 +41,7 @@ jobs:
       - name: Checkout Standard Extensions
         uses: actions/checkout@v4
         with:
-          path: StandardExtensions
+          # path: StandardExtensions
           fetch-depth: 0
           persist-credentials: true
 
