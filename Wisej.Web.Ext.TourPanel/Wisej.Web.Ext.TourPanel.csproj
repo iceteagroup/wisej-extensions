@@ -27,10 +27,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Platform\wisej.web.ext.TourPanel.js" />
   </ItemGroup>
-  <ItemGroup>
+
+	<ItemGroup>
     <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
     <PackageReference Include="$(WisejPackageName)-RibbonBar" Version="$(WisejVersion)" />
+	<PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
   </ItemGroup>
+  <PropertyGroup>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+  </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
   </Target>

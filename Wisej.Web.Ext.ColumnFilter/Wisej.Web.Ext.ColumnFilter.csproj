@@ -27,7 +27,11 @@
   <ItemGroup>
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.7" />
     <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
+	  <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
   </ItemGroup>
+  <PropertyGroup>
+	  <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Update="Messages.Designer.cs">
       <DesignTime>True</DesignTime>
