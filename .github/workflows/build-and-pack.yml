@@ -41,7 +41,6 @@ jobs:
       - name: Checkout Standard Extensions
         uses: actions/checkout@v4
         with:
-          # path: StandardExtensions
           fetch-depth: 0
           persist-credentials: true
 
@@ -53,7 +52,6 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          # global-json-file: StandardExtensions/global.json
           global-json-file: global.json
 
       - run: dotnet --info
@@ -80,7 +78,7 @@ jobs:
           $newVersion = "${{ github.event.inputs.assembly_version }}"
           Write-Host "Setting AssemblyInfo versions to $newVersion"
 
-          Get-ChildItem -Path "StandardExtensions" -Recurse -Filter "AssemblyInfo.cs" | ForEach-Object {
+          Get-ChildItem -Path "." -Recurse -Filter "AssemblyInfo.cs" | ForEach-Object {
             $path = $_.FullName
             $content = Get-Content $path -Raw
             $updated = $content `
@@ -92,7 +90,7 @@ jobs:
             }
           }
 
-          $propsPath = "StandardExtensions/Directory.Build.props"
+          $propsPath = "Directory.Build.props"
           if (Test-Path $propsPath) {
             $propsContent = Get-Content $propsPath -Raw
             $propsUpdated = $propsContent -replace '(?<=<FileVersion>)[^<]+(?=</FileVersion>)', $newVersion
@@ -104,13 +102,13 @@ jobs:
 
       - name: Restore workloads for mobile builds
         run: |
-          dotnet workload restore StandardExtensions/Wisej.Extensions.sln
+          dotnet workload restore Wisej.Extensions.sln
 
       - name: Restore dependencies
-        run: dotnet restore StandardExtensions/Wisej.Extensions.sln
+        run: dotnet restore Wisej.Extensions.sln
 
       - name: Build (Release)
-        run: dotnet build StandardExtensions/Wisej.Extensions.sln --configuration Release
+        run: dotnet build Wisej.Extensions.sln --configuration Release
 
       - name: Install NuGet.exe
         if: ${{ github.event.inputs.pack == 'true' }}
@@ -129,7 +127,7 @@ jobs:
 
           $version = "${{ github.event.inputs.assembly_version }}"
           if ([string]::IsNullOrWhiteSpace($version)) {
-            $propsPath = "StandardExtensions/Directory.Build.props"
+            $propsPath = "Directory.Build.props"
             if (Test-Path $propsPath) {
               try {
                 [xml]$propsXml = Get-Content $propsPath -Raw
@@ -159,7 +157,7 @@ jobs:
             $channel = 'release'
           }
 
-          $nuspecs = Get-ChildItem -Path "StandardExtensions" -Recurse -Include *.nuspec,*.NuSpec -File
+          $nuspecs = Get-ChildItem -Path "." -Recurse -Include *.nuspec,*.NuSpec -File
           if (-not $nuspecs) {
             Write-Error "No .nuspec files found to pack."
             exit 1
@@ -222,9 +220,9 @@ jobs:
       - name: Commit version bump
         if: ${{ github.event_name != 'pull_request' && github.event.inputs.assembly_version != '' }}
         shell: bash
-        working-directory: ${{ github.workspace }}/StandardExtensions
+        working-directory: ${{ github.workspace }}
         run: |
-          git config --global --add safe.directory "$GITHUB_WORKSPACE/StandardExtensions"
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
