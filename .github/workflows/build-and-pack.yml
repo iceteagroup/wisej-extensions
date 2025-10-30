@@ -53,7 +53,8 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          global-json-file: StandardExtensions/global.json
+          # global-json-file: StandardExtensions/global.json
+          global-json-file: global.json
 
       - run: dotnet --info
 
