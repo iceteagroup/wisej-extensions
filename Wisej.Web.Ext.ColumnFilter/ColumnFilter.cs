@@ -306,7 +306,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 			{
 				Dock = DockStyle.Right,
 				Size = new Size(24, 24),
-				Cursor = Cursors.Hand
+				Cursor = Cursors.Hand,
+				SizeMode = PictureBoxSizeMode.CenterImage
 			};
 
 			var me = this;
