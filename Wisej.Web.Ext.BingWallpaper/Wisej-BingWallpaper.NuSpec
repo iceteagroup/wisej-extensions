@@ -29,7 +29,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
     
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.BingWallpaper.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.BingWallpaper.xml" target="lib/net48" />

@@ -29,7 +29,7 @@ The jSequence (https://bramp.github.io/js-sequence-diagrams/) Diagram extension 
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
 
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.jSequence.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.jSequence.xml" target="lib/net48" />

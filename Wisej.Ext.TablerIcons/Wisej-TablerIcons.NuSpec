@@ -29,7 +29,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
     <file src="..\..\Distro\bin\net48\Wisej.Ext.TablerIcons.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net8.0\Wisej.Ext.TablerIcons.dll" target="lib/net8.0" />
   </files>

@@ -29,7 +29,7 @@ The TinyEditor extension uses a simple, lightweight (under 9KB) and standalone J
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
     
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.TinyEditor.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.TinyEditor.xml" target="lib/net48" />

@@ -29,7 +29,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
 
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.CoolClock.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.CoolClock.xml" target="lib/net48" />

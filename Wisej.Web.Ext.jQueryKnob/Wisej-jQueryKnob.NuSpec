@@ -29,7 +29,7 @@ The jQueryKnob extension component uses the amazing jQueryKnob widget (http://an
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
 
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.jQueryKnob.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.jQueryKnob.xml" target="lib/net48" />

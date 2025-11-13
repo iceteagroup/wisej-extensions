@@ -30,7 +30,7 @@ The QuillJS https://quilljs.com/ extension is a platform-independent, browser-ba
   </metadata>
   <files>
   
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
     
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.QuillJS.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.QuillJS.xml" target="lib/net48" />

@@ -29,7 +29,7 @@ The OfficeViewer extension control uses Microsoft’s Office 365 Live Viewers (h
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
     
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.OfficeViewer.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.OfficeViewer.xml" target="lib/net48" />

@@ -30,7 +30,7 @@ Refer to Microsoft’s ClearScript Reference (https://microsoft.github.io/ClearS
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
     
     <file src="..\..\Distro\bin\net48\Wisej.Ext.ClearScript.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Ext.ClearScript.xml" target="lib/net48" />
