@@ -66,11 +66,109 @@ jobs:
           dotnet nuget add source "https://api.nuget.org/v3/index.json" --name "nuget.org"
           dotnet nuget list source
 
-      - name: (Optional) Bump AssemblyInfo version
-        if: ${{ github.event.inputs.assembly_version != '' }}
+      - name: Install NuGet.exe
         shell: pwsh
         run: |
-          $newVersion = "${{ github.event.inputs.assembly_version }}"
+          if (-not (Get-Command nuget.exe -ErrorAction SilentlyContinue)) {
+            Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "nuget.exe"
+            $updatedPath = "$pwd;$env:PATH"
+            $env:PATH = $updatedPath
+            "PATH=$updatedPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          }
+
+      - name: Determine assembly version
+        id: determine_version
+        shell: pwsh
+        run: |
+          $provided = "${{ github.event.inputs.assembly_version }}"
+          if (-not [string]::IsNullOrWhiteSpace($provided)) {
+            Write-Warning "Manual assembly version input is ignored. Version will be determined automatically."
+          }
+
+          $owner = "${{ github.repository_owner }}"
+          $packageName = $null
+          $propsPath = "Directory.Build.props"
+          if (Test-Path $propsPath) {
+            try {
+              [xml]$propsXml = Get-Content $propsPath -Raw
+              $packageName = $propsXml.Project.PropertyGroup.WisejPackageName
+              if ([string]::IsNullOrWhiteSpace($packageName)) {
+                Write-Warning "WisejPackageName property not found. Using default package id."
+              }
+            } catch {
+              Write-Warning "Unable to parse Directory.Build.props for package name: $_"
+            }
+          }
+          if ([string]::IsNullOrWhiteSpace($packageName)) {
+            $packageName = "Wisej-4"
+          }
+
+          $sources = @(
+            "https://api.nuget.org/v3/index.json",
+            "https://nuget.pkg.github.com/$owner/index.json"
+          )
+
+          $semanticVersions = @()
+          foreach ($source in $sources) {
+            try {
+              $listOutput = & nuget.exe list $packageName -Source $source -AllVersions -Prerelease 2>$null
+              foreach ($line in $listOutput) {
+                if ($line -match "^$packageName\s+(?<ver>[0-9A-Za-z\.-\+]+)$") {
+                  $ver = $Matches['ver']
+                  try {
+                    $semVer = [System.Management.Automation.SemanticVersion]::Parse($ver)
+                    $semanticVersions += [PSCustomObject]@{
+                      Original = $ver
+                      Semantic = $semVer
+                    }
+                  } catch {
+                    Write-Warning "Unable to parse semantic version '$ver' from source '$source'."
+                  }
+                }
+              }
+            } catch {
+              Write-Warning "Failed to query ${source} for ${packageName}: $_"
+            }
+          }
+
+          $latestVersion = $null
+          if ($semanticVersions.Count -gt 0) {
+            $latestVersion = ($semanticVersions | Sort-Object Semantic -Descending | Select-Object -First 1).Semantic.Version
+            Write-Host "Latest published version for ${packageName}: $($latestVersion)"
+          } elseif (Test-Path $propsPath) {
+            try {
+              [xml]$propsXmlForVersion = Get-Content $propsPath -Raw
+              $fallbackVersion = $propsXmlForVersion.Project.PropertyGroup.FileVersion
+              if (-not [string]::IsNullOrWhiteSpace($fallbackVersion)) {
+                $latestVersion = [System.Version]::Parse($fallbackVersion)
+                Write-Host "Using Directory.Build.props FileVersion as fallback: $fallbackVersion"
+              }
+            } catch {
+              Write-Warning "Failed to load fallback version from Directory.Build.props: $_"
+            }
+          }
+
+          if (-not $latestVersion) {
+            $latestVersion = [System.Version]::new(4, 0, 0, 0)
+            Write-Host "Defaulting base version to $latestVersion"
+          }
+
+          $baseMajor = $latestVersion.Major
+          $baseMinor = $latestVersion.Minor
+          $baseBuild = if ($latestVersion.Build -ge 0) { $latestVersion.Build } else { 0 }
+          $baseRevision = if ($latestVersion.Revision -ge 0) { $latestVersion.Revision } else { 0 }
+          $nextVersion = [System.Version]::new($baseMajor, $baseMinor, $baseBuild, $baseRevision + 1)
+          Write-Host "Next assembly version: $($nextVersion.ToString())"
+
+          $versionString = $nextVersion.ToString()
+          "assembly_version=$versionString" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "ASSEMBLY_VERSION=$versionString" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Update AssemblyInfo version
+        if: ${{ steps.determine_version.outputs.assembly_version != '' }}
+        shell: pwsh
+        run: |
+          $newVersion = "${{ steps.determine_version.outputs.assembly_version }}"
           Write-Host "Setting AssemblyInfo versions to $newVersion"
 
           Get-ChildItem -Path "." -Recurse -Filter "AssemblyInfo.cs" | ForEach-Object {
@@ -103,16 +201,7 @@ jobs:
         run: dotnet restore Wisej.Extensions.sln
 
       - name: Build (Release)
-        run: dotnet build Wisej.Extensions.sln --configuration Release
-
-      - name: Install NuGet.exe
-        if: ${{ github.event.inputs.pack == 'true' }}
-        shell: pwsh
-        run: |
-          if (-not (Get-Command nuget.exe -ErrorAction SilentlyContinue)) {
-            Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "nuget.exe"
-            $env:PATH = "$pwd;$env:PATH"
-          }
+        run: dotnet build Wisej.Extensions.sln --configuration Release --no-incremental
 
       - name: Pack NuGet
         if: ${{ github.event.inputs.pack == 'true' }}
@@ -120,26 +209,10 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force -Path ./artifacts | Out-Null
 
-          $version = "${{ github.event.inputs.assembly_version }}"
+          $version = "${{ steps.determine_version.outputs.assembly_version }}"
           if ([string]::IsNullOrWhiteSpace($version)) {
-            $propsPath = "Directory.Build.props"
-            if (Test-Path $propsPath) {
-              try {
-                [xml]$propsXml = Get-Content $propsPath -Raw
-                $propsVersion = $propsXml.Project.PropertyGroup.FileVersion
-                if (-not [string]::IsNullOrWhiteSpace($propsVersion)) {
-                  $version = $propsVersion
-                  Write-Host "Using version from Directory.Build.props: $version"
-                }
-              } catch {
-                Write-Warning "Failed to parse Directory.Build.props for version: $_"
-              }
-            }
-          }
-
-          if ([string]::IsNullOrWhiteSpace($version)) {
-            $version = "1.0.0.0"
-            Write-Host "Version not provided, using default: $version"
+            Write-Error "Assembly version could not be determined."
+            exit 1
           }
 
           $channel = "${{ github.event.inputs.package_channel }}"
@@ -154,13 +227,79 @@ jobs:
 
           $nuspecs = Get-ChildItem -Path "." -Recurse -Include *.nuspec,*.NuSpec -File
           if (-not $nuspecs) {
-            Write-Error "No .nuspec files found to pack."
-            exit 1
+            Write-Warning "No .nuspec files found. Skipping NuGet packing."
+            exit 0
           }
 
+          $tempNuspecDir = Join-Path $env:TEMP "wisej-nuspec"
+          New-Item -ItemType Directory -Force -Path $tempNuspecDir | Out-Null
+
           foreach ($nuspec in $nuspecs) {
+            if (-not (Test-Path $nuspec.FullName)) {
+              Write-Warning "Skipping missing nuspec at $($nuspec.FullName)"
+              continue
+            }
+
+            $nuspecDirectory = $nuspec.Directory
+            if (-not $nuspecDirectory) {
+              Write-Warning "Skipping $($nuspec.FullName) because the directory could not be resolved."
+              continue
+            }
+
+            $adjustedNuspecPath = $nuspec.FullName
+            $shouldUseTemp = $false
+            try {
+              [xml]$nuspecXml = Get-Content $nuspec.FullName -Raw
+              $filesNodes = @()
+              if ($nuspecXml.package.files) {
+                $filesNodes = @($nuspecXml.package.files.file)
+              }
+
+              foreach ($fileNode in $filesNodes) {
+                if (-not $fileNode -or -not $fileNode.src) {
+                  continue
+                }
+
+                $srcValue = $fileNode.src.ToString()
+                if ($srcValue -match '(?i)Wisej\.png$' -and -not ($srcValue -match '^\.\.\\')) {
+                  $resolvedPath = Join-Path $nuspecDirectory.FullName $srcValue
+                  if (-not (Test-Path $resolvedPath)) {
+                    $parent = $nuspecDirectory.Parent
+                    if ($parent) {
+                      $iconCandidates = @(
+                        Join-Path $parent.FullName "Wisej.png",
+                        Join-Path $parent.FullName "wisej.png"
+                      ) | Where-Object { Test-Path $_ }
+
+                      if ($iconCandidates.Count -gt 0) {
+                        $iconLeaf = Split-Path $iconCandidates[0] -Leaf
+                        $fileNode.src = "..\\$iconLeaf"
+                        Write-Host "Updated icon source for $($nuspec.Name) to ..\\$iconLeaf"
+                        $shouldUseTemp = $true
+                      } else {
+                        Write-Warning "Wisej.png not found for $($nuspec.Name)."
+                      }
+                    } else {
+                      Write-Warning "Cannot locate parent directory for $($nuspec.Name) to resolve Wisej.png."
+                    }
+                  }
+                }
+              }
+
+              if ($shouldUseTemp) {
+                $tempPath = Join-Path $tempNuspecDir $nuspec.Name
+                $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+                $writer = New-Object System.IO.StreamWriter($tempPath, $false, $utf8NoBom)
+                $nuspecXml.Save($writer)
+                $writer.Close()
+                $adjustedNuspecPath = $tempPath
+              }
+            } catch {
+              Write-Warning "Failed to adjust nuspec $($nuspec.FullName): $_"
+            }
+
             Write-Host "Packing $($nuspec.FullName) with version $version"
-            nuget.exe pack $nuspec.FullName -Version $version -OutputDirectory ./artifacts -Properties "version=$version"
+            nuget.exe pack $adjustedNuspecPath -Version $version -OutputDirectory ./artifacts -Properties "version=$version"
 
             try {
               [xml]$nuspecXml = Get-Content $nuspec.FullName -Raw
