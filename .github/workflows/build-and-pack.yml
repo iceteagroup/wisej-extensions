@@ -134,7 +134,7 @@ jobs:
           $latestVersion = $null
           if ($semanticVersions.Count -gt 0) {
             $latestVersion = ($semanticVersions | Sort-Object Semantic -Descending | Select-Object -First 1).Semantic.Version
-            Write-Host "Latest published version for $packageName: $($latestVersion.ToString())"
+            Write-Host "Latest published version for ${packageName}: $($latestVersion)"
           } elseif (Test-Path $propsPath) {
             try {
               [xml]$propsXmlForVersion = Get-Content $propsPath -Raw
