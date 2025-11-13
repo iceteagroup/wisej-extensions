@@ -5,10 +5,6 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
-      pack:
-        description: "Build and publish NuGet package?"
-        required: false
-        default: "false"
       assembly_version:
         description: "Optional AssemblyFileVersion (e.g. 1.2.3.4)"
         required: false
@@ -204,7 +200,6 @@ jobs:
         run: dotnet build Wisej.Extensions.sln --configuration Release --no-incremental
 
       - name: Pack NuGet
-        if: ${{ github.event.inputs.pack == 'true' }}
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path ./artifacts | Out-Null
@@ -330,7 +325,6 @@ jobs:
           }
 
       - name: Upload NuGet artifacts
-        if: ${{ github.event.inputs.pack == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: nuget-packages
@@ -338,7 +332,7 @@ jobs:
           if-no-files-found: error
 
       - name: Publish to GitHub Packages
-        if: ${{ github.event.inputs.pack == 'true' && github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         shell: bash
         run: |
           OWNER="${{ github.repository_owner }}"
