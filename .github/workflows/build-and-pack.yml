@@ -199,6 +199,37 @@ jobs:
       - name: Build (Release)
         run: dotnet build Wisej.Extensions.sln --configuration Release --no-incremental
 
+      - name: Stage build outputs for packing
+        shell: pwsh
+        run: |
+          $distroRoot = Join-Path $PWD 'Distro'
+          if (Test-Path $distroRoot) {
+            Remove-Item -Path $distroRoot -Recurse -Force
+          }
+
+          $distroBin = Join-Path $distroRoot 'bin'
+          New-Item -ItemType Directory -Force -Path $distroBin | Out-Null
+
+          $releaseDirs = Get-ChildItem -Path $PWD -Recurse -Directory -Filter 'Release' |
+            Where-Object { $_.Parent -and $_.Parent.Name -eq 'bin' }
+
+          foreach ($releaseDir in $releaseDirs) {
+            $targetFrameworkDirs = Get-ChildItem -Path $releaseDir.FullName -Directory -ErrorAction SilentlyContinue
+
+            if (-not $targetFrameworkDirs) {
+              continue
+            }
+
+            foreach ($tfmDir in $targetFrameworkDirs) {
+              $tfmName = $tfmDir.Name
+              $destination = Join-Path $distroBin $tfmName
+              New-Item -ItemType Directory -Force -Path $destination | Out-Null
+
+              $sourcePattern = Join-Path $tfmDir.FullName '*'
+              Copy-Item -Path $sourcePattern -Destination $destination -Recurse -Force
+            }
+          }
+
       - name: Pack NuGet
         shell: pwsh
         run: |

@@ -30,7 +30,7 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src=".\bin\Debug\net8.0\Wisej.Ext.Playwright.dll" target="lib/net8.0" />
-		<file src=".\bin\Debug\net8.0\Wisej.Ext.Playwright.xml" target="lib/net8.0" />
-	</files>
+                <file src="..\..\Distro\bin\net8.0\Wisej.Ext.PlayWright.dll" target="lib/net8.0" />
+                <file src="..\..\Distro\bin\net8.0\Wisej.Ext.PlayWright.xml" target="lib/net8.0" />
+        </files>
 </package>
