@@ -28,7 +28,7 @@ The Clipboard extension provides the ability to respond to clipboard commands (c
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
     
     <file src="..\..\Distro\bin\net48\Wisej.Ext.ClientClipboard.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Ext.ClientClipboard.xml" target="lib/net48" />

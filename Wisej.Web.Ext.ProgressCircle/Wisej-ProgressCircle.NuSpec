@@ -29,7 +29,7 @@ The ProgressCircle component is entirely implemented on the server side as a der
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
     
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.ProgressCircle.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.ProgressCircle.xml" target="lib/net48" />

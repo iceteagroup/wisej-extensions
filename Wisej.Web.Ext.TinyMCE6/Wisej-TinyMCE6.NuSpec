@@ -29,7 +29,7 @@ The TinyMCE6 https://www.tiny.cloud/ extension gives you total control over your
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
     
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.TinyMCE6.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.TinyMCE6.xml" target="lib/net48" />

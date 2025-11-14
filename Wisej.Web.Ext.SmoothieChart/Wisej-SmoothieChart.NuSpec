@@ -29,7 +29,7 @@ The SmoothieChart extension uses a cool JavaScript charting widget (http://smoot
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
     
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.SmoothieChart.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.SmoothieChart.xml" target="lib/net48" />

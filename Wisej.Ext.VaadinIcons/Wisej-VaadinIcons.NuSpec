@@ -29,7 +29,7 @@ The complete VaadinIcons icon pack (https://github.com/vaadin/vaadin-icons). All
     </dependencies>
   </metadata>
   <files>
-    <file src=".\Wisej.png" target="images/" />
+    <file src="..\Wisej.png" target="images/" />
     <file src="..\..\Distro\bin\net48\Wisej.Ext.VaadinIcons.dll" target="lib/net48" />
     <file src="..\..\Distro\bin\net8.0\Wisej.Ext.VaadinIcons.dll" target="lib/net8.0" />
   </files>
