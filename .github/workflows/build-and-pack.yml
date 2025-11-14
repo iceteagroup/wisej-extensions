@@ -202,6 +202,24 @@ jobs:
       - name: Stage build outputs for packing
         shell: pwsh
         run: |
+          function Copy-TfmContent {
+            param(
+              [System.IO.DirectoryInfo]$SourceDir,
+              [string]$DistroBin
+            )
+
+            if (-not $SourceDir -or -not (Test-Path $SourceDir.FullName)) {
+              return
+            }
+
+            $tfmName = $SourceDir.Name
+            $destination = Join-Path $DistroBin $tfmName
+            New-Item -ItemType Directory -Force -Path $destination | Out-Null
+
+            Write-Host "Staging $($SourceDir.FullName) -> $destination"
+            Copy-Item -Path (Join-Path $SourceDir.FullName '*') -Destination $destination -Recurse -Force
+          }
+
           $distroRoot = Join-Path $PWD 'Distro'
           if (Test-Path $distroRoot) {
             Remove-Item -Path $distroRoot -Recurse -Force
@@ -210,23 +228,24 @@ jobs:
           $distroBin = Join-Path $distroRoot 'bin'
           New-Item -ItemType Directory -Force -Path $distroBin | Out-Null
 
-          $releaseDirs = Get-ChildItem -Path $PWD -Recurse -Directory -Filter 'Release' |
-            Where-Object { $_.Parent -and $_.Parent.Name -eq 'bin' }
-
-          foreach ($releaseDir in $releaseDirs) {
-            $targetFrameworkDirs = Get-ChildItem -Path $releaseDir.FullName -Directory -ErrorAction SilentlyContinue
-
-            if (-not $targetFrameworkDirs) {
+          $projectFiles = Get-ChildItem -Path $PWD -Recurse -Filter '*.csproj' -File -ErrorAction SilentlyContinue
+          foreach ($proj in $projectFiles) {
+            $releaseDir = Join-Path $proj.Directory.FullName 'bin/Release'
+            if (-not (Test-Path $releaseDir)) {
               continue
             }
 
+            $targetFrameworkDirs = Get-ChildItem -Path $releaseDir -Directory -ErrorAction SilentlyContinue
             foreach ($tfmDir in $targetFrameworkDirs) {
-              $tfmName = $tfmDir.Name
-              $destination = Join-Path $distroBin $tfmName
-              New-Item -ItemType Directory -Force -Path $destination | Out-Null
+              Copy-TfmContent -SourceDir $tfmDir -DistroBin $distroBin
+            }
+          }
 
-              $sourcePattern = Join-Path $tfmDir.FullName '*'
-              Copy-Item -Path $sourcePattern -Destination $destination -Recurse -Force
+          $rootBin = Join-Path $PWD 'bin'
+          if (Test-Path $rootBin) {
+            $rootTfms = Get-ChildItem -Path $rootBin -Directory -ErrorAction SilentlyContinue
+            foreach ($tfmDir in $rootTfms) {
+              Copy-TfmContent -SourceDir $tfmDir -DistroBin $distroBin
             }
           }
 
