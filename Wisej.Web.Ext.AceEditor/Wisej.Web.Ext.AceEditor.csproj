@@ -8,7 +8,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.3.23</FileVersion>
+    <FileVersion>4.0.4.13</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="JavaScript\startup.js" />
