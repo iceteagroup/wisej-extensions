@@ -119,7 +119,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 					var indexes = dataGrid.Rows.AsQueryable().Where(config, combinedWhere).Select(r => r.Index).ToArray();
 					foreach (var row in dataGrid.Rows)
 					{
-						if (Array.BinarySearch(indexes, row.Index) < 0)
+						if (!row.IsNewRow && Array.BinarySearch(indexes, row.Index) < 0)
 							row.Visible = false;
 					}
 				}
