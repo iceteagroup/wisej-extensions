@@ -418,7 +418,7 @@ jobs:
                   $adjustedNuspecPath = $tempPath
                 }
               } catch {
-                Write-Warning "Failed to adjust nuspec $nuspecPath: $_"
+                Write-Warning ("Failed to adjust nuspec {0}: {1}" -f $nuspecPath, $_)
               }
 
               $tempDir = Join-Path $env:TEMP ("wisej-pack-" + [Guid]::NewGuid().ToString("N"))
@@ -435,7 +435,7 @@ jobs:
                 [xml]$nuspecXml = Get-Content $nuspecPath -Raw
                 $pkgId = $nuspecXml.package.metadata.id
               } catch {
-                Write-Warning "Unable to parse package id for $nuspecPath: $_"
+                Write-Warning ("Unable to parse package id for {0}: {1}" -f $nuspecPath, $_)
               }
 
               if ([string]::IsNullOrWhiteSpace($pkgId)) {
