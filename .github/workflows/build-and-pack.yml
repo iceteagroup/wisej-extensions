@@ -248,7 +248,7 @@ jobs:
         run: dotnet restore Wisej.Extensions.sln
 
       - name: Build (Release)
-        run: dotnet build Wisej.Extensions.sln --configuration Release --no-incremental
+        run: dotnet build Wisej.Extensions.sln --configuration Release --no-incremental /m
 
       - name: Stage build outputs for packing
         shell: powershell
@@ -346,102 +346,125 @@ jobs:
             exit 0
           }
 
-          $tempNuspecDir = Join-Path $env:TEMP "wisej-nuspec"
-          New-Item -ItemType Directory -Force -Path $tempNuspecDir | Out-Null
+          $nugetPath = (Get-Command nuget.exe -ErrorAction Stop).Source
+          $artifactsDir = (Resolve-Path "./artifacts").Path
+          $jobs = @()
 
           foreach ($nuspec in $nuspecs) {
-            if (-not (Test-Path $nuspec.FullName)) {
-              Write-Warning "Skipping missing nuspec at $($nuspec.FullName)"
-              continue
-            }
+            $jobs += Start-Job -ArgumentList $nuspec.FullName, $nuspec.BaseName, $version, $channel, $nugetPath, $artifactsDir -ScriptBlock {
+              param($nuspecPath, $nuspecBaseName, $version, $channel, $nugetPath, $artifactsDir)
+              $ErrorActionPreference = 'Stop'
 
-            $nuspecDirectory = $nuspec.Directory
-            if (-not $nuspecDirectory) {
-              Write-Warning "Skipping $($nuspec.FullName) because the directory could not be resolved."
-              continue
-            }
-
-            $adjustedNuspecPath = $nuspec.FullName
-            $shouldUseTemp = $false
-            try {
-              [xml]$nuspecXml = Get-Content $nuspec.FullName -Raw
-              $filesNodes = @()
-              if ($nuspecXml.package.files) {
-                $filesNodes = @($nuspecXml.package.files.file)
+              if (-not (Test-Path $nuspecPath)) {
+                Write-Warning "Skipping missing nuspec at $nuspecPath"
+                return
               }
 
-              foreach ($fileNode in $filesNodes) {
-                if (-not $fileNode -or -not $fileNode.src) {
-                  continue
+              $nuspecFile = Get-Item -LiteralPath $nuspecPath
+              $nuspecDirectory = $nuspecFile.Directory
+              if (-not $nuspecDirectory) {
+                Write-Warning "Skipping $nuspecPath because the directory could not be resolved."
+                return
+              }
+
+              $adjustedNuspecPath = $nuspecPath
+              $shouldUseTemp = $false
+              try {
+                [xml]$nuspecXml = Get-Content $nuspecPath -Raw
+                $filesNodes = @()
+                if ($nuspecXml.package.files) {
+                  $filesNodes = @($nuspecXml.package.files.file)
                 }
 
-                $srcValue = $fileNode.src.ToString()
-                if ($srcValue -match '(?i)Wisej\.png$' -and -not ($srcValue -match '^\.\.\\')) {
-                  $resolvedPath = Join-Path $nuspecDirectory.FullName $srcValue
-                  if (-not (Test-Path $resolvedPath)) {
-                    $parent = $nuspecDirectory.Parent
-                    if ($parent) {
-                      $iconCandidates = @(
-                        Join-Path $parent.FullName "Wisej.png",
-                        Join-Path $parent.FullName "wisej.png"
-                      ) | Where-Object { Test-Path $_ }
+                foreach ($fileNode in $filesNodes) {
+                  if (-not $fileNode -or -not $fileNode.src) {
+                    continue
+                  }
 
-                      if ($iconCandidates.Count -gt 0) {
-                        $iconLeaf = Split-Path $iconCandidates[0] -Leaf
-                        $fileNode.src = "..\\$iconLeaf"
-                        Write-Host "Updated icon source for $($nuspec.Name) to ..\\$iconLeaf"
-                        $shouldUseTemp = $true
+                  $srcValue = $fileNode.src.ToString()
+                  if ($srcValue -match '(?i)Wisej\.png$' -and -not ($srcValue -match '^\.\.\\')) {
+                    $resolvedPath = Join-Path $nuspecDirectory.FullName $srcValue
+                    if (-not (Test-Path $resolvedPath)) {
+                      $parent = $nuspecDirectory.Parent
+                      if ($parent) {
+                        $iconCandidates = @(
+                          Join-Path $parent.FullName "Wisej.png",
+                          Join-Path $parent.FullName "wisej.png"
+                        ) | Where-Object { Test-Path $_ }
+
+                        if ($iconCandidates.Count -gt 0) {
+                          $iconLeaf = Split-Path $iconCandidates[0] -Leaf
+                          $fileNode.src = "..\\$iconLeaf"
+                          Write-Host "Updated icon source for $($nuspecFile.Name) to ..\\$iconLeaf"
+                          $shouldUseTemp = $true
+                        } else {
+                          Write-Warning "Wisej.png not found for $($nuspecFile.Name)."
+                        }
                       } else {
-                        Write-Warning "Wisej.png not found for $($nuspec.Name)."
+                        Write-Warning "Cannot locate parent directory for $($nuspecFile.Name) to resolve Wisej.png."
                       }
-                    } else {
-                      Write-Warning "Cannot locate parent directory for $($nuspec.Name) to resolve Wisej.png."
                     }
                   }
                 }
+
+                if ($shouldUseTemp) {
+                  $tempNuspecDir = Join-Path $env:TEMP "wisej-nuspec"
+                  New-Item -ItemType Directory -Force -Path $tempNuspecDir | Out-Null
+                  $tempPath = Join-Path $tempNuspecDir ("$([Guid]::NewGuid().ToString('N'))-$($nuspecFile.Name)")
+                  $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+                  $writer = New-Object System.IO.StreamWriter($tempPath, $false, $utf8NoBom)
+                  $nuspecXml.Save($writer)
+                  $writer.Close()
+                  $adjustedNuspecPath = $tempPath
+                }
+              } catch {
+                Write-Warning "Failed to adjust nuspec $nuspecPath: $_"
               }
 
-              if ($shouldUseTemp) {
-                $tempPath = Join-Path $tempNuspecDir $nuspec.Name
-                $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-                $writer = New-Object System.IO.StreamWriter($tempPath, $false, $utf8NoBom)
-                $nuspecXml.Save($writer)
-                $writer.Close()
-                $adjustedNuspecPath = $tempPath
+              $tempDir = Join-Path $env:TEMP ("wisej-pack-" + [Guid]::NewGuid().ToString("N"))
+              New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
+
+              Write-Host "Packing $nuspecPath with version $version"
+              & $nugetPath pack $adjustedNuspecPath -Version $version -OutputDirectory $tempDir -Properties "version=$version"
+              if ($LASTEXITCODE -ne 0) {
+                throw "nuget.exe pack failed for $nuspecPath (exit $LASTEXITCODE)"
               }
-            } catch {
-              Write-Warning "Failed to adjust nuspec $($nuspec.FullName): $_"
-            }
 
-            Write-Host "Packing $($nuspec.FullName) with version $version"
-            nuget.exe pack $adjustedNuspecPath -Version $version -OutputDirectory ./artifacts -Properties "version=$version"
-
-            try {
-              [xml]$nuspecXml = Get-Content $nuspec.FullName -Raw
-              $pkgId = $nuspecXml.package.metadata.id
-            } catch {
-              Write-Warning "Unable to parse package id for $($nuspec.Name): $_"
-              $pkgId = $nuspec.BaseName
-            }
-
-            if ([string]::IsNullOrWhiteSpace($pkgId)) {
-              $pkgId = $nuspec.BaseName
-            }
-
-            $expected = Join-Path "./artifacts" "$pkgId.$version.nupkg"
-            if (-not (Test-Path $expected)) {
-              $built = Get-ChildItem "./artifacts" -Filter "$pkgId*.nupkg" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
-              if ($built) {
-                $expected = $built.FullName
-              } else {
-                Write-Warning "No package file found for $pkgId after packing."
-                continue
+              $pkgId = $null
+              try {
+                [xml]$nuspecXml = Get-Content $nuspecPath -Raw
+                $pkgId = $nuspecXml.package.metadata.id
+              } catch {
+                Write-Warning "Unable to parse package id for $nuspecPath: $_"
               }
-            }
 
-            $destPath = Join-Path "./artifacts" ("$pkgId-$channel-$version.nupkg")
-            Move-Item -Force $expected $destPath
-            Write-Host "Renamed package to $destPath"
+              if ([string]::IsNullOrWhiteSpace($pkgId)) {
+                $pkgId = $nuspecBaseName
+              }
+
+              $expected = Join-Path $tempDir "$pkgId.$version.nupkg"
+              if (-not (Test-Path $expected)) {
+                $built = Get-ChildItem $tempDir -Filter "$pkgId*.nupkg" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+                if ($built) {
+                  $expected = $built.FullName
+                } else {
+                  Write-Warning "No package file found for $pkgId after packing."
+                  return
+                }
+              }
+
+              $destPath = Join-Path $artifactsDir ("$pkgId-$channel-$version.nupkg")
+              Move-Item -Force $expected $destPath
+              Write-Host "Renamed package to $destPath"
+            }
+          }
+
+          $jobs | Wait-Job | Out-Null
+          $failed = $jobs | Where-Object { $_.State -eq 'Failed' }
+          $jobs | Receive-Job -ErrorAction Continue | Out-Null
+          $jobs | Remove-Job | Out-Null
+          if ($failed) {
+            throw "One or more NuGet pack jobs failed."
           }
 
       - name: Upload NuGet artifacts
