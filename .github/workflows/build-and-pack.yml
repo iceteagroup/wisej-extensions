@@ -25,7 +25,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: [self-hosted, windows]
     timeout-minutes: 20
     permissions:
       contents: write
@@ -40,41 +40,92 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
+      - name: Configure .NET install dir
+        shell: powershell
+        run: |
+          $dotnetDir = "${{ runner.temp }}\dotnet"
+          "DOTNET_INSTALL_DIR=$dotnetDir" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "DOTNET_ROOT=$dotnetDir" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          $dotnetDir | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
 
+      - name: Ensure gzip available for cache
+        shell: powershell
+        run: |
+          $gitUsrBin = "C:\Program Files\Git\usr\bin"
+          if (Test-Path $gitUsrBin) {
+            $gzip = Join-Path $gitUsrBin "gzip.exe"
+            if (Test-Path $gzip) {
+              $gitUsrBin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+            } else {
+              Write-Warning "gzip.exe not found in $gitUsrBin; cache save may fail."
+            }
+          } else {
+            Write-Warning "Git usr bin not found at $gitUsrBin; cache save may fail."
+          }
+
       - run: dotnet --info
 
       - name: Configure NuGet sources (GitHub + nuget.org)
-        shell: bash
+        shell: powershell
         run: |
-          OWNER="${{ github.repository_owner }}"
-          SRC="https://nuget.pkg.github.com/${OWNER}/index.json"
-          dotnet nuget remove source github || true
-          dotnet nuget add source "$SRC" \
-            --name "github" \
-            --username "$OWNER" \
-            --password "${{ secrets.GITHUB_TOKEN }}" \
+          $owner = "${{ github.repository_owner }}"
+          $src = "https://nuget.pkg.github.com/$owner/index.json"
+
+          dotnet nuget remove source github 2>$null
+          if ($LASTEXITCODE -ne 0) { $LASTEXITCODE = 0 }
+          dotnet nuget add source "$src" `
+            --name "github" `
+            --username "$owner" `
+            --password "${{ secrets.GITHUB_TOKEN }}" `
             --store-password-in-clear-text
-          dotnet nuget remove source nuget.org || true
+
+          dotnet nuget remove source nuget.org 2>$null
+          if ($LASTEXITCODE -ne 0) { $LASTEXITCODE = 0 }
           dotnet nuget add source "https://api.nuget.org/v3/index.json" --name "nuget.org"
           dotnet nuget list source
 
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.sln', '**/*.csproj', '**/packages.lock.json', '**/Directory.Packages.props', '**/global.json') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
+      - name: Cache .NET workloads
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.DOTNET_INSTALL_DIR }}\packs
+            ${{ env.DOTNET_INSTALL_DIR }}\sdk-manifests
+            ${{ env.DOTNET_INSTALL_DIR }}\workloads
+          key: workloads-${{ runner.os }}-${{ hashFiles('**/*.sln', '**/*.csproj', '**/global.json') }}
+          restore-keys: |
+            workloads-${{ runner.os }}-
+
       - name: Install NuGet.exe
-        shell: pwsh
+        shell: powershell
         run: |
-          if (-not (Get-Command nuget.exe -ErrorAction SilentlyContinue)) {
-            Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "nuget.exe"
-            $updatedPath = "$pwd;$env:PATH"
-            $env:PATH = $updatedPath
-            "PATH=$updatedPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          $nugetCmd = Get-Command nuget.exe -ErrorAction SilentlyContinue
+          if (-not $nugetCmd) {
+            $nugetPath = Join-Path $env:GITHUB_WORKSPACE "nuget.exe"
+            Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile $nugetPath
+            $nugetDir = Split-Path $nugetPath
+          } else {
+            $nugetDir = Split-Path $nugetCmd.Source
           }
+
+          $nugetDir | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Determine assembly version
         id: determine_version
-        shell: pwsh
+        shell: powershell
         run: |
           $provided = "${{ github.event.inputs.assembly_version }}"
           if (-not [string]::IsNullOrWhiteSpace($provided)) {
@@ -162,7 +213,7 @@ jobs:
 
       - name: Update AssemblyInfo version
         if: ${{ steps.determine_version.outputs.assembly_version != '' }}
-        shell: pwsh
+        shell: powershell
         run: |
           $newVersion = "${{ steps.determine_version.outputs.assembly_version }}"
           Write-Host "Setting AssemblyInfo versions to $newVersion"
@@ -200,7 +251,7 @@ jobs:
         run: dotnet build Wisej.Extensions.sln --configuration Release --no-incremental
 
       - name: Stage build outputs for packing
-        shell: pwsh
+        shell: powershell
         run: |
           function Copy-TfmContent {
             param(
@@ -269,7 +320,7 @@ jobs:
           }
 
       - name: Pack NuGet
-        shell: pwsh
+        shell: powershell
         run: |
           New-Item -ItemType Directory -Force -Path ./artifacts | Out-Null
 
@@ -402,30 +453,32 @@ jobs:
 
       - name: Publish to GitHub Packages
         if: ${{ github.event_name != 'pull_request' }}
-        shell: bash
+        shell: powershell
         run: |
-          OWNER="${{ github.repository_owner }}"
-          SRC="https://nuget.pkg.github.com/${OWNER}/index.json"
-          for pkg in ./artifacts/*.nupkg; do
-            echo "Pushing $pkg"
-            dotnet nuget push "$pkg" \
-              --api-key "${{ secrets.GITHUB_TOKEN }}" \
-              --source "$SRC" \
+          $owner = "${{ github.repository_owner }}"
+          $src = "https://nuget.pkg.github.com/$owner/index.json"
+
+          Get-ChildItem "./artifacts" -Filter "*.nupkg" | ForEach-Object {
+            Write-Host "Pushing $($_.FullName)"
+            dotnet nuget push $_.FullName `
+              --api-key "${{ secrets.GITHUB_TOKEN }}" `
+              --source "$src" `
               --skip-duplicate
-          done
+          }
 
       - name: Commit version bump
         if: ${{ github.event_name != 'pull_request' && github.event.inputs.assembly_version != '' }}
-        shell: bash
+        shell: powershell
         working-directory: ${{ github.workspace }}
         run: |
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global --add safe.directory "$env:GITHUB_WORKSPACE"
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          if ! git diff --cached --quiet; then
+          git diff --cached --quiet
+          if ($LASTEXITCODE -ne 0) {
             git commit -m "chore: bump AssemblyInfo version to ${{ github.event.inputs.assembly_version }} [skip ci]"
             git push origin HEAD:${{ github.ref_name }}
-          else
-            echo "No version changes to commit."
-          fi
+          } else {
+            Write-Host "No version changes to commit."
+          }
