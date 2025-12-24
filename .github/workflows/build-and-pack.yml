@@ -250,6 +250,9 @@ jobs:
       - name: Build (Release)
         run: dotnet build Wisej.Extensions.sln --configuration Release --no-incremental /m
 
+      - name: Build PlayWright (Release)
+        run: dotnet build Wisej.Ext.PlayWright/Wisej.Ext.PlayWright/Wisej.Ext.PlayWright.csproj --configuration Release --no-incremental /m
+
       - name: Stage build outputs for packing
         shell: powershell
         run: |
@@ -283,6 +286,15 @@ jobs:
           $distroRoots += Join-Path $currentDir.FullName 'Distro'
           if ($currentDir.Parent) {
             $distroRoots += Join-Path $currentDir.Parent.FullName 'Distro'
+          }
+
+          $nuspecFiles = Get-ChildItem -Path $PWD -Recurse -Include *.nuspec,*.NuSpec -File -ErrorAction SilentlyContinue
+          foreach ($nuspec in $nuspecFiles) {
+            $nuspecDir = Split-Path $nuspec.FullName -Parent
+            $nuspecRoot = if ($nuspecDir) { Split-Path $nuspecDir -Parent } else { $null }
+            if ($nuspecRoot) {
+              $distroRoots += Join-Path $nuspecRoot 'Distro'
+            }
           }
 
           $distroRoots = $distroRoots | Select-Object -Unique
