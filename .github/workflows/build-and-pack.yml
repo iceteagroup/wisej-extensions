@@ -261,44 +261,6 @@ jobs:
               [System.IO.DirectoryInfo]$SourceDir,
               [string[]]$DistroBins
             )
-             if (-not $SourceDir -or -not (Test-Path $SourceDir.FullName)) {
-              return
-            }
-             foreach ($distroBin in $DistroBins) {
-              if ([string]::IsNullOrWhiteSpace($distroBin)) {
-                continue
-              }
-               $tfmName = $SourceDir.Name
-              $destination = Join-Path $distroBin $tfmName
-              New-Item -ItemType Directory -Force -Path $destination | Out-Null
-              Write-Host "Staging $($SourceDir.FullName) -> $destination"
-              Copy-Item -Path (Join-Path $SourceDir.FullName '*') -Destination $destination -Recurse -Force
-            }
-          }
-           $currentDir = Get-Item -LiteralPath $PWD
-          $distroRoots = @()
-
-          $distroRoots += Join-Path $currentDir.FullName 'Distro'
-          if ($currentDir.Parent) {
-            $distroRoots += Join-Path $currentDir.Parent.FullName 'Distro'
-          }
-          $nuspecFiles = Get-ChildItem -Path $PWD -Recurse -Include *.nuspec,*.NuSpec -File -ErrorAction SilentlyContinue
-          foreach ($nuspec in $nuspecFiles) {
-            $nuspecDir = Split-Path $nuspec.FullName -Parent
-            $nuspecRoot = if ($nuspecDir) { Split-Path $nuspecDir -Parent } else { $null }
-             if ($nuspecRoot) {
-               $distroRoots += Join-Path $nuspecRoot 'Distro'
-             }
-           }
-
-           $distroRoots = $distroRoots | Select-Object -Unique
-        shell: powershell
-        run: |
-          function Copy-TfmContent {
-            param(
-              [System.IO.DirectoryInfo]$SourceDir,
-              [string[]]$DistroBins
-            )
 
             if (-not $SourceDir -or -not (Test-Path $SourceDir.FullName)) {
               return
