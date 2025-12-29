@@ -103,7 +103,7 @@ namespace Wisej.Ext.WebWorker
 		/// Returns or sets the JavaScript code to execute in the WebWorker process.
 		/// </summary>
 		[DefaultValue("")]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
+		[Editor("Wisej.Design.JavaScriptEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string JavaScript
 		{
