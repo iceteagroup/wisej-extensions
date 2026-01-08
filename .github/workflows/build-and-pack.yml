@@ -28,6 +28,7 @@ jobs:
     runs-on: [self-hosted, windows]
     timeout-minutes: 30
     permissions:
+      actions: write
       contents: write
       checks: write
       pull-requests: write
@@ -40,15 +41,59 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Configure .NET install dir
+      - name: Detect existing .NET SDK
+        id: dotnet
         shell: powershell
         run: |
-          $dotnetDir = "${{ runner.temp }}\dotnet"
+          $globalJsonPath = "global.json"
+          $requiredVersion = $null
+          if (Test-Path $globalJsonPath) {
+            try {
+              $requiredVersion = (Get-Content $globalJsonPath -Raw | ConvertFrom-Json).sdk.version
+            } catch {
+              $requiredVersion = $null
+            }
+          }
+
+          $dotnetCmd = Get-Command dotnet -ErrorAction SilentlyContinue
+          $useSystem = $false
+          $dotnetRoot = ""
+
+          if ($dotnetCmd) {
+            $dotnetRoot = Split-Path $dotnetCmd.Source
+            if ([string]::IsNullOrWhiteSpace($requiredVersion)) {
+              $useSystem = $true
+            } else {
+              $sdks = & dotnet --list-sdks 2>$null
+              $pattern = ("^{0}\\s" -f [regex]::Escape($requiredVersion))
+              if ($sdks -match $pattern) {
+                $useSystem = $true
+              }
+            }
+          }
+
+          "use_system=$useSystem" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          if ($useSystem) {
+            "DOTNET_INSTALL_DIR=$dotnetRoot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            "DOTNET_ROOT=$dotnetRoot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            $dotnetRoot | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+            Write-Host "Using system .NET SDK from $dotnetRoot."
+          } else {
+            Write-Host "System .NET SDK not available; will install to runner temp."
+          }
+
+      - name: Configure .NET install dir
+        if: ${{ steps.dotnet.outputs.use_system != 'true' }}
+        shell: powershell
+        run: |
+          $dotnetDir = "C:\dotnet"
+          New-Item -ItemType Directory -Force -Path $dotnetDir | Out-Null
           "DOTNET_INSTALL_DIR=$dotnetDir" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           "DOTNET_ROOT=$dotnetDir" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           $dotnetDir | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Setup .NET
+        if: ${{ steps.dotnet.outputs.use_system != 'true' }}
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
