@@ -286,7 +286,7 @@ namespace Wisej.Web.Ext.ApexCharts
 			/// The template used by the <see cref="WidgetTemplate"/>
 			/// </summary>
 			[DefaultValue("")]
-			[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
+			[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
 					"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 			public string Template
 			{
@@ -377,7 +377,7 @@ namespace Wisej.Web.Ext.ApexCharts
 			/// <summary>
 			/// The source code of the <see cref="WidgetEventHandler"/>
 			/// </summary>
-			[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
+			[Editor("Wisej.Design.JavaScriptEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
 					"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 			public string Source
 			{
@@ -431,7 +431,7 @@ namespace Wisej.Web.Ext.ApexCharts
 			/// <summary>
 			/// The source code for the <see cref="WidgetFunction"/>
 			/// </summary>
-			[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
+			[Editor("Wisej.Design.JavaScriptEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
 					"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 			public string Source
 			{

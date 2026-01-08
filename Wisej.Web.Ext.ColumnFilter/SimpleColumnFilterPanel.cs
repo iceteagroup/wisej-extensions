@@ -224,6 +224,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			var cellText = "";
 			var index = column.Index;
 			var dataGrid = column.DataGridView;
+
 			foreach (var row in dataGrid.Rows)
 			{
 				if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
