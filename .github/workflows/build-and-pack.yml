@@ -152,7 +152,7 @@ jobs:
         with:
           path: |
             ~/.nuget/packages
-          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.sln', '**/*.csproj', '**/packages.lock.json', '**/Directory.Packages.props', '**/global.json') }}
+          key: nuget-${{ runner.os }}-${{ hashFiles('Wisej.Extensions.sln', 'Directory.Build.props', 'Directory.Packages.props', 'global.json') }}
           restore-keys: |
             nuget-${{ runner.os }}-
 
@@ -163,7 +163,7 @@ jobs:
             ${{ env.DOTNET_INSTALL_DIR }}\packs
             ${{ env.DOTNET_INSTALL_DIR }}\sdk-manifests
             ${{ env.DOTNET_INSTALL_DIR }}\workloads
-          key: workloads-${{ runner.os }}-${{ hashFiles('**/*.sln', '**/*.csproj', '**/global.json') }}
+          key: workloads-${{ runner.os }}-${{ hashFiles('Wisej.Extensions.sln', 'Directory.Build.props', 'Directory.Packages.props', 'global.json') }}
           restore-keys: |
             workloads-${{ runner.os }}-
 
