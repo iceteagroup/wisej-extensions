@@ -99,7 +99,13 @@ jobs:
         if: ${{ steps.dotnet.outputs.use_system != 'true' }}
         shell: powershell
         run: |
-          $dotnetDir = "C:\dotnet"
+          $baseDir = $env:RUNNER_TOOL_CACHE
+          if ([string]::IsNullOrWhiteSpace($baseDir)) {
+            $baseDir = "C:\dotnet"
+          } else {
+            $baseDir = Join-Path $baseDir "dotnet"
+          }
+          $dotnetDir = $baseDir
           New-Item -ItemType Directory -Force -Path $dotnetDir | Out-Null
           "DOTNET_INSTALL_DIR=$dotnetDir" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           "DOTNET_ROOT=$dotnetDir" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
@@ -177,7 +183,9 @@ jobs:
           Write-Host "Ensuring write access for $env:DOTNET_ROOT..."
           $user = (whoami)
           icacls $env:DOTNET_ROOT /grant "${user}:(OI)(CI)F" /T /C | Out-Null
+          if ($LASTEXITCODE -ne 0) { Write-Warning "icacls failed for ${user} on $env:DOTNET_ROOT"; $LASTEXITCODE = 0 }
           icacls $env:DOTNET_ROOT /grant "Administrators:(OI)(CI)F" /T /C | Out-Null
+          if ($LASTEXITCODE -ne 0) { Write-Warning "icacls failed for Administrators on $env:DOTNET_ROOT"; $LASTEXITCODE = 0 }
 
       - name: Ensure Android workload installed
         shell: powershell
