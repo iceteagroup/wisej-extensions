@@ -167,6 +167,37 @@ jobs:
           restore-keys: |
             workloads-${{ runner.os }}-
 
+      - name: Ensure DOTNET_ROOT writable
+        shell: powershell
+        run: |
+          if (-not $env:DOTNET_ROOT) {
+            Write-Error "DOTNET_ROOT is not set."
+            exit 1
+          }
+          Write-Host "Ensuring write access for $env:DOTNET_ROOT..."
+          $user = (whoami)
+          icacls $env:DOTNET_ROOT /grant "$user:(OI)(CI)F" /T | Out-Null
+          icacls $env:DOTNET_ROOT /grant "Administrators:(OI)(CI)F" /T | Out-Null
+
+      - name: Ensure Android workload installed
+        shell: powershell
+        run: |
+          $packsRoot = Join-Path $env:DOTNET_ROOT "packs\Microsoft.Android.Sdk.Windows"
+          $hasPack = (Test-Path $packsRoot) -and ((Get-ChildItem -Path $packsRoot -Directory -ErrorAction SilentlyContinue | Measure-Object).Count -gt 0)
+          if ($hasPack) {
+            Write-Host "Android workload pack already present in $packsRoot."
+            return
+          }
+
+          $workloads = & dotnet workload list 2>$null
+          if ($workloads -match '\bandroid\b') {
+            Write-Host "Android workload already listed."
+            return
+          }
+
+          Write-Host "Installing Android workload..."
+          dotnet workload install android
+
       - name: Install NuGet.exe
         shell: powershell
         run: |
