@@ -575,6 +575,17 @@ jobs:
                 }
 
                 if ($shouldUseTemp) {
+                  foreach ($fileNode in $filesNodes) {
+                    if (-not $fileNode -or -not $fileNode.src) {
+                      continue
+                    }
+
+                    $srcValue = $fileNode.src.ToString()
+                    if (-not [string]::IsNullOrWhiteSpace($srcValue) -and -not [System.IO.Path]::IsPathRooted($srcValue)) {
+                      $fileNode.src = Join-Path $nuspecDirectory.FullName $srcValue
+                    }
+                  }
+
                   $tempNuspecDir = Join-Path $env:TEMP "wisej-nuspec"
                   New-Item -ItemType Directory -Force -Path $tempNuspecDir | Out-Null
                   $tempPath = Join-Path $tempNuspecDir ("$([Guid]::NewGuid().ToString('N'))-$($nuspecFile.Name)")
