@@ -176,8 +176,8 @@ jobs:
           }
           Write-Host "Ensuring write access for $env:DOTNET_ROOT..."
           $user = (whoami)
-          icacls $env:DOTNET_ROOT /grant "${user}:(OI)(CI)F" /T | Out-Null
-          icacls $env:DOTNET_ROOT /grant "Administrators:(OI)(CI)F" /T | Out-Null
+          icacls $env:DOTNET_ROOT /grant "${user}:(OI)(CI)F" /T /C | Out-Null
+          icacls $env:DOTNET_ROOT /grant "Administrators:(OI)(CI)F" /T /C | Out-Null
 
       - name: Ensure Android workload installed
         shell: powershell
