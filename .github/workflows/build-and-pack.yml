@@ -138,19 +138,52 @@ jobs:
         run: |
           $owner = "${{ github.repository_owner }}"
           $src = "https://nuget.pkg.github.com/$owner/index.json"
+          $token = "${{ secrets.GH_PAT }}"
+          if ([string]::IsNullOrWhiteSpace($token)) {
+            $token = "${{ secrets.GITHUB_TOKEN }}"
+            Write-Warning "GH_PAT is not set. Falling back to GITHUB_TOKEN; cross-repo GitHub Packages may return 403."
+          }
 
           dotnet nuget remove source github 2>$null
           if ($LASTEXITCODE -ne 0) { $LASTEXITCODE = 0 }
           dotnet nuget add source "$src" `
             --name "github" `
             --username "$owner" `
-            --password "${{ secrets.GITHUB_TOKEN }}" `
+            --password "$token" `
             --store-password-in-clear-text
 
           dotnet nuget remove source nuget.org 2>$null
           if ($LASTEXITCODE -ne 0) { $LASTEXITCODE = 0 }
           dotnet nuget add source "https://api.nuget.org/v3/index.json" --name "nuget.org"
           dotnet nuget list source
+
+      - name: Write NuGet.config for restore
+        shell: powershell
+        run: |
+          $owner = "${{ github.repository_owner }}"
+          $token = "${{ secrets.GH_PAT }}"
+          if ([string]::IsNullOrWhiteSpace($token)) {
+            throw "GH_PAT is required to restore GitHub Packages for Standard Extensions."
+          }
+
+          $configPath = Join-Path $env:GITHUB_WORKSPACE "NuGet.config"
+          $xml = @(
+            '<?xml version="1.0" encoding="utf-8"?>',
+            '<configuration>',
+            '  <packageSources>',
+            '    <clear />',
+            ('    <add key="github" value="https://nuget.pkg.github.com/{0}/index.json" />' -f $owner),
+            '    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />',
+            '  </packageSources>',
+            '  <packageSourceCredentials>',
+            '    <github>',
+            ('      <add key="Username" value="{0}" />' -f $owner),
+            ('      <add key="ClearTextPassword" value="{0}" />' -f $token),
+            '    </github>',
+            '  </packageSourceCredentials>',
+            '</configuration>'
+          ) -join "`r`n"
+          Set-Content -Path $configPath -Value $xml -Encoding UTF8
 
       - name: Cache NuGet packages
         uses: actions/cache@v4
@@ -341,13 +374,13 @@ jobs:
           dotnet workload restore Wisej.Extensions.sln
 
       - name: Restore dependencies
-        run: dotnet restore Wisej.Extensions.sln
+        run: dotnet restore Wisej.Extensions.sln --configfile "${{ github.workspace }}\\NuGet.config"
 
       - name: Build (Release)
-        run: dotnet build Wisej.Extensions.sln --configuration Release --no-incremental /m
+        run: dotnet build Wisej.Extensions.sln --configuration Release --no-incremental /m --no-restore
 
       - name: Build PlayWright (Release)
-        run: dotnet build Wisej.Ext.PlayWright/Wisej.Ext.PlayWright/Wisej.Ext.PlayWright.csproj --configuration Release --no-incremental /m
+        run: dotnet build Wisej.Ext.PlayWright/Wisej.Ext.PlayWright/Wisej.Ext.PlayWright.csproj --configuration Release --no-incremental /m --no-restore
 
       - name: Stage build outputs for packing
         shell: powershell
