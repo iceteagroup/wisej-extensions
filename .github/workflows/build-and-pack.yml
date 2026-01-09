@@ -377,6 +377,9 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore Wisej.Extensions.sln --configfile "${{ github.workspace }}\\NuGet.config"
 
+      - name: Restore PlayWright dependencies
+        run: dotnet restore Wisej.Ext.PlayWright/Wisej.Ext.PlayWright/Wisej.Ext.PlayWright.csproj --configfile "${{ github.workspace }}\\NuGet.config"
+
       - name: Build (Release)
         run: dotnet build Wisej.Extensions.sln --configuration Release --no-incremental /m --no-restore
 
