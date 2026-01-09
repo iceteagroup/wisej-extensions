@@ -490,6 +490,20 @@ jobs:
                   }
 
                   $srcValue = $fileNode.src.ToString()
+                  if (-not [string]::IsNullOrWhiteSpace($srcValue)) {
+                    $resolvedPattern = $srcValue
+                    if (-not [System.IO.Path]::IsPathRooted($srcValue)) {
+                      $resolvedPattern = Join-Path $nuspecDirectory.FullName $srcValue
+                    }
+                    $matches = Get-ChildItem -Path $resolvedPattern -ErrorAction SilentlyContinue
+                    if (-not $matches) {
+                      if (-not $missingNodes) { $missingNodes = @() }
+                      $missingNodes += $fileNode
+                      Write-Warning ("Removing missing file entry '{0}' from {1}" -f $srcValue, $nuspecFile.Name)
+                      $shouldUseTemp = $true
+                      continue
+                    }
+                  }
                   if ($srcValue -match '(?i)Wisej\.png$' -and -not ($srcValue -match '^\.\.\\')) {
                     $resolvedPath = Join-Path $nuspecDirectory.FullName $srcValue
                     if (-not (Test-Path $resolvedPath)) {
@@ -511,6 +525,14 @@ jobs:
                       } else {
                         Write-Warning "Cannot locate parent directory for $($nuspecFile.Name) to resolve Wisej.png."
                       }
+                    }
+                  }
+                }
+
+                if ($missingNodes) {
+                  foreach ($missingNode in $missingNodes) {
+                    if ($missingNode -and $missingNode.ParentNode) {
+                      [void]$missingNode.ParentNode.RemoveChild($missingNode)
                     }
                   }
                 }
