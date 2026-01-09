@@ -163,7 +163,8 @@ jobs:
           $owner = "${{ github.repository_owner }}"
           $token = "${{ secrets.GH_PAT }}"
           if ([string]::IsNullOrWhiteSpace($token)) {
-            throw "GH_PAT is required to restore GitHub Packages for Standard Extensions."
+            $token = "${{ secrets.GITHUB_TOKEN }}"
+            Write-Warning "GH_PAT is not set. Falling back to GITHUB_TOKEN; GitHub Packages may return 403."
           }
 
           $configPath = Join-Path $env:GITHUB_WORKSPACE "NuGet.config"
