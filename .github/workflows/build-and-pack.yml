@@ -167,7 +167,7 @@ jobs:
             Write-Warning "GH_PAT is not set. Falling back to GITHUB_TOKEN; GitHub Packages may return 403."
           }
 
-          $configPath = Join-Path $env:GITHUB_WORKSPACE "NuGet.config"
+          $configPath = Join-Path $env:RUNNER_TEMP "nuget.config"
           $xml = @(
             '<?xml version="1.0" encoding="utf-8"?>',
             '<configuration>',
@@ -185,6 +185,7 @@ jobs:
             '</configuration>'
           ) -join "`r`n"
           Set-Content -Path $configPath -Value $xml -Encoding UTF8
+          "NUGET_CONFIG_PATH=$configPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Cache NuGet packages
         uses: actions/cache@v4
@@ -341,44 +342,15 @@ jobs:
           "assembly_version=$versionString" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
           "ASSEMBLY_VERSION=$versionString" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
-      - name: Update AssemblyInfo version
-        if: ${{ steps.determine_version.outputs.assembly_version != '' }}
-        shell: powershell
-        run: |
-          $newVersion = "${{ steps.determine_version.outputs.assembly_version }}"
-          Write-Host "Setting AssemblyInfo versions to $newVersion"
-
-          Get-ChildItem -Path "." -Recurse -Filter "AssemblyInfo.cs" | ForEach-Object {
-            $path = $_.FullName
-            $content = Get-Content $path -Raw
-            $updated = $content `
-              -replace '(?<=\[assembly:\s*AssemblyFileVersion\(")[^"]+(?="\)\s*\])', $newVersion `
-              -replace '(?<=\[assembly:\s*AssemblyInformationalVersion\(")[^"]+(?="\)\s*\])', $newVersion
-            if ($updated -ne $content) {
-              Set-Content -Path $path -Value $updated -Encoding UTF8
-              Write-Host "Updated: $path"
-            }
-          }
-
-          $propsPath = "Directory.Build.props"
-          if (Test-Path $propsPath) {
-            $propsContent = Get-Content $propsPath -Raw
-            $propsUpdated = $propsContent -replace '(?<=<FileVersion>)[^<]+(?=</FileVersion>)', $newVersion
-            if ($propsUpdated -ne $propsContent) {
-              Set-Content -Path $propsPath -Value $propsUpdated -Encoding UTF8
-              Write-Host "Updated: $propsPath"
-            }
-          }
-
       - name: Restore workloads for mobile builds
         run: |
           dotnet workload restore Wisej.Extensions.sln
 
       - name: Restore dependencies
-        run: dotnet restore Wisej.Extensions.sln --configfile "${{ github.workspace }}\\NuGet.config"
+        run: dotnet restore Wisej.Extensions.sln --configfile "${{ env.NUGET_CONFIG_PATH }}"
 
       - name: Restore PlayWright dependencies
-        run: dotnet restore Wisej.Ext.PlayWright/Wisej.Ext.PlayWright/Wisej.Ext.PlayWright.csproj --configfile "${{ github.workspace }}\\NuGet.config"
+        run: dotnet restore Wisej.Ext.PlayWright/Wisej.Ext.PlayWright/Wisej.Ext.PlayWright.csproj --configfile "${{ env.NUGET_CONFIG_PATH }}"
 
       - name: Build (Release)
         run: dotnet build Wisej.Extensions.sln --configuration Release --no-incremental /m --no-restore
@@ -665,21 +637,4 @@ jobs:
               --api-key "${{ secrets.GITHUB_TOKEN }}" `
               --source "$src" `
               --skip-duplicate
-          }
-
-      - name: Commit version bump
-        if: ${{ github.event_name != 'pull_request' && github.event.inputs.assembly_version != '' }}
-        shell: powershell
-        working-directory: ${{ github.workspace }}
-        run: |
-          git config --global --add safe.directory "$env:GITHUB_WORKSPACE"
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git diff --cached --quiet
-          if ($LASTEXITCODE -ne 0) {
-            git commit -m "chore: bump AssemblyInfo version to ${{ github.event.inputs.assembly_version }} [skip ci]"
-            git push origin HEAD:${{ github.ref_name }}
-          } else {
-            Write-Host "No version changes to commit."
           }
