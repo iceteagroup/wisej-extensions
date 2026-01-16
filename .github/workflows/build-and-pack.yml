@@ -18,6 +18,11 @@ on:
           - test
           - preview
           - release
+      publish_packages:
+        description: "Publish nupkg artifacts to GitHub Packages"
+        type: boolean
+        required: false
+        default: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -625,7 +630,8 @@ jobs:
           if-no-files-found: error
 
       - name: Publish to GitHub Packages
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' && (github.event_name != 'workflow_dispatch' || inputs.publish_packages) }}
+        continue-on-error: true
         shell: powershell
         run: |
           $owner = "${{ github.repository_owner }}"
