@@ -199,9 +199,8 @@ namespace Wisej.Web.Ext.CKEditor
 		/// Use the toolbar configuration tool at <see href="http://ckeditor.com/tmp/4.5.0-beta/ckeditor/samples/toolbarconfigurator/index.html#basic"/>
 		/// and copy the json into the Options definition.
 		/// </summary>
-		[DesignerActionList]
 		[MergableProperty(false)]
-		[Editor("Wisej.Design.CodeEditor, Wisej.Framework.Design, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
+		[Editor("Wisej.Design.DynamicObjectEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public virtual new dynamic Options
 		{
@@ -426,7 +425,6 @@ namespace Wisej.Web.Ext.CKEditor
 			get { return _baseUrl; }
 			set { _baseUrl = value; }
 		}
-
 		private static string _baseUrl = "https://cdn.ckeditor.com/4.21.0/full-all/";
 
 		/// <summary>

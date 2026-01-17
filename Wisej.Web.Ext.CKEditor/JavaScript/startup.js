@@ -106,6 +106,12 @@ this.init = function () {
 			me.fireEvent("keyup");
 		});
 
+		// focus the wrapper wisej widget.
+		// IFrame editors cannot propagate pointer events to their container.
+		me.editor.window.$.addEventListener('pointerdown', function (e) {
+			me.fireWidgetEvent("focus");
+		});
+
 		me.fireEvent("initialized");
 	});
 
@@ -116,12 +122,6 @@ this.init = function () {
 
 	me.editor.on("change", function () {
 		me.setDirty(true);
-	});
-
-	// focus the wrapper wisej widget.
-	// IFrame editors cannot propagate pointer events to their container.
-	me.editor.on('focus', function (e) {
-		me.fireWidgetEvent("focus");
 	});
 
 	// fire the "command" event on the server, when the users presses a toolbar button.
@@ -136,9 +136,14 @@ this.init = function () {
 	me.editor.on('mode', function () {
 		if (this.mode === 'source') {
 			var editable = me.editor.editable();
-			editable.removeListener(editable, "input", function () { me.setDirty(true) });
-			editable.attachListener(editable, 'input', function () { me.setDirty(true) });
+			editable.removeListener(editable, "input", _onInput);
+			editable.attachListener(editable, 'input', _onInput);
 		}
+
+		function _onInput() {
+			me.setDirty(true);
+		}
+
 	});
 }
 
@@ -301,16 +306,20 @@ this.enableCommand = function (name, enable) {
  * @internal
  */
 this.tabFocus = function () {
-	if (this.editor)
+	if (this.editor) {
 		this.editor.focus();
+		this.fireWidgetEvent("focus");
+	}
 }
 
 /**
  * Focus this widget.
  */
 this.focus = function () {
-	if (this.editor)
+	if (this.editor) {
 		this.editor.focus();
+		this.fireWidgetEvent("focus");
+	}
 }
 
 /**
