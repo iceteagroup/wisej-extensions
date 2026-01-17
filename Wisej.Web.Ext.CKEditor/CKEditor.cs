@@ -427,7 +427,6 @@ namespace Wisej.Web.Ext.CKEditor
 			get { return _baseUrl; }
 			set { _baseUrl = value; }
 		}
-
 		private static string _baseUrl = "https://cdn.ckeditor.com/4.21.0/full-all/";
 
 		/// <summary>
