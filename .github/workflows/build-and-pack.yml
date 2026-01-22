@@ -14,15 +14,6 @@ on:
         description: "Optional AssemblyFileVersion (e.g. 1.2.3.4)"
         required: false
         default: ""
-      package_channel:
-        description: "Channel appended to filename (test/preview/release)"
-        required: false
-        default: "test"
-        type: choice
-        options:
-          - test
-          - preview
-          - release
       publish_packages:
         description: "Publish nupkg artifacts to GitHub Packages"
         type: boolean
@@ -461,15 +452,7 @@ jobs:
             exit 1
           }
 
-          $channel = "${{ github.event.inputs.package_channel }}"
-          if ([string]::IsNullOrWhiteSpace($channel)) {
-            $channel = 'release'
-          }
-          $validChannels = @('test','preview','release')
-          if ($validChannels -notcontains $channel) {
-            Write-Host "Invalid channel '$channel' provided. Falling back to 'release'."
-            $channel = 'release'
-          }
+          $channel = 'release'
 
           $nuspecs = Get-ChildItem -Path "." -Recurse -Include *.nuspec,*.NuSpec -File
           if (-not $nuspecs) {
