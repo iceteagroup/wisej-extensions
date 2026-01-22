@@ -5,6 +5,11 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
+      pack:
+        description: "Build and publish NuGet package?"
+        type: boolean
+        required: false
+        default: false
       assembly_version:
         description: "Optional AssemblyFileVersion (e.g. 1.2.3.4)"
         required: false
@@ -246,6 +251,7 @@ jobs:
           dotnet workload install android
 
       - name: Install NuGet.exe
+        if: ${{ github.event.inputs.pack == 'true' }}
         shell: powershell
         run: |
           $nugetCmd = Get-Command nuget.exe -ErrorAction SilentlyContinue
@@ -261,6 +267,7 @@ jobs:
 
       - name: Determine assembly version
         id: determine_version
+        if: ${{ github.event.inputs.pack == 'true' }}
         shell: powershell
         run: |
           $provided = "${{ github.event.inputs.assembly_version }}"
@@ -364,6 +371,7 @@ jobs:
         run: dotnet build Wisej.Ext.PlayWright/Wisej.Ext.PlayWright/Wisej.Ext.PlayWright.csproj --configuration Release --no-incremental /m --no-restore
 
       - name: Stage build outputs for packing
+        if: ${{ github.event.inputs.pack == 'true' }}
         shell: powershell
         run: |
           function Copy-TfmContent {
@@ -442,6 +450,7 @@ jobs:
           }
 
       - name: Pack NuGet
+        if: ${{ github.event.inputs.pack == 'true' }}
         shell: powershell
         run: |
           New-Item -ItemType Directory -Force -Path ./artifacts | Out-Null
@@ -623,6 +632,7 @@ jobs:
           }
 
       - name: Upload NuGet artifacts
+        if: ${{ github.event.inputs.pack == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: nuget-packages
@@ -630,7 +640,7 @@ jobs:
           if-no-files-found: error
 
       - name: Publish to GitHub Packages
-        if: ${{ github.event_name != 'pull_request' && (github.event_name != 'workflow_dispatch' || inputs.publish_packages) }}
+        if: ${{ github.event.inputs.pack == 'true' && github.event_name != 'pull_request' && (github.event_name != 'workflow_dispatch' || inputs.publish_packages) }}
         continue-on-error: true
         shell: powershell
         run: |
