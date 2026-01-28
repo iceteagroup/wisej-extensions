@@ -21,10 +21,10 @@ using System;
 
 namespace Wisej.Web.Ext.ColumnFilter
 {
-    /// <summary>
-    /// Custom AND/OR label.
-    /// </summary>
-    internal class lblANDOR : Label
+	/// <summary>
+	/// Custom AND/OR label.
+	/// </summary>
+	internal class lblANDOR : Label
 	{
 		#region Constructors
 		public lblANDOR ()

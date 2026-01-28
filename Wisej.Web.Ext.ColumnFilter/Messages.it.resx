@@ -148,7 +148,7 @@
     <value>non è nullo</value>
   </data>
   <data name="is_null" xml:space="preserve">
-    <value>è null</value>
+    <value>è nullo</value>
   </data>
   <data name="is_true" xml:space="preserve">
     <value>è vero</value>

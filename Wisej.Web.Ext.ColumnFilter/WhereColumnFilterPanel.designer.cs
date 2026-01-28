@@ -123,6 +123,7 @@
 		}
 
 		#endregion
+
 		private Web.LinkLabel clear;
 		private Web.Line line1;
 		private Web.CheckBox cbMatchCase;
