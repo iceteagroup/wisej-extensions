@@ -6,7 +6,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.27.3</FileVersion>
+    <FileVersion>3.5.28.1</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Platform\wisej.web.ext.SideButton.js" />
