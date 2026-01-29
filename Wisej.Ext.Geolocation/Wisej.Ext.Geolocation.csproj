@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.6.10</FileVersion>
+    <FileVersion>4.0.7.3</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Platform\Geolocation.js" />
