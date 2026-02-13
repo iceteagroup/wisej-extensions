@@ -139,6 +139,11 @@ this.init = function () {
 			editable.removeListener(editable, "input", _onInput);
 			editable.attachListener(editable, 'input', _onInput);
 		}
+
+		function _onInput() {
+			me.setDirty(true);
+		}
+
 	});
 }
 
