@@ -86,7 +86,7 @@ namespace Wisej.Web.Ext.ChatControl
 		/// The control rendered in the chat box. 
 		/// Only available after the control has been added to the chatbox.
 		/// </summary>
-		public Control? Control { get; set; }
+		public Control Control { get; set; }
 
 		/// <summary>
 		/// Gets or sets whether the bubble background is visible.

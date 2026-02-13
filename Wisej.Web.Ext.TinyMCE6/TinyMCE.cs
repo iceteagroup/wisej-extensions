@@ -178,7 +178,6 @@ namespace Wisej.Web.Ext.TinyMCE6
 		/// <summary>
 		/// Returns or sets the configuration to use for this instance of the editor: <see href="https://www.tinymce.com/docs/configure/"/>.
 		/// </summary>
-		[DesignerActionList]
 		[MergableProperty(false)]
 		[Editor("Wisej.Design.DynamicObjectEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]

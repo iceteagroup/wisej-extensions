@@ -123,46 +123,4 @@
   <data name="clear.Text" xml:space="preserve">
     <value>Löschen</value>
   </data>
-  <data name="cmbOperator.Items" xml:space="preserve">
-    <value>ist gleich</value>
-  </data>
-  <data name="cmbOperator.Items1" xml:space="preserve">
-    <value>ist nicht gleich</value>
-  </data>
-  <data name="cmbOperator.Items16" xml:space="preserve">
-    <value>ist wahr</value>
-  </data>
-  <data name="cmbOperator.Items17" xml:space="preserve">
-    <value>ist falsch</value>
-  </data>
-  <data name="cmbOperator.Items18" xml:space="preserve">
-    <value>ist null</value>
-  </data>
-  <data name="cmbOperator.Items19" xml:space="preserve">
-    <value>ist nicht null</value>
-  </data>
-  <data name="cmbOperator.Items2" xml:space="preserve">
-    <value>enthält</value>
-  </data>
-  <data name="cmbOperator.Items3" xml:space="preserve">
-    <value>enthält nicht</value>
-  </data>
-  <data name="cmbOperator.Items4" xml:space="preserve">
-    <value>beginnt mit</value>
-  </data>
-  <data name="cmbOperator.Items5" xml:space="preserve">
-    <value>endet mit</value>
-  </data>
-  <data name="cmbOperator.Items6" xml:space="preserve">
-    <value>ist leer</value>
-  </data>
-  <data name="cmbOperator.Items7" xml:space="preserve">
-    <value>ist nicht leer</value>
-  </data>
-  <data name="cmbOperator.Items8" xml:space="preserve">
-    <value>ist null</value>
-  </data>
-  <data name="cmbOperator.Items9" xml:space="preserve">
-    <value>ist nicht null</value>
-  </data>
 </root>

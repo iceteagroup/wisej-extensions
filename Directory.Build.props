@@ -1,13 +1,10 @@
 <Project>
-  <PropertyGroup>
-    <NetFxVersion>net48</NetFxVersion>
-    <NetCoreVersion>net8.0</NetCoreVersion>
-    <FileVersion>4.0.0.0</FileVersion>
-    <WisejPackageName>Wisej-4</WisejPackageName>
-    <WisejVersion>4.0.*-*</WisejVersion>
-    <SdmVersion>4.0.*-*</SdmVersion>
-
-    <!-- Allow Windows-targeting builds on macOS/other OSs -->
-    <EnableWindowsTargeting>true</EnableWindowsTargeting>
-  </PropertyGroup>
+	<PropertyGroup>
+		<NetFxVersion>net48</NetFxVersion>
+		<NetCoreVersion>net8.0</NetCoreVersion>
+		<FileVersion>4.0.0.0</FileVersion>
+		<WisejPackageName>Wisej-4</WisejPackageName>
+		<WisejVersion>4.0.*-*</WisejVersion>
+		<SdmVersion>4.0.*-*</SdmVersion>
+	</PropertyGroup>
 </Project>

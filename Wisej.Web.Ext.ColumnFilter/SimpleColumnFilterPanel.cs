@@ -50,6 +50,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 			this.Disposed += this.SimpleColumnFilterPanel_Disposed;
 			this.DataGridViewColumn.DataGridView.Sorted += this.Rows_Sorted;
 			this.DataGridViewColumn.DataGridView.Rows.CollectionChanged += this.Rows_CollectionChanged;
+
+			this.items.VirtualScroll = true;
 		}
 
 		private void SimpleColumnFilterPanel_Disposed(object sender, EventArgs e)
@@ -124,40 +126,44 @@ namespace Wisej.Web.Ext.ColumnFilter
 			var colIndex = column.Index;
 			var dataGrid = column.DataGridView;
 
-			var rows = dataGrid.Rows;
 			var filterItems = this.items.Items;
 
 			if (filterItems.Count == 0)
 			{
-				string text = string.Empty;
-				foreach (var r in rows)
+				var text = string.Empty;
+				for (var rowIndex = 0; rowIndex < dataGrid.RowCount; rowIndex++)
 				{
-					text = Convert.ToString(r[colIndex].FormattedValue);
+					if (rowIndex == dataGrid.NewRowIndex)
+						break;
+
+					text = Convert.ToString(dataGrid.GetFormattedValue(colIndex, rowIndex));
 					if (text != string.Empty)
 					{
 						if (!filterItems.Contains(text))
 						{
-							filterItems.Add(text, r.Visible);
+							var visible = dataGrid.GetRowState(rowIndex).HasFlag(DataGridViewElementStates.Visible);
+							filterItems.Add(text, visible);
 						}
 					}
 				}
 			}
 			else
 			{
-				string text = string.Empty;
-				foreach (var r in rows)
+				var text = string.Empty;
+				for (var rowIndex = 0; rowIndex < dataGrid.RowCount; rowIndex++)
 				{
-					text = Convert.ToString(r[colIndex].FormattedValue);
+					text = Convert.ToString(dataGrid.GetFormattedValue(colIndex, rowIndex));
 					if (text != string.Empty)
 					{
 						var index = filterItems.IndexOf(text);
+						var visible = dataGrid.GetRowState(rowIndex).HasFlag(DataGridViewElementStates.Visible);
 						if (index > -1)
 						{
-							this.items.SetItemChecked(index, r.Visible);
+							this.items.SetItemChecked(index, visible);
 						}
 						else
 						{
-							filterItems.Add(text, r.Visible);
+							filterItems.Add(text, visible);
 						}
 					}
 				}
@@ -175,15 +181,15 @@ namespace Wisej.Web.Ext.ColumnFilter
 			{
 				// make all rows visible before applying the filters.
 				var dataGrid = this.DataGridViewColumn.DataGridView;
-				foreach (var row in dataGrid.Rows)
+				for (var rowIndex = 0; rowIndex < dataGrid.RowCount; rowIndex++)
 				{
-					row.Visible = true;
+					dataGrid.SetRowState(rowIndex, DataGridViewElementStates.Visible, true);
 				}
 
 				// reset current cell 
 				dataGrid.CurrentCell = null;
 
-				// remove all summary rows.				
+				// remove all summary rows.
 				dataGrid.RemoveSummaryRows();
 
 				// apply all the filters.
@@ -221,19 +227,18 @@ namespace Wisej.Web.Ext.ColumnFilter
 				return false;
 
 			// filter the rows in the datagrid using a simple string comparison.
-			var cellText = "";
-			var index = column.Index;
+			var colIndex = column.Index;
 			var dataGrid = column.DataGridView;
 
-			foreach (var row in dataGrid.Rows)
+			for (var rowIndex = 0; rowIndex < dataGrid.RowCount; rowIndex++)
 			{
-				if (this.DataGridViewColumn.ValueType == typeof(System.Boolean))
-					cellText = Convert.ToString(row[index].Value);
-				else
-					cellText = row[index].FormattedValue?.ToString() ?? string.Empty;
+				if (rowIndex == dataGrid.NewRowIndex)
+					break;
 
-				if (!row.IsNewRow && !checkedItems.Contains(cellText))
-					row.Visible = false;
+				var cellText = Convert.ToString(dataGrid.GetFormattedValue(colIndex, rowIndex));
+
+				if (!checkedItems.Contains(cellText))
+					dataGrid.SetRowState(rowIndex, DataGridViewElementStates.Visible, false);
 			}
 
 			return true;

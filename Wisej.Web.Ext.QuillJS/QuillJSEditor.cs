@@ -187,7 +187,7 @@ namespace Wisej.Web.Ext.QuillJS
 		/// </summary>
 		[Description("Configures the toolbar options for the editor.")]
 		[TypeConverter(typeof(DynamicObjectConverter))]
-		[Editor("Wisej.Design.DynamicObjectEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
+		[Editor("Wisej.Design.DynamicObjectEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		[WisejSerializerOptions(WisejSerializerOptions.None)]
 		public dynamic Toolbar
