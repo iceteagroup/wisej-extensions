@@ -1,129 +1,269 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// (C) 2026 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
+//
+// 
+//
+// ALL INFORMATION CONTAINED HEREIN IS, AND REMAINS
+// THE PROPERTY OF ICE TEA GROUP LLC AND ITS SUPPLIERS, IF ANY.
+// THE INTELLECTUAL PROPERTY AND TECHNICAL CONCEPTS CONTAINED
+// HEREIN ARE PROPRIETARY TO ICE TEA GROUP LLC AND ITS SUPPLIERS
+// AND MAY BE COVERED BY U.S. AND FOREIGN PATENTS, PATENT IN PROCESS, AND
+// ARE PROTECTED BY TRADE SECRET OR COPYRIGHT LAW.
+//
+// DISSEMINATION OF THIS INFORMATION OR REPRODUCTION OF THIS MATERIAL
+// IS STRICTLY FORBIDDEN UNLESS PRIOR WRITTEN PERMISSION IS OBTAINED
+// FROM ICE TEA GROUP LLC.
+//
+///////////////////////////////////////////////////////////////////////////////
+
 using System.Collections.Generic;
+using System.ComponentModel;
 using Wisej.Core;
 
 namespace Wisej.Web.Ext.Mermaid
 {
-	public enum MermaidSecurityLevel
-	{
-		Strict,
-		Loose,
-		Antiscript,
-		Sandbox
-	}
-
-	public enum MermaidLogLevel
-	{
-		Trace,
-		Debug,
-		Info,
-		Warn,
-		Error,
-		Fatal
-	}
-
+	/// <summary>
+	/// Mermaid initialization options passed to <c>mermaid.initialize(...)</c>.
+	/// </summary>
+	/// <remarks>
+	/// Set properties on this object to control Mermaid initialization.
+	/// </remarks>
+	[WisejSerializerOptions(WisejSerializerOptions.CamelCase)]
 	public class MermaidConfiguration
 	{
-		public string Theme { get; set; }
+		private Mermaid _owner;
 
-		public Dictionary<string, object> ThemeVariables { get; set; }
-
-		public MermaidSecurityLevel? SecurityLevel { get; set; }
-
-		public MermaidLogLevel? LogLevel { get; set; }
-
-		public bool? DeterministicIds { get; set; }
-
-		public int? MaxTextSize { get; set; }
-
-		public string FontFamily { get; set; }
-
-		public bool? StartOnLoad { get; set; }
-
-		public MermaidFlowchartConfiguration Flowchart { get; set; }
-
-		public MermaidSequenceConfiguration Sequence { get; set; }
-
-		internal dynamic ToOptions()
+		internal MermaidConfiguration(Mermaid owner)
 		{
-			dynamic options = new DynamicObject();
+			_owner = owner;
+		}
 
-			if (!string.IsNullOrWhiteSpace(this.Theme))
-				options.theme = this.Theme;
-
-			if (this.ThemeVariables != null && this.ThemeVariables.Count > 0)
-				options.themeVariables = this.ThemeVariables;
-
-			if (this.SecurityLevel.HasValue)
-				options.securityLevel = this.SecurityLevel.Value.ToString().ToLowerInvariant();
-
-			if (this.LogLevel.HasValue)
-				options.logLevel = this.LogLevel.Value.ToString().ToLowerInvariant();
-
-			if (this.DeterministicIds.HasValue)
-				options.deterministicIds = this.DeterministicIds.Value;
-
-			if (this.MaxTextSize.HasValue)
-				options.maxTextSize = this.MaxTextSize.Value;
-
-			if (!string.IsNullOrWhiteSpace(this.FontFamily))
-				options.fontFamily = this.FontFamily;
-
-			if (this.StartOnLoad.HasValue)
-				options.startOnLoad = this.StartOnLoad.Value;
-
-			if (this.Flowchart != null)
+		/// <summary>
+		/// Diagram look (e.g. <c>classic</c>, <c>neo</c>, <c>handDrawn</c>).
+		/// </summary>
+		/// <remarks>
+		/// This maps to Mermaid's <c>look</c> initialization option.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.Look = "handDrawn";
+		/// ]]></code>
+		/// </example>
+		[DefaultValue("classic")]
+		public string Look
+		{
+			get => _look;
+			set
 			{
-				var flowchart = this.Flowchart.ToOptions();
-				if (flowchart != null)
-					options.flowchart = flowchart;
+				if (_look != value)
+				{
+					_look = value;
+					_owner.Update();
+				}
 			}
+		}
+		string _look = "classic";
 
-			if (this.Sequence != null)
+		/// <summary>
+		/// Theme name (e.g. <c>default</c>, <c>dark</c>, <c>forest</c>, <c>neutral</c>).
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.Theme = "neutral";
+		/// ]]></code>
+		/// </example>
+		[DefaultValue("default")]
+		public string Theme
+		{
+			get => _theme;
+			set
 			{
-				var sequence = this.Sequence.ToOptions();
-				if (sequence != null)
-					options.sequence = sequence;
+				if (_theme != value)
+				{
+					_theme = value;
+					_owner.Update();
+				}
 			}
-
-			return options;
 		}
-	}
+		string _theme = "default";
 
-	public class MermaidFlowchartConfiguration
-	{
-		public bool? UseMaxWidth { get; set; }
-
-		public bool? HtmlLabels { get; set; }
-
-		internal dynamic ToOptions()
+		/// <summary>
+		/// Theme variables (maps to Mermaid's <c>themeVariables</c>).
+		/// </summary>
+		/// <remarks>
+		/// Common keys include <c>fontFamily</c> and <c>fontSize</c>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.ThemeVariables = new Dictionary<string, object>
+		/// {
+		///     ["fontFamily"] = "\"Segoe UI\", sans-serif",
+		///     ["fontSize"] = "14px",
+		///     ["lineColor"] = "#999999"
+		/// };
+		/// ]]></code>
+		/// </example>
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public Dictionary<string, object> ThemeVariables
 		{
-			if (!this.UseMaxWidth.HasValue && !this.HtmlLabels.HasValue)
-				return null;
-
-			dynamic options = new DynamicObject();
-
-			if (this.UseMaxWidth.HasValue)
-				options.useMaxWidth = this.UseMaxWidth.Value;
-
-			if (this.HtmlLabels.HasValue)
-				options.htmlLabels = this.HtmlLabels.Value;
-
-			return options;
+			get => _themeVariables;
 		}
-	}
+		Dictionary<string, object> _themeVariables = new Dictionary<string, object>();
 
-	public class MermaidSequenceConfiguration
-	{
-		public bool? ShowSequenceNumbers { get; set; }
-
-		internal dynamic ToOptions()
+		/// <summary>
+		/// Security level (maps to Mermaid's <c>securityLevel</c>).
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.SecurityLevel = Wisej.Web.Ext.Mermaid.MermaidSecurityLevel.Strict;
+		/// ]]></code>
+		/// </example>
+		[DefaultValue(MermaidSecurityLevel.Strict)]
+		public MermaidSecurityLevel SecurityLevel
 		{
-			if (!this.ShowSequenceNumbers.HasValue)
-				return null;
-
-			dynamic options = new DynamicObject();
-			options.showSequenceNumbers = this.ShowSequenceNumbers.Value;
-			return options;
+			get => _securityLevel;
+			set
+			{
+				if (_securityLevel != value)
+				{
+					_securityLevel = value;
+					_owner.Update();
+				}
+			}
 		}
+		MermaidSecurityLevel _securityLevel = MermaidSecurityLevel.Strict;
+
+		/// <summary>
+		/// Log level (maps to Mermaid's <c>logLevel</c>).
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.LogLevel = Wisej.Web.Ext.Mermaid.MermaidLogLevel.Info;
+		/// ]]></code>
+		/// </example>
+		[DefaultValue(MermaidLogLevel.Trace)]
+		public MermaidLogLevel LogLevel
+		{
+			get => _logLevel;
+			set
+			{
+				if (_logLevel != value)
+				{
+					_logLevel = value;
+					_owner.Update();
+				}
+			}
+		}
+		MermaidLogLevel _logLevel = MermaidLogLevel.Trace;
+
+		/// <summary>
+		/// When set, Mermaid generates deterministic IDs for rendered elements.
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.DeterministicIds = true;
+		/// ]]></code>
+		/// </example>
+		[DefaultValue(true)]
+		public bool DeterministicIds
+		{
+			get => _deterministicIds;
+			set
+			{
+				if (_deterministicIds != value)
+				{
+					_deterministicIds = value;
+					_owner.Update();
+				}
+			}
+		}
+		bool _deterministicIds = true;
+
+		/// <summary>
+		/// Maximum text size allowed in diagrams (maps to Mermaid's <c>maxTextSize</c>).
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// // Increase the maximum allowed size when working with very large diagrams.
+		/// mermaid.Config.MaxTextSize = 250_000;
+		/// ]]></code>
+		/// </example>
+		[DefaultValue(32000)]
+		public int MaxTextSize
+		{
+			get => _maxTextSize;
+			set
+			{
+				if (_maxTextSize != value)
+				{
+					_maxTextSize = value;
+					_owner.Update();
+				}
+			}
+		}
+		int _maxTextSize = 32000;
+
+		/// <summary>
+		/// Font family applied to the diagram text.
+		/// </summary>
+		/// <remarks>
+		/// This maps to Mermaid's <c>fontFamily</c> option. For size, use <see cref="ThemeVariables"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.FontFamily = "\"Inter\", \"Segoe UI\", sans-serif";
+		/// ]]></code>
+		/// </example>
+		public string FontFamily
+		{
+			get => _fontFamily ?? _owner.Font.Name;
+			set
+			{
+				if (_fontFamily != value)
+				{
+					_fontFamily = value;
+					_owner.Update();
+				}
+			}
+		}
+		string _fontFamily = null;
+
+		private bool ShouldSerializeFontFamily() 
+			=> _fontFamily != null;
+
+		private void ResetFontFamily() 
+			=> FontFamily = null;
+
+		/// <summary>
+		/// Flowchart-specific options.
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.Flowchart.HtmlLabels = true;
+		/// ]]></code>
+		/// </example>
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public MermaidFlowchartConfiguration Flowchart
+		{
+			get => _flowchart ??= new MermaidFlowchartConfiguration(_owner);
+		}
+		MermaidFlowchartConfiguration _flowchart;
+
+		/// <summary>
+		/// Sequence diagram specific options.
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.Sequence.ShowSequenceNumbers = true;
+		/// ]]></code>
+		/// </example>
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public MermaidSequenceConfiguration Sequence
+		{
+			get => _sequence ??= new MermaidSequenceConfiguration(_owner);
+		}
+		MermaidSequenceConfiguration _sequence;
 	}
 }
