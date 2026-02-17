@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 // License information used by the LicenseManager.
 //[assembly: Wisej.License.ReleaseDate("7/31/2024")]
@@ -16,7 +16,7 @@
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ice Tea Group LLC")]
 [assembly: AssemblyProduct("Wisej 3 Extensions")]
-[assembly: AssemblyCopyright("Copyright ©2024 Ice Tea Group LLC")]
+[assembly: AssemblyCopyright("Copyright �2024 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,4 +31,4 @@
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("4.0.0.0")]
-[assembly: AssemblyFileVersion("3.5.10.4")]
+[assembly: AssemblyFileVersion("4.0.8.14")]

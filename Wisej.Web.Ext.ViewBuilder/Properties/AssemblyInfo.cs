@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Wisej.Core;
 
@@ -12,7 +12,7 @@ using Wisej.Core;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ice Tea Group LLC")]
 [assembly: AssemblyProduct("Wisej 3 Extensions")]
-[assembly: AssemblyCopyright("Copyright ©2023 Ice Tea Group LLC")]
+[assembly: AssemblyCopyright("Copyright �2023 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,4 +31,4 @@ using Wisej.Core;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("4.0.0.0")]
-[assembly: AssemblyFileVersion("4.0.8.9")]
+[assembly: AssemblyFileVersion("4.0.8.14")]
