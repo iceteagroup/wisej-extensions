@@ -7,7 +7,8 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.8.9</FileVersion>
+	<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+	<FileVersion>4.0.8.9</FileVersion>
     <NoWarn>CA1416</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -27,6 +28,7 @@
   <ItemGroup>
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.7" />
     <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
+	<PackageReference Include="System.Resources.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Messages.Designer.cs">
