@@ -10,7 +10,7 @@
     <version>$version$</version>
     <projectUrl>http://wisej.com/</projectUrl>
     <repository type="git" url="https://github.com/iceteagroup/wisej-extensions/tree/4.0/Wisej.Web.Ext.ColumnFilter" />
-    <icon>..\images\wisej.png</icon>
+    <icon>images\wisej.png</icon>
     <description>
         The ColumnFilter extender component allows you to add row filtering to your DataGridViews. It includes 2 ready made FilterPanels.
     </description>
