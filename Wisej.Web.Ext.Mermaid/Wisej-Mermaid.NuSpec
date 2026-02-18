@@ -29,26 +29,26 @@
   <files>
     <file src=".\Wisej.png" target="images/" />
 
-    <file src=".\bin\net48\Wisej.Web.Ext.Mermaid.dll" target="lib/net48" />
-    <file src=".\bin\net48\Wisej.Web.Ext.Mermaid.xml" target="lib/net48" />
+    <file src="..\..\Distro\\net48\Wisej.Web.Ext.Mermaid.dll" target="lib/net48" />
+    <file src="..\..\Distro\\net48\Wisej.Web.Ext.Mermaid.xml" target="lib/net48" />
 
-    <file src=".\bin\net8.0\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0" />
-    <file src=".\bin\net8.0\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0" />
+    <file src="..\..\Distro\\net8.0\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0" />
+    <file src="..\..\Distro\\net8.0\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0" />
 
-    <file src=".\bin\net8.0-windows\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0-windows7.0" />
-    <file src=".\bin\net8.0-windows\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0-windows7.0" />
+    <file src="..\..\Distro\\net8.0-windows\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0-windows7.0" />
+    <file src="..\..\Distro\\net8.0-windows\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0-windows7.0" />
 
-    <file src=".\bin\net8.0-ios\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0-ios14.2" />
-    <file src=".\bin\net8.0-ios\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0-ios14.2" />
+    <file src="..\..\Distro\\net8.0-ios\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0-ios14.2" />
+    <file src="..\..\Distro\\net8.0-ios\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0-ios14.2" />
 
-    <file src=".\bin\net8.0-android\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0-android21.0" />
-    <file src=".\bin\net8.0-android\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0-android21.0" />
+    <file src="..\..\Distro\\net8.0-android\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0-android21.0" />
+    <file src="..\..\Distro\\net8.0-android\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0-android21.0" />
 
-    <file src=".\bin\net8.0-maccatalyst\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0-maccatalyst14.0" />
-    <file src=".\bin\net8.0-maccatalyst\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0-maccatalyst14.0" />
+    <file src="..\..\Distro\\net8.0-maccatalyst\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0-maccatalyst14.0" />
+    <file src="..\..\Distro\\net8.0-maccatalyst\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0-maccatalyst14.0" />
 
-    <file src=".\bin\net8.0-windows10.0.19041.0\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0-windows10.0.19041.0" />
-    <file src=".\bin\net8.0-windows10.0.19041.0\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0-windows10.0.19041.0" />
+    <file src="..\..\Distro\\net8.0-windows10.0.19041.0\Wisej.Web.Ext.Mermaid.dll" target="lib/net8.0-windows10.0.19041.0" />
+    <file src="..\..\Distro\\net8.0-windows10.0.19041.0\Wisej.Web.Ext.Mermaid.xml" target="lib/net8.0-windows10.0.19041.0" />
   </files>
 </package>
 
