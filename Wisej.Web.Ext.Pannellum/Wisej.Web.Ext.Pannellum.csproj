@@ -6,7 +6,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.28.1</FileVersion>
+    <FileVersion>3.5.29.7</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="JavaScript\pannellum-2.3.2.css" />
