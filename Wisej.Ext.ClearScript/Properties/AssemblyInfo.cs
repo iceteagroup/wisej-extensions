@@ -47,7 +47,7 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("4.0.0.0")]
-[assembly: AssemblyFileVersion("4.0.8.21")]
+[assembly: AssemblyFileVersion("4.0.8.22")]
 
 namespace Microsoft.ClearScript.Properties
 {
