@@ -2,6 +2,8 @@
 using System.Runtime.InteropServices;
 using Wisej.Core;
 
+// Add the WisejResources attribute to 
+// merge js and css embedded resources with the wisej package.
 [assembly: WisejResources()]
 
 // General Information about an assembly is controlled through the following 
@@ -31,4 +33,4 @@ using Wisej.Core;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("4.0.0.0")]
-[assembly: AssemblyFileVersion("4.0.7.3")]
+[assembly: AssemblyFileVersion("4.0.8.18")]
