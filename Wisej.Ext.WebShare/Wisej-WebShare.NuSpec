@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>Wisej-3-WebShare</id>
+    <title>Wisej.NET 3 – WebShare Extension</title>
+    <tags>Real-Time-Web Full-Stack-Web-Development WinForms-to-Web VisualStudio-Web-Development Wisej-3 NET7 NET48 iOs Android MacCatalyst Windows10 Web-Api</tags>
+    <copyright>Copyright (C) Ice Tea Group LLC, All Rights Reserved.</copyright>
+    <authors>Ice Tea Group LLC</authors>
+    <owners>Wisej</owners>
+    <version>$version$</version>
+    <projectUrl>http://wisej.com/</projectUrl>
+    <repository type="git" url="https://github.com/iceteagroup/Wisej-Extensions" />
+    <icon>images\Wisej.png</icon>
+    <description>
+        Wisej.NET's WebShare extension is an integration for the Web Share API available in most browsers.
+    </description>
+    <summary>
+        WebShare Integration.
+    </summary>
+    <releaseNotes>
+        Please visit https://wisej.com/release-notes/?milestone=$version$ to view the release notes.
+    </releaseNotes>
+    <language>en-US</language>
+    <!--
+      Under dependencies include only other NuGet packages.
+    -->
+    <dependencies>
+      <dependency id="Wisej-3" version="$version$" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\Wisej.png" target="images/" />
+    <file src="..\..\Distro\bin\net48\Wisej.Ext.WebShare.dll" target="lib/net48" />
+    <file src="..\..\Distro\bin\net48\Wisej.Ext.WebShare.xml" target="lib/net48" />
+
+    <file src="..\..\Distro\bin\net8.0\Wisej.Ext.WebShare.dll" target="lib/net8.0" />
+    <file src="..\..\Distro\bin\net8.0\Wisej.Ext.WebShare.xml" target="lib/net8.0" />
+
+    <file src="..\..\Distro\bin\net8.0-ios\Wisej.Ext.WebShare.dll" target="lib/net8.0-ios14.2" />
+    <file src="..\..\Distro\bin\net8.0-ios\Wisej.Ext.WebShare.xml" target="lib/net8.0-ios14.2" />
+
+    <file src="..\..\Distro\bin\net8.0-android\Wisej.Ext.WebShare.dll" target="lib/net8.0-android21.0" />
+    <file src="..\..\Distro\bin\net8.0-android\Wisej.Ext.WebShare.xml" target="lib/net8.0-android21.0" />
+
+    <file src="..\..\Distro\bin\net8.0-maccatalyst\Wisej.Ext.WebShare.dll" target="lib/net8.0-maccatalyst14.0" />
+    <file src="..\..\Distro\bin\net8.0-maccatalyst\Wisej.Ext.WebShare.xml" target="lib/net8.0-maccatalyst14.0" />
+
+    <file src="..\..\Distro\bin\net8.0-windows10.0.19041.0\Wisej.Ext.WebShare.dll" target="lib/net8.0-windows10.0.19041.0" />
+    <file src="..\..\Distro\bin\net8.0-windows10.0.19041.0\Wisej.Ext.WebShare.xml" target="lib/net8.0-windows10.0.19041.0" />
+  </files>
+</package>
