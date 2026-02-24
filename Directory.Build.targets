@@ -1,0 +1,9 @@
+﻿<Project>
+  <PropertyGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+    <PackageReference Update="System.Memory" Version="4.5.5" />
+  </ItemGroup>
+</Project>

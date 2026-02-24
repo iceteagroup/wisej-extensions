@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -8,7 +8,7 @@
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ice Tea Group LLC")]
 [assembly: AssemblyProduct("Wisej 3 Extensions")]
-[assembly: AssemblyCopyright("Copyright ©2018 Ice Tea Group LLC")]
+[assembly: AssemblyCopyright("Copyright �2018 Ice Tea Group LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -23,4 +23,4 @@
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.5.28.1")]
+[assembly: AssemblyFileVersion("3.5.0.16")]
