@@ -8,7 +8,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.8.18</FileVersion>
+    <FileVersion>4.0.9.4</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="JavaScript\tesseract.min.js" />
