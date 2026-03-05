@@ -11,18 +11,16 @@ this.init = function (options) {
 
 	this.options = options;
 
-	this.__applyStyles(options);
 	this.__render(options);
 
-	this.addListener("resize", (e) => this.__render(options));
+	// this.addListener("resize", (e) => this.__render(options));
+
 	this.addListener("pointerdown", this.__onElementPointerDown);
 };
 
 this.update = function (options) {
 
 	this.options = options;
-
-	this.__applyStyles(options);
 	this.__render(options);
 };
 
@@ -39,19 +37,19 @@ this._onInitialized = function () {
 // This allows server - side event handlers to react to clicks on specific parts of the diagram.
 this.__onElementPointerDown = function (e) {
 
-	const target = e.getOriginalTarget();
+	var target = e.getOriginalTarget();
 	if (!target)
 		return;
 
 	// Helper to traverse up the DOM to find a parent with specific attributes or classes
-	const findMermaidParent = function (el, maxDepth) {
+	var findMermaidParent = function (el, maxDepth) {
 		let depth = 0;
 		let current = el;
 		while (current && depth < (maxDepth || 10)) {
 			// Look for Mermaid-specific containers (nodes, edges, subgraphs, etc.)
 			var classList = current.classList || [];
 			for (let i = 0; i < classList.length; i++) {
-				const cls = classList[i];
+				var cls = classList[i];
 				if (cls && (cls.indexOf('node') === 0 || 
 							cls.indexOf('edge') === 0 || 
 							cls.indexOf('cluster') === 0 ||
@@ -76,7 +74,7 @@ this.__onElementPointerDown = function (e) {
 	};
 
 	// Build data object with element information
-	const data = {
+	var data = {
 		tagName: target.tagName ? target.tagName.toLowerCase() : null,
 		text: getTextContent(target),
 		id: target.id || null,
@@ -85,7 +83,7 @@ this.__onElementPointerDown = function (e) {
 	};
 
 	// Try to find parent Mermaid element (node, edge, etc.)
-	const parent = findMermaidParent(target);
+	var parent = findMermaidParent(target);
 	if (parent) {
 		data.elementType = parent.type;
 		data.parentId = parent.element.id || null;
@@ -93,14 +91,14 @@ this.__onElementPointerDown = function (e) {
 		
 		// For edges, try to extract source/target information
 		if (parent.type && parent.type.indexOf('edge') === 0) {
-			const ariaLabel = parent.element.getAttribute ? parent.element.getAttribute('aria-label') : null;
+			var ariaLabel = parent.element.getAttribute ? parent.element.getAttribute('aria-label') : null;
 			if (ariaLabel)
 				data.ariaLabel = ariaLabel;
 		}
 
 		// If we didn't get text from the clicked element, try the parent
 		if (!data.text) {
-			const parentText = getTextContent(parent.element);
+			var parentText = getTextContent(parent.element);
 			if (parentText)
 				data.text = parentText;
 		}
@@ -108,7 +106,7 @@ this.__onElementPointerDown = function (e) {
 
 	// Add standard mouse event arguments
 	if (e.getButton) {
-		const button = 0;
+		var button = 0;
 		switch (e.getButton()) {
 			case "right": button = 2; break;
 			case "middle": button = 1; break;
@@ -123,23 +121,12 @@ this.__onElementPointerDown = function (e) {
 	this.fireWidgetEvent("elementClick", data);
 }
 
-// Applies styles to the container. 
-// The options can include padding, overflow, and whether to use max - width for responsive diagrams.
-// This allows the server - side code to control the layout and scrolling behavior of the diagram container.
-this.__applyStyles = function (options) {
-
-	var padding = options.padding || 16;
-	var overflow = options.overflow || "auto";
-	var useMaxWidth = options.useMaxWidth !== false;
-
-	this.container.style.overflow = overflow;
-	this.container.style.padding = padding + "px";
-	this.container.style.maxWidth = useMaxWidth ? "100%" : "";
-};
-
 // Render the diagram using the Mermaid library. 
 // If Mermaid is not loaded yet, wait for the "load" event and try again.
 this.__render = function (options) {
+
+	if (!options.diagram)
+		return;
 
 	if (!window.mermaid) {
 		this.addListenerOnce("load", () => this.__render(options));
@@ -148,29 +135,25 @@ this.__render = function (options) {
 
 	try {
 
-		const me = this;
-		const container = this.container
+		var me = this;
+		var container = this.container
 
-		mermaid.initialize(options.config);
+		mermaid.initialize(options);
+
 		mermaid.render(this.getId() + "_mermaid", options.diagram)
-			.then(({ svg }) => {
+			.then(({ svg, bindFunctions }) => {
 
 				container.innerHTML = svg;
+				if (bindFunctions) bindFunctions(container);
+
 				me.fireEvent("render");
 
-				if (me.panzoom) {
-					container.removeEventListener("wheel", me.panzoom.zoomWithWheel);
-					me.panzoom.destroy();
+				if (options.enablePanZoom) {
+
+					var scale = (options.zoomLevel || 1.0) * 0.2;
+					var svgElement = container.querySelector('svg');
+					this.__enablePanZoom(svgElement, scale, 0.01, 0.02, 2);
 				}
-
-				//const panzoom = me.panzoom = Panzoom(container.firstChild, {
-				//	maxScale: 5,
-				//	minScale: 0.3,
-				//	contain: "none"
-				//});
-
-				//// mouse wheel zooming
-				//container.addEventListener("wheel", panzoom.zoomWithWheel);
 
 			}).catch((err) => {
 
@@ -180,7 +163,6 @@ this.__render = function (options) {
 			});
 	}
 	catch (e) {
-
 	}
 };
 
@@ -191,8 +173,8 @@ this.__render = function (options) {
  */
 this.validate = function (diagram) {
 
-	const me = this;
-	const svg = this.container.firstChild;
+	var me = this;
+	var svg = this.container.firstChild;
 
 	return new Promise(async function (resolve, reject) {
 
@@ -212,12 +194,12 @@ this.validate = function (diagram) {
  */
 this.downloadSvg = function (fileName) {
 
-	options = options || {};
-	const svg = this.container.firstChild;
+	var svg = this.container.firstChild;
+	var me = this;
 
 	var svgText = me.__serializeSvg(svg);
 	var blob = new Blob([svgText], { type: "image/svg+xml;charset=utf-8" });
-	this.__downloadBlob(blob, fileName || "diagram.svg");
+	this.__downloadBlob(blob, fileName);
 };
 
 /**
@@ -225,15 +207,15 @@ this.downloadSvg = function (fileName) {
  */
 this.getImage = function () {
 
-	const options = {};
-	const svg = this.container.firstChild;
+	var options = {};
+	var element = this.container;
 
 	// need allowTaint to render svg icons.
 	// https://github.com/niklasvh/html2canvas/issues/95
 	options.useCORS = true;
 	options.allowTaint = true;
 
-	const result = new Promise(function (resolve, reject) {
+	var result = new Promise(function (resolve, reject) {
 
 		// make sure the html2canvas library is loaded.
 		wisej.utils.Loader.load([
@@ -242,14 +224,14 @@ this.getImage = function () {
 				url: "resource.wx/Wisej.Web.Ext.Html2Canvas.JavaScript.Html2Canvas.js?v=" + Wisej.Core.version
 			}], function () {
 
-				const rect = svg.getBoundingClientRect()
-				svg.setAttribute("width", rect.width);
-				svg.setAttribute("height", rect.height);
+				var rect = element.firstChild.getBoundingClientRect()
+				element.setAttribute("width", rect.width);
+				element.setAttribute("height", rect.height);
 
-				html2canvas(dom, options).then(function (canvas) {
+				html2canvas(element, options).then(function (canvas) {
 
 					try {
-						resolve(canvas.toDataURL());
+					  resolve(canvas.toDataURL("image/png"));
 					}
 					catch (error) {
 						reject(error);
@@ -268,36 +250,36 @@ this.getImage = function () {
 this.downloadPdf = function (fileName, options) {
 
 	options = options || {};
-	const me = this;
-	const svg = this.container.firstChild;
+	var me = this;
+	var svg = this.container.firstChild;
 
-	const svgText = this.__serializeSvg(svg);
+	var svgText = this.__serializeSvg(svg);
 
 	// get dimensions from SVG.
-	const rect = svgElement.getBoundingClientRect();
-	const width = rect ? Math.max(1, Math.ceil(rect.width)) : 800;
-	const height = rect ? Math.max(1, Math.ceil(rect.height)) : 600;
+	var rect = svg.getBoundingClientRect();
+	var width = rect ? Math.max(1, Math.ceil(rect.width)) : 800;
+	var height = rect ? Math.max(1, Math.ceil(rect.height)) : 600;
 
 	// apply scale factor for better quality (default 2x for high DPI).
-	const scale = (typeof options.scale === "number" && options.scale > 0) ? options.scale : 2;
-	const scaledWidth = width * scale;
-	const scaledHeight = height * scale;
+	var scale = (typeof options.scale === "number" && options.scale > 0) ? options.scale : 2;
+	var scaledWidth = width * scale;
+	var scaledHeight = height * scale;
 
 	// create canvas for rasterization.
-	const canvas = document.createElement("canvas");
+	var canvas = document.createElement("canvas");
 	canvas.width = scaledWidth;
 	canvas.height = scaledHeight;
-	const ctx = canvas.getContext("2d");
+	var ctx = canvas.getContext("2d");
 
 	// fill with background color.
-	const bgColor = options.backgroundColor || "#ffffff";
+	var bgColor = options.backgroundColor || "#ffffff";
 	ctx.fillStyle = bgColor;
 	ctx.fillRect(0, 0, scaledWidth, scaledHeight);
 
 	// convert SVG to data URI to avoid CORS/tainted canvas issues.
-	const svgDataUri = "data:image/svg+xml;base64," + btoa(decodeURIComponent(encodeURIComponent(svgText)));
+	var svgDataUri = "data:image/svg+xml;base64," + btoa(decodeURIComponent(encodeURIComponent(svgText)));
 
-	const img = new Image();
+	var img = new Image();
 	img.onload = function () {
 		try {
 			ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
@@ -323,38 +305,38 @@ this.downloadPdf = function (fileName, options) {
 this.getPdf = async function (options) {
 
 	options = options || {};
-	const me = this;
-	const svg = this.container.firstChild;
-	const svgText = me.__serializeSvg(svg);
+	var me = this;
+	var svg = this.container.firstChild;
+	var svgText = me.__serializeSvg(svg);
 
 	return new Promise(function (resolve, reject) {
 
 		try {
 			// get dimensions from SVG.
-			const rect = svg.getBoundingClientRect();
-			const width = rect ? Math.max(1, Math.ceil(rect.width)) : 800;
-			const height = rect ? Math.max(1, Math.ceil(rect.height)) : 600;
+			var rect = svg.getBoundingClientRect();
+			var width = rect ? Math.max(1, Math.ceil(rect.width)) : 800;
+			var height = rect ? Math.max(1, Math.ceil(rect.height)) : 600;
 
 			// apply scale factor for better quality (default 2x for high DPI).
-			const scale = options.scale || 2;
-			const scaledWidth = width * scale;
-			const scaledHeight = height * scale;
+			var scale = options.scale || 2;
+			var scaledWidth = width * scale;
+			var scaledHeight = height * scale;
 
 			// Create canvas for rasterization.
-			const canvas = document.createElement("canvas");
+			var canvas = document.createElement("canvas");
 			canvas.width = scaledWidth;
 			canvas.height = scaledHeight;
-			const ctx = canvas.getContext("2d");
+			var ctx = canvas.getContext("2d");
 
 			// Fill with background color.
-			const bgColor = options.backgroundColor || "#ffffff";
+			var bgColor = options.backgroundColor || "#ffffff";
 			ctx.fillStyle = bgColor;
 			ctx.fillRect(0, 0, scaledWidth, scaledHeight);
 
 			// Convert SVG to data URI to avoid CORS/tainted canvas issues.
-			const svgDataUri = "data:image/svg+xml;base64," + btoa(decodeURIComponent(encodeURIComponent(svgText)));
+			var svgDataUri = "data:image/svg+xml;base64," + btoa(decodeURIComponent(encodeURIComponent(svgText)));
 
-			const img = new Image();
+			var img = new Image();
 			img.onload = function () {
 				try {
 					ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
@@ -400,7 +382,7 @@ this.__serializeSvg = function (svgElement) {
 		return null;
 
 	// Clone to avoid mutating the live DOM.
-	const svg = svgElement.cloneNode(true);
+	var svg = svgElement.cloneNode(true);
 
 	// Ensure required namespaces.
 	if (!svg.getAttribute("xmlns"))
@@ -409,9 +391,9 @@ this.__serializeSvg = function (svgElement) {
 		svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
 	// Ensure width/height to make rasterization deterministic.
-	const rect = svgElement.getBoundingClientRect ? svgElement.getBoundingClientRect() : null;
-	const width = rect ? Math.max(1, Math.ceil(rect.width)) : null;
-	const height = rect ? Math.max(1, Math.ceil(rect.height)) : null;
+	var rect = svgElement.getBoundingClientRect ? svgElement.getBoundingClientRect() : null;
+	var width = rect ? Math.max(1, Math.ceil(rect.width)) : null;
+	var height = rect ? Math.max(1, Math.ceil(rect.height)) : null;
 
 	if ((!svg.getAttribute("width") || !svg.getAttribute("height")) && svg.getAttribute("viewBox")) {
 		var vb = (svg.getAttribute("viewBox") || "").trim().split(/\s+|,/).map(parseFloat);
@@ -439,22 +421,22 @@ this.__serializeSvg = function (svgElement) {
 // For more complex documents or better compatibility, consider using a dedicated PDF library.
 this.__generatePdf = function (canvas, width, height, fileName, options) {
 
-	const me = this;
+	var me = this;
 	options = options || {};
 
 	// PDF dimensions in points (72 points = 1 inch).
-	const margin = (typeof options.margin === "number") ? options.margin : 20;
-	const pageWidth = width + (margin * 2);
-	const pageHeight = height + (margin * 2);
+	var margin = (typeof options.margin === "number") ? options.margin : 20;
+	var pageWidth = width + (margin * 2);
+	var pageHeight = height + (margin * 2);
 
 	// convert canvas to JPEG for embedding (good compression).
-	const quality = (typeof options.quality === "number") ? options.quality : 0.95;
-	const imgData = canvas.toDataURL("image/jpeg", quality);
+	var quality = (typeof options.quality === "number") ? options.quality : 0.95;
+	var imgData = canvas.toDataURL("image/jpeg", quality);
 
 	// build a minimal PDF document structure.
-	const pdfBytes = me.__buildPdfDocument(imgData, width, height, pageWidth, pageHeight, margin);
+	var pdfBytes = me.__buildPdfDocument(imgData, width, height, pageWidth, pageHeight, margin);
 
-	const blob = new Blob([pdfBytes], { type: "application/pdf" });
+	var blob = new Blob([pdfBytes], { type: "application/pdf" });
 	me.__downloadBlob(blob, fileName);
 };
 
@@ -464,9 +446,9 @@ this.__generatePdf = function (canvas, width, height, fileName, options) {
 this.__buildPdfDocument = function (imgDataUrl, imgWidth, imgHeight, pageWidth, pageHeight, margin) {
 
 	// Extract base64 image data.
-	const base64Data = imgDataUrl.split(",")[1];
-	const binaryData = atob(base64Data);
-	const imgBytes = new Uint8Array(binaryData.length);
+	var base64Data = imgDataUrl.split(",")[1];
+	var binaryData = atob(base64Data);
+	var imgBytes = new Uint8Array(binaryData.length);
 	for (let i = 0; i < binaryData.length; i++) {
 		imgBytes[i] = binaryData.charCodeAt(i);
 	}
@@ -493,33 +475,33 @@ this.__buildPdfDocument = function (imgDataUrl, imgWidth, imgHeight, pageWidth, 
 	addObject("3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 " + pageWidth.toFixed(2) + " " + pageHeight.toFixed(2) + "] /Contents 4 0 R /Resources << /XObject << /Im0 5 0 R >> >> >>\nendobj\n");
 
 	// Object 4: Content stream (PDF commands to draw the image).
-	const streamContent = "q\n" + imgWidth.toFixed(2) + " 0 0 " + imgHeight.toFixed(2) + " " + margin.toFixed(2) + " " + margin.toFixed(2) + " cm\n/Im0 Do\nQ\n";
+	var streamContent = "q\n" + imgWidth.toFixed(2) + " 0 0 " + imgHeight.toFixed(2) + " " + margin.toFixed(2) + " " + margin.toFixed(2) + " cm\n/Im0 Do\nQ\n";
 	addObject("4 0 obj\n<< /Length " + streamContent.length + " >>\nstream\n" + streamContent + "endstream\nendobj\n");
 
 	// Object 5: Image XObject (JPEG image with DCT encoding).
-	const imgObjHeader = "5 0 obj\n<< /Type /XObject /Subtype /Image /Width " + Math.round(imgWidth * 2) + " /Height " + Math.round(imgHeight * 2) + " /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length " + imgBytes.length + " >>\nstream\n";
-	const imgObjFooter = "\nendstream\nendobj\n";
+	var imgObjHeader = "5 0 obj\n<< /Type /XObject /Subtype /Image /Width " + Math.round(imgWidth * 2) + " /Height " + Math.round(imgHeight * 2) + " /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length " + imgBytes.length + " >>\nstream\n";
+	var imgObjFooter = "\nendstream\nendobj\n";
 
 	// Calculate byte offset for cross-reference table.
-	const xrefOffset = content.length + imgObjHeader.length + imgBytes.length + imgObjFooter.length;
+	var xrefOffset = content.length + imgObjHeader.length + imgBytes.length + imgObjFooter.length;
 
 	// Build cross-reference (xref) table.
 	let xref = "xref\n0 6\n0000000000 65535 f \n";
 	for (let j = 0; j < offsets.length; j++) {
-		const offset = String(offsets[j]);
+		var offset = String(offsets[j]);
 		xref += "0000000000".substring(0, 10 - offset.length) + offset + " 00000 n \n";
 	}
 
 	// Trailer (points to catalog and xref location).
-	const trailer = "trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n" + xrefOffset + "\n%%EOF\n";
+	var trailer = "trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n" + xrefOffset + "\n%%EOF\n";
 
 	// Assemble final PDF as byte array.
-	const encoder = new TextEncoder();
-	const headerBytes = encoder.encode(content + imgObjHeader);
-	const footerBytes = encoder.encode(imgObjFooter + xref + trailer);
+	var encoder = new TextEncoder();
+	var headerBytes = encoder.encode(content + imgObjHeader);
+	var footerBytes = encoder.encode(imgObjFooter + xref + trailer);
 
-	const totalLength = headerBytes.length + imgBytes.length + footerBytes.length;
-	const pdfBytes = new Uint8Array(totalLength);
+	var totalLength = headerBytes.length + imgBytes.length + footerBytes.length;
+	var pdfBytes = new Uint8Array(totalLength);
 	pdfBytes.set(headerBytes, 0);
 	pdfBytes.set(imgBytes, headerBytes.length);
 	pdfBytes.set(footerBytes, headerBytes.length + imgBytes.length);
@@ -530,12 +512,12 @@ this.__buildPdfDocument = function (imgDataUrl, imgWidth, imgHeight, pageWidth, 
 // Triggers a download of the given Blob with the specified file name. 
 // This is used to download the generated PDF file containing the diagram.
 // It creates a temporary URL for the Blob and simulates a click on a hidden link to start the download, then cleans up the URL and link element afterward.
-this.__downloadBlob = function (blob) {
+this.__downloadBlob = function (blob, fileName) {
 	// Create a temporary URL for the Blob
-	const url = URL.createObjectURL(blob);
+	var url = URL.createObjectURL(blob);
 
 	// Create a temporary <a> to trigger download
-	const a = document.createElement("a");
+	var a = document.createElement("a");
 	a.href = url;
 	a.download = fileName;
 	document.body.appendChild(a);
@@ -545,3 +527,82 @@ this.__downloadBlob = function (blob) {
 	document.body.removeChild(a);
 	URL.revokeObjectURL(url);
 };
+
+/**
+ * Mermaid pan and zoom integration.
+ */
+this.__enablePanZoom = function (svg, scale, zoomStep, minZoom, maxZoom) {
+
+	var ctx = this;
+	var currentSvg = svg;
+	var panSurface = ctx.container;
+
+	ctx.__tvZoom = scale;
+	ctx.__tvPanX = 0;
+	ctx.__tvPanY = 0;
+
+	ctx.__tvApplyTransform = function () {
+		currentSvg.style.transformOrigin = '0 0';
+		currentSvg.style.transform = 'translate(' + ctx.__tvPanX + 'px,' + ctx.__tvPanY + 'px) scale(' + ctx.__tvZoom + ')';
+		currentSvg.style.maxWidth = 'none';
+		currentSvg.style.height = 'auto';
+		return true;
+	};
+
+	if (!panSurface.__tvPanBound) {
+		panSurface.__tvPanBound = true;
+		panSurface.style.cursor = 'grab';
+		panSurface.style.userSelect = 'none';
+		var dragging = false;
+		var lastX = 0;
+		var lastY = 0;
+		panSurface.addEventListener('mousedown', function (e) {
+
+			if (e.button !== 0) return;
+			dragging = true;
+			lastX = e.clientX;
+			lastY = e.clientY;
+			panSurface.style.cursor = 'grabbing';
+			e.preventDefault();
+
+		});
+		window.addEventListener('mousemove', function (e) {
+
+			if (!dragging) return;
+			var dx = e.clientX - lastX;
+			var dy = e.clientY - lastY;
+			lastX = e.clientX;
+			lastY = e.clientY;
+			ctx.__tvPanX += dx;
+			ctx.__tvPanY += dy;
+			ctx.__tvApplyTransform();
+
+		});
+		window.addEventListener('mouseup', function () {
+
+			if (!dragging) return;
+			dragging = false;
+			panSurface.style.cursor = 'grab';
+
+		});
+		panSurface.addEventListener('mouseleave', function () {
+
+			if (dragging) panSurface.style.cursor = 'grabbing';
+
+		});
+		panSurface.addEventListener('wheel', function (e) {
+			if (!e) return;
+			var delta = (typeof e.deltaY === 'number') ? e.deltaY : 0;
+			if (delta === 0) return;
+			e.preventDefault();
+			var next = ctx.__tvZoom + (delta < 0 ? zoomStep : -zoomStep);
+			if (next < minZoom) next = minZoom;
+			if (next > maxZoom) next = maxZoom;
+			ctx.__tvZoom = next;
+			ctx.fireWidgetEvent('zoom', ctx.__tvZoom);
+			ctx.__tvApplyTransform();
+		});
+	}
+
+	ctx.__tvApplyTransform();
+}

@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
@@ -93,10 +94,15 @@ namespace Wisej.Web.Ext.Mermaid
 		/// ]]></code>		/// </example>
 		public Mermaid(string diagram)
 		{
-			this.Diagram = diagram ?? "";
-			this.DiagramPadding = 16;
-			this.UseMaxWidth = true;
-			this.Overflow = "auto";
+			this.Diagram = diagram;
+			
+			// defaults
+			this.Options.enablePanZoom = true;
+			this.Options.deterministicIds = true;
+			this.Options.look = "classic";
+			this.Options.theme = "default";
+			this.Options.securityLevel = MermaidSecurityLevel.Strict;
+			this.Options.logLevel = MermaidLogLevel.Trace;
 		}
 
 		#endregion
@@ -238,86 +244,298 @@ namespace Wisej.Web.Ext.Mermaid
 		/// ]]></code>
 		/// </example>
 		[DefaultValue("")]
+		[Category("Mermaid")]
 		[DesignerActionList]
 		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		public string Diagram
 		{
-			get => _diagram;
+			get => this.Options.diagram ?? "";
 			set
 			{
-				if (_diagram != value)
+				value ??= "";
+				if (this.Diagram != value)
 				{
-					_diagram = value ?? "";
-					this.Options.diagram = _diagram;
+					this.Options.diagram = value;
 					OnDiagramChanged(EventArgs.Empty);
 				}
 			}
 		}
-		string _diagram = "";
 
 		/// <summary>
-		/// Gets the Mermaid initialization options passed to <c>mermaid.initialize(...)</c>.
-		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.Theme = "forest";
-		/// mermaid.Config.Flowchart.HtmlLabels = true;
-		/// ]]></code>
-		/// </example>
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public MermaidConfiguration Config
-		{
-			get => this.Options.config ??= new MermaidConfiguration(this);
-		}
-
-		/// <summary>
-		/// Gets or sets the padding (pixels) applied around the diagram.
-		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.DiagramPadding = 8;
-		/// ]]></code>
-		/// </example>
-		[DefaultValue(16)]
-		public int DiagramPadding
-		{
-			get => this.Options.padding ?? 16;
-			set => this.Options.padding = value < 0 ? 0 : value;
-		}
-
-		/// <summary>
-		/// Gets or sets the CSS <c>overflow</c> applied to the container element.
-		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// // Hide scrollbars and clip content.
-		/// mermaid.Overflow = "hidden";
-		/// ]]></code>
-		/// </example>
-		[DefaultValue("auto")]
-		public string Overflow
-		{
-			get => this.Options.overflow ?? "auto";
-			set => this.Options.overflow = value;
-		}
-
-		/// <summary>
-		/// Gets or sets whether the diagram SVG is constrained to <c>max-width: 100%</c>.
+		/// Diagram look (e.g. <c>classic</c>, <c>neo</c>, <c>handDrawn</c>).
 		/// </summary>
 		/// <remarks>
-		/// Use this to make diagrams responsive within their container.
+		/// This maps to Mermaid's <c>look</c> initialization option.
 		/// </remarks>
 		/// <example>
 		/// <code><![CDATA[
-		/// mermaid.UseMaxWidth = true;
+		/// mermaid.Config.Look = "handDrawn";
 		/// ]]></code>
 		/// </example>
-		[DefaultValue(true)]
-		public bool UseMaxWidth
+		[Category("Mermaid")]
+		[DefaultValue("classic")]
+		public string Look
 		{
-			get => this.Options.useMaxWidth ?? true;
-			set => this.Options.useMaxWidth = value;
+			get => this.Options.look ?? "classic";
+			set
+			{
+				if (this.Look != value)
+					this.Options.look = value;
+			}
+		}
+
+		/// <summary>
+		/// Theme name (e.g. <c>default</c>, <c>dark</c>, <c>forest</c>, <c>neutral</c>).
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.Theme = "neutral";
+		/// ]]></code>
+		/// </example>
+		[Category("Mermaid")]
+		[DefaultValue("default")]
+		public string Theme
+		{
+			get => this.Options.theme ?? "default";
+			set
+			{
+				if (this.Text != value)
+					this.Options.theme = value;
+			}
+		}
+
+		/// <summary>
+		/// Security level (maps to Mermaid's <c>securityLevel</c>).
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.SecurityLevel = Wisej.Web.Ext.Mermaid.MermaidSecurityLevel.Strict;
+		/// ]]></code>
+		/// </example>
+		[Category("Mermaid")]
+		[DefaultValue(MermaidSecurityLevel.Strict)]
+		public MermaidSecurityLevel SecurityLevel
+		{
+			get => this.Options.securityLevel ?? MermaidSecurityLevel.Strict;
+			set
+			{
+				if (this.SecurityLevel != value)
+					this.Options.securityLevel = value;
+			}
+		}
+
+		/// <summary>
+		/// Log level (maps to Mermaid's <c>logLevel</c>).
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.LogLevel = Wisej.Web.Ext.Mermaid.MermaidLogLevel.Info;
+		/// ]]></code>
+		/// </example>
+		[Category("Mermaid")]
+		[DefaultValue(MermaidLogLevel.Trace)]
+		public MermaidLogLevel LogLevel
+		{
+			get => this.Options.logLevel ?? MermaidLogLevel.Trace;
+			set
+			{
+				if (this.LogLevel != value)
+					this.Options.logLevel = value;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether pan and zoom functionality is enabled.
+		/// </summary>
+		[Category("Mermaid")]
+		[DefaultValue(true)]
+		public bool EnablePanZoom
+		{
+			get => this.Options.enablePanZoom ?? true;
+			set
+			{
+				if (this.EnablePanZoom != value)
+					this.Options.enablePanZoom = value;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the scale factor (1 = 100%).
+		/// </summary>
+		[Category("Mermaid")]
+		[DefaultValue(1.0f)]
+		public float ZoomLevel
+		{
+			get => this.Options.zoomLevel ?? 1.0f;
+			set
+			{
+				if (this.ZoomLevel != value)
+					this.Options.zoomLevel = value;
+			}
+		}
+
+		/// <summary>
+		/// When set, Mermaid generates deterministic IDs for rendered elements.
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.DeterministicIds = true;
+		/// ]]></code>
+		/// </example>
+		[Category("Mermaid")]
+		[DefaultValue(true)]
+		public bool DeterministicIds
+		{
+			get => this.Options.deterministicIds ?? true;
+			set
+			{
+				if (this.DeterministicIds != value)
+					this.Options.deterministicIds = value;
+			}
+		}
+
+		/// <summary>
+		/// Font family applied to the diagram text.
+		/// </summary>
+		/// <remarks>
+		/// This maps to Mermaid's <c>fontFamily</c> option. For size, use <see cref="ThemeVariables"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Config.FontFamily = "\"Inter\", \"Segoe UI\", sans-serif";
+		/// ]]></code>
+		/// </example>
+		[Category("Mermaid")]
+		public string FontFamily
+		{
+			get => _fontFamily ?? this.Font.Name;
+			set
+			{
+				if (this.FontFamily != value)
+				{
+					_fontFamily = value;
+					this.Options.fontFamily = value;
+				}
+			}
+		}
+		private string _fontFamily = null;
+
+		private bool ShouldSerializeFontFamily()
+			=> _fontFamily != null;
+
+		private void ResetFontFamily()
+			=> FontFamily = null;
+
+		/// <summary>
+		/// Flowchart-specific options.
+		/// </summary>
+		/// <remarks>
+		/// <para>Common keys include <c>titleColor</c>, <c>nodeBorder</c>, <c>edgeLabelBackground</c>.</para>
+		/// <para>See <see href="https://mermaid.js.org/config/theming.html#flowchart-variables">Flowchart Configuration</see> in the Mermaid documentation for details and examples.</para>
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Flowchart.titleColor = "red";
+		/// ]]></code>
+		/// </example>
+		[Category("Mermaid")]
+		[DefaultValue(null)]
+		[MergableProperty(false)]
+		[TypeConverter(typeof(DynamicObjectConverter))]
+		[Editor("Wisej.Design.DynamicObjectEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", "System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+		[WisejSerializerOptions(WisejSerializerOptions.None)]
+		public virtual dynamic Flowchart
+		{
+			get
+			{
+				if (_flowchart == null)
+				{
+					_flowchart = new DynamicObject();
+					(_flowchart as INotifyPropertyChanged).PropertyChanged += (s, e) => this.Update();
+				}
+				return _flowchart;
+			}
+		}
+		dynamic _flowchart;
+
+		/// <summary>
+		/// Sequence diagram specific options.
+		/// </summary>
+		/// <remarks>
+		/// Common keys include <c>sequenceNumberColor</c>, <c>labelTextColor</c>. 
+		/// See <see href="https://mermaid.js.org/config/theming.html#sequence-diagram-variables">Sequence Diagram Configuration</see> in the Mermaid documentation for details and examples.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.Sequence.ShowSequenceNumbers = true;
+		/// ]]></code>
+		/// </example>
+		[Category("Mermaid")]
+		[DefaultValue(null)]
+		[MergableProperty(false)]
+		[TypeConverter(typeof(DynamicObjectConverter))]
+		[Editor("Wisej.Design.DynamicObjectEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", "System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+		[WisejSerializerOptions(WisejSerializerOptions.None)]
+		public virtual dynamic Sequence
+		{
+			get
+			{
+				if (_sequence == null)
+				{
+					_sequence = new DynamicObject();
+					(_sequence as INotifyPropertyChanged).PropertyChanged += (s, e) => this.Update();
+				}
+				return _sequence;
+			}
+		}
+		dynamic _sequence;
+
+		/// <summary>
+		/// Theme variables (maps to Mermaid's <c>themeVariables</c>).
+		/// </summary>
+		/// <remarks>
+		/// Common keys include <c>fontFamily</c> and <c>fontSize</c>. 
+		/// See <see href="https://mermaid.js.org/config/theming.html#theme-variables">Theme Variables</see> in the Mermaid documentation for details and examples.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// mermaid.ThemeVariables.darkMode = true; 
+		/// mermaid.ThemeVariables.fontSize = "16px"; 
+		/// ]]></code>
+		/// </example>
+		[Category("Mermaid")]
+		[DefaultValue(null)]
+		[MergableProperty(false)]
+		[TypeConverter(typeof(DynamicObjectConverter))]
+		[Editor("Wisej.Design.DynamicObjectEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", "System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+		[WisejSerializerOptions(WisejSerializerOptions.None)]
+		public virtual dynamic ThemeVariables
+		{
+			get
+			{
+				if (_themeVariables == null)
+				{
+					_themeVariables = new DynamicObject();
+					(_themeVariables as INotifyPropertyChanged).PropertyChanged += (s, e) => this.Update();
+				}
+				return _themeVariables;
+			}
+		}
+		dynamic _themeVariables;
+
+		/// <summary>
+		/// Gets or sets the URL of the source from which the Mermaid library is loaded.
+		/// </summary>
+		/// <remarks>
+		/// Thed default is to use the embedded Mermaid script resource, but you can set this property to 
+		/// load Mermaid from a CDN or custom location if needed. 
+		/// Ensure that the specified URL points to a valid Mermaid JavaScript file for the widget to function correctly.
+		/// </remarks>
+		public static string SourceURL
+		{
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -328,7 +546,7 @@ namespace Wisej.Web.Ext.Mermaid
 		/// </remarks>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public override System.Collections.Generic.List<Package> Packages
+		public override List<Package> Packages
 		{
 			// disable inlining or we lose the calling assembly in GetResourceString()/GetResourceURL().
 			[MethodImpl(MethodImplOptions.NoInlining)]
@@ -336,15 +554,12 @@ namespace Wisej.Web.Ext.Mermaid
 			{
 				if (base.Packages.Count == 0)
 				{
+					var source = SourceURL ?? GetResourceURL("Wisej.Web.Ext.Mermaid.JavaScript.mermaid.min.js");
+
 					base.Packages.Add(new Package()
 					{
 						Name = "mermaid.js",
-						Source = GetResourceURL("Wisej.Web.Ext.Mermaid.JavaScript.mermaid.min.js")
-					});
-					base.Packages.Add(new Package()
-					{
-						Name = "panzoom.js",
-						Source = GetResourceURL("Wisej.Web.Ext.Mermaid.JavaScript.panzoom.min.js")
+						Source = source
 					});
 				}
 
@@ -481,9 +696,9 @@ namespace Wisej.Web.Ext.Mermaid
 		/// ]]></code>
 		/// </example>
 		public async Task<MemoryStream> ExportToPdfAsync(
-			double? scale = null, 
-			string backgroundColor = null, 
-			double? margin = null, 
+			double? scale = null,
+			string backgroundColor = null,
+			double? margin = null,
 			double? quality = null)
 		{
 			// call the JavaScript function that generates PDF and returns base64.

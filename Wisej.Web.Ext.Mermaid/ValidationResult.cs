@@ -29,7 +29,7 @@ namespace Wisej.Web.Ext.Mermaid
 	/// <example>
 	/// <code><![CDATA[
 	/// MermaidValidationResult result = await mermaid.ValidateAsync(mermaid.Diagram);
-	/// if (!result.Ok)
+	/// if (!result.Valid)
 	///     Wisej.Web.MessageBox.Show(result.Message ?? "Validation failed.");
 	/// ]]></code>
 	/// </example>
@@ -38,29 +38,18 @@ namespace Wisej.Web.Ext.Mermaid
 		// Internal constructor. Parses the error payload.
 		internal ValidationResult(dynamic error)
 		{
-
+			this.Message = error.message;
+			this.Valid = error.valid ?? false;
 		}
 
 		/// <summary>
-		/// Gets or sets whether the operation succeeded.
+		/// Returns true if the diagram is valid, or false if the diagram is invalid and the error message contains details about the failure.
 		/// </summary>
-		public bool OK { get; set; }
+		public bool Valid { get; }
 
 		/// <summary>
-		/// Gets or sets an optional human-readable message describing the outcome.
+		/// Returns the error message associated with the failure, or null if the operation succeeded.
 		/// </summary>
 		public string Message { get; }
-
-		/// <summary>
-		/// Gets or sets an optional raw error payload associated with the failure.
-		/// </summary>
-		/// <remarks>
-		/// This value is typically a JSON-serializable object coming from the browser.
-		/// </remarks>
-		/// <example>
-		/// <code><![CDATA[
-		/// ]]></code>
-		/// </example>
-		public dynamic Error { get; }
 	}
 }
