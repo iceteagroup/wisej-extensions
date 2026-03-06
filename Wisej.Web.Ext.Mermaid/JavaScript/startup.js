@@ -150,7 +150,7 @@ this.__render = function (options) {
 
 				if (options.enablePanZoom) {
 
-					var scale = (options.zoomLevel || 1.0) * 0.2;
+					var scale = (options.zoomLevel || 1.0);
 					var svgElement = container.querySelector('svg');
 					this.__enablePanZoom(svgElement, scale, 0.01, 0.02, 2);
 				}
