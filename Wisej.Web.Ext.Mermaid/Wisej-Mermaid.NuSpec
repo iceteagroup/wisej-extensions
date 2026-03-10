@@ -23,6 +23,7 @@
     <language>en-US</language>
     <dependencies>
       <dependency id="Wisej-4" version="$version$" />
+      <dependency id="Wisej-4-Html2Canvas" version="$version$" />
       <dependency id="System.Text.Json" version="8.0.5" />
     </dependencies>
   </metadata>
