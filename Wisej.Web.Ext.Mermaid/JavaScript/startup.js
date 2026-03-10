@@ -50,12 +50,12 @@ this.__onElementPointerDown = function (e) {
 			var classList = current.classList || [];
 			for (let i = 0; i < classList.length; i++) {
 				var cls = classList[i];
-				if (cls && (cls.indexOf('node') === 0 ||
-					cls.indexOf('edge') === 0 ||
-					cls.indexOf('cluster') === 0 ||
-					cls === 'flowchart-link' ||
-					cls === 'actor' ||
-					cls === 'labelBox')) {
+				if (cls && (cls.indexOf('node') === 0 || 
+							cls.indexOf('edge') === 0 || 
+							cls.indexOf('cluster') === 0 ||
+							cls === 'flowchart-link' ||
+							cls === 'actor' ||
+							cls === 'labelBox')) {
 					return { element: current, type: cls };
 				}
 			}
@@ -88,7 +88,7 @@ this.__onElementPointerDown = function (e) {
 		data.elementType = parent.type;
 		data.parentId = parent.element.id || null;
 		data.parentDataId = parent.element.getAttribute ? (parent.element.getAttribute('data-id') || null) : null;
-
+		
 		// For edges, try to extract source/target information
 		if (parent.type && parent.type.indexOf('edge') === 0) {
 			var ariaLabel = parent.element.getAttribute ? parent.element.getAttribute('aria-label') : null;
@@ -182,7 +182,7 @@ this.validate = function (diagram) {
 			await mermaid.parse(diagram);
 			resolve({ valid: true, error: "" });
 		}
-		catch (err) {
+		catch(err) {
 			resolve({ valid: false, error: err.message });
 		}
 	});
@@ -224,15 +224,14 @@ this.getImage = function () {
 				url: "resource.wx/Wisej.Web.Ext.Html2Canvas.JavaScript.Html2Canvas.js?v=" + Wisej.Core.version
 			}], function () {
 
-				var svg = element.querySelector("svg");
-				var rect = svg.getBoundingClientRect()
-				svg.setAttribute("width", rect.width);
-				svg.setAttribute("height", rect.height);
+				var rect = element.firstChild.getBoundingClientRect()
+				element.setAttribute("width", rect.width);
+				element.setAttribute("height", rect.height);
 
 				html2canvas(element, options).then(function (canvas) {
 
 					try {
-						resolve(canvas.toDataURL("image/png"));
+					  resolve(canvas.toDataURL("image/png"));
 					}
 					catch (error) {
 						reject(error);
