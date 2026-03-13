@@ -3,10 +3,11 @@
     <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);$(NetCoreVersion)-windows;$(NetCoreVersion)-windows10.0.19041.0;$(NetCoreVersion)-android;$(NetCoreVersion)-ios;$(NetCoreVersion)-maccatalyst</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.10.10</FileVersion>
+    <FileVersion>4.0.10.14</FileVersion>
     <CheckEolWorkloads>false</CheckEolWorkloads>
     <NoWarn>CA1416</NoWarn>
   </PropertyGroup>
