@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.10.10</FileVersion>
+    <FileVersion>4.0.10.11</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AWSSDK.Core">
