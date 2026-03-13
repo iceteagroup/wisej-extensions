@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.30.5</FileVersion>
+    <FileVersion>3.5.31.5</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="ChartJS3.bmp" />
