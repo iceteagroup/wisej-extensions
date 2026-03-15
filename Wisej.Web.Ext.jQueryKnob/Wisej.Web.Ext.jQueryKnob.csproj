@@ -8,7 +8,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.10.12</FileVersion>
+    <FileVersion>4.0.10.13</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="JavaScript\jquery-3.1.1.js" />
