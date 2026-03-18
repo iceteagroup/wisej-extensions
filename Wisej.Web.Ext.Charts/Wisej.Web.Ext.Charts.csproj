@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.10.15</FileVersion>
+    <FileVersion>4.0.10.16</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Platform\chart-js.js" />
