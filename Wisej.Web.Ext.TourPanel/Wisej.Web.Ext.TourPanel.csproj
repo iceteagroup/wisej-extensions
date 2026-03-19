@@ -8,7 +8,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
 	<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
-    <FileVersion>4.0.10.16</FileVersion>
+    <FileVersion>4.0.10.17</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Templates\**" />
