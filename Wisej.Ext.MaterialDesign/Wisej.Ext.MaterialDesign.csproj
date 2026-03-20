@@ -4,7 +4,7 @@
     <SignAssembly>true</SignAssembly>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>4.0.10.17</FileVersion>
+    <FileVersion>4.0.10.18</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\add-alarm-button.svg" />
