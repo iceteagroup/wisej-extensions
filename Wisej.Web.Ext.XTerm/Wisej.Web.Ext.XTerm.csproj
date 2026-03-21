@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.10.18</FileVersion>
+    <FileVersion>4.0.10.19</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="JavaScript\addons\attach\attach.js" />
