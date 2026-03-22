@@ -8,7 +8,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
 	<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
-	<FileVersion>4.0.10.19</FileVersion>
+	<FileVersion>4.0.10.20</FileVersion>
     <NoWarn>CA1416</NoWarn>
   </PropertyGroup>
   <ItemGroup>
