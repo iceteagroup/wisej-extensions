@@ -167,7 +167,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Mermaid", "Wi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.Svg", "Wisej.Ext.Svg\Wisej.Ext.Svg.csproj", "{0FF36A36-71A1-15D1-5666-2864198F699E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.LucidIcons", "Wisej.Ext.LucidIcons\Wisej.Ext.LucidIcons.csproj", "{91558FCD-F0CF-692A-2E01-EE0F91039C9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.LucideIcons", "Wisej.Ext.LucideIcons\Wisej.Ext.LucideIcons.csproj", "{91558FCD-F0CF-692A-2E01-EE0F91039C9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
