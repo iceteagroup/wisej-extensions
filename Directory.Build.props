@@ -1,10 +1,10 @@
 <Project>
-  <PropertyGroup>
-    <NetFxVersion>net48</NetFxVersion>
-    <NetCoreVersion>net8.0</NetCoreVersion>
-    <FileVersion>4.0.10.23</FileVersion>
-    <WisejPackageName>Wisej-4</WisejPackageName>
-    <WisejVersion>4.0.*-*</WisejVersion>
-    <SdmVersion>4.0.*-*</SdmVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<NetFxVersion>net48</NetFxVersion>
+		<NetCoreVersion>net8.0</NetCoreVersion>
+		<FileVersion>4.0.0.0</FileVersion>
+		<WisejPackageName>Wisej-4</WisejPackageName>
+		<WisejVersion>4.0.*-*</WisejVersion>
+		<SdmVersion>4.0.*-*</SdmVersion>
+	</PropertyGroup>
 </Project>
