@@ -8,4 +8,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\**\*.*" />
   </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\Wisej.Ext.Svg\Wisej.Ext.Svg.csproj" />
+  </ItemGroup>
 </Project>

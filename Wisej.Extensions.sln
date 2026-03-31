@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.2.11415.280 d18.0
+VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{2535EDEC-B72A-4378-A87A-0B124000C55B}"
 EndProject
@@ -164,6 +164,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.FluentUIOutlinedIcons", "Wisej.Ext.FluentUIOutlinedIcons\Wisej.Ext.FluentUIOutlinedIcons.csproj", "{962EAA9F-9E87-D191-3B59-187ED66C6643}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Web.Ext.Mermaid", "Wisej.Web.Ext.Mermaid\Wisej.Web.Ext.Mermaid.csproj", "{EFBDF0EC-2307-44E1-C8D8-D67BBCE68A1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.Svg", "Wisej.Ext.Svg\Wisej.Ext.Svg.csproj", "{0FF36A36-71A1-15D1-5666-2864198F699E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wisej.Ext.LucidIcons", "Wisej.Ext.LucidIcons\Wisej.Ext.LucidIcons.csproj", "{91558FCD-F0CF-692A-2E01-EE0F91039C9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1099,6 +1103,30 @@ Global
 		{EFBDF0EC-2307-44E1-C8D8-D67BBCE68A1C}.Release|x64.Build.0 = Release|Any CPU
 		{EFBDF0EC-2307-44E1-C8D8-D67BBCE68A1C}.Release|x86.ActiveCfg = Release|Any CPU
 		{EFBDF0EC-2307-44E1-C8D8-D67BBCE68A1C}.Release|x86.Build.0 = Release|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Debug|x64.Build.0 = Debug|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Debug|x86.Build.0 = Debug|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Release|x64.ActiveCfg = Release|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Release|x64.Build.0 = Release|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Release|x86.ActiveCfg = Release|Any CPU
+		{0FF36A36-71A1-15D1-5666-2864198F699E}.Release|x86.Build.0 = Release|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Debug|x64.Build.0 = Debug|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Debug|x86.Build.0 = Debug|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Release|x64.ActiveCfg = Release|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Release|x64.Build.0 = Release|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Release|x86.ActiveCfg = Release|Any CPU
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1181,6 +1209,8 @@ Global
 		{FE09698D-F48B-D564-A362-617CF9AC5720} = {F0DF53A6-5CC5-495E-AED7-387189F9C7C0}
 		{962EAA9F-9E87-D191-3B59-187ED66C6643} = {F0DF53A6-5CC5-495E-AED7-387189F9C7C0}
 		{EFBDF0EC-2307-44E1-C8D8-D67BBCE68A1C} = {D8955065-A2D7-41A8-8CB2-4316AC6B0B27}
+		{0FF36A36-71A1-15D1-5666-2864198F699E} = {D7DCF4CA-F508-4C1C-8199-5D865DA943FD}
+		{91558FCD-F0CF-692A-2E01-EE0F91039C9A} = {F0DF53A6-5CC5-495E-AED7-387189F9C7C0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFDB97B7-7798-4B99-AE27-BBA1C4110DAD}

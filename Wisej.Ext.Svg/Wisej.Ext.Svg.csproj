@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);$(NetCoreVersion)-windows;$(NetCoreVersion)-android;$(NetCoreVersion)-ios;$(NetCoreVersion)-maccatalyst;$(NetCoreVersion)-windows10.0.19041.0</TargetFrameworks>
+	<PlatformTarget>AnyCPU</PlatformTarget>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+	<RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace("-", "_"))</RootNamespace>
+	<NoWarn>CA1416</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Properties\applicationhost.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Platform\qx.ui.basic.Image.patch.js" />
+    <EmbeddedResource Include="Platform\snap.svg-min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
+  </Target>
+
+  <ItemGroup>
+    <None Update="Properties\launchSettings.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
