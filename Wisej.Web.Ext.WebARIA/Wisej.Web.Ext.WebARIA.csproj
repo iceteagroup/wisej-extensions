@@ -8,7 +8,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
-    <FileVersion>4.0.12.19</FileVersion>
+    <FileVersion>4.0.12.20</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Platform\wisej.web.extender.WebAria.js" />
