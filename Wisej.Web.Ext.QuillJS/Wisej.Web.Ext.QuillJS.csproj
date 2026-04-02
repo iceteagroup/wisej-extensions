@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.31.20</FileVersion>
+    <FileVersion>3.5.31.21</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="JavaScript\quill.snow.min.css" />
