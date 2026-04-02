@@ -7,4 +7,10 @@
 		<WisejVersion>4.0.*-*</WisejVersion>
 		<SdmVersion>4.0.*-*</SdmVersion>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(UsingMicrosoftNETSdk)' == 'true' and '$(TargetFramework)' == '$(NetFxVersion)'">
+		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+	</PropertyGroup>
+	<ItemGroup Condition="'$(UsingMicrosoftNETSdk)' == 'true' and '$(TargetFramework)' == '$(NetFxVersion)'">
+		<PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+	</ItemGroup>
 </Project>

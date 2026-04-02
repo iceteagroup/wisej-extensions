@@ -7,7 +7,6 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-        <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
     <FileVersion>4.0.12.22</FileVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -31,7 +30,6 @@
   <ItemGroup>
     <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
     <PackageReference Include="$(WisejPackageName)-RibbonBar" Version="$(WisejVersion)" />
-    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;xcopy &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y /c&#xD;&#xA;" />
