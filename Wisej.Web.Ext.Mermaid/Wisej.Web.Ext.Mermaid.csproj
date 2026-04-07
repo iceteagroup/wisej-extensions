@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.1.0.4</FileVersion>
+    <FileVersion>4.1.0.5</FileVersion>
     <CheckEolWorkloads>false</CheckEolWorkloads>
     <NoWarn>CA1416</NoWarn>
   </PropertyGroup>
