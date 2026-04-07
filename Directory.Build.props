@@ -2,9 +2,15 @@
 	<PropertyGroup>
 		<NetFxVersion>net48</NetFxVersion>
 		<NetCoreVersion>net8.0</NetCoreVersion>
-		<FileVersion>4.0.1.4</FileVersion>
+		<FileVersion>4.0.12.26</FileVersion>
 		<WisejPackageName>Wisej-4</WisejPackageName>
 		<WisejVersion>4.0.*-*</WisejVersion>
 		<SdmVersion>4.0.*-*</SdmVersion>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(UsingMicrosoftNETSdk)' == 'true' and '$(TargetFramework)' == '$(NetFxVersion)'">
+		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+	</PropertyGroup>
+	<ItemGroup Condition="'$(UsingMicrosoftNETSdk)' == 'true' and '$(TargetFramework)' == '$(NetFxVersion)'">
+		<PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+	</ItemGroup>
 </Project>
