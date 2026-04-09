@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.1.0.10</FileVersion>
+    <FileVersion>4.1.0.11</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Wisej.AspNetHost.aspx" />
