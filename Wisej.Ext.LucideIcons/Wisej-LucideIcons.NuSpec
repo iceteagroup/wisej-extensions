@@ -12,8 +12,8 @@
     <repository type="git" url="https://github.com/iceteagroup/wisej-extensions/tree/4.0/Wisej.Ext.LucideIcons" />
     <icon>images\Wisej.png</icon>
     <description>
-        This package contains the Ionic icon set for SVG icons packaged in a Wisej.NET IconPack assembly.
-    </description>
+	    This package contains the Lucide icon set for SVG icons packaged in a Wisej.NET IconPack assembly.
+	</description>
     <summary>
         Lucide Icon Pack for Wisej.NET.
     </summary>
