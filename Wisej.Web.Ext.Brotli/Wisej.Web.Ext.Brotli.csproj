@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.1.0.14</FileVersion>
+    <FileVersion>4.1.0.15</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Native\brolib_x64.dll" />
