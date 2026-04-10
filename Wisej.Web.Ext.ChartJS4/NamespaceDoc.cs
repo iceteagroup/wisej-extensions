@@ -17,15 +17,52 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 namespace Wisej.Web.Ext.ChartJS4
 {
 	/// <summary>
-	/// <para>
-	/// ChartJS component. Displays beautiful http://www.chartjs.org/ charts.
-	/// </para>
+	/// The <b>Wisej.Web.Ext.ChartJS4</b> namespace contains classes for integrating Chart.js 4.x charts 
+	/// into Wisej.NET applications with modern serialization patterns.
 	/// </summary>
-	internal class NamespaceDoc
+	/// <remarks>
+	/// <para>
+	/// This library provides a refactored, more maintainable implementation of Chart.js integration
+	/// with the following improvements:
+	/// </para>
+	/// <list type="bullet">
+	/// <item><description>Modern JSON serialization using System.Text.Json</description></item>
+	/// <item><description>Decoupled architecture with no tight coupling between components</description></item>
+	/// <item><description>Flexible extensibility through JsonExtensionData properties</description></item>
+	/// <item><description>Strongly-typed models with proper null handling</description></item>
+	/// <item><description>Better code organization and maintainability</description></item>
+	/// </list>
+	/// <para>
+	/// For documentation on Chart.js features, see <see href="https://www.chartjs.org/docs/latest/"/>.
+	/// </para>
+	/// </remarks>
+	[System.Runtime.CompilerServices.CompilerGenerated]
+	class NamespaceDoc
+	{
+	}
+}
+
+namespace Wisej.Web.Ext.ChartJS4.Models
+{
+	/// <summary>
+	/// Contains data model classes for chart configuration, including data sets and options.
+	/// </summary>
+	[System.Runtime.CompilerServices.CompilerGenerated]
+	class NamespaceDoc
+	{
+	}
+}
+
+namespace Wisej.Web.Ext.ChartJS4.Serialization
+{
+	/// <summary>
+	/// Contains JSON serialization converters for chart-specific types.
+	/// </summary>
+	[System.Runtime.CompilerServices.CompilerGenerated]
+	class NamespaceDoc
 	{
 	}
 }

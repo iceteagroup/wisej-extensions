@@ -1,4 +1,4 @@
-﻿//# sourceURL=wisej.web.ext.ChartJS4.startup.js
+//# sourceURL=wisej.web.ext.NewChartJS.startup.js
 
 /**
  * Initializes the widget.
@@ -16,32 +16,36 @@ this.init = function (config) {
 
 	var me = this;
 
-	Chart.register(ChartDataLabels);
+	if (config.options?.plugins && config.options?.plugins?.datalabels) {
 
+		Chart.register(ChartDataLabels);
+	}
+	// Set responsive behavior
+	if (!config.options) {
+		config.options = {};
+	}
 	config.options.responsive = true;
 	config.options.maintainAspectRatio = false;
-	config.type = config.type === "horizontalBar" ? "bar" : config.type;
 
+	// Process plugins
 	this.__processPlugins(config);
 
+	// Process widget functions (scriptable options callbacks)
 	this.__processWidgetFunctions(config);
 
-	// process the datasets.
-	if (config.data.datasets)
-		this.__processDataSets(config.data.datasets);
-
-	// processes the scales format.
-	this.__processScales(config.options);
-
-	// convert fonts and colors from Wisej maps to
-	// the appropriate field in the options map.
+	// Convert fonts and colors from Wisej maps
 	this.__setFontAndColors(config.options);
 
-	// convert color arrays with 1 element to single values.
-	this.__normalizeColorArrays(config.data.datasets);
+	// Process animation function strings
+	if (config.options.animation) {
+		this.__processAnimation(config.options.animation);
+	}
+	if (config.options.animations) {
+		this.__processAnimation(config.options.animations);
+	}
 
-	// convert point style and colour arrays in line chart datasets into single values
-	this.__normalizeLineChartDataSetArrays(config.data.datasets);
+	// Normalize color arrays
+	this.__normalizeColorArrays(config.data.datasets);
 
 	// destroy the previous Chart object.
 	// NOTE: if the server only changed the data set
@@ -75,10 +79,16 @@ this.init = function (config) {
 			}
 		};
 	}
-	
+
 	// create and save the chart object.
 	var ctx = canvas.getContext("2d");
-	this.chart = this.widget = new Chart(ctx, config);
+
+	this.__processElements(config.options.elements);
+
+	this.chart = new Chart(ctx, config);
+
+	this.chart.update();
+	this.widget = this.chart;
 
 	// Runtime Mode Only:
 	// Attach the click event to fire our managed event.
@@ -166,9 +176,220 @@ this.updateData = function (datasets, labels, duration) {
 	}
 }
 
-// registers the user functions with this widget class.
-// if their names collide with existing functions they will
-// override them. collisions are logged in the console.
+/**
+ * Chart.js API Methods
+ */
+
+/**
+ * Triggers an update of the chart.
+ * @param {String} mode - Optional update mode
+ */
+this.updateChart = function (mode) {
+	if (this.chart) {
+		if (mode) {
+			this.chart.update(mode);
+		} else {
+			this.chart.update();
+		}
+	}
+}
+
+/**
+ * Destroys the chart instance.
+ */
+this.destroy = function () {
+	if (this.chart) {
+		this.chart.destroy();
+		this.chart = null;
+	}
+}
+
+/**
+ * Resets the chart to its initial state.
+ */
+this.reset = function () {
+	if (this.chart) {
+		this.chart.reset();
+	}
+}
+
+/**
+ * Triggers a redraw of the chart.
+ */
+this.render = function () {
+	if (this.chart) {
+		this.chart.render();
+	}
+}
+
+/**
+ * Stops all animations.
+ */
+this.stop = function () {
+	if (this.chart) {
+		this.chart.stop();
+	}
+}
+
+/**
+ * Resizes the chart canvas.
+ * @param {Number} width - Optional width
+ * @param {Number} height - Optional height
+ */
+this.resize = function (width, height) {
+	if (this.chart) {
+		if (width && height) {
+			this.chart.resize(width, height);
+		} else {
+			this.chart.resize();
+		}
+	}
+}
+
+/**
+ * Clears the chart canvas.
+ */
+this.clear = function () {
+	if (this.chart) {
+		this.chart.clear();
+	}
+}
+
+/**
+ * Returns a base64 encoded image of the chart.
+ * @param {String} type - Image type (e.g., 'image/png')
+ * @param {Number} quality - Quality for lossy formats (0.0 to 1.0)
+ * @returns {String} Base64 encoded image
+ */
+this.toBase64Image = function (type, quality) {
+	if (this.chart) {
+		return this.chart.toBase64Image(type, quality);
+	}
+	return null;
+}
+
+/**
+ * Generates an HTML legend.
+ * @returns {String} HTML legend string
+ */
+this.generateLegend = function () {
+	if (this.chart) {
+		return this.chart.generateLegend();
+	}
+	return '';
+}
+
+/**
+ * Gets the number of visible datasets.
+ * @returns {Number} Count of visible datasets
+ */
+this.getVisibleDatasetCount = function () {
+	if (this.chart) {
+		return this.chart.getVisibleDatasetCount();
+	}
+	return 0;
+}
+
+/**
+ * Checks if a dataset is visible.
+ * @param {Number} datasetIndex - Index of the dataset
+ * @returns {Boolean} True if visible
+ */
+this.isDatasetVisible = function (datasetIndex) {
+	if (this.chart) {
+		return this.chart.isDatasetVisible(datasetIndex);
+	}
+	return false;
+}
+
+/**
+ * Sets the visibility of a dataset.
+ * @param {Number} datasetIndex - Index of the dataset
+ * @param {Boolean} visible - True to show, false to hide
+ */
+this.setDatasetVisibility = function (datasetIndex, visible) {
+	if (this.chart) {
+		this.chart.setDatasetVisibility(datasetIndex, visible);
+	}
+}
+
+/**
+ * Toggles the visibility of data at the specified index.
+ * @param {Number} index - Index of the data
+ */
+this.toggleDataVisibility = function (index) {
+	if (this.chart) {
+		this.chart.toggleDataVisibility(index);
+	}
+}
+
+/**
+ * Gets the visibility state of data at the specified index.
+ * @param {Number} index - Index of the data
+ * @returns {Boolean} True if visible
+ */
+this.getDataVisibility = function (index) {
+	if (this.chart) {
+		return this.chart.getDataVisibility(index);
+	}
+	return false;
+}
+
+/**
+ * Hides a dataset or data element.
+ * @param {Number} datasetIndex - Index of the dataset
+ * @param {Number} dataIndex - Optional index of the data element
+ */
+this.hide = function (datasetIndex, dataIndex) {
+	if (this.chart) {
+		if (dataIndex !== undefined) {
+			this.chart.hide(datasetIndex, dataIndex);
+		} else {
+			this.chart.hide(datasetIndex);
+		}
+	}
+}
+
+/**
+ * Shows a dataset or data element.
+ * @param {Number} datasetIndex - Index of the dataset
+ * @param {Number} dataIndex - Optional index of the data element
+ */
+this.show = function (datasetIndex, dataIndex) {
+	if (this.chart) {
+		if (dataIndex !== undefined) {
+			this.chart.show(datasetIndex, dataIndex);
+		} else {
+			this.chart.show(datasetIndex);
+		}
+	}
+}
+
+/**
+ * Sets the active (hovered) elements.
+ * @param {Array} activeElements - Array of active element specifications
+ */
+this.setActiveElements = function (activeElements) {
+	if (this.chart) {
+		this.chart.setActiveElements(activeElements);
+	}
+}
+
+/**
+ * Gets the currently active (hovered) elements.
+ * @returns {Array} Array of active elements
+ */
+this.getActiveElements = function () {
+	if (this.chart) {
+		return this.chart.getActiveElements();
+	}
+	return [];
+}
+
+/**
+ * Registers user functions with this widget instance.
+ * Functions are referenced in chart options using the "(ctx)=>functionName" pattern.
+ */
 this.__processWidgetFunctions = function (config) {
 
 	var name, source;
@@ -196,7 +417,9 @@ this.__processWidgetFunctions = function (config) {
 	}
 }
 
-// creates a wrapper for the user function.
+/**
+ * Creates a wrapper around a user function so it waits for the chart to initialize.
+ */
 this._makeFunctionWrapper = function (name, func) {
 
 	var me = this;
@@ -214,17 +437,13 @@ this._makeFunctionWrapper = function (name, func) {
 	};
 
 	return wrapper;
-},
-
-// ---------------------------------------------------
-// Conversion of option field with functions
-// i.e.: options.dataSource = "()=>createDataSource"
-//		 options.dataSource = "(o)=>createDataSource"
-//		 options.dataSource = "()=>createDataSource()"
-//		 options.dataSource = "()=>createDataSource(1,'a')"
-// ---------------------------------------------------
+}
 
 this._regexp = /^\((.*)\)=>([^\s\(\)]+)(\((.*)\))?$/;
+
+/**
+ * Recursively converts "(ctx)=>functionName" strings in the options object to actual function references.
+ */
 this._parseFunctions = function (options, functions) {
 
 	if (!functions || functions.length == 0)
@@ -271,59 +490,23 @@ this._parseFunctions = function (options, functions) {
 }
 
 /**
- * Applies a transformation to the datasets.
- * @param {any} datasets
- */
-this.__processDataSets = function (datasets) {
-
-	datasets.forEach(dataset => {
-		if (dataset.stepped == "false")
-			dataset.stepped = false;
-	});
-},
-
-/**
- * Moves the scales to the correct location.
- * @param {any} options
- */
-this.__processScales = function (options) {
-
-	if (options == null)
-		return;
-
-	var xAxes = options.scales.xAxes;
-	var yAxes = options.scales.yAxes;
-
-	var scales = {};
-	scales["x"] = xAxes[0];
-	for (var i = 1; i < xAxes.length; i++) {
-		scales["x" + i.toString()] = xAxes[i];
-	}
-
-	scales["y"] = yAxes[0];
-	for (var i = 1; i < yAxes.length; i++) {
-		scales["y" + i.toString()] = yAxes[i];
-	}
-
-	options.scales = scales;
-}
-
-/**
- * Fixes plugin names and adds system methods.
- * @param {any} options
+ * Configures plugins for the chart.
  */
 this.__processPlugins = function (config) {
 
-	var plugins = config.options.plugins;
-	if (plugins.dataLabels) {
-		plugins.dataLabels.useEmbeddedFont = true;
-		plugins.datalabels = plugins.dataLabels;
-		delete plugins.dataLabels;
+	if (!config.options.plugins) {
+		config.options.plugins = {};
 	}
 
-	var datalabels = plugins.datalabels;
-	if (!datalabels.formatter) {
-		datalabels.formatter = this.__formatDataLabels;
+	var plugins = config.options.plugins;
+
+	// Configure datalabels plugin if present
+	if (plugins.datalabels && (plugins.datalabels.display === true || plugins.datalabels.display === undefined)) {
+
+		plugins.datalabels.useEmbeddedFont = true;
+		if (!plugins.datalabels.formatter) {
+			plugins.datalabels.formatter = this.__formatDataLabels;
+		}
 	}
 }
 
@@ -339,6 +522,16 @@ this.__formatDataLabels = function (value, context) {
 	}
 
 	return Math.round(value);
+}
+
+this.__looksLikeFunction = function (str) {
+	return typeof str === 'string' && (
+		str.trim().startsWith('function') || str.trim().startsWith('(')
+	);
+}
+
+this.__stringToFunction = function (string) {
+	return new Function(string);
 }
 
 /**
@@ -359,9 +552,9 @@ this.__setFontAndColors = function (options) {
 			var font = fontMgr.resolve(options.font);
 			if (font) {
 				options.font = {
-					size : font.getSize(),
-					family : font.getFamily().join(","),
-					style : font.isBold() ? "bold" : "normal"
+					size: font.getSize(),
+					family: font.getFamily().join(","),
+					style: font.isBold() ? "bold" : "normal"
 				};
 			}
 			continue;
@@ -370,6 +563,15 @@ this.__setFontAndColors = function (options) {
 		// it's a color, resolve it.
 		if (name == "color" || name == "fontColor") {
 			options[name] = colorMgr.resolve(options[name]);
+			continue;
+		}
+
+		if (qx.lang.String.endsWith(name, "Color")) {
+			// check if the color is a function.
+			if (this.__looksLikeFunction(options[name])) {
+				// convert the string to a function.
+				options[name] = this.__stringToFunction(options[name]);
+			}
 			continue;
 		}
 
@@ -391,6 +593,49 @@ this.__setFontAndColors = function (options) {
 	}
 }
 
+this.__processElements = function (elements) {
+
+	if (!elements)
+		return;
+
+	//elements is an object with the elements to process.
+	for (var name in elements) {
+
+		if (elements[name] == null)
+			continue;
+
+		var element = elements[name];
+		if (element instanceof Object) {
+			this.__processElements(elements[name]);
+			continue;
+		}
+
+		if (this.__looksLikeFunction(elements[name])) {
+			elements[name] = this.__stringToFunction(elements[name]);
+		}
+
+	}
+}
+
+this.__processAnimation = function (config) {
+	if (config && typeof config === "object") {
+		for (const key of Object.keys(config)) {
+			const value = config[key];
+
+			if (value && typeof value === "object") {
+				this.__processAnimation(value); // recurse
+			} else if (this.__looksLikeFunction(value)) {
+				try {
+					// safer than eval
+					config[key] = new Function("return " + value)();
+				} catch (e) {
+					console.error("Invalid function in config:", value, e);
+				}
+			}
+		}
+	}
+};
+
 /**
  * Converts color arrays with only 1 element to a single variable.
  */
@@ -411,36 +656,6 @@ this.__normalizeColorArrays = function (datasets) {
 				if (colors && colors instanceof Array && colors.length == 1)
 					ds[name] = colors[0];
 			}
-		}
-	}
-}
-
-
-/**
- * Various fix ups for line datasets
- */
-this.__normalizeLineChartDataSetArrays = function (datasets) {
-
-	if (datasets == null || datasets.length == 0)
-		return;
-
-	for (var i = 0; i < datasets.length; i++) {
-
-		if (datasets[i].type == 'line') {
-
-			var ds = datasets[i];
-
-			if (ds.pointStyle.length == 1)
-				ds.pointStyle = ds.pointStyle[0];
-
-			if (ds.pointRadius.length == 1)
-				ds.pointRadius = ds.pointRadius[0];
-
-			if (ds.pointHoverRadius.length == 1)
-				ds.pointHoverRadius = ds.pointHoverRadius[0];
-
-			if (ds.steppedLine == 'false')
-				ds.steppedLine = false;
 		}
 	}
 }
