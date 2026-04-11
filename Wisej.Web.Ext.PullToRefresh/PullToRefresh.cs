@@ -334,7 +334,7 @@ namespace Wisej.Web.Ext.PullToRefresh
 				}
 				else
 				{
-					config.containers = null;
+					config.scrollContainers = null;
 				}
 
 				// subscribe only if the event has been attached to since
