@@ -26,9 +26,7 @@
     -->
     <dependencies>
       <dependency id="Wisej-4" version="$version$" />
-	  <group targetFramework=".NETFramework4.8">
-        <dependency id="System.Text.Json" version="8.0.5" />
-	  </group>
+	  <dependency id="System.Text.Json" version="8.0.5" />
     </dependencies>
   </metadata>
   <files>

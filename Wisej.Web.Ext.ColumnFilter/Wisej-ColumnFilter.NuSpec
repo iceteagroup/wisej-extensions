@@ -32,33 +32,33 @@
   <files>
     <file src="..\Wisej.png" target="images/" />
     
-    <file src="..\..\Distro\\net48\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net48" />
-    <file src="..\..\Distro\\net48\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net48" />
-    <file src="..\..\Distro\\net48\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net48" />
+    <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net48" />
+    <file src="..\..\Distro\bin\net48\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net48" />
+    <file src="..\..\Distro\bin\net48\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net48" />
     
-    <file src="..\..\Distro\\net8.0\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0" />
-    <file src="..\..\Distro\\net8.0\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0" />
-    <file src="..\..\Distro\\net8.0\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0" />
+    <file src="..\..\Distro\bin\net8.0\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0" />
+    <file src="..\..\Distro\bin\net8.0\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0" />
+    <file src="..\..\Distro\bin\net8.0\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0" />
     
-    <file src="..\..\Distro\\net8.0-windows\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-windows7.0" />
-    <file src="..\..\Distro\\net8.0-windows\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-windows7.0" />
-    <file src="..\..\Distro\\net8.0\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-windows7.0" />
+    <file src="..\..\Distro\bin\net8.0-windows\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-windows7.0" />
+    <file src="..\..\Distro\bin\net8.0-windows\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-windows7.0" />
+    <file src="..\..\Distro\bin\net8.0\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-windows7.0" />
     
-    <file src="..\..\Distro\\net8.0-ios\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-ios14.2" />
-    <file src="..\..\Distro\\net8.0-ios\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-ios14.2" />
-    <file src="..\..\Distro\\net8.0-ios\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-ios14.2" />
+    <file src="..\..\Distro\bin\net8.0-ios\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-ios14.2" />
+    <file src="..\..\Distro\bin\net8.0-ios\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-ios14.2" />
+    <file src="..\..\Distro\bin\net8.0-ios\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-ios14.2" />
     
-    <file src="..\..\Distro\\net8.0-android\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-android21.0" />
-    <file src="..\..\Distro\\net8.0-android\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-android21.0" />
-    <file src="..\..\Distro\\net8.0-android\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-android21.0" />
+    <file src="..\..\Distro\bin\net8.0-android\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-android21.0" />
+    <file src="..\..\Distro\bin\net8.0-android\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-android21.0" />
+    <file src="..\..\Distro\bin\net8.0-android\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-android21.0" />
     
-    <file src="..\..\Distro\\net8.0-maccatalyst\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-maccatalyst14.0" />
-    <file src="..\..\Distro\\net8.0-maccatalyst\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-maccatalyst14.0" />
-    <file src="..\..\Distro\\net8.0-maccatalyst\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-maccatalyst14.0" />
+    <file src="..\..\Distro\bin\net8.0-maccatalyst\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-maccatalyst14.0" />
+    <file src="..\..\Distro\bin\net8.0-maccatalyst\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-maccatalyst14.0" />
+    <file src="..\..\Distro\bin\net8.0-maccatalyst\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-maccatalyst14.0" />
     
-    <file src="..\..\Distro\\net8.0-windows10.0.19041.0\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-windows10.0.19041.0" />
-    <file src="..\..\Distro\\net8.0-windows10.0.19041.0\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-windows10.0.19041.0" />
-    <file src="..\..\Distro\\net8.0-windows10.0.19041.0\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-windows10.0.19041.0" />
+    <file src="..\..\Distro\bin\net8.0-windows10.0.19041.0\Wisej.Web.Ext.ColumnFilter.dll" target="lib/net8.0-windows10.0.19041.0" />
+    <file src="..\..\Distro\bin\net8.0-windows10.0.19041.0\Wisej.Web.Ext.ColumnFilter.xml" target="lib/net8.0-windows10.0.19041.0" />
+    <file src="..\..\Distro\bin\net8.0-windows10.0.19041.0\**\Wisej.Web.Ext.ColumnFilter.resources.dll" target="lib/net8.0-windows10.0.19041.0" />
     
   </files>
 </package>
