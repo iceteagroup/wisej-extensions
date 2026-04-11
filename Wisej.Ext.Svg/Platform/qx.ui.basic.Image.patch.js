@@ -83,14 +83,14 @@ qx.Mixin.define("wisej.web.qx.ui.basic.Imagepatch", {
 				}
 
 				var node = svg.node;
-				node.setAttribute("width", "100%");
-				node.setAttribute("height", "100%");
-				node.setAttribute("preserveAspectRatio", "xMidYMid meet");
+				node?.setAttribute("width", "100%");
+				node?.setAttribute("height", "100%");
+				node?.setAttribute("preserveAspectRatio", "xMidYMid meet");
 
 				if (color)
-					node.style.color = color;
+					node?.style.color = color;
 
-				var dataUri = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(node.outerHTML);
+				var dataUri = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(node?.outerHTML);
 				wisej.web.qx.ui.basic.Imagepatch.__svgCache[cacheKey] = dataUri;
 
 				if (reqId !== me.__svgReqId || me.isDisposed())
