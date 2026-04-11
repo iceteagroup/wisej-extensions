@@ -25,17 +25,14 @@
   <ItemGroup>
 	<PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
   </ItemGroup>
-  <Target Name="CopyFilesToBin" AfterTargets="PostBuildEvent">
+  
+<Target Name="CopyFilesToBin" AfterTargets="PostBuildEvent">
 	<ItemGroup>
 	  <FilesToCopy Include="$(TargetDir)Wisej.Ext.Svg.dll" />
 	</ItemGroup>
 
-	<Copy
-	  SourceFiles="@(FilesToCopy)"
-	  DestinationFolder="$(ProjectDir)..\bin\$(TargetFramework)\"
-	  SkipUnchangedFiles="true"
-	  OverwriteReadOnlyFiles="true" />
-  </Target>
+	<Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(ProjectDir)..\bin\$(TargetFramework)\" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" />
+</Target>
 
   <ItemGroup>
     <None Update="Properties\launchSettings.json">
