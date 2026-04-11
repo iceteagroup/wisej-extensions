@@ -145,7 +145,7 @@ namespace Wisej.Web.Ext.QuillJS
 		[Description("Gets or sets the HTML content of the editor.")]
 		public string Html
 		{
-			get => this.Options.html;
+			get => this.Options.html ?? String.Empty;
 			set => this.Options.html = value;
 		}
 
@@ -167,7 +167,7 @@ namespace Wisej.Web.Ext.QuillJS
 		[Description("Determines whether the editor content can be modified.")]
 		public bool ReadOnly
 		{
-			get => this.Options.readOnly;
+			get => this.Options.readOnly ?? false;
 			set => this.Options.readOnly = value;
 		}
 
@@ -178,7 +178,7 @@ namespace Wisej.Web.Ext.QuillJS
 		[Description("The placeholder text to show when the editor is empty.")]
 		public string Placeholder
 		{
-			get => this.Options.placeholder;
+			get => this.Options.placeholder ?? String.Empty;
 			set => this.Options.placeholder = value;
 		}
 
@@ -192,7 +192,7 @@ namespace Wisej.Web.Ext.QuillJS
 		[WisejSerializerOptions(WisejSerializerOptions.None)]
 		public dynamic Toolbar
 		{
-			get => this.Options.modules.toolbar;
+			get => this.Options?.modules?.toolbar;
 			set => this.Options.modules.toolbar = value;
 		}
 
