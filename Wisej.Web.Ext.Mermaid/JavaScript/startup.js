@@ -11,7 +11,7 @@ this.init = function (options) {
 
   this.options = options;
 
-  this.__render(options);
+  this.__render();
 
   // this.addListener("resize", (e) => this.__render(options));
 
@@ -21,7 +21,7 @@ this.init = function (options) {
 this.update = function (options) {
 
   this.options = options;
-  this.__render(options);
+  this.__render();
 };
 
 /**
@@ -123,13 +123,13 @@ this.__onElementPointerDown = function (e) {
 
 // Render the diagram using the Mermaid library. 
 // If Mermaid is not loaded yet, wait for the "load" event and try again.
-this.__render = function (options) {
+this.__render = function () {
 
-  if (!options.diagram)
+  if (!this.options || !this.options.diagram)
 	return;
 
   if (!window.mermaid) {
-	this.addListenerOnce("load", () => this.__render(options));
+	this.addListenerOnce("load", () => this.__render());
 	return;
   }
 
@@ -138,9 +138,16 @@ this.__render = function (options) {
 	var me = this;
 	var container = this.container
 
-	mermaid.initialize(options);
+	// Clear the container to force a fresh render
+	container.innerHTML = '';
 
-	mermaid.render(this.getId() + "_mermaid", options.diagram)
+	// Initialize Mermaid with current optionss
+	mermaid.initialize(this.options);
+
+	// Use a unique ID for each render to avoid Mermaid's cache
+	var renderId = this.getId() + "_mermaid_" + Date.now();
+
+	mermaid.render(renderId, this.options.diagram)
 	  .then(({ svg, bindFunctions }) => {
 
 		container.innerHTML = svg;
@@ -148,9 +155,9 @@ this.__render = function (options) {
 
 		me.fireEvent("render");
 
-		if (options.enablePanZoom) {
+		if (me.options.enablePanZoom) {
 
-		  var scale = (options.zoomLevel || 1.0);
+		  var scale = (me.options.zoomLevel || 1.0);
 		  var svgElement = container.querySelector('svg');
 		  this.__enablePanZoom(svgElement, scale, 0.01, 0.02, 2);
 		}
