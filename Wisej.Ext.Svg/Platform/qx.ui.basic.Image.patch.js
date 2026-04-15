@@ -42,7 +42,7 @@ qx.Mixin.define("wisej.web.qx.ui.basic.Imagepatch", {
 
 			this.__svgReqId++;
 
-			if (!value || value.indexOf(".svg") === -1) {
+			if (!value || value.indexOf("data:") === 0 || value.indexOf(".svg") === -1) {
 				__wisejImageOriginalApplySource.call(this, value, old);
 				this.__forceUpdate();
 				return;
@@ -60,47 +60,112 @@ qx.Mixin.define("wisej.web.qx.ui.basic.Imagepatch", {
 
 			var cacheKey = source + "|" + (color || "");
 			var cached = wisej.web.qx.ui.basic.Imagepatch.__svgCache[cacheKey];
+			var me = this;
 
 			if (cached) {
-				this.setSource(cached);
-				this.__forceUpdate();
-				return;
+				if (cached instanceof Array) {
+					// Currently loading, append to the callbacks
+					cached.push(function(uri) {
+						if (me.isDisposed() || me.getSource() !== originalSource || reqId !== me.__svgReqId)
+							return;
+						
+						if (uri) {
+							me.setSource(uri);
+						} else {
+							__wisejImageOriginalApplySource.call(me, originalSource, old);
+						}
+						me.__forceUpdate();
+					});
+					return;
+				} else if (cached === "failed") {
+					__wisejImageOriginalApplySource.call(this, originalSource, old);
+					this.__forceUpdate();
+					return;
+				} else {
+					this.setSource(cached);
+					this.__forceUpdate();
+					return;
+				}
 			}
 
-			var me = this;
-			Snap.load(source, function(svg) {
+			// Mark as loading by setting it into an array to push callbacks onto
+			wisej.web.qx.ui.basic.Imagepatch.__svgCache[cacheKey] = [];
 
-				if (reqId !== me.__svgReqId || me.isDisposed())
-					return;
+			var fetchSource = source;
+			if (qx.util.AliasManager && qx.util.AliasManager.getInstance) {
+				fetchSource = qx.util.AliasManager.getInstance().resolve(fetchSource);
+			}
+			if (qx.util.ResourceManager && qx.util.ResourceManager.getInstance) {
+				if (qx.util.ResourceManager.getInstance().has(fetchSource)) {
+					fetchSource = qx.util.ResourceManager.getInstance().toUri(fetchSource);
+				}
+			}
 
-				if (me.getSource() !== originalSource)
-					return;
+			Snap.load(fetchSource, function(svg) {
 
-				if (!svg || !svg.node) {
-					__wisejImageOriginalApplySource.call(me, source, old);
-					me.__forceUpdate();
+				var callbacks = wisej.web.qx.ui.basic.Imagepatch.__svgCache[cacheKey];
+				var finish = function(uri) {
+					wisej.web.qx.ui.basic.Imagepatch.__svgCache[cacheKey] = uri || "failed";
+
+					if (!me.isDisposed() && me.getSource() === originalSource && reqId === me.__svgReqId) {
+						if (uri) {
+							me.setSource(uri);
+						} else {
+							__wisejImageOriginalApplySource.call(me, originalSource, old);
+						}
+						me.__forceUpdate();
+					}
+
+					if (callbacks && callbacks.length) {
+						for (var i = 0; i < callbacks.length; i++) {
+							callbacks[i](uri);
+						}
+					}
+				};
+
+				if (!svg) {
+					finish(null);
 					return;
 				}
 
-				var node = svg.node;
-				node.setAttribute("width", "100%");
-				node.setAttribute("height", "100%");
-				node.setAttribute("preserveAspectRatio", "xMidYMid meet");
+				var node = svg.node || svg;
 
-				if (color)
-					node.style.color = color;
+				if (node) {
+					if (node.nodeType === 11) { // Node.DOCUMENT_FRAGMENT_NODE
+						node = node.querySelector("svg") || node.firstElementChild || node.firstChild;
+					} else if (node.nodeName && node.nodeName.toLowerCase() !== "svg") {
+						node = node.querySelector("svg") || node;
+					}
+				}
 
-				var dataUri = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(node?.outerHTML);
-				wisej.web.qx.ui.basic.Imagepatch.__svgCache[cacheKey] = dataUri;
-
-				if (reqId !== me.__svgReqId || me.isDisposed())
+				if (!node || !node.nodeName || node.nodeName.toLowerCase() !== "svg" || typeof node.setAttribute !== "function") {
+					finish(null);
 					return;
+				}
 
-				if (me.getSource() !== originalSource)
-					return;
+				try {
+					if (!node.getAttribute("xmlns")) {
+						node.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+					}
 
-				me.setSource(dataUri);
-				me.__forceUpdate();
+					node.setAttribute("width", "100%");
+					node.setAttribute("height", "100%");
+					node.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+					if (color)
+						node.style.color = color;
+
+					var svgContent = node.outerHTML || new XMLSerializer().serializeToString(node);
+
+					if (color) {
+						svgContent = svgContent.replace(/currentColor/gi, color);
+					}
+
+					var dataUri = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgContent);
+					finish(dataUri);
+				} catch (e) {
+					finish(null);
+				}
 			});
 		},
 
