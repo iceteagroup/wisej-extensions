@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.12.20260414</FileVersion>
+    <FileVersion>4.0.12.20260415</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Platform\wisej.web.ext.PolymerComponent.js" />
