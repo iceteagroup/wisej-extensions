@@ -7,7 +7,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.12.20260415</FileVersion>
+    <FileVersion>4.0.12.5</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="GoogleMap.bmp" />
