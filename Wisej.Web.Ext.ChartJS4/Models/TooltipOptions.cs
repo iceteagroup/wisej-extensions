@@ -30,10 +30,26 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class TooltipOptions : OptionsBase
 	{
-		public TooltipOptions()
-		{
-			BodyFont = new FontOptions();
-		}
+		private bool _enabled = true;
+		private string? _mode;
+		private string? _position;
+		private bool _intersect = true;
+		private object? _backgroundColor;
+		private object? _titleColor;
+		private Font? _titleFont;
+		private int _titleSpacing = 2;
+		private int _titleMarginBottom = 6;
+		private object? _bodyColor;
+		private FontOptions? _bodyFont;
+		private int _bodySpacing = 2;
+		private int _padding = 6;
+		private int _caretPadding = 2;
+		private int _caretSize = 5;
+		private int _cornerRadius = 6;
+		private bool _displayColors = true;
+		private int _boxWidth = 40;
+		private int _boxHeight;
+		private bool _usePointStyle;
 
 		/// <summary>
 		/// Are tooltips enabled?
@@ -42,7 +58,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
 		[Description("Are tooltips enabled?")]
-		public bool Enabled { get; set; } = true;
+		public bool Enabled
+		{
+			get => _enabled;
+			set => SetProperty(ref _enabled, value);
+		}
 
 		/// <summary>
 		/// Mode for positioning: 'point', 'nearest', 'index', 'dataset', 'x', 'y'.
@@ -50,7 +70,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("mode")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Positioning mode.")]
-		public string? Mode { get; set; }
+		public string? Mode
+		{
+			get => _mode;
+			set => SetProperty(ref _mode, value);
+		}
 
 		/// <summary>
 		/// The tooltip position mode. Defines the mode used to determine the position of the tooltip.
@@ -60,7 +84,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("The tooltip position mode ('average', 'nearest', 'bottom').")]
 		[DefaultValue(null)]
-		public string? Position { get; set; }
+		public string? Position
+		{
+			get => _position;
+			set => SetProperty(ref _position, value);
+		}
 
 		/// <summary>
 		/// Determines whether the Position property should be serialized by the designer.
@@ -79,7 +107,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
 		[Description("Intersect mode.")]
-		public bool Intersect { get; set; } = true;
+		public bool Intersect
+		{
+			get => _intersect;
+			set => SetProperty(ref _intersect, value);
+		}
 
 		/// <summary>
 		/// Background color of the tooltip.
@@ -87,7 +119,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("backgroundColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Background color.")]
-		public object? BackgroundColor { get; set; }
+		public object? BackgroundColor
+		{
+			get => _backgroundColor;
+			set => SetProperty(ref _backgroundColor, value);
+		}
 
 		/// <summary>
 		/// Color of title text.
@@ -95,7 +131,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("titleColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Title color.")]
-		public object? TitleColor { get; set; }
+		public object? TitleColor
+		{
+			get => _titleColor;
+			set => SetProperty(ref _titleColor, value);
+		}
 
 		/// <summary>
 		/// Font for title.
@@ -104,16 +144,24 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Title font.")]
 		[DefaultValue(null)]
-		public Font? TitleFont { get; set; } = null;
+		public Font? TitleFont
+		{
+			get => _titleFont;
+			set => SetProperty(ref _titleFont, value);
+		}
 
 		/// <summary>
 		/// Spacing to add to top and bottom of each title line.
 		/// </summary>
 		[JsonPropertyName("titleSpacing")]
-		[JsonIgnore(Condition =JsonIgnoreCondition.WhenWritingDefault)]
+		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(2)]
 		[Description("Title spacing.")]
-		public int TitleSpacing { get; set; } = 2;
+		public int TitleSpacing
+		{
+			get => _titleSpacing;
+			set => SetProperty(ref _titleSpacing, value);
+		}
 
 		/// <summary>
 		/// Margin to add on bottom of title section.
@@ -122,7 +170,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(6)]
 		[Description("Title bottom margin.")]
-		public int TitleMarginBottom { get; set; } = 6;
+		public int TitleMarginBottom
+		{
+			get => _titleMarginBottom;
+			set => SetProperty(ref _titleMarginBottom, value);
+		}
 
 		/// <summary>
 		/// Color of body text.
@@ -130,7 +182,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("bodyColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Body color.")]
-		public object? BodyColor { get; set; }
+		public object? BodyColor
+		{
+			get => _bodyColor;
+			set => SetProperty(ref _bodyColor, value);
+		}
 
 		/// <summary>
 		/// Font for body.
@@ -140,10 +196,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Body font.")]
 		public FontOptions? BodyFont
 		{
-			get => _bodyFont ??= new FontOptions();
-			set => _bodyFont = value;
+			get
+			{
+				if (_bodyFont == null)
+					_bodyFont = new FontOptions { Chart = Chart };
+				return _bodyFont;
+			}
+			set => SetProperty(ref _bodyFont, value);
 		}
-		private FontOptions? _bodyFont;
 
 		/// <summary>
 		/// Spacing to add to top and bottom of each tooltip item.
@@ -152,7 +212,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(2)]
 		[Description("Body spacing.")]
-		public int BodySpacing { get; set; } = 2;
+		public int BodySpacing
+		{
+			get => _bodySpacing;
+			set => SetProperty(ref _bodySpacing, value);
+		}
 
 		/// <summary>
 		/// Padding inside the tooltip.
@@ -161,7 +225,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(6)]
 		[Description("Tooltip padding.")]
-		public int Padding { get; set; } = 6;
+		public int Padding
+		{
+			get => _padding;
+			set => SetProperty(ref _padding, value);
+		}
 
 		/// <summary>
 		/// Extra distance to move the end of the tooltip arrow away from the tooltip point.
@@ -170,7 +238,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(2)]
 		[Description("Caret padding.")]
-		public int CaretPadding { get; set; } = 2;
+		public int CaretPadding
+		{
+			get => _caretPadding;
+			set => SetProperty(ref _caretPadding, value);
+		}
 
 		/// <summary>
 		/// Size, in px, of the tooltip arrow.
@@ -179,7 +251,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(5)]
 		[Description("Caret size.")]
-		public int CaretSize { get; set; } = 5;
+		public int CaretSize
+		{
+			get => _caretSize;
+			set => SetProperty(ref _caretSize, value);
+		}
 
 		/// <summary>
 		/// Radius of tooltip corner curves.
@@ -188,7 +264,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(6)]
 		[Description("Corner radius.")]
-		public int CornerRadius { get; set; } = 6;
+		public int CornerRadius
+		{
+			get => _cornerRadius;
+			set => SetProperty(ref _cornerRadius, value);
+		}
 
 		/// <summary>
 		/// If true, color boxes are shown in the tooltip.
@@ -197,7 +277,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
 		[Description("Display color boxes.")]
-		public bool DisplayColors { get; set; } = true;
+		public bool DisplayColors
+		{
+			get => _displayColors;
+			set => SetProperty(ref _displayColors, value);
+		}
 
 		/// <summary>
 		/// Width of the color box if displayColors is true.
@@ -206,7 +290,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(40)]
 		[Description("Color box width.")]
-		public int BoxWidth { get; set; } = 40;
+		public int BoxWidth
+		{
+			get => _boxWidth;
+			set => SetProperty(ref _boxWidth, value);
+		}
 
 		/// <summary>
 		/// Height of the color box if displayColors is true.
@@ -214,7 +302,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("boxHeight")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Color box height.")]
-		public int BoxHeight { get; set; }
+		public int BoxHeight
+		{
+			get => _boxHeight;
+			set => SetProperty(ref _boxHeight, value);
+		}
 
 		/// <summary>
 		/// If true, the tooltip will use the point style from the dataset rather than the default square.
@@ -223,7 +315,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("If true, use the point style for tooltip items.")]
-		public bool UsePointStyle { get; set; }
+		public bool UsePointStyle
+		{
+			get => _usePointStyle;
+			set => SetProperty(ref _usePointStyle, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -234,6 +330,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_bodyFont != null)
+				_bodyFont.Chart = Chart;
+		}
+
 		/// <summary>
 		/// Determines whether the Enabled property should be serialized by the designer.
 		/// </summary>
@@ -332,7 +436,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the BodyFont property to its default value.
 		/// </summary>
-		public void ResetBodyFont() => BodyFont = null;
+		public void ResetBodyFont() => SetProperty(ref _bodyFont, null);
 
 		/// <summary>
 		/// Determines whether the BodySpacing property should be serialized by the designer.

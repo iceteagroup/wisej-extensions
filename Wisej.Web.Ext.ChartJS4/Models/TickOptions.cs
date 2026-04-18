@@ -29,6 +29,15 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class TickOptions : OptionsBase
 	{
+		private bool _display = true;
+		private object? _color;
+		private FontOptions? _font;
+		private int _maxRotation = 50;
+		private int _minRotation;
+		private bool _mirror;
+		private string? _align;
+		private int _padding = 3;
+
 		/// <summary>
 		/// If true, show tick labels.
 		/// </summary>
@@ -36,7 +45,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
 		[Description("Display tick labels.")]
-		public bool Display { get; set; } = true;
+		public bool Display
+		{
+			get => _display;
+			set => SetProperty(ref _display, value);
+		}
 
 		/// <summary>
 		/// Color of tick labels.
@@ -44,7 +57,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("color")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Tick label color.")]
-		public object? Color { get; set; }
+		public object? Color
+		{
+			get => _color;
+			set => SetProperty(ref _color, value);
+		}
 
 		/// <summary>
 		/// Font configuration for ticks.
@@ -54,10 +71,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Font configuration.")]
 		public FontOptions? Font
 		{
-			get => _font ??= new FontOptions();
-			set => _font = value;
+			get
+			{
+				if (_font == null)
+					_font = new FontOptions { Chart = Chart };
+				return _font;
+			}
+			set => SetProperty(ref _font, value);
 		}
-		private FontOptions? _font;
 
 		/// <summary>
 		/// Maximum rotation for tick labels when rotating to condense labels.
@@ -66,7 +87,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(50)]
 		[Description("Maximum rotation angle.")]
-		public int MaxRotation { get; set; } = 50;
+		public int MaxRotation
+		{
+			get => _maxRotation;
+			set => SetProperty(ref _maxRotation, value);
+		}
 
 		/// <summary>
 		/// Minimum rotation for tick labels.
@@ -75,7 +100,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0)]
 		[Description("Minimum rotation angle.")]
-		public int MinRotation { get; set; }
+		public int MinRotation
+		{
+			get => _minRotation;
+			set => SetProperty(ref _minRotation, value);
+		}
 
 		/// <summary>
 		/// Flips tick labels around axis, displaying the labels inside the chart instead of outside.
@@ -84,7 +113,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("Mirror tick labels.")]
-		public bool Mirror { get; set; }
+		public bool Mirror
+		{
+			get => _mirror;
+			set => SetProperty(ref _mirror, value);
+		}
 
 		/// <summary>
 		/// Alignment of tick labels: 'start', 'center', 'end', 'inner'.
@@ -92,7 +125,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("align")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Alignment of tick labels.")]
-		public string? Align { get; set; }
+		public string? Align
+		{
+			get => _align;
+			set => SetProperty(ref _align, value);
+		}
 
 		/// <summary>
 		/// Padding between the tick label and the axis.
@@ -101,7 +138,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Padding between label and axis.")]
 		[DefaultValue(3)]
-		public int Padding { get; set; } = 3;
+		public int Padding
+		{
+			get => _padding;
+			set => SetProperty(ref _padding, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -112,6 +153,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_font != null)
+				_font.Chart = Chart;
+		}
+
 		/// <summary>
 		/// Determines whether the Align property should be serialized by the designer.
 		/// </summary>
@@ -150,7 +199,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Font property to its default value.
 		/// </summary>
-		public void ResetFont() => Font = null;
+		public void ResetFont() => SetProperty(ref _font, null);
 
 		/// <summary>
 		/// Determines whether the MaxRotation property should be serialized by the designer.

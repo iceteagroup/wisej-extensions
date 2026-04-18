@@ -29,6 +29,9 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class FillerOptions : OptionsBase
 	{
+		private bool _propagate = true;
+		private string? _drawTime;
+
 		/// <summary>
 		/// If true, the filler plugin is enabled.
 		/// </summary>
@@ -36,7 +39,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
 		[Description("Propagate fill to visible datasets.")]
-		public bool Propagate { get; set; } = true;
+		public bool Propagate
+		{
+			get => _propagate;
+			set => SetProperty(ref _propagate, value);
+		}
 
 		/// <summary>
 		/// Draw time: 'beforeDatasetsDraw' or 'beforeDatasetDraw'.
@@ -44,7 +51,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("drawTime")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("When to draw the fill.")]
-		public string? DrawTime { get; set; }
+		public string? DrawTime
+		{
+			get => _drawTime;
+			set => SetProperty(ref _drawTime, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -54,6 +65,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
 		/// <summary>
 		/// Determines whether the Propagate property should be serialized by the designer.
 		/// </summary>

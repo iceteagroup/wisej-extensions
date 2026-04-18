@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
 // (C) 2021 ICE TEA GROUP LLC - ALL RIGHTS RESERVED
 //
@@ -19,6 +19,7 @@
 
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -67,8 +68,9 @@ namespace Wisej.Web.Ext.ChartJS4.Serialization
 				return;
 			}
 
-			// Write as rgba(r, g, b, a) format
-			writer.WriteStringValue($"rgba({value.R}, {value.G}, {value.B}, {value.A / 255.0:F2})");
+			// Write as rgba(r, g, b, a) format using invariant culture to ensure period as decimal separator
+			var alpha = (value.A / 255.0).ToString("F2", CultureInfo.InvariantCulture);
+			writer.WriteStringValue($"rgba({value.R}, {value.G}, {value.B}, {alpha})");
 		}
 	}
 }

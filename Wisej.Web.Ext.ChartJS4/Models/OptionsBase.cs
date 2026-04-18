@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 namespace Wisej.Web.Ext.ChartJS4.Models
 {
 
-	public abstract class OptionsBase
+	public abstract class OptionsBase : ChartModelBase
 	{
 		[Browsable(false)]
 		[JsonIgnore(Condition = JsonIgnoreCondition.Always)]

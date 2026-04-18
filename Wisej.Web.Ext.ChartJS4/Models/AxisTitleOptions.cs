@@ -29,6 +29,12 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class AxisTitleOptions : OptionsBase
 	{
+		private bool _display;
+		private string? _text;
+		private object? _color;
+		private FontOptions? _font;
+		private int _padding;
+
 		/// <summary>
 		/// If true, display the axis title.
 		/// </summary>
@@ -36,7 +42,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("Display axis title.")]
-		public bool Display { get; set; }
+		public bool Display
+		{
+			get => _display;
+			set => SetProperty(ref _display, value);
+		}
 
 		/// <summary>
 		/// Title text.
@@ -44,7 +54,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("text")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Title text.")]
-		public string? Text { get; set; }
+		public string? Text
+		{
+			get => _text;
+			set => SetProperty(ref _text, value);
+		}
 
 		/// <summary>
 		/// Color of the title text.
@@ -52,7 +66,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("color")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Title text color.")]
-		public object? Color { get; set; }
+		public object? Color
+		{
+			get => _color;
+			set => SetProperty(ref _color, value);
+		}
 
 		/// <summary>
 		/// Font configuration.
@@ -62,10 +80,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Font configuration.")]
 		public FontOptions? Font
 		{
-			get => _font ??= new FontOptions();
-			set => _font = value;
+			get
+			{
+				if (_font == null)
+					_font = new FontOptions { Chart = Chart };
+				return _font;
+			}
+			set => SetProperty(ref _font, value);
 		}
-		private FontOptions? _font;
 
 		/// <summary>
 		/// Padding around the title.
@@ -73,7 +95,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("padding")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Padding around title.")]
-		public int Padding { get; set; }
+		public int Padding
+		{
+			get => _padding;
+			set => SetProperty(ref _padding, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -84,6 +110,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_font != null)
+				_font.Chart = Chart;
+		}
 
 		/// <summary>
 		/// Determines whether the Display property should be serialized by the designer.
@@ -123,7 +156,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Font property to its default value.
 		/// </summary>
-		public void ResetFont() => Font = null;
+		public void ResetFont() => SetProperty(ref _font, null);
 
 		/// <summary>
 		/// Determines whether the Padding property should be serialized by the designer.

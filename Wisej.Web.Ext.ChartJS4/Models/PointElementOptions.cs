@@ -29,6 +29,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class PointElementOptions : OptionsBase
 	{
+		private int _radius = 3;
+		private string? _pointStyle;
+		private double? _rotation;
+		private object? _backgroundColor;
+		private int _borderWidth = 1;
 
 		/// <summary>
 		/// Point radius.
@@ -37,7 +42,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(3)]
 		[Description("Point radius.")]
-		public int Radius { get; set; } = 3;
+		public int Radius
+		{
+			get => _radius;
+			set => SetProperty(ref _radius, value);
+		}
 
 		/// <summary>
 		/// Point style: 'circle', 'cross', 'crossRot', 'dash', 'line', 'rect', 'rectRounded', 'rectRot', 'star', 'triangle'.
@@ -45,7 +54,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("pointStyle")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Point style.")]
-		public string? PointStyle { get; set; }
+		public string? PointStyle
+		{
+			get => _pointStyle;
+			set => SetProperty(ref _pointStyle, value);
+		}
 
 		/// <summary>
 		/// Point rotation in degrees.
@@ -53,7 +66,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("rotation")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Point rotation in degrees.")]
-		public double? Rotation { get; set; }
+		public double? Rotation
+		{
+			get => _rotation;
+			set => SetProperty(ref _rotation, value);
+		}
 
 		/// <summary>
 		/// Point background color.
@@ -61,7 +78,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("backgroundColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Point background color.")]
-		public object? BackgroundColor { get; set; }
+		public object? BackgroundColor
+		{
+			get => _backgroundColor;
+			set => SetProperty(ref _backgroundColor, value);
+		}
 
 		/// <summary>
 		/// Point border width.
@@ -70,7 +91,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(1)]
 		[Description("Point border width.")]
-		public int BorderWidth { get; set; } = 1;
+		public int BorderWidth
+		{
+			get => _borderWidth;
+			set => SetProperty(ref _borderWidth, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -81,6 +106,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
 		/// <summary>
 		/// Determines whether the Radius property should be serialized by the designer.
 		/// </summary>

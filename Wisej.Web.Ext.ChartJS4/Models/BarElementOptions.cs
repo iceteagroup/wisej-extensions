@@ -29,13 +29,21 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class BarElementOptions : OptionsBase
 	{
+		private object? _backgroundColor;
+		private int _borderWidth;
+		private int _borderRadius;
+
 		/// <summary>
 		/// Bar background color.
 		/// </summary>
 		[JsonPropertyName("backgroundColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Bar background color.")]
-		public object? BackgroundColor { get; set; }
+		public object? BackgroundColor
+		{
+			get => _backgroundColor;
+			set => SetProperty(ref _backgroundColor, value);
+		}
 
 		/// <summary>
 		/// Bar border width.
@@ -44,7 +52,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0)]
 		[Description("Bar border width.")]
-		public int BorderWidth { get; set; }
+		public int BorderWidth
+		{
+			get => _borderWidth;
+			set => SetProperty(ref _borderWidth, value);
+		}
 
 		/// <summary>
 		/// Bar border radius in pixels.
@@ -52,7 +64,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("borderRadius")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Bar border radius.")]
-		public int BorderRadius { get; set; }
+		public int BorderRadius
+		{
+			get => _borderRadius;
+			set => SetProperty(ref _borderRadius, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -63,6 +79,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
 		/// <summary>
 		/// Determines whether the BackgroundColor property should be serialized by the designer.
 		/// </summary>

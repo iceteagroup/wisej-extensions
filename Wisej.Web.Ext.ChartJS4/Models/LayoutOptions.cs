@@ -29,6 +29,8 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class LayoutOptions : OptionsBase
 	{
+		private PaddingOptions? _padding;
+
 		/// <summary>
 		/// The padding to add inside the chart.
 		/// </summary>
@@ -37,10 +39,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Padding inside the chart.")]
 		public PaddingOptions? Padding
 		{
-			get => _padding ??= new PaddingOptions();
-			set => _padding = value;
+			get
+			{
+				if (_padding == null)
+					_padding = new PaddingOptions { Chart = Chart };
+				return _padding;
+			}
+			set => SetProperty(ref _padding, value);
 		}
-		private PaddingOptions? _padding;
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -60,7 +66,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Padding property to its default value.
 		/// </summary>
-		public void ResetPadding() => Padding = null;
+		public void ResetPadding() => SetProperty(ref _padding, null);
 
 		/// <summary>
 		/// Determines whether the ExtensionData property should be serialized by the designer.
@@ -71,5 +77,12 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// Resets the ExtensionData property to its default value.
 		/// </summary>
 		public void ResetExtensionData() => ExtensionData = null;
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_padding != null)
+				_padding.Chart = Chart;
+		}
 	}
 }

@@ -29,6 +29,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class InteractionOptions : OptionsBase
 	{
+		private string? _mode = null;
+		private bool _intersect = true;
+		private string? _axis;
+		private bool _includeInvisible;
+
 		/// <summary>
 		/// Sets which elements appear in the interaction.
 		/// </summary>
@@ -36,7 +41,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Sets which elements appear in the interaction.")]
 		[DefaultValue(null)]
-		public string? Mode { get; set; } = null;
+		public string? Mode
+		{
+			get => _mode;
+			set => SetProperty(ref _mode, value);
+		}
 
 		/// <summary>
 		/// If true, the interaction mode only applies when the mouse position intersects an item on the chart.
@@ -45,7 +54,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.Never)]
 		[DefaultValue(true)]
 		[Description("If true, the interaction mode only applies when the mouse position intersects an item on the chart.")]
-		public bool Intersect { get; set; } = true;
+		public bool Intersect
+		{
+			get => _intersect;
+			set => SetProperty(ref _intersect, value);
+		}
 
 		/// <summary>
 		/// Can be 'x', 'y', 'xy', or 'r' to define which directions are used in calculating distances.
@@ -53,7 +66,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("axis")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Axis for interaction calculations.")]
-		public string? Axis { get; set; }
+		public string? Axis
+		{
+			get => _axis;
+			set => SetProperty(ref _axis, value);
+		}
 
 		/// <summary>
 		/// If true, include invisible points.
@@ -62,7 +79,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("Include invisible points in interactions.")]
-		public bool IncludeInvisible { get; set; }
+		public bool IncludeInvisible
+		{
+			get => _includeInvisible;
+			set => SetProperty(ref _includeInvisible, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.

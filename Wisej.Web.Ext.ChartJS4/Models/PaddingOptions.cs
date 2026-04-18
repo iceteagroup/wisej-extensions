@@ -29,13 +29,22 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class PaddingOptions : OptionsBase
 	{
+		private int _top;
+		private int _right;
+		private int _bottom;
+		private int _left;
+
 		/// <summary>
 		/// Top padding.
 		/// </summary>
 		[JsonPropertyName("top")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Top padding.")]
-		public int Top { get; set; }
+		public int Top
+		{
+			get => _top;
+			set => SetProperty(ref _top, value);
+		}
 
 		/// <summary>
 		/// Right padding.
@@ -43,7 +52,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("right")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Right padding.")]
-		public int Right { get; set; }
+		public int Right
+		{
+			get => _right;
+			set => SetProperty(ref _right, value);
+		}
 
 		/// <summary>
 		/// Bottom padding.
@@ -51,7 +64,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("bottom")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Bottom padding.")]
-		public int Bottom { get; set; }
+		public int Bottom
+		{
+			get => _bottom;
+			set => SetProperty(ref _bottom, value);
+		}
 
 		/// <summary>
 		/// Left padding.
@@ -59,7 +76,12 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("left")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Left padding.")]
-		public int Left { get; set; }
+		public int Left
+		{
+			get => _left;
+			set => SetProperty(ref _left, value);
+		}
+
 		/// <summary>
 		/// Determines whether the Top property should be serialized by the designer.
 		/// </summary>

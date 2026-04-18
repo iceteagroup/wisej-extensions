@@ -29,10 +29,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class SubtitleOptions : OptionsBase
 	{
-		public SubtitleOptions()
-		{
-			Font = new FontOptions();
-		}
+		private bool _display;
+		private object? _text;
+		private object? _color;
+		private FontOptions? _font;
+		private int _padding;
 
 		/// <summary>
 		/// Is the subtitle shown?
@@ -41,7 +42,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("Is the subtitle shown?")]
-		public bool Display { get; set; }
+		public bool Display
+		{
+			get => _display;
+			set => SetProperty(ref _display, value);
+		}
 
 		/// <summary>
 		/// Subtitle text (can be string or array of strings).
@@ -49,7 +54,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("text")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Subtitle text.")]
-		public object? Text { get; set; }
+		public object? Text
+		{
+			get => _text;
+			set => SetProperty(ref _text, value);
+		}
 
 		/// <summary>
 		/// Color of text.
@@ -57,7 +66,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("color")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Text color.")]
-		public object? Color { get; set; }
+		public object? Color
+		{
+			get => _color;
+			set => SetProperty(ref _color, value);
+		}
 
 		/// <summary>
 		/// Font configuration.
@@ -67,10 +80,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Font configuration.")]
 		public FontOptions? Font
 		{
-			get => _font ??= new FontOptions();
-			set => _font = value;
+			get
+			{
+				if (_font == null)
+					_font = new FontOptions { Chart = Chart };
+				return _font;
+			}
+			set => SetProperty(ref _font, value);
 		}
-		private FontOptions? _font;
 
 		/// <summary>
 		/// Padding to apply around the subtitle.
@@ -78,7 +95,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("padding")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Padding around subtitle.")]
-		public int Padding { get; set; } = 0;
+		public int Padding
+		{
+			get => _padding;
+			set => SetProperty(ref _padding, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -89,6 +110,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_font != null)
+				_font.Chart = Chart;
+		}
 
 		/// <summary>
 		/// Determines whether the Display property should be serialized by the designer.
@@ -128,7 +156,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Font property to its default value.
 		/// </summary>
-		public void ResetFont() => Font = null;
+		public void ResetFont() => SetProperty(ref _font, null);
 
 		/// <summary>
 		/// Determines whether the Padding property should be serialized by the designer.

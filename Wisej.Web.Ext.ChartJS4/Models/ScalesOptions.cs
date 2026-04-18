@@ -33,24 +33,19 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		private AxisOptions? _y;
 
 		/// <summary>
-		/// Initializes a new instance of the ScalesOptions class with lazy-loaded axis options.
-		/// </summary>
-		/// <remarks>The X and Y properties are lazily initialized on first access and only serialized if modified.</remarks>
-		public ScalesOptions()
-		{
-			// Axes are NOT instantiated by default
-			// They will be lazy-loaded on first access
-		}
-
-		/// <summary>
 		/// X axis configuration.
 		/// </summary>
 		[JsonIgnore(Condition = JsonIgnoreCondition.Always)]
 		[Description("X axis configuration.")]
 		public AxisOptions? X
 		{
-			get => _x ??= new AxisOptions();
-			set => _x = value;
+			get
+			{
+				if (_x == null)
+					_x = new AxisOptions { Chart = Chart };
+				return _x;
+			}
+			set => SetProperty(ref _x, value);
 		}
 
 		/// <summary>
@@ -61,7 +56,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the X property to its default value.
 		/// </summary>
-		public void ResetX() => _x = null;
+		public void ResetX() => SetProperty(ref _x, null);
 
 		[JsonPropertyName("x")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -77,8 +72,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Y axis configuration.")]
 		public AxisOptions? Y
 		{
-			get => _y ??= new AxisOptions();
-			set => _y = value;
+			get
+			{
+				if (_y == null)
+					_y = new AxisOptions { Chart = Chart };
+				return _y;
+			}
+			set => SetProperty(ref _y, value);
 		}
 
 		/// <summary>
@@ -89,7 +89,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Y property to its default value.
 		/// </summary>
-		public void ResetY() => _y = null;
+		public void ResetY() => SetProperty(ref _y, null);
 
 		[JsonPropertyName("y")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -108,5 +108,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_x != null)
+				_x.Chart = Chart;
+			if (_y != null)
+				_y.Chart = Chart;
+		}
 	}
 }

@@ -29,6 +29,10 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class BorderOptions : OptionsBase
 	{
+		private bool _display = true;
+		private object? _color;
+		private int _width = 1;
+
 		/// <summary>
 		/// If true, draw border.
 		/// </summary>
@@ -36,7 +40,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
 		[Description("Display border.")]
-		public bool Display { get; set; } = true;
+		public bool Display
+		{
+			get => _display;
+			set => SetProperty(ref _display, value);
+		}
 
 		/// <summary>
 		/// Border color.
@@ -44,7 +52,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("color")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Border color.")]
-		public object? Color { get; set; }
+		public object? Color
+		{
+			get => _color;
+			set => SetProperty(ref _color, value);
+		}
 
 		/// <summary>
 		/// Border width.
@@ -53,7 +65,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(1)]
 		[Description("Border width.")]
-		public int Width { get; set; } = 1;
+		public int Width
+		{
+			get => _width;
+			set => SetProperty(ref _width, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -64,6 +80,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
 		/// <summary>
 		/// Determines whether the Display property should be serialized by the designer.
 		/// </summary>

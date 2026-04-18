@@ -29,6 +29,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class LegendLabelsOptions : OptionsBase
 	{
+		private int _boxWidth;
+		private int _boxHeight;
+		private object? _color;
+		private FontOptions? _font;
+		private int _padding = 10;
+		private bool _usePointStyle;
+
 		/// <summary>
 		/// Width of colored box.
 		/// </summary>
@@ -36,7 +43,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0)]
 		[Description("Width of colored box.")]
-		public int BoxWidth { get; set; } = 0;
+		public int BoxWidth
+		{
+			get => _boxWidth;
+			set => SetProperty(ref _boxWidth, value);
+		}
 
 		/// <summary>
 		/// Height of colored box.
@@ -45,7 +56,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Height of colored box.")]
 		[DefaultValue(0)]
-		public int BoxHeight { get; set; } = 0;
+		public int BoxHeight
+		{
+			get => _boxHeight;
+			set => SetProperty(ref _boxHeight, value);
+		}
 
 		/// <summary>
 		/// Color of label and the strikethrough.
@@ -53,7 +68,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("color")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Label color.")]
-		public object? Color { get; set; }
+		public object? Color
+		{
+			get => _color;
+			set => SetProperty(ref _color, value);
+		}
 
 		/// <summary>
 		/// Font configuration.
@@ -63,10 +82,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Font configuration.")]
 		public FontOptions? Font
 		{
-			get => _font ??= new FontOptions();
-			set => _font = value;
+			get
+			{
+				if (_font == null)
+					_font = new FontOptions { Chart = Chart };
+				return _font;
+			}
+			set => SetProperty(ref _font, value);
 		}
-		private FontOptions? _font;
 
 		/// <summary>
 		/// Padding between rows of colored boxes.
@@ -75,7 +98,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(10)]
 		[Description("Padding between rows.")]
-		public int Padding { get; set; } = 10;
+		public int Padding
+		{
+			get => _padding;
+			set => SetProperty(ref _padding, value);
+		}
 
 		/// <summary>
 		/// If true, the legend items will use the point style from the dataset rather than the default square.
@@ -84,7 +111,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("If true, use the point style for legend items.")]
-		public bool UsePointStyle { get; set; }
+		public bool UsePointStyle
+		{
+			get => _usePointStyle;
+			set => SetProperty(ref _usePointStyle, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -95,6 +126,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_font != null)
+				_font.Chart = Chart;
+		}
+
 		/// <summary>
 		/// Determines whether the BoxWidth property should be serialized by the designer.
 		/// </summary>
@@ -133,7 +172,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Font property to its default value.
 		/// </summary>
-		public void ResetFont() => Font = null;
+		public void ResetFont() => SetProperty(ref _font, null);
 
 		/// <summary>
 		/// Determines whether the Padding property should be serialized by the designer.

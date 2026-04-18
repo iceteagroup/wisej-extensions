@@ -29,6 +29,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class LineElementOptions : OptionsBase
 	{
+		private double _tension;
+		private object? _backgroundColor;
+		private int _borderWidth = 3;
+		private string? _borderCapStyle;
+
 		/// <summary>
 		/// Line tension (Bezier curve tension). 0 for straight lines.
 		/// </summary>
@@ -36,7 +41,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0)]
 		[Description("Line tension (Bezier curve).")]
-		public double Tension { get; set; }
+		public double Tension
+		{
+			get => _tension;
+			set => SetProperty(ref _tension, value);
+		}
 
 		/// <summary>
 		/// Line background color.
@@ -44,7 +53,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("backgroundColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Line background color.")]
-		public object? BackgroundColor { get; set; }
+		public object? BackgroundColor
+		{
+			get => _backgroundColor;
+			set => SetProperty(ref _backgroundColor, value);
+		}
 
 		/// <summary>
 		/// Line border width.
@@ -53,7 +66,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(3)]
 		[Description("Line border width.")]
-		public int BorderWidth { get; set; } = 3;
+		public int BorderWidth
+		{
+			get => _borderWidth;
+			set => SetProperty(ref _borderWidth, value);
+		}
 
 		/// <summary>
 		/// Cap style of the line: 'butt', 'round', 'square'.
@@ -61,7 +78,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("borderCapStyle")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Cap style of the line.")]
-		public string? BorderCapStyle { get; set; }
+		public string? BorderCapStyle
+		{
+			get => _borderCapStyle;
+			set => SetProperty(ref _borderCapStyle, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -72,6 +93,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
 		/// <summary>
 		/// Determines whether the Tension property should be serialized by the designer.
 		/// </summary>

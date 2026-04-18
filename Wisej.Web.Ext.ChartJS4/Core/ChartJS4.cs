@@ -24,6 +24,7 @@ using System.ComponentModel.Design.Serialization;
 using System.Drawing;
 using System.Dynamic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -48,7 +49,8 @@ namespace Wisej.Web.Ext.ChartJS4
 			PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
 			DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault,
 			WriteIndented = true,
-			Converters = { new ColorJsonConverter(), new ChartDataSetConverter() },
+			Converters = { new ColorJsonConverter(), new ChartDataSetConverter(), new ChartNaNJsonConverter() },
+			Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
 		};
 
 		/// <summary>
@@ -56,8 +58,8 @@ namespace Wisej.Web.Ext.ChartJS4
 		/// </summary>
 		public ChartJS4()
 		{
-			Labels = Array.Empty<string>();
-			DataSets = new List<ChartDataSet>();
+			_labels = new LabelCollection(this);
+			_dataSets = new DataSetCollection(this);
 		}
 
 		#region Events
@@ -120,32 +122,34 @@ namespace Wisej.Web.Ext.ChartJS4
 		/// </summary>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[Description("Gets or sets the labels for the chart data.")]
-		public string[] Labels
+		public LabelCollection Labels
 		{
 			get { return _labels; }
 			set
 			{
-				_labels = value ?? Array.Empty<string>();
+				_labels = value ?? new LabelCollection();
+				_labels.Chart = this;
 				Update();
 			}
 		}
-		private string[] _labels;
+		private LabelCollection _labels;
 
 		/// <summary>
 		/// Gets or sets the data sets for the chart.
 		/// </summary>
 		[Description("Gets or sets the data sets for the chart.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public List<ChartDataSet> DataSets
+		public DataSetCollection DataSets
 		{
 			get { return _dataSets; }
 			set
 			{
-				_dataSets = value ?? new List<ChartDataSet>();
+				_dataSets = value ?? new DataSetCollection();
+				_dataSets.Chart = this;
 				Update();
 			}
 		}
-		private List<ChartDataSet> _dataSets;
+		private DataSetCollection _dataSets;
 
 		/// <summary>
 		/// Gets or sets the chart options.
@@ -157,12 +161,14 @@ namespace Wisej.Web.Ext.ChartJS4
 			get
 			{
 				if (_options == null)
-					_options = new ChartOptions();
+					_options = new ChartOptions { Chart = this };
 				return _options;
 			}
 			set
 			{
 				_options = value;
+				if (_options != null)
+					_options.Chart = this;
 				Update();
 			}
 		}
@@ -464,7 +470,7 @@ namespace Wisej.Web.Ext.ChartJS4
 		/// <param name="activeElements">Array of active element specifications.</param>
 		public void SetActiveElements(object[] activeElements)
 		{
-			Call("setActiveElements", activeElements);
+			Call("setActiveElements", activeElements.ToList());
 		}
 
 		/// <summary>
@@ -548,7 +554,7 @@ namespace Wisej.Web.Ext.ChartJS4
 						new Package
 						{
 							Name = "chart.js",
-							Source = GetResourceURL("Wisej.Web.Ext.ChartJS4.JavaScript.chart-4.4.9.min.js")
+							Source = GetResourceURL("Wisej.Web.Ext.ChartJS4.JavaScript.chart.min..js")
 						},
 						new Package
 						{
@@ -587,6 +593,9 @@ namespace Wisej.Web.Ext.ChartJS4
 			set { }
 		}
 
+        [Browsable(false)]
+        public override dynamic Options { get => base.Options; set => base.Options = value; }
+
 		/// <summary>
 		/// Renders the client component.
 		/// </summary>
@@ -612,21 +621,36 @@ namespace Wisej.Web.Ext.ChartJS4
 					
 				data = new
 				{
-					labels = Labels,
-					datasets = SerializeDataSets()
+					labels = this.DesignMode ? new string[7] {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"} :  Labels,
+					datasets = this.DesignMode ? GeneratePreviewData() : SerializeDataSets()
 				}
 			};
 
 			base.OnWebRender((object)config);
 		}
 
-		#endregion
+		private object[] GeneratePreviewData()
+		{
+			return new[]
+			{
+				new
+				{
+					label = "Sample Dataset",
+					data = new[] { 10, 20, 15, 25, 18, 30, 22 },
+					backgroundColor = "rgba(75, 192, 192, 0.2)",
+					borderColor = "rgba(75, 192, 192, 1)",
+					borderWidth = 1
+				}
+			};
+        }
 
-		/// <summary>
-		/// Defines a named JavaScript function that can be referenced in chart options
-		/// using the <c>(ctx)=>functionName</c> pattern for scriptable options.
-		/// </summary>
-		public class WidgetFunction
+        #endregion
+
+        /// <summary>
+        /// Defines a named JavaScript function that can be referenced in chart options
+        /// using the <c>(ctx)=>functionName</c> pattern for scriptable options.
+        /// </summary>
+        public class WidgetFunction
 		{
 			/// <summary>
 			/// The name of the function (referenced in chart options as <c>(ctx)=>Name</c>).

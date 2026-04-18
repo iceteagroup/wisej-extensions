@@ -29,6 +29,12 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class GridOptions : OptionsBase
 	{
+		private bool _display = true;
+		private object? _color;
+		private int _lineWidth = 1;
+		private bool _drawBorder = true;
+		private bool _circular;
+
 		/// <summary>
 		/// If true, draw grid lines.
 		/// </summary>
@@ -36,7 +42,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
 		[Description("Display grid lines.")]
-		public bool Display { get; set; } = true;
+		public bool Display
+		{
+			get => _display;
+			set => SetProperty(ref _display, value);
+		}
 
 		/// <summary>
 		/// Grid line color.
@@ -44,7 +54,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("color")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Grid line color.")]
-		public object? Color { get; set; }
+		public object? Color
+		{
+			get => _color;
+			set => SetProperty(ref _color, value);
+		}
 
 		/// <summary>
 		/// Stroke width of grid lines.
@@ -53,7 +67,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(1)]
 		[Description("Grid line width.")]
-		public int LineWidth { get; set; } = 1;
+		public int LineWidth
+		{
+			get => _lineWidth;
+			set => SetProperty(ref _lineWidth, value);
+		}
 
 		/// <summary>
 		/// If true, draw border at the edge between the axis and the chart area.
@@ -62,7 +80,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
 		[Description("Draw border at edge.")]
-		public bool DrawBorder { get; set; } = true;
+		public bool DrawBorder
+		{
+			get => _drawBorder;
+			set => SetProperty(ref _drawBorder, value);
+		}
 
 		/// <summary>
 		/// If true, gridlines are circular (on radar chart only).
@@ -71,7 +93,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("Circular grid lines (radar only).")]
-		public bool Circular { get; set; }
+		public bool Circular
+		{
+			get => _circular;
+			set => SetProperty(ref _circular, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -82,6 +108,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
 		/// <summary>
 		/// Determines whether the Display property should be serialized by the designer.
 		/// </summary>

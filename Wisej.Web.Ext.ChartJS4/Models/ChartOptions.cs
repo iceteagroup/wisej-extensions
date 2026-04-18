@@ -33,15 +33,23 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	/// </summary>
 	[ApiCategory("ChartJS4")]
 	[TypeConverter(typeof(Converter))]
-	public class ChartOptions
+	public class ChartOptions : ChartModelBase
 	{
+		private bool _responsive = true;
+		private bool _maintainAspectRatio = true;
+		private int? _aspectRatio = 2;
+		private int? _resizeDelay;
+		private double? _devicePixelRatio;
+		private string? _locale;
 		private PluginsOptions? _plugins;
 		private ScalesOptions? _scales;
 		private InteractionOptions? _interaction;
 		private object? _animations;
+		private object? _animation;
 		private TransitionsOptions? _transitions;
 		private LayoutOptions? _layout;
 		private object? _elements;
+		private string? _type;
 
 		public ChartOptions()
 		{
@@ -56,7 +64,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
 		[Description("Resizes the chart canvas when its container does.")]
-		public bool Responsive { get; set; } = true;
+		public bool Responsive
+		{
+			get => _responsive;
+			set => SetProperty(ref _responsive, value);
+		}
 
 		/// <summary>
 		/// Determines whether the Responsive property should be serialized by the designer.
@@ -75,7 +87,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
 		[Description("Maintain the original canvas aspect ratio (width / height) when resizing.")]
-		public bool MaintainAspectRatio { get; set; } = true;
+		public bool MaintainAspectRatio
+		{
+			get => _maintainAspectRatio;
+			set => SetProperty(ref _maintainAspectRatio, value);
+		}
 
 		/// <summary>
 		/// Determines whether the MaintainAspectRatio property should be serialized by the designer.
@@ -94,7 +110,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(2)]
 		[Description("Canvas aspect ratio (i.e., width / height).")]
-		public int? AspectRatio { get; set; } = 2;
+		public int? AspectRatio
+		{
+			get => _aspectRatio;
+			set => SetProperty(ref _aspectRatio, value);
+		}
 
 		/// <summary>
 		/// Determines whether the AspectRatio property should be serialized by the designer.
@@ -113,7 +133,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0)]
 		[Description("Delay the resize update by milliseconds.")]
-		public int? ResizeDelay { get; set; } = 0;
+		public int? ResizeDelay
+		{
+			get => _resizeDelay;
+			set => SetProperty(ref _resizeDelay, value);
+		}
 
 		/// <summary>
 		/// Determines whether the ResizeDelay property should be serialized by the designer.
@@ -132,7 +156,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Override the window's default devicePixelRatio.")]
 		[DefaultValue(null)]
-		public double? DevicePixelRatio { get; set; }
+		public double? DevicePixelRatio
+		{
+			get => _devicePixelRatio;
+			set => SetProperty(ref _devicePixelRatio, value);
+		}
 
 		/// <summary>
 		/// Determines whether the DevicePixelRatio property should be serialized by the designer.
@@ -151,7 +179,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("The chart's locale.")]
 		[DefaultValue(null)]
-		public string? Locale { get; set; }
+		public string? Locale
+		{
+			get => _locale;
+			set => SetProperty(ref _locale, value);
+		}
 
 		/// <summary>
 		/// Determines whether the Locale property should be serialized by the designer.
@@ -170,8 +202,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public PluginsOptions? Plugins
 		{
-			get => _plugins ??= new PluginsOptions();
-			set => _plugins = value;
+			get
+			{
+				if (_plugins == null)
+					_plugins = new PluginsOptions { Chart = Chart };
+				return _plugins;
+			}
+			set => SetProperty(ref _plugins, value);
 		}
 
 		/// <summary>
@@ -182,7 +219,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Plugins property to its default value.
 		/// </summary>
-		public void ResetPlugins() => _plugins = null;
+		public void ResetPlugins() => SetProperty(ref _plugins, null);
 
 		[JsonPropertyName("plugins")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -197,8 +234,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public ScalesOptions? Scales
 		{
-			get => _scales ??= new ScalesOptions();
-			set => _scales = value;
+			get
+			{
+				if (_scales == null)
+					_scales = new ScalesOptions { Chart = Chart };
+				return _scales;
+			}
+			set => SetProperty(ref _scales, value);
 		}
 
 		/// <summary>
@@ -209,7 +251,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Scales property to its default value.
 		/// </summary>
-		public void ResetScales() => _scales = null;
+		public void ResetScales() => SetProperty(ref _scales, null);
 
 		[JsonPropertyName("scales")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -224,8 +266,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public InteractionOptions? Interaction
 		{
-			get => _interaction ??= new InteractionOptions();
-			set => _interaction = value;
+			get
+			{
+				if (_interaction == null)
+					_interaction = new InteractionOptions { Chart = Chart };
+				return _interaction;
+			}
+			set => SetProperty(ref _interaction, value);
 		}
 
 		/// <summary>
@@ -236,7 +283,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Interaction property to its default value.
 		/// </summary>
-		public void ResetInteraction() => _interaction = null;
+		public void ResetInteraction() => SetProperty(ref _interaction, null);
 
 		[JsonPropertyName("interaction")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -252,7 +299,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		public object? Animations
 		{
 			get => _animations;
-			set => _animations = value;
+			set => SetProperty(ref _animations, value);
 		}
 
 		/// <summary>
@@ -263,7 +310,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Animations property to its default value.
 		/// </summary>
-		public void ResetAnimations() => _animations = null;
+		public void ResetAnimations() => SetProperty(ref _animations, null);
 
 		[JsonPropertyName("animations")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -281,7 +328,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Global animation configuration (single animation config object).")]
 		[DefaultValue(null)]
-		public object? Animation { get; set; }
+		public object? Animation
+		{
+			get => _animation;
+			set => SetProperty(ref _animation, value);
+		}
 
 		/// <summary>
 		/// Determines whether the Animation property should be serialized by the designer.
@@ -299,8 +350,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public TransitionsOptions? Transitions
 		{
-			get => _transitions ??= new TransitionsOptions();
-			set => _transitions = value;
+			get
+			{
+				if (_transitions == null)
+					_transitions = new TransitionsOptions { Chart = Chart };
+				return _transitions;
+			}
+			set => SetProperty(ref _transitions, value);
 		}
 
 		/// <summary>
@@ -311,7 +367,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Transitions property to its default value.
 		/// </summary>
-		public void ResetTransitions() => _transitions = null;
+		public void ResetTransitions() => SetProperty(ref _transitions, null);
 
 		[JsonPropertyName("transitions")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -326,8 +382,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public LayoutOptions? Layout
 		{
-			get => _layout ??= new LayoutOptions();
-			set => _layout = value;
+			get
+			{
+				if (_layout == null)
+					_layout = new LayoutOptions { Chart = Chart };
+				return _layout;
+			}
+			set => SetProperty(ref _layout, value);
 		}
 
 		/// <summary>
@@ -338,7 +399,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Layout property to its default value.
 		/// </summary>
-		public void ResetLayout() => _layout = null;
+		public void ResetLayout() => SetProperty(ref _layout, null);
 
 		[JsonPropertyName("layout")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -354,7 +415,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		public object? Elements
 		{
 			get => _elements;
-			set => _elements = value;
+			set => SetProperty(ref _elements, value);
 		}
 
 		/// <summary>
@@ -365,7 +426,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Elements property to its default value.
 		/// </summary>
-		public void ResetElements() => _elements = null;
+		public void ResetElements() => SetProperty(ref _elements, null);
 
 		[JsonPropertyName("elements")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -392,7 +453,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.Always)]
 		[DefaultValue(null)]
 		[Description("Overrides the chart type string in the Chart.js config.")]
-		public string? Type { get; set; }
+		public string? Type
+		{
+			get => _type;
+			set => SetProperty(ref _type, value);
+		}
 
 		/// <summary>
 		/// Sets raw JSON to merge into the top-level chart options (ExtensionData).
@@ -418,8 +483,32 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 						}
 					}
 					catch { /* ignore invalid JSON */ }
+
+					Update();
 				}
 			}
+		}
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_plugins != null)
+				_plugins.Chart = Chart;
+			if (_scales != null)
+				_scales.Chart = Chart;
+			if (_interaction != null)
+				_interaction.Chart = Chart;
+			if (_transitions != null)
+				_transitions.Chart = Chart;
+			if (_layout != null)
+				_layout.Chart = Chart;
+
+			if (_animations is ChartModelBase animationsModel)
+				animationsModel.Chart = Chart;
+			if (_animation is ChartModelBase animationModel)
+				animationModel.Chart = Chart;
+			if (_elements is ChartModelBase elementsModel)
+				elementsModel.Chart = Chart;
 		}
 	}
 

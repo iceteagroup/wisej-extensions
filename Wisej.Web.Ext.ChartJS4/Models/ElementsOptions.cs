@@ -35,12 +35,6 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		private BarElementOptions? _bar;
 		private ArcElementOptions? _arc;
 
-		public ElementsOptions()
-		{
-			// Nested options are NOT instantiated by default
-			// They will be lazy-loaded on first access
-		}
-
 		/// <summary>
 		/// Point element options.
 		/// </summary>
@@ -48,8 +42,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Point element options.")]
 		public PointElementOptions? Point
 		{
-			get => _point ??= new PointElementOptions();
-			set => _point = value;
+			get
+			{
+				if (_point == null)
+					_point = new PointElementOptions { Chart = Chart };
+				return _point;
+			}
+			set => SetProperty(ref _point, value);
 		}
 
 		/// <summary>
@@ -60,7 +59,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Point property to its default value.
 		/// </summary>
-		public void ResetPoint() => _point = null;
+		public void ResetPoint() => SetProperty(ref _point, null);
 
 		[JsonPropertyName("point")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -76,8 +75,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Line element options.")]
 		public LineElementOptions? Line
 		{
-			get => _line ??= new LineElementOptions();
-			set => _line = value;
+			get
+			{
+				if (_line == null)
+					_line = new LineElementOptions { Chart = Chart };
+				return _line;
+			}
+			set => SetProperty(ref _line, value);
 		}
 
 		/// <summary>
@@ -88,7 +92,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Line property to its default value.
 		/// </summary>
-		public void ResetLine() => _line = null;
+		public void ResetLine() => SetProperty(ref _line, null);
 
 		[JsonPropertyName("line")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -104,8 +108,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Bar element options.")]
 		public BarElementOptions? Bar
 		{
-			get => _bar ??= new BarElementOptions();
-			set => _bar = value;
+			get
+			{
+				if (_bar == null)
+					_bar = new BarElementOptions { Chart = Chart };
+				return _bar;
+			}
+			set => SetProperty(ref _bar, value);
 		}
 
 		/// <summary>
@@ -116,7 +125,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Bar property to its default value.
 		/// </summary>
-		public void ResetBar() => _bar = null;
+		public void ResetBar() => SetProperty(ref _bar, null);
 
 		[JsonPropertyName("bar")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -132,8 +141,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Arc element options.")]
 		public ArcElementOptions? Arc
 		{
-			get => _arc ??= new ArcElementOptions();
-			set => _arc = value;
+			get
+			{
+				if (_arc == null)
+					_arc = new ArcElementOptions { Chart = Chart };
+				return _arc;
+			}
+			set => SetProperty(ref _arc, value);
 		}
 
 		/// <summary>
@@ -144,7 +158,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Arc property to its default value.
 		/// </summary>
-		public void ResetArc() => _arc = null;
+		public void ResetArc() => SetProperty(ref _arc, null);
 
 		[JsonPropertyName("arc")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -162,5 +176,18 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_point != null)
+				_point.Chart = Chart;
+			if (_line != null)
+				_line.Chart = Chart;
+			if (_bar != null)
+				_bar.Chart = Chart;
+			if (_arc != null)
+				_arc.Chart = Chart;
+		}
 	}
 }

@@ -29,13 +29,22 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class AxisOptions : OptionsBase
 	{
-		public AxisOptions()
-		{
-			Grid = new GridOptions();
-			Border = new BorderOptions();
-			Title = new AxisTitleOptions();
-			Ticks = new TickOptions();
-		}
+		private string? _type;
+		private bool _display = true;
+		private object? _position;
+		private string? _stack;
+		private int _weight;
+		private GridOptions? _grid;
+		private BorderOptions? _border;
+		private AxisTitleOptions? _title;
+		private TickOptions? _ticks;
+		private double? _min;
+		private double? _max;
+		private double? _suggestedMin;
+		private double? _suggestedMax;
+		private object? _stacked;
+		private bool _reverse;
+		private bool _offset;
 
 		/// <summary>
 		/// Type of scale being employed: 'linear', 'logarithmic', 'category', 'time', 'timeseries', 'radialLinear'.
@@ -43,7 +52,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("type")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Type of scale being employed.")]
-		public string? Type { get; set; }
+		public string? Type
+		{
+			get => _type;
+			set => SetProperty(ref _type, value);
+		}
 
 		/// <summary>
 		/// Display the axis?
@@ -52,7 +65,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
 		[Description("Display the axis?")]
-		public bool Display { get; set; } = true;
+		public bool Display
+		{
+			get => _display;
+			set => SetProperty(ref _display, value);
+		}
 
 		/// <summary>
 		/// Position of the axis: 'top', 'left', 'bottom', 'right'.
@@ -60,7 +77,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("position")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Position of the axis.")]
-		public object? Position { get; set; }
+		public object? Position
+		{
+			get => _position;
+			set => SetProperty(ref _position, value);
+		}
 
 		/// <summary>
 		/// Stack group for this axis. Axes with the same stack are stacked together.
@@ -68,7 +89,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("stack")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Stack group identifier.")]
-		public string? Stack { get; set; }
+		public string? Stack
+		{
+			get => _stack;
+			set => SetProperty(ref _stack, value);
+		}
 
 		/// <summary>
 		/// Weight used to sort the axis. Higher weights are further away from the chart area.
@@ -76,8 +101,12 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("weight")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Axis weight for sorting.")]
-		public int Weight { get; set; }
-		
+		public int Weight
+		{
+			get => _weight;
+			set => SetProperty(ref _weight, value);
+		}
+
 		/// <summary>
 		/// Grid line configuration.
 		/// </summary>
@@ -86,10 +115,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Grid line configuration.")]
 		public GridOptions? Grid
 		{
-			get => _grid ??= new GridOptions();
-			set => _grid = value;
+			get
+			{
+				if (_grid == null)
+					_grid = new GridOptions { Chart = Chart };
+				return _grid;
+			}
+			set => SetProperty(ref _grid, value);
 		}
-		private GridOptions? _grid;
 
 		/// <summary>
 		/// Border configuration.
@@ -99,10 +132,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Border configuration.")]
 		public BorderOptions? Border
 		{
-			get => _border ??= new BorderOptions();
-			set => _border = value;
+			get
+			{
+				if (_border == null)
+					_border = new BorderOptions { Chart = Chart };
+				return _border;
+			}
+			set => SetProperty(ref _border, value);
 		}
-		private BorderOptions? _border;
 
 		/// <summary>
 		/// Title configuration.
@@ -112,10 +149,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Axis title configuration.")]
 		public AxisTitleOptions? Title
 		{
-			get => _title ??= new AxisTitleOptions();
-			set => _title = value;
+			get
+			{
+				if (_title == null)
+					_title = new AxisTitleOptions { Chart = Chart };
+				return _title;
+			}
+			set => SetProperty(ref _title, value);
 		}
-		private AxisTitleOptions? _title;
 
 		/// <summary>
 		/// Ticks configuration.
@@ -125,10 +166,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Tick configuration.")]
 		public TickOptions? Ticks
 		{
-			get => _ticks ??= new TickOptions();
-			set => _ticks = value;
+			get
+			{
+				if (_ticks == null)
+					_ticks = new TickOptions { Chart = Chart };
+				return _ticks;
+			}
+			set => SetProperty(ref _ticks, value);
 		}
-		private TickOptions? _ticks;
 
 		/// <summary>
 		/// Minimum value for the scale.
@@ -136,7 +181,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("min")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Minimum value for the scale.")]
-		public double? Min { get; set; }
+		public double? Min
+		{
+			get => _min;
+			set => SetProperty(ref _min, value);
+		}
 
 		/// <summary>
 		/// Maximum value for the scale.
@@ -144,7 +193,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("max")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Maximum value for the scale.")]
-		public double? Max { get; set; }
+		public double? Max
+		{
+			get => _max;
+			set => SetProperty(ref _max, value);
+		}
 
 		/// <summary>
 		/// User defined minimum value for the scale, overrides minimum value from data.
@@ -152,7 +205,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("suggestedMin")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Suggested minimum value.")]
-		public double? SuggestedMin { get; set; }
+		public double? SuggestedMin
+		{
+			get => _suggestedMin;
+			set => SetProperty(ref _suggestedMin, value);
+		}
 
 		/// <summary>
 		/// User defined maximum value for the scale, overrides maximum value from data.
@@ -160,7 +217,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("suggestedMax")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Suggested maximum value.")]
-		public double? SuggestedMax { get; set; }
+		public double? SuggestedMax
+		{
+			get => _suggestedMax;
+			set => SetProperty(ref _suggestedMax, value);
+		}
 
 		/// <summary>
 		/// If true, data will be comprised between datasets of data.
@@ -169,7 +230,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("stacked")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Enable stacking. Accepts bool or \"single\".")]
-		public object? Stacked { get; set; }
+		public object? Stacked
+		{
+			get => _stacked;
+			set => SetProperty(ref _stacked, value);
+		}
 
 		/// <summary>
 		/// Reverse the scale.
@@ -178,7 +243,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("Reverse the scale.")]
-		public bool Reverse { get; set; }
+		public bool Reverse
+		{
+			get => _reverse;
+			set => SetProperty(ref _reverse, value);
+		}
 
 		/// <summary>
 		/// If true, extra space is added to the both edges and the axis is scaled to fit into the chart area.
@@ -187,7 +256,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("Add offset to edges.")]
-		public bool Offset { get; set; }
+		public bool Offset
+		{
+			get => _offset;
+			set => SetProperty(ref _offset, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -198,6 +271,20 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_grid != null)
+				_grid.Chart = Chart;
+			if (_border != null)
+				_border.Chart = Chart;
+			if (_title != null)
+				_title.Chart = Chart;
+			if (_ticks != null)
+				_ticks.Chart = Chart;
+		}
+
 		/// <summary>
 		/// Determines whether the Type property should be serialized by the designer.
 		/// </summary>
@@ -256,7 +343,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Grid property to its default value.
 		/// </summary>
-		public void ResetGrid() => Grid = null;
+		public void ResetGrid() => SetProperty(ref _grid, null);
 
 		/// <summary>
 		/// Determines whether the Border property should be serialized by the designer.
@@ -266,7 +353,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Border property to its default value.
 		/// </summary>
-		public void ResetBorder() => Border = null;
+		public void ResetBorder() => SetProperty(ref _border, null);
 
 		/// <summary>
 		/// Determines whether the Title property should be serialized by the designer.
@@ -276,7 +363,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Title property to its default value.
 		/// </summary>
-		public void ResetTitle() => Title = null;
+		public void ResetTitle() => SetProperty(ref _title, null);
 
 		/// <summary>
 		/// Determines whether the Ticks property should be serialized by the designer.
@@ -286,7 +373,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Ticks property to its default value.
 		/// </summary>
-		public void ResetTicks() => Ticks = null;
+		public void ResetTicks() => SetProperty(ref _ticks, null);
 
 		/// <summary>
 		/// Determines whether the Min property should be serialized by the designer.

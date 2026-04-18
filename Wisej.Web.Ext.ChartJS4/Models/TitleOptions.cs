@@ -29,10 +29,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class TitleOptions : OptionsBase
 	{
-		public TitleOptions()
-		{
-			Font = new FontOptions();
-		}
+		private bool _display;
+		private object? _text;
+		private string? _position;
+		private string? _align;
+		private object? _color;
+		private FontOptions? _font;
+		private int _padding = 10;
 
 		/// <summary>
 		/// Is the title shown?
@@ -41,7 +44,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("Is the title shown?")]
-		public bool Display { get; set; }
+		public bool Display
+		{
+			get => _display;
+			set => SetProperty(ref _display, value);
+		}
 
 		/// <summary>
 		/// Title text (can be string or array of strings).
@@ -49,7 +56,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("text")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Title text.")]
-		public object? Text { get; set; }
+		public object? Text
+		{
+			get => _text;
+			set => SetProperty(ref _text, value);
+		}
 
 		/// <summary>
 		/// Position of title: 'top', 'left', 'bottom', 'right'.
@@ -57,7 +68,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("position")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Position of title.")]
-		public string? Position { get; set; }
+		public string? Position
+		{
+			get => _position;
+			set => SetProperty(ref _position, value);
+		}
 
 		/// <summary>
 		/// Alignment of the title: 'start', 'center', 'end'.
@@ -65,7 +80,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("align")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Alignment of title.")]
-		public string? Align { get; set; }
+		public string? Align
+		{
+			get => _align;
+			set => SetProperty(ref _align, value);
+		}
 
 		/// <summary>
 		/// Color of text.
@@ -73,7 +92,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("color")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Text color.")]
-		public object? Color { get; set; }
+		public object? Color
+		{
+			get => _color;
+			set => SetProperty(ref _color, value);
+		}
 
 		/// <summary>
 		/// Font configuration.
@@ -83,10 +106,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Font configuration.")]
 		public FontOptions? Font
 		{
-			get => _font ??= new FontOptions();
-			set => _font = value;
+			get
+			{
+				if (_font == null)
+					_font = new FontOptions { Chart = Chart };
+				return _font;
+			}
+			set => SetProperty(ref _font, value);
 		}
-		private FontOptions? _font;
 
 		/// <summary>
 		/// Padding to apply around the title.
@@ -95,7 +122,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(10)]
 		[Description("Padding around title.")]
-		public int Padding { get; set; } = 10;
+		public int Padding
+		{
+			get => _padding;
+			set => SetProperty(ref _padding, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -106,6 +137,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_font != null)
+				_font.Chart = Chart;
+		}
+
 		/// <summary>
 		/// Determines whether the Display property should be serialized by the designer.
 		/// </summary>
@@ -164,7 +203,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Font property to its default value.
 		/// </summary>
-		public void ResetFont() => Font = null;
+		public void ResetFont() => SetProperty(ref _font, null);
 
 		/// <summary>
 		/// Determines whether the Padding property should be serialized by the designer.

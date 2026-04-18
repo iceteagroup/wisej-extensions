@@ -29,6 +29,18 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class DataLabelsOptions : OptionsBase
 	{
+		private bool _display;
+		private string? _anchor;
+		private string? _align;
+		private int _offset = 4;
+		private object? _backgroundColor;
+		private object? _borderColor;
+		private int _borderWidth;
+		private int _borderRadius;
+		private object? _color;
+		private FontOptions? _font;
+		private int _padding = 4;
+
 		/// <summary>
 		/// Display data labels.
 		/// </summary>
@@ -36,7 +48,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.Never)]
 		[DefaultValue(false)]
 		[Description("Display data labels.")]
-		public bool Display { get; set; } = false;
+		public bool Display
+		{
+			get => _display;
+			set => SetProperty(ref _display, value);
+		}
 
 		/// <summary>
 		/// Anchor point: 'start', 'center', 'end'.
@@ -44,7 +60,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("anchor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Anchor point.")]
-		public string? Anchor { get; set; }
+		public string? Anchor
+		{
+			get => _anchor;
+			set => SetProperty(ref _anchor, value);
+		}
 
 		/// <summary>
 		/// Alignment: 'start', 'center', 'end', 'left', 'right', 'top', 'bottom'.
@@ -52,7 +72,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("align")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Alignment.")]
-		public string? Align { get; set; }
+		public string? Align
+		{
+			get => _align;
+			set => SetProperty(ref _align, value);
+		}
 
 		/// <summary>
 		/// Distance (in pixels) to pull the label away from the anchor point.
@@ -61,7 +85,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(4)]
 		[Description("Offset distance.")]
-		public int Offset { get; set; } = 4;
+		public int Offset
+		{
+			get => _offset;
+			set => SetProperty(ref _offset, value);
+		}
 
 		/// <summary>
 		/// Background color.
@@ -69,7 +97,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("backgroundColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Background color.")]
-		public object? BackgroundColor { get; set; }
+		public object? BackgroundColor
+		{
+			get => _backgroundColor;
+			set => SetProperty(ref _backgroundColor, value);
+		}
 
 		/// <summary>
 		/// Border color.
@@ -77,7 +109,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("borderColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Border color.")]
-		public object? BorderColor { get; set; }
+		public object? BorderColor
+		{
+			get => _borderColor;
+			set => SetProperty(ref _borderColor, value);
+		}
 
 		/// <summary>
 		/// Border width.
@@ -86,7 +122,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0)]
 		[Description("Border width.")]
-		public int BorderWidth { get; set; } = 0;
+		public int BorderWidth
+		{
+			get => _borderWidth;
+			set => SetProperty(ref _borderWidth, value);
+		}
 
 		/// <summary>
 		/// Border radius.
@@ -95,7 +135,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0)]
 		[Description("Border radius.")]
-		public int BorderRadius { get; set; } = 0;
+		public int BorderRadius
+		{
+			get => _borderRadius;
+			set => SetProperty(ref _borderRadius, value);
+		}
 
 		/// <summary>
 		/// Text color.
@@ -103,7 +147,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("color")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Text color.")]
-		public object? Color { get; set; }
+		public object? Color
+		{
+			get => _color;
+			set => SetProperty(ref _color, value);
+		}
 
 		/// <summary>
 		/// Font configuration.
@@ -113,10 +161,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Description("Font configuration.")]
 		public FontOptions? Font
 		{
-			get => _font ??= new FontOptions();
-			set => _font = value;
+			get
+			{
+				if (_font == null)
+					_font = new FontOptions { Chart = Chart };
+				return _font;
+			}
+			set => SetProperty(ref _font, value);
 		}
-		private FontOptions? _font;
 
 		/// <summary>
 		/// Padding.
@@ -125,7 +177,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Padding.")]
 		[DefaultValue(4)]
-		public int Padding { get; set; } = 4;
+		public int Padding
+		{
+			get => _padding;
+			set => SetProperty(ref _padding, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -245,6 +301,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// Resets the Padding property to its default value.
 		/// </summary>
 		public void ResetPadding() => Padding = 4;
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_font != null)
+				_font.Chart = Chart;
+		}
 
 	}
 }

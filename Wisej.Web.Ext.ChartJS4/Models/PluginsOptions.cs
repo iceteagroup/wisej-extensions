@@ -52,8 +52,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public LegendOptions? Legend
 		{
-			get => _legend ??= new LegendOptions();
-			set => _legend = value;
+			get
+			{
+				if (_legend == null)
+					_legend = new LegendOptions { Chart = Chart };
+				return _legend;
+			}
+			set => SetProperty(ref _legend, value);
 		}
 
 		/// <summary>
@@ -64,7 +69,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Legend property to its default value.
 		/// </summary>
-		public void ResetLegend() => _legend = null;
+		public void ResetLegend() => SetProperty(ref _legend, null);
 
 		[JsonPropertyName("legend")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -81,8 +86,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public TitleOptions? Title
 		{
-			get => _title ??= new TitleOptions();
-			set => _title = value;
+			get
+			{
+				if (_title == null)
+					_title = new TitleOptions { Chart = Chart };
+				return _title;
+			}
+			set => SetProperty(ref _title, value);
 		}
 
 		/// <summary>
@@ -93,7 +103,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Title property to its default value.
 		/// </summary>
-		public void ResetTitle() => _title = null;
+		public void ResetTitle() => SetProperty(ref _title, null);
 
 		[JsonPropertyName("title")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -110,8 +120,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public TooltipOptions? Tooltip
 		{
-			get => _tooltip ??= new TooltipOptions();
-			set => _tooltip = value;
+			get
+			{
+				if (_tooltip == null)
+					_tooltip = new TooltipOptions { Chart = Chart };
+				return _tooltip;
+			}
+			set => SetProperty(ref _tooltip, value);
 		}
 
 		/// <summary>
@@ -122,7 +137,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Tooltip property to its default value.
 		/// </summary>
-		public void ResetTooltip() => _tooltip = null;
+		public void ResetTooltip() => SetProperty(ref _tooltip, null);
 
 		[JsonPropertyName("tooltip")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -139,8 +154,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public SubtitleOptions? Subtitle
 		{
-			get => _subtitle ??= new SubtitleOptions();
-			set => _subtitle = value;
+			get
+			{
+				if (_subtitle == null)
+					_subtitle = new SubtitleOptions { Chart = Chart };
+				return _subtitle;
+			}
+			set => SetProperty(ref _subtitle, value);
 		}
 
 		/// <summary>
@@ -151,7 +171,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Subtitle property to its default value.
 		/// </summary>
-		public void ResetSubtitle() => _subtitle = null;
+		public void ResetSubtitle() => SetProperty(ref _subtitle, null);
 
 		[JsonPropertyName("subtitle")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -168,8 +188,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public DecimationOptions? Decimation
 		{
-			get => _decimation ??= new DecimationOptions();
-			set => _decimation = value;
+			get
+			{
+				if (_decimation == null)
+					_decimation = new DecimationOptions { Chart = Chart };
+				return _decimation;
+			}
+			set => SetProperty(ref _decimation, value);
 		}
 
 		/// <summary>
@@ -180,7 +205,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Decimation property to its default value.
 		/// </summary>
-		public void ResetDecimation() => _decimation = null;
+		public void ResetDecimation() => SetProperty(ref _decimation, null);
 
 		[JsonPropertyName("decimation")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -197,8 +222,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public FillerOptions? Filler
 		{
-			get => _filler ??= new FillerOptions();
-			set => _filler = value;
+			get
+			{
+				if (_filler == null)
+					_filler = new FillerOptions { Chart = Chart };
+				return _filler;
+			}
+			set => SetProperty(ref _filler, value);
 		}
 
 		/// <summary>
@@ -209,7 +239,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the Filler property to its default value.
 		/// </summary>
-		public void ResetFiller() => _filler = null;
+		public void ResetFiller() => SetProperty(ref _filler, null);
 
 		[JsonPropertyName("filler")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -227,8 +257,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(null)]
 		public DataLabelsOptions? DataLabels
 		{
-			get => _dataLabels ??= new DataLabelsOptions();
-			set => _dataLabels = value;
+			get
+			{
+				if (_dataLabels == null)
+					_dataLabels = new DataLabelsOptions { Chart = Chart };
+				return _dataLabels;
+			}
+			set => SetProperty(ref _dataLabels, value);
 		}
 
 		/// <summary>
@@ -239,7 +274,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Resets the DataLabels property to its default value.
 		/// </summary>
-		public void ResetDataLabels() => _dataLabels = null;
+		public void ResetDataLabels() => SetProperty(ref _dataLabels, null);
 
 		[JsonPropertyName("datalabels")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -282,8 +317,29 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 						}
 					}
 					catch { /* ignore invalid JSON */ }
+
+					Update();
 				}
 			}
+		}
+
+		/// <inheritdoc/>
+		protected override void OnChartChanged()
+		{
+			if (_legend != null)
+				_legend.Chart = Chart;
+			if (_title != null)
+				_title.Chart = Chart;
+			if (_tooltip != null)
+				_tooltip.Chart = Chart;
+			if (_subtitle != null)
+				_subtitle.Chart = Chart;
+			if (_decimation != null)
+				_decimation.Chart = Chart;
+			if (_filler != null)
+				_filler.Chart = Chart;
+			if (_dataLabels != null)
+				_dataLabels.Chart = Chart;
 		}
 	}
 }

@@ -29,13 +29,21 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class ArcElementOptions : OptionsBase
 	{
+		private object? _backgroundColor;
+		private int _borderWidth = 2;
+		private object? _borderColor;
+
 		/// <summary>
 		/// Arc background color.
 		/// </summary>
 		[JsonPropertyName("backgroundColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Arc background color.")]
-		public object? BackgroundColor { get; set; }
+		public object? BackgroundColor
+		{
+			get => _backgroundColor;
+			set => SetProperty(ref _backgroundColor, value);
+		}
 
 		/// <summary>
 		/// Arc border width.
@@ -44,7 +52,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(2)]
 		[Description("Arc border width.")]
-		public int BorderWidth { get; set; } = 2;
+		public int BorderWidth
+		{
+			get => _borderWidth;
+			set => SetProperty(ref _borderWidth, value);
+		}
 
 		/// <summary>
 		/// Arc border color.
@@ -52,7 +64,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("borderColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Arc border color.")]
-		public object? BorderColor { get; set; }
+		public object? BorderColor
+		{
+			get => _borderColor;
+			set => SetProperty(ref _borderColor, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -63,6 +79,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
 		/// <summary>
 		/// Determines whether the BackgroundColor property should be serialized by the designer.
 		/// </summary>

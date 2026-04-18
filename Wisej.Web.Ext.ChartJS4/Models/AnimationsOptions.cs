@@ -29,6 +29,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class AnimationsOptions : OptionsBase
 	{
+		private int _duration = 1000;
+		private string? _easing;
+		private int _delay;
+		private bool _loop;
+
 		/// <summary>
 		/// The number of milliseconds an animation takes.
 		/// </summary>
@@ -36,7 +41,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(1000)]
 		[Description("Animation duration in milliseconds.")]
-		public int Duration { get; set; } = 1000;
+		public int Duration
+		{
+			get => _duration;
+			set => SetProperty(ref _duration, value);
+		}
 
 		/// <summary>
 		/// Easing function to use. Available options: 'linear', 'easeInQuad', 'easeOutQuad', etc.
@@ -45,7 +54,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Easing function for animations.")]
 		[DefaultValue(null)]
-		public string? Easing { get; set; }
+		public string? Easing
+		{
+			get => _easing;
+			set => SetProperty(ref _easing, value);
+		}
 
 		/// <summary>
 		/// Delay before starting the animation.
@@ -54,7 +67,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0)]
 		[Description("Delay before animation starts in milliseconds.")]
-		public int Delay { get; set; }
+		public int Delay
+		{
+			get => _delay;
+			set => SetProperty(ref _delay, value);
+		}
 
 		/// <summary>
 		/// If true, the chart will animate in with a rotation animation.
@@ -63,7 +80,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("Loop the animation.")]
-		public bool Loop { get; set; }
+		public bool Loop
+		{
+			get => _loop;
+			set => SetProperty(ref _loop, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.

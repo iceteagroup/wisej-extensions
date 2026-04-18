@@ -29,6 +29,10 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[TypeConverter(typeof(Converter))]
 	public class DecimationOptions : OptionsBase
 	{
+		private bool _enabled;
+		private string? _algorithm;
+		private int _samples;
+
 		/// <summary>
 		/// Is decimation enabled?
 		/// </summary>
@@ -36,7 +40,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("Enable decimation.")]
-		public bool Enabled { get; set; }
+		public bool Enabled
+		{
+			get => _enabled;
+			set => SetProperty(ref _enabled, value);
+		}
 
 		/// <summary>
 		/// Decimation algorithm: 'lttb', 'min-max'.
@@ -44,7 +52,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("algorithm")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Decimation algorithm.")]
-		public string? Algorithm { get; set; }
+		public string? Algorithm
+		{
+			get => _algorithm;
+			set => SetProperty(ref _algorithm, value);
+		}
 
 		/// <summary>
 		/// Number of samples to keep after decimation.
@@ -53,7 +65,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Number of samples.")]
 		[DefaultValue(0)]
-		public int Samples { get; set; }
+		public int Samples
+		{
+			get => _samples;
+			set => SetProperty(ref _samples, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -64,6 +80,7 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
+
 		/// <summary>
 		/// Determines whether the Enabled property should be serialized by the designer.
 		/// </summary>

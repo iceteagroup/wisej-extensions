@@ -30,15 +30,30 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	/// Represents data to be plotted on a chart with flexible serialization.
 	/// </summary>
 	[ApiCategory("ChartJS4")]
-	public class ChartDataSet
+	public class ChartDataSet : ChartModelBase
 	{
+		private int? _order;
+		private string? _stack;
+		private string? _yAxisID;
+		private string _label = "Dataset";
+		private object[]? _data;
+		private string? _type;
+		private bool _hidden;
+		private object? _backgroundColor;
+		private object? _borderColor;
+		private int _borderWidth;
+
 		/// <summary>
 		/// The drawing order of the dataset. Also affects order for stacking, tooltip and legend.
 		/// </summary>
 		[JsonPropertyName("order")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("The drawing order of the dataset.")]
-		public int? Order { get; set; }
+		public int? Order
+		{
+			get => _order;
+			set => SetProperty(ref _order, value);
+		}
 
 		/// <summary>
 		/// The ID of the group to which the dataset belongs to (when stacking datasets).
@@ -46,7 +61,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("stack")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("The stack group identifier for grouped/stacked datasets.")]
-		public string? Stack { get; set; }
+		public string? Stack
+		{
+			get => _stack;
+			set => SetProperty(ref _stack, value);
+		}
 
 		/// <summary>
 		/// The ID of the y-axis to plot this dataset on.
@@ -54,7 +73,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("yAxisID")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("The ID of the y-axis to plot this dataset on.")]
-		public string? YAxisID { get; set; }
+		public string? YAxisID
+		{
+			get => _yAxisID;
+			set => SetProperty(ref _yAxisID, value);
+		}
 
 
 		/// <summary>
@@ -62,7 +85,6 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// </summary>
 		public ChartDataSet()
 		{
-			Label = "Dataset";
 		}
 
 		/// <summary>
@@ -70,7 +92,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// </summary>
 		[JsonPropertyName("label")]
 		[Description("The label for the dataset which appears in the legend and tooltips.")]
-		public string Label { get; set; }
+		public string Label
+		{
+			get => _label;
+			set => SetProperty(ref _label, value);
+		}
 
 		/// <summary>
 		/// The data to plot.
@@ -78,7 +104,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("data")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("The data to plot.")]
-		public object[]? Data { get; set; }
+		public object[]? Data
+		{
+			get => _data;
+			set => SetProperty(ref _data, value);
+		}
 
 		/// <summary>
 		/// The type of chart that plots this data set (overrides the main chart type).
@@ -86,7 +116,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("type")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("The type of chart that plots this data set.")]
-		public string? Type { get; set; }
+		public string? Type
+		{
+			get => _type;
+			set => SetProperty(ref _type, value);
+		}
 
 		/// <summary>
 		/// Hides the dataset.
@@ -95,7 +129,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
 		[Description("Hides the dataset.")]
-		public bool Hidden { get; set; }
+		public bool Hidden
+		{
+			get => _hidden;
+			set => SetProperty(ref _hidden, value);
+		}
 
 		/// <summary>
 		/// The fill color or pattern.
@@ -103,7 +141,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("backgroundColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("The fill color or pattern.")]
-		public object? BackgroundColor { get; set; }
+		public object? BackgroundColor
+		{
+			get => _backgroundColor;
+			set => SetProperty(ref _backgroundColor, value);
+		}
 
 		/// <summary>
 		/// The border color.
@@ -111,7 +153,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("borderColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("The border color.")]
-		public object? BorderColor { get; set; }
+		public object? BorderColor
+		{
+			get => _borderColor;
+			set => SetProperty(ref _borderColor, value);
+		}
 
 		/// <summary>
 		/// The border width.
@@ -120,7 +166,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0)]
 		[Description("The border width.")]
-		public int BorderWidth { get; set; }
+		public int BorderWidth
+		{
+			get => _borderWidth;
+			set => SetProperty(ref _borderWidth, value);
+		}
 
 		/// <summary>
 		/// Additional custom properties that can be serialized to JSON.
@@ -160,6 +210,20 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[ApiCategory("ChartJS4")]
 	public class LineDataSet : ChartDataSet
 	{
+		private double _tension;
+		private object? _fill;
+		private object? _stepped;
+		private object[]? _borderDash;
+		private object? _pointStyle;
+		private object? _pointRadius;
+		private object? _pointHoverRadius;
+		private object? _pointBorderColor;
+		private object? _pointHoverBackgroundColor;
+		private object? _animations;
+		private object? _radius;
+		private string? _cubicInterpolationMode;
+		private object? _spanGaps;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LineDataSet"/> class.
 		/// </summary>
@@ -175,7 +239,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0.0)]
 		[Description("Bezier curve tension (0 for straight lines).")]
-		public double Tension { get; set; }
+		public double Tension
+		{
+			get => _tension;
+			set => SetProperty(ref _tension, value);
+		}
 
 		/// <summary>
 		/// Fill area under the line. Accepts bool (true/false), int (dataset index), or string ('-1', 'origin', 'start', 'end', 'stack', 'shape').
@@ -183,7 +251,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("fill")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Fill area under the line (bool, int, or string).")]
-		public object? Fill { get; set; }
+		public object? Fill
+		{
+			get => _fill;
+			set => SetProperty(ref _fill, value);
+		}
 
 		/// <summary>
 		/// Whether the line is drawn as a stepped line. Accepts bool or one of 'before', 'after', 'middle'.
@@ -191,7 +263,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("stepped")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Draw the line as stepped. Accepts bool or 'before', 'after', 'middle'.")]
-		public object? Stepped { get; set; }
+		public object? Stepped
+		{
+			get => _stepped;
+			set => SetProperty(ref _stepped, value);
+		}
 
 		/// <summary>
 		/// Length and spacing of dashes. Refer to MDN for details.
@@ -199,7 +275,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("borderDash")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Length and spacing of dashes (e.g., [5, 5]).")]
-		public int[]? BorderDash { get; set; }
+		public object[]? BorderDash
+		{
+			get => _borderDash;
+			set => SetProperty(ref _borderDash, value);
+		}
 
 		/// <summary>
 		/// Style of the point. Accepts a string or array of strings ('circle', 'cross', 'crossRot', 'dash', 'line', 'rect', 'rectRounded', 'rectRot', 'star', 'triangle', 'false').
@@ -207,7 +287,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("pointStyle")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Style of the point.")]
-		public object? PointStyle { get; set; }
+		public object? PointStyle
+		{
+			get => _pointStyle;
+			set => SetProperty(ref _pointStyle, value);
+		}
 
 		/// <summary>
 		/// Radius of the point shape. Accepts a number or array of numbers.
@@ -216,7 +300,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(5)]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Radius of the point shape.")]
-		public object? PointRadius { get; set; }
+		public object? PointRadius
+		{
+			get => _pointRadius;
+			set => SetProperty(ref _pointRadius, value);
+		}
 
 		/// <summary>
 		/// Point radius when hovered.
@@ -224,7 +312,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("pointHoverRadius")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Point radius when hovered.")]
-		public object? PointHoverRadius { get; set; }
+		public object? PointHoverRadius
+		{
+			get => _pointHoverRadius;
+			set => SetProperty(ref _pointHoverRadius, value);
+		}
 
 		/// <summary>
 		/// Point border color.
@@ -232,7 +324,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("pointBorderColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Point border color.")]
-		public object? PointBorderColor { get; set; }
+		public object? PointBorderColor
+		{
+			get => _pointBorderColor;
+			set => SetProperty(ref _pointBorderColor, value);
+		}
 
 		/// <summary>
 		/// Point background color when hovered.
@@ -240,7 +336,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("pointHoverBackgroundColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Point background color when hovered.")]
-		public object? PointHoverBackgroundColor { get; set; }
+		public object? PointHoverBackgroundColor
+		{
+			get => _pointHoverBackgroundColor;
+			set => SetProperty(ref _pointHoverBackgroundColor, value);
+		}
 
 		/// <summary>
 		/// Per-dataset animation configuration. Accepts an object like <c>new { y = new { duration = 2000 } }</c>.
@@ -248,7 +348,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("animations")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Per-dataset animation configuration.")]
-		public object? Animations { get; set; }
+		public object? Animations
+		{
+			get => _animations;
+			set => SetProperty(ref _animations, value);
+		}
 
 		/// <summary>
 		/// Radius of the point shape for all points in the dataset. This is a shorthand for <see cref="PointRadius"/> when a single value is needed.
@@ -257,7 +361,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[DefaultValue(5)]
 		//[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Radius of all points in the dataset.")]
-		public object? Radius { get; set; }
+		public object? Radius
+		{
+			get => _radius;
+			set => SetProperty(ref _radius, value);
+		}
 
 		/// <summary>
 		/// Algorithm to use when interpolating a smooth curve from the discrete data points.
@@ -267,7 +375,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Algorithm for smooth curve interpolation. 'default' or 'monotone'.")]
 		[DefaultValue(null)]
-		public string? CubicInterpolationMode { get; set; }
+		public string? CubicInterpolationMode
+		{
+			get => _cubicInterpolationMode;
+			set => SetProperty(ref _cubicInterpolationMode, value);
+		}
 
 		/// <summary>
 		/// If <c>true</c>, lines will be drawn between points with no or null data. If <c>false</c>, points with NaN data will create a break in the line.
@@ -277,7 +389,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("If true, lines will be drawn between points with no or null data.")]
 		[DefaultValue(null)]
-		public object? SpanGaps { get; set; }
+		public object? SpanGaps
+		{
+			get => _spanGaps;
+			set => SetProperty(ref _spanGaps, value);
+		}
 
 		/// <summary>
 		/// Determines whether the Tension property should be serialized by the designer.
@@ -306,6 +422,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[ApiCategory("ChartJS4")]
 	public class BarDataSet : ChartDataSet
 	{
+		private double _barPercentage = 0.9;
+		private double _categoryPercentage = 0.8;
+		private int _hoverBorderWidth = 1;
+		private object? _hoverBorderColor;
+		private int _borderRadius;
+		private object? _borderSkipped;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BarDataSet"/> class.
 		/// </summary>
@@ -321,7 +444,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0.9)]
 		[Description("Percent (0-1) of the available width each bar should be within the category width.")]
-		public double BarPercentage { get; set; } = 0.9;
+		public double BarPercentage
+		{
+			get => _barPercentage;
+			set => SetProperty(ref _barPercentage, value);
+		}
 
 		/// <summary>
 		/// Percent (0-1) of the available width each category should be within the sample width.
@@ -330,7 +457,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0.8)]
 		[Description("Percent (0-1) of the available width each category should be within the sample width.")]
-		public double CategoryPercentage { get; set; } = 0.8;
+		public double CategoryPercentage
+		{
+			get => _categoryPercentage;
+			set => SetProperty(ref _categoryPercentage, value);
+		}
 
 		/// <summary>
 		/// Border width of the bar when hovered.
@@ -339,7 +470,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(1)]
 		[Description("Border width when hovered.")]
-		public int HoverBorderWidth { get; set; } = 1;
+		public int HoverBorderWidth
+		{
+			get => _hoverBorderWidth;
+			set => SetProperty(ref _hoverBorderWidth, value);
+		}
 
 		/// <summary>
 		/// Border color of the bar when hovered.
@@ -347,7 +482,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("hoverBorderColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Border color when hovered.")]
-		public object? HoverBorderColor { get; set; }
+		public object? HoverBorderColor
+		{
+			get => _hoverBorderColor;
+			set => SetProperty(ref _hoverBorderColor, value);
+		}
 
 		/// <summary>
 		/// The border radius of the bars. Set to a large number (e.g. <see cref="int.MaxValue"/>) for fully rounded bars.
@@ -356,7 +495,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0)]
 		[Description("The border radius of the bars.")]
-		public int BorderRadius { get; set; }
+		public int BorderRadius
+		{
+			get => _borderRadius;
+			set => SetProperty(ref _borderRadius, value);
+		}
 
 		/// <summary>
 		/// Determines whether the BorderRadius property should be serialized by the designer.
@@ -375,7 +518,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("borderSkipped")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Which edge to skip border radius on. Set to false to apply to all edges.")]
-		public object? BorderSkipped { get; set; }
+		public object? BorderSkipped
+		{
+			get => _borderSkipped;
+			set => SetProperty(ref _borderSkipped, value);
+		}
 
 		/// <summary>
 		/// Determines whether the BarPercentage property should be serialized by the designer.
@@ -404,6 +551,8 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[ApiCategory("ChartJS4")]
 	public class PieDataSet : ChartDataSet
 	{
+		private int _weight = 1;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PieDataSet"/> class.
 		/// </summary>
@@ -418,7 +567,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(1)]
 		[Description("The relative thickness of the dataset (doughnut only).")]
-		public int Weight { get; set; } = 1;
+		public int Weight
+		{
+			get => _weight;
+			set => SetProperty(ref _weight, value);
+		}
 
 		/// <summary>
 		/// Determines whether the Weight property should be serialized by the designer.
@@ -437,6 +590,8 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[ApiCategory("ChartJS4")]
 	public class BubbleDataSet : ChartDataSet
 	{
+		private string? _boxStrokeStyle;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BubbleDataSet"/> class.
 		/// </summary>
@@ -451,7 +606,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("boxStrokeStyle")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Stroke style for box elements.")]
-		public string? BoxStrokeStyle { get; set; }
+		public string? BoxStrokeStyle
+		{
+			get => _boxStrokeStyle;
+			set => SetProperty(ref _boxStrokeStyle, value);
+		}
 	}
 
 	/// <summary>
@@ -460,6 +619,8 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[ApiCategory("ChartJS4")]
 	public class ScatterDataSet : ChartDataSet
 	{
+		private object? _fill;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ScatterDataSet"/> class.
 		/// </summary>
@@ -476,7 +637,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Whether to fill the area under the scatter points.")]
 		[DefaultValue(null)]
-		public object? Fill { get; set; }
+		public object? Fill
+		{
+			get => _fill;
+			set => SetProperty(ref _fill, value);
+		}
 	}
 
 	/// <summary>
@@ -485,6 +650,9 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	[ApiCategory("ChartJS4")]
 	public class RadarDataSet : ChartDataSet
 	{
+		private object? _fill;
+		private double _tension;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RadarDataSet"/> class.
 		/// </summary>
@@ -499,7 +667,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonPropertyName("fill")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		[Description("Fill area under the radar (bool, int, or string).")]
-		public object? Fill { get; set; }
+		public object? Fill
+		{
+			get => _fill;
+			set => SetProperty(ref _fill, value);
+		}
 
 		/// <summary>
 		/// Bezier curve tension (0 for straight lines).
@@ -508,7 +680,11 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(0.0)]
 		[Description("Bezier curve tension (0 for straight lines).")]
-		public double Tension { get; set; }
+		public double Tension
+		{
+			get => _tension;
+			set => SetProperty(ref _tension, value);
+		}
 
 		/// <summary>
 		/// Determines whether the Fill property should be serialized by the designer.
