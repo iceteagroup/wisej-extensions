@@ -19,7 +19,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="ChartJS4.bmp" />
-		<EmbeddedResource Include="JavaScript\chart-4.4.9.min.js" />
+		<EmbeddedResource Include="JavaScript\chart.min.js" />
 		<EmbeddedResource Include="JavaScript\chartjs-adapter-date-fns-3.0.0.bundle.min.js" />
 		<EmbeddedResource Include="JavaScript\chartjs-plugin-datalabels.js" />
 		<EmbeddedResource Include="JavaScript\easingEffects.js" />

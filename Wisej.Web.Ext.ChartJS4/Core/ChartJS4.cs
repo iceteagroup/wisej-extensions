@@ -573,6 +573,9 @@ namespace Wisej.Web.Ext.ChartJS4
 						},
 					});
 
+					// Auto-discover embedded resources from "ChartJsPlugins" folders in loaded assemblies.
+					base.Packages.AddRange(DiscoverPluginPackages());
+
 					if (PluginPackages?.Count > 0)
 						base.Packages.AddRange(PluginPackages);
 				}
@@ -662,6 +665,53 @@ namespace Wisej.Web.Ext.ChartJS4
 			/// Should be a valid JavaScript function expression, e.g. <c>"function(ctx) { return ctx.dataIndex % 2 === 0 ? 'red' : 'blue'; }"</c>.
 			/// </summary>
 			public string Source { get; set; } = string.Empty;
+		}
+
+		/// <summary>
+		/// Scans all loaded assemblies for embedded resources located in a virtual folder
+		/// named <c>ChartJsPlugins</c> (i.e. resource names containing <c>.ChartJsPlugins.</c>)
+		/// and returns a <see cref="Package"/> for each discovered script file.
+		/// </summary>
+		/// <remarks>
+		/// To register a Chart.js plugin, add the JavaScript file to a folder called
+		/// <c>ChartJsPlugins</c> in your project and set its <c>Build Action</c> to
+		/// <c>Embedded Resource</c>. The file will be discovered and loaded automatically.
+		/// </remarks>
+		private IEnumerable<Package> DiscoverPluginPackages()
+		{
+			const string folderMarker = ".ChartJsPlugins.";
+			var thisAssembly = typeof(ChartJS4).Assembly;
+
+			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+			{
+				if (assembly == thisAssembly || assembly.IsDynamic)
+					continue;
+
+				string[] resourceNames;
+				try
+				{
+					resourceNames = assembly.GetManifestResourceNames();
+				}
+				catch
+				{
+					continue;
+				}
+
+				foreach (var resourceName in resourceNames)
+				{
+					if (resourceName.IndexOf(folderMarker, StringComparison.OrdinalIgnoreCase) < 0)
+						continue;
+
+					var packageName = resourceName.Substring(
+						resourceName.LastIndexOf(folderMarker, StringComparison.OrdinalIgnoreCase) + folderMarker.Length);
+
+					yield return new Package
+					{
+						Name = packageName,
+						Source = GetResourceURL(assembly, resourceName)
+					};
+				}
+			}
 		}
 	}
 
