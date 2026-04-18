@@ -4,7 +4,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>4.1.0.21</FileVersion>
+    <FileVersion>4.1.0.22</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\2fa.svg" />
