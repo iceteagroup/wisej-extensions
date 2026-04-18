@@ -554,7 +554,7 @@ namespace Wisej.Web.Ext.ChartJS4
 						new Package
 						{
 							Name = "chart.js",
-							Source = GetResourceURL("Wisej.Web.Ext.ChartJS4.JavaScript.chart.min..js")
+							Source = GetResourceURL("Wisej.Web.Ext.ChartJS4.JavaScript.chart.min.js")
 						},
 						new Package
 						{
