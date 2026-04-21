@@ -4,7 +4,7 @@
     <SignAssembly>true</SignAssembly>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>3.5.31.20260420</FileVersion>
+    <FileVersion>3.5.31.20260421</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\accessibility-outline.svg" />
