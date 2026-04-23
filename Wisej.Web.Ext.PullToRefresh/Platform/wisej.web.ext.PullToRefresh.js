@@ -20,7 +20,7 @@
 /**
  * wisej.web.ext.PullToRefresh
  *
- * Loads bing's image of the day and rotates them over the target control's background.
+ * Adds a pull to refresh feature to a control.
  */
 qx.Class.define("wisej.web.ext.PullToRefresh", {
 
