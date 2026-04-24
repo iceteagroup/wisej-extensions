@@ -7,7 +7,7 @@
 		<AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
 		<EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
 		<LangVersion>latest</LangVersion>
-		<FileVersion>4.1.0.5</FileVersion>
+		<FileVersion>4.1.0.26</FileVersion>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
