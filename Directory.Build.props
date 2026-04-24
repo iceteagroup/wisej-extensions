@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<NetFxVersion>net48</NetFxVersion>
 		<NetCoreVersion>net8.0</NetCoreVersion>
-		<FileVersion>4.1.99.4242</FileVersion>
+		<FileVersion>4.1.0.26</FileVersion>
 		<WisejPackageName>Wisej-4</WisejPackageName>
 		<WisejVersion>4.1.*-*</WisejVersion>
 		<SdmVersion>4.1.*-*</SdmVersion>
