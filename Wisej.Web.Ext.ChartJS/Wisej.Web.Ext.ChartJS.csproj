@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.12.20260427</FileVersion>
+    <FileVersion>4.0.12.11</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="ChartJS.bmp" />
