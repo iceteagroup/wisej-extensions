@@ -7,7 +7,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.12.14</FileVersion>
+    <FileVersion>4.0.12.15</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Templates\**" />
