@@ -9,7 +9,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.12.29</FileVersion>
+    <FileVersion>4.0.12.30</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Images\Link.svg" />
