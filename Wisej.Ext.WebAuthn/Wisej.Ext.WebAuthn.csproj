@@ -6,7 +6,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.12.18</FileVersion>
+    <FileVersion>4.0.12.10</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Platform\wisej.ext.WebAuthn.js" />
