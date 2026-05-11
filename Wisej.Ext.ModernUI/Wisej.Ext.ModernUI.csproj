@@ -4,7 +4,7 @@
     <SignAssembly>true</SignAssembly>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>3.5.33.7</FileVersion>
+    <FileVersion>3.5.33.8</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\appbar.3d.3ds.svg" />
