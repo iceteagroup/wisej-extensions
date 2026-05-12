@@ -1,4 +1,4 @@
-﻿//# sourceURL=wisej.web.ext.FullCalendar.startup.js
+//# sourceURL=wisej.web.ext.FullCalendar.startup.js
 
 /**
  * Initializes the widget.
@@ -34,17 +34,28 @@ this.init = function (options) {
 
 	if (!wisej.web.DesignMode) {
 
-		// initializes the tooltip system.
-		this.__initTooltipSystem(options);
-
 		// attach our event handler to fire the event back to the server.
 		options.events = this.loadEvents.bind(this);
 		options.dayClick = this.onDayClick.bind(this);
 		options.eventDrop = this.onEventDrop.bind(this);
 		options.eventClick = this.onEventClick.bind(this);
+		options.eventResize = this.onEventResize.bind(this);
 		options.eventMouseover = this.onEventMouseEnter.bind(this);
 		options.eventMouseout = this.onEventMouseLeave.bind(this);
-		options.eventResize = this.onEventResize.bind(this);
+
+		// initializes the tooltip system.
+		if (options.showEventToolTips) {
+
+			// instantiate timers to manage the shared tooltip.
+			this.__showTimer = new qx.event.Timer();
+			this.__showTimer.addListener("interval", this.__onShowInterval, this);
+			this.__hideTimer = new qx.event.Timer();
+			this.__hideTimer.addListener("interval", this.__onHideInterval, this);
+
+			// retrieve the shared tooltip instance.
+			this.__tooltipManager = qx.ui.tooltip.Manager.getInstance();
+			this.__sharedTooltip = this.__tooltipManager.getSharedTooltip();
+		}
 
 		// in case the widget is not visible, wait for the "appear" event and render again.
 		if (this.calendar == null)
@@ -150,6 +161,7 @@ this.__patchHandlers = function () {
 			var component = this.component;
 			component.bindSegHandlerToEl(el, 'click', this.handleClick.bind(this));
 			component.bindSegHandlerToEl(el, 'contextmenu', this.handleClick.bind(this));
+			// Restore the native mouseenter/mouseleave bindings that we previously accidentally blew away
 			component.bindSegHandlerToEl(el, 'mouseenter', this.handleMouseover.bind(this));
 			component.bindSegHandlerToEl(el, 'mouseleave', this.handleMouseout.bind(this));
 		}
@@ -314,28 +326,6 @@ this.onEventResize = function (event) {
 	});
 }
 
-/**
- * Initializes the tooltip system.
- */
-this.__initTooltipSystem = function (options) {
-
-	if (options.showEventToolTips) {
-
-		// listen to mouse over and out to show/hide the tooltip.
-		options.eventMouseover = this.onEventMouseOver.bind(this);
-		options.eventMouseout = this.onEventMouseOut.bind(this);
-
-		// instantiate timers to manage the shared tooltip.
-		this.__showTimer = new qx.event.Timer();
-		this.__showTimer.addListener("interval", this.__onShowInterval, this);
-		this.__hideTimer = new qx.event.Timer();
-		this.__hideTimer.addListener("interval", this.__onHideInterval, this);
-
-		// retrieve the shared tooltip instance.
-		this.__tooltipManager = qx.ui.tooltip.Manager.getInstance();
-		this.__sharedTooltip = this.__tooltipManager.getSharedTooltip();
-	}
-}
 
 /**
  * Handles the "eventMouseover" event.
@@ -442,6 +432,23 @@ this.onEventMouseEnter = function (calEvent, ev, view) {
 	};
 
 	me.fireWidgetEvent(type, data);
+
+	// Handle tooltips if enabled
+	if (this.__sharedTooltip) {
+		this.__tooltipEl = ev.target;
+
+		const text = calEvent.toolTipText ?? calEvent.title;
+		this.__sharedTooltip.set({
+			label: text,
+			opener: this
+		});
+
+		this.__tooltipManager.resetCurrent();
+
+		// we manage the tooltip outside of the default manager since
+		// in this case we don't have a widget for each entry in the calendar.
+		this.__showTimer.startWith(this.__sharedTooltip.getShowTimeout());
+	}
 }
 
 /**
@@ -457,6 +464,16 @@ this.onEventMouseLeave = function (calEvent, ev, view) {
   };
 
   me.fireWidgetEvent(type, data);
+
+  // Handle tooltips if enabled
+  if (this.__hideTimer) {
+	this.__hideTimer.stop();
+	this.__showTimer.stop();
+	this.__tooltipEl = null;
+	this.__tooltipTarget = null;
+	if (this.__sharedTooltip)
+		this.__sharedTooltip.exclude();
+  }
 }
 
 /**
