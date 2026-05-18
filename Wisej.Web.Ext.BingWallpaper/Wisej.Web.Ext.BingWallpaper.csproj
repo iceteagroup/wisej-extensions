@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.12.22</FileVersion>
+    <FileVersion>4.0.12.23</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="BingWallpaper.bmp" />
