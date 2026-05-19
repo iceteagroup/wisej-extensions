@@ -747,18 +747,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 			get { return RightToLeft.No; }
 			set { }
 		}
-
-		/// <summary>
-		/// This member is not meaningful for this control.
-		/// </summary>
-		[Browsable(false)]
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public override AccessibleRole AccessibleRole
-		{
-			get { return AccessibleRole.Default; }
-			set { }
-		}
+			
 
 		/// <summary>
 		/// This member is not meaningful for this control.

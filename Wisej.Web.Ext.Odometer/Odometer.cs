@@ -481,19 +481,7 @@ namespace Wisej.Web.Ext.Odometer
 			get { return AnchorStyles.None; }
 			set { }
 		}
-
-		/// <summary>
-		/// This member is not meaningful for this control.
-		/// </summary>
-		/// <exclude/>
-		[Browsable(false)]
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public override AccessibleRole AccessibleRole
-		{
-			get { return AccessibleRole.Default; }
-			set { }
-		}
+			
 
 		/// <summary>
 		/// This member is not meaningful for this control.
