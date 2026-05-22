@@ -233,7 +233,7 @@ namespace Wisej.Web.Ext.PullToRefresh
 		/// <summary>
 		/// Gets or sets the loader image to use for the pull to refresh component.
 		/// </summary>
-		[DefaultValue("resource.wx/loader.gif")]
+		[DefaultValue("resource.wx/loader.svg")]
 		[Description("Gets or sets the loader image to use for the pull to refresh component.")]
 		[TypeConverter("Wisej.Web.ImageSourceConverter, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]
 		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171",
@@ -254,7 +254,7 @@ namespace Wisej.Web.Ext.PullToRefresh
 				}
 			}
 		}
-		private string _imageSource = "resource.wx/loader.gif";
+		private string _imageSource = "resource.wx/loader.svg";
 
 		#endregion
 
