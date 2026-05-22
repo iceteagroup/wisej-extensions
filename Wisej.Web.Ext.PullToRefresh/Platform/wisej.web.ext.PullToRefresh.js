@@ -80,8 +80,8 @@ qx.Class.define("wisej.web.ext.PullToRefresh", {
 
 		_applyBackColor: function (value, old) {
 
-			this.__scrollableControls?.forEach((value, key) => {
-				value.style.backgroundColor = value;
+			this.__scrollableControls?.forEach((loader, key) => {
+				loader.style.backgroundColor = value;
 			});
 		},
 
@@ -92,9 +92,22 @@ qx.Class.define("wisej.web.ext.PullToRefresh", {
 
 		_applyImageSource: function (value, old) {
 
-			this.__scrollableControls?.forEach((value, key) => {
-				value.style.backgroundImage = `url(${value})`;
+			var source = this.__resolveImageSource(value);
+			this.__scrollableControls?.forEach((loader, key) => {
+				loader.style.backgroundImage = source ? `url("${source}")` : null;
 			});
+		},
+
+		// resolves Wisej image aliases and normalizes app-relative paths.
+		__resolveImageSource: function (value) {
+
+			if (!value)
+				return null;
+
+			value = value.replace(/\\/g, "/");
+
+			var imageColor = qx.ui.basic.Image.resolveImage(value);
+			return imageColor && imageColor.source ? imageColor.source : value;
 		},
 
 		// applies pull to refresh on the given scrollable controls.
@@ -158,7 +171,7 @@ qx.Class.define("wisej.web.ext.PullToRefresh", {
 			loader.style.backgroundRepeat = "no-repeat";
 			loader.style.backgroundSize = `${height - 20}px`;
 			loader.style.backgroundColor = this.getBackColor();
-			loader.style.backgroundImage = `url(${this.getImageSource()})`;
+			loader.style.backgroundImage = `url("${this.__resolveImageSource(this.getImageSource())}")`;
 
 			return loader;
 		},
