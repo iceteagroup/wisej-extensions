@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.33.11</FileVersion>
+    <FileVersion>3.5.33.12</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="ZXing.NET\renderer\GeometryRenderer.cs" />
