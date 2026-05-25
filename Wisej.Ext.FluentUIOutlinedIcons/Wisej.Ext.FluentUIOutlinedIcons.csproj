@@ -5,7 +5,7 @@
 	<SignAssembly>true</SignAssembly>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	<AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-	<FileVersion>4.1.0.32</FileVersion>
+	<FileVersion>4.1.0.39</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\**\*.*" />
