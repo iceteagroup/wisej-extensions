@@ -7,7 +7,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.13.1</FileVersion>
+    <FileVersion>4.0.13.2</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Platform\fuzzy.js" />
