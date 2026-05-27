@@ -503,11 +503,13 @@ jobs:
                     }
                     $matches = Get-ChildItem -Path $resolvedPattern -ErrorAction SilentlyContinue
                     if (-not $matches) {
-                      if (-not $missingNodes) { $missingNodes = @() }
-                      $missingNodes += $fileNode
-                      Write-Warning ("Removing missing file entry '{0}' from {1}" -f $srcValue, $nuspecFile.Name)
-                      $shouldUseTemp = $true
-                      continue
+                      $hasWildcards = $srcValue.IndexOfAny([char[]]@('*','?')) -ge 0
+                      if ($hasWildcards) {
+                        Write-Warning ("No files matched wildcard nuspec entry '{0}' from {1}. Resolved pattern: {2}" -f $srcValue, $nuspecFile.Name, $resolvedPattern)
+                        continue
+                      }
+
+                      throw ("Missing required nuspec file entry '{0}' from {1}. Resolved pattern: {2}" -f $srcValue, $nuspecFile.Name, $resolvedPattern)
                     }
                   }
                   if ($srcValue -match '(?i)Wisej\.png$' -and -not ($srcValue -match '^\.\.\\')) {
@@ -535,14 +537,6 @@ jobs:
                   }
                 }
 
-                if ($missingNodes) {
-                  foreach ($missingNode in $missingNodes) {
-                    if ($missingNode -and $missingNode.ParentNode) {
-                      [void]$missingNode.ParentNode.RemoveChild($missingNode)
-                    }
-                  }
-                }
-
                 if ($shouldUseTemp) {
                   foreach ($fileNode in $filesNodes) {
                     if (-not $fileNode -or -not $fileNode.src) {
@@ -565,7 +559,7 @@ jobs:
                   $adjustedNuspecPath = $tempPath
                 }
               } catch {
-                Write-Warning ("Failed to adjust nuspec {0}: {1}" -f $nuspecPath, $_)
+                throw ("Failed to adjust nuspec {0}: {1}" -f $nuspecPath, $_)
               }
 
               $tempDir = Join-Path $env:TEMP ("wisej-pack-" + [Guid]::NewGuid().ToString("N"))
@@ -578,11 +572,23 @@ jobs:
               }
 
               $pkgId = $null
+              $requiresLibDll = $false
               try {
                 [xml]$nuspecXml = Get-Content $nuspecPath -Raw
                 $pkgId = $nuspecXml.package.metadata.id
+                if ($nuspecXml.package.files) {
+                  foreach ($fileNode in @($nuspecXml.package.files.file)) {
+                    if ($fileNode -and $fileNode.target) {
+                      $targetValue = $fileNode.target.ToString().Replace('\', '/')
+                      if ($targetValue -match '^lib(/|$)') {
+                        $requiresLibDll = $true
+                        break
+                      }
+                    }
+                  }
+                }
               } catch {
-                Write-Warning ("Unable to parse package id for {0}: {1}" -f $nuspecPath, $_)
+                throw ("Unable to parse package metadata for {0}: {1}" -f $nuspecPath, $_)
               }
 
               if ([string]::IsNullOrWhiteSpace($pkgId)) {
@@ -595,8 +601,20 @@ jobs:
                 if ($built) {
                   $expected = $built.FullName
                 } else {
-                  Write-Warning "No package file found for $pkgId after packing."
-                  return
+                  throw "No package file found for $pkgId after packing."
+                }
+              }
+
+              if ($requiresLibDll) {
+                Add-Type -AssemblyName System.IO.Compression.FileSystem
+                $package = [System.IO.Compression.ZipFile]::OpenRead($expected)
+                try {
+                  $libDllEntries = @($package.Entries | Where-Object { $_.FullName -match '^lib/.+\.dll$' })
+                  if (-not $libDllEntries) {
+                    throw "Package $pkgId contains no lib/*.dll entries after packing from $nuspecPath."
+                  }
+                } finally {
+                  $package.Dispose()
                 }
               }
 
