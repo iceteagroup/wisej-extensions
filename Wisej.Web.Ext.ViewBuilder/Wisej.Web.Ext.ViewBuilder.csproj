@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.33.12</FileVersion>
+    <FileVersion>3.5.34.1</FileVersion>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='net48'">
     <Reference Include="System.Windows.Forms" />
