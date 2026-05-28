@@ -4,7 +4,7 @@
     <SignAssembly>true</SignAssembly>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>4.0.13.6</FileVersion>
+    <FileVersion>4.0.13.3</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\activity.svg" />
