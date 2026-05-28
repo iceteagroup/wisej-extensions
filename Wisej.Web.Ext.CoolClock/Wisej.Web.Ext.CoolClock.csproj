@@ -8,7 +8,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.13.3</FileVersion>
+    <FileVersion>4.0.13.4</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="CoolClock.bmp" />
