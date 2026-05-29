@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.13.6</FileVersion>
+    <FileVersion>4.0.13.10</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
