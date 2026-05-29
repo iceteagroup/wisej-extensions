@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="Wisej.Framework" name="Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
+  <assembly alias="Wisej.Framework" name="Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
   <data name="HtmlText.Anchor" type="Wisej.Web.AnchorStyles, Wisej.Framework">
     <value>Top, Bottom, Left, Right</value>
   </data>
@@ -139,7 +139,7 @@
     <value>HtmlText</value>
   </data>
   <data name="&gt;&gt;HtmlText.Type" xml:space="preserve">
-    <value>Wisej.Web.Ext.TourPanel.TourPanel+HtmlPanel, Wisej.Web.Ext.TourPanel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
+    <value>Wisej.Web.Ext.TourPanel.TourPanel+HtmlPanel, Wisej.Web.Ext.TourPanel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
   </data>
   <data name="&gt;&gt;HtmlText.Parent" xml:space="preserve">
     <value>$this</value>
@@ -163,7 +163,7 @@
     <value>TitleLabel</value>
   </data>
   <data name="&gt;&gt;TitleLabel.Type" xml:space="preserve">
-    <value>Wisej.Web.Ext.TourPanel.TourPanel+Label, Wisej.Web.Ext.TourPanel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
+    <value>Wisej.Web.Ext.TourPanel.TourPanel+Label, Wisej.Web.Ext.TourPanel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
   </data>
   <data name="&gt;&gt;TitleLabel.Parent" xml:space="preserve">
     <value>TitlePanel</value>
@@ -193,7 +193,7 @@
     <value>CloseButton</value>
   </data>
   <data name="&gt;&gt;CloseButton.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;CloseButton.Parent" xml:space="preserve">
     <value>TitlePanel</value>
@@ -220,7 +220,7 @@
     <value>NextButton</value>
   </data>
   <data name="&gt;&gt;NextButton.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;NextButton.Parent" xml:space="preserve">
     <value>ButtonsPanel</value>
@@ -244,7 +244,7 @@
     <value>BackButton</value>
   </data>
   <data name="&gt;&gt;BackButton.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;BackButton.Parent" xml:space="preserve">
     <value>ButtonsPanel</value>
@@ -268,7 +268,7 @@
     <value>ExitButton</value>
   </data>
   <data name="&gt;&gt;ExitButton.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;ExitButton.Parent" xml:space="preserve">
     <value>ButtonsPanel</value>
@@ -292,7 +292,7 @@
     <value>PlayButton</value>
   </data>
   <data name="&gt;&gt;PlayButton.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;PlayButton.Parent" xml:space="preserve">
     <value>ButtonsPanel</value>
@@ -319,7 +319,7 @@
     <value>ButtonsPanel</value>
   </data>
   <data name="&gt;&gt;ButtonsPanel.Type" xml:space="preserve">
-    <value>Wisej.Web.FlowLayoutPanel, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.FlowLayoutPanel, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;ButtonsPanel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -343,7 +343,7 @@
     <value>TitlePanel</value>
   </data>
   <data name="&gt;&gt;TitlePanel.Type" xml:space="preserve">
-    <value>Wisej.Web.Panel, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Panel, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;TitlePanel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -370,6 +370,6 @@
     <value>TourPanel</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Wisej.Web.ContainerControl, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.ContainerControl, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
 </root>
