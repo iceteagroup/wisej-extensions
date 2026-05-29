@@ -31,19 +31,13 @@
   <files>
     <file src="..\Wisej.png" target="images/" />
     <file src="..\..\Distro\bin\net48\Wisej.Ext.Svg.dll" target="lib/net48" />
-    <file src="..\..\Distro\bin\net48\Wisej.Ext.Svg.xml" target="lib/net48" />
 
     <file src="..\..\Distro\bin\net8.0\Wisej.Ext.Svg.dll" target="lib/net8.0" />
-    <file src="..\..\Distro\bin\net8.0\Wisej.Ext.Svg.xml" target="lib/net8.0" />
     <file src="..\..\Distro\bin\net8.0-ios\Wisej.Ext.Svg.dll" target="lib/net8.0-ios14.2" />
-    <file src="..\..\Distro\bin\net8.0-ios\Wisej.Ext.Svg.xml" target="lib/net8.0-ios14.2" />
 
     <file src="..\..\Distro\bin\net8.0-android\Wisej.Ext.Svg.dll" target="lib/net8.0-android21.0" />
-    <file src="..\..\Distro\bin\net8.0-android\Wisej.Ext.Svg.xml" target="lib/net8.0-android21.0" />
     <file src="..\..\Distro\bin\net8.0-maccatalyst\Wisej.Ext.Svg.dll" target="lib/net8.0-maccatalyst14.0" />
-    <file src="..\..\Distro\bin\net8.0-maccatalyst\Wisej.Ext.Svg.xml" target="lib/net8.0-maccatalyst14.0" />
 
-	<file src="..\..\Distro\bin\net8.0-windows10.0.19041.0\Wisej.Ext.Svg.dll" target="lib/net8.0-windows10.0.19041.0" />
-    <file src="..\..\Distro\bin\net8.0-windows10.0.19041.0\Wisej.Ext.Svg.xml" target="lib/net8.0-windows10.0.19041.0" />
+	  <file src="..\..\Distro\bin\net8.0-windows10.0.19041.0\Wisej.Ext.Svg.dll" target="lib/net8.0-windows10.0.19041.0" />
   </files>
 </package>
