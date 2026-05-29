@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="Wisej.Framework" name="Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
+  <assembly alias="Wisej.Framework" name="Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171" />
   <data name="HtmlText.Anchor" type="Wisej.Web.AnchorStyles, Wisej.Framework">
     <value>Top, Bottom, Left, Right</value>
   </data>
@@ -139,7 +139,7 @@
     <value>HtmlText</value>
   </data>
   <data name="&gt;&gt;HtmlText.Type" xml:space="preserve">
-    <value>Wisej.Web.Ext.TourPanel.TourPanel+HtmlPanel, Wisej.Web.Ext.TourPanel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
+    <value>Wisej.Web.Ext.TourPanel.TourPanel+HtmlPanel, Wisej.Web.Ext.TourPanel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
   </data>
   <data name="&gt;&gt;HtmlText.Parent" xml:space="preserve">
     <value>$this</value>
@@ -163,7 +163,7 @@
     <value>TitleLabel</value>
   </data>
   <data name="&gt;&gt;TitleLabel.Type" xml:space="preserve">
-    <value>Wisej.Web.Ext.TourPanel.TourPanel+Label, Wisej.Web.Ext.TourPanel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
+    <value>Wisej.Web.Ext.TourPanel.TourPanel+Label, Wisej.Web.Ext.TourPanel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=653fbd0440795259</value>
   </data>
   <data name="&gt;&gt;TitleLabel.Parent" xml:space="preserve">
     <value>TitlePanel</value>
@@ -193,7 +193,7 @@
     <value>CloseButton</value>
   </data>
   <data name="&gt;&gt;CloseButton.Type" xml:space="preserve">
-    <value>Wisej.Web.Button, Wisej.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
+    <value>Wisej.Web.Button, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171</value>
   </data>
   <data name="&gt;&gt;CloseButton.Parent" xml:space="preserve">
     <value>TitlePanel</value>
