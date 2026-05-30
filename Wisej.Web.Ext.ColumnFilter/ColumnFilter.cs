@@ -240,9 +240,23 @@ namespace Wisej.Web.Ext.ColumnFilter
 		[Description("Show the filter button only when the mouse is over the column header.")]
 		public bool ShowOnHover
 		{
-			get;
-			set;
-		} = false;
+			get => this._showOnHover;
+			set
+			{
+				if (value != this._showOnHover)
+				{
+					this._showOnHover = value;
+
+					foreach (var col in this.columns)
+					{
+						var icon = col.HeaderCell.Control as PictureBox;
+						if (icon != null)
+							icon.Visible = !value;
+					}
+				}
+			}
+		}
+		private bool _showOnHover;
 
 		/// <summary>
 		/// Size of the filter button image.
@@ -323,7 +337,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 				{
 					RegisterDataGrid(column.DataGridView);
 					column.HeaderCell.Control.Visible = !this.ShowOnHover;
-					column.HeaderCell.Control.Anonymous = this.ShowOnHover;
 				}
 			}
 		}
@@ -355,24 +368,17 @@ namespace Wisej.Web.Ext.ColumnFilter
 				Dock = DockStyle.Right,
 				Size = this.ImageSize,
 				Cursor = Cursors.Hand,
+				Anonymous = true,
 				SizeMode = PictureBoxSizeMode.CenterImage
 			};
 
-			search.Click += this.FilterButton_Click;
 			search.UserData.FilterColumn = column;
 			search.ImageSource = this.ImageSource;
 			search.Image = this.Image != null ? new Bitmap(this.Image) : null;
 
+			search.InitScript = "this.getContentElement().setAttribute('role', 'filter');";
+
 			return search;
-		}
-
-		private void FilterButton_Click(object sender, EventArgs e)
-		{
-			if (this.FilterPanelType == null)
-				throw new InvalidOperationException("FilterPanelType is null.");
-
-			var column = (DataGridViewColumn)((Control)sender).UserData.FilterColumn;
-			ShowFilterPanel(column);
 		}
 
 		private void ShowFilterPanel(DataGridViewColumn column)
@@ -434,7 +440,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 			if (dataGrid.IsValidColumn(e.ColumnIndex))
 			{
 				var column = dataGrid.Columns[e.ColumnIndex];
-				if (column.UserData.ColumnFilter == this)
+				if (column.UserData.ColumnFilter == this && e.Role == "filter")
 				{
 					ShowFilterPanel(column);
 				}
@@ -443,30 +449,40 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		private void DataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
 		{
-			var dataGrid = (DataGridView)sender;
-			if (dataGrid.IsValidColumn(e.ColumnIndex))
+			if (this.ShowOnHover)
 			{
-				var column = dataGrid.Columns[e.ColumnIndex];
-				if (column.UserData.ColumnFilter == this)
+				var dataGrid = (DataGridView)sender;
+				if (dataGrid.IsValidColumn(e.ColumnIndex))
 				{
-					var icon = column.HeaderCell.Control as PictureBox;
-					if (icon != null)
-						icon.Visible = false;
+					var column = dataGrid.Columns[e.ColumnIndex];
+					if (column.UserData.ColumnFilter == this)
+					{
+						var filterPanel = column.UserData.FilterPanel as ColumnFilterPanel;
+						if  (filterPanel != null && filterPanel.Visible)
+							return;
+
+						var icon = column.HeaderCell.Control as PictureBox;
+						if (icon != null && icon.UserData.Filtered != true)
+							icon.Visible = false;
+					}
 				}
 			}
 		}
 
 		private void DataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
 		{
-			var dataGrid = (DataGridView)sender;
-			if (dataGrid.IsValidColumn(e.ColumnIndex))
+			if (this.ShowOnHover)
 			{
-				var column = dataGrid.Columns[e.ColumnIndex];
-				if (column.UserData.ColumnFilter == this)
+				var dataGrid = (DataGridView)sender;
+				if (dataGrid.IsValidColumn(e.ColumnIndex))
 				{
-					var icon = column.HeaderCell.Control as PictureBox;
-					if (icon != null)
-						icon.Visible = true;
+					var column = dataGrid.Columns[e.ColumnIndex];
+					if (column.UserData.ColumnFilter == this)
+					{
+						var icon = column.HeaderCell.Control as PictureBox;
+						if (icon != null)
+							icon.Visible = true;
+					}
 				}
 			}
 		}

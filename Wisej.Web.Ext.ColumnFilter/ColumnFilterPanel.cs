@@ -156,7 +156,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 					if (columnFilter.ShowOnHover)
 					{
 						button.Visible = true;
-						button.Anonymous = false;
+						button.UserData.Filtered = true;
 					}
 				}
 				else
@@ -169,7 +169,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 					if (columnFilter.ShowOnHover)
 					{
 						button.Visible = false;
-						button.Anonymous = true;
+						button.UserData.Filtered = false;
 					}
 				}
 			}
