@@ -11,6 +11,9 @@
     <NoWarn>CA1416</NoWarn>
     <GenerateResourceUsePreserializedResources Condition="'$(TargetFramework)'=='net48'">false</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='$(NetFxVersion)'">
+    <GenerateResourceUsePreserializedResources>false</GenerateResourceUsePreserializedResources>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.cs" />
     <Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.Designer.cs" />
@@ -26,7 +29,7 @@
     <None Include="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.7" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.7.2" />
     <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
   </ItemGroup>
   <ItemGroup>
