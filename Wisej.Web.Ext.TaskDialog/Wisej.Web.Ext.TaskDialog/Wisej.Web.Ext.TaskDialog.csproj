@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
+    <GenerateResourceUsePreserializedResources Condition="'$(TargetFramework)'=='net48'">false</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <!--<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))'=='net'">
   <Reference Include="Microsoft.CSharp" />

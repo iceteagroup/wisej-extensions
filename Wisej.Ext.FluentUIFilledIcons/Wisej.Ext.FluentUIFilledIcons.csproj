@@ -2,8 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);</TargetFrameworks>
-	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	<AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <GenerateResourceUsePreserializedResources Condition="'$(TargetFramework)'=='net48'">false</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\**\*.*" />
