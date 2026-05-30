@@ -7,7 +7,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.1.0.18</FileVersion>
+    <FileVersion>4.0.14.1</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="FullCalendar.bmp" />
