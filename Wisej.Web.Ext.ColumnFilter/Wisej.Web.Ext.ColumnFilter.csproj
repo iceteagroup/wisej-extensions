@@ -9,12 +9,10 @@
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
     <FileVersion>4.0.14.1</FileVersion>
     <NoWarn>CA1416</NoWarn>
-    <GenerateResourceUsePreserializedResources Condition="'$(TargetFramework)'=='net48'">false</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'=='$(NetFxVersion)'">
-    <GenerateResourceUsePreserializedResources>false</GenerateResourceUsePreserializedResources>
-  </PropertyGroup>
-  <ItemGroup>
+<PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
+  <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+</PropertyGroup>  <ItemGroup>
     <Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.cs" />
     <Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.Designer.cs" />
   </ItemGroup>
