@@ -85,7 +85,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		#region Implementation
 
-
 		/// <summary>
 		/// Performs initialization tasks when the panel is created.
 		/// </summary>
@@ -94,10 +93,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			base.OnLoad(e);
 
-			if (!this.DesignMode && this.DataGridViewColumn != null)
-			{
-				this.DataGridViewColumn.DataGridView.Sorted += this.Rows_Sorted;
-			}
+			this.ColumnFilter.RegisterDataGrid(this.DataGridViewColumn.DataGridView);
 		}
 
 		private void Rows_Sorted(object sender, EventArgs e)
@@ -149,19 +145,32 @@ namespace Wisej.Web.Ext.ColumnFilter
 			foreach (var panel in panels)
 			{
 				columnFilter = panel.ColumnFilter;
+				var button = panel.FilterButton;
 				if (panel.OnApplyFilter())
 				{
 					if (columnFilter.FilteredImage != null)
-						panel.FilterButton.Image = columnFilter.FilteredImage;
+						button.Image = columnFilter.FilteredImage;
 					else if (columnFilter.FilteredImageSource?.Length > 0)
-						panel.FilterButton.ImageSource = columnFilter.FilteredImageSource;
+						button.ImageSource = columnFilter.FilteredImageSource;
+
+					if (columnFilter.ShowOnHover)
+					{
+						button.Visible = true;
+						button.Anonymous = false;
+					}
 				}
 				else
 				{
 					if (columnFilter.Image != null)
-						panel.FilterButton.Image = columnFilter.Image;
+						button.Image = columnFilter.Image;
 					else if (columnFilter.ImageSource.Length > 0)
-						panel.FilterButton.ImageSource = columnFilter.ImageSource;
+						button.ImageSource = columnFilter.ImageSource;
+
+					if (columnFilter.ShowOnHover)
+					{
+						button.Visible = false;
+						button.Anonymous = true;
+					}
 				}
 			}
 		}
@@ -280,9 +289,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 				var column = this.DataGridViewColumn;
 				if (column != null)
 				{
-					if (column.DataGridView != null)
-						column.DataGridView.Sorted -= this.Rows_Sorted;
-
 					column.HeaderCell.Control?.Dispose();
 					column.HeaderCell.Control = null;
 					column.UserData.FilterPanel = null;
