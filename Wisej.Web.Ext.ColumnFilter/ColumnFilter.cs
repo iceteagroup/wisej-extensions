@@ -266,9 +266,23 @@ namespace Wisej.Web.Ext.ColumnFilter
 		[Description("Size of the filter button image.")]
 		public Size ImageSize
 		{
-			get;
-			set;
-		} = new Size(24, 24);
+			get => this._imageSize;
+			set
+			{
+				if (value != this._imageSize)
+				{
+					this._imageSize = value;
+
+					foreach (var col in this.columns)
+					{
+						var icon = col.HeaderCell.Control as Control;
+						if (icon != null)
+							icon.Size = value;
+					}
+				}
+			}
+		}
+		private Size _imageSize = new Size(24, 24);
 
 		#endregion
 
@@ -368,7 +382,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 				Dock = DockStyle.Right,
 				Size = this.ImageSize,
 				Cursor = Cursors.Hand,
-				Anonymous = true,
 				SizeMode = PictureBoxSizeMode.CenterImage
 			};
 
@@ -376,9 +389,41 @@ namespace Wisej.Web.Ext.ColumnFilter
 			search.ImageSource = this.ImageSource;
 			search.Image = this.Image != null ? new Bitmap(this.Image) : null;
 
-			search.InitScript = "this.getContentElement().setAttribute('role', 'filter');";
+			search.Click += this.Search_Click;
+			search.MouseEnter += this.Search_MouseEnter;
+			search.MouseLeave += this.Search_MouseLeave;
 
 			return search;
+		}
+
+		private void Search_MouseLeave(object sender, EventArgs e)
+		{
+			if (this.ShowOnHover)
+			{
+				var button = (Control)sender;
+				button.UserData.Active = false;
+
+				if (button.UserData.Filtered != true && button.UserData.PanelOpen != true)
+					button.Visible = false;
+			}
+		}
+
+		private void Search_MouseEnter(object sender, EventArgs e)
+		{
+			if (this.ShowOnHover)
+			{
+				var button = (Control)sender;
+				button.Visible = true;
+				button.UserData.Active = true;
+			}
+		}
+
+		private void Search_Click(object sender, EventArgs e)
+		{
+			var control = (Control)sender;
+			var column = (DataGridViewColumn)control.UserData.FilterColumn;
+			if (column != null)
+				ShowFilterPanel(column);
 		}
 
 		private void ShowFilterPanel(DataGridViewColumn column)
@@ -403,12 +448,14 @@ namespace Wisej.Web.Ext.ColumnFilter
 		}
 
 		/// <summary>
-		/// Applies the filters to the specified <see cref="DataGridView"/> and fires the <see cref="RowsFiltered"/> event.
+		/// Reapplys the filters to the specified <see cref="DataGridView"/>.
 		/// </summary>
-		/// <param name="dataGridView">The <see cref="DataGridView"/> to apply the filters to.</param>
 		public void ApplyFilters(DataGridView dataGridView)
+			=> ApplyFiltersInternal(dataGridView);
+
+		internal static void ApplyFiltersInternal(DataGridView dataGridView)
 		{
-			foreach (var col in this.columns)
+			foreach (DataGridViewColumn col in dataGridView.Columns)
 			{
 				var filterPanel = col.UserData.FilterPanel as ColumnFilterPanel;
 				if (filterPanel != null)
@@ -425,81 +472,73 @@ namespace Wisej.Web.Ext.ColumnFilter
 			{
 				this.dataGrids.Add(dataGridView);
 
-				dataGridView.Sorted += this.DataGridView_Sorted;
-				dataGridView.Disposed += this.DataGridView_Disposed;
-				dataGridView.CellMouseClick += this.DataGridView_CellMouseClick;
-				dataGridView.CellMouseEnter += this.DataGridView_CellMouseEnter;
-				dataGridView.CellMouseLeave += this.DataGridView_CellMouseLeave;
-				dataGridView.DataBindingComplete += this.DataGridView_DataBindingComplete;
+				dataGridView.Sorted -= DataGridView_Sorted;
+				dataGridView.Disposed -= DataGridView_Disposed;
+				dataGridView.CellMouseEnter -= DataGridView_CellMouseEnter;
+				dataGridView.CellMouseLeave -= DataGridView_CellMouseLeave;
+				dataGridView.DataBindingComplete -= DataGridView_DataBindingComplete;
+
+				dataGridView.Sorted += DataGridView_Sorted;
+				dataGridView.Disposed += DataGridView_Disposed;
+				dataGridView.CellMouseEnter += DataGridView_CellMouseEnter;
+				dataGridView.CellMouseLeave += DataGridView_CellMouseLeave;
+				dataGridView.DataBindingComplete += DataGridView_DataBindingComplete;
 			}
 		}
 
-		private void DataGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+		private static void DataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
 		{
 			var dataGrid = (DataGridView)sender;
-			if (dataGrid.IsValidColumn(e.ColumnIndex))
+			if (!dataGrid.IsValidColumn(e.ColumnIndex))
+				return;
+
+			var column = dataGrid.Columns[e.ColumnIndex];
+			var filter = (ColumnFilter)column.UserData.ColumnFilter;
+
+			if (filter != null && filter.ShowOnHover)
 			{
-				var column = dataGrid.Columns[e.ColumnIndex];
-				if (column.UserData.ColumnFilter == this && e.Role == "filter")
-				{
-					ShowFilterPanel(column);
-				}
+				var filterPanel = column.UserData.FilterPanel as ColumnFilterPanel;
+				if (filterPanel != null && filterPanel.Visible)
+					return;
+
+				var button = column.HeaderCell.Control as PictureBox;
+				if (button != null && button.UserData.Filtered != true && button.UserData.PanelOpen != true)
+					button.Visible = false;
 			}
 		}
 
-		private void DataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+		private static void DataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
 		{
-			if (this.ShowOnHover)
-			{
-				var dataGrid = (DataGridView)sender;
-				if (dataGrid.IsValidColumn(e.ColumnIndex))
-				{
-					var column = dataGrid.Columns[e.ColumnIndex];
-					if (column.UserData.ColumnFilter == this)
-					{
-						var filterPanel = column.UserData.FilterPanel as ColumnFilterPanel;
-						if  (filterPanel != null && filterPanel.Visible)
-							return;
+			var dataGrid = (DataGridView)sender;
+			if (!dataGrid.IsValidColumn(e.ColumnIndex))
+				return;
 
-						var icon = column.HeaderCell.Control as PictureBox;
-						if (icon != null && icon.UserData.Filtered != true)
-							icon.Visible = false;
-					}
-				}
+			var column = dataGrid.Columns[e.ColumnIndex];
+			var filter = (ColumnFilter)column.UserData.ColumnFilter;
+
+			if (filter != null && filter.ShowOnHover)
+			{
+				var button = column.HeaderCell.Control as PictureBox;
+				if (button != null)
+					button.Visible = true;
 			}
 		}
 
-		private void DataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+		private static void DataGridView_Sorted(object sender, EventArgs e)
 		{
-			if (this.ShowOnHover)
-			{
-				var dataGrid = (DataGridView)sender;
-				if (dataGrid.IsValidColumn(e.ColumnIndex))
-				{
-					var column = dataGrid.Columns[e.ColumnIndex];
-					if (column.UserData.ColumnFilter == this)
-					{
-						var icon = column.HeaderCell.Control as PictureBox;
-						if (icon != null)
-							icon.Visible = true;
-					}
-				}
-			}
+			var dataGrid = (DataGridView)sender;
+			ApplyFiltersInternal(dataGrid);
+		}
+
+		private static void DataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+		{
+			var dataGrid = (DataGridView)sender;
+			ApplyFiltersInternal(dataGrid);
 		}
 
 		private void DataGridView_Disposed(object sender, EventArgs e)
 		{
 			this.dataGrids.Remove((DataGridView)sender);
-		}
-
-		private void DataGridView_Sorted(object sender, EventArgs e)
-		{
-			ApplyFilters((DataGridView)sender);
-		}
-
-		private void DataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-		{
-			ApplyFilters((DataGridView)sender);
 		}
 
 		#endregion

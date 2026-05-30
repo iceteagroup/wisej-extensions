@@ -146,29 +146,25 @@ namespace Wisej.Web.Ext.ColumnFilter
 			{
 				columnFilter = panel.ColumnFilter;
 				var button = panel.FilterButton;
-				if (panel.OnApplyFilter())
-				{
-					if (columnFilter.FilteredImage != null)
-						button.Image = columnFilter.FilteredImage;
-					else if (columnFilter.FilteredImageSource?.Length > 0)
-						button.ImageSource = columnFilter.FilteredImageSource;
 
-					if (columnFilter.ShowOnHover)
+				if (button != null)
+				{
+					if (panel.OnApplyFilter())
 					{
-						button.Visible = true;
+						if (columnFilter.FilteredImage != null)
+							button.Image = columnFilter.FilteredImage;
+						else if (columnFilter.FilteredImageSource?.Length > 0)
+							button.ImageSource = columnFilter.FilteredImageSource;
+
 						button.UserData.Filtered = true;
 					}
-				}
-				else
-				{
-					if (columnFilter.Image != null)
-						button.Image = columnFilter.Image;
-					else if (columnFilter.ImageSource.Length > 0)
-						button.ImageSource = columnFilter.ImageSource;
-
-					if (columnFilter.ShowOnHover)
+					else
 					{
-						button.Visible = false;
+						if (columnFilter.Image != null)
+							button.Image = columnFilter.Image;
+						else if (columnFilter.ImageSource.Length > 0)
+							button.ImageSource = columnFilter.ImageSource;
+
 						button.UserData.Filtered = false;
 					}
 				}
@@ -189,7 +185,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// </summary>
 		protected virtual void OnBeforeShow()
 		{
-			Trace.TraceWarning("OnBeforeShow is not implemented.");
 		}
 
 		/// <summary>
@@ -198,7 +193,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// </summary>
 		protected virtual void OnAfterShow()
 		{
-			Trace.TraceWarning("OnAfterShow is not implemented.");
 		}
 
 		/// <summary>
@@ -208,7 +202,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// <returns>True to indicate that the filter has been applied. False if the filter has been cleared.</returns>
 		protected virtual bool OnApplyFilter()
 		{
-			Trace.TraceWarning("OnApplyFilter is not implemented.");
 			return true;
 		}
 
@@ -216,6 +209,15 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			if (this.Visible)
 				OnBeforeShow();
+
+			var button = this.FilterButton;
+			if (button != null)
+			{
+				button.UserData.PanelOpen = this.Visible;
+
+				if (!this.Visible && button.UserData.Filtered != true && button.UserData.Active != true)
+					button.Visible = false;
+			}
 		}
 
 		private void ColumnFilterPanel_Accelerator(object sender, AcceleratorEventArgs e)
@@ -307,7 +309,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// <param name="applyFilters"></param>
 		public virtual void Clear(bool applyFilters = true)
 		{
-			Trace.TraceWarning("Clear is not implemented.");
 		}
 
 		#endregion
