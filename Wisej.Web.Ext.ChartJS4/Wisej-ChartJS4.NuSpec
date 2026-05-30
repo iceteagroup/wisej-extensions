@@ -26,7 +26,7 @@
     -->
     <dependencies>
       <dependency id="Wisej-4" version="$version$" />
-	  <dependency id="System.Text.Json" version="8.0.5" />
+	  <dependency id="System.Text.Json" version="10.0.8" />
     </dependencies>
   </metadata>
   <files>
