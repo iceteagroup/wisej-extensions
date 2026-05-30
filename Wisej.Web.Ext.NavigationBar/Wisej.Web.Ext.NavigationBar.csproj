@@ -8,6 +8,7 @@
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
     <FileVersion>4.0.13.11</FileVersion>
     <NoWarn>CA1416</NoWarn>
+    <GenerateResourceUsePreserializedResources Condition="'$(TargetFramework)'=='net48'">false</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="NavigationBar.bmp" />

@@ -1,16 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(NetFxVersion);$(NetCoreVersion);;net8.0-android;net8.0-ios;net8.0-windows10.0.19041.0</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
+    <GenerateResourceUsePreserializedResources Condition="'$(TargetFramework)'=='net48'">false</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="mkdir &quot;$(ProjectDir)..\bin&quot;&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)..\bin\$(TargetFramework)\&quot; /s /y" />
   </Target>
-
   <ItemGroup>
     <None Remove="Resources\corona-pflaster.svg" />
     <None Remove="Resources\corona-pill.svg" />
@@ -984,7 +982,6 @@
     <None Remove="Resources\werkzeuge-tools.svg" />
     <None Remove="Resources\werkzeuge-wand.svg" />
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="Resources\corona-pflaster.svg" />
     <EmbeddedResource Include="Resources\corona-pill.svg" />
@@ -1958,5 +1955,4 @@
     <EmbeddedResource Include="Resources\werkzeuge-tools.svg" />
     <EmbeddedResource Include="Resources\werkzeuge-wand.svg" />
   </ItemGroup>
-
 </Project>
