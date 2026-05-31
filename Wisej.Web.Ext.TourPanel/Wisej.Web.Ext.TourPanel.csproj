@@ -10,7 +10,7 @@
     <FileVersion>4.0.14.2</FileVersion>
   </PropertyGroup>
 <PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
-  <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+  <GenerateResourceUsePreserializedResources>false</GenerateResourceUsePreserializedResources>
 </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Templates\**" />

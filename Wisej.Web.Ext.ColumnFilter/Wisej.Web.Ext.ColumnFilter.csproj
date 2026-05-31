@@ -11,7 +11,7 @@
     <NoWarn>CA1416</NoWarn>
   </PropertyGroup>
 <PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
-  <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+  <GenerateResourceUsePreserializedResources>false</GenerateResourceUsePreserializedResources>
 </PropertyGroup>  <ItemGroup>
     <Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.cs" />
     <Compile Remove="Templates\Visual C#\ColumnFilterPanel\ColumnFilterPanel.Designer.cs" />
