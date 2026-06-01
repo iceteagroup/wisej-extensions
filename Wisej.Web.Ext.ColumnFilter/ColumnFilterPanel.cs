@@ -210,13 +210,16 @@ namespace Wisej.Web.Ext.ColumnFilter
 			if (this.Visible)
 				OnBeforeShow();
 
-			var button = this.FilterButton;
-			if (button != null)
+			if (this.ColumnFilter.ShowOnHover)
 			{
-				button.UserData.PanelOpen = this.Visible;
+				var button = this.FilterButton;
+				if (button != null)
+				{
+					button.UserData.PanelOpen = this.Visible;
 
-				if (!this.Visible && button.UserData.Filtered != true && button.UserData.Active != true)
-					button.Visible = false;
+					if (!this.Visible && button.UserData.Filtered != true && button.UserData.Active != true)
+						button.Visible = false;
+				}
 			}
 		}
 
