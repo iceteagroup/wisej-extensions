@@ -26,7 +26,7 @@
     -->
     <dependencies>
       <dependency id="Wisej-3" version="$version$" />
-      <dependency id="System.Linq.Dynamic.Core" version="1.6.7" />
+      <dependency id="System.Linq.Dynamic.Core" version="1.7.2" />
     </dependencies>
   </metadata>
   <files>
