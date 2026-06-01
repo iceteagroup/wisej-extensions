@@ -29,7 +29,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 	/// Where column filter panel showing a list of operators and values based on the Columns ValueType
 	///	
 	/// </summary>
-	[ToolboxItem(true)]
+	[ToolboxItem(false)]
 	[ApiCategory("ColumnFilter")]
 	public partial class WhereColumnFilterPanel : ColumnFilterPanel
 	{
