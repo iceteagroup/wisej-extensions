@@ -27,6 +27,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 	/// the bound column in a checked list box. The user can select
 	/// multiple values, clear the selection or select all.
 	/// </summary>
+	[ToolboxItem(false)]
 	[ApiCategory("ColumnFilter")]
 	public partial class SimpleColumnFilterPanel : ColumnFilterPanel
 	{
@@ -94,13 +95,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		protected override void OnBeforeShow()
 		{
 			// show the loader if we are about to populate the list of values.
-			if (this.reloadItems)
-			{
-				this.items.Items.Clear();
-				this.reloadItems = false;
-			}
-
-			if (this.items.Items.Count == 0 && this.DataGridViewColumn.DataGridView.RowCount > 0)
+			if (this.reloadItems && this.DataGridViewColumn.DataGridView.RowCount > 0)
 				this.items.ShowLoader = true;
 		}
 
@@ -112,7 +107,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			try
 			{
-				PopulateList();
+				if (this.reloadItems)
+					PopulateList();
 			}
 			finally
 			{
@@ -122,6 +118,9 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		private void PopulateList()
 		{
+			var selection = this.items.Text;
+			this.items.Items.Clear();
+
 			var column = this.DataGridViewColumn;
 			var colIndex = column.Index;
 			var dataGrid = column.DataGridView;
@@ -168,7 +167,9 @@ namespace Wisej.Web.Ext.ColumnFilter
 					}
 				}
 			}
-			this.items.Sorted = SortItems;
+
+			this.items.Text = selection;
+			this.items.Sorted = this.SortItems;
 		}
 
 		/// <summary>

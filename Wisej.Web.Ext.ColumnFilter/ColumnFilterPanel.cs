@@ -85,7 +85,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		#region Implementation
 
-
 		/// <summary>
 		/// Performs initialization tasks when the panel is created.
 		/// </summary>
@@ -94,10 +93,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			base.OnLoad(e);
 
-			if (!this.DesignMode && this.DataGridViewColumn != null)
-			{
-				this.DataGridViewColumn.DataGridView.Sorted += this.Rows_Sorted;
-			}
+			this.ColumnFilter.RegisterDataGrid(this.DataGridViewColumn.DataGridView);
 		}
 
 		private void Rows_Sorted(object sender, EventArgs e)
@@ -149,19 +145,28 @@ namespace Wisej.Web.Ext.ColumnFilter
 			foreach (var panel in panels)
 			{
 				columnFilter = panel.ColumnFilter;
-				if (panel.OnApplyFilter())
+				var button = panel.FilterButton;
+
+				if (button != null)
 				{
-					if (columnFilter.FilteredImage != null)
-						panel.FilterButton.Image = columnFilter.FilteredImage;
-					else if (columnFilter.FilteredImageSource?.Length > 0)
-						panel.FilterButton.ImageSource = columnFilter.FilteredImageSource;
-				}
-				else
-				{
-					if (columnFilter.Image != null)
-						panel.FilterButton.Image = columnFilter.Image;
-					else if (columnFilter.ImageSource.Length > 0)
-						panel.FilterButton.ImageSource = columnFilter.ImageSource;
+					if (panel.OnApplyFilter())
+					{
+						if (columnFilter.FilteredImage != null)
+							button.Image = columnFilter.FilteredImage;
+						else if (columnFilter.FilteredImageSource?.Length > 0)
+							button.ImageSource = columnFilter.FilteredImageSource;
+
+						button.UserData.Filtered = true;
+					}
+					else
+					{
+						if (columnFilter.Image != null)
+							button.Image = columnFilter.Image;
+						else if (columnFilter.ImageSource.Length > 0)
+							button.ImageSource = columnFilter.ImageSource;
+
+						button.UserData.Filtered = false;
+					}
 				}
 			}
 		}
@@ -180,7 +185,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// </summary>
 		protected virtual void OnBeforeShow()
 		{
-			Trace.TraceWarning("OnBeforeShow is not implemented.");
 		}
 
 		/// <summary>
@@ -189,7 +193,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// </summary>
 		protected virtual void OnAfterShow()
 		{
-			Trace.TraceWarning("OnAfterShow is not implemented.");
 		}
 
 		/// <summary>
@@ -199,7 +202,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// <returns>True to indicate that the filter has been applied. False if the filter has been cleared.</returns>
 		protected virtual bool OnApplyFilter()
 		{
-			Trace.TraceWarning("OnApplyFilter is not implemented.");
 			return true;
 		}
 
@@ -207,6 +209,18 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			if (this.Visible)
 				OnBeforeShow();
+
+			if (this.ColumnFilter.ShowOnHover)
+			{
+				var button = this.FilterButton;
+				if (button != null)
+				{
+					button.UserData.PanelOpen = this.Visible;
+
+					if (!this.Visible && button.UserData.Filtered != true && button.UserData.Active != true)
+						button.Visible = false;
+				}
+			}
 		}
 
 		private void ColumnFilterPanel_Accelerator(object sender, AcceleratorEventArgs e)
@@ -280,9 +294,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 				var column = this.DataGridViewColumn;
 				if (column != null)
 				{
-					if (column.DataGridView != null)
-						column.DataGridView.Sorted -= this.Rows_Sorted;
-
 					column.HeaderCell.Control?.Dispose();
 					column.HeaderCell.Control = null;
 					column.UserData.FilterPanel = null;
@@ -301,7 +312,6 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// <param name="applyFilters"></param>
 		public virtual void Clear(bool applyFilters = true)
 		{
-			Trace.TraceWarning("Clear is not implemented.");
 		}
 
 		#endregion

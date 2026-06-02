@@ -102,13 +102,13 @@ namespace Wisej.Web.Ext.ColumnFilter
 				dataGrid.RemoveSummaryRows();
 
 				// reset Combined where
-				dataGrid.UserData.columFiltercombinedWhere = "";
+				dataGrid.UserData.ColumFilterCombinedWhere = "";
 
 				// apply all the filters.
 				base.ApplyFilters();
 
 				// do the actual filtering
-				string combinedWhere = dataGrid.UserData.columFiltercombinedWhere;
+				var combinedWhere = (string)dataGrid.UserData.ColumFilterCombinedWhere;
 				if (combinedWhere.Length > 0)
 				{
 					var config = new ParsingConfig
@@ -173,13 +173,13 @@ namespace Wisej.Web.Ext.ColumnFilter
 			if (where.Length > 0)
 			{
 				var dataGrid = this.DataGridViewColumn.DataGridView;
-				string combinedWhere = dataGrid.UserData.columFiltercombinedWhere ?? "";
+				var combinedWhere = dataGrid.UserData.ColumFilterCombinedWhere ?? "";
 
 				if (combinedWhere.Length > 0)
 					combinedWhere += " AND ";
 
 				combinedWhere += where;
-				dataGrid.UserData.columFiltercombinedWhere = combinedWhere;
+				dataGrid.UserData.ColumFilterCombinedWhere = combinedWhere;
 			}
 
 			return where.Length > 0;

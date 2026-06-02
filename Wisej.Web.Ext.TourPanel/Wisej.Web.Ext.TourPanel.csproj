@@ -9,6 +9,9 @@
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
     <FileVersion>4.1.0.20</FileVersion>
   </PropertyGroup>
+<PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
+  <GenerateResourceUsePreserializedResources>false</GenerateResourceUsePreserializedResources>
+</PropertyGroup>
   <ItemGroup>
     <Compile Remove="Templates\**" />
     <Compile Remove="Wisej.TourPanel.Templates\**" />
