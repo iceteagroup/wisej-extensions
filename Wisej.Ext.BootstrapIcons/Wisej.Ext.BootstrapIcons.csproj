@@ -4,7 +4,7 @@
     <SignAssembly>true</SignAssembly>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>4.0.14.5</FileVersion>
+    <FileVersion>4.0.14.6</FileVersion>
     <GenerateResourceUsePreserializedResources Condition="'$(TargetFramework)'=='net48'">false</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
