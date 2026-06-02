@@ -18,10 +18,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Drawing;
-using System.ComponentModel;
-using Wisej.Core;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+using Wisej.Core;
 
 namespace Wisej.Web.Ext.ColumnFilter
 {
@@ -40,6 +41,9 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 		// keeps the list of columns using this filter panel.
 		private List<DataGridViewColumn> columns = new List<DataGridViewColumn>();
+
+		// keeps the list of datagridviews using this filter panel.
+		private List<DataGridView> dataGrids = new List<DataGridView>();
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="ColumnFilter"/>
@@ -106,7 +110,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// <summary>
 		/// Returns or sets the image that is displayed in the filter button.
 		/// </summary>
-		/// <returns>The <see cref="T:System.Drawing.Image" /> to display.</returns>
+		/// <returns>The <see cref="System.Drawing.Image" /> to display.</returns>
 		[Bindable(true)]
 		[Localizable(true)]
 		[Wisej.Base.SRCategory("CatAppearance")]
@@ -169,7 +173,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// Returns or sets the image that is displayed in the filter button when
 		/// there is an active filter. Can be null.
 		/// </summary>
-		/// <returns>The <see cref="T:System.Drawing.Image" /> to display.</returns>
+		/// <returns>The <see cref="System.Drawing.Image" /> to display.</returns>
 		[Bindable(true)]
 		[Localizable(true)]
 		[Wisej.Base.SRCategory("CatAppearance")]
@@ -220,11 +224,65 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// <remarks>If supported by filter type</remarks>
 		/// <since>3.2.6</since>
 		[DefaultValue(false)]
+		[Wisej.Base.SRCategory("CatBehavior")]
+		[Description("Sort items before displaying them. If supported by filter type.")]
 		public bool SortItems
 		{
 			get;
 			set;
 		} = false;
+
+		/// <summary>
+		/// Show the filter button only when the mouse is over the column header.
+		/// </summary>
+		[DefaultValue(false)]
+		[Wisej.Base.SRCategory("CatBehavior")]
+		[Description("Show the filter button only when the mouse is over the column header.")]
+		public bool ShowOnHover
+		{
+			get => this._showOnHover;
+			set
+			{
+				if (value != this._showOnHover)
+				{
+					this._showOnHover = value;
+
+					foreach (var col in this.columns)
+					{
+						var icon = col.HeaderCell.Control as PictureBox;
+						if (icon != null)
+							icon.Visible = !value;
+					}
+				}
+			}
+		}
+		private bool _showOnHover;
+
+		/// <summary>
+		/// Size of the filter button image.
+		/// </summary>
+		[DefaultValue(typeof(Size), "24, 24")]
+		[Wisej.Base.SRCategory("CatAppearance")]
+		[Description("Size of the filter button image.")]
+		public Size ImageSize
+		{
+			get => this._imageSize;
+			set
+			{
+				if (value != this._imageSize)
+				{
+					this._imageSize = value;
+
+					foreach (var col in this.columns)
+					{
+						var icon = col.HeaderCell.Control as Control;
+						if (icon != null)
+							icon.Size = value;
+					}
+				}
+			}
+		}
+		private Size _imageSize = new Size(24, 24);
 
 		#endregion
 
@@ -267,26 +325,43 @@ namespace Wisej.Web.Ext.ColumnFilter
 
 			if (show)
 			{
-				if (!GetShowFilter(column))
-				{
-					this.columns.Add(column);
-					column.Disposed -= Column_Disposed;
-					column.Disposed += Column_Disposed;
-					column.UserData.ColumnFilter = this;
-					column.HeaderCell.Control = CreateFilterButton(column);
-				}
+				RegisterColumn(column);
 			}
 			else
 			{
-				this.columns.Remove(column);
-				column.Disposed -= Column_Disposed;
-				column.UserData.ColumnFilter = null;
-				column.HeaderCell.Control?.Dispose();
-				column.HeaderCell.Control = null;
+				UnregisterColumn(column);
 			}
 
 			if (column.Site?.DesignMode ?? false)
 				column.DataGridView?.Invalidate();
+		}
+
+		private void RegisterColumn(DataGridViewColumn column)
+		{
+			if (!this.columns.Contains(column))
+			{
+				this.columns.Add(column);
+
+				column.Disposed -= this.Column_Disposed;
+				column.Disposed += this.Column_Disposed;
+				column.UserData.ColumnFilter = this;
+				column.HeaderCell.Control = CreateFilterButton(column);
+
+				if (column.DataGridView != null)
+				{
+					RegisterDataGrid(column.DataGridView);
+					column.HeaderCell.Control.Visible = !this.ShowOnHover;
+				}
+			}
+		}
+
+		private void UnregisterColumn(DataGridViewColumn column)
+		{
+			this.columns.Remove(column);
+			column.Disposed -= this.Column_Disposed;
+			column.UserData.ColumnFilter = null;
+			column.HeaderCell.Control?.Dispose();
+			column.HeaderCell.Control = null;
 		}
 
 		private void Column_Disposed(object sender, EventArgs e)
@@ -305,27 +380,54 @@ namespace Wisej.Web.Ext.ColumnFilter
 			var search = new PictureBox()
 			{
 				Dock = DockStyle.Right,
-				Size = new Size(24, 24),
+				Size = this.ImageSize,
 				Cursor = Cursors.Hand,
 				SizeMode = PictureBoxSizeMode.CenterImage
 			};
 
-			var me = this;
-			search.Click += FilterButton_Click;
 			search.UserData.FilterColumn = column;
-			if (me.Image != null)
-				search.Image = new Bitmap(me.Image);
-			search.ImageSource = me.ImageSource;
+			search.ImageSource = this.ImageSource;
+			search.Image = this.Image != null ? new Bitmap(this.Image) : null;
+
+			search.Click += this.Search_Click;
+			search.MouseEnter += this.Search_MouseEnter;
+			search.MouseLeave += this.Search_MouseLeave;
 
 			return search;
 		}
 
-		private void FilterButton_Click(object sender, EventArgs e)
+		private void Search_MouseLeave(object sender, EventArgs e)
 		{
-			if (this.FilterPanelType == null)
-				throw new InvalidOperationException("FilterPanelType is null.");
+			if (this.ShowOnHover)
+			{
+				var button = (Control)sender;
+				button.UserData.Active = false;
 
-			var column = (DataGridViewColumn)((Control)sender).UserData.FilterColumn;
+				if (button.UserData.Filtered != true && button.UserData.PanelOpen != true)
+					button.Visible = false;
+			}
+		}
+
+		private void Search_MouseEnter(object sender, EventArgs e)
+		{
+			if (this.ShowOnHover)
+			{
+				var button = (Control)sender;
+				button.Visible = true;
+				button.UserData.Active = true;
+			}
+		}
+
+		private void Search_Click(object sender, EventArgs e)
+		{
+			var control = (Control)sender;
+			var column = (DataGridViewColumn)control.UserData.FilterColumn;
+			if (column != null)
+				ShowFilterPanel(column);
+		}
+
+		private void ShowFilterPanel(DataGridViewColumn column)
+		{
 			var filterPanel = (ColumnFilterPanel)column.UserData.FilterPanel;
 
 			if (filterPanel == null)
@@ -336,13 +438,107 @@ namespace Wisej.Web.Ext.ColumnFilter
 				column.UserData.FilterPanel = filterPanel;
 
 				if (filterPanel.GetType() == typeof(SimpleColumnFilterPanel))
-					((SimpleColumnFilterPanel)filterPanel).SortItems = SortItems;
+					((SimpleColumnFilterPanel)filterPanel).SortItems = this.SortItems;
 			}
 
 			if (filterPanel.Visible)
 				filterPanel.Close();
 			else
 				filterPanel.ShowPopup(column);
+		}
+
+		/// <summary>
+		/// Reapplys the filters to the specified <see cref="DataGridView"/>.
+		/// </summary>
+		public void ApplyFilters(DataGridView dataGridView)
+			=> ApplyFiltersInternal(dataGridView);
+
+		internal static void ApplyFiltersInternal(DataGridView dataGridView)
+		{
+			foreach (DataGridViewColumn col in dataGridView.Columns)
+			{
+				var filterPanel = col.UserData.FilterPanel as ColumnFilterPanel;
+				if (filterPanel != null)
+				{
+					filterPanel.ApplyFiltersInternal();
+					break;
+				}
+			}
+		}
+
+		internal void RegisterDataGrid(DataGridView dataGridView)
+		{
+			if (!this.dataGrids.Contains(dataGridView))
+			{
+				this.dataGrids.Add(dataGridView);
+
+				dataGridView.Sorted -= DataGridView_Sorted;
+				dataGridView.Disposed -= DataGridView_Disposed;
+				dataGridView.CellMouseEnter -= DataGridView_CellMouseEnter;
+				dataGridView.CellMouseLeave -= DataGridView_CellMouseLeave;
+				dataGridView.DataBindingComplete -= DataGridView_DataBindingComplete;
+
+				dataGridView.Sorted += DataGridView_Sorted;
+				dataGridView.Disposed += DataGridView_Disposed;
+				dataGridView.CellMouseEnter += DataGridView_CellMouseEnter;
+				dataGridView.CellMouseLeave += DataGridView_CellMouseLeave;
+				dataGridView.DataBindingComplete += DataGridView_DataBindingComplete;
+			}
+		}
+
+		private static void DataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+		{
+			var dataGrid = (DataGridView)sender;
+			if (!dataGrid.IsValidColumn(e.ColumnIndex))
+				return;
+
+			var column = dataGrid.Columns[e.ColumnIndex];
+			var filter = (ColumnFilter)column.UserData.ColumnFilter;
+
+			if (filter != null && filter.ShowOnHover)
+			{
+				var filterPanel = column.UserData.FilterPanel as ColumnFilterPanel;
+				if (filterPanel != null && filterPanel.Visible)
+					return;
+
+				var button = column.HeaderCell.Control as PictureBox;
+				if (button != null && button.UserData.Filtered != true && button.UserData.PanelOpen != true)
+					button.Visible = false;
+			}
+		}
+
+		private static void DataGridView_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+		{
+			var dataGrid = (DataGridView)sender;
+			if (!dataGrid.IsValidColumn(e.ColumnIndex))
+				return;
+
+			var column = dataGrid.Columns[e.ColumnIndex];
+			var filter = (ColumnFilter)column.UserData.ColumnFilter;
+
+			if (filter != null && filter.ShowOnHover)
+			{
+				var button = column.HeaderCell.Control as PictureBox;
+				if (button != null)
+					button.Visible = true;
+			}
+		}
+
+		private static void DataGridView_Sorted(object sender, EventArgs e)
+		{
+			var dataGrid = (DataGridView)sender;
+			ApplyFiltersInternal(dataGrid);
+		}
+
+		private static void DataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+		{
+			var dataGrid = (DataGridView)sender;
+			ApplyFiltersInternal(dataGrid);
+		}
+
+		private void DataGridView_Disposed(object sender, EventArgs e)
+		{
+			this.dataGrids.Remove((DataGridView)sender);
 		}
 
 		#endregion
