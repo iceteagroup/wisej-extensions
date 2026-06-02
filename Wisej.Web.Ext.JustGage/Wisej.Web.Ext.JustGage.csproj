@@ -7,7 +7,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.0.14.6</FileVersion>
+    <FileVersion>4.0.14.1</FileVersion>
     <GenerateResourceUsePreserializedResources Condition="'$(TargetFramework)'=='net48'">false</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <ItemGroup>
