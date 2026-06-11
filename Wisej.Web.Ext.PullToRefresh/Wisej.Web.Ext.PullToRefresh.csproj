@@ -9,7 +9,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.1.0.21</FileVersion>
+    <FileVersion>4.1.0.42</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Platform\wisej.web.ext.PullToRefresh.js" />
