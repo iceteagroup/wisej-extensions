@@ -35,6 +35,7 @@ namespace Wisej.Web.Ext.ChatControl
 	[DefaultEvent("SentMessage")]
 	public partial class ChatBox : UserControl
 	{
+		private int _multilineInputListenerId = -1;
 
 		#region Constructor
 
@@ -44,6 +45,10 @@ namespace Wisej.Web.Ext.ChatControl
 		public ChatBox()
 		{
 			InitializeComponent();
+
+			// Keep the message input from acting as a nested native drop target.
+			// File drops should be handled by the ChatBox as a whole.
+			this.textBoxMessage.AllowDrop = false;
 
 			// Forward the TextBox tools to this Tools collection.
 			this.textBoxMessage.Tools.AddRange(this.Tools.ToArray());
@@ -453,12 +458,12 @@ namespace Wisej.Web.Ext.ChatControl
 				this.textBoxMessage.Multiline = true;
 				this.textBoxMessage.AcceptsReturn = true;
 
-				// reze the input panel when the text changes.
-				this.textBoxMessage.ClientEvents.Clear();
-				this.textBoxMessage.AddClientEventListener("input",
-	@"
-	debugger;
+				// Re-size the input panel when the text changes.
+				if (this._multilineInputListenerId > 0)
+					this.textBoxMessage.RemoveClientEventListener(this._multilineInputListenerId);
 
+				this._multilineInputListenerId = this.textBoxMessage.AddClientEventListener("input",
+	@"
 	let text = this.getValue();
 	text = text.replace(/\n/g, '<br/>');
 	const font = this.getFont();
@@ -496,7 +501,12 @@ namespace Wisej.Web.Ext.ChatControl
 			{
 				this.textBoxMessage.Multiline = false;
 				this.textBoxMessage.AcceptsReturn = false;
-				this.textBoxMessage.ClientEvents.Clear();
+
+				if (this._multilineInputListenerId > 0)
+				{
+					this.textBoxMessage.RemoveClientEventListener(this._multilineInputListenerId);
+					this._multilineInputListenerId = -1;
+				}
 			}
 		}
 
