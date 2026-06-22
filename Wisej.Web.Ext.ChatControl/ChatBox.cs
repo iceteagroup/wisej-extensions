@@ -543,16 +543,25 @@ namespace Wisej.Web.Ext.ChatControl
 			var text = this.textBoxMessage.Text;
 			if (!String.IsNullOrEmpty(text))
 			{
-				// clear text in textbox.
-				this.textBoxMessage.Clear();
-				this.panelMessageInput.Height = 50;
-
-				// create a new message.
+				// create the message that is about to be sent.
 				var message = new Message
 				{
 					User = this.User,
 					Content = text,
 				};
+
+				// fire SendingMessage so handlers can inspect or cancel the message
+				// before it is sent. Per the documented contract, a cancelled message
+				// is not added to the chat container; the typed text is left in place
+				// so the user can edit and resend.
+				var args = new SendingMessageEventArgs(true, message);
+				OnSendingMessage(args);
+				if (args.Cancel)
+					return;
+
+				// clear text in textbox.
+				this.textBoxMessage.Clear();
+				this.panelMessageInput.Height = 50;
 
 				// add it to the datasource.
 				this.DataSource.Add(message);
@@ -582,16 +591,6 @@ namespace Wisej.Web.Ext.ChatControl
 			OnFormatMessage(new MessageEventArgs(isChatBoxUser, message));
 
 			message.RenderMessageControl += Message_RenderMessageControl;
-
-			// allow the container to cancel sending the message..
-			if (message.Timestamp == null)
-			{
-				var args = new SendingMessageEventArgs(isChatBoxUser, message);
-				OnSendingMessage(args);
-
-				if (args.Cancel)
-					return;
-			}
 
 			var messageContainer = new FlexLayoutPanelMessageContainer(message, this)
 			{
