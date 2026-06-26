@@ -4,7 +4,7 @@
     <SignAssembly>true</SignAssembly>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>4.1.0.47</FileVersion>
+    <FileVersion>4.1.1.1</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\abacus.svg" />
