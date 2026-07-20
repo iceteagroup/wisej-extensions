@@ -107,7 +107,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		{
 			try
 			{
-				if (this.reloadItems)
+				if (this.reloadItems || items.Items.Count == 0)
 					PopulateList();
 			}
 			finally
