@@ -590,11 +590,6 @@ namespace Wisej.Web.Ext.NavigationBar
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public new Padding Padding { get => base.Padding; set => base.Padding = value; }
-		/// <exclude/>
-		[Browsable(false)]
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override bool AutoSize { get => base.AutoSize; set => base.AutoSize = value; }
 		/// <exclude/>
 		[Browsable(false)]
