@@ -39,6 +39,10 @@ this.init = function (options) {
 
 	this.widget.on("change", function () {
 
+		// don't schedule an update for text applied from the server.
+		if (me.__updatingText)
+			return;
+
 		clearTimeout(me.updateTimer);
 
 		var delay = me.autoUpdateDelay;
@@ -70,11 +74,48 @@ this.update = function (options, old) {
 
 	if (this.widget) {
 
+		var text = options.text;
+		delete options.text;
+
 		this.widget.setOptions(options);
 
-		if (this.widget.getValue() != options.text) {
-			this.widget.setValue(options.text);	
-			this.widget.clearSelection();
+		if (text != null && this.widget.getValue() != text) {
+
+			// replace the full document instead of using setValue() +
+			// clearSelection(), which parks the caret at the end of the
+			// document and resets the scroll position (QA-2706). a full-range
+			// replace goes through the document as a regular edit: the undo
+			// stack is preserved and identical text is a no-op.
+			var editor = this.editor;
+			var session = editor.getSession();
+			var focused = editor.isFocused();
+			var cursor = editor.getCursorPosition();
+			var scrollTop = session.getScrollTop();
+			var scrollLeft = session.getScrollLeft();
+
+			this.__updatingText = true;
+			try {
+				var Range = ace.require("ace/range").Range;
+				var lastRow = session.getLength() - 1;
+				session.replace(new Range(0, 0, lastRow, session.getLine(lastRow).length), text);
+			} finally {
+				this.__updatingText = false;
+			}
+
+			if (focused) {
+				// restore the caret and scroll position (clipped to the
+				// new document) when the user is editing.
+				editor.moveCursorToPosition(cursor);
+				editor.clearSelection();
+				session.setScrollTop(scrollTop);
+				session.setScrollLeft(scrollLeft);
+			}
+			else {
+				editor.moveCursorToPosition({ row: 0, column: 0 });
+				editor.clearSelection();
+				session.setScrollTop(0);
+				session.setScrollLeft(0);
+			}
 		}
 	}
 }

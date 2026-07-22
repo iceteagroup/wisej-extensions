@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Wisej.Core;
 using Wisej.Design;
 
 namespace Wisej.Web.Ext.AceEditor
@@ -261,8 +262,39 @@ namespace Wisej.Web.Ext.AceEditor
 
 		private void ProcessWidgetChangeEvent(WidgetEventArgs e)
 		{
-			var text = e.Data ?? "";
-			this.Options.text = this.Text = text;
+			string text = e.Data ?? "";
+
+			if (base.Text == text)
+				return;
+
+			// The text originated from the client: absorb it without rendering
+			// it back, otherwise the stale echo reverts what the user typed
+			// during the round trip and moves the caret to the end of the
+			// document (QA-2706).
+			var me = (IWisejControl)this;
+			var dirty = me.IsDirty;
+			this.Options.text = text;
+			me.IsDirty = dirty;
+
+			// Options.text's change notification removed "options" from the
+			// cached client configuration; restore it to match the next render
+			// or the full options (with this text) are re-sent with the next
+			// unrelated update.
+			UpdateState("options", WisejSerializer.Serialize(this.Options, GetSerializationOptions()));
+
+			// update the property and fire TextChanged last: user code
+			// handling the event may legitimately update the widget.
+			base.Text = text;
+		}
+
+		private WisejSerializerOptions GetSerializationOptions()
+		{
+			// same resolution as the private Widget.GetSerializationOptions().
+			var options = TypeDescriptor.GetProperties(this)["Options"].Attributes[typeof(WisejSerializerOptionsAttribute)];
+			if (options != null)
+				return ((WisejSerializerOptionsAttribute)options).Options;
+
+			return WisejSerializerOptions.UseOptionsAttribute | WisejSerializerOptions.CamelCase;
 		}
 
 		protected override void OnGotFocus(EventArgs e)
