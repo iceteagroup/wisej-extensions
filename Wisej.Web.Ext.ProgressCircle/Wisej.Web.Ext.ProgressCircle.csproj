@@ -6,7 +6,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.36.6</FileVersion>
+    <FileVersion>3.5.36.7</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="ProgressCircle.bmp" />
