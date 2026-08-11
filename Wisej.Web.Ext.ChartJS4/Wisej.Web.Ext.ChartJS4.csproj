@@ -7,7 +7,7 @@
 	<AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
 	<EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
 	<LangVersion>latest</LangVersion>
-	<FileVersion>4.1.2.2</FileVersion>
+	<FileVersion>4.1.2.3</FileVersion>
 	<Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)'=='net48' ">
