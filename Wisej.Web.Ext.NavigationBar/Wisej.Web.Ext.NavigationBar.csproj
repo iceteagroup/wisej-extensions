@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.1.2.6</FileVersion>
+    <FileVersion>4.1.2.7</FileVersion>
     <NoWarn>CA1416</NoWarn>
   </PropertyGroup>
   <ItemGroup>
