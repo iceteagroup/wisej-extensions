@@ -6,7 +6,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>4.1.2.11</FileVersion>
+    <FileVersion>4.1.2.12</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="$(WisejPackageName)" Version="$(WisejVersion)" />
