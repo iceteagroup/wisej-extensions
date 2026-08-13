@@ -7,7 +7,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.1.2.12</FileVersion>
+    <FileVersion>4.1.2.13</FileVersion>
     <NoWarn>CA1416</NoWarn>
   </PropertyGroup>
 <PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
