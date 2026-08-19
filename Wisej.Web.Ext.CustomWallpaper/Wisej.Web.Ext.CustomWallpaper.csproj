@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.1.2.21</FileVersion>
+    <FileVersion>4.1.2.22</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="CustomWallpaper.bmp" />
