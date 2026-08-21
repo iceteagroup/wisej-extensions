@@ -7,7 +7,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>4.1.2.27</FileVersion>
+    <FileVersion>4.1.2.29</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Platform\wisej.web.ext.ScreenRecorder.js" />
