@@ -6,7 +6,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.37.1</FileVersion>
+    <FileVersion>3.5.37.3</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Platform\smoothie-1.28.js" />
