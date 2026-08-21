@@ -5,7 +5,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
-    <FileVersion>3.5.36.7</FileVersion>
+    <FileVersion>3.5.37.1</FileVersion>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='net48'">
     <Reference Include="System.Net" />
