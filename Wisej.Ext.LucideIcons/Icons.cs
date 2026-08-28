@@ -1,11 +1,11 @@
-namespace Wisej.Ext.LucidIcons
+namespace Wisej.Ext.LucideIcons
 {
 	/// <summary>
 	/// Defines all the images in the icon set.
 	/// </summary>
 	public static class Icons
 	{
-		private const string root = "resource.wx/Wisej.Ext.LucidIcons/";
+		private const string root = "resource.wx/Wisej.Ext.LucideIcons/";
 
 		public const string AArrowDown = root + "a-arrow-down.svg";
 		public const string AArrowUp = root + "a-arrow-up.svg";
