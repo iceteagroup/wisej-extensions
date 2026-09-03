@@ -365,7 +365,11 @@ this.__initTooltipSystem = function (options) {
  */
 this.onEventMouseOver = function (event, ev) {
 
-	this.__tooltipEl = ev.target;
+	// Use currentTarget (the event segment) instead of target: FullCalendar
+	// delegates mouseenter, so ev.target may be an inner span (e.g. .fc-time or
+	// .fc-title) whose unclipped offsetWidth extends past the visible, clipped
+	// .fc-content box, which shifted the tooltip off-center of the event.
+	this.__tooltipEl = ev.currentTarget;
 
 	const text = event.toolTipText ?? event.title;
 	this.__sharedTooltip.set({
@@ -468,7 +472,9 @@ this.onEventMouseEnter = function (calEvent, ev, view) {
 
 	// Handle tooltips if enabled
 	if (this.__sharedTooltip) {
-		this.__tooltipEl = ev.target;
+		// Use currentTarget (the event segment) instead of target: see
+		// the matching comment in onEventMouseOver.
+		this.__tooltipEl = ev.currentTarget;
 
 		const text = calEvent.toolTipText ?? calEvent.title;
 		this.__sharedTooltip.set({
