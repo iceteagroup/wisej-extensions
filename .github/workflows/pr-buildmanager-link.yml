@@ -1,0 +1,11 @@
+name: PR Build Manager Link
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  deeplink:
+    uses: iceteagrouplab/Scripts/.github/workflows/pr-buildmanager-link.yml@main
+    permissions:
+      pull-requests: write
