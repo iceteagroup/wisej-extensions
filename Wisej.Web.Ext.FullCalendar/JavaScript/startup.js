@@ -404,6 +404,14 @@ this.__onShowInterval = function (e) {
 	this.__showTimer.stop();
 	this.__hideTimer.stop();
 	this.__sharedTooltip.show();
+
+	// Flush pending layout/appearance queues before placing the tooltip: right
+	// after show() the tooltip's bounds may still reflect the PREVIOUS label's
+	// size (queue flush is otherwise deferred to the next tick), so the first
+	// placement can center on a stale width and visibly snap into place a
+	// frame later once the liveupdate interval re-measures it.
+	qx.ui.core.queue.Manager.flush();
+
 	this.__sharedTooltip.placeToElement(this.__tooltipEl, true);
 	this.__hideTimer.startWith(this.__sharedTooltip.getHideTimeout());
 }
