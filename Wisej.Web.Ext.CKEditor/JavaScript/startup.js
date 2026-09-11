@@ -106,6 +106,29 @@ this.init = function () {
 			me.fireEvent("keyup");
 		});
 
+		// forward Tab and Shift+Tab to the Wisej focus handler.
+		// the editable area lives inside the editor's iframe: the keydown never reaches
+		// the qooxdoo FocusHandler on the parent document, and the browser's own sequential
+		// navigation leaves the iframe (tabindex 0) straight into the browser's UI because
+		// every focusable Wisej widget sorts before it (tabindex >= 1).
+		// priority 20 runs after the "tab" plugin (default 10) so table-cell navigation
+		// and tabSpaces keep working: they cancel the event before it gets here.
+		me.editor.on("key", function (e) {
+
+			var keyCode = e.data.keyCode;
+			if (keyCode == 9 || keyCode == CKEDITOR.SHIFT + 9) {
+
+				var focusHandler = qx.ui.core.FocusHandler.getInstance();
+				if (keyCode == 9)
+					focusHandler.focusNext(me);
+				else
+					focusHandler.focusPrev(me);
+
+				e.cancel();
+			}
+
+		}, null, null, 20);
+
 		// focus the wrapper wisej widget.
 		// IFrame editors cannot propagate pointer events to their container.
 		me.editor.window.$.addEventListener('pointerdown', function (e) {
