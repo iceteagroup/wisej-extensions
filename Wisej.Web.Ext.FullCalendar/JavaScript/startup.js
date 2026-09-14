@@ -365,7 +365,11 @@ this.__initTooltipSystem = function (options) {
  */
 this.onEventMouseOver = function (event, ev) {
 
-	this.__tooltipEl = ev.target;
+	// Use currentTarget (the event segment) instead of target: FullCalendar
+	// delegates mouseenter, so ev.target may be an inner span (e.g. .fc-time or
+	// .fc-title) whose unclipped offsetWidth extends past the visible, clipped
+	// .fc-content box, which shifted the tooltip off-center of the event.
+	this.__tooltipEl = ev.currentTarget;
 
 	const text = event.toolTipText ?? event.title;
 	this.__sharedTooltip.set({
@@ -400,6 +404,14 @@ this.__onShowInterval = function (e) {
 	this.__showTimer.stop();
 	this.__hideTimer.stop();
 	this.__sharedTooltip.show();
+
+	// Flush pending layout/appearance queues before placing the tooltip: right
+	// after show() the tooltip's bounds may still reflect the PREVIOUS label's
+	// size (queue flush is otherwise deferred to the next tick), so the first
+	// placement can center on a stale width and visibly snap into place a
+	// frame later once the liveupdate interval re-measures it.
+	qx.ui.core.queue.Manager.flush();
+
 	this.__sharedTooltip.placeToElement(this.__tooltipEl, true);
 	this.__hideTimer.startWith(this.__sharedTooltip.getHideTimeout());
 }
@@ -468,7 +480,9 @@ this.onEventMouseEnter = function (calEvent, ev, view) {
 
 	// Handle tooltips if enabled
 	if (this.__sharedTooltip) {
-		this.__tooltipEl = ev.target;
+		// Use currentTarget (the event segment) instead of target: see
+		// the matching comment in onEventMouseOver.
+		this.__tooltipEl = ev.currentTarget;
 
 		const text = calEvent.toolTipText ?? calEvent.title;
 		this.__sharedTooltip.set({
