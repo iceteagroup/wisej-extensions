@@ -5,12 +5,15 @@ namespace Wisej.Web.Ext.Camera
 	[ApiCategory("Camera")]
 	public partial class Camera
 	{
-		/// <summary>
-		/// The facingMode property is a value indicating the direction in which the camera 
-		/// producing the video track is currently facing.
-		/// </summary>
-		/// <remarks>See: <see href="https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings/facingMode"/> </remarks>
-		public enum VideoFacingMode
+        /// <summary>
+        /// The facingMode property is a value indicating the direction in which the camera 
+        /// producing the video track is currently facing.
+        /// </summary>
+        /// <remarks>
+        /// For more information on camera facing modes, visit the
+        /// <see href="https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings/facingMode"/>.
+        /// </remarks>
+        public enum VideoFacingMode
 		{
 			/// <summary>
 			/// The video source is facing toward the user; this includes, 
