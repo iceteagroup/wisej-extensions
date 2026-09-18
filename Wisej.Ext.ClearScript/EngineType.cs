@@ -21,10 +21,14 @@ using System.ComponentModel;
 
 namespace Wisej.Ext.ClearScript
 {
-	/// <summary>
-	/// Indicates the type of scripting engine to create.
-	/// </summary>
-	[ApiCategory("ClearScript")]
+    /// <summary>
+    /// Indicates the type of scripting engine to create.
+    /// </summary>
+    /// /// <remarks>
+    /// This enumeration defines the available scripting engines for use with the Wisej framework,
+    /// allowing developers to specify which engine to utilize for executing scripts.
+    /// </remarks>
+    [ApiCategory("ClearScript")]
 	public enum EngineType
 	{
 		/// <summary>
