@@ -167,12 +167,13 @@ qx.Class.define("wisej.ext.FileSystemDirectoryHandle", {
 		getFile: function (name, create) {
 			var me = this;
 			return (async function () {
-				var file = await me.handle.getFileHandle(name, { create: create || false });
+				var handle = await me.handle.getFileHandle(name, { create: create || false });
+				var file = await handle.getFile();
 				return {
-					size: file.size ?? 0,
+					size: file.size,
 					type: file.type,
-					name: file.name,
-					lastModified: file.lastModifiedDate ?? new Date(),
+					name: handle.name,
+					lastModified: file.lastModifiedDate,
 					hash: new wisej.ext.FileSystemFileHandle(handle, file).$$hash,
 				};
 			})();
@@ -189,7 +190,7 @@ qx.Class.define("wisej.ext.FileSystemDirectoryHandle", {
 			return (async function () {
 				var array = [];
 				var values = await me.handle.values();
-				for await (handle of values) {
+				for await (var handle of values) {
 					if (handle.kind === "file") {
 						var name = handle.name;
 						if (rx.exec(name)) {
@@ -219,7 +220,7 @@ qx.Class.define("wisej.ext.FileSystemDirectoryHandle", {
 			return (async function () {
 				var array = [];
 				var values = await me.handle.values();
-				for await (handle of values) {
+				for await (var handle of values) {
 					if (handle.kind === "directory") {
 						var name = handle.name;
 						if (rx.exec(name)) {
@@ -243,10 +244,7 @@ qx.Class.define("wisej.ext.FileSystemDirectoryHandle", {
 			var me = this;
 
 			return (async function () {
-				await me.handle.removeEntry({
-					name,
-					recursive,
-				});
+				await me.handle.removeEntry(name, { recursive: recursive });
 			})();
 		},
 
