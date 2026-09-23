@@ -25,7 +25,7 @@ namespace Wisej.Ext.WebAuthn
 	/// An authenticator's response to a client's request for generation of a new authentication assertion.
 	/// </summary>
 	/// <remarks>
-	/// See <see href="https://w3c.github.io/webauthn/#iface-authenticatorassertionresponse"/>
+	/// See <see href="https://w3c.github.io/webauthn/#iface-authenticatorassertionresponse"/>.
 	/// </remarks>
 	[ApiCategory("WebAuthn")]
 	public class Assertion
@@ -49,6 +49,19 @@ namespace Wisej.Ext.WebAuthn
 		/// <summary>
 		/// Creates a new instance of <see cref="Assertion"/>.
 		/// </summary>
+		/// <remarks>
+		/// The <see cref="Signature"/>, <see cref="ClientDataJSON"/> and <see cref="AuthenticatorData"/>
+		/// properties can only be set internally; use the
+		/// <see cref="Assertion(byte[], string, string)"/> overload to initialize them.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var assertion = new Assertion();
+		///
+		/// // All properties are null until they are assigned by the WebAuthn extension.
+		/// bool isEmpty = assertion.Signature == null;
+		/// ]]></code>
+		/// </example>
 		public Assertion()
         {
         }
@@ -56,9 +69,20 @@ namespace Wisej.Ext.WebAuthn
 		/// <summary>
 		/// Creates a new instance of <see cref="Assertion"/> with the given configuration.
 		/// </summary>
-		/// <param name="signature">The authenticator's signature.</param>
-		/// <param name="clientDataJSON">Client data.</param>
-		/// <param name="authenticatorData">Authenticator data.</param>
+		/// <param name="signature">The raw signature returned by the authenticator.</param>
+		/// <param name="clientDataJSON">The JSON-compatible serialization of the client data.</param>
+		/// <param name="authenticatorData">The authenticator data returned by the authenticator.</param>
+		/// <example>
+		/// <code><![CDATA[
+		/// // Build an Assertion from the values returned by WebAuthn.GetAsync().
+		/// CredentialsResponse response = await WebAuthn.GetAsync(challenge, allowCredentials, 60000);
+		///
+		/// var assertion = new Assertion(
+		/// 	response.Signature,
+		/// 	response.ClientData.Base64,
+		/// 	response.AuthenticatorData.Base64);
+		/// ]]></code>
+		/// </example>
 		public Assertion(byte[] signature, string clientDataJSON, string authenticatorData)
         {
             this.Signature = signature;

@@ -24,6 +24,26 @@ namespace Wisej.Ext.WebAuthn
 	/// <summary>
 	/// Represents the result of a request for credentials from the client.
 	/// </summary>
+	/// <remarks>
+	/// Returned by <see cref="WebAuthn.CreateAsync"/> and <see cref="WebAuthn.GetAsync"/>.
+	/// <see cref="Signature"/> and <see cref="UserHandle"/> are only set by <see cref="WebAuthn.GetAsync"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// // Registration: keep the public key.
+	/// CredentialsResponse created = await WebAuthn.CreateAsync(
+	/// 	challenge, rp, user, parameters, selection, 60000, AttestationConveyancePreference.None);
+	/// PublicKey publicKey = created.AuthenticatorData.PublicKey;
+	///
+	/// // Login: validate the signature with the stored public key.
+	/// CredentialsResponse assertion = await WebAuthn.GetAsync(challenge2, allowCredentials, 60000);
+	/// bool valid = WebAuthn.Validate(
+	/// 	publicKey,
+	/// 	assertion.AuthenticatorData.Base64,
+	/// 	assertion.ClientData.Base64,
+	/// 	assertion.Signature);
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("WebAuthn")]
 	public class CredentialsResponse
 	{
@@ -31,7 +51,7 @@ namespace Wisej.Ext.WebAuthn
 		/// The authenticator data provided by the client.
 		/// </summary>
 		/// <remarks>
-		/// <See href="https://w3c.github.io/webauthn/#authenticator-data"/>
+		/// See <see href="https://w3c.github.io/webauthn/#authenticator-data"/>.
 		/// </remarks>
 		public AuthenticatorData AuthenticatorData { get; set; }
 
