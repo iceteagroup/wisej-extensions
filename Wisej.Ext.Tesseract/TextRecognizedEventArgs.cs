@@ -32,6 +32,24 @@ namespace Wisej.Ext.Tesseract
 		/// <param name="confidence">The confidence of the recognition. Generally a higher confidence indicates that the result is more accurate.</param>
 		/// <param name="text">The text discovered.</param>
 		/// <param name="words">An array of strings containing the words discovered.</param>
+		/// <example>
+		/// <code><![CDATA[
+		/// // Instances are created by the Tesseract component when it raises the
+		/// // TextRecognized event. Handle the event to read the recognized text:
+		/// tesseract1.TextRecognized += (sender, e) =>
+		/// {
+		/// 	if (e.Confidence >= 75)
+		/// 	{
+		/// 		label1.Text = e.Text;
+		/// 		listBox1.Items.Clear();
+		/// 		listBox1.Items.AddRange(e.Words);
+		/// 	}
+		/// };
+		///
+		/// // Or create an instance directly, e.g. to simulate the event in a test:
+		/// var args = new TextRecognizedEventArgs(90, "Invoice 1234", new[] { "Invoice", "1234" });
+		/// ]]></code>
+		/// </example>
 		public TextRecognizedEventArgs(int confidence, string text, string[] words)
 		{
 			this.Confidence = confidence;
