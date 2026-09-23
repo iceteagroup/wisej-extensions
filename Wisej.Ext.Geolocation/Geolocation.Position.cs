@@ -168,9 +168,35 @@ namespace Wisej.Ext.Geolocation
 		public double Speed { get; internal set; }
 
 		/// <summary>
-		/// Returns a string that represents the current object.
+		/// Returns a string that represents the current <see cref="T:Wisej.Ext.Geolocation.Position"/> object.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>
+		/// A string containing the <see cref="P:Wisej.Ext.Geolocation.Position.Status"/>,
+		/// <see cref="P:Wisej.Ext.Geolocation.Position.ErrorMessage"/>, <see cref="P:Wisej.Ext.Geolocation.Position.Latitude"/>,
+		/// <see cref="P:Wisej.Ext.Geolocation.Position.Longitude"/>, <see cref="P:Wisej.Ext.Geolocation.Position.Altitude"/>
+		/// and <see cref="P:Wisej.Ext.Geolocation.Position.Speed"/> values, formatted as
+		/// <c>"Status=...; Message=...; Latitude=...; Longitude=...; Altitude=...; Speed=..."</c>.
+		/// </returns>
+		/// <remarks>
+		/// The returned string is intended for logging and debugging. Values that the device
+		/// could not provide are shown as <c>NaN</c>, and the message is empty when
+		/// <see cref="P:Wisej.Ext.Geolocation.Position.ErrorMessage"/> is null.
+		/// </remarks>
+		/// <example>
+		/// Retrieving the current position and logging a summary of it:
+		/// <code><![CDATA[
+		/// var geolocation = new Wisej.Ext.Geolocation.Geolocation();
+		///
+		/// geolocation.GetCurrentPosition(position =>
+		/// {
+		///     // e.g. "Status=Success; Message=; Latitude=39.7684; Longitude=-86.1581; Altitude=NaN; Speed=NaN"
+		///     System.Diagnostics.Debug.WriteLine(position.ToString());
+		///
+		///     if (position.Status != Wisej.Ext.Geolocation.StatusCode.Success)
+		///         AlertBox.Show(position.ToString());
+		/// });
+		/// ]]></code>
+		/// </example>
 		public override string ToString()
 		{
 			return String.Concat(
