@@ -309,7 +309,7 @@ namespace Wisej.Ext.ClientFileSystem
 		/// <returns>An awaitable <see cref="Task"/> that represents the asynchronous operation.</returns>
 		public async Task TruncateAsync(int size)
 		{
-			await CallAsync("truncate");
+			await CallAsync("truncate", size);
 		}
 
 		/// <summary>
