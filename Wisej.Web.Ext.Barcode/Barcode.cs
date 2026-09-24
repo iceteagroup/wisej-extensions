@@ -28,6 +28,33 @@ namespace Wisej.Web.Ext.Barcode
 	/// <summary>
 	/// Represents a barcode widget supporting several formats.
 	/// </summary>
+	/// <remarks>
+	/// The value encoded in the barcode is the <see cref="Control.Text"/> of the control. The barcode is drawn on
+	/// the server with the ZXing.NET library, sized to fill the control minus its <see cref="Control.Padding"/>, and
+	/// uses the <see cref="Control.ForeColor"/>, <see cref="Control.BackColor"/> and <see cref="Control.Font"/> of the control.
+	/// </remarks>
+	/// <example>
+	/// The following example shows a QR code with a link and a Code 128 barcode with a product number:
+	/// <code><![CDATA[
+	/// var qrCode = new Barcode
+	/// {
+	///     BarcodeType = BarcodeType.QR,
+	///     Text = "https://wisej.com",
+	///     ShowLabel = false,
+	///     Size = new Size(150, 150)
+	/// };
+	///
+	/// var productCode = new Barcode
+	/// {
+	///     BarcodeType = BarcodeType.Code_128,
+	///     Text = "PRD-004521",
+	///     Size = new Size(250, 80),
+	///     Location = new Point(0, 160)
+	/// };
+	///
+	/// this.Controls.AddRange(new Control[] { qrCode, productCode });
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Barcode))]
 	[DefaultProperty("Value")]
@@ -38,6 +65,21 @@ namespace Wisej.Web.Ext.Barcode
 		/// <summary>
 		/// Creates a new instance of the <see cref="T:Wisej.Web.Ext.Barcode"/> control.
 		/// </summary>
+		/// <remarks>
+		/// The new control shows a Code 39 barcode with its label, uses the Arial 10pt font for the label
+		/// and has a default size of 100 x 40 pixels. It can't receive the focus.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var barcode = new Barcode();
+		/// barcode.BarcodeType = BarcodeType.EAN_13;
+		/// barcode.Text = "5901234123457";
+		/// barcode.Dock = DockStyle.Top;
+		/// barcode.Height = 100;
+		///
+		/// this.Controls.Add(barcode);
+		/// ]]></code>
+		/// </example>
 		public Barcode()
 		{
 			base.TabStop = false;
@@ -573,7 +615,29 @@ namespace Wisej.Web.Ext.Barcode
 		/// <summary>
 		/// Draws the barcode and returns the image object.
 		/// </summary>
-		/// <returns></returns>
+		/// <remarks>
+		/// The image uses the current <see cref="BarcodeType"/>, <see cref="ShowLabel"/>, <see cref="VerticalOffset"/>,
+		/// size, padding, colors and font of the control, and encodes the <see cref="Control.Text"/> of the control.
+		/// The caller is responsible for disposing the returned image. An exception is thrown when the text
+		/// can't be encoded with the selected <see cref="BarcodeType"/>, for example letters in an <see cref="F:Wisej.Web.Ext.Barcode.BarcodeType.EAN_13"/> barcode.
+		/// </remarks>
+		/// <returns>An <see cref="Image"/> with the barcode, or null if nothing could be drawn.</returns>
+		/// <example>
+		/// The following example saves the barcode as a PNG file and downloads it to the browser:
+		/// <code><![CDATA[
+		/// private void buttonDownload_Click(object sender, EventArgs e)
+		/// {
+		///     using (var image = this.barcode1.DrawBarCode())
+		///     using (var stream = new MemoryStream())
+		///     {
+		///         image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+		///         stream.Position = 0;
+		///
+		///         Application.Download(stream, "barcode.png");
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		public Image DrawBarCode()
 		{
 			barcode.Format = (ZXing.BarcodeFormat)this.BarcodeType;
