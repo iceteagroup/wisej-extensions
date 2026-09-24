@@ -33,6 +33,37 @@ namespace Wisej.Web.Ext.AceEditor
 	/// Ace is an embeddable code editor written in JavaScript. 
 	/// It matches the features and performance of native editors such as Sublime, Vim and TextMate. 
 	/// </remarks>
+	/// <example>
+	/// The following example adds a C# code editor to a page and reads the code when the user clicks a button:
+	/// <code><![CDATA[
+	/// private AceEditor aceEditor;
+	///
+	/// private void Page1_Load(object sender, EventArgs e)
+	/// {
+	///     this.aceEditor = new AceEditor
+	///     {
+	///         Dock = DockStyle.Fill,
+	///         Language = "csharp",
+	///         Theme = "monokai",
+	///         FontSize = 14,
+	///         Text = "public class Hello\r\n{\r\n}"
+	///     };
+	///
+	///     this.aceEditor.TextChanged += aceEditor_TextChanged;
+	///     this.panelEditor.Controls.Add(this.aceEditor);
+	/// }
+	///
+	/// private void aceEditor_TextChanged(object sender, EventArgs e)
+	/// {
+	///     this.labelStatus.Text = $"{this.aceEditor.Text.Length} characters";
+	/// }
+	///
+	/// private void buttonSave_Click(object sender, EventArgs e)
+	/// {
+	///     File.WriteAllText(Application.MapPath("Code/Hello.cs"), this.aceEditor.Text);
+	/// }
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("AceEditor")]
 	public class AceEditor : Widget
 	{
@@ -42,6 +73,22 @@ namespace Wisej.Web.Ext.AceEditor
 		/// <summary>
 		/// Initializes a new instance of <see cref="AceEditor"/>.
 		/// </summary>
+		/// <remarks>
+		/// The new editor shows the gutter, line numbers, indent guides and the print margin at column 80,
+		/// and sends text changes to the server 1000 milliseconds after the user stops typing
+		/// (see <see cref="AutoUpdateDelay"/>).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var editor = new AceEditor();
+		/// editor.Language = "javascript";
+		/// editor.Theme = "github";
+		/// editor.ShowPrintMargin = false;
+		/// editor.Text = "function hello() {\n    return 'Hello';\n}";
+		///
+		/// this.Controls.Add(editor);
+		/// ]]></code>
+		/// </example>
 		public AceEditor()
 		{
 			this.ShowGutter = true;
@@ -311,6 +358,22 @@ namespace Wisej.Web.Ext.AceEditor
 		/// <summary>
 		/// Performs an undo operation on the document, reverting the last change.
 		/// </summary>
+		/// <remarks>
+		/// The operation runs in the editor on the client. The <see cref="Text"/> property is updated
+		/// when the resulting change is sent back to the server.
+		/// </remarks>
+		/// <example>
+		/// The following example connects the editor to Undo and Redo buttons on a toolbar:
+		/// <code><![CDATA[
+		/// private void toolBar_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+		/// {
+		///     if (e.Button == this.buttonUndo)
+		///         this.aceEditor.Undo();
+		///     else if (e.Button == this.buttonRedo)
+		///         this.aceEditor.Redo();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Undo()
 		{
 			this.Instance.undo();
@@ -319,6 +382,20 @@ namespace Wisej.Web.Ext.AceEditor
 		/// <summary>
 		/// Performs a redo operation on the document, reimplementing the last change.
 		/// </summary>
+		/// <remarks>
+		/// Only changes that were reverted with <see cref="Undo"/> (or with the undo keyboard shortcut) can be redone.
+		/// The operation runs in the editor on the client. The <see cref="Text"/> property is updated
+		/// when the resulting change is sent back to the server.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// private void buttonRedo_Click(object sender, EventArgs e)
+		/// {
+		///     this.aceEditor.Redo();
+		///     this.aceEditor.Focus();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Redo()
 		{
 			this.Instance.redo();
