@@ -32,6 +32,17 @@ namespace Wisej.Web.Ext.AspNetControl
 		/// <summary>
 		/// Registers the module.
 		/// </summary>
+		/// <remarks>
+		/// Registers the <see cref="HttpModule"/> with the ASP.NET application. ASP.NET calls this method automatically
+		/// before the application starts, through the <see cref="T:System.Web.PreApplicationStartMethodAttribute"/>
+		/// declared in this assembly, so you don't need to call it or add the module to Web.config.
+		/// </remarks>
+		/// <example>
+		/// The following example shows the assembly attribute that runs this method on startup:
+		/// <code><![CDATA[
+		/// [assembly: PreApplicationStartMethod(typeof(Wisej.Web.Ext.AspNetControl.HttpModuleStartup), "Start")]
+		/// ]]></code>
+		/// </example>
 		/// <exclude/>
 		public static void Start()
 		{

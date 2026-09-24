@@ -39,6 +39,24 @@ namespace Wisej.Web.Ext.AspNetControl
 		/// <summary>
 		/// Initializes a new instance of <see cref="T:Wisej.Web.Ext.AspNetControl.AspNetWrapper"/>.
 		/// </summary>
+		/// <remarks>
+		/// The new instance saves the VIEWSTATE of the ASP.NET page in the Wisej session
+		/// (see <see cref="UseSessionViewState"/>).
+		/// This class is abstract: derive from <see cref="T:Wisej.Web.Ext.AspNetControl.AspNetWrapper`1"/>
+		/// to wrap a specific ASP.NET control.
+		/// </remarks>
+		/// <example>
+		/// The following example creates a wrapper that stores the VIEWSTATE in the page instead of the Wisej session:
+		/// <code><![CDATA[
+		/// public class CalendarWrapper : AspNetWrapper<System.Web.UI.WebControls.Calendar>
+		/// {
+		///     public CalendarWrapper()
+		///     {
+		///         this.UseSessionViewState = false;
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		public AspNetWrapperBase()
 		{
 			this.UseSessionViewState = true;
@@ -359,6 +377,26 @@ namespace Wisej.Web.Ext.AspNetControl
 		/// </summary>
 		/// <param name="page">The <see cref="T:System.Web.UI.Page"/> that is processing OnPreInit.</param>
 		/// <param name="container">The container form to add the wrapped control to.</param>
+		/// <remarks>
+		/// This method is called by the embedded Wisej.AspNetHost.aspx page at the beginning of the ASP.NET
+		/// page life cycle. It attaches the page events to this wrapper, creates the wrapped control and adds it
+		/// to <paramref name="container"/>. It's not intended to be called from application code.
+		/// </remarks>
+		/// <example>
+		/// The following example shows how the host page calls this method in its <c>OnPreInit</c> override:
+		/// <code><![CDATA[
+		/// protected override void OnPreInit(EventArgs e)
+		/// {
+		///     Wisej.Web.Application.RestoreSession(Context);
+		///
+		///     var wrapper = this.Wrapper; // the AspNetWrapperBase found using the "_cid" query parameter.
+		///     if (wrapper != null)
+		///         wrapper.OnPagePreInitCallback(this, this.form);
+		///
+		///     base.OnPreInit(e);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public void OnPagePreInitCallback(System.Web.UI.Page page, System.Web.UI.HtmlControls.HtmlForm container)
 		{
@@ -489,6 +527,38 @@ namespace Wisej.Web.Ext.AspNetControl
 		/// When in design mode, causes the rendered control to update its
 		/// entire surface in the designer.
 		/// </summary>
+		/// <remarks>
+		/// Calling this method changes the URL of the inner IFrame, which reloads the host page and runs
+		/// the ASP.NET page life cycle again. Use it to apply property values that are copied to
+		/// <see cref="WrappedControl"/> in the <see cref="Init"/> or <see cref="Load"/> events.
+		/// </remarks>
+		/// <example>
+		/// The following example reloads a wrapped calendar when its date changes on the server:
+		/// <code><![CDATA[
+		/// public class CalendarWrapper : AspNetWrapper<System.Web.UI.WebControls.Calendar>
+		/// {
+		///     public DateTime VisibleDate
+		///     {
+		///         get { return this._visibleDate; }
+		///         set
+		///         {
+		///             if (this._visibleDate != value)
+		///             {
+		///                 this._visibleDate = value;
+		///                 Update();
+		///             }
+		///         }
+		///     }
+		///     private DateTime _visibleDate = DateTime.Today;
+		///
+		///     protected override void OnLoad(EventArgs e)
+		///     {
+		///         base.OnLoad(e);
+		///         this.WrappedControl.VisibleDate = this._visibleDate;
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		public new void Update()
 		{
 			this._version++;
