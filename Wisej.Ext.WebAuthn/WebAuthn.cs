@@ -90,10 +90,11 @@ namespace Wisej.Ext.WebAuthn
 					},
 					ClientData = new ClientData
 					{
-						Challenge = Convert.FromBase64String(result.clientData.challenge),
+						Challenge = FromBase64Url((string)result.clientData.challenge),
 						Origin = result.clientData.origin,
 						Type = result.clientData.type
-					}
+					},
+					SignatureCounter = unchecked((int)Convert.ToUInt32(result.authenticatorData.signCount ?? 0))
 				};
 			}
 		}
@@ -118,6 +119,8 @@ namespace Wisej.Ext.WebAuthn
 			}
 			else
 			{
+				var authData = Convert.FromBase64String((string)result.authenticatorDataBase64);
+
 				return new CredentialsResponse
 				{
 					AuthenticatorData = new AuthenticatorData
@@ -130,13 +133,14 @@ namespace Wisej.Ext.WebAuthn
 					},
 					ClientData = new ClientData
 					{
-						Challenge = Convert.FromBase64String(result.clientData.challenge),
+						Challenge = FromBase64Url((string)result.clientData.challenge),
 						Origin = result.clientData.origin,
 						Base64 = result.clientDataBase64,
 						Type = result.clientData.type
 					},
 					UserHandle = result.userHandle,
 					Signature = Convert.FromBase64String(result.signature),
+					SignatureCounter = ReadSignatureCounter(authData),
 				};
 			}
 		}
@@ -321,6 +325,51 @@ namespace Wisej.Ext.WebAuthn
 			var output = new byte[input.Length - 1];
 			Array.Copy(input, 1, output, 0, output.Length);
 			return output;
+		}
+
+		/// <summary>
+		/// Decodes a base64url value (RFC 4648 section 5), with or without padding.
+		/// </summary>
+		/// <remarks>
+		/// The browser returns clientData.challenge base64url-encoded without padding,
+		/// which <see cref="Convert.FromBase64String(string)"/> cannot decode directly.
+		/// Standard base64 input is also accepted.
+		/// </remarks>
+		/// <param name="value">The base64url-encoded value.</param>
+		/// <returns>The decoded bytes.</returns>
+		private static byte[] FromBase64Url(string value)
+		{
+			if (value == null)
+				return null;
+
+			var s = value.Replace('-', '+').Replace('_', '/');
+			switch (s.Length % 4)
+			{
+				case 2: s += "=="; break;
+				case 3: s += "="; break;
+			}
+			return Convert.FromBase64String(s);
+		}
+
+		/// <summary>
+		/// Reads the unsigned 32-bit big-endian signature counter (bytes 33-36) from the authenticator data.
+		/// </summary>
+		/// <remarks>
+		/// See: <see href="https://w3c.github.io/webauthn/#sctn-authenticator-data"/>.
+		/// Values above <see cref="int.MaxValue"/> wrap because <see cref="CredentialsResponse.SignatureCounter"/> is an <see cref="int"/>.
+		/// </remarks>
+		/// <param name="authData">The raw authenticator data.</param>
+		/// <returns>The signature counter, or 0 if the data is too short.</returns>
+		private static int ReadSignatureCounter(byte[] authData)
+		{
+			if (authData == null || authData.Length < 37)
+				return 0;
+
+			return unchecked((int)(
+				(uint)authData[33] << 24 |
+				(uint)authData[34] << 16 |
+				(uint)authData[35] << 8 |
+				authData[36]));
 		}
 
 		#region Wisej Implementation
