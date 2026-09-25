@@ -28,6 +28,20 @@ namespace Wisej.Web.Ext.ChartJS3.Design
 	/// </summary>
 	internal class DataSetCollectionEditor : CollectionEditor
 	{
+		/// <summary>
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS3.Design.DataSetCollectionEditor"/> class.
+		/// </summary>
+		/// <param name="type">The type of the collection to edit.</param>
+		/// <remarks>
+		/// The Visual Studio designer creates the editor when the user edits a <see cref="T:Wisej.Web.Ext.ChartJS3.DataSetCollection"/> property.
+		/// The items created by the editor match the <see cref="P:Wisej.Web.Ext.ChartJS3.ChartJS3.ChartType"/> of the chart being edited.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var editor = new DataSetCollectionEditor(typeof(DataSetCollection));
+		/// var result = editor.EditValue(context, provider, this.chartJS31.DataSets);
+		/// ]]></code>
+		/// </example>
 		public DataSetCollectionEditor(Type type) : base(type)
 		{
 		}
