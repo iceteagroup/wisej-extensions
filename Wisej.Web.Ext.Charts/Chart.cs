@@ -28,6 +28,21 @@ namespace Wisej.Web.Ext.Charts
     /// 
     /// Renders charts from the ChartJS library (http://www.chartjs.org/).
     /// </summary>
+    /// <remarks>
+    /// This is a work-in-progress component. It currently renders a fixed bar chart with sample data
+    /// (seven monthly labels and two data sets) and exposes no public properties or methods to configure
+    /// the chart type, labels or data. Use it like any other <see cref="Control"/>: create it, set its
+    /// size or docking, and add it to a container.
+    /// </remarks>
+    /// <example>
+    /// <code><![CDATA[
+    /// var chart = new Chart
+    /// {
+    ///     Dock = DockStyle.Fill
+    /// };
+    /// this.Controls.Add(chart);
+    /// ]]></code>
+    /// </example>
     public class Chart : Control
     {
         private int random()
