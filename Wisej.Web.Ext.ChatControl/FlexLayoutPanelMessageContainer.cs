@@ -23,16 +23,40 @@ using System.Drawing;
 namespace Wisej.Web.Ext.ChatControl
 {
 	/// <summary>
-	/// A container for a message.
+	/// A <see cref="FlexLayoutPanel"/> that displays a single <see cref="ChatControl.Message"/> inside a <see cref="ChatControl.ChatBox"/>,
+	/// including the user's avatar, name, timestamp and the message bubble.
 	/// </summary>
+	/// <remarks>
+	/// The <see cref="ChatControl.ChatBox"/> creates one container for each message added to its
+	/// <see cref="ChatControl.ChatBox.DataSource"/>. The container requests the message control
+	/// (see <see cref="ChatControl.ChatBox.RenderMessageControl"/>), sizes it to at most half the width of the
+	/// chat box (up to 600 pixels), and applies the bubble color from <see cref="User.BubbleColor"/> or,
+	/// when not set, the theme colors <c>@highlight</c> (current user) or <c>@controlDark</c> (other users).
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var message = new Message("Hello!", null, chatBox.User);
+	/// var container = new FlexLayoutPanelMessageContainer(message, chatBox);
+	/// container.BubbleColor = Color.LightBlue;
+	/// ]]></code>
+	/// </example>
 	public partial class FlexLayoutPanelMessageContainer : FlexLayoutPanel
 	{
 
 		#region Constructors
 
 		/// <summary>
-		/// Creates a new instance of <see cref="FlexLayoutPanelMessageContainer"/>.
+		/// Creates a new, empty instance of <see cref="FlexLayoutPanelMessageContainer"/>.
 		/// </summary>
+		/// <remarks>
+		/// This constructor only initializes the child controls; it does not bind a message or owner.
+		/// Use <see cref="FlexLayoutPanelMessageContainer(ChatControl.Message, ChatControl.ChatBox)"/> to create a fully initialized container.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var container = new FlexLayoutPanelMessageContainer();
+		/// ]]></code>
+		/// </example>
 		public FlexLayoutPanelMessageContainer()
 		{
 			InitializeComponent();
@@ -41,8 +65,20 @@ namespace Wisej.Web.Ext.ChatControl
 		/// <summary>
 		/// Creates a new instance of <see cref="FlexLayoutPanelMessageContainer"/> with the given message and owner.
 		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="owner"></param>
+		/// <param name="message">The <see cref="ChatControl.Message"/> to display. Its <see cref="ChatControl.Message.User"/> must not be <c>null</c>.</param>
+		/// <param name="owner">The <see cref="ChatControl.ChatBox"/> that owns this container. Its <see cref="ChatControl.ChatBox.User"/> must not be <c>null</c>.</param>
+		/// <remarks>
+		/// The constructor sets the timestamp (formatted with <see cref="ChatControl.ChatBox.TimestampFormat"/>),
+		/// the avatar and timestamp visibility, the bubble color, the user name and image, and requests
+		/// the message control, which is added to the bubble. The message control is resized whenever the owner is resized.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var message = new Message("How can I help?", null, new User("bot", "Assistant"));
+		/// message.Timestamp = DateTime.Now;
+		/// var container = new FlexLayoutPanelMessageContainer(message, chatBox);
+		/// ]]></code>
+		/// </example>
 		public FlexLayoutPanelMessageContainer(Message message, ChatBox owner)
 		{
 			InitializeComponent();
@@ -58,23 +94,58 @@ namespace Wisej.Web.Ext.ChatControl
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets the ChatBox owner for this control.
+		/// Returns or sets the <see cref="ChatControl.ChatBox"/> that owns this container.
 		/// </summary>
+		/// <value>The owner <see cref="ChatControl.ChatBox"/>, or <c>null</c> when created with the parameterless constructor.</value>
+		/// <example>
+		/// <code><![CDATA[
+		/// var container = new FlexLayoutPanelMessageContainer(message, chatBox);
+		/// var format = container.ChatBox.TimestampFormat;
+		/// ]]></code>
+		/// </example>
 		public ChatBox ChatBox { get; set; }
 
 		/// <summary>
-		/// Gets or sets the Message for this control.
+		/// Returns or sets the <see cref="ChatControl.Message"/> displayed by this container.
 		/// </summary>
+		/// <value>The displayed <see cref="ChatControl.Message"/>, or <c>null</c> when created with the parameterless constructor.</value>
+		/// <example>
+		/// <code><![CDATA[
+		/// var container = new FlexLayoutPanelMessageContainer(message, chatBox);
+		/// var sender = container.Message.User?.Name;
+		/// ]]></code>
+		/// </example>
 		public Message Message { get; set; }
 
 		/// <summary>
-		/// The control displayed in the message.
+		/// Returns or sets the control displayed inside the message bubble.
 		/// </summary>
+		/// <value>
+		/// The control returned by the <see cref="ChatControl.ChatBox.RenderMessageControl"/> event, or an
+		/// <see cref="AutoSizeLabel"/> showing <see cref="ChatControl.Message.Content"/> by default.
+		/// </value>
+		/// <example>
+		/// <code><![CDATA[
+		/// var container = new FlexLayoutPanelMessageContainer(message, chatBox);
+		/// container.MessageControl.ForeColor = Color.White;
+		/// ]]></code>
+		/// </example>
 		public Control MessageControl { get; set; }
 
 		/// <summary>
-		/// Gets or sets the bubble color for the message.
+		/// Returns or sets the background color of the message bubble.
 		/// </summary>
+		/// <value>
+		/// The back color of the bubble panel. Initialized from <see cref="User.BubbleColor"/>, or
+		/// <c>@highlight</c> / <c>@controlDark</c> when not set, or <see cref="Color.Transparent"/>
+		/// when <see cref="ChatControl.Message.BubbleVisible"/> is <c>false</c>.
+		/// </value>
+		/// <example>
+		/// <code><![CDATA[
+		/// var container = new FlexLayoutPanelMessageContainer(message, chatBox);
+		/// container.BubbleColor = Color.LightGreen;
+		/// ]]></code>
+		/// </example>
 		public Color BubbleColor
 		{
 			get => this.panelContent.BackColor;
