@@ -23,8 +23,20 @@ using System.Text.Json.Serialization;
 namespace Wisej.Web.Ext.ChartJS4.Models
 {
 	/// <summary>
-	/// Arc element styling options (for pie, doughnut, polar area charts).
+	/// Represents the default styling options of the arc elements used by pie, doughnut and polar area charts (Chart.js <c>options.elements.arc</c>).
 	/// </summary>
+	/// <remarks>
+	/// An instance is available through <see cref="ElementsOptions.Arc"/>. These values apply to all arc datasets unless overridden by the dataset options.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var chart = new ChartJS4();
+	/// var arc = new ArcElementOptions();
+	/// arc.BorderWidth = 1;
+	/// arc.BorderColor = System.Drawing.Color.White;
+	/// chart.ChartOptions.Elements = new ElementsOptions { Arc = arc };
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("ChartJS4")]
 	[TypeConverter(typeof(Converter))]
 	public class ArcElementOptions : OptionsBase
@@ -34,8 +46,22 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		private object? _borderColor;
 
 		/// <summary>
-		/// Arc background color.
+		/// Returns or sets the default fill color of the arcs (Chart.js option <c>backgroundColor</c>).
 		/// </summary>
+		/// <value>
+		/// A <see cref="System.Drawing.Color"/>, a CSS color string, or an array of colors. The default is <c>null</c>, which uses the Chart.js default color.
+		/// </value>
+		/// <remarks>
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var arc = new ArcElementOptions();
+		/// arc.BackgroundColor = new[] { "#36a2eb", "#ff6384", "#ffce56" };
+		/// chart.ChartOptions.Elements = new ElementsOptions { Arc = arc };
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("backgroundColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Arc background color.")]
@@ -46,8 +72,22 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Arc border width.
+		/// Returns or sets the default border width, in pixels, of the arcs (Chart.js option <c>borderWidth</c>).
 		/// </summary>
+		/// <value>
+		/// The border width in pixels. The default is <c>2</c>.
+		/// </value>
+		/// <remarks>
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var arc = new ArcElementOptions();
+		/// arc.BorderWidth = 1;
+		/// chart.ChartOptions.Elements = new ElementsOptions { Arc = arc };
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("borderWidth")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(2)]
@@ -59,8 +99,22 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Arc border color.
+		/// Returns or sets the default border color of the arcs (Chart.js option <c>borderColor</c>).
 		/// </summary>
+		/// <value>
+		/// A <see cref="System.Drawing.Color"/>, a CSS color string, or an array of colors. The default is <c>null</c>, which uses the Chart.js default (<c>"#fff"</c>).
+		/// </value>
+		/// <remarks>
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var arc = new ArcElementOptions();
+		/// arc.BorderColor = System.Drawing.Color.White;
+		/// chart.ChartOptions.Elements = new ElementsOptions { Arc = arc };
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("borderColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Arc border color.")]
@@ -71,8 +125,24 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Additional custom properties that can be serialized to JSON.
+		/// Returns or sets a dictionary of additional Chart.js options that are not exposed as typed properties of the arc element options.
 		/// </summary>
+		/// <value>
+		/// A <see cref="System.Collections.Generic.Dictionary{TKey, TValue}"/> of option names and values, or <c>null</c> (default).
+		/// </value>
+		/// <remarks>
+		/// The dictionary is marked with <c>[JsonExtensionData]</c>: each entry is serialized as an additional top-level property of this options object, using the key as the JSON property name. Use it to set any Chart.js option not covered by the typed API.
+		/// This property is hidden from the property grid and is not persisted by the designer. Assigning the property does not refresh the chart automatically; the new values are sent with the next chart update.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var arc = new ArcElementOptions();
+		/// arc.ExtensionData = new System.Collections.Generic.Dictionary<string, object>
+		/// {
+		///     ["borderAlign"] = "inner"
+		/// };
+		/// ]]></code>
+		/// </example>
 		[JsonExtensionData]
 		[DefaultValue(null)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -81,33 +151,93 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
 
 		/// <summary>
-		/// Determines whether the BackgroundColor property should be serialized by the designer.
+		/// Returns whether the <see cref="BackgroundColor"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="BackgroundColor"/> is not <c>null</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (arc.ShouldSerializeBackgroundColor())
+		///     arc.ResetBackgroundColor();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeBackgroundColor() => BackgroundColor != null;
 
 		/// <summary>
-		/// Resets the BackgroundColor property to its default value.
+		/// Resets the <see cref="BackgroundColor"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="BackgroundColor"/> to <c>null</c>.
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var arc = new ArcElementOptions();
+		/// arc.ResetBackgroundColor();
+		/// ]]></code>
+		/// </example>
 		public void ResetBackgroundColor() => BackgroundColor = null;
 
 		/// <summary>
-		/// Determines whether the BorderWidth property should be serialized by the designer.
+		/// Returns whether the <see cref="BorderWidth"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="BorderWidth"/> is not <c>2</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (arc.ShouldSerializeBorderWidth())
+		///     arc.ResetBorderWidth();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeBorderWidth() => BorderWidth != 2;
 
 		/// <summary>
-		/// Resets the BorderWidth property to its default value.
+		/// Resets the <see cref="BorderWidth"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="BorderWidth"/> to <c>2</c>.
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var arc = new ArcElementOptions();
+		/// arc.ResetBorderWidth();
+		/// ]]></code>
+		/// </example>
 		public void ResetBorderWidth() => BorderWidth = 2;
 
 		/// <summary>
-		/// Determines whether the BorderColor property should be serialized by the designer.
+		/// Returns whether the <see cref="BorderColor"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="BorderColor"/> is not <c>null</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (arc.ShouldSerializeBorderColor())
+		///     arc.ResetBorderColor();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeBorderColor() => BorderColor != null;
 
 		/// <summary>
-		/// Resets the BorderColor property to its default value.
+		/// Resets the <see cref="BorderColor"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="BorderColor"/> to <c>null</c>.
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var arc = new ArcElementOptions();
+		/// arc.ResetBorderColor();
+		/// ]]></code>
+		/// </example>
 		public void ResetBorderColor() => BorderColor = null;
 
 	}

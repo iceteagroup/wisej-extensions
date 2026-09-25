@@ -23,8 +23,20 @@ using System.Text.Json.Serialization;
 namespace Wisej.Web.Ext.ChartJS4.Models
 {
 	/// <summary>
-	/// Interaction options.
+	/// Represents the Chart.js interaction options (<c>options.interaction</c>) that control how hover and tooltip interactions select chart elements.
 	/// </summary>
+	/// <remarks>
+	/// An instance is available through <see cref="ChartOptions.Interaction"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var chart = new ChartJS4();
+	/// var interaction = chart.ChartOptions.Interaction;
+	/// interaction.Mode = "index";
+	/// interaction.Intersect = false;
+	/// interaction.Axis = "x";
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("ChartJS4")]
 	[TypeConverter(typeof(Converter))]
 	public class InteractionOptions : OptionsBase
@@ -35,8 +47,23 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		private bool _includeInvisible;
 
 		/// <summary>
-		/// Sets which elements appear in the interaction.
+		/// Returns or sets which elements appear in the interaction (Chart.js option <c>mode</c>).
 		/// </summary>
+		/// <value>
+		/// One of <c>"point"</c>, <c>"nearest"</c>, <c>"index"</c>, <c>"dataset"</c>, <c>"x"</c> or <c>"y"</c>, or <c>null</c> (default) to use the Chart.js default (<c>"nearest"</c>).
+		/// </value>
+		/// <remarks>
+		/// <c>"index"</c> selects the items at the same index in all datasets; <c>"dataset"</c> selects all items of the same dataset; <c>"point"</c> selects all items that intersect the point; <c>"nearest"</c> selects the nearest items; <c>"x"</c> and <c>"y"</c> select the items that intersect along the respective axis.
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var interaction = chart.ChartOptions.Interaction;
+		/// interaction.Mode = "index";
+		/// interaction.Intersect = false;
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("mode")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Sets which elements appear in the interaction.")]
@@ -48,8 +75,22 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// If true, the interaction mode only applies when the mouse position intersects an item on the chart.
+		/// Returns or sets whether the interaction mode applies only when the mouse position intersects an item on the chart (Chart.js option <c>intersect</c>).
 		/// </summary>
+		/// <value>
+		/// <c>true</c> to require intersection; otherwise <c>false</c>. The default is <c>true</c>.
+		/// </value>
+		/// <remarks>
+		/// This value is always serialized.
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var interaction = chart.ChartOptions.Interaction;
+		/// interaction.Intersect = false;
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("intersect")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.Never)]
 		[DefaultValue(true)]
@@ -61,8 +102,22 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Can be 'x', 'y', 'xy', or 'r' to define which directions are used in calculating distances.
+		/// Returns or sets which directions are used when calculating distances between the pointer and the elements (Chart.js option <c>axis</c>).
 		/// </summary>
+		/// <value>
+		/// <c>"x"</c>, <c>"y"</c>, <c>"xy"</c> or <c>"r"</c>, or <c>null</c> (default) to use the Chart.js default (<c>"x"</c> for <c>"index"</c> mode, <c>"xy"</c> otherwise).
+		/// </value>
+		/// <remarks>
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var interaction = chart.ChartOptions.Interaction;
+		/// interaction.Mode = "nearest";
+		/// interaction.Axis = "x";
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("axis")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Axis for interaction calculations.")]
@@ -73,8 +128,21 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// If true, include invisible points.
+		/// Returns or sets whether points that are outside the chart area are also included when evaluating interactions (Chart.js option <c>includeInvisible</c>).
 		/// </summary>
+		/// <value>
+		/// <c>true</c> to include invisible points; otherwise <c>false</c>. The default is <c>false</c>.
+		/// </value>
+		/// <remarks>
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var interaction = chart.ChartOptions.Interaction;
+		/// interaction.IncludeInvisible = true;
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("includeInvisible")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
@@ -86,8 +154,25 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Additional custom properties that can be serialized to JSON.
+		/// Returns or sets a dictionary of additional Chart.js options that are not exposed as typed properties of the interaction options.
 		/// </summary>
+		/// <value>
+		/// A <see cref="System.Collections.Generic.Dictionary{TKey, TValue}"/> of option names and values, or <c>null</c> (default).
+		/// </value>
+		/// <remarks>
+		/// The dictionary is marked with <c>[JsonExtensionData]</c>: each entry is serialized as an additional top-level property of this options object, using the key as the JSON property name. Use it to set any Chart.js option not covered by the typed API.
+		/// This property is hidden from the property grid and is not persisted by the designer. Assigning the property does not refresh the chart automatically; the new values are sent with the next chart update.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var interaction = chart.ChartOptions.Interaction;
+		/// interaction.ExtensionData = new System.Collections.Generic.Dictionary<string, object>
+		/// {
+		///     ["includeInvisible"] = true
+		/// };
+		/// ]]></code>
+		/// </example>
 		[JsonExtensionData]
 		[DefaultValue(null)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -96,53 +181,158 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
 
 		/// <summary>
-		/// Determines whether the Mode property should be serialized by the designer.
+		/// Returns whether the <see cref="Mode"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Mode"/> is not <c>null</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (interaction.ShouldSerializeMode())
+		///     interaction.ResetMode();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeMode() => Mode != null;
 
 		/// <summary>
-		/// Resets the Mode property to its default value.
+		/// Resets the <see cref="Mode"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="Mode"/> to <c>null</c> (Chart.js default).
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var interaction = chart.ChartOptions.Interaction;
+		/// interaction.ResetMode();
+		/// ]]></code>
+		/// </example>
 		public void ResetMode() => Mode = null;
 
 		/// <summary>
-		/// Determines whether the Intersect property should be serialized by the designer.
+		/// Returns whether the <see cref="Intersect"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Intersect"/> is <c>false</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (interaction.ShouldSerializeIntersect())
+		///     interaction.ResetIntersect();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeIntersect() => Intersect != true;
 
 		/// <summary>
-		/// Resets the Intersect property to its default value.
+		/// Resets the <see cref="Intersect"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="Intersect"/> to <c>true</c>.
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var interaction = chart.ChartOptions.Interaction;
+		/// interaction.ResetIntersect();
+		/// ]]></code>
+		/// </example>
 		public void ResetIntersect() => Intersect = true;
 
 		/// <summary>
-		/// Determines whether the Axis property should be serialized by the designer.
+		/// Returns whether the <see cref="Axis"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Axis"/> is not <c>null</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (interaction.ShouldSerializeAxis())
+		///     interaction.ResetAxis();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeAxis() => Axis != null;
 
 		/// <summary>
-		/// Resets the Axis property to its default value.
+		/// Resets the <see cref="Axis"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="Axis"/> to <c>null</c> (Chart.js default).
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var interaction = chart.ChartOptions.Interaction;
+		/// interaction.ResetAxis();
+		/// ]]></code>
+		/// </example>
 		public void ResetAxis() => Axis = null;
 
 		/// <summary>
-		/// Determines whether the IncludeInvisible property should be serialized by the designer.
+		/// Returns whether the <see cref="IncludeInvisible"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="IncludeInvisible"/> is <c>true</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (interaction.ShouldSerializeIncludeInvisible())
+		///     interaction.ResetIncludeInvisible();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeIncludeInvisible() => IncludeInvisible != false;
 
 		/// <summary>
-		/// Resets the IncludeInvisible property to its default value.
+		/// Resets the <see cref="IncludeInvisible"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="IncludeInvisible"/> to <c>false</c>.
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var interaction = chart.ChartOptions.Interaction;
+		/// interaction.ResetIncludeInvisible();
+		/// ]]></code>
+		/// </example>
 		public void ResetIncludeInvisible() => IncludeInvisible = false;
 
 		/// <summary>
-		/// Determines whether the ExtensionData property should be serialized by the designer.
+		/// Returns whether the <see cref="ExtensionData"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="ExtensionData"/> contains at least one entry; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (interaction.ShouldSerializeExtensionData())
+		///     interaction.ResetExtensionData();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeExtensionData() => ExtensionData != null && ExtensionData.Count > 0;
 
 		/// <summary>
-		/// Resets the ExtensionData property to its default value.
+		/// Resets the <see cref="ExtensionData"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="ExtensionData"/> to <c>null</c>.
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var interaction = chart.ChartOptions.Interaction;
+		/// interaction.ResetExtensionData();
+		/// ]]></code>
+		/// </example>
 		public void ResetExtensionData() => ExtensionData = null;
 	}
 }

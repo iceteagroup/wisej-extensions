@@ -29,11 +29,42 @@ namespace Wisej.Web.Ext.ChartJS4.Serialization
 	/// JSON converter for <see cref="Color"/> objects.
 	/// Converts colors to RGBA format for Chart.js.
 	/// </summary>
+	/// <remarks>
+	/// Colors are written as <c>"rgba(r, g, b, a)"</c> strings, with the alpha channel expressed as a value
+	/// between 0 and 1 formatted with two decimals using the invariant culture. <see cref="Color.Empty"/> and
+	/// fully transparent colors are written as <c>null</c>. When reading, both the <c>rgba(…)</c> format and any
+	/// HTML color (e.g. <c>"#FF0000"</c> or <c>"red"</c>) are accepted.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var options = new JsonSerializerOptions();
+	/// options.Converters.Add(new ColorJsonConverter());
+	/// var json = JsonSerializer.Serialize(Color.FromArgb(128, 255, 0, 0), options);
+	/// // json == "\"rgba(255, 0, 0, 0.50)\""
+	/// ]]></code>
+	/// </example>
 	public class ColorJsonConverter : JsonConverter<Color>
 	{
 		/// <summary>
-		/// Reads a Color from JSON.
+		/// Reads a <see cref="Color"/> from a JSON string value.
 		/// </summary>
+		/// <param name="reader">The reader positioned on the JSON string token.</param>
+		/// <param name="typeToConvert">The type to convert (<see cref="Color"/>).</param>
+		/// <param name="options">The serializer options in use.</param>
+		/// <returns>
+		/// The parsed <see cref="Color"/>, or <see cref="Color.Empty"/> if the value is <c>null</c> or empty.
+		/// </returns>
+		/// <remarks>
+		/// Values in the <c>rgba(r, g, b, a)</c> format are parsed directly (the alpha value is scaled from 0–1 to 0–255);
+		/// any other value is parsed with <see cref="ColorTranslator.FromHtml"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var options = new JsonSerializerOptions();
+		/// options.Converters.Add(new ColorJsonConverter());
+		/// var color = JsonSerializer.Deserialize<Color>("\"rgba(0, 128, 255, 1)\"", options);
+		/// ]]></code>
+		/// </example>
 		public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
 			var value = reader.GetString();
@@ -58,8 +89,24 @@ namespace Wisej.Web.Ext.ChartJS4.Serialization
 		}
 
 		/// <summary>
-		/// Writes a Color to JSON in RGBA format.
+		/// Writes a <see cref="Color"/> to JSON in RGBA format.
 		/// </summary>
+		/// <param name="writer">The writer to write the value to.</param>
+		/// <param name="value">The color to write.</param>
+		/// <param name="options">The serializer options in use.</param>
+		/// <remarks>
+		/// Writes a string in the <c>rgba(r, g, b, a)</c> format, with the alpha channel as a 0–1 value with two
+		/// decimals formatted using the invariant culture. <see cref="Color.Empty"/> and colors with an alpha of 0
+		/// are written as <c>null</c>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var options = new JsonSerializerOptions();
+		/// options.Converters.Add(new ColorJsonConverter());
+		/// var json = JsonSerializer.Serialize(Color.SteelBlue, options);
+		/// // json == "\"rgba(70, 130, 180, 1.00)\""
+		/// ]]></code>
+		/// </example>
 		public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
 		{
 			if (value == Color.Empty || value.A == 0)
