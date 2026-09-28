@@ -153,6 +153,11 @@ namespace Wisej.Web.Ext.ChatControl
 						ForeColor = Color.FromName("@highlightText")
 					};
 				}
+				else
+				{
+					// use the control provided by the RenderMessageControl handler.
+					this.Control = args.Control;
+				}
 			}
 
 			OnMessageControlAssigned(EventArgs.Empty);
