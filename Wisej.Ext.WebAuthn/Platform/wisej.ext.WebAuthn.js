@@ -201,14 +201,12 @@ qx.Class.define("wisej.ext.WebAuthn", {
 			var attestedCredentialDataFlag = this._isBitOn(flagsBuffer, 6);
 			var extensionDataFlag = this._isBitOn(flagsBuffer, 7);
 
-			// parse the signature counter.
-			var signCount;
-			var signCountArray = authData.slice(34, 37);
-			if (signCountArray.buffer != null) {
-				var signCountDataView = new DataView(signCountArray.buffer, 0)
-
-				signCount = signCountDataView.getInt16(0);
-            }
+			// parse the signature counter: bytes 33-36, unsigned 32-bit big-endian.
+			// authData is an ArrayBuffer for "get" and a Uint8Array (from CBOR) for "create".
+			var signCount = 0;
+			var signCountBytes = new Uint8Array(authData.slice(33, 37));
+			if (signCountBytes.length === 4)
+				signCount = new DataView(signCountBytes.buffer, signCountBytes.byteOffset, 4).getUint32(0, false);
 
 			// parse attestedCredentialData, if available.
 			var attestedCredentialData = attestedCredentialDataFlag ? this._parseAttestedCredentialData(authData) : null;
