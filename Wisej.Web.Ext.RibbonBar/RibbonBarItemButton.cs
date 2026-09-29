@@ -28,6 +28,17 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <summary>
 	/// Represents a button in a <see cref="RibbonBarGroup"/>.
 	/// </summary>
+	/// <remarks>
+	/// <para>
+	/// The button can be displayed large, with the image above the text (<see cref="Orientation.Vertical"/>, the default), or
+	/// small, with the image to the left of the text (<see cref="Orientation.Horizontal"/>).
+	/// </para><para>
+	/// When the button has <see cref="MenuItems"/>, clicking it opens the drop down menu and doesn't fire the click events;
+	/// clicking a menu item fires <see cref="ItemClicked"/> and <see cref="RibbonBar.MenuButtonItemClick"/>.
+	/// Use <see cref="RibbonBarItemSplitButton"/> to have both a clickable button and a drop down menu.
+	/// Without menu items, clicking the button fires <see cref="RibbonBarItem.Click"/> and <see cref="RibbonBar.ItemClick"/>.
+	/// </para>
+	/// </remarks>
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
@@ -84,6 +95,21 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets whether the <see cref="RibbonBarItemButton"/> 
 		/// is rendered using the "pushed" state.
 		/// </summary>
+		/// <returns>true if the button is displayed as pushed; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// The pushed state is only visual: the button doesn't toggle it automatically when clicked.
+		/// Changing the value fires the <see cref="PushedChanged"/> event.
+		/// </remarks>
+		/// <example>
+		/// Using the button as a toggle button:
+		/// <code><![CDATA[
+		/// private void buttonBold_Click(object sender, EventArgs e)
+		/// {
+		///     this.buttonBold.Pushed = !this.buttonBold.Pushed;
+		///     ApplyBold(this.buttonBold.Pushed);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets whether the RibbonBarItemButton is rendered using the pushed state.")]
@@ -105,6 +131,21 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets the layout orientation of the <see cref="RibbonBarItemButton"/>.
 		/// </summary>
+		/// <returns>One of the <see cref="Orientation"/> values. The default is <see cref="Orientation.Vertical"/>.</returns>
+		/// <remarks>
+		/// <see cref="Orientation.Vertical"/> displays a large button with the image above the text that fills the height of the group
+		/// and occupies a column of its own. <see cref="Orientation.Horizontal"/> displays a small button with the image to the left of
+		/// the text; small buttons are stacked vertically in the same column until an item has <see cref="ColumnBreak"/> set to true.
+		/// Buttons added to a <see cref="RibbonBarItemButtonGroup"/> are always changed to <see cref="Orientation.Horizontal"/>.
+		/// </remarks>
+		/// <example>
+		/// Creating a large button and two small buttons stacked in the next column:
+		/// <code><![CDATA[
+		/// this.ribbonBarGroup1.Items.Add(new RibbonBarItemButton { Text = "Paste", ImageSource = "icon-paste" });
+		/// this.ribbonBarGroup1.Items.Add(new RibbonBarItemButton { Text = "Cut", ImageSource = "icon-cut", Orientation = Orientation.Horizontal });
+		/// this.ribbonBarGroup1.Items.Add(new RibbonBarItemButton { Text = "Copy", ImageSource = "icon-copy", Orientation = Orientation.Horizontal });
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(Orientation.Vertical)]
 		[RefreshProperties(RefreshProperties.Repaint)]
 		[SRCategory("CatAppearance")]
@@ -127,6 +168,11 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets a value indicating whether a new column starts after
 		/// this <see cref="RibbonBarItem"/>.
 		/// </summary>
+		/// <returns>true if the next item in the <see cref="RibbonBarGroup"/> is placed in a new column; otherwise, false.</returns>
+		/// <remarks>
+		/// Always returns true when <see cref="Orientation"/> is <see cref="Orientation.Vertical"/>, since large buttons
+		/// occupy a column of their own. The value set is used only when <see cref="Orientation"/> is <see cref="Orientation.Horizontal"/>.
+		/// </remarks>
 		public override bool ColumnBreak
 		{
 			get { return base.ColumnBreak || this.Orientation == Orientation.Vertical; }
@@ -147,6 +193,29 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns the collection of <see cref="MenuItem" /> objects associated with the button.
 		/// </summary>
 		/// <returns>A <see cref="Menu.MenuItemCollection" /> that represents the list of <see cref="MenuItem" /> objects stored in the menu.</returns>
+		/// <remarks>
+		/// When the collection contains at least one item, the button shows a drop down arrow and clicking it opens the menu
+		/// below the button instead of firing the click events. Clicking a menu item, at any level, fires the <see cref="ItemClicked"/> event
+		/// on this button and the <see cref="RibbonBar.MenuButtonItemClick"/> event on the <see cref="RibbonBar"/>.
+		/// </remarks>
+		/// <example>
+		/// Adding a drop down menu to a button and handling the clicks on the menu items:
+		/// <code><![CDATA[
+		/// this.buttonPaste.MenuItems.Add(new MenuItem("Paste") { Name = "paste" });
+		/// this.buttonPaste.MenuItems.Add(new MenuItem("Paste Special...") { Name = "pasteSpecial" });
+		/// this.buttonPaste.MenuItems.Add(new MenuItem("Paste as Text") { Name = "pasteText" });
+		///
+		/// this.buttonPaste.ItemClicked += (s, e) =>
+		/// {
+		///     switch (e.MenuItem.Name)
+		///     {
+		///         case "paste": Paste(); break;
+		///         case "pasteSpecial": new PasteSpecialDialog().ShowDialog(); break;
+		///         case "pasteText": PasteAsText(); break;
+		///     }
+		/// };
+		/// ]]></code>
+		/// </example>
 		[MergableProperty(false)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns the collection of MenuItem objects associated with the button.")]

@@ -29,14 +29,15 @@ namespace Wisej.Web.Ext.Camera
 	public delegate void RecorderErrorHandler(object sender, RecorderErrorEventArgs e);
 
 	/// <summary>
-	/// Provides data for the <see cref="Camera.Error"/> event of the <see cref="Camera"/> control.
+	/// Provides data for the <see cref="Wisej.Web.Ext.ScreenRecorder.ScreenRecorder.Error"/> event of the
+	/// <see cref="Wisej.Web.Ext.ScreenRecorder.ScreenRecorder"/> component.
 	/// </summary>
 	public class RecorderErrorEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RecorderErrorEventArgs"/> class.
 		/// </summary>
-		/// <param name="message"></param>
+		/// <param name="message">The error message reported by the browser.</param>
 		public RecorderErrorEventArgs(string message)
 		{
 			this.Message = message;

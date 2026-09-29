@@ -44,6 +44,13 @@ namespace Wisej.Ext.CognitiveServices
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Wisej.Ext.CognitiveServices.CognitiveServices" /> class.
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var cognitiveServices = new CognitiveServices();
+		/// cognitiveServices.UriBase = "https://eastus.api.cognitive.microsoft.com/vision/v1.0/analyze";
+		/// cognitiveServices.SubscriptionKey = "<your-subscription-key>";
+		/// ]]></code>
+		/// </example>
 		public CognitiveServices()
 		{
 		}
@@ -52,6 +59,15 @@ namespace Wisej.Ext.CognitiveServices
 		/// Initializes a new instance of the <see cref="T:Wisej.Ext.CognitiveServices.CognitiveServices" /> class together with the specified container.
 		/// </summary>
 		/// <param name="container">A <see cref="T:System.ComponentModel.IContainer" /> that represents the container for the component. </param>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="container"/> is null.</exception>
+		/// <example>
+		/// <code><![CDATA[
+		/// // in a Wisej Form or Page, add the component to the designer's container
+		/// // so it is disposed together with the form.
+		/// this.cognitiveServices1 = new CognitiveServices(this.components);
+		/// this.cognitiveServices1.SubscriptionKey = "<your-subscription-key>";
+		/// ]]></code>
+		/// </example>
 		public CognitiveServices(IContainer container)
             : this()
         {
@@ -159,8 +175,26 @@ namespace Wisej.Ext.CognitiveServices
 		#region Methods
 
 		/// <summary>
-		/// Gets the analysis of the specified image file by using the Computer Vision REST API.
-		/// </summary>		
+		/// Starts the analysis of the specified image using the Computer Vision REST API.
+		/// </summary>
+		/// <param name="imageData">The image to analyze, as a byte array (JPEG, PNG, GIF or BMP).</param>
+		/// <remarks>
+		/// The image is posted as <c>application/octet-stream</c> to <see cref="P:Wisej.Ext.CognitiveServices.CognitiveServices.UriBase"/>
+		/// followed by <c>?</c> and <see cref="P:Wisej.Ext.CognitiveServices.CognitiveServices.RequestParameters"/>, using
+		/// <see cref="P:Wisej.Ext.CognitiveServices.CognitiveServices.SubscriptionKey"/> in the <c>Ocp-Apim-Subscription-Key</c> header.
+		/// The method returns immediately; the request runs asynchronously.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var cognitiveServices = new CognitiveServices();
+		/// cognitiveServices.UriBase = "https://eastus.api.cognitive.microsoft.com/vision/v1.0/analyze";
+		/// cognitiveServices.SubscriptionKey = "<your-subscription-key>";
+		/// cognitiveServices.RequestParameters = "visualFeatures=Categories,Description,Color&language=en";
+		///
+		/// byte[] imageData = File.ReadAllBytes(Application.MapPath("Images/photo.jpg"));
+		/// cognitiveServices.StartAnalysisRequest(imageData);
+		/// ]]></code>
+		/// </example>
 		public async void StartAnalysisRequest (byte[] imageData)
 		{
 			HttpClient client = new HttpClient();

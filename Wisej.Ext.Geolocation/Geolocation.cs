@@ -43,6 +43,21 @@ namespace Wisej.Ext.Geolocation
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Wisej.Ext.Geolocation.Geolocation" /> class.
 		/// </summary>
+		/// <remarks>
+		/// Use this constructor when creating the component in code. The component uses the browser's
+		/// geolocation API, so the user is asked for permission the first time a position is requested.
+		/// </remarks>
+		/// <example>
+		/// Creating a geolocation component in code and configuring it before use:
+		/// <code><![CDATA[
+		/// var geolocation = new Wisej.Ext.Geolocation.Geolocation
+		/// {
+		///     EnableHighAccuracy = true,
+		///     Timeout = 10000,    // wait up to 10 seconds.
+		///     MaximumAge = 0      // don't accept a cached position.
+		/// };
+		/// ]]></code>
+		/// </example>
 		public Geolocation()
 		{
 		}
@@ -51,6 +66,27 @@ namespace Wisej.Ext.Geolocation
 		/// Initializes a new instance of the <see cref="T:Wisej.Ext.Geolocation.Geolocation" /> class together with the specified container.
 		/// </summary>
 		/// <param name="container">A <see cref="T:System.ComponentModel.IContainer" /> that represents the container for the component. </param>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="container"/> is null.</exception>
+		/// <remarks>
+		/// The component is added to <paramref name="container"/> and is disposed together with it.
+		/// This is the constructor used by the designer when the component is dropped on a page or form.
+		/// </remarks>
+		/// <example>
+		/// Creating a geolocation component that is disposed together with the form's components:
+		/// <code><![CDATA[
+		/// public partial class MainPage : Wisej.Web.Page
+		/// {
+		///     private System.ComponentModel.IContainer components = new System.ComponentModel.Container();
+		///     private Wisej.Ext.Geolocation.Geolocation geolocation;
+		///
+		///     public MainPage()
+		///     {
+		///         InitializeComponent();
+		///         this.geolocation = new Wisej.Ext.Geolocation.Geolocation(this.components);
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		public Geolocation(IContainer container)
 			: this()
 		{
@@ -85,7 +121,7 @@ namespace Wisej.Ext.Geolocation
 
 		/// <summary>
 		/// Enables or disables active watch mode for this geolocation component.
-		/// When enabled, the <see cref="E:Wisej.Ext.Geolocation.PositionChanged"/> event be fired automatically each time the position of the device changes.
+		/// When enabled, the <see cref="E:Wisej.Ext.Geolocation.Geolocation.PositionChanged"/> event is fired automatically each time the position of the device changes.
 		/// </summary>
 		[DefaultValue(false)]
 		[Description("Enables or disables active watch mode for this geolocation component.")]
@@ -187,7 +223,34 @@ namespace Wisej.Ext.Geolocation
 		/// <summary>
 		/// Returns the current position of the device.
 		/// </summary>
-		/// <param name="callback"></param>
+		/// <param name="callback">
+		/// The method to call when the client returns the position. It receives a
+		/// <see cref="T:Wisej.Ext.Geolocation.Position"/> object that contains the coordinates,
+		/// or the <see cref="P:Wisej.Ext.Geolocation.Position.Status"/> and
+		/// <see cref="P:Wisej.Ext.Geolocation.Position.ErrorMessage"/> if the request failed.
+		/// </param>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="callback"/> is null.</exception>
+		/// <remarks>
+		/// The request is sent to the browser and <paramref name="callback"/> is invoked when the response
+		/// is received. The request uses the current values of <see cref="P:Wisej.Ext.Geolocation.Geolocation.EnableHighAccuracy"/>,
+		/// <see cref="P:Wisej.Ext.Geolocation.Geolocation.Timeout"/> and <see cref="P:Wisej.Ext.Geolocation.Geolocation.MaximumAge"/>.
+		/// Always check <see cref="P:Wisej.Ext.Geolocation.Position.Status"/> before using the coordinates.
+		/// </remarks>
+		/// <example>
+		/// Requesting the current position and showing it in a label:
+		/// <code><![CDATA[
+		/// private void buttonLocate_Click(object sender, EventArgs e)
+		/// {
+		///     this.geolocation1.GetCurrentPosition(position =>
+		///     {
+		///         if (position.Status == Wisej.Ext.Geolocation.StatusCode.Success)
+		///             this.labelPosition.Text = $"{position.Latitude}, {position.Longitude} (±{position.Accuracy} m)";
+		///         else
+		///             AlertBox.Show(position.ErrorMessage ?? position.Status.ToString());
+		///     });
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void GetCurrentPosition(Action<Position> callback)
 		{
 			if (callback == null)
@@ -199,6 +262,31 @@ namespace Wisej.Ext.Geolocation
 		/// <summary>
 		/// Asynchronously returns the current position of the device.
 		/// </summary>
+		/// <returns>
+		/// A <see cref="T:System.Threading.Tasks.Task`1"/> that completes when the client returns the position.
+		/// Its result is a <see cref="T:Wisej.Ext.Geolocation.Position"/> object that contains the coordinates,
+		/// or the <see cref="P:Wisej.Ext.Geolocation.Position.Status"/> and
+		/// <see cref="P:Wisej.Ext.Geolocation.Position.ErrorMessage"/> if the request failed.
+		/// </returns>
+		/// <remarks>
+		/// This is the awaitable version of <see cref="M:Wisej.Ext.Geolocation.Geolocation.GetCurrentPosition(System.Action{Wisej.Ext.Geolocation.Position})"/>.
+		/// The task doesn't fault when the position can't be retrieved; check
+		/// <see cref="P:Wisej.Ext.Geolocation.Position.Status"/> on the result instead.
+		/// </remarks>
+		/// <example>
+		/// Awaiting the current position in an event handler:
+		/// <code><![CDATA[
+		/// private async void buttonLocate_Click(object sender, EventArgs e)
+		/// {
+		///     var position = await this.geolocation1.GetCurrentPositionAsync();
+		///
+		///     if (position.Status == Wisej.Ext.Geolocation.StatusCode.Success)
+		///         this.labelPosition.Text = $"{position.Latitude}, {position.Longitude}";
+		///     else
+		///         AlertBox.Show(position.ErrorMessage ?? position.Status.ToString());
+		/// }
+		/// ]]></code>
+		/// </example>
 		public Task<Position> GetCurrentPositionAsync()
 		{
 			var tcs = new TaskCompletionSource<Position>();

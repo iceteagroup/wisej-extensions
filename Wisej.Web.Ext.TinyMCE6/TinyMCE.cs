@@ -29,9 +29,13 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.TinyMCE6
 {
 	/// <summary>
-	/// TinyMCE gives you total control over your rich text editing.
-	/// from: https://www.tinymce.com/
+	/// TinyMCE is a platform-independent, browser-based WYSIWYG HTML editor control.
 	/// </summary>
+	/// <remarks>
+	/// This control wraps TinyMCE 6 (<see href="https://www.tiny.cloud/"/>). By default the library is loaded from
+	/// the CDN set in <see cref="BaseUrl"/>. The HTML content is exchanged with the server through the <see cref="Text"/> property
+	/// and the editor is configured using the <see cref="Options"/> property, which is passed to <c>tinymce.init()</c>.
+	/// </remarks>
 	[ApiCategory("TinyMCE")]
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Control), "RichTextBox.bmp")]
@@ -67,8 +71,11 @@ namespace Wisej.Web.Ext.TinyMCE6
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets whether the editor is enabled.
+		/// Returns or sets whether the editor is enabled.
 		/// </summary>
+		/// <remarks>
+		/// When disabled, the editor is switched to TinyMCE's "readonly" mode; when enabled it's switched back to "design" mode.
+		/// </remarks>
 		public new bool Enabled
 		{
 			get
@@ -90,7 +97,30 @@ namespace Wisej.Web.Ext.TinyMCE6
 		/// <summary>
 		/// Returns or sets the HTML text associated with this control.
 		/// </summary>
-		/// <returns>The HTML text associated with this control.</returns>
+		/// <remarks>
+		/// <para>
+		/// Setting the text replaces the content of the editor. If the editor is not loaded yet, the content is applied as soon as it's ready.
+		/// </para>
+		/// <para>
+		/// Changes made by the user are sent back to the server with the next request after the editor changes, a key is pressed
+		/// or the editor loses the focus. <see cref="ExecCommand(string, string)"/> updates the text shortly after the command is executed.
+		/// <c>TextChanged</c> is fired every time the value changes.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Loading and saving the HTML content:
+		/// <code><![CDATA[
+		/// private void Form1_Load(object sender, EventArgs e)
+		/// {
+		///     this.tinyMCE1.Text = "<h1>Monthly Report</h1><p>Write the summary here.</p>";
+		/// }
+		///
+		/// private void buttonSave_Click(object sender, EventArgs e)
+		/// {
+		///     SaveDocument(this.tinyMCE1.Text);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("")]
 		public override string Text
 		{
@@ -113,8 +143,11 @@ namespace Wisej.Web.Ext.TinyMCE6
 		private string _text = "";
 
 		/// <summary>
-		/// Shows or hides the menu panel.
+		/// Returns or sets whether the menu bar is visible.
 		/// </summary>
+		/// <remarks>
+		/// When set to false it overrides the <c>menubar</c> setting in <see cref="Options"/>. Changing this property recreates the editor.
+		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue(true)]
 		[Description("Shows or hides the menu panel.")]
@@ -134,8 +167,11 @@ namespace Wisej.Web.Ext.TinyMCE6
 		private bool _showMenuBar = true;
 
 		/// <summary>
-		/// Shows or hides the toolbar panel.
+		/// Returns or sets whether the toolbar is visible.
 		/// </summary>
+		/// <remarks>
+		/// When set to false it overrides the <c>toolbar</c> setting in <see cref="Options"/>. Changing this property recreates the editor.
+		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue(true)]
 		[Description("Shows or hides the toolbar panel.")]
@@ -155,8 +191,11 @@ namespace Wisej.Web.Ext.TinyMCE6
 		private bool _showToolbar = true;
 
 		/// <summary>
-		/// Shows or hides the footer panel.
+		/// Returns or sets whether the footer (status bar) is visible.
 		/// </summary>
+		/// <remarks>
+		/// When set to false it overrides the <c>statusbar</c> setting in <see cref="Options"/>. Changing this property recreates the editor.
+		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue(true)]
 		[Description("Shows or hides the footer panel.")]
@@ -181,6 +220,33 @@ namespace Wisej.Web.Ext.TinyMCE6
 		[MergableProperty(false)]
 		[Editor("Wisej.Design.DynamicObjectEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+		/// <summary>
+		/// Returns or sets the configuration to use for this instance of the editor: <see href="https://www.tiny.cloud/docs/tinymce/6/"/>.
+		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// The object is serialized and passed to <c>tinymce.init()</c>. Use the TinyMCE option names, i.e. <c>plugins</c>, <c>toolbar</c>,
+		/// <c>content_style</c>. The <c>selector</c> and <c>resize</c> options are always set by the control.
+		/// </para>
+		/// <para>
+		/// Assigning the property updates the widget. When changing the members of the existing object, call <see cref="Update"/>
+		/// to apply the new configuration. TinyMCE cannot be reconfigured after creation, so the editor is always destroyed and recreated.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Configuring the plugins and the toolbar:
+		/// <code><![CDATA[
+		/// public Form1()
+		/// {
+		///     InitializeComponent();
+		///
+		///     this.tinyMCE1.Options.plugins = "lists link image table";
+		///     this.tinyMCE1.Options.toolbar = "undo redo | bold italic underline | bullist numlist | link image";
+		///     this.tinyMCE1.Options.content_style = "body { font-family: Arial; font-size: 14px; }";
+		///     this.tinyMCE1.Update();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public new virtual dynamic Options
 		{
 			get
@@ -203,6 +269,20 @@ namespace Wisej.Web.Ext.TinyMCE6
 		[Description("Returns or sets the font names to display in the toolbar.")]
 		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+		/// <summary>
+		/// Returns or sets the font names to display in the toolbar.
+		/// </summary>
+		/// <remarks>
+		/// The names are sent to the client with the widget options, but the startup script doesn't apply them to the editor.
+		/// To change the list of fonts, set the TinyMCE <c>font_family_formats</c> option in <see cref="Options"/>.
+		/// </remarks>
+		/// <example>
+		/// Setting the fonts using the TinyMCE option:
+		/// <code><![CDATA[
+		/// this.tinyMCE1.Options.font_family_formats = "Arial=arial,helvetica,sans-serif; Georgia=georgia,serif; Verdana=verdana,geneva";
+		/// this.tinyMCE1.Update();
+		/// ]]></code>
+		/// </example>
 		public string[] FontNames
 		{
 			get { return this._fontNames; }
@@ -229,8 +309,11 @@ namespace Wisej.Web.Ext.TinyMCE6
 		}
 
 		/// <summary>
-		/// Returns the default buttons to show in the toolbar.
+		/// Returns the default font names used to initialize <see cref="FontNames"/>.
 		/// </summary>
+		/// <remarks>
+		/// The default names are "Verdana", "Arial", "Georgia" and "Trebuchet MS".
+		/// </remarks>
 		public static string[] DefaultFontNames
 		{
 			get
@@ -241,8 +324,29 @@ namespace Wisej.Web.Ext.TinyMCE6
 		private static string[] _defaultFontNames = new[] { "Verdana", "Arial", "Georgia", "Trebuchet MS" };
 
 		/// <summary>
-		/// Collection of external (local) plugins to register with the TinyMCE control.
+		/// Returns or sets the collection of external (local) plugins to register with the TinyMCE control.
 		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// Each plugin is loaded from <c>Url</c> + "/" + <c>FileName</c> using <c>tinymce.PluginManager.load()</c> before the editor is created.
+		/// Plugins with an empty <see cref="ExternalPlugin.Name"/>, <see cref="ExternalPlugin.Url"/> or <see cref="ExternalPlugin.FileName"/>
+		/// are ignored. The plugin must also be listed in the <c>plugins</c> option in <see cref="Options"/> to be activated.
+		/// </para>
+		/// <para>
+		/// Assigning the property recreates the editor.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Registering a plugin deployed with the application:
+		/// <code><![CDATA[
+		/// this.tinyMCE1.ExternalPlugins = new[]
+		/// {
+		///     new ExternalPlugin { Name = "wordcounter", Url = "Plugins/wordcounter", FileName = "plugin.js" }
+		/// };
+		/// this.tinyMCE1.Options.plugins = "lists link wordcounter";
+		/// this.tinyMCE1.Update();
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public ExternalPlugin[] ExternalPlugins
@@ -267,36 +371,83 @@ namespace Wisej.Web.Ext.TinyMCE6
 		#region Methods
 
 		/// <summary>
-		/// Executes commands to manipulate the contents of the editable region. 
+		/// Executes commands to manipulate the contents of the editable region.
 		/// </summary>
-		/// <param name="command">The name of the command to execute. See <see href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand and http://archive.tinymce.com/wiki.php/TinyMCE3x:Command_identifiers"/> for a list of commands.</param>
-		/// <param name="showDefaultUI">Indicates whether the default user interface should be shown. This is not implemented in Mozilla.</param>
-		/// <param name="argument">For commands which require an input argument (such as insertImage, for which this is the URL of the image to insert), this is a string providing that information. Specify null if no argument is needed.</param>
+		/// <param name="command">The name of the command to execute, i.e. "Bold", "Undo", "mceInsertContent". See <see href="https://www.tiny.cloud/docs/tinymce/6/editor-command-identifiers/"/> for a list of commands.</param>
+		/// <param name="showDefaultUI">Indicates whether the default user interface (i.e. a dialog) should be shown, when the command has one.</param>
+		/// <param name="argument">For commands which require an input argument (such as "mceInsertContent", for which this is the HTML to insert), this is a string providing that information. Specify null if no argument is needed.</param>
 		/// <remarks>
-		/// Most commands affect the document's selection (bold, italics, etc.), while others insert new elements (adding a link) or 
-		/// affect an entire line (indenting). When using contentEditable, calling execCommand() will affect the 
-		/// currently active editable element.
+		/// <para>
+		/// Most commands affect the current selection (bold, italic, etc.), while others insert new elements (adding a link) or
+		/// affect an entire line (indenting).
+		/// </para>
+		/// <para>
+		/// The command is executed asynchronously on the client; if the editor is not ready yet, it's executed after it's initialized.
+		/// The <see cref="Text"/> property is updated shortly after the command runs.
+		/// </para>
 		/// </remarks>
+		/// <example>
+		/// Inserting a link at the caret position:
+		/// <code><![CDATA[
+		/// private void buttonInsertLink_Click(object sender, EventArgs e)
+		/// {
+		///     this.tinyMCE1.ExecCommand("mceInsertContent", false, "<a href=\"https://wisej.com\">Wisej.NET</a>");
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void ExecCommand(string command, bool showDefaultUI = false, string argument = null)
 		{
 			Call("execCommand", command, showDefaultUI, argument);
 		}
 
 		/// <summary>
-		/// Executes commands to manipulate the contents of the editable region. 
+		/// Executes commands to manipulate the contents of the editable region.
 		/// </summary>
-		/// <param name="command">The name of the command to execute. See <see href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand"/> and <see href="http://archive.tinymce.com/wiki.php/TinyMCE3x:Command_identifiers"/> for a list of commands.</param>
-		/// <param name="argument">For commands which require an input argument (such as insertImage, for which this is the URL of the image to insert), this is a string providing that information. Specify null if no argument is needed.</param>
+		/// <param name="command">The name of the command to execute, i.e. "Bold", "Undo", "mceInsertContent". See <see href="https://www.tiny.cloud/docs/tinymce/6/editor-command-identifiers/"/> for a list of commands.</param>
+		/// <param name="argument">For commands which require an input argument (such as "mceInsertContent", for which this is the HTML to insert), this is a string providing that information. Specify null if no argument is needed.</param>
 		/// <remarks>
-		/// Most commands affect the document's selection (bold, italics, etc.), while others insert new elements (adding a link) or 
-		/// affect an entire line (indenting). When using contentEditable, calling execCommand() will affect the 
-		/// currently active editable element.
+		/// <para>
+		/// Most commands affect the current selection (bold, italic, etc.), while others insert new elements (adding a link) or
+		/// affect an entire line (indenting).
+		/// </para>
+		/// <para>
+		/// The command is executed asynchronously on the client without showing its default user interface.
+		/// The <see cref="Text"/> property is updated shortly after the command runs.
+		/// </para>
 		/// </remarks>
+		/// <example>
+		/// Executing commands from buttons outside of the editor:
+		/// <code><![CDATA[
+		/// private void buttonBold_Click(object sender, EventArgs e)
+		/// {
+		///     this.tinyMCE1.ExecCommand("Bold");
+		/// }
+		///
+		/// private void buttonUndo_Click(object sender, EventArgs e)
+		/// {
+		///     this.tinyMCE1.ExecCommand("Undo");
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void ExecCommand(string command, string argument = null)
 		{
 			ExecCommand(command, false, argument);
 		}
 
+		/// <summary>
+		/// Updates the client widget with the current properties and <see cref="Options"/>.
+		/// </summary>
+		/// <remarks>
+		/// When the configuration has changed, the TinyMCE editor is destroyed and recreated; the <see cref="Text"/> and the enabled state are
+		/// applied again once the new editor is loaded.
+		/// </remarks>
+		/// <example>
+		/// Applying changes made to the <see cref="Options"/> object:
+		/// <code><![CDATA[
+		/// this.tinyMCE1.Options.menubar = "edit insert format table";
+		/// this.tinyMCE1.Update();
+		/// ]]></code>
+		/// </example>
 		public override void Update()
 		{
 			IWisejControl me = this;
@@ -325,7 +476,7 @@ namespace Wisej.Web.Ext.TinyMCE6
 		}
 
 		/// <summary>
-		/// Overridden to create our initialization script.
+		/// Overridden to create the initialization script. Setting this property has no effect.
 		/// </summary>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -336,8 +487,28 @@ namespace Wisej.Web.Ext.TinyMCE6
 		}
 
 		/// <summary>
-		/// Returns or sets the base url for the TinyMCE installation
+		/// Returns or sets the base URL of the TinyMCE installation.
 		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// The default is "https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.0.3/". The URL must end with "/" since "tinymce.min.js"
+		/// is appended to it. This is a static setting shared by all sessions; set it at startup, before any editor is created.
+		/// </para>
+		/// <para>
+		/// To use a local installation, deploy the TinyMCE files in a folder of the application and set the relative URL.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Using a local copy of TinyMCE:
+		/// <code><![CDATA[
+		/// static void Main()
+		/// {
+		///     TinyMCE.BaseUrl = "Scripts/tinymce/";
+		///
+		///     Application.MainPage = new MainPage();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public static string BaseUrl
 		{
 			get { return _baseUrl; }
@@ -346,7 +517,7 @@ namespace Wisej.Web.Ext.TinyMCE6
 		private static string _baseUrl = "https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.0.3/";
 
 		/// <summary>
-		/// Overridden to return our list of script resources.
+		/// Overridden to return the TinyMCE script loaded from <see cref="BaseUrl"/>.
 		/// </summary>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

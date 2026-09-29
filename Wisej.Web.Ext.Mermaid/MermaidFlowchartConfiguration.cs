@@ -22,13 +22,15 @@ using System.ComponentModel;
 namespace Wisej.Web.Ext.Mermaid
 {
 	/// <summary>
-	/// Flowchart configuration options (maps to Mermaid's <c>flowchart</c> option).
+	/// Represents the flowchart configuration options (maps to Mermaid's <c>flowchart</c> option).
 	/// </summary>
-	/// <example>
-	/// <code><![CDATA[
-	/// mermaid.Config.Flowchart.HtmlLabels = true;
-	/// ]]></code>
-	/// </example>
+	/// <remarks>
+	/// <para>
+	/// Instances of this class are created internally and are bound to a <see cref="Mermaid"/> widget: changing a
+	/// property updates the owner widget. The <see cref="Mermaid"/> widget exposes the same settings directly
+	/// (see <see cref="Mermaid.Flowchart"/>).
+	/// </para>
+	/// </remarks>
 	public class MermaidFlowchartConfiguration
 	{
 		private Mermaid _owner;
@@ -39,13 +41,12 @@ namespace Wisej.Web.Ext.Mermaid
 		}
 
 		/// <summary>
-		/// When set, constrains rendered diagrams to max-width.
+		/// Returns or sets whether the rendered flowchart is scaled to fit the available width (maps to <c>useMaxWidth</c>).
 		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.Flowchart.UseMaxWidth = true;
-		/// ]]></code>
-		/// </example>
+		/// <remarks>
+		/// When true, the SVG uses the available width as its maximum width and is scaled down accordingly;
+		/// when false (default), it's rendered at its natural size.
+		/// </remarks>
 		[DefaultValue(false)]
 		public bool UseMaxWidth
 		{
@@ -62,13 +63,8 @@ namespace Wisej.Web.Ext.Mermaid
 		bool _useMaxWidth;
 
 		/// <summary>
-		/// When set, enables HTML labels in flowcharts.
+		/// Returns or sets whether the flowchart labels are rendered as HTML instead of SVG text (maps to <c>htmlLabels</c>).
 		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.Flowchart.HtmlLabels = true;
-		/// ]]></code>
-		/// </example>
 		[DefaultValue(false)]
 		public bool HtmlLabels
 		{

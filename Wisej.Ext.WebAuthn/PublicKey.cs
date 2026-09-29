@@ -50,6 +50,15 @@ namespace Wisej.Ext.WebAuthn
         /// <summary>
         /// Creates a new instance of <see cref="PublicKey"/>.
         /// </summary>
+        /// <example>
+        /// <code><![CDATA[
+        /// var publicKey = new PublicKey
+        /// {
+        /// 	CredentialID = storedCredentialID,
+        /// 	Data = storedKeyData
+        /// };
+        /// ]]></code>
+        /// </example>
         public PublicKey()
         {
         }
@@ -57,8 +66,17 @@ namespace Wisej.Ext.WebAuthn
         /// <summary>
         /// Creates a new instance of <see cref="PublicKey"/> with the given configuration.
         /// </summary>
-        /// <param name="credentialID">The credential id received upon registration.</param>
-        /// <param name="data">The dynamic public key object.</param>
+        /// <param name="credentialID">The base64 credential ID received upon registration.</param>
+        /// <param name="data">The dynamic COSE public key object received upon registration.</param>
+        /// <example>
+        /// <code><![CDATA[
+        /// CredentialsResponse response = await WebAuthn.CreateAsync(
+        /// 	challenge, rp, user, parameters, selection, 60000, AttestationConveyancePreference.None);
+        ///
+        /// PublicKey registered = response.AuthenticatorData.PublicKey;
+        /// var copy = new PublicKey(registered.CredentialID, registered.Data);
+        /// ]]></code>
+        /// </example>
         public PublicKey(string credentialID, dynamic data)
         {
             this.CredentialID = credentialID;
@@ -69,6 +87,23 @@ namespace Wisej.Ext.WebAuthn
         /// Creates a new instance of <see cref="PublicKey"/> with the given JSON configuration.
         /// </summary>
         /// <param name="json">The serialized JSON string of the <see cref="PublicKey"/> object.</param>
+        /// <remarks>
+        /// The JSON must contain the <c>CredentialID</c> and <c>Data</c> members.
+        /// Use this overload to restore a public key saved in a database after registration.
+        /// </remarks>
+        /// <example>
+        /// <code><![CDATA[
+        /// // Restore the public key saved when the user registered.
+        /// string json = LoadPublicKeyJson(userId);
+        /// var publicKey = new PublicKey(json);
+        ///
+        /// bool valid = WebAuthn.Validate(
+        /// 	publicKey,
+        /// 	response.AuthenticatorData.Base64,
+        /// 	response.ClientData.Base64,
+        /// 	response.Signature);
+        /// ]]></code>
+        /// </example>
         public PublicKey(string json)
         {
             var obj = JSON.Parse(json);

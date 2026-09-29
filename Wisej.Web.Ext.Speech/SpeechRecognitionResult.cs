@@ -33,6 +33,9 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Returns a numeric estimate of how confident the speech recognition system is that the recognition is correct.
 		/// </summary>
+		/// <remarks>
+		/// The value ranges from 0 (lowest confidence) to 1 (highest confidence). Some browsers return 0 for interim results.
+		/// </remarks>
 		public double Confidence { get; internal set; }
 
 		/// <summary>

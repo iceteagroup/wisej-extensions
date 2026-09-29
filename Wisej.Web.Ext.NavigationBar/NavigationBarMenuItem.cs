@@ -20,15 +20,23 @@
 namespace Wisej.Web.Ext.NavigationBar
 {
 	/// <summary>
-	/// Represents a menu item in the context menu displayed when the
+	/// Represents a menu item in the <see cref="NavigationBarMenu"/> displayed when
 	/// <see cref="NavigationBar.CompactView"/> is true and the user
-	/// selects an item with child items.
+	/// expands a top-level item with child items.
 	/// </summary>
+	/// <remarks>
+	/// Each menu item copies the <see cref="Control.Text"/>, <see cref="Control.Name"/>, <see cref="NavigationBarItem.Icon"/>
+	/// and <see cref="Control.Enabled"/> values of the corresponding <see cref="NavigationBarItem"/> at the time the menu is shown.
+	/// </remarks>
 	public class NavigationBarMenuItem : MenuItem
 	{
 		/// <summary>
 		/// Returns or sets the <see cref="NavigationBarItem"/> that corresponds to this menu item.
 		/// </summary>
+		/// <remarks>
+		/// Clicking the menu item raises the click of this <see cref="NavigationBarItem"/>, which fires
+		/// <see cref="NavigationBar.ItemClick"/> and selects the item.
+		/// </remarks>
 		public NavigationBarItem Item { get; set; }
 
 		#region Wisej Implementation

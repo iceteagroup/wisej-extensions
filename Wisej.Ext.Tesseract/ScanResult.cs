@@ -14,6 +14,16 @@ namespace Wisej.Ext.Tesseract
 		/// <param name="confidence">The confidence of the recognition. Generally a higher confidence indicates that the result is more accurate.</param>
 		/// <param name="text">The text discovered.</param>
 		/// <param name="words">An array of strings containing the words discovered.</param>
+		/// <example>
+		/// <code><![CDATA[
+		/// // ScanResult instances are normally returned by Tesseract.ScanImageAsync,
+		/// // but they can also be created directly, for example in unit tests.
+		/// var result = new ScanResult(92, "Hello World", new[] { "Hello", "World" });
+		///
+		/// if (result.Confidence >= 80)
+		/// 	AlertBox.Show($"Found {result.Words.Length} words: {result.Text}");
+		/// ]]></code>
+		/// </example>
 		public ScanResult(int confidence, string text, string[] words)
 		{
 			this.Confidence = confidence;

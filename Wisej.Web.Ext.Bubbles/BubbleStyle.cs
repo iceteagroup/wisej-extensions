@@ -21,10 +21,11 @@ using System.ComponentModel;
 
 namespace Wisej.Web.Ext.Bubbles
 {
-	/// <summary>
-	/// Bubble styles. Corresponds to states in the theme.
-	/// </summary>
-	[ApiCategory("Bubbles")]
+    /// <summary>
+    /// Represents the various bubble styles available in the application, which correspond to the visual states defined in the theme.
+    /// These styles can be used to customize the appearance of bubble notifications and tooltips.
+    /// </summary>
+    [ApiCategory("Bubbles")]
 	public enum BubbleStyle
 	{
 		/// <summary>

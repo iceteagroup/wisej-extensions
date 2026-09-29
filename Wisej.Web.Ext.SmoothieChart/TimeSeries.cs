@@ -25,6 +25,21 @@ namespace Wisej.Web.Ext.SmoothieChart
 	/// <summary>
 	/// Represents a line on the <see cref="T:Wisej.Web.Ext.SmoothieChart.SmoothieChart"/> control.
 	/// </summary>
+	/// <remarks>
+	/// Add instances to the <see cref="SmoothieChart.TimeSeries"/> collection; the values of the line are provided by
+	/// the <see cref="SmoothieChart.DataNeeded"/> event.
+	/// </remarks>
+	/// <example>
+	/// Adding a filled line to the chart:
+	/// <code><![CDATA[
+	/// this.smoothieChart1.TimeSeries.Add(new TimeSeries
+	/// {
+	///     LineColor = Color.Lime,
+	///     FillColor = Color.FromArgb(80, Color.Lime),
+	///     LineWidth = 2
+	/// });
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("SmoothieChart")]
 	public class TimeSeries
 	{
@@ -57,8 +72,12 @@ namespace Wisej.Web.Ext.SmoothieChart
 		private Color _lineColor = Color.Green;
 
 		/// <summary>
-		/// Returns or sets the fill color.
+		/// Returns or sets the color used to fill the area below the line.
 		/// </summary>
+		/// <remarks>
+		/// The default is <see cref="Color.Transparent"/> (no fill). Use a semi-transparent color to keep the grid
+		/// and the other lines visible.
+		/// </remarks>
 		[DefaultValue(typeof(Color), "Transparent")]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the fill color.")]

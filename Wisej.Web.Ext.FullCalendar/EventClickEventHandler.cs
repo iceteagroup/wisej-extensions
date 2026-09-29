@@ -32,9 +32,13 @@ namespace Wisej.Web.Ext.FullCalendar
 	public delegate void EventClickEventHandler(object sender, EventClickEventArgs e);
 
 	/// <summary>
-	/// Provides data for the <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.EventClick" /> event of 
+	/// Provides data for the <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.EventClick" /> and
+	/// <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.EventDoubleClick" /> events of
 	/// the <see cref="T:Wisej.Web.Ext.FullCalendar.FullCalendar" /> control.
 	/// </summary>
+	/// <remarks>
+	/// The mouse location is relative to the <see cref="T:Wisej.Web.Ext.FullCalendar.FullCalendar"/> control. Right clicks are reported with the <see cref="F:Wisej.Web.MouseButtons.Right"/> button.
+	/// </remarks>
 	[ApiCategory("FullCalendar")]
 	public class EventClickEventArgs : MouseEventArgs
 	{

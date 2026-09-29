@@ -6,8 +6,29 @@ using System.Threading.Tasks;
 
 namespace Wisej.Web.Ext.JssorSlider
 {
+	/// <summary>
+	/// Represents the options of the thumbnail navigator (the panel with the preview images of the slides) of a <see cref="JssorSlider"/>.
+	/// </summary>
+	/// <example>
+	/// Showing a strip of 5 thumbnails that wraps around:
+	/// <code><![CDATA[
+	/// var thumbnails = new ThumbnailOptions(this.jssorSlider1)
+	/// {
+	///     Visible = true,
+	///     Wrap = true,
+	///     Columns = 5,
+	///     Rows = 1,
+	///     SpacingX = 8,
+	///     AutoCenterHorizontally = true
+	/// };
+	/// ]]></code>
+	/// </example>
 	public class ThumbnailOptions : OptionsBase
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ThumbnailOptions"/> class for the specified slider.
+		/// </summary>
+		/// <param name="slider">The <see cref="JssorSlider"/> that owns these options.</param>
 		public ThumbnailOptions(JssorSlider slider) : base(slider)
 		{
 		}
@@ -20,6 +41,9 @@ namespace Wisej.Web.Ext.JssorSlider
 			}
 		}
 
+		/// <summary>
+		/// Returns or sets whether the thumbnail navigator wraps around (loops) when it reaches the last thumbnail.
+		/// </summary>
 		public bool Wrap
 		{
 			get { return base.GetState(STATE_WRAP); }
@@ -33,6 +57,12 @@ namespace Wisej.Web.Ext.JssorSlider
 			}
 		}
 
+		/// <summary>
+		/// Returns or sets the number of thumbnails displayed in the thumbnail navigator at the same time.
+		/// </summary>
+		/// <remarks>
+		/// The default is 1.
+		/// </remarks>
 		public int Columns
 		{
 			get { return this._columns; }
@@ -47,6 +77,12 @@ namespace Wisej.Web.Ext.JssorSlider
 		}
 		private int _columns = 1;
 
+		/// <summary>
+		/// Returns or sets the number of rows (lanes) used to arrange the thumbnails.
+		/// </summary>
+		/// <remarks>
+		/// The default is 1.
+		/// </remarks>
 		public int Rows
 		{
 			get { return this._rows; }
@@ -61,6 +97,9 @@ namespace Wisej.Web.Ext.JssorSlider
 		}
 		private int _rows = 1;
 
+		/// <summary>
+		/// Returns or sets the horizontal space in pixels between the thumbnails.
+		/// </summary>
 		public int SpacingX
 		{
 			get { return this._spacingX; }
@@ -75,6 +114,9 @@ namespace Wisej.Web.Ext.JssorSlider
 		}
 		private int _spacingX = 0;
 
+		/// <summary>
+		/// Returns or sets the vertical space in pixels between the thumbnails.
+		/// </summary>
 		public int SpacingY
 		{
 			get { return this._spacingY; }
@@ -89,6 +131,12 @@ namespace Wisej.Web.Ext.JssorSlider
 		}
 		private int _spacingY = 0;
 
+		/// <summary>
+		/// Returns or sets the orientation used to arrange the thumbnails.
+		/// </summary>
+		/// <remarks>
+		/// The default is <see cref="Orientation.Horizontal"/>.
+		/// </remarks>
 		public Orientation Orientation
 		{
 			get { return this._orientation; }
@@ -103,6 +151,12 @@ namespace Wisej.Web.Ext.JssorSlider
 		}
 		private Orientation _orientation = Orientation.Horizontal;
 
+		/// <summary>
+		/// Returns or sets whether the thumbnail navigator is displayed.
+		/// </summary>
+		/// <remarks>
+		/// When <see cref="ShowOnMouseOver"/> is also <c>true</c>, the thumbnail navigator is displayed only while the pointer is over the slider.
+		/// </remarks>
 		public bool Visible
 		{
 			get { return base.GetState(STATE_VISIBLE); }
@@ -116,6 +170,12 @@ namespace Wisej.Web.Ext.JssorSlider
 			}
 		}
 
+		/// <summary>
+		/// Returns or sets whether the thumbnail navigator is displayed only when the pointer is over the slider.
+		/// </summary>
+		/// <remarks>
+		/// Applies only when <see cref="Visible"/> is <c>true</c>.
+		/// </remarks>
 		public bool ShowOnMouseOver
 		{
 			get { return base.GetState(STATE_SHOWONMOUSEOVER); }
@@ -129,6 +189,9 @@ namespace Wisej.Web.Ext.JssorSlider
 			}
 		}
 
+		/// <summary>
+		/// Returns or sets whether the thumbnail navigator is automatically centered vertically in the slider.
+		/// </summary>
 		public bool AutoCenterVertically
 		{
 			get { return base.GetState(STATE_AUTOCENTERV); }
@@ -142,6 +205,9 @@ namespace Wisej.Web.Ext.JssorSlider
 			}
 		}
 
+		/// <summary>
+		/// Returns or sets whether the thumbnail navigator is automatically centered horizontally in the slider.
+		/// </summary>
 		public bool AutoCenterHorizontally
 		{
 			get { return base.GetState(STATE_AUTOCENTERH); }

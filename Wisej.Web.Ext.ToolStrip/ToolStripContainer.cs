@@ -26,8 +26,10 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Provides panels on each side of the form and a central panel that can hold one or more controls.
-	///</summary>
+	/// Represents a container with a <see cref="ToolStripPanel"/> docked on each side, which can host
+	/// <see cref="ToolStrip"/> controls, and a central <see cref="ToolStripContentPanel"/> that fills the remaining space
+	/// and holds the other controls.
+	/// </summary>
 	public partial class ToolStripContainer : ContainerControl
 	{
 		private readonly ToolStripPanel _topPanel;
@@ -39,8 +41,13 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripContainer" /> class. 
-		///</summary>
+		/// Initializes a new instance of the <see cref="ToolStripContainer" /> class.
+		/// </summary>
+		/// <remarks>
+		/// The constructor creates the four side panels, docked to <see cref="DockStyle.Top"/>, <see cref="DockStyle.Bottom"/>,
+		/// <see cref="DockStyle.Left"/> and <see cref="DockStyle.Right"/>, and the <see cref="ContentPanel"/>, docked to
+		/// <see cref="DockStyle.Fill"/>.
+		/// </remarks>
 		public ToolStripContainer()
 		{
             SetStyle(ControlStyles.ContainerControl, true);
@@ -295,9 +302,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ImageLayout _backgroundImageLayout;
 
 		/// <summary>
-		/// Gets the bottom panel of the <see cref="ToolStripContainer" />.
-		///</summary>
+		/// Returns the bottom panel of the <see cref="ToolStripContainer" />.
+		/// </summary>
 		/// <returns>A <see cref="ToolStripPanel" /> representing the bottom panel of the <see cref="ToolStripContainer" />.</returns>
+		/// <remarks>
+		/// The panel is docked to the bottom edge of the container. Use <see cref="BottomToolStripPanelVisible"/> to hide it.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripContainerBottomToolStripPanelDescr")]
 		[Localizable(false)]
@@ -313,9 +323,18 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripPanel _bottomToolStripPanel;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the bottom panel of the <see cref="ToolStripContainer" /> is visible. 
-		///</summary>
+		/// Returns or sets a value indicating whether the bottom panel of the <see cref="ToolStripContainer" /> is visible.
+		/// </summary>
 		/// <returns>true if the bottom panel of the <see cref="ToolStripContainer" /> is visible; otherwise, false. The default is true.</returns>
+		/// <example>
+		/// Showing only the top panel, for example to keep a single row of tool strips at the top:
+		/// <code><![CDATA[
+		/// this.toolStripContainer1.BottomToolStripPanelVisible = false;
+		/// this.toolStripContainer1.LeftToolStripPanelVisible = false;
+		/// this.toolStripContainer1.RightToolStripPanelVisible = false;
+		/// this.toolStripContainer1.TopToolStripPanelVisible = true;
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripContainerBottomToolStripPanelVisibleDescr")]
 		[DefaultValue(true)]
@@ -337,9 +356,23 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _bottomToolStripPanelVisible;
 
 		/// <summary>
-		/// Gets the center panel of the <see cref="ToolStripContainer" />.
-		///</summary>
+		/// Returns the center panel of the <see cref="ToolStripContainer" />.
+		/// </summary>
 		/// <returns>A <see cref="ToolStripContentPanel" /> representing the center panel of the <see cref="ToolStripContainer" />.</returns>
+		/// <remarks>
+		/// The content panel is docked to fill the area not used by the side panels. Add the controls that make up the
+		/// body of the page or form to this panel instead of adding them directly to the <see cref="ToolStripContainer"/>.
+		/// </remarks>
+		/// <example>
+		/// Adding a control to the center of the container:
+		/// <code><![CDATA[
+		/// var grid = new DataGridView
+		/// {
+		///     Dock = DockStyle.Fill
+		/// };
+		/// this.toolStripContainer1.ContentPanel.Controls.Add(grid);
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripContainerContentPanelDescr")]
 		[SRCategory("CatAppearance")]
 		[Localizable(false)]
@@ -429,8 +462,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Cursor _cursor;
 
 		/// <summary>
-		/// Gets the default size of the <see cref="ToolStripContainer" />, in pixels.
-		///</summary>
+		/// Returns the default size of the <see cref="ToolStripContainer" />, in pixels.
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Size" /> representing the horizontal and vertical dimensions of the <see cref="ToolStripContainer" />, in pixels.</returns>
 		public new Size DefaultSize
 		{
@@ -467,9 +500,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Color _foreColor;
 
 		/// <summary>
-		/// Gets the left panel of the <see cref="ToolStripContainer" />.
-		///</summary>
+		/// Returns the left panel of the <see cref="ToolStripContainer" />.
+		/// </summary>
 		/// <returns>A <see cref="ToolStripPanel" /> representing the left panel of the <see cref="ToolStripContainer" />.</returns>
+		/// <remarks>
+		/// The panel is docked to the left edge of the container. Use <see cref="LeftToolStripPanelVisible"/> to hide it.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripContainerLeftToolStripPanelDescr")]
 		[Localizable(false)]
@@ -485,8 +521,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripPanel _leftToolStripPanel;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the left panel of the <see cref="ToolStripContainer" /> is visible.
-		///</summary>
+		/// Returns or sets a value indicating whether the left panel of the <see cref="ToolStripContainer" /> is visible.
+		/// </summary>
 		/// <returns>true if the left panel of the <see cref="ToolStripContainer" /> is visible; otherwise, false. The default is true.</returns>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripContainerLeftToolStripPanelVisibleDescr")]
@@ -509,9 +545,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _leftToolStripPanelVisible;
 
 		/// <summary>
-		/// Gets the right panel of the <see cref="ToolStripContainer" />.
-		///</summary>
+		/// Returns the right panel of the <see cref="ToolStripContainer" />.
+		/// </summary>
 		/// <returns>A <see cref="ToolStripPanel" /> representing the right panel of the <see cref="ToolStripContainer" />.</returns>
+		/// <remarks>
+		/// The panel is docked to the right edge of the container. Use <see cref="RightToolStripPanelVisible"/> to hide it.
+		/// </remarks>
 		[SRDescription("ToolStripContainerRightToolStripPanelDescr")]
 		[SRCategory("CatAppearance")]
 		[Localizable(false)]
@@ -527,8 +566,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripPanel _rightToolStripPanel;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the right panel of the <see cref="ToolStripContainer" /> is visible.
-		///</summary>
+		/// Returns or sets a value indicating whether the right panel of the <see cref="ToolStripContainer" /> is visible.
+		/// </summary>
 		/// <returns>true if the right panel of the <see cref="ToolStripContainer" /> is visible; otherwise, false. The default is true.</returns>
 		[SRDescription("ToolStripContainerRightToolStripPanelVisibleDescr")]
 		[SRCategory("CatAppearance")]
@@ -551,9 +590,23 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _rightToolStripPanelVisible;
 
 		/// <summary>
-		/// Gets the top panel of the <see cref="ToolStripContainer" />.
-		///</summary>
+		/// Returns the top panel of the <see cref="ToolStripContainer" />.
+		/// </summary>
 		/// <returns>A <see cref="ToolStripPanel" /> representing the top panel of the <see cref="ToolStripContainer" />.</returns>
+		/// <remarks>
+		/// The panel is docked to the top edge of the container. Use <see cref="TopToolStripPanelVisible"/> to hide it.
+		/// The same pattern applies to <see cref="BottomToolStripPanel"/>, <see cref="LeftToolStripPanel"/> and <see cref="RightToolStripPanel"/>.
+		/// </remarks>
+		/// <example>
+		/// Adding a <see cref="ToolStrip"/> to the top panel:
+		/// <code><![CDATA[
+		/// var toolStrip = new ToolStrip();
+		/// toolStrip.Items.Add("Save", null, (s, e) => SaveDocument());
+		/// toolStrip.Items.Add("Print", null, (s, e) => PrintDocument());
+		///
+		/// this.toolStripContainer1.TopToolStripPanel.Controls.Add(toolStrip);
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripContainerTopToolStripPanelDescr")]
 		[Localizable(false)]
@@ -569,8 +622,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripPanel _topToolStripPanel;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the top panel of the <see cref="ToolStripContainer" /> is visible.
-		///</summary>
+		/// Returns or sets a value indicating whether the top panel of the <see cref="ToolStripContainer" /> is visible.
+		/// </summary>
 		/// <returns>true if the top panel of the <see cref="ToolStripContainer" /> is visible; otherwise, false. The default is true.</returns>
 		[DefaultValue(true)]
 		[SRDescription("ToolStripContainerTopToolStripPanelVisibleDescr")]

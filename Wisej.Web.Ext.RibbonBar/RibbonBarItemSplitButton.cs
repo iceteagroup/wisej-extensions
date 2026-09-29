@@ -24,6 +24,25 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <summary>
 	/// Represents a split button in a <see cref="RibbonBarGroup"/>.
 	/// </summary>
+	/// <remarks>
+	/// Unlike the <see cref="RibbonBarItemButton"/>, which opens the drop down menu when clicked anywhere, the split button
+	/// is made of two parts: clicking the main part fires the <see cref="RibbonBarItem.Click"/> and <see cref="RibbonBar.ItemClick"/>
+	/// events, while clicking the arrow opens the drop down menu defined in <see cref="RibbonBarItemButton.MenuItems"/>.
+	/// </remarks>
+	/// <example>
+	/// Creating a split button that executes the default action or shows more options:
+	/// <code><![CDATA[
+	/// var undo = new RibbonBarItemSplitButton { Name = "undo", Text = "Undo", ImageSource = "icon-undo" };
+	/// undo.MenuItems.Add(new MenuItem("Undo All") { Name = "undoAll" });
+	/// undo.Click += (s, e) => Undo();
+	/// undo.ItemClicked += (s, e) =>
+	/// {
+	///     if (e.MenuItem.Name == "undoAll")
+	///         UndoAll();
+	/// };
+	/// this.ribbonBarGroup1.Items.Add(undo);
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]

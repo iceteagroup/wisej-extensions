@@ -32,13 +32,17 @@ namespace Wisej.Web.Ext.FullCalendar
 	/// <summary>
 	/// Provides data for the <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.EventChanged" /> event.
 	/// </summary>
+	/// <remarks>
+	/// The event is fired when the user drags or resizes an event, and when the code changes a property of an
+	/// <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> that belongs to the calendar.
+	/// </remarks>
 	[ApiCategory("FullCalendar")]
 	public class EventValueEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Initializes a new instance of <see cref="T:Wisej.Web.Ext.FullCalendar.EventValueEventArgs"/>.
 		/// </summary>
-		/// <param name="event">The <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> that has been changed by the user.</param>
+		/// <param name="event">The <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> that has been changed.</param>
 		/// <param name="oldStartDate">The previous value of the <see cref="P:Wisej.Web.Ext.FullCalendar.Event.Start"/> property.</param>
 		/// <param name="oldEndDate">The previous value of the <see cref="P:Wisej.Web.Ext.FullCalendar.Event.End"/> property.</param>
 		public EventValueEventArgs(Event @event, DateTime oldStartDate, DateTime oldEndDate)
@@ -49,8 +53,11 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
-		/// Returns the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> that has been changed by the user.
+		/// Returns the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> that has been changed.
 		/// </summary>
+		/// <remarks>
+		/// The event already contains the new values.
+		/// </remarks>
 		public Event Event
 		{
 			get;

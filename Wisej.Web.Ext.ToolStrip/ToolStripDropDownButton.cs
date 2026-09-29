@@ -27,7 +27,22 @@ namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
 	/// Represents a control that when clicked displays an associated <see cref="ToolStripDropDown" /> from which the user can select a single item.
-	///</summary>
+	/// </summary>
+	/// <remarks>
+	/// Unlike <see cref="ToolStripSplitButton" />, the whole button opens the drop-down. Handle <see cref="ToolStripDropDownItem.DropDownItemClicked" />
+	/// or the <see cref="ToolStripItem.Click" /> event of the single drop-down items to respond to the selection.
+	/// </remarks>
+	/// <example>
+	/// Creating a drop-down button with three options:
+	/// <code><![CDATA[
+	/// var export = new ToolStripDropDownButton("Export");
+	/// export.DropDownItems.Add("PDF");
+	/// export.DropDownItems.Add("Excel");
+	/// export.DropDownItems.Add("CSV");
+	/// export.DropDownItemClicked += (s, e) => ExportData(e.ClickedItem.Text);
+	/// this.toolStrip1.Items.Add(export);
+	/// ]]></code>
+	/// </example>
 	public class ToolStripDropDownButton : ToolStripDropDownItem
 	{
 
@@ -74,12 +89,11 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripDropDownButton" /> class that has the specified name, displays the specified text and image, and raises the Click event.
-		///</summary>
+		/// Initializes a new instance of the <see cref="ToolStripDropDownButton" /> class that has the specified name and displays the specified text and image.
+		/// </summary>
 		/// <param name="text">The text to be displayed on the <see cref="ToolStripDropDownButton" />.</param>
 		/// <param name="image">An <see cref="System.Drawing.Image" /> to be displayed on the <see cref="ToolStripDropDownButton" />.</param>
-		/// <param name="onClick">The event handler for the <see cref="Control.Click" /> event.</param>
-		/// <param name="name">The name of the <see cref="ToolStripDropDownButton" />.</param>
+		/// <param name="name">The name of the <see cref="ToolStripDropDownButton" />, see <see cref="ToolStripItem.Name" />.</param>
 		public ToolStripDropDownButton(string text, Image image, string name)
 		{
 			this.Text = text;
@@ -88,6 +102,12 @@ namespace Wisej.Web.Ext.ToolStrip
 			// TODO: Implement
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToolStripDropDownButton" /> class that displays the specified text and image and opens the specified items when clicked.
+		/// </summary>
+		/// <param name="text">The text to be displayed on the <see cref="ToolStripDropDownButton" />.</param>
+		/// <param name="image">An <see cref="System.Drawing.Image" /> to be displayed on the <see cref="ToolStripDropDownButton" />.</param>
+		/// <param name="dropDownItems">The items to add to <see cref="ToolStripDropDownItem.DropDownItems" />.</param>
 		public ToolStripDropDownButton(string text, Image image, ToolStripItem[] dropDownItems)
 		{
 			this.Text = text;
@@ -101,9 +121,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets a value indicating whether to use the Text property or the <see cref="ToolStripItem.ToolTipText" /> property for the <see cref="ToolStripDropDownButton" /> ToolTip.
-		///</summary>
-		/// <returns>true to use the <see cref="Control.Text" /> property for the ToolTip; otherwise, false. The default is true.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripItem.Text" /> of the <see cref="ToolStripDropDownButton" /> is used as its tooltip when no custom tooltip text is set.
+		/// </summary>
+		/// <returns>true to use the <see cref="ToolStripItem.Text" /> property for the tooltip; otherwise, false. The default is true.</returns>
 		[DefaultValue(true)]
 		public bool AutoToolTip
 		{
@@ -123,8 +143,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _autoToolTip;
 
 		/// <summary>
-		/// Gets a value indicating whether to display the <see cref="ToolTip" /> that is defined as the default.
-		///</summary>
+		/// Returns the default value of the <see cref="ToolStripDropDownButton.AutoToolTip" /> property.
+		/// </summary>
 		/// <returns>true in all cases.</returns>
 		public override bool DefaultAutoToolTip
 		{
@@ -137,9 +157,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _defaultAutoToolTip;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether an arrow is displayed on the <see cref="ToolStripDropDownButton" />, which indicates that further options are available in a drop-down list.
-		///</summary>
+		/// Returns or sets a value indicating whether an arrow is displayed on the <see cref="ToolStripDropDownButton" />, which indicates that further options are available in a drop-down list.
+		/// </summary>
 		/// <returns>true to show an arrow on the <see cref="ToolStripDropDownButton" />; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// Hiding the arrow doesn't change the behavior: clicking the button still opens the drop-down.
+		/// </remarks>
 		[DefaultValue(true)]
 		[SRDescription("ToolStripDropDownButtonShowDropDownArrowDescr")]
 		[SRCategory("CatAppearance")]

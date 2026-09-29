@@ -28,7 +28,11 @@ namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
 	/// Represents a text box in a <see cref="ToolStrip" /> that allows the user to enter text.
-	///</summary>
+	/// </summary>
+	/// <remarks>
+	/// The hosted <see cref="Wisej.Web.TextBox"/> is created by the item, with a <see cref="BorderStyle.Double"/> border and
+	/// <see cref="Control.AutoSize"/> enabled, and is accessible through the <see cref="TextBox"/> property.
+	/// </remarks>
 	public partial class ToolStripTextBox : ToolStripControlHost
 	{
 
@@ -36,7 +40,19 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ToolStripTextBox" /> class.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Adding a search box to a tool strip:
+		/// <code><![CDATA[
+		/// var search = new ToolStripTextBox("search");
+		/// search.KeyDown += (s, e) =>
+		/// {
+		///     if (e.KeyCode == Keys.Enter)
+		///         RunSearch(search.Text);
+		/// };
+		/// this.toolStrip1.Items.Add(search);
+		/// ]]></code>
+		/// </example>
 		public ToolStripTextBox()
 			: base(CreateControlInstance())
 		{
@@ -44,8 +60,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripTextBox" /> class with the specified name. 
-		///</summary>
+		/// Initializes a new instance of the <see cref="ToolStripTextBox" /> class with the specified name.
+		/// </summary>
 		/// <param name="name">The name of the <see cref="ToolStripTextBox" />.</param>
 		public ToolStripTextBox(string name)
 			: this()
@@ -55,9 +71,10 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripTextBox" /> class derived from a base control.
-		///</summary>
-		/// <param name="c">The control from which to derive the <see cref="ToolStripTextBox" />. </param>
+		/// This constructor is not supported: a <see cref="ToolStripTextBox"/> always creates its own hosted text box.
+		/// </summary>
+		/// <param name="c">The control from which to derive the <see cref="ToolStripTextBox" />.</param>
+		/// <exception cref="System.NotSupportedException">Always thrown.</exception>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public ToolStripTextBox(Control c)
 			: base(c)
@@ -183,9 +200,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ImageLayout _backgroundImageLayout;
 
 		/// <summary>
-		/// Gets the default size of the <see cref="ToolStripTextBox" />.
-		///</summary>
-		/// <returns>The default <see cref="System.Drawing.Size" /> of the <see cref="ToolStripTextBox" /> in pixels. The default size is 100 pixels by 25 pixels.</returns>
+		/// Returns the default size of the <see cref="ToolStripTextBox" />.
+		/// </summary>
+		/// <returns>The default <see cref="System.Drawing.Size" /> of the <see cref="ToolStripTextBox" /> in pixels.</returns>
 		public override Size DefaultSize
 		{
 			get
@@ -197,9 +214,18 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Size _defaultSize;
 
 		/// <summary>
-		/// Gets the hosted <see cref="TextBox" /> control.
-		///</summary>
-		/// <returns>The hosted <see cref="TextBox" />.</returns>
+		/// Returns the hosted <see cref="Wisej.Web.TextBox" /> control.
+		/// </summary>
+		/// <returns>The hosted <see cref="Wisej.Web.TextBox" />.</returns>
+		/// <remarks>
+		/// Use this property to access members of the text box that are not exposed by <see cref="ToolStripTextBox"/>.
+		/// </remarks>
+		/// <example>
+		/// Showing a watermark in the hosted text box:
+		/// <code><![CDATA[
+		/// this.toolStripTextBox1.TextBox.Watermark = "Search...";
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public TextBox TextBox
@@ -213,8 +239,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private TextBox _textBox;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether pressing the TAB key in a multiline text box control types a TAB character in the control instead of moving the focus to the next control in the tab order.
-		///</summary>
+		/// Returns or sets a value indicating whether pressing the TAB key in a multiline text box control types a TAB character in the control instead of moving the focus to the next control in the tab order.
+		/// </summary>
 		/// <returns>true if users can enter tabs in a multiline text box using the TAB key; false if pressing the TAB key moves the focus. The default is false.</returns>
 		[SRCategory("CatBehavior")]
 		[DefaultValue(false)]
@@ -237,8 +263,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _acceptsTab;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether pressing ENTER in a multiline <see cref="TextBox" /> control creates a new line of text in the control or activates the default button for the form.
-		///</summary>
+		/// Returns or sets a value indicating whether pressing ENTER in a multiline <see cref="TextBox" /> control creates a new line of text in the control or activates the default button for the form.
+		/// </summary>
 		/// <returns>true if the ENTER key creates a new line of text in a multiline version of the control; false if the ENTER key activates the default button for the form. The default is false.</returns>
 		[SRCategory("CatBehavior")]
 		[DefaultValue(false)]
@@ -261,9 +287,21 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _acceptsReturn;
 
 		/// <summary>
-		/// Gets or sets a custom string collection to use when the <see cref="ToolStripTextBox.AutoCompleteSource" /> property is set to CustomSource.
-		///</summary>
-		/// <returns>An <see cref="AutoCompleteStringCollection" /> to use with <see cref="TextBox.AutoCompleteSource" />.</returns>
+		/// Returns or sets a custom collection of strings used to suggest completions while the user types in the <see cref="ToolStripTextBox" />.
+		/// </summary>
+		/// <returns>A <see cref="System.Collections.Specialized.StringCollection" /> with the completion strings.</returns>
+		/// <remarks>
+		/// The collection is not created automatically: assign a new <see cref="System.Collections.Specialized.StringCollection"/>
+		/// before adding strings. Use <see cref="AutoCompleteMode"/> to enable the completion.
+		/// </remarks>
+		/// <example>
+		/// Suggesting city names:
+		/// <code><![CDATA[
+		/// var cities = new StringCollection();
+		/// cities.AddRange(new[] { "Berlin", "Boston", "Budapest", "Buenos Aires" });
+		/// this.toolStripTextBox1.AutoCompleteCustomSource = cities;
+		/// ]]></code>
+		/// </example>
 		[Browsable(true)]
 		[Localizable(true)]
 		[SRDescription("TextBoxAutoCompleteCustomSourceDescr")]
@@ -287,8 +325,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private StringCollection _autoCompleteCustomSource;
 
 		/// <summary>
-		/// Gets or sets an option that controls how automatic completion works for the <see cref="ToolStripTextBox" />.
-		///</summary>
+		/// Returns or sets an option that controls how automatic completion works for the <see cref="ToolStripTextBox" />.
+		/// </summary>
 		/// <returns>One of the <see cref="AutoCompleteMode" /> values. The default is <see cref="AutoCompleteMode.None" />.</returns>
 		[DefaultValue(AutoCompleteMode.None)]
 		[SRDescription("TextBoxAutoCompleteModeDescr")]
@@ -312,10 +350,6 @@ namespace Wisej.Web.Ext.ToolStrip
 		private AutoCompleteMode _autoCompleteMode;
 
 		//TODO: Implement in Wisej.
-		/// <summary>
-		/// Gets or sets a value specifying the source of complete strings used for automatic completion.
-		///</summary>
-		/// <returns>One of the <see cref="AutoCompleteSource" /> values. The default is <see cref="AutoCompleteSource.None" />.</returns>
 		//[Browsable(true)]
 		//[SRDescription("TextBoxAutoCompleteSourceDescr")]
 		//[DefaultValue(AutoCompleteSource.None)]
@@ -338,8 +372,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		//private AutoCompleteSource _autoCompleteSource;
 
 		/// <summary>
-		/// Gets or sets the border type of the <see cref="ToolStripTextBox" /> control.
-		///</summary>
+		/// Returns or sets the border type of the <see cref="ToolStripTextBox" /> control.
+		/// </summary>
 		/// <returns>One of the <see cref="BorderStyle" /> values. The default is <see cref="BorderStyle.Double" />.</returns>
 		[SRDescription("TextBoxBorderDescr")]
 		[DefaultValue(BorderStyle.Double)]
@@ -362,8 +396,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private BorderStyle _borderStyle;
 
 		/// <summary>
-		/// Gets a value indicating whether the user can undo the previous operation in a <see cref="ToolStripTextBox" /> control.
-		///</summary>
+		/// Returns a value indicating whether the user can undo the previous operation in a <see cref="ToolStripTextBox" /> control.
+		/// </summary>
 		/// <returns>true if the user can undo the previous operation performed in a text box control; otherwise, false.</returns>
 		[Browsable(false)]
 		[SRCategory("CatBehavior")]
@@ -380,8 +414,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _canUndo;
 
 		/// <summary>
-		/// Gets or sets whether the <see cref="ToolStripTextBox" /> control modifies the case of characters as they are typed.
-		///</summary>
+		/// Returns or sets whether the <see cref="ToolStripTextBox" /> control modifies the case of characters as they are typed.
+		/// </summary>
 		/// <returns>One of the <see cref="CharacterCasing" /> values. The default is <see cref="CharacterCasing.Normal" />.</returns>
 		[SRCategory("CatBehavior")]
 		[DefaultValue(CharacterCasing.Normal)]
@@ -404,8 +438,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private CharacterCasing _characterCasing;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the selected text in the text box control remains highlighted when the control loses focus.
-		///</summary>
+		/// Returns or sets a value indicating whether the selected text in the text box control remains highlighted when the control loses focus.
+		/// </summary>
 		/// <returns>true if the selected text does not appear highlighted when the text box control loses focus; false, if the selected text remains highlighted when the text box control loses focus. The default is true.</returns>
 		[SRCategory("CatBehavior")]
 		[DefaultValue(true)]
@@ -428,8 +462,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _hideSelection;
 
 		/// <summary>
-		/// Gets or sets the lines of text in a <see cref="ToolStripTextBox" /> control.
-		///</summary>
+		/// Returns or sets the lines of text in a <see cref="ToolStripTextBox" /> control.
+		/// </summary>
 		/// <returns>An array of strings that contains the text in a text box control.</returns>
 		[SRDescription("TextBoxLinesDescr")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -453,8 +487,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private String[] _lines;
 
 		/// <summary>
-		/// Gets or sets the maximum number of characters the user can type or paste into the text box control.
-		///</summary>
+		/// Returns or sets the maximum number of characters the user can type or paste into the text box control.
+		/// </summary>
 		/// <returns>The number of characters that can be entered into the control. The default is 32767 characters.</returns>
 		[SRCategory("CatBehavior")]
 		[DefaultValue(32767)]
@@ -478,9 +512,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private int _maxLength;
 
 		/// <summary>
-		/// Gets or sets a value that indicates that the <see cref="ToolStripTextBox" /> control has been modified by the user since the control was created or its contents were last set.
-		///</summary>
-		/// <returns>true if the control's contents have been modified; otherwise, false. </returns>
+		/// Returns or sets a value that indicates that the <see cref="ToolStripTextBox" /> control has been modified by the user since the control was created or its contents were last set.
+		/// </summary>
+		/// <returns>true if the control's contents have been modified; otherwise, false.</returns>
+		/// <example>
+		/// Saving only when the user changed the text:
+		/// <code><![CDATA[
+		/// if (this.toolStripTextBox1.Modified)
+		/// {
+		///     SaveDocument(this.toolStripTextBox1.Text);
+		///     this.toolStripTextBox1.Modified = false;
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[SRCategory("CatBehavior")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -530,8 +574,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _multiline;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether text in the <see cref="ToolStripTextBox" /> is read-only.
-		///</summary>
+		/// Returns or sets a value indicating whether text in the <see cref="ToolStripTextBox" /> is read-only.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripTextBox" /> is read-only; otherwise, false. The default is false.</returns>
 		[SRCategory("CatBehavior")]
 		[DefaultValue(false)]
@@ -554,8 +598,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _readOnly;
 
 		/// <summary>
-		/// Gets or sets a value indicating the currently selected text in the control.
-		///</summary>
+		/// Returns or sets a value indicating the currently selected text in the control.
+		/// </summary>
 		/// <returns>A string that represents the currently selected text in the text box.</returns>
 		[SRDescription("TextBoxSelectedTextDescr")]
 		[Browsable(false)]
@@ -579,9 +623,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private string _selectedText;
 
 		/// <summary>
-		/// Gets or sets the number of characters selected in the<see cref="ToolStripTextBox" />.
-		///</summary>
-		/// <returns>The number of characters selected in the<see cref="ToolStripTextBox" />.</returns>
+		/// Returns or sets the number of characters selected in the <see cref="ToolStripTextBox" />.
+		/// </summary>
+		/// <returns>The number of characters selected in the <see cref="ToolStripTextBox" />.</returns>
 		[SRCategory("CatAppearance")]
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -604,9 +648,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private int _selectionLength;
 
 		/// <summary>
-		/// Gets or sets the starting point of text selected in the<see cref="ToolStripTextBox" />.
-		///</summary>
-		/// <returns>The starting position of text selected in the<see cref="ToolStripTextBox" />.</returns>
+		/// Returns or sets the starting point of text selected in the <see cref="ToolStripTextBox" />.
+		/// </summary>
+		/// <returns>The starting position of text selected in the <see cref="ToolStripTextBox" />.</returns>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
 		[SRCategory("CatAppearance")]
@@ -629,9 +673,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private int _selectionStart;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the defined shortcuts are enabled.
-		///</summary>
-		/// <returns>true to enable the shortcuts; otherwise, false.</returns>
+		/// Returns or sets a value indicating whether the defined shortcuts are enabled.
+		/// </summary>
+		/// <returns>true to enable the shortcuts; otherwise, false. The default is true.</returns>
 		[SRDescription("TextBoxShortcutsEnabledDescr")]
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
@@ -653,8 +697,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _shortcutsEnabled;
 
 		/// <summary>
-		/// Gets the length of text in the control.
-		///</summary>
+		/// Returns the length of text in the control.
+		/// </summary>
 		/// <returns>The number of characters contained in the text of the <see cref="ToolStripTextBox" />.</returns>
 		[Browsable(false)]
 		public int TextLength
@@ -668,8 +712,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private int _textLength;
 
 		/// <summary>
-		/// Gets or sets how text is aligned in a <see cref="TextBox" /> control.
-		///</summary>
+		/// Returns or sets how text is aligned in the hosted <see cref="TextBox" /> control.
+		/// </summary>
 		/// <returns>One of the <see cref="HorizontalAlignment" /> enumeration values that specifies how text is aligned in the control. The default is <see cref="HorizontalAlignment.Left" />.</returns>
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
@@ -844,8 +888,14 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Appends text to the current text of the <see cref="ToolStripTextBox" />.
-		///</summary>
+		/// </summary>
 		/// <param name="text">The text to append to the current contents of the <see cref="ToolStripTextBox" />.</param>
+		/// <example>
+		/// Appending a unit to the value typed by the user:
+		/// <code><![CDATA[
+		/// this.toolStripTextBox1.AppendText(" kg");
+		/// ]]></code>
+		/// </example>
 		public void AppendText(string text)
 		{
 			// TODO: Implement
@@ -853,7 +903,14 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Clears all text from the <see cref="ToolStripTextBox" /> control.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Clearing the search box after running the search:
+		/// <code><![CDATA[
+		/// RunSearch(this.toolStripTextBox1.Text);
+		/// this.toolStripTextBox1.Clear();
+		/// ]]></code>
+		/// </example>
 		public void Clear()
 		{
 			// TODO: Implement
@@ -861,7 +918,14 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Clears information about the most recent operation from the undo buffer of the <see cref="ToolStripTextBox" />.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Loading a value that the user should not be able to undo:
+		/// <code><![CDATA[
+		/// this.toolStripTextBox1.Text = LoadLastQuery();
+		/// this.toolStripTextBox1.ClearUndo();
+		/// ]]></code>
+		/// </example>
 		public void ClearUndo()
 		{
 			// TODO: Implement
@@ -869,7 +933,16 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Copies the current selection in the <see cref="ToolStripTextBox" /> to the Clipboard.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Copying the selected text from a menu command:
+		/// <code><![CDATA[
+		/// private void menuItemCopy_Click(object sender, EventArgs e)
+		/// {
+		///     this.toolStripTextBox1.Copy();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Copy()
 		{
 			// TODO: Implement
@@ -877,7 +950,16 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Moves the current selection in the <see cref="ToolStripTextBox" /> to the Clipboard.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Cutting the selected text from a menu command:
+		/// <code><![CDATA[
+		/// private void menuItemCut_Click(object sender, EventArgs e)
+		/// {
+		///     this.toolStripTextBox1.Cut();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Cut()
 		{
 			// TODO: Implement
@@ -885,7 +967,16 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Specifies that the value of the <see cref="ToolStripTextBox.SelectionLength" /> property is zero so that no characters are selected in the control.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Removing the selection when the item loses the focus:
+		/// <code><![CDATA[
+		/// private void toolStripTextBox1_Leave(object sender, EventArgs e)
+		/// {
+		///     this.toolStripTextBox1.DeselectAll();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void DeselectAll()
 		{
 			// TODO: Implement
@@ -893,9 +984,18 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Retrieves the character that is closest to the specified location within the control.
-		///</summary>
+		/// </summary>
+		/// <param name="pt">The location from which to seek the nearest character, in client coordinates of the text box.</param>
 		/// <returns>The character at the specified location.</returns>
-		/// <param name="pt">The location from which to seek the nearest character.</param>
+		/// <example>
+		/// Reading the character under the mouse pointer:
+		/// <code><![CDATA[
+		/// private void textBox_MouseDown(object sender, MouseEventArgs e)
+		/// {
+		///     char c = this.toolStripTextBox1.GetCharFromPosition(new Point(e.X, e.Y));
+		/// }
+		/// ]]></code>
+		/// </example>
 		public char GetCharFromPosition(Point pt)
 		{
 			// TODO: Implement
@@ -904,9 +1004,19 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Retrieves the index of the character nearest to the specified location.
-		///</summary>
+		/// </summary>
+		/// <param name="pt">The location to search, in client coordinates of the text box.</param>
 		/// <returns>The zero-based character index at the specified location.</returns>
-		/// <param name="pt">The location to search.</param>
+		/// <example>
+		/// Moving the caret to the position clicked by the user:
+		/// <code><![CDATA[
+		/// private void textBox_MouseDown(object sender, MouseEventArgs e)
+		/// {
+		///     int index = this.toolStripTextBox1.GetCharIndexFromPosition(new Point(e.X, e.Y));
+		///     this.toolStripTextBox1.Select(index, 0);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public int GetCharIndexFromPosition(Point pt)
 		{
 			// TODO: Implement
@@ -915,9 +1025,16 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Retrieves the index of the first character of a given line.
-		///</summary>
+		/// </summary>
+		/// <param name="lineNumber">The zero-based line for which to get the index of its first character.</param>
 		/// <returns>The zero-based character index in the specified line.</returns>
-		/// <param name="lineNumber">The line for which to get the index of its first character.</param>
+		/// <example>
+		/// Moving the caret to the beginning of the text:
+		/// <code><![CDATA[
+		/// int start = this.toolStripTextBox1.GetFirstCharIndexFromLine(0);
+		/// this.toolStripTextBox1.Select(start, 0);
+		/// ]]></code>
+		/// </example>
 		public int GetFirstCharIndexFromLine(int lineNumber)
 		{
 			// TODO: Implement
@@ -926,8 +1043,16 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Retrieves the index of the first character of the current line.
-		///</summary>
+		/// </summary>
 		/// <returns>The zero-based character index in the current line.</returns>
+		/// <example>
+		/// Selecting the text from the start of the line to the caret:
+		/// <code><![CDATA[
+		/// int start = this.toolStripTextBox1.GetFirstCharIndexOfCurrentLine();
+		/// int caret = this.toolStripTextBox1.SelectionStart;
+		/// this.toolStripTextBox1.Select(start, caret - start);
+		/// ]]></code>
+		/// </example>
 		public int GetFirstCharIndexOfCurrentLine()
 		{
 			// TODO: Implement
@@ -936,9 +1061,15 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Retrieves the line number from the specified character position within the text of the control.
-		///</summary>
-		/// <returns>The zero-based line number in which the character index is located.</returns>
+		/// </summary>
 		/// <param name="index">The character index position to search.</param>
+		/// <returns>The zero-based line number in which the character index is located.</returns>
+		/// <example>
+		/// Retrieving the line of the caret:
+		/// <code><![CDATA[
+		/// int line = this.toolStripTextBox1.GetLineFromCharIndex(this.toolStripTextBox1.SelectionStart);
+		/// ]]></code>
+		/// </example>
 		public int GetLineFromCharIndex(int index)
 		{
 			// TODO: Implement
@@ -947,9 +1078,15 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Retrieves the location within the control at the specified character index.
-		///</summary>
-		/// <returns>The location of the specified character.</returns>
+		/// </summary>
 		/// <param name="index">The index of the character for which to retrieve the location.</param>
+		/// <returns>The location of the specified character, in client coordinates of the text box.</returns>
+		/// <example>
+		/// Retrieving the location of the last character:
+		/// <code><![CDATA[
+		/// Point pt = this.toolStripTextBox1.GetPositionFromCharIndex(this.toolStripTextBox1.TextLength - 1);
+		/// ]]></code>
+		/// </example>
 		public Point GetPositionFromCharIndex(int index)
 		{
 			// TODO: Implement
@@ -958,7 +1095,16 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Replaces the current selection in the text box with the contents of the Clipboard.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Pasting from a menu command:
+		/// <code><![CDATA[
+		/// private void menuItemPaste_Click(object sender, EventArgs e)
+		/// {
+		///     this.toolStripTextBox1.Paste();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Paste()
 		{
 			// TODO: Implement
@@ -966,7 +1112,14 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Scrolls the contents of the control to the current caret position.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Showing the end of a long text:
+		/// <code><![CDATA[
+		/// this.toolStripTextBox1.Select(this.toolStripTextBox1.TextLength, 0);
+		/// this.toolStripTextBox1.ScrollToCaret();
+		/// ]]></code>
+		/// </example>
 		public void ScrollToCaret()
 		{
 			// TODO: Implement
@@ -974,9 +1127,17 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Selects a range of text in the text box.
-		///</summary>
+		/// </summary>
 		/// <param name="start">The position of the first character in the current text selection within the text box.</param>
 		/// <param name="length">The number of characters to select.</param>
+		/// <example>
+		/// Selecting the first word of the text:
+		/// <code><![CDATA[
+		/// string text = this.toolStripTextBox1.Text;
+		/// int end = text.IndexOf(' ');
+		/// this.toolStripTextBox1.Select(0, end < 0 ? text.Length : end);
+		/// ]]></code>
+		/// </example>
 		public void Select(int start, int length)
 		{
 			// TODO: Implement
@@ -984,7 +1145,16 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Selects all text in the text box.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Selecting the whole text when the item receives the focus, so typing replaces it:
+		/// <code><![CDATA[
+		/// private void toolStripTextBox1_Enter(object sender, EventArgs e)
+		/// {
+		///     this.toolStripTextBox1.SelectAll();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void SelectAll()
 		{
 			// TODO: Implement
@@ -992,7 +1162,17 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Undoes the last edit operation in the text box.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Undoing from a menu command, only when possible:
+		/// <code><![CDATA[
+		/// private void menuItemUndo_Click(object sender, EventArgs e)
+		/// {
+		///     if (this.toolStripTextBox1.CanUndo)
+		///         this.toolStripTextBox1.Undo();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Undo()
 		{
 			// TODO: Implement

@@ -22,17 +22,15 @@ using System.ComponentModel;
 namespace Wisej.Web.Ext.Mermaid
 {
 	/// <summary>
-	/// Sequence diagram configuration options (maps to Mermaid's <c>sequence</c> option).
+	/// Represents the sequence diagram configuration options (maps to Mermaid's <c>sequence</c> option).
 	/// </summary>
-	/// <example>
-	/// <code><![CDATA[
-	/// mermaid.Config.Sequence = new Wisej.Web.Ext.Mermaid.MermaidSequenceConfiguration
-	/// {
-	///     ShowSequenceNumbers = true
-	/// };
-	/// mermaid.ApplyOptions();
-	/// ]]></code>
-	/// </example>
+	/// <remarks>
+	/// <para>
+	/// Instances of this class are created internally and are bound to a <see cref="Mermaid"/> widget: changing a
+	/// property updates the owner widget. The <see cref="Mermaid"/> widget exposes the same settings directly
+	/// (see <see cref="Mermaid.Sequence"/>).
+	/// </para>
+	/// </remarks>
 	public class MermaidSequenceConfiguration
 	{
 		private Mermaid _owner;
@@ -43,14 +41,8 @@ namespace Wisej.Web.Ext.Mermaid
 		}
 
 		/// <summary>
-		/// When set, shows sequence numbers.
+		/// Returns or sets whether the messages of the sequence diagram are numbered (maps to <c>showSequenceNumbers</c>).
 		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.Sequence ??= new Wisej.Web.Ext.Mermaid.MermaidSequenceConfiguration();
-		/// mermaid.Config.Sequence.ShowSequenceNumbers = true;
-		/// ]]></code>
-		/// </example>
 		[DefaultValue(false)]
 		public bool ShowSequenceNumbers
 		{

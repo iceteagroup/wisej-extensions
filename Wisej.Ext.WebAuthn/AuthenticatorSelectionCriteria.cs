@@ -25,7 +25,7 @@ namespace Wisej.Ext.WebAuthn
 	/// Manages requirements regarding authenticator attributes.
 	/// </summary>
 	/// <remarks>
-	/// <See href="https://w3c.github.io/webauthn/#dom-authenticatorselectioncriteria-authenticatorattachment"/>
+	/// See <see href="https://w3c.github.io/webauthn/#dom-authenticatorselectioncriteria-authenticatorattachment"/>.
 	/// </remarks>	
 	[ApiCategory("WebAuthn")]
 	public class AuthenticatorSelectionCriteria
@@ -55,10 +55,23 @@ namespace Wisej.Ext.WebAuthn
         /// <summary>
         /// Creates a new instance of <see cref="AuthenticatorSelectionCriteria"/> with the given configuration.
         /// </summary>
-        /// <param name="authenticatorAttachment">The attachment modality.</param>
-        /// <param name="residentKey"></param>
-        /// <param name="requireResidentKey"></param>
-        /// <param name="userVerification"></param>
+        /// <param name="authenticatorAttachment">The attachment modality: <see cref="F:Wisej.Ext.WebAuthn.AuthenticatorAttachment.Platform"/> (e.g. Windows Hello) or <see cref="F:Wisej.Ext.WebAuthn.AuthenticatorAttachment.CrossPlatform"/> (e.g. a security key).</param>
+        /// <param name="residentKey">The extent to which a client-side discoverable credential is desired: "discouraged", "preferred" or "required". Empty by default.</param>
+        /// <param name="requireResidentKey">Legacy WebAuthn Level 1 flag; set to true only when <paramref name="residentKey"/> is "required". False by default.</param>
+        /// <param name="userVerification">The Relying Party's user verification requirement. <see cref="ResidentKeyRequirement.Preferred"/> by default.</param>
+        /// <example>
+        /// <code><![CDATA[
+        /// // Built-in authenticator, discoverable credential, user verification required.
+        /// var selection = new AuthenticatorSelectionCriteria(
+        /// 	AuthenticatorAttachment.Platform,
+        /// 	residentKey: "required",
+        /// 	requireResidentKey: true,
+        /// 	userVerification: ResidentKeyRequirement.Required);
+        ///
+        /// CredentialsResponse response = await WebAuthn.CreateAsync(
+        /// 	challenge, rp, user, parameters, selection, 60000, AttestationConveyancePreference.None);
+        /// ]]></code>
+        /// </example>
         public AuthenticatorSelectionCriteria(AuthenticatorAttachment authenticatorAttachment, string residentKey="", bool requireResidentKey=false, ResidentKeyRequirement userVerification=ResidentKeyRequirement.Preferred)
         {
             this.AuthenticatorAttachment = authenticatorAttachment;

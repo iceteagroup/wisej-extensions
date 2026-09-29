@@ -25,6 +25,22 @@ namespace Wisej.Web.Ext.Barcode
 	/// BarCode component. Displays all sorts of bar codes using the ZXing library.
 	/// </para>
 	/// </summary>
+	/// <example>
+	/// The following example shows a QR code and reads barcodes from a camera:
+	/// <code><![CDATA[
+	/// var qrCode = new Barcode
+	/// {
+	///     BarcodeType = BarcodeType.QR,
+	///     Text = "https://wisej.com",
+	///     ShowLabel = false,
+	///     Size = new Size(150, 150)
+	/// };
+	/// this.Controls.Add(qrCode);
+	///
+	/// var reader = new BarcodeReader(this.components) { Camera = this.camera1 };
+	/// reader.ScanSuccess += (s, e) => AlertBox.Show($"Scanned: {e.Data}");
+	/// ]]></code>
+	/// </example>
 	internal class NamespaceDoc
 	{
 	}

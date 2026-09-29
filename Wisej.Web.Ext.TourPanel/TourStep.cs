@@ -25,8 +25,27 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.TourPanel
 {
 	/// <summary>
-	/// Represents a steps in a <see cref="Wisej.Web.Ext.TourPanel"/>.
+	/// Represents a step in a <see cref="TourPanel"/>.
 	/// </summary>
+	/// <remarks>
+	/// Each step displays its <see cref="Title"/> and <see cref="Text"/> in the <see cref="TourPanel"/>, placed next to
+	/// the control identified by <see cref="TargetName"/> or <see cref="Target"/>. Changes to a step that is currently
+	/// visible are applied immediately.
+	/// </remarks>
+	/// <example>
+	/// Defining a step that points to a button inside a panel:
+	/// <code><![CDATA[
+	/// var step = new TourStep
+	/// {
+	///     Title = "Save",
+	///     Text = "Click <b>Save</b> to store your changes.",
+	///     TargetName = "panelTools.buttonSave",
+	///     Alignment = Placement.RightMiddle,
+	///     AutoPlayTime = 8
+	/// };
+	/// step.Show += (s, e) => this.buttonSave.Enabled = true;
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("TourPanel")]
 	public class TourStep
 	{
@@ -70,6 +89,9 @@ namespace Wisej.Web.Ext.TourPanel
 		/// Returns the <see cref="TourPanel"/> that owns
 		/// this <see cref="TourStep"/>.
 		/// </summary>
+		/// <remarks>
+		/// The value is set when the step is assigned to the <see cref="TourPanel.Steps"/> property; it's null otherwise.
+		/// </remarks>
 		[Browsable(false)]
 		public TourPanel Tour
 		{
@@ -81,6 +103,9 @@ namespace Wisej.Web.Ext.TourPanel
 		/// Returns or sets the title to display in the
 		/// <see cref="TourPanel"/>.
 		/// </summary>
+		/// <remarks>
+		/// The title is displayed in <see cref="TourPanel.TitleLabel"/>. Setting it to null sets it to an empty string.
+		/// </remarks>
 		[DefaultValue("")]
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
@@ -103,8 +128,19 @@ namespace Wisej.Web.Ext.TourPanel
 
 		/// <summary>
 		/// Returns or sets the HTML text to display in the
-		/// <see cref="TourPanel"/>
+		/// <see cref="TourPanel"/>.
 		/// </summary>
+		/// <remarks>
+		/// The text is displayed in <see cref="TourPanel.HtmlText"/> and can contain HTML markup.
+		/// When <see cref="TourPanel.AutoSize"/> is true, the panel is resized to fit the text.
+		/// Setting it to null sets it to an empty string.
+		/// </remarks>
+		/// <example>
+		/// Using HTML to format the text of a step:
+		/// <code><![CDATA[
+		/// this.tourStep1.Text = "Use the <b>search</b> box to find a customer by:<ul><li>Name</li><li>Email</li></ul>";
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("")]
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
@@ -147,6 +183,22 @@ namespace Wisej.Web.Ext.TourPanel
 		/// <summary>
 		/// Returns a dynamic object that can be used to store custom data in relation to this component.
 		/// </summary>
+		/// <remarks>
+		/// The object is created on first access and it's never sent to the client.
+		/// </remarks>
+		/// <example>
+		/// Storing and reading custom values on a step:
+		/// <code><![CDATA[
+		/// this.tourStep1.UserData.HelpTopic = "customers";
+		///
+		/// private void tour_BeforeStep(object sender, TourPanelEventArgs e)
+		/// {
+		///     string topic = e.Step.UserData.HelpTopic;
+		///     if (topic != null)
+		///         LoadHelpTopic(topic);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public dynamic UserData
@@ -156,9 +208,13 @@ namespace Wisej.Web.Ext.TourPanel
 		private dynamic _userData = null;
 
 		/// <summary>
-		/// Enables or disables the step. When a step is disabled it is
+		/// Returns or sets whether the step is enabled. When a step is disabled it is
 		/// skipped from the rotation.
 		/// </summary>
+		/// <remarks>
+		/// Disabled steps are skipped by <see cref="TourPanel.First"/>, <see cref="TourPanel.Next"/> and <see cref="TourPanel.Back"/>,
+		/// but they can still be shown by setting <see cref="TourPanel.SelectedIndex"/> or <see cref="TourPanel.CurrentStep"/>.
+		/// </remarks>
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("Enables or disables the step.")]
@@ -170,8 +226,8 @@ namespace Wisej.Web.Ext.TourPanel
 		private bool _enabled = true;
 
 		/// <summary>
-		/// Identifies the target control within the
-		/// parent of the <see cref="TourPanel"/>.
+		/// Returns or sets the name or path that identifies the target control within the
+		/// <see cref="TourPanel.Container"/> of the <see cref="TourPanel"/>.
 		/// </summary>
 		/// <remarks>
 		/// <para>
@@ -191,7 +247,29 @@ namespace Wisej.Web.Ext.TourPanel
 		/// Child widgets that are part of the children collection on the client can be reached using the "[]" syntax.
 		/// For example, the first tool in a tools widget is addressable as "textBox1/tools[0]".
 		/// </para>
+		/// <para>
+		/// The names in the path can also refer to the columns of a <see cref="DataGridView"/> or <see cref="ListView"/>, the items of a
+		/// <see cref="MenuBar"/> or <see cref="MainMenu"/>, the "menu" of a <see cref="Form"/> and MDI child forms.
+		/// When the tour is started with <see cref="TourPanel.Show()"/> (no container), the first name is the name of an open
+		/// <see cref="Form"/> or <see cref="Page"/>, or "Desktop" or "MainPage".
+		/// </para>
+		/// <para>
+		/// When the target is not found, the <see cref="TourPanel.NotFound"/> event is fired.
+		/// The target is resolved only the first time the step is shown, the result is stored in <see cref="Target"/>.
+		/// </para>
 		/// </remarks>
+		/// <example>
+		/// Pointing to nested controls, tools and grid columns:
+		/// <code><![CDATA[
+		/// this.tour.Steps = new[]
+		/// {
+		///     new TourStep { Title = "Name", Text = "Enter the name here.", TargetName = "panelDetails.textBoxName" },
+		///     new TourStep { Title = "Tools", Text = "Use the first tool to clear the field.", TargetName = "textBoxSearch/tools[0]" },
+		///     new TourStep { Title = "Total", Text = "This column shows the total.", TargetName = "dataGridView1.colTotal" }
+		/// };
+		/// this.tour.Show(this);
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("")]
 		[SRCategory("CatBehavior")]
 		[SRDescription("Identifies the target control within the TourPanel.")]
@@ -215,6 +293,21 @@ namespace Wisej.Web.Ext.TourPanel
 		/// Returns or sets the target for the step. The object can be a reference to a control, a component, or
 		/// a string with the numeric ID (the <see cref="Wisej.Web.Control.Handle"/>) of the target.
 		/// </summary>
+		/// <remarks>
+		/// When set, <see cref="TargetName"/> is ignored. When the target is resolved from <see cref="TargetName"/>,
+		/// this property is set to a string with the handle of the target followed by the child path (i.e. "12/tools[0]").
+		/// When the target is a control or component, the <see cref="TourPanel"/> makes it visible before showing the step
+		/// (selects its tab page, expands its panel, scrolls it into view, etc.).
+		/// </remarks>
+		/// <example>
+		/// Targeting a control created at runtime, which doesn't have a designer name:
+		/// <code><![CDATA[
+		/// var button = new Button { Text = "Export" };
+		/// this.panelTools.Controls.Add(button);
+		///
+		/// this.tourStep3.Target = button;
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public object Target
@@ -243,6 +336,10 @@ namespace Wisej.Web.Ext.TourPanel
 		/// Returns or sets a value indicating whether pointer events are allowed
 		/// on the current target.
 		/// </summary>
+		/// <remarks>
+		/// When false (default), the mask displayed over the page blocks all pointer events while this step is shown.
+		/// When true, the mask lets pointer events through and the user can interact with the target.
+		/// </remarks>
 		[DefaultValue(false)]
 		[Description("Returns or sets a value indicating whether pointer events are allowed on the current target.")]
 		public bool AllowPointerEvents
@@ -261,8 +358,8 @@ namespace Wisej.Web.Ext.TourPanel
 
 		/// <summary>
 		/// Returns or sets the number of seconds to wait before
-		/// showing the next step when the TourPanel is auto playing the steps.
-		/// The default value is 0 to use the time set in the 
+		/// showing the next step when the <see cref="TourPanel"/> is auto playing the steps.
+		/// The default value is 0 to use the time set in the
 		/// <see cref="TourPanel.DefaultAutoPlayTime"/> property.
 		/// </summary>
 		/// <exception cref="ArgumentException">
@@ -285,11 +382,14 @@ namespace Wisej.Web.Ext.TourPanel
 		private int _autoPlayTime = 0;
 
 		/// <summary>
-		/// Returns or sets the alignment side and position of the 
-		/// <see cref="TourPanel"/>
-		/// when this 
-		/// <see cref="TourStep"/> is shown.
+		/// Returns or sets the alignment side and position of the
+		/// <see cref="TourPanel"/> in relation to the target
+		/// when this <see cref="TourStep"/> is shown.
 		/// </summary>
+		/// <remarks>
+		/// The default value is <see cref="Placement.BottomCenter"/>. When the value is the same as
+		/// <see cref="TourPanel.DefaultAlignment"/>, the default alignment of the <see cref="TourPanel"/> is used.
+		/// </remarks>
 		[SRCategory("CatLayout")]
 		[SRDescription("Returns or sets the alignment side and position of the TourPanel.")]
 		public Placement Alignment
@@ -321,9 +421,22 @@ namespace Wisej.Web.Ext.TourPanel
 
 		/// <summary>
 		/// Returns or sets the offset in pixels of the calculated position of the
-		/// <see cref="TourPanel"/> when this 
+		/// <see cref="TourPanel"/> when this
 		/// <see cref="TourStep"/> is shown.
 		/// </summary>
+		/// <remarks>
+		/// The <see cref="Padding"/> sides are used according to the placement: for example <see cref="Padding.Top"/> adds space
+		/// between the target and a panel placed below it, and <see cref="Padding.Left"/> between the target and a panel placed
+		/// at its right. When the value is the same as <see cref="TourPanel.DefaultOffset"/>, the default offset of the
+		/// <see cref="TourPanel"/> is used.
+		/// </remarks>
+		/// <example>
+		/// Moving the panel 20 pixels away from the bottom of the target:
+		/// <code><![CDATA[
+		/// this.tourStep1.Alignment = Placement.BottomCenter;
+		/// this.tourStep1.Offset = new Padding(0, 20, 0, 0);
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatLayout")]
 		[SRDescription("Returns or sets the offset in pixels of the calculated position of the TourPanel ")]
 		public Padding Offset
@@ -354,13 +467,13 @@ namespace Wisej.Web.Ext.TourPanel
 		}
 
 		/// <summary>
-		/// Determines whether the 
-		/// <see cref="TourPanel"/>
+		/// Returns or sets whether the <see cref="TourPanel"/>
 		/// shows the <see cref="TourPanel.CloseButton"/> and <see cref="TourPanel.ExitButton"/> buttons when showing this
 		/// <see cref="TourStep"/>.
 		/// </summary>
 		/// <remarks>
-		/// The <see cref="TourPanel.ExitButton"/> is always shown on the last step.
+		/// The <see cref="TourPanel.ExitButton"/> is always shown on the last step. When the value is the same as
+		/// <see cref="TourPanel.DefaultShowClose"/>, the default value of the <see cref="TourPanel"/> is used.
 		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[SRDescription("Determines whether the TourPanel shows a close button.")]
@@ -395,6 +508,9 @@ namespace Wisej.Web.Ext.TourPanel
 		/// Returns true when this step is currently visible on
 		/// the <see cref="TourPanel"/>.
 		/// </summary>
+		/// <remarks>
+		/// The value is set to true before the <see cref="Show"/> event and to false after the <see cref="Hide"/> event.
+		/// </remarks>
 		[Browsable(false)]
 		public bool IsVisible
 		{
@@ -403,9 +519,12 @@ namespace Wisej.Web.Ext.TourPanel
 		}
 
 		/// <summary>
-		/// Returns the index of this step in the 
+		/// Returns the index of this step in the
 		/// <see cref="TourPanel.Steps"/> list.
 		/// </summary>
+		/// <remarks>
+		/// Returns -1 when the step doesn't belong to a <see cref="TourPanel"/>.
+		/// </remarks>
 		[Browsable(false)]
 		public int Index
 		{
@@ -431,7 +550,13 @@ namespace Wisej.Web.Ext.TourPanel
 		/// <summary>
 		/// Returns a string representation of this object.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>A string in the format "Step: " followed by the <see cref="Title"/>.</returns>
+		/// <example>
+		/// Logging the current step:
+		/// <code><![CDATA[
+		/// System.Diagnostics.Debug.WriteLine(this.tour.CurrentStep?.ToString());
+		/// ]]></code>
+		/// </example>
 		public override string ToString()
 		{
 			return "Step: " + this.Title;

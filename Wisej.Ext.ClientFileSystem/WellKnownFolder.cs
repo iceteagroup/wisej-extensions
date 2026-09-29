@@ -19,11 +19,14 @@
 
 namespace Wisej.Ext.ClientFileSystem
 {
-	/// <summary>
-	/// Indicates the starting directory for <see cref="ClientFileSystem.ShowDirectoryPicker"/> and 
-	/// <see cref="ClientFileSystem.ShowSaveFilePicker"/>
-	/// </summary>
-	public enum WellKnownFolder
+    /// <summary>
+    /// Represents well-known folders that can be used as starting directories for the
+    /// <see cref="ClientFileSystem.ShowDirectoryPicker"/> and
+    /// <see cref="ClientFileSystem.ShowSaveFilePicker"/> methods.
+    /// This enum provides a set of predefined folder locations to simplify user selection
+    /// of directories in file dialogs.
+    /// </summary>
+    public enum WellKnownFolder
 	{
 		/// <summary>
 		/// No initial folder.

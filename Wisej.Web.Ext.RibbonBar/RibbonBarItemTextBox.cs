@@ -27,6 +27,11 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <summary>
 	/// Represents a textbox in a <see cref="RibbonBarGroup"/>.
 	/// </summary>
+	/// <remarks>
+	/// The <see cref="RibbonBarItem.Text"/> and the image are displayed as a label to the left of the edit field; the content of
+	/// the field is in the <see cref="Value"/> property. The user can move between the text boxes and combo boxes in the same
+	/// <see cref="RibbonBarGroup"/> using the Tab and Shift+Tab keys.
+	/// </remarks>
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
@@ -61,9 +66,24 @@ namespace Wisej.Web.Ext.RibbonBar
 		#region Properties
 
 		/// <summary>
-		/// Returns or sets the currently selected item or the
-		/// value in the editable field of the <see cref="RibbonBarItemTextBox"/>.
+		/// Returns or sets the value in the editable field of the <see cref="RibbonBarItemTextBox"/>.
 		/// </summary>
+		/// <returns>The text in the edit field. The default is null.</returns>
+		/// <remarks>
+		/// The value is updated on the server when the user commits the change in the field. Every change, including
+		/// assigning the value in code, fires the <see cref="ValueChanged"/> event on the item and the
+		/// <see cref="RibbonBar.ItemValueChanged"/> event on the <see cref="RibbonBar"/>.
+		/// </remarks>
+		/// <example>
+		/// Searching the text typed in a ribbon text box:
+		/// <code><![CDATA[
+		/// private void ribbonBar1_ItemValueChanged(object sender, RibbonBarItemEventArgs e)
+		/// {
+		///     if (e.Item == this.textBoxSearch)
+		///         Search(this.textBoxSearch.Value);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[Description("")]
 		public string Value
@@ -87,6 +107,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets the width of the TextBox field inside the <see cref="RibbonBarItemTextBox"/>.
 		/// </summary>
+		/// <returns>The width of the edit field in pixels, not including the label. The default is 120.</returns>
 		[DefaultValue(120)]
 		[SRCategory("CatLayout")]
 		[Description("Returns or sets the width of the TextBox field inside the RibbonBarItemTextBox.")]

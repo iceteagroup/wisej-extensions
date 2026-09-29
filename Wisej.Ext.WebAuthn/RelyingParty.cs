@@ -26,13 +26,13 @@ namespace Wisej.Ext.WebAuthn
 	/// User account parameters for credential generation.
 	/// </summary>
 	/// <remarks>
-	/// <See href="https://w3c.github.io/webauthn/#dictionary-rp-credential-params"/>
+	/// See <see href="https://w3c.github.io/webauthn/#dictionary-rp-credential-params"/>.
 	/// </remarks>
 	[ApiCategory("WebAuthn")]
 	public class RelyingParty
 	{
 		/// <summary>
-		/// The user handle of the user account.
+		/// The Relying Party identifier (RP ID), typically the domain of the application.
 		/// </summary>
 		public string ID { get; set; }
 
@@ -44,18 +44,34 @@ namespace Wisej.Ext.WebAuthn
 		/// <summary>
 		/// Creates a new instance of <see cref="RelyingParty"/> with the given configuration.
 		/// </summary>
-		/// <param name="id">The RP ID.</param>
-		/// <param name="name">The RP name.</param>
+		/// <param name="id">The RP ID: the domain of the application (e.g. "example.com"). It must match the current origin or a registrable suffix of it.</param>
+		/// <param name="name">The human-palatable name of the Relying Party, shown to the user.</param>
+		/// <example>
+		/// <code><![CDATA[
+		/// var rp = new RelyingParty("example.com", "Example Inc.");
+		///
+		/// CredentialsResponse response = await WebAuthn.CreateAsync(
+		/// 	challenge, rp, user, parameters, selection, 60000, AttestationConveyancePreference.None);
+		/// ]]></code>
+		/// </example>
 		public RelyingParty(string id, string name)
         {
             this.ID = id;
             this.Name = name;
         }
 
-		/// <summary>
-		/// Returns a string that represents the current object.
-		/// </summary>
-		/// <returns></returns>
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A JSON string with the <c>id</c> and <c>name</c> members.</returns>
+        /// <example>
+        /// <code><![CDATA[
+        /// var rp = new RelyingParty("example.com", "Example Inc.");
+        ///
+        /// string json = rp.ToString();
+        /// // {"id":"example.com","name":"Example Inc."}
+        /// ]]></code>
+        /// </example>
         public override string ToString()
         {
 			return new

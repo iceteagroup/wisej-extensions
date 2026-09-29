@@ -48,11 +48,12 @@ namespace Wisej.Web.Ext.Mermaid
 	public class MermaidErrorEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MermaidErrorEventHandler"/> class.
+		/// Initializes a new instance of the <see cref="MermaidErrorEventArgs"/> class.
 		/// </summary>
 		/// <param name="message">Human-readable error message.</param>
 		/// <param name="error">Optional raw error payload from the browser.</param>
 		/// <example>
+		/// Raising the event from a derived control:
 		/// <code><![CDATA[
 		/// var args = new Wisej.Web.Ext.Mermaid.MermaidErrorEventArgs("Invalid diagram.");
 		/// ]]></code>
@@ -64,9 +65,14 @@ namespace Wisej.Web.Ext.Mermaid
 		}
 
 		/// <summary>
-		/// Gets a human-readable error message.
+		/// Returns the human-readable error message.
 		/// </summary>
+		/// <remarks>
+		/// When raised by the <see cref="Mermaid"/> widget, this is the message of the Mermaid parser error,
+		/// or "Invalid Mermaid diagram." when the browser didn't provide one.
+		/// </remarks>
 		/// <example>
+		/// Showing the error to the user:
 		/// <code><![CDATA[
 		/// mermaid.Error += (s, e) => Wisej.Web.MessageBox.Show(e.Message);
 		/// ]]></code>
@@ -74,12 +80,13 @@ namespace Wisej.Web.Ext.Mermaid
 		public string Message { get; }
 
 		/// <summary>
-		/// Optional payload sent from the browser (typically a JSON-serializable object).
+		/// Returns the optional error payload sent from the browser (typically a JSON-serializable object), or null.
 		/// </summary>
 		/// <remarks>
 		/// This value is passed through as-is and may be an anonymous JSON-like object.
 		/// </remarks>
 		/// <example>
+		/// Inspecting the raw error payload:
 		/// <code><![CDATA[
 		/// mermaid.Error += (s, e) =>
 		/// {

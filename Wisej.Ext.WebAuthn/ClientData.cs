@@ -25,8 +25,19 @@ namespace Wisej.Ext.WebAuthn
 	/// The client data represents the contextual bindings of both the WebAuthn Relying Party and the client.
 	/// </summary>
 	/// <remarks>
-	/// <See href="https://w3c.github.io/webauthn/#dictionary-client-data"/>
-	/// </remarks>	
+	/// Returned in <see cref="CredentialsResponse.ClientData"/>. <see cref="Base64"/> is only set by <see cref="WebAuthn.GetAsync"/>.
+	/// See <see href="https://w3c.github.io/webauthn/#dictionary-client-data"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// CredentialsResponse response = await WebAuthn.GetAsync(challenge, allowCredentials, 60000);
+	/// ClientData clientData = response.ClientData;
+	///
+	/// // Reject responses that were not produced for this operation or origin.
+	/// if (clientData.Type != "webauthn.get" || clientData.Origin != "https://example.com")
+	/// 	throw new InvalidOperationException("Unexpected client data.");
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("WebAuthn")]
 	public class ClientData
     {

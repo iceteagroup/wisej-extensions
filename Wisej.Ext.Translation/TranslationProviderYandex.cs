@@ -35,7 +35,9 @@ namespace Wisej.Ext.Translation
 	/// Yandex translation provider.
 	/// </summary>
 	/// <remarks>
-	/// <See href="https://tech.yandex.com/translate/."/>
+	/// This is the default provider used by the <see cref="Translation"/> component. It requires only an API key,
+	/// set through <see cref="ClientSecret"/> (or <see cref="Translation.ClientSecret"/>).
+	/// See <see href="https://tech.yandex.com/translate/"/>.
 	/// </remarks>
 	[ApiCategory("Translation")]
 	public class TranslationProviderYandex : TranslationProviderBase
@@ -66,9 +68,25 @@ namespace Wisej.Ext.Translation
 		/// of the <see cref="T:Wisej.Ext.Translation.TranslationResult"/> class.
 		/// </summary>
 		/// <param name="text">The text to translate.</param>
-		/// <param name="from">The source language ("en", "de", ...) or null/empty to ask the provider to auto detect the source language.</param>
-		/// <param name="to">The target language ("en", "de", ...)</param>
-		/// <returns></returns>
+		/// <param name="from">The source language code ("en", "de", ...), or null or empty to let the provider auto-detect the source language.</param>
+		/// <param name="to">The target language code ("en", "de", ...).</param>
+		/// <returns>A <see cref="TranslationResult"/> containing the translated text or, if the request failed, the error code and message.</returns>
+		/// <remarks>
+		/// The request is sent synchronously to the Yandex Translate API. Exceptions (e.g. network errors) are caught
+		/// and returned as a <see cref="TranslationResult"/> whose <see cref="TranslationResult.ErrorCode"/> is the exception's HResult.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var yandex = new TranslationProviderYandex { ClientSecret = "<your-yandex-api-key>" };
+		///
+		/// TranslationResult result = yandex.Translate("Buongiorno", null, "en");
+		///
+		/// if (result.ErrorCode == 0)
+		/// 	AlertBox.Show(result.TranslatedText);
+		/// else
+		/// 	AlertBox.Show(result.ErrorMessage, MessageBoxIcon.Error);
+		/// ]]></code>
+		/// </example>
 		public override TranslationResult Translate(string text, string from, string to)
 		{
 			string requestUrl = String.Format("{0}?key={1}&text={2}&lang={3}",
@@ -126,9 +144,24 @@ namespace Wisej.Ext.Translation
 		/// of the <see cref="T:Wisej.Ext.Translation.TranslationResult"/> class.
 		/// </summary>
 		/// <param name="text">The text to translate.</param>
-		/// <param name="from">The source language ("en", "de", ...) or null/empty to ask the provider to auto detect the source language.</param>
-		/// <param name="to">The target language ("en", "de", ...)</param>
-		/// <param name="resultCallback">Callback method that will receive the TranslationResult when ready.</param>
+		/// <param name="from">The source language code ("en", "de", ...), or null or empty to let the provider auto-detect the source language.</param>
+		/// <param name="to">The target language code ("en", "de", ...).</param>
+		/// <param name="resultCallback">Callback method that will receive the <see cref="TranslationResult"/> when ready.</param>
+		/// <remarks>
+		/// The request runs in a background task started with <see cref="Wisej.Web.Application.StartTask(System.Action)"/>.
+		/// Call <c>Application.Update(this)</c> in the callback to push UI changes to the browser.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var yandex = new TranslationProviderYandex { ClientSecret = "<your-yandex-api-key>" };
+		///
+		/// yandex.TranslateAsync("Buongiorno", "it", "en", result =>
+		/// {
+		/// 	label1.Text = result.TranslatedText ?? result.ErrorMessage;
+		/// 	Application.Update(this);
+		/// });
+		/// ]]></code>
+		/// </example>
 		public override void TranslateAsync(string text, string from, string to, Action<TranslationResult> resultCallback)
 		{
 			var callback = resultCallback;

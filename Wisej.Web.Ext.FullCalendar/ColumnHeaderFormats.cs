@@ -27,6 +27,9 @@ namespace Wisej.Web.Ext.FullCalendar
 	/// <summary>
 	/// Represents the column header formats for the different views.
 	/// </summary>
+	/// <remarks>
+	/// The instance is returned by <see cref="P:Wisej.Web.Ext.FullCalendar.FullCalendar.HeaderFormats"/>.
+	/// </remarks>
 	[TypeConverter(typeof(ColumnHeaderFormats.Converter))]
 	[ApiCategory("FullCalendar")]
 	public class ColumnHeaderFormats
@@ -39,9 +42,19 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
-		/// Determines the text that will be displayed on the day column headings in day view
+		/// Returns or sets the text that will be displayed on the column headings in the day view
 		/// using momentjs format patterns: <see href="http://momentjs.com/docs/#/displaying/format/"/>.
 		/// </summary>
+		/// <remarks>
+		/// Applies to the day views (<see cref="F:Wisej.Web.Ext.FullCalendar.ViewType.BasicDay"/> and <see cref="F:Wisej.Web.Ext.FullCalendar.ViewType.AgendaDay"/>). Returns "Default" when not set, in which case the format of the current locale is used.
+		/// Setting it to null or an empty string restores the default. Setting the property recreates the calendar on the client.
+		/// </remarks>
+		/// <example>
+		/// Setting the column header format:
+		/// <code><![CDATA[
+		/// this.fullCalendar1.HeaderFormats.DayViewFormat = "dddd, MMMM D";
+		/// ]]></code>
+		/// </example>
 		[Description("Determines the text that will be displayed on the month column headings.")]
 		public string DayViewFormat
 		{
@@ -71,9 +84,19 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
-		/// Determines the text that will be displayed on the day column headings in week view
+		/// Returns or sets the text that will be displayed on the column headings in the week view
 		/// using momentjs format patterns: <see href="http://momentjs.com/docs/#/displaying/format/"/>.
 		/// </summary>
+		/// <remarks>
+		/// Applies to the week views (<see cref="F:Wisej.Web.Ext.FullCalendar.ViewType.BasicWeek"/> and <see cref="F:Wisej.Web.Ext.FullCalendar.ViewType.AgendaWeek"/>). Returns "Default" when not set, in which case the format of the current locale is used.
+		/// Setting it to null or an empty string restores the default. Setting the property recreates the calendar on the client.
+		/// </remarks>
+		/// <example>
+		/// Setting the column header format:
+		/// <code><![CDATA[
+		/// this.fullCalendar1.HeaderFormats.WeekViewFormat = "ddd M/D";
+		/// ]]></code>
+		/// </example>
 		[Description("Determines the text that will be displayed on the month column headings.")]
 		public string WeekViewFormat
 		{
@@ -103,9 +126,19 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
-		/// Determines the text that will be displayed on the month column headings
+		/// Returns or sets the text that will be displayed on the column headings in the month view
 		/// using momentjs format patterns: <see href="http://momentjs.com/docs/#/displaying/format/"/>.
 		/// </summary>
+		/// <remarks>
+		/// Applies to the <see cref="F:Wisej.Web.Ext.FullCalendar.ViewType.Month"/> view, where the headings show the days of the week. Returns "Default" when not set, in which case the format of the current locale is used.
+		/// Setting it to null or an empty string restores the default. Setting the property recreates the calendar on the client.
+		/// </remarks>
+		/// <example>
+		/// Setting the column header format:
+		/// <code><![CDATA[
+		/// this.fullCalendar1.HeaderFormats.MonthViewFormat = "dddd";
+		/// ]]></code>
+		/// </example>
 		[Description("Determines the text that will be displayed on the month column headings.")]
 		public string MonthViewFormat
 		{

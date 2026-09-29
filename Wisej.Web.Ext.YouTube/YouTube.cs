@@ -22,6 +22,10 @@ namespace Wisej.Web.Ext.YouTube
     /// <summary>
     /// Implements a YouTube viewer control.
     /// </summary>
+    /// <remarks>
+    /// This class is a placeholder for a future YouTube viewer control: it doesn't derive
+    /// from a Wisej control yet and doesn't expose any members.
+    /// </remarks>
     //[ToolboxItem(true)]
     //[DefaultProperty("Value")]
     //[DefaultBindingProperty("Value")]

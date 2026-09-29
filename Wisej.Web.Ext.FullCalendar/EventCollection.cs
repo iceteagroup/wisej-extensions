@@ -28,6 +28,13 @@ namespace Wisej.Web.Ext.FullCalendar
 	/// <summary>
 	/// Collection of <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> objects.
 	/// </summary>
+	/// <remarks>
+	/// The collection is returned by <see cref="P:Wisej.Web.Ext.FullCalendar.FullCalendar.Events"/>. Any change reloads the events
+	/// on the client after the current request. Event IDs are unique in the collection: adding or inserting an event with the ID of
+	/// an existing event replaces it, and events without an ID receive an automatic ID.
+	/// When <see cref="P:Wisej.Web.Ext.FullCalendar.FullCalendar.VirtualMode"/> is true, the collection can't be modified and the
+	/// indexers retrieve the events by firing <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.RetrieveVirtualEvent"/>.
+	/// </remarks>
 	[ApiCategory("FullCalendar")]
 	public class EventCollection : IList<Event>
 	{
@@ -54,7 +61,26 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// Returns or sets the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> at the specified position.
 		/// </summary>
 		/// <param name="index">The index of the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to get or set.</param>
-		/// <returns></returns>
+		/// <returns>The <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> at the specified position.</returns>
+		/// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is less than 0 or not less than <see cref="Count"/>.</exception>
+		/// <exception cref="T:System.InvalidOperationException">
+		/// The calendar is in virtual mode and either the event is being set, or the
+		/// <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.RetrieveVirtualEvent"/> handler didn't return an event.
+		/// </exception>
+		/// <remarks>
+		/// In virtual mode, reading an event fires <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.RetrieveVirtualEvent"/>
+		/// with <see cref="P:Wisej.Web.Ext.FullCalendar.RetrieveVirtualEventEventArgs.EventIndex"/> set to <paramref name="index"/>.
+		/// </remarks>
+		/// <example>
+		/// Iterating the events by index:
+		/// <code><![CDATA[
+		/// for (int i = 0; i < this.fullCalendar1.Events.Count; i++)
+		/// {
+		///     var ev = this.fullCalendar1.Events[i];
+		///     ev.Editable = ev.Start > DateTime.Now;
+		/// }
+		/// ]]></code>
+		/// </example>
 		public Event this[int index]
 		{
 			get
@@ -94,7 +120,25 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// Returns or sets the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> identified by the ID.
 		/// </summary>
 		/// <param name="id">The ID of the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to get or set.</param>
-		/// <returns></returns>
+		/// <returns>The <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> with the specified ID, or null if not found.</returns>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="id"/> is null when setting the event.</exception>
+		/// <exception cref="T:System.InvalidOperationException">
+		/// The calendar is in virtual mode and either the event is being set, or the
+		/// <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.RetrieveVirtualEvent"/> handler didn't return an event.
+		/// </exception>
+		/// <remarks>
+		/// Setting an event replaces the event with the same ID or, when not found, adds the event to the collection.
+		/// In virtual mode, reading an event fires <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.RetrieveVirtualEvent"/>
+		/// with <see cref="P:Wisej.Web.Ext.FullCalendar.RetrieveVirtualEventEventArgs.EventID"/> set to <paramref name="id"/>.
+		/// </remarks>
+		/// <example>
+		/// Finding an event by its ID:
+		/// <code><![CDATA[
+		/// var ev = this.fullCalendar1.Events["m42"];
+		/// if (ev != null)
+		///     ev.Title = "Budget meeting (moved)";
+		/// ]]></code>
+		/// </example>
 		public Event this[string id]
 		{
 			get
@@ -149,6 +193,9 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// <summary>
 		/// Returns the number of <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> objects in the collection.
 		/// </summary>
+		/// <remarks>
+		/// In virtual mode returns <see cref="P:Wisej.Web.Ext.FullCalendar.FullCalendar.VirtualSize"/>.
+		/// </remarks>
 		public int Count
 		{
 			get
@@ -165,6 +212,13 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// </summary>
 		/// <param name="day">The <see cref="T:System.DateTime"/> date of the all-day event.</param>
 		/// <returns>The newly added all-day <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/>.</returns>
+		/// <exception cref="T:System.InvalidOperationException">The calendar is in virtual mode.</exception>
+		/// <example>
+		/// Adding an all-day event:
+		/// <code><![CDATA[
+		/// this.fullCalendar1.Events.Add(new DateTime(2026, 12, 25)).Title = "Christmas";
+		/// ]]></code>
+		/// </example>
 		public Event Add(DateTime day)
 		{
 			var ev = new Event(day);
@@ -173,11 +227,19 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
-		/// Add a new <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/>.
+		/// Adds a new <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to the collection.
 		/// </summary>
 		/// <param name="start">The starting <see cref="T:System.DateTime"/> date and time of the event.</param>
 		/// <param name="end">The ending <see cref="T:System.DateTime"/> date and time of the event.</param>
 		/// <returns>The newly added <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/>.</returns>
+		/// <exception cref="T:System.InvalidOperationException">The calendar is in virtual mode.</exception>
+		/// <example>
+		/// Adding a timed event:
+		/// <code><![CDATA[
+		/// var ev = this.fullCalendar1.Events.Add(new DateTime(2026, 10, 6, 9, 30, 0), new DateTime(2026, 10, 6, 11, 0, 0));
+		/// ev.Title = "Workshop";
+		/// ]]></code>
+		/// </example>
 		public Event Add(DateTime start, DateTime end)
 		{
 			var ev = new Event(start, end);
@@ -186,11 +248,18 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
-		/// Add a new <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/>.
+		/// Adds a new <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to the collection.
 		/// </summary>
 		/// <param name="start">The starting <see cref="T:System.DateTime"/> date and time of the event.</param>
 		/// <param name="duration">The <see cref="T:System.TimeSpan"/> duration of the event.</param>
 		/// <returns>The newly added <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/>.</returns>
+		/// <exception cref="T:System.InvalidOperationException">The calendar is in virtual mode.</exception>
+		/// <example>
+		/// Adding a 45 minutes event:
+		/// <code><![CDATA[
+		/// this.fullCalendar1.Events.Add(new DateTime(2026, 10, 6, 14, 0, 0), TimeSpan.FromMinutes(45)).Title = "Interview";
+		/// ]]></code>
+		/// </example>
 		public Event Add(DateTime start, TimeSpan duration)
 		{
 			var ev = new Event(start, duration);
@@ -199,11 +268,22 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
-		/// Add a new <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/>.
+		/// Adds a new all-day <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to the collection.
 		/// </summary>
 		/// <param name="id">A string that represents the ID of this event.</param>
 		/// <param name="day">The <see cref="T:System.DateTime"/> date of the all-day event.</param>
 		/// <returns>The newly added <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/>.</returns>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="id"/> is null or empty.</exception>
+		/// <exception cref="T:System.InvalidOperationException">The calendar is in virtual mode.</exception>
+		/// <remarks>
+		/// If the collection already contains an event with the same <paramref name="id"/>, it is replaced.
+		/// </remarks>
+		/// <example>
+		/// Adding an all-day event with a known ID:
+		/// <code><![CDATA[
+		/// this.fullCalendar1.Events.Add("holiday-2026-12-25", new DateTime(2026, 12, 25)).Title = "Christmas";
+		/// ]]></code>
+		/// </example>
 		public Event Add(string id, DateTime day)
 		{
 			var ev = new Event(id, day);
@@ -212,12 +292,24 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
-		/// Add a new <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/>.
+		/// Adds a new <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to the collection.
 		/// </summary>
 		/// <param name="id">A string that represents the ID of this event.</param>
 		/// <param name="start">The starting <see cref="T:System.DateTime"/> date and time of the event.</param>
 		/// <param name="end">The ending <see cref="T:System.DateTime"/> date and time of the event.</param>
 		/// <returns>The newly added <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/>.</returns>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="id"/> is null or empty.</exception>
+		/// <exception cref="T:System.InvalidOperationException">The calendar is in virtual mode.</exception>
+		/// <remarks>
+		/// If the collection already contains an event with the same <paramref name="id"/>, it is replaced.
+		/// </remarks>
+		/// <example>
+		/// Adding an event using the primary key of a record as the ID:
+		/// <code><![CDATA[
+		/// var ev = this.fullCalendar1.Events.Add(appointment.Id.ToString(), appointment.Start, appointment.End);
+		/// ev.Title = appointment.Subject;
+		/// ]]></code>
+		/// </example>
 		public Event Add(string id, DateTime start, DateTime end)
 		{
 			var ev = new Event(id, start, end);
@@ -226,12 +318,23 @@ namespace Wisej.Web.Ext.FullCalendar
 		}
 
 		/// <summary>
-		/// Add a new <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/>.
+		/// Adds a new <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to the collection.
 		/// </summary>
 		/// <param name="id">A string that represents the ID of this event.</param>
 		/// <param name="start">The starting <see cref="T:System.DateTime"/> date and time of the event.</param>
 		/// <param name="duration">The <see cref="T:System.TimeSpan"/> duration of the event.</param>
 		/// <returns>The newly added <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/>.</returns>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="id"/> is null or empty.</exception>
+		/// <exception cref="T:System.InvalidOperationException">The calendar is in virtual mode.</exception>
+		/// <remarks>
+		/// If the collection already contains an event with the same <paramref name="id"/>, it is replaced.
+		/// </remarks>
+		/// <example>
+		/// Adding a two hours event with an ID:
+		/// <code><![CDATA[
+		/// this.fullCalendar1.Events.Add("training", new DateTime(2026, 10, 8, 13, 0, 0), TimeSpan.FromHours(2)).Title = "Training";
+		/// ]]></code>
+		/// </example>
 		public Event Add(string id, DateTime start, TimeSpan duration)
 		{
 			var ev = new Event(id, start, duration);
@@ -243,6 +346,22 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// Adds a new <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to the collection.
 		/// </summary>
 		/// <param name="ev">The <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to add to the collection.</param>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="ev"/> is null.</exception>
+		/// <exception cref="T:System.InvalidOperationException">The calendar is in virtual mode.</exception>
+		/// <remarks>
+		/// If the collection already contains an event with the same ID, it is replaced. If the event has no ID, an automatic ID is assigned.
+		/// If the event belongs to another calendar, it's removed from it.
+		/// </remarks>
+		/// <example>
+		/// Adding an event configured in advance:
+		/// <code><![CDATA[
+		/// this.fullCalendar1.Events.Add(new Event(new DateTime(2026, 10, 6, 9, 0, 0), TimeSpan.FromHours(1))
+		/// {
+		///     Title = "Sprint planning",
+		///     BackgroundColor = Color.MediumPurple
+		/// });
+		/// ]]></code>
+		/// </example>
 		public void Add(Event ev)
 		{
 			if (this.owner.VirtualMode)
@@ -276,6 +395,23 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// Adds the list of <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> items to the collection.
 		/// </summary>
 		/// <param name="list">The list of events to add to the collection.</param>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="list"/> is null.</exception>
+		/// <exception cref="T:System.InvalidOperationException">The calendar is in virtual mode.</exception>
+		/// <remarks>
+		/// Events with the same ID of an event already in the collection replace the existing events.
+		/// The events on the client are reloaded only once.
+		/// </remarks>
+		/// <example>
+		/// Loading a set of events at once:
+		/// <code><![CDATA[
+		/// var events = appointments
+		///     .Select(a => new Event(a.Id.ToString(), a.Start, a.End) { Title = a.Subject })
+		///     .ToList();
+		///
+		/// this.fullCalendar1.Events.Clear();
+		/// this.fullCalendar1.Events.AddRange(events);
+		/// ]]></code>
+		/// </example>
 		public void AddRange(ICollection<Event> list)
 		{
 			if (this.owner.VirtualMode)
@@ -311,6 +447,15 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// <summary>
 		/// Removes all events.
 		/// </summary>
+		/// <remarks>
+		/// Does nothing when the calendar is in virtual mode.
+		/// </remarks>
+		/// <example>
+		/// Removing all the events:
+		/// <code><![CDATA[
+		/// this.fullCalendar1.Events.Clear();
+		/// ]]></code>
+		/// </example>
 		public void Clear()
 		{
 			if (this.owner.VirtualMode)
@@ -333,7 +478,17 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// Checks if the specified <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> exists in the collection.
 		/// </summary>
 		/// <param name="ev">The <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to look for.</param>
-		/// <returns></returns>
+		/// <returns>true if <paramref name="ev"/> is in the collection; otherwise, false.</returns>
+		/// <remarks>
+		/// The search compares the event instances, not the IDs. In virtual mode it always returns false.
+		/// </remarks>
+		/// <example>
+		/// Adding an event only if it's not already in the calendar:
+		/// <code><![CDATA[
+		/// if (!this.fullCalendar1.Events.Contains(ev))
+		///     this.fullCalendar1.Events.Add(ev);
+		/// ]]></code>
+		/// </example>
 		public bool Contains(Event ev)
 		{
 			return this.list.Contains(ev);
@@ -344,6 +499,16 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// </summary>
 		/// <param name="array">The destination array.</param>
 		/// <param name="arrayIndex">The index at which to begin the copy.</param>
+		/// <remarks>
+		/// In virtual mode there are no events to copy.
+		/// </remarks>
+		/// <example>
+		/// Copying the events to an array:
+		/// <code><![CDATA[
+		/// var array = new Event[this.fullCalendar1.Events.Count];
+		/// this.fullCalendar1.Events.CopyTo(array, 0);
+		/// ]]></code>
+		/// </example>
 		public void CopyTo(Event[] array, int arrayIndex)
 		{
 			this.list.CopyTo(array, arrayIndex);
@@ -353,17 +518,37 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// Returns the index of the specified <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> in the collection.
 		/// </summary>
 		/// <param name="ev">The <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to look for.</param>
-		/// <returns></returns>
+		/// <returns>The index of <paramref name="ev"/> in the collection, or -1 if not found.</returns>
+		/// <example>
+		/// Removing an event using its index:
+		/// <code><![CDATA[
+		/// int index = this.fullCalendar1.Events.IndexOf(ev);
+		/// if (index > -1)
+		///     this.fullCalendar1.Events.RemoveAt(index);
+		/// ]]></code>
+		/// </example>
 		public int IndexOf(Event ev)
 		{
 			return this.list.IndexOf(ev);
 		}
 
 		/// <summary>
-		/// Returns the index of the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> in the collection.
+		/// Inserts the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> in the collection at the specified position.
 		/// </summary>
 		/// <param name="index">The position in the collection where to insert the event.</param>
 		/// <param name="ev">The <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to insert.</param>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="ev"/> is null.</exception>
+		/// <exception cref="T:System.InvalidOperationException">The calendar is in virtual mode.</exception>
+		/// <remarks>
+		/// If the collection already contains an event with the same ID, the existing event is replaced in its current position
+		/// and <paramref name="index"/> is ignored. The position in the collection doesn't affect how the events are displayed.
+		/// </remarks>
+		/// <example>
+		/// Inserting an event at the beginning of the collection:
+		/// <code><![CDATA[
+		/// this.fullCalendar1.Events.Insert(0, new Event(new DateTime(2026, 10, 1)) { Title = "Quarter start" });
+		/// ]]></code>
+		/// </example>
 		public void Insert(int index, Event ev)
 		{
 			if (this.owner.VirtualMode)
@@ -397,7 +582,18 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// Removes the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> from the collection and updates the calendar.
 		/// </summary>
 		/// <param name="ev">The <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to remove.</param>
-		/// <returns></returns>
+		/// <returns>Always true, also when <paramref name="ev"/> was not in the collection.</returns>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="ev"/> is null.</exception>
+		/// <exception cref="T:System.InvalidOperationException">The calendar is in virtual mode.</exception>
+		/// <example>
+		/// Removing the event that was double clicked:
+		/// <code><![CDATA[
+		/// private void fullCalendar1_EventDoubleClick(object sender, EventClickEventArgs e)
+		/// {
+		///     this.fullCalendar1.Events.Remove(e.Event);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public bool Remove(Event ev)
 		{
 			if (this.owner.VirtualMode)
@@ -418,6 +614,16 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// Removes the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> at the specified index from the collection and updates the calendar.
 		/// </summary>
 		/// <param name="index">The index of the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> to remove.</param>
+		/// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is less than 0 or not less than <see cref="Count"/>.</exception>
+		/// <exception cref="T:System.InvalidOperationException">The calendar is in virtual mode.</exception>
+		/// <example>
+		/// Removing the last event:
+		/// <code><![CDATA[
+		/// var events = this.fullCalendar1.Events;
+		/// if (events.Count > 0)
+		///     events.RemoveAt(events.Count - 1);
+		/// ]]></code>
+		/// </example>
 		public void RemoveAt(int index)
 		{
 			if (this.owner.VirtualMode)
@@ -435,7 +641,20 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// <summary>
 		/// Returns an enumerator that iterates all the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> objects in the collection.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>An enumerator for the <see cref="T:Wisej.Web.Ext.FullCalendar.Event"/> objects in the collection.</returns>
+		/// <remarks>
+		/// In virtual mode the enumerator doesn't return any event.
+		/// </remarks>
+		/// <example>
+		/// Iterating the events using foreach:
+		/// <code><![CDATA[
+		/// foreach (var ev in this.fullCalendar1.Events)
+		/// {
+		///     if (ev.Start.Date == DateTime.Today)
+		///         ev.BackgroundColor = Color.Red;
+		/// }
+		/// ]]></code>
+		/// </example>
 		public IEnumerator<Event> GetEnumerator()
 		{
 			return this.list.GetEnumerator();

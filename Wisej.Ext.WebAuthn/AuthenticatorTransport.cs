@@ -23,7 +23,20 @@ namespace Wisej.Ext.WebAuthn
 {
 	/// <summary>
 	/// Available transport types.
-	/// </summary>	
+	/// </summary>
+	/// <remarks>
+	/// Used by <see cref="PublicKeyCredentialDescriptor.Transports"/> to hint how the client can reach the authenticator.
+	/// See <see href="https://w3c.github.io/webauthn/#enum-transport"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// // Allow the credential to be used from a security key over USB or NFC.
+	/// var descriptor = new PublicKeyCredentialDescriptor(
+	/// 	credentialID,
+	/// 	"public-key",
+	/// 	new[] { AuthenticatorTransport.Usb, AuthenticatorTransport.Nfc });
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("WebAuthn")]
 	public enum AuthenticatorTransport
     {

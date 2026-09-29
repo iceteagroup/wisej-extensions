@@ -26,7 +26,31 @@ namespace Wisej.Web.Ext.GoogleMaps
 	/// <summary>
 	/// Represents a single geocoding result.
 	/// </summary>
-	/// <remarks>A geocode request may return multiple result objects.</remarks>
+	/// <remarks>
+	/// A geocode request may return multiple result objects. When the request fails, the
+	/// <see cref="GoogleMap.GetGeocode(System.Action{GeocoderResult[]}, string)"/> and GetGeocodeAsync methods return a single
+	/// result with <see cref="IsError"/> set to true and <see cref="ResultCode"/> set to the status returned by Google;
+	/// all the other properties of that result are null.
+	/// </remarks>
+	/// <example>
+	/// Reading the results of a geocode request:
+	/// <code><![CDATA[
+	/// private async void buttonFind_Click(object sender, EventArgs e)
+	/// {
+	///     var results = await this.googleMap1.GetGeocodeAsync("Brandenburg Gate, Berlin");
+	///     if (results[0].IsError)
+	///     {
+	///         AlertBox.Show("Geocoding failed: " + results[0].ResultCode);
+	///         return;
+	///     }
+	/// 
+	///     foreach (var result in results)
+	///     {
+	///         this.listBoxResults.Items.Add($"{result.FormattedAddress} {result.GeocodeGeometry.Location}");
+	///     }
+	/// }
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("GoogleMaps")]
 	public class GeocoderResult
 	{
@@ -57,11 +81,14 @@ namespace Wisej.Web.Ext.GoogleMaps
 
 
 		/// <summary>
-		/// Gets a value indicating whether this instance is error.
+		/// Returns whether this instance represents a failed geocode request.
 		/// </summary>
 		/// <value>
-		///   <c>true</c> if this instance is error; otherwise, <c>false</c>.
+		///   <c>true</c> if the request failed; otherwise, <c>false</c>.
 		/// </value>
+		/// <remarks>
+		/// When true, <see cref="ResultCode"/> contains the status returned by Google and all the other properties are null.
+		/// </remarks>
 		public bool IsError
 		{
 			get { return !string.IsNullOrWhiteSpace(ResultCode); }
@@ -69,15 +96,19 @@ namespace Wisej.Web.Ext.GoogleMaps
 
 
 		/// <summary>
-		/// Gets the result code.
+		/// Returns the status code of a failed geocode request.
 		/// </summary>
 		/// <value>
-		/// The result code.
+		/// The status code returned by google.maps.Geocoder, i.e. "ZERO_RESULTS", "OVER_QUERY_LIMIT", "REQUEST_DENIED"
+		/// or "INVALID_REQUEST"; null when the request succeeded.
 		/// </value>
+		/// <remarks>
+		/// See <see href="https://developers.google.com/maps/documentation/javascript/reference/geocoder#GeocoderStatus"/>.
+		/// </remarks>
 		public string ResultCode { get; internal set; }
 
 		/// <summary>
-		/// Gets an array indicating the address type of the returned result.
+		/// Returns an array indicating the address type of the returned result.
 		/// </summary>
 		/// <value>
 		/// The array indicating the address type of the returned result.
@@ -87,7 +118,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		public string[] Types { get; private set; }
 
 		/// <summary>
-		/// Gets the human-readable address of this location.
+		/// Returns the human-readable address of this location.
 		/// </summary>
 		/// <value>
 		/// The human-readable address of this location.
@@ -95,7 +126,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		public string FormattedAddress { get; private set; }
 
 		/// <summary>
-		/// Gets an array of separate components applicable to this address.
+		/// Returns an array of separate components applicable to this address.
 		/// </summary>
 		/// <value>
 		/// The array of separate components applicable to this address.
@@ -103,7 +134,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		public AddressComponent[] AddressComponents { get; private set; }
 
 		/// <summary>
-		/// Gets a value indicating that the geocoder did not return an exact match for the original request,
+		/// Returns a value indicating that the geocoder did not return an exact match for the original request,
 		/// though it was able to match part of the requested address.
 		/// </summary>
 		/// <value>
@@ -112,7 +143,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		public bool PartialMatch { get; private set; }
 
 		/// <summary>
-		/// Gets the unique identifier of a place, which can be used with other Google APIs.
+		/// Returns the unique identifier of a place, which can be used with other Google APIs.
 		/// </summary>
 		/// <value>
 		/// The unique identifier of a place.
@@ -120,17 +151,17 @@ namespace Wisej.Web.Ext.GoogleMaps
 		public string PlaceId { get; private set; }
 
 		/// <summary>
-		/// Gets an array denoting all the localities contained in a postal code.
+		/// Returns an array denoting all the localities contained in a postal code.
 		/// </summary>
 		/// <value>
 		/// The array denoting all the localities contained in a postal code.
 		/// </value>
 		/// <remarks>Is only present when the result is a postal code that contains multiple localities.
-		/// This array can contain up to 10 localities</remarks>
+		/// This array can contain up to 10 localities.</remarks>
 		public string[] PostcodeLocalities { get; private set; }
 
 		/// <summary>
-		/// Gets the geocode geometry information.
+		/// Returns the geocode geometry information.
 		/// </summary>
 		/// <value>
 		/// The geocode geometry information.
@@ -151,7 +182,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 			}
 
 			/// <summary>
-			/// Gets the abbreviated textual name for the address component, if available.
+			/// Returns the abbreviated textual name for the address component, if available.
 			/// </summary>
 			/// <value>
 			/// The abbreviated textual name for the address component, if available.
@@ -159,7 +190,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 			public string ShortName { get; private set; }
 
 			/// <summary>
-			/// Gets the full text description or name of the address component as returned by the Geocoder.
+			/// Returns the full text description or name of the address component as returned by the Geocoder.
 			/// </summary>
 			/// <value>
 			/// The full text description or name of the address component as returned by the Geocoder.
@@ -167,17 +198,17 @@ namespace Wisej.Web.Ext.GoogleMaps
 			public string LongName { get; private set; }
 
 			/// <summary>
-			/// Gets an array denoting all the localities contained in a postal code.
+			/// Returns an array denoting all the localities contained in a postal code.
 			/// </summary>
 			/// <value>
-			/// The array denoting all the localities contained in a postal codes.
+			/// The array denoting all the localities contained in a postal code.
 			/// </value>
 			/// <remarks>Is only present when the result is a postal code that contains multiple localities.
 			/// This array can contain up to 10 localities.</remarks>
 			public string[] PostcodeLocalities { get; private set; }
 
 			/// <summary>
-			/// Gets an array indicating the type of the address component.
+			/// Returns an array indicating the type of the address component, i.e. "locality", "country" or "postal_code".
 			/// </summary>
 			/// <value>
 			/// The array indicating the type of the address component.
@@ -197,7 +228,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 			}
 
 			/// <summary>
-			/// Gets the geocoded latitude,longitude value.
+			/// Returns the geocoded latitude,longitude value.
 			/// </summary>
 			/// <value>
 			/// The geocoded latitude,longitude value.
@@ -205,11 +236,14 @@ namespace Wisej.Web.Ext.GoogleMaps
 			public LatLng Location { get; private set; }
 
 			/// <summary>
-			/// Gets additional data about the specified location.
+			/// Returns additional data about the specified location.
 			/// </summary>
 			/// <value>
 			/// The additional data about the specified location.
 			/// </value>
+			/// <remarks>
+			/// Null when the location type returned by Google doesn't match any <see cref="GeocoderLocationType"/> value.
+			/// </remarks>
 			public GeocoderLocationType? LocationType { get; private set; }
 
 			internal GeocoderLocationType? Parse(string locationType)

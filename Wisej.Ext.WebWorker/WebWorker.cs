@@ -31,6 +31,40 @@ namespace Wisej.Ext.WebWorker
 	/// The WebWorker component represents a JavaScript WebWorker instance that can run on the client and fire sever events
 	/// and receive updates from the server.
 	/// </summary>
+	/// <remarks>
+	/// The worker script is set using either the <see cref="JavaScript"/> or the <see cref="JavaScriptSource"/> property
+	/// and runs in a background thread in the browser. Data sent from the server with <see cref="SendMessage"/> is received
+	/// in the worker's <c>onmessage</c> handler, and data sent by the worker with <c>postMessage</c> fires the
+	/// <see cref="PostMessage"/> event on the server.
+	/// See: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API">Web Workers API.</a>
+	/// </remarks>
+	/// <example>
+	/// The following example creates a worker that doubles the numbers it receives and sends the result back to the server:
+	/// <code><![CDATA[
+	/// private WebWorker webWorker;
+	///
+	/// private void Page1_Load(object sender, EventArgs e)
+	/// {
+	///     this.webWorker = new WebWorker(this.components);
+	///     this.webWorker.JavaScript = @"
+	///         onmessage = function (e) {
+	///             postMessage(e.data * 2);
+	///         };";
+	///
+	///     this.webWorker.PostMessage += webWorker_PostMessage;
+	/// }
+	///
+	/// private void buttonCalculate_Click(object sender, EventArgs e)
+	/// {
+	///     this.webWorker.SendMessage(21);
+	/// }
+	///
+	/// private void webWorker_PostMessage(object sender, WebWorkerPostMessageEventArgs e)
+	/// {
+	///     AlertBox.Show($"Result: {e.Data}"); // Result: 42
+	/// }
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(WebWorker))]
 	[ToolboxItemFilter("Wisej.Web", ToolboxItemFilterType.Require)]
@@ -47,6 +81,13 @@ namespace Wisej.Ext.WebWorker
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Wisej.Ext.WebWorker.WebWorker" /> class.
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var worker = new WebWorker();
+		/// worker.JavaScriptSource = "Scripts/worker.js";
+		/// worker.PostMessage += (s, e) => AlertBox.Show(e.Data?.ToString());
+		/// ]]></code>
+		/// </example>
 		public WebWorker()
 		{
 		}
@@ -55,6 +96,18 @@ namespace Wisej.Ext.WebWorker
 		/// Initializes a new instance of the <see cref="T:Wisej.Ext.WebWorker.WebWorker" /> class together with the specified container.
 		/// </summary>
 		/// <param name="container">A <see cref="T:System.ComponentModel.IContainer" /> that represents the container for the component. </param>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="container"/> is null.</exception>
+		/// <remarks>
+		/// Adding the component to a container ensures that it's disposed together with the container,
+		/// for example when the owning page or form is disposed.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// // "components" is the container created by the designer for the page or form.
+		/// var worker = new WebWorker(this.components);
+		/// worker.JavaScript = "onmessage = function (e) { postMessage('Received: ' + e.data); };";
+		/// ]]></code>
+		/// </example>
 		public WebWorker(IContainer container)
 			: this()
 		{
@@ -150,6 +203,21 @@ namespace Wisej.Ext.WebWorker
 		/// <summary>
 		/// Terminates the current WebWorker.
 		/// </summary>
+		/// <remarks>
+		/// The worker process in the browser is stopped immediately, without letting it finish its current work.
+		/// A new worker is started automatically the next time <see cref="SendMessage"/> is called
+		/// or when the <see cref="JavaScript"/> or <see cref="JavaScriptSource"/> property changes.
+		/// </remarks>
+		/// <example>
+		/// The following example stops a long running worker when the user clicks a cancel button:
+		/// <code><![CDATA[
+		/// private void buttonCancel_Click(object sender, EventArgs e)
+		/// {
+		///     this.webWorker.Terminate();
+		///     this.labelStatus.Text = "Canceled.";
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Terminate()
 		{
 			Call("terminate");
@@ -158,7 +226,36 @@ namespace Wisej.Ext.WebWorker
 		/// <summary>
 		/// Sends the data object to the current WebWorker, if it's running.
 		/// </summary>
-		/// <param name="data"></param>
+		/// <remarks>
+		/// If the worker is not running yet, it's started before the data is sent. The worker receives the
+		/// data in the <c>data</c> property of the event passed to its <c>onmessage</c> handler.
+		/// </remarks>
+		/// <param name="data">The data object to send to the WebWorker. It's serialized to JSON before it's sent to the client.</param>
+		/// <example>
+		/// The following example sends an object to a worker that sums an array of numbers:
+		/// <code><![CDATA[
+		/// // worker script:
+		/// // onmessage = function (e) {
+		/// //     var sum = e.data.values.reduce(function (a, b) { return a + b; }, 0);
+		/// //     postMessage({ name: e.data.name, sum: sum });
+		/// // };
+		///
+		/// private void buttonSum_Click(object sender, EventArgs e)
+		/// {
+		///     this.webWorker.SendMessage(new
+		///     {
+		///         name = "Totals",
+		///         values = new[] { 1, 2, 3, 4, 5 }
+		///     });
+		/// }
+		///
+		/// private void webWorker_PostMessage(object sender, WebWorkerPostMessageEventArgs e)
+		/// {
+		///     dynamic result = e.Data;
+		///     AlertBox.Show($"{result.name}: {result.sum}"); // Totals: 15
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void SendMessage(object data)
 		{
 			Call("sendMessage", data);
@@ -167,6 +264,24 @@ namespace Wisej.Ext.WebWorker
 		/// <summary>
 		/// Updates the component on the client.
 		/// </summary>
+		/// <remarks>
+		/// Calling this method reloads the worker's source code on the client, which terminates the running
+		/// worker and starts a new one. It's called automatically when the <see cref="JavaScript"/> or
+		/// <see cref="JavaScriptSource"/> property changes.
+		/// </remarks>
+		/// <example>
+		/// The following example restarts the worker after the script file has been changed on the server:
+		/// <code><![CDATA[
+		/// private void buttonReload_Click(object sender, EventArgs e)
+		/// {
+		///     File.WriteAllText(
+		///         Path.Combine(Application.StartupPath, "Scripts/worker.js"),
+		///         "onmessage = function (e) { postMessage(e.data.toUpperCase()); };");
+		///
+		///     this.webWorker.Update();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public override void Update()
 		{
 			this.version++;

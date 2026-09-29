@@ -19,10 +19,10 @@
 
 namespace Wisej.Ext.ClientFileSystem
 {
-	/// <summary>
-	/// Requested permission state
-	/// </summary>
-	public enum PermissionState
+    /// <summary>
+    /// Represents the requested permission state for file system operations.
+    /// </summary>
+    public enum PermissionState
 	{
 		/// <summary>
 		/// Permission is granted

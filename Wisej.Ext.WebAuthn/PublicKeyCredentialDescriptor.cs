@@ -25,7 +25,7 @@ namespace Wisej.Ext.WebAuthn
 	/// Identifies the credential to be retrieved from the client.
 	/// </summary>
 	/// <remarks>
-	/// <See href="https://www.w3.org/TR/webauthn-2/#dictdef-publickeycredentialdescriptor"/>
+	/// See <see href="https://www.w3.org/TR/webauthn-2/#dictdef-publickeycredentialdescriptor"/>.
 	/// </remarks>
 	[ApiCategory("WebAuthn")]
 	public class PublicKeyCredentialDescriptor
@@ -49,6 +49,15 @@ namespace Wisej.Ext.WebAuthn
 		/// <summary>
 		/// Creates a new instance of <see cref="PublicKeyCredentialDescriptor"/>.
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var descriptor = new PublicKeyCredentialDescriptor
+		/// {
+		/// 	Id = storedCredentialID,
+		/// 	Transports = new[] { AuthenticatorTransport.Internal }
+		/// };
+		/// ]]></code>
+		/// </example>
 		public PublicKeyCredentialDescriptor()
         {
         }
@@ -56,9 +65,20 @@ namespace Wisej.Ext.WebAuthn
 		/// <summary>
 		/// Creates a new instance of <see cref="PublicKeyCredentialDescriptor"/> with the given configuration.
 		/// </summary>
-		/// <param name="id">The credential ID.</param>
-		/// <param name="type">The type of credential to retrieve.</param>
-		/// <param name="transports">The optional authenticator types.</param>
+		/// <param name="id">The base64 credential ID, as returned in <see cref="PublicKey.CredentialID"/> upon registration.</param>
+		/// <param name="type">The type of credential to retrieve. Defaults to "public-key".</param>
+		/// <param name="transports">Optional hints for how the client can reach the authenticator.</param>
+		/// <example>
+		/// <code><![CDATA[
+		/// // Ask the user to authenticate with the credential registered earlier.
+		/// var allowCredentials = new[]
+		/// {
+		/// 	new PublicKeyCredentialDescriptor(storedCredentialID)
+		/// };
+		///
+		/// CredentialsResponse response = await WebAuthn.GetAsync(challenge, allowCredentials, 60000);
+		/// ]]></code>
+		/// </example>
 		public PublicKeyCredentialDescriptor(string id, string type="public-key", AuthenticatorTransport[] transports=null)
         {
             this.Id = id;

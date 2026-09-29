@@ -28,77 +28,134 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ViewBuilder
 {
 	/// <summary>
-	/// Loads or created a view (a <see cref="ContainerControl"/> instance) from or a JSON representation.
+	/// Creates a view (a <see cref="ContainerControl"/> instance) or loads an existing one from a JSON representation
+	/// or from an object model.
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// The JSON string is rendered and parsed using camel casing. When using dynamic C# objects (see example below)
-	/// you can use the standard C# proper casing, Wisej.NET will serialize it into camel-cased JSON.
+	/// Each object in the definition describes a component: the "_type" member contains the type name (a name without a namespace,
+	/// i.e. "TextBox", is resolved in the Wisej.Web namespace of Wisej.Framework; otherwise use the full name, i.e. "MyApp.Controls.MyPanel"),
+	/// and all the other members are assigned to the properties with the same name. Property names are matched ignoring case,
+	/// therefore both camel casing ("labelText") and proper casing ("LabelText") work. The "_type" member is not needed on the root object
+	/// when loading into an existing container with <see cref="LoadView(ContainerControl, string)"/>.
 	/// </para>
 	/// <para>
-	/// Events are either attached to existing handler methods, or to a dynamically compiled method from the
-	/// code snippet defined in the string representation.
+	/// Values are converted to the property type using the property's <see cref="TypeConverter"/>, i.e. "10,10" for a <see cref="System.Drawing.Point"/>
+	/// or "Top" for an enum. Arrays are added to collection properties such as "controls". A string assigned to a property that
+	/// refers to another object (i.e. "dataSource" or "acceptButton") is resolved after the whole view is loaded to the control
+	/// or component with that name (see also <see cref="ResolveReference"/>). A string in the format
+	/// <c>{Binding Member, Source=name, Format=format, OnFormat=handler, OnParse=handler, SourceUpdateMode=mode, ControlUpdateMode=mode}</c>
+	/// creates a data binding; all the parts except the member are optional and the default data source is the root container.
 	/// </para>
 	/// <para>
-	/// Example:
+	/// Members with the name of an event are attached to the event handler with the specified name. The handler is resolved using
+	/// <see cref="ResolveEventHandler"/> first, then it's looked up among the methods declared by the class of the root container, and
+	/// last it's resolved as a fully qualified static method name (i.e. "MyApp.Handlers.OnClick"). Event handlers are not compiled from code:
+	/// to support code snippets, assign a custom <see cref="ResolveEventHandler"/>.
 	/// </para>
-	/// <code lang="cs">
-	/// <![CDATA[
-	///	this.form1.LoadView(new {
-	///		mame = "Form1",
-	///		size = "200,200",
-	///		windowState = "Maximized",
-	///		// _type = "Wisej.Web.Form", <- Not necessary when loading into an existing ContainerControl.
-	///		
-	///		controls = new [] {
-	///			new {
-	///				_type = "TextBox",
-	///				name = "textBox1",
-	///				dock = "Top",
-	///				labelText = "Name:",
-	///				enabled = true,
-	///				validating = "textBox1_OnValidating",
-	///				toolTip1_ToolTip = "Enter the name"
-	///			},
-	///			new {
-	///				_type = "Panel",
-	///				dock = "Top",
-	///				autoSize = true,
-	///				controls = new [] {
-	///					_type = "TextBox",
-	///					name = "textBox1",
-	///					location = "10,10",
-	///					labelText = "Last Name:",
-	///					label = new {
-	///						text = "Changed Text"
-	///					},
-	///					
-	///				}
-	///			}
-	///		},
-	///		
-	///		components = new []	{
-	///			new {
-	///				_type = "ToolTip",
-	///				name = "ToolTip1"
-	///			}
-	///		}
-	///		
-	/// });
-	/// ]]>
-	/// </code>
+	/// <para>
+	/// The optional "components" array on the root object defines non-visual components (i.e. a ToolTip or an ErrorProvider) that are created
+	/// first and are disposed together with the root container. Extender properties provided by these components are assigned using
+	/// the component name and the property name separated by an underscore or a dot, i.e. "toolTip1_ToolTip". Declare the "components" array
+	/// as the last member of the root object: the root members that follow it are not processed.
+	/// </para>
 	/// </remarks>
+	/// <example>
+	/// Loading a view defined in JSON into an existing form, with an event handler and a tool tip:
+	/// <code><![CDATA[
+	/// public partial class Form1 : Form
+	/// {
+	///     private void Form1_Load(object sender, EventArgs e)
+	///     {
+	///         this.LoadView(@"{
+	///             ""text"": ""Customer"",
+	///             ""size"": ""400,300"",
+	///             ""controls"": [
+	///                 {
+	///                     ""_type"": ""TextBox"",
+	///                     ""name"": ""textBox1"",
+	///                     ""dock"": ""Top"",
+	///                     ""labelText"": ""Name:"",
+	///                     ""validating"": ""textBox1_Validating"",
+	///                     ""toolTip1_ToolTip"": ""Enter the name""
+	///                 },
+	///                 {
+	///                     ""_type"": ""Panel"",
+	///                     ""dock"": ""Top"",
+	///                     ""autoSize"": true,
+	///                     ""controls"": [
+	///                         {
+	///                             ""_type"": ""TextBox"",
+	///                             ""name"": ""textBox2"",
+	///                             ""location"": ""10,10"",
+	///                             ""labelText"": ""Last Name:""
+	///                         }
+	///                     ]
+	///                 }
+	///             ],
+	///             ""components"": [
+	///                 { ""_type"": ""ToolTip"", ""name"": ""toolTip1"" }
+	///             ]
+	///         }");
+	///     }
+	///
+	///     private void textBox1_Validating(object sender, CancelEventArgs e)
+	///     {
+	///         e.Cancel = String.IsNullOrEmpty(((TextBox)sender).Text);
+	///     }
+	/// }
+	/// ]]></code>
+	/// Binding controls to a property of the root container (the default data source):
+	/// <code><![CDATA[
+	/// public partial class CustomerForm : Form
+	/// {
+	///     public Customer Customer { get; set; }
+	///
+	///     public void LoadCustomer(Customer customer)
+	///     {
+	///         this.Customer = customer;
+	///         this.LoadView(@"{
+	///             ""controls"": [
+	///                 { ""_type"": ""TextBox"", ""dock"": ""Top"", ""text"": ""{Binding Customer.Name}"" },
+	///                 { ""_type"": ""TextBox"", ""dock"": ""Top"", ""readOnly"": true, ""text"": ""{Binding Customer.Balance, Format=c}"" }
+	///             ]
+	///         }");
+	///     }
+	/// }
+	/// ]]></code>
+	/// </example>
 	public static partial class ViewBuilder
 	{
 		#region Methods
 
 		/// <summary>
-		/// Create a new <see cref="ContainerControl"/> from the specified <paramref name="json"/>
+		/// Creates a new <see cref="ContainerControl"/> from the specified <paramref name="json"/>
 		/// representation.
 		/// </summary>
 		/// <param name="json">JSON definition of the <see cref="ContainerControl"/> to create.</param>
-		/// <returns></returns>
+		/// <returns>The new <see cref="ContainerControl"/> instance of the type specified in the "_type" member of the root object.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="json"/> is null.</exception>
+		/// <exception cref="Exception">The "_type" member is missing or the type cannot be resolved.</exception>
+		/// <exception cref="ArgumentException">A property cannot be assigned.</exception>
+		/// <remarks>
+		/// The root type must derive from <see cref="ContainerControl"/>, i.e. "Form", "Page" or "UserControl", and have a public
+		/// parameterless constructor. Event handler names are looked up among the methods declared by the root type, therefore
+		/// set "_type" to the full name of your own class (i.e. "MyApp.CustomerForm") to use its handlers.
+		/// </remarks>
+		/// <example>
+		/// Creating and showing a form defined in JSON:
+		/// <code><![CDATA[
+		/// var form = (Form)ViewBuilder.Create(@"{
+		///     ""_type"": ""Form"",
+		///     ""text"": ""Hello"",
+		///     ""size"": ""300,200"",
+		///     ""controls"": [
+		///         { ""_type"": ""Label"", ""text"": ""Hello World!"", ""dock"": ""Fill"" }
+		///     ]
+		/// }");
+		/// form.Show();
+		/// ]]></code>
+		/// </example>
 		public static ContainerControl Create(string json)
 		{
 			if (json == null)
@@ -108,12 +165,26 @@ namespace Wisej.Web.Ext.ViewBuilder
 		}
 
 		/// <summary>
-		/// Create a new <see cref="ContainerControl"/> from the specified <paramref name="json"/>
-		/// representation.
+		/// Creates a new <see cref="ContainerControl"/> from the JSON representation read from the specified <paramref name="json"/> stream.
 		/// </summary>
-		/// <param name="json">JSON definition of the <see cref="ContainerControl"/> to create.</param>
-		/// <returns></returns>
+		/// <param name="json">Stream containing the JSON definition of the <see cref="ContainerControl"/> to create.</param>
+		/// <returns>The new <see cref="ContainerControl"/> instance of the type specified in the "_type" member of the root object.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="json"/> is null.</exception>
+		/// <exception cref="Exception">The "_type" member is missing or the type cannot be resolved.</exception>
+		/// <exception cref="ArgumentException">A property cannot be assigned.</exception>
+		/// <remarks>
+		/// The stream is read but not closed.
+		/// </remarks>
+		/// <example>
+		/// Creating a page from a JSON file deployed with the application:
+		/// <code><![CDATA[
+		/// using (var stream = File.OpenRead(Application.MapPath("Views/Dashboard.json")))
+		/// {
+		///     var page = (Page)ViewBuilder.Create(stream);
+		///     page.Show();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public static ContainerControl Create(Stream json)
 		{
 			if (json == null)
@@ -124,12 +195,36 @@ namespace Wisej.Web.Ext.ViewBuilder
 		}
 
 		/// <summary>
-		/// Create a new <see cref="ContainerControl"/> from the specified <paramref name="model"/>
+		/// Creates a new <see cref="ContainerControl"/> from the specified <paramref name="model"/>
 		/// representation.
 		/// </summary>
 		/// <param name="model">Object model of the <see cref="ContainerControl"/> to create.</param>
-		/// <returns></returns>
+		/// <returns>The new <see cref="ContainerControl"/> instance of the type specified in the "_type" member of the root object.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="model"/> is null.</exception>
+		/// <exception cref="Exception">The "_type" member is missing or the type cannot be resolved.</exception>
+		/// <exception cref="ArgumentException">A property cannot be assigned.</exception>
+		/// <remarks>
+		/// The model is accessed dynamically: the root object and every nested object that defines a component must support
+		/// the string indexer used to read the "_type" member, like <see cref="DynamicObject"/> or the objects returned by
+		/// <see cref="WisejSerializer.Parse(string)"/>.
+		/// </remarks>
+		/// <example>
+		/// Creating a form from a <see cref="DynamicObject"/> model:
+		/// <code><![CDATA[
+		/// dynamic button = new DynamicObject();
+		/// button._type = "Button";
+		/// button.text = "OK";
+		/// button.location = "10,10";
+		///
+		/// dynamic model = new DynamicObject();
+		/// model._type = "Form";
+		/// model.text = "Confirm";
+		/// model.controls = new object[] { button };
+		///
+		/// var form = (Form)ViewBuilder.Create((object)model);
+		/// form.ShowDialog();
+		/// ]]></code>
+		/// </example>
 		public static ContainerControl Create(object model)
 		{
 			if (model == null)
@@ -143,8 +238,26 @@ namespace Wisej.Web.Ext.ViewBuilder
 		/// existing <paramref name="container"/>.
 		/// </summary>
 		/// <param name="container">Container to load with the new controls.</param>
-		/// <param name="json">SON representation of the controls to create.</param>
+		/// <param name="json">JSON representation of the container properties and of the controls to create. When null or empty, nothing is loaded.</param>
+		/// <returns>The <paramref name="container"/> instance.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="container"/> is null.</exception>
+		/// <exception cref="Exception">The "_type" member of a child object is missing or the type cannot be resolved.</exception>
+		/// <exception cref="ArgumentException">A property cannot be assigned.</exception>
+		/// <remarks>
+		/// The members of the root object are assigned to the <paramref name="container"/> and the new controls are added to
+		/// its existing controls. Event handlers can refer to methods declared in the class of the <paramref name="container"/>,
+		/// including private methods.
+		/// </remarks>
+		/// <example>
+		/// Loading a view into a panel:
+		/// <code><![CDATA[
+		/// this.panel1.LoadView(@"{
+		///     ""controls"": [
+		///         { ""_type"": ""Button"", ""name"": ""buttonSave"", ""text"": ""Save"", ""dock"": ""Bottom"", ""click"": ""buttonSave_Click"" }
+		///     ]
+		/// }");
+		/// ]]></code>
+		/// </example>
 		public static ContainerControl LoadView(this ContainerControl container, string json)
 		{
 			if (container == null)
@@ -161,8 +274,26 @@ namespace Wisej.Web.Ext.ViewBuilder
 		/// existing <paramref name="container"/>.
 		/// </summary>
 		/// <param name="container">Container to load with the new controls.</param>
-		/// <param name="jsonStream">JSON representation of the controls to create.</param>
+		/// <param name="jsonStream">Stream containing the JSON representation of the container properties and of the controls to create. When null, nothing is loaded.</param>
+		/// <returns>The <paramref name="container"/> instance.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="container"/> is null.</exception>
+		/// <exception cref="Exception">The "_type" member of a child object is missing or the type cannot be resolved.</exception>
+		/// <exception cref="ArgumentException">A property cannot be assigned.</exception>
+		/// <remarks>
+		/// The stream is read but not closed.
+		/// </remarks>
+		/// <example>
+		/// Loading the layout of a form from a JSON file:
+		/// <code><![CDATA[
+		/// private void Form1_Load(object sender, EventArgs e)
+		/// {
+		///     using (var stream = File.OpenRead(Application.MapPath("Views/Form1.json")))
+		///     {
+		///         this.LoadView(stream);
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		public static ContainerControl LoadView(this ContainerControl container, Stream jsonStream)
 		{
 			if (container == null)
@@ -179,8 +310,30 @@ namespace Wisej.Web.Ext.ViewBuilder
 		/// existing <paramref name="container"/>.
 		/// </summary>
 		/// <param name="container">Container to load with the new controls.</param>
-		/// <param name="model">Object model representation of the controls to create.</param>
+		/// <param name="model">Object model representation of the container properties and of the controls to create. When null, nothing is loaded.</param>
+		/// <returns>The <paramref name="container"/> instance.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="container"/> is null.</exception>
+		/// <exception cref="Exception">The "_type" member of a child object is missing or the type cannot be resolved.</exception>
+		/// <exception cref="ArgumentException">A property cannot be assigned.</exception>
+		/// <remarks>
+		/// The model is accessed dynamically: every nested object that defines a control must support the string indexer used to
+		/// read the "_type" member, like <see cref="DynamicObject"/> or the objects returned by <see cref="WisejSerializer.Parse(string)"/>.
+		/// </remarks>
+		/// <example>
+		/// Adding a text box to the current form from a <see cref="DynamicObject"/> model:
+		/// <code><![CDATA[
+		/// dynamic textBox = new DynamicObject();
+		/// textBox._type = "TextBox";
+		/// textBox.name = "textBoxEmail";
+		/// textBox.labelText = "Email:";
+		/// textBox.dock = "Top";
+		///
+		/// dynamic model = new DynamicObject();
+		/// model.controls = new object[] { textBox };
+		///
+		/// this.LoadView((object)model);
+		/// ]]></code>
+		/// </example>
 		public static ContainerControl LoadView(this ContainerControl container, object model)
 		{
 			if (container == null)

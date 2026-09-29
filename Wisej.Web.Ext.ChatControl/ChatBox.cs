@@ -29,8 +29,24 @@ using Wisej.Base;
 namespace Wisej.Web.Ext.ChatControl
 {
 	/// <summary>
-	/// Provides a control with chat functionality.
+	/// Provides a control with chat functionality: a scrollable list of message bubbles
+	/// and an input box with a send button.
 	/// </summary>
+	/// <remarks>
+	/// Messages are managed through the <see cref="DataSource"/> collection: adding a
+	/// <see cref="Message"/> to it renders the message, removing it removes the rendered control.
+	/// Messages typed by the user are added automatically when the user presses Enter or clicks
+	/// the send button. The default event is <see cref="SentMessage"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var chatBox = new ChatBox { Dock = DockStyle.Fill };
+	/// chatBox.User = new User("1", "Alice");
+	/// chatBox.SentMessage += (s, e) => AlertBox.Show(e.Message.Content);
+	/// chatBox.DataSource.Add(new Message("Hello!", null, new User("2", "Bot")));
+	/// this.Controls.Add(chatBox);
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[DefaultEvent("SentMessage")]
 	public partial class ChatBox : UserControl
@@ -42,6 +58,16 @@ namespace Wisej.Web.Ext.ChatControl
 		/// <summary>
 		/// Creates a new instance of <see cref="ChatBox"/>.
 		/// </summary>
+		/// <remarks>
+		/// The current <see cref="User"/> is initialized to a default user named "User"
+		/// with a generated id.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chatBox = new ChatBox();
+		/// chatBox.User = new User { Id = "1", Name = "Alice" };
+		/// ]]></code>
+		/// </example>
 		public ChatBox()
 		{
 			InitializeComponent();
@@ -59,38 +85,101 @@ namespace Wisej.Web.Ext.ChatControl
 		#region Events
 
 		/// <summary>
-		/// Fires before a message is sent.
+		/// Fired before a message is sent.
 		/// </summary>
+		/// <remarks>
+		/// Set <see cref="SendingMessageEventArgs.Cancel"/> to <c>true</c> to prevent the message
+		/// from being rendered and <see cref="SentMessage"/> from firing. The event is raised only
+		/// for messages added without a <see cref="Message.Timestamp"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.SendingMessage += (s, e) =>
+		/// {
+		///     if (String.IsNullOrWhiteSpace(e.Message.Content))
+		///         e.Cancel = true;
+		/// };
+		/// ]]></code>
+		/// </example>
 		[Description("Fires before a user-typed message is sent.")]
 		public event SendingMessageEventHandler SendingMessage;
 
 		/// <summary>
-		/// Fires after a message has been sent.
+		/// Fired after a message has been sent and rendered in the <see cref="ChatBox"/>.
 		/// </summary>
+		/// <remarks>
+		/// Fires for every message added to <see cref="DataSource"/>, whether typed by the user or
+		/// added in code. Use <see cref="MessageEventArgs.IsChatBoxUser"/> to determine whether the
+		/// message belongs to the current <see cref="User"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var botUser = new User("bot", "Echo Bot");
+		/// chatBox.SentMessage += (s, e) =>
+		/// {
+		///     if (e.IsChatBoxUser)
+		///         chatBox.DataSource.Add(new Message("Echo: " + e.Message.Content, null, botUser));
+		/// };
+		/// ]]></code>
+		/// </example>
 		[Description("Fires after a user-typed message has been sent.")]
 		public event MessageEventHandler SentMessage;
 
 		/// <summary>
-		/// Fires when the user starts typing.
+		/// Fired when the user starts typing in the message input box.
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.TypingStart += (s, e) => labelStatus.Text = "Typing...";
+		/// ]]></code>
+		/// </example>
 		[Description("Fires when the user starts typing.")]
 		public event EventHandler TypingStart;
 
 		/// <summary>
-		/// Fires when the user stops typing.
+		/// Fired when the user stops typing.
 		/// </summary>
+		/// <remarks>
+		/// Fires when the message is sent with Enter or when the input box loses focus while typing.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.TypingEnd += (s, e) => labelStatus.Text = "";
+		/// ]]></code>
+		/// </example>
 		[Description("Fires when the user stops typing.")]
 		public event EventHandler TypingEnd;
 
 		/// <summary>
-		/// Fires when the user performs an action on a message.
+		/// Fired when the user performs an action on a message.
 		/// </summary>
+		/// <remarks>
+		/// The event data is a <c>dynamic</c> object describing the action.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.MessageActionInvoke += (s, e) => AlertBox.Show("Message action invoked.");
+		/// ]]></code>
+		/// </example>
 		[Description("Fires when the user performs an action on a message.")]
 		public event EventHandler<dynamic> MessageActionInvoke;
 
 		/// <summary>
-		/// Fires when a <see cref="ComponentTool"/> is clicked.
+		/// Fired when a <see cref="ComponentTool"/> in the <see cref="Tools"/> collection is clicked.
 		/// </summary>
+		/// <remarks>
+		/// Handlers are attached to the <c>ToolClick</c> event of the inner message input text box.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.Tools.Add(new ComponentTool { Name = "attach", ImageSource = "icon-attach" });
+		/// chatBox.ToolClick += (s, e) =>
+		/// {
+		///     if (e.Tool.Name == "attach")
+		///         AlertBox.Show("Attach clicked");
+		/// };
+		/// ]]></code>
+		/// </example>
 		[Description("Fires when a tool item is clicked.")]
 		public event ToolClickEventHandler ToolClick
 		{
@@ -99,17 +188,40 @@ namespace Wisej.Web.Ext.ChatControl
 		}
 
 		/// <summary>
-		/// Fires when a <see cref="Message"/> control is needed.
+		/// Fired when a <see cref="Message"/> needs a control to display its content.
 		/// </summary>
+		/// <remarks>
+		/// Set <see cref="RenderMessageControlEventArgs.Control"/> to provide a custom control.
+		/// When no control is provided, a selectable label showing <see cref="Message.Content"/> is used.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.RenderMessageControl += (s, e) =>
+		/// {
+		///     if (e.Message.ContentType == "image")
+		///         e.Control = new PictureBox { ImageSource = e.Message.Content };
+		/// };
+		/// ]]></code>
+		/// </example>
 		[Description("Fires when a Message control is needed.")]
 		public event RenderMessageControlEventHandler RenderMessageControl;
 
 		/// <summary>
-		/// Fires when a message is posted to the <see cref="ChatBox"/>.
+		/// Fired when a message is posted to the <see cref="ChatBox"/>, before it is rendered.
 		/// </summary>
 		/// <remarks>
-		/// Use this event to save information related to the type of control to render.
+		/// Use this event to save information related to the type of control to render, for example
+		/// by setting <see cref="Message.ContentType"/> or <see cref="Message.UserData"/>.
 		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.FormatMessage += (s, e) =>
+		/// {
+		///     if (e.Message.Content.StartsWith("http"))
+		///         e.Message.ContentType = "link";
+		/// };
+		/// ]]></code>
+		/// </example>
 		[Description("Fires when the current users posts to the ChatBox.")]
 		public event FormatMessageEventHandler FormatMessage;
 
@@ -180,8 +292,20 @@ namespace Wisej.Web.Ext.ChatControl
 		#region Overridden Properties
 
 		/// <summary>
-		/// Returns or sets the type of scroll bars to display for the <see cref="ScrollableControl" />.
+		/// Returns or sets the type of scroll bars to display in the messages area of the <see cref="ChatBox"/>.
 		/// </summary>
+		/// <value>
+		/// One of the <see cref="Wisej.Web.ScrollBars"/> values. The default is <see cref="Wisej.Web.ScrollBars.Both"/>.
+		/// </value>
+		/// <remarks>
+		/// Hides the inherited <see cref="ScrollableControl.ScrollBars"/> and applies the value to the
+		/// inner panel that hosts the messages.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.ScrollBars = ScrollBars.Vertical;
+		/// ]]></code>
+		/// </example>
 		[ResponsiveProperty]
 		[DefaultValue(ScrollBars.Both)]
 		[SRCategory("CatAppearance")]
@@ -203,8 +327,25 @@ namespace Wisej.Web.Ext.ChatControl
 		#region Properties
 
 		/// <summary>
-		/// Gets the data source for the chat box.
+		/// Returns the collection of messages displayed in the chat box.
 		/// </summary>
+		/// <value>
+		/// An <see cref="ObservableCollection{T}"/> of <see cref="Message"/> objects, created on first access.
+		/// </value>
+		/// <remarks>
+		/// Changes to the collection are reflected in the control: adding a message renders it
+		/// (and scrolls it into view), removing it disposes its control, clearing removes all messages,
+		/// and moving reorders them. Messages without a <see cref="Message.User"/> are assigned the
+		/// current <see cref="User"/>, and messages without a <see cref="Message.Timestamp"/> are
+		/// stamped with the current time.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var bot = new User("bot", "Assistant");
+		/// chatBox.DataSource.Add(new Message("Hi, how can I help?", null, bot));
+		/// chatBox.DataSource.RemoveAt(0);
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public ObservableCollection<Message> DataSource
@@ -223,8 +364,20 @@ namespace Wisej.Web.Ext.ChatControl
 		private ObservableCollection<Message> _dataSource;
 
 		/// <summary>
-		/// Gets or sets the current timestamp format.
+		/// Returns or sets the format string used to display message timestamps.
 		/// </summary>
+		/// <value>
+		/// A standard or custom <see cref="DateTime"/> format string. The initial value is <c>"HH:mm"</c>.
+		/// </value>
+		/// <remarks>
+		/// Note that the designer <see cref="DefaultValueAttribute"/> is declared as <c>"HH:mmm"</c>,
+		/// which differs from the initial value <c>"HH:mm"</c>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.TimestampFormat = "dd/MM HH:mm";
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("HH:mmm")]
 		[Description("Gets or sets the current timestamp format.")]
 		public string TimestampFormat
@@ -256,8 +409,20 @@ namespace Wisej.Web.Ext.ChatControl
 		}
 
 		/// <summary>
-		/// Gets or sets the color of the message text box.
+		/// Returns or sets the color of the message input text box.
 		/// </summary>
+		/// <value>
+		/// A <see cref="Color"/> applied to the message input text box.
+		/// </value>
+		/// <remarks>
+		/// Unlike the inherited <see cref="Control.ForeColor"/>, this property reads and writes the
+		/// <c>BackColor</c> of the inner message input text box.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.ForeColor = Color.WhiteSmoke;
+		/// ]]></code>
+		/// </example>
 		[Description("Gets or sets the color of the message text box.")]
 		public override Color ForeColor
 		{
@@ -266,8 +431,19 @@ namespace Wisej.Web.Ext.ChatControl
 		}
 
 		/// <summary>
-		/// Gets the tools collection for the ChatBox.
+		/// Returns the collection of tools displayed in the message input box of the <see cref="ChatBox"/>.
 		/// </summary>
+		/// <value>
+		/// The <see cref="ComponentToolCollection"/> of the inner message input text box.
+		/// </value>
+		/// <remarks>
+		/// Handle <see cref="ToolClick"/> to respond to clicks on the tools.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.Tools.Add(new ComponentTool { Name = "emoji", ImageSource = "icon-emoji", ToolTipText = "Emoji" });
+		/// ]]></code>
+		/// </example>
 		[Browsable(true)]
 		[MergableProperty(false)]
 		[Description("Gets the tools collection for the ChatBox.")]
@@ -281,8 +457,21 @@ namespace Wisej.Web.Ext.ChatControl
 		}
 
 		/// <summary>
-		/// Gets or sets the current user.
+		/// Returns or sets the current user of the <see cref="ChatBox"/>.
 		/// </summary>
+		/// <value>
+		/// The <see cref="Wisej.Web.Ext.ChatControl.User"/> that authors messages typed in the input box.
+		/// The initial value is a user named "User" with a generated id and a default avatar.
+		/// </value>
+		/// <remarks>
+		/// Messages from this user are aligned to the right; messages from other users are aligned to the left.
+		/// Changing the user does not update messages already displayed.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.User = new User("42", "Alice", "Images/alice.png");
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[Description("Gets or sets the current user.")]
 		[Browsable(false)]
@@ -306,8 +495,19 @@ namespace Wisej.Web.Ext.ChatControl
 		private User _user = new User(Guid.NewGuid().ToString(), "User", "resource.wx/Wisej.Web.Ext.ChatControl/Images/person-fill.svg");
 
 		/// <summary>
-		/// Gets or sets whether the message avatar is visible.
+		/// Returns or sets whether the message avatar is visible.
 		/// </summary>
+		/// <value>
+		/// <c>true</c> to show the user avatar next to messages; otherwise <c>false</c>. The default is <c>true</c>.
+		/// </value>
+		/// <remarks>
+		/// Changing this value does not update messages already displayed.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.AvatarVisible = false;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(true)]
 		public bool AvatarVisible
 		{
@@ -328,8 +528,19 @@ namespace Wisej.Web.Ext.ChatControl
 		private bool _avatarVisible = true;
 
 		/// <summary>
-		/// Gets or sets whether to display the timestamp.
+		/// Returns or sets whether to display the message timestamp.
 		/// </summary>
+		/// <value>
+		/// <c>true</c> to show the timestamp of each message; otherwise <c>false</c>. The default is <c>true</c>.
+		/// </value>
+		/// <remarks>
+		/// Changing this value does not update messages already displayed. See also <see cref="TimestampFormat"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.TimestampVisible = false;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(true)]
 		public bool TimestampVisible
 		{
@@ -350,8 +561,19 @@ namespace Wisej.Web.Ext.ChatControl
 		private bool _timestampVisible = true;
 
 		/// <summary>
-		/// Gets or sets whether to show the input text box.
+		/// Returns or sets whether to show the message input panel (text box and send button).
 		/// </summary>
+		/// <value>
+		/// <c>true</c> to show the input panel; otherwise <c>false</c>. The default is <c>true</c>.
+		/// </value>
+		/// <remarks>
+		/// Hide the input panel to use the <see cref="ChatBox"/> as a read-only message viewer.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.InputVisible = false;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(true)]
 		public bool InputVisible
 		{
@@ -366,8 +588,16 @@ namespace Wisej.Web.Ext.ChatControl
 		}
 
 		/// <summary>
-		/// Gets or sets the text to show when the Chat's TextBox is empty.
+		/// Returns or sets the watermark text to show when the message input text box is empty.
 		/// </summary>
+		/// <value>
+		/// The watermark text. The default is <c>"Type a message..."</c>.
+		/// </value>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.Watermark = "Ask me anything...";
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("Type a message...")]
 		public string Watermark
 		{
@@ -382,8 +612,20 @@ namespace Wisej.Web.Ext.ChatControl
 		}
 
 		/// <summary>
-		/// Gets or sets whether the message input text box is multiline.
+		/// Returns or sets whether the message input text box is multiline.
 		/// </summary>
+		/// <value>
+		/// <c>true</c> to allow multiple lines of input; otherwise <c>false</c>. The default is <c>false</c>.
+		/// </value>
+		/// <remarks>
+		/// When <c>true</c>, the text box accepts returns and automatically resizes its height to fit
+		/// the text; pressing Enter without modifiers still sends the message.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.Multiline = true;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		public bool Multiline
 		{
@@ -394,6 +636,18 @@ namespace Wisej.Web.Ext.ChatControl
 		/// <summary>
 		/// Returns or sets whether the chat control is in read-only mode.
 		/// </summary>
+		/// <value>
+		/// <c>true</c> to make the message input read-only and disable the send button; otherwise
+		/// <c>false</c>. The default is <c>false</c>.
+		/// </value>
+		/// <remarks>
+		/// Messages can still be added in code through <see cref="DataSource"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.ReadOnly = true;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		public bool ReadOnly
 		{
@@ -517,6 +771,14 @@ namespace Wisej.Web.Ext.ChatControl
 		/// <summary>
 		/// Clears the chat box messages.
 		/// </summary>
+		/// <remarks>
+		/// Clears the <see cref="DataSource"/> collection, which removes and disposes all message controls.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.Clear();
+		/// ]]></code>
+		/// </example>
 		public void Clear()
 		{
 			this.DataSource.Clear();
@@ -696,9 +958,15 @@ namespace Wisej.Web.Ext.ChatControl
 		#region Export
 
 		/// <summary>
-		/// Exports the chat history as a json string.
+		/// Exports the chat history as a JSON string.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>A JSON string containing the serialized messages in <see cref="DataSource"/>.</returns>
+		/// <example>
+		/// <code><![CDATA[
+		/// string json = chatBox.ExportAsJson();
+		/// Application.Session.ChatHistory = json;
+		/// ]]></code>
+		/// </example>
 		public string ExportAsJson()
 		{
 			return JSON.Stringify(this.DataSource);

@@ -27,7 +27,7 @@ namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
 	/// Provides basic functionality for controls that display a <see cref="ToolStripDropDown" /> when a <see cref="ToolStripDropDownButton" />, <see cref="ToolStripMenuItem" />, or <see cref="ToolStripSplitButton" /> control is clicked.
-	///</summary>
+	/// </summary>
 	public class ToolStripDropDownItem : ToolStripItem
 	{
 
@@ -41,6 +41,12 @@ namespace Wisej.Web.Ext.ToolStrip
 			// TODO: Implement
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToolStripDropDownItem" /> class with the specified display text, image, and <see cref="ToolStripItem" /> collection that the drop-down control contains.
+		/// </summary>
+		/// <param name="text">The text to display on the item.</param>
+		/// <param name="image">The <see cref="System.Drawing.Image" /> to display on the item.</param>
+		/// <param name="dropDownItems">The items to add to <see cref="ToolStripDropDownItem.DropDownItems" />.</param>
 		public ToolStripDropDownItem(string text, Image image, ToolStripItem[] dropDownItems)
 		{
 			this.Text = text;
@@ -136,9 +142,25 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets the <see cref="ToolStripDropDown" /> that will be displayed when this <see cref="ToolStripDropDownItem" /> is clicked.
-		///</summary>
+		/// Returns or sets the <see cref="ToolStripDropDown" /> that will be displayed when this <see cref="ToolStripDropDownItem" /> is clicked.
+		/// </summary>
 		/// <returns>A <see cref="ToolStripDropDown" /> that is associated with the <see cref="ToolStripDropDownItem" />.</returns>
+		/// <remarks>
+		/// When not set, a default drop-down is created the first time it's needed; <see cref="ToolStripDropDownItem.DropDownItems" /> returns its <see cref="ToolStrip.Items" />.
+		/// Assigning an existing <see cref="ToolStripDropDown" /> lets several items share the same drop-down.
+		/// </remarks>
+		/// <example>
+		/// Sharing the same drop-down between a menu item and a drop-down button:
+		/// <code><![CDATA[
+		/// var colors = new ToolStripDropDown();
+		/// colors.Items.Add("Red");
+		/// colors.Items.Add("Green");
+		/// colors.Items.Add("Blue");
+		///
+		/// this.toolStripMenuItemColor.DropDown = colors;
+		/// this.toolStripDropDownButtonColor.DropDown = colors;
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripDropDownDescr")]
 		[SRCategory("CatData")]
 		public ToolStripDropDown DropDown
@@ -159,10 +181,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripDropDown _dropDown;
 
 		/// <summary>
-		/// Gets or sets a value indicating the direction in which the <see cref="ToolStripDropDownItem" /> emerges from its parent container.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The property is set to a value that is not one of the <see cref="ToolStripDropDownDirection" /> values.</exception>
+		/// Returns or sets a value indicating the direction in which the <see cref="ToolStripDropDown" /> emerges from its parent container.
+		/// </summary>
 		/// <returns>One of the <see cref="ToolStripDropDownDirection" /> values.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The property is set to a value that is not one of the <see cref="ToolStripDropDownDirection" /> values.</exception>
+		/// <remarks>
+		/// <see cref="ToolStripDropDownDirection.Default" /> lets the item choose the direction based on its position and on the <see cref="ToolStripItem.RightToLeft" /> setting.
+		/// </remarks>
+		/// <example>
+		/// Opening the drop-down of a button placed on a status bar upwards:
+		/// <code><![CDATA[
+		/// this.toolStripDropDownButtonZoom.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[SRDescription("ToolStripDropDownItemDropDownDirectionDescr")]
 		[SRCategory("CatBehavior")]
@@ -184,9 +215,22 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripDropDownDirection _dropDownDirection;
 
 		/// <summary>
-		/// Gets the collection of items in the <see cref="ToolStripDropDown" /> that is associated with this <see cref="ToolStripDropDownItem" />.
-		///</summary>
-		/// <returns>A <see cref="ToolStripItemCollection" /> of controls.</returns>
+		/// Returns the collection of items in the <see cref="ToolStripDropDown" /> that is associated with this <see cref="ToolStripDropDownItem" />.
+		/// </summary>
+		/// <returns>A <see cref="ToolStripItemCollection" /> of items.</returns>
+		/// <remarks>
+		/// This is the <see cref="ToolStrip.Items" /> collection of <see cref="ToolStripDropDownItem.DropDown" />.
+		/// </remarks>
+		/// <example>
+		/// Populating a sub-menu at runtime:
+		/// <code><![CDATA[
+		/// this.toolStripMenuItemRecent.DropDownItems.Clear();
+		/// foreach (string file in GetRecentFiles())
+		/// {
+		///     this.toolStripMenuItemRecent.DropDownItems.Add(file, null, (s, e) => OpenDocument(file));
+		/// }
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatData")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[SRDescription("ToolStripDropDownItemsDescr")]
@@ -201,9 +245,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItemCollection _dropDownItems;
 
 		/// <summary>
-		/// Gets a value indicating whether the <see cref="ToolStripDropDownItem" /> has <see cref="ToolStripDropDown" /> controls associated with it. 
-		///</summary>
-		/// <returns>true if the <see cref="ToolStripDropDownItem" /> has <see cref="ToolStripDropDown" /> controls; otherwise, false.</returns>
+		/// Returns a value indicating whether the <see cref="ToolStripDropDownItem" /> has items in its <see cref="ToolStripDropDownItem.DropDownItems" /> collection.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripDropDownItem" /> has drop-down items; otherwise, false.</returns>
 		[Browsable(false)]
 		public virtual bool HasDropDownItems
 		{
@@ -215,6 +259,13 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private bool _hasDropDownItems;
 
+		/// <summary>
+		/// Returns a value indicating whether a <see cref="ToolStripDropDown" /> has been created or assigned to <see cref="ToolStripDropDownItem.DropDown" />.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripDropDownItem" /> has a <see cref="ToolStripDropDown" />; otherwise, false.</returns>
+		/// <remarks>
+		/// Unlike reading <see cref="ToolStripDropDownItem.DropDown" />, checking this property doesn't create the default drop-down.
+		/// </remarks>
 		[Browsable(false)]
 		public bool HasDropDown
 		{
@@ -227,9 +278,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _hasDropDown;
 
 		/// <summary>
-		/// Gets a value indicating whether the <see cref="ToolStripDropDownItem" /> is in the pressed state.
-		///</summary>
-		/// <returns>true if the <see cref="ToolStripDropDownItem" /> is in the pressed state; otherwise, false. </returns>
+		/// Returns a value indicating whether the <see cref="ToolStripDropDownItem" /> is in the pressed state.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripDropDownItem" /> is in the pressed state (its drop-down is open); otherwise, false.</returns>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override bool Pressed
@@ -300,16 +351,42 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Makes a visible <see cref="ToolStripDropDown" /> hidden.
-		///</summary>
+		/// </summary>
+		/// <remarks>
+		/// Raises the <see cref="ToolStripDropDownItem.DropDownClosed" /> event.
+		/// </remarks>
+		/// <example>
+		/// Closing the drop-down after the user picks a value:
+		/// <code><![CDATA[
+		/// private void toolStripDropDownButtonColor_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+		/// {
+		///     this.selectedColor = e.ClickedItem.Text;
+		///     this.toolStripDropDownButtonColor.HideDropDown();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void HideDropDown()
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// Displays the <see cref="ToolStripDropDownItem" /> control associated with this <see cref="ToolStripDropDownItem" />.
-		///</summary>
+		/// Displays the <see cref="ToolStripDropDown" /> associated with this <see cref="ToolStripDropDownItem" />.
+		/// </summary>
 		/// <exception cref="System.InvalidOperationException">The <see cref="ToolStripDropDownItem" /> is the same as the parent <see cref="ToolStrip" />.</exception>
+		/// <remarks>
+		/// Raises the <see cref="ToolStripDropDownItem.DropDownOpening" /> and <see cref="ToolStripDropDownItem.DropDownOpened" /> events.
+		/// The drop-down is displayed only if the item has drop-down items.
+		/// </remarks>
+		/// <example>
+		/// Opening a menu from code:
+		/// <code><![CDATA[
+		/// private void buttonOptions_Click(object sender, EventArgs e)
+		/// {
+		///     this.toolStripDropDownButtonOptions.ShowDropDown();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void ShowDropDown()
 		{
 			// TODO: Implement

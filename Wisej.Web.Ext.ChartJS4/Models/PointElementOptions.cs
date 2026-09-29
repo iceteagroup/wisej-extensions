@@ -23,8 +23,20 @@ using System.Text.Json.Serialization;
 namespace Wisej.Web.Ext.ChartJS4.Models
 {
 	/// <summary>
-	/// Point element styling options.
+	/// Represents the default styling options of the point elements used by line, radar, scatter and bubble charts (Chart.js <c>options.elements.point</c>).
 	/// </summary>
+	/// <remarks>
+	/// An instance is available through <see cref="ElementsOptions.Point"/>. These values apply to all datasets that draw points unless overridden by the dataset options.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var chart = new ChartJS4();
+	/// var point = new PointElementOptions();
+	/// point.Radius = 5;
+	/// point.PointStyle = "rectRot";
+	/// chart.ChartOptions.Elements = new ElementsOptions { Point = point };
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("ChartJS4")]
 	[TypeConverter(typeof(Converter))]
 	public class PointElementOptions : OptionsBase
@@ -36,8 +48,23 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		private int _borderWidth = 1;
 
 		/// <summary>
-		/// Point radius.
+		/// Returns or sets the default radius, in pixels, of the points (Chart.js option <c>radius</c>).
 		/// </summary>
+		/// <value>
+		/// The radius in pixels. The default is <c>3</c>.
+		/// </value>
+		/// <remarks>
+		/// Set it to <c>0</c> to hide the points.
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var point = new PointElementOptions();
+		/// point.Radius = 5;
+		/// chart.ChartOptions.Elements = new ElementsOptions { Point = point };
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("radius")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(3)]
@@ -49,8 +76,22 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Point style: 'circle', 'cross', 'crossRot', 'dash', 'line', 'rect', 'rectRounded', 'rectRot', 'star', 'triangle'.
+		/// Returns or sets the default shape of the points (Chart.js option <c>pointStyle</c>).
 		/// </summary>
+		/// <value>
+		/// One of <c>"circle"</c>, <c>"cross"</c>, <c>"crossRot"</c>, <c>"dash"</c>, <c>"line"</c>, <c>"rect"</c>, <c>"rectRounded"</c>, <c>"rectRot"</c>, <c>"star"</c> or <c>"triangle"</c>, or <c>null</c> (default) to use the Chart.js default (<c>"circle"</c>).
+		/// </value>
+		/// <remarks>
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var point = new PointElementOptions();
+		/// point.PointStyle = "triangle";
+		/// chart.ChartOptions.Elements = new ElementsOptions { Point = point };
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("pointStyle")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Point style.")]
@@ -61,8 +102,23 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Point rotation in degrees.
+		/// Returns or sets the default rotation, in degrees, of the point shapes (Chart.js option <c>rotation</c>).
 		/// </summary>
+		/// <value>
+		/// The rotation in degrees, or <c>null</c> (default) to use the Chart.js default (<c>0</c>).
+		/// </value>
+		/// <remarks>
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var point = new PointElementOptions();
+		/// point.PointStyle = "rect";
+		/// point.Rotation = 45;
+		/// chart.ChartOptions.Elements = new ElementsOptions { Point = point };
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("rotation")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Point rotation in degrees.")]
@@ -73,8 +129,22 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Point background color.
+		/// Returns or sets the default fill color of the points (Chart.js option <c>backgroundColor</c>).
 		/// </summary>
+		/// <value>
+		/// A <see cref="System.Drawing.Color"/>, a CSS color string, or an array of colors. The default is <c>null</c>, which uses the Chart.js default color.
+		/// </value>
+		/// <remarks>
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var point = new PointElementOptions();
+		/// point.BackgroundColor = System.Drawing.Color.Orange;
+		/// chart.ChartOptions.Elements = new ElementsOptions { Point = point };
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("backgroundColor")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Point background color.")]
@@ -85,8 +155,22 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Point border width.
+		/// Returns or sets the default border width, in pixels, of the points (Chart.js option <c>borderWidth</c>).
 		/// </summary>
+		/// <value>
+		/// The border width in pixels. The default is <c>1</c>.
+		/// </value>
+		/// <remarks>
+		/// Changing this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// var point = new PointElementOptions();
+		/// point.BorderWidth = 2;
+		/// chart.ChartOptions.Elements = new ElementsOptions { Point = point };
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("borderWidth")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(1)]
@@ -98,8 +182,24 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Additional custom properties that can be serialized to JSON.
+		/// Returns or sets a dictionary of additional Chart.js options that are not exposed as typed properties of the point element options.
 		/// </summary>
+		/// <value>
+		/// A <see cref="System.Collections.Generic.Dictionary{TKey, TValue}"/> of option names and values, or <c>null</c> (default).
+		/// </value>
+		/// <remarks>
+		/// The dictionary is marked with <c>[JsonExtensionData]</c>: each entry is serialized as an additional top-level property of this options object, using the key as the JSON property name. Use it to set any Chart.js option not covered by the typed API.
+		/// This property is hidden from the property grid and is not persisted by the designer. Assigning the property does not refresh the chart automatically; the new values are sent with the next chart update.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var point = new PointElementOptions();
+		/// point.ExtensionData = new System.Collections.Generic.Dictionary<string, object>
+		/// {
+		///     ["hoverRadius"] = 6
+		/// };
+		/// ]]></code>
+		/// </example>
 		[JsonExtensionData]
 		[DefaultValue(null)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -108,53 +208,153 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
 
 		/// <summary>
-		/// Determines whether the Radius property should be serialized by the designer.
+		/// Returns whether the <see cref="Radius"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Radius"/> is not <c>3</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (point.ShouldSerializeRadius())
+		///     point.ResetRadius();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeRadius() => Radius != 3;
 
 		/// <summary>
-		/// Resets the Radius property to its default value.
+		/// Resets the <see cref="Radius"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="Radius"/> to <c>3</c>.
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var point = new PointElementOptions();
+		/// point.ResetRadius();
+		/// ]]></code>
+		/// </example>
 		public void ResetRadius() => Radius = 3;
 
 		/// <summary>
-		/// Determines whether the PointStyle property should be serialized by the designer.
+		/// Returns whether the <see cref="PointStyle"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="PointStyle"/> is not <c>null</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (point.ShouldSerializePointStyle())
+		///     point.ResetPointStyle();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializePointStyle() => PointStyle != null;
 
 		/// <summary>
-		/// Resets the PointStyle property to its default value.
+		/// Resets the <see cref="PointStyle"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="PointStyle"/> to <c>null</c> (Chart.js default).
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var point = new PointElementOptions();
+		/// point.ResetPointStyle();
+		/// ]]></code>
+		/// </example>
 		public void ResetPointStyle() => PointStyle = null;
 
 		/// <summary>
-		/// Determines whether the Rotation property should be serialized by the designer.
+		/// Returns whether the <see cref="Rotation"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Rotation"/> is not <c>null</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (point.ShouldSerializeRotation())
+		///     point.ResetRotation();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeRotation() => Rotation != null;
 
 		/// <summary>
-		/// Resets the Rotation property to its default value.
+		/// Resets the <see cref="Rotation"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="Rotation"/> to <c>null</c> (Chart.js default).
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var point = new PointElementOptions();
+		/// point.ResetRotation();
+		/// ]]></code>
+		/// </example>
 		public void ResetRotation() => Rotation = null;
 
 		/// <summary>
-		/// Determines whether the BackgroundColor property should be serialized by the designer.
+		/// Returns whether the <see cref="BackgroundColor"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="BackgroundColor"/> is not <c>null</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (point.ShouldSerializeBackgroundColor())
+		///     point.ResetBackgroundColor();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeBackgroundColor() => BackgroundColor != null;
 
 		/// <summary>
-		/// Resets the BackgroundColor property to its default value.
+		/// Resets the <see cref="BackgroundColor"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="BackgroundColor"/> to <c>null</c>.
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var point = new PointElementOptions();
+		/// point.ResetBackgroundColor();
+		/// ]]></code>
+		/// </example>
 		public void ResetBackgroundColor() => BackgroundColor = null;
 
 		/// <summary>
-		/// Determines whether the BorderWidth property should be serialized by the designer.
+		/// Returns whether the <see cref="BorderWidth"/> property has been changed from its default value and should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="BorderWidth"/> is not <c>1</c>; otherwise <c>false</c>.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and the property grid to determine whether the property value is persisted in the generated code.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// if (point.ShouldSerializeBorderWidth())
+		///     point.ResetBorderWidth();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeBorderWidth() => BorderWidth != 1;
 
 		/// <summary>
-		/// Resets the BorderWidth property to its default value.
+		/// Resets the <see cref="BorderWidth"/> property to its default value.
 		/// </summary>
+		/// <remarks>
+		/// Sets <see cref="BorderWidth"/> to <c>1</c>.
+		/// This method is used by the Visual Studio designer and the property grid ("Reset" command).
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var point = new PointElementOptions();
+		/// point.ResetBorderWidth();
+		/// ]]></code>
+		/// </example>
 		public void ResetBorderWidth() => BorderWidth = 1;
 
 	}

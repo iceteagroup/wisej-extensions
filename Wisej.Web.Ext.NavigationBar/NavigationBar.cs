@@ -35,6 +35,35 @@ namespace Wisej.Web.Ext.NavigationBar
 	/// an application header with logo, child items, and a user panel
 	/// with gravatar and other user information.
 	/// </summary>
+	/// <remarks>
+	/// Items are <see cref="NavigationBarItem"/> instances added to the <see cref="Items"/> collection;
+	/// each item can contain child items in its own <see cref="NavigationBarItem.Items"/> collection.
+	/// When <see cref="CompactView"/> is true, the bar shrinks to show only the icons and the child items
+	/// of a top-level item are displayed in a popup <see cref="NavigationBarMenu"/>.
+	/// </remarks>
+	/// <example>
+	/// Building a navigation bar in code and reacting to item clicks:
+	/// <code><![CDATA[
+	/// var navBar = new NavigationBar
+	/// {
+	///     Dock = DockStyle.Left,
+	///     Text = "My Application",
+	///     Logo = "Images/logo.svg",
+	///     UserName = "Jane Doe",
+	///     UserStatus = "Online",
+	///     UserStatusColor = Color.LimeGreen
+	/// };
+	/// navBar.UserAvatar = navBar.GetGravatarUrl("jane.doe@example.com");
+	///
+	/// navBar.Items.Add("dashboard", "Dashboard", "Images/dashboard.svg");
+	/// navBar.Items.Add("reports", "Reports", "icon-file");
+	/// navBar.Items["reports"].Items.Add("sales", "Sales");
+	/// navBar.Items["reports"].Items.Add("inventory", "Inventory");
+	///
+	/// navBar.ItemClick += (s, e) => AlertBox.Show("Clicked: " + e.Item.Text);
+	/// this.Controls.Add(navBar);
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(NavigationBar))]
 	[Description("Responsive vertical navigation bar.")]
@@ -168,6 +197,28 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the selected item.
 		/// </summary>
+		/// <exception cref="ArgumentException">The <see cref="NavigationBarItem"/> doesn't belong to this <see cref="NavigationBar"/>.</exception>
+		/// <remarks>
+		/// The item can be at any level (top-level or child item) but it must belong to this <see cref="NavigationBar"/>.
+		/// Setting this property updates <see cref="NavigationBarItem.Selected"/> on the previous and new item,
+		/// expands all the parent items of the new item (unless <see cref="CompactView"/> is true)
+		/// and fires the <see cref="SelectedItemChanged"/> event. It doesn't fire the <see cref="ItemClick"/> event.
+		/// Clicking an item sets this property automatically after the <see cref="ItemClick"/> event.
+		/// Set it to null to clear the selection.
+		/// </remarks>
+		/// <example>
+		/// Selecting a child item in code, which also expands its parent:
+		/// <code><![CDATA[
+		/// this.navigationBar1.SelectedItem = this.navigationBar1.Items["reports"].Items["sales"];
+		///
+		/// private void navigationBar1_SelectedItemChanged(object sender, EventArgs e)
+		/// {
+		///     var item = this.navigationBar1.SelectedItem;
+		///     if (item != null)
+		///         this.labelTitle.Text = item.Text;
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public NavigationBarItem SelectedItem
@@ -199,8 +250,12 @@ namespace Wisej.Web.Ext.NavigationBar
 		private NavigationBarItem _selectedItem;
 
 		/// <summary>
-		/// Shows or hides the user panel.
+		/// Returns or sets whether the user panel is visible.
 		/// </summary>
+		/// <remarks>
+		/// The user panel displays <see cref="UserAvatar"/>, <see cref="UserName"/>, <see cref="UserStatus"/>
+		/// and <see cref="UserStatusColor"/>. Clicking it fires the <see cref="UserClick"/> event.
+		/// </remarks>
 		[DesignerActionList]
 		[ResponsiveProperty]
 		[DefaultValue(true)]
@@ -213,8 +268,12 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Shows or hides the header panel.
+		/// Returns or sets whether the header panel is visible.
 		/// </summary>
+		/// <remarks>
+		/// The header panel displays the <see cref="Logo"/> and the title (<see cref="Text"/>).
+		/// Clicking it fires the <see cref="TitleClick"/> event.
+		/// </remarks>
 		[DesignerActionList]
 		[ResponsiveProperty]
 		[DefaultValue(true)]
@@ -229,6 +288,30 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the compact view mode.
 		/// </summary>
+		/// <remarks>
+		/// When set to true, the title, user name and user information are hidden, the width of the
+		/// <see cref="NavigationBar"/> is reduced to fit the logo (the current width is saved), the avatar
+		/// is resized to the size of the logo and all top-level items are collapsed. While in compact view,
+		/// the width cannot be changed, items show their text as a tooltip, and expanding a top-level item
+		/// with child items shows its children in a popup <see cref="NavigationBarMenu"/> instead.
+		/// When set back to false, the saved width and avatar size are restored and the parents of the
+		/// <see cref="SelectedItem"/> are expanded. Fires the <see cref="CompactViewChanged"/> event.
+		/// </remarks>
+		/// <example>
+		/// Toggling the compact view when the user clicks the title, and switching it
+		/// automatically on small screens:
+		/// <code><![CDATA[
+		/// private void navigationBar1_TitleClick(object sender, EventArgs e)
+		/// {
+		///     this.navigationBar1.CompactView = !this.navigationBar1.CompactView;
+		/// }
+		///
+		/// private void Page1_Resize(object sender, EventArgs e)
+		/// {
+		///     this.navigationBar1.CompactView = this.Width < 800;
+		/// }
+		/// ]]></code>
+		/// </example>
 		[ResponsiveProperty]
 		[DesignerActionList]
 		[DefaultValue(false)]
@@ -290,6 +373,11 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the indentation in pixels for child items.
 		/// </summary>
+		/// <remarks>
+		/// The value is multiplied by the nesting level of each child item and applied as the left margin
+		/// of the child item's icon: with an indentation of 16, first-level children are indented by 16 pixels,
+		/// second-level children by 32 pixels, and so on. Top-level items are not indented.
+		/// </remarks>
 		[ResponsiveProperty]
 		[DefaultValue(0)]
 		[SRCategory("CatAppearance")]
@@ -318,6 +406,10 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the text to display in the title.
 		/// </summary>
+		/// <remarks>
+		/// The title is displayed in the header panel next to the <see cref="Logo"/> and
+		/// it's hidden when <see cref="CompactView"/> is true.
+		/// </remarks>
 		[DefaultValue("")]
 		[DesignerActionList]
 		[SRCategory("CatAppearance")]
@@ -331,6 +423,11 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the logo to display in the title.
 		/// </summary>
+		/// <remarks>
+		/// The value can be a URL, a relative path to an image file, or the name of a theme icon.
+		/// The logo remains visible in <see cref="CompactView"/> and its size determines the width
+		/// of the compact <see cref="NavigationBar"/>.
+		/// </remarks>
 		[DefaultValue("")]
 		[DesignerActionList]
 		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
@@ -346,6 +443,17 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the user avatar to display in the user panel.
 		/// </summary>
+		/// <remarks>
+		/// The value can be a URL, a relative path to an image file, or the name of a theme icon.
+		/// Use <see cref="GetGravatarUrl"/> to show the gravatar associated with the user's email address.
+		/// </remarks>
+		/// <example>
+		/// Showing the gravatar of the current user:
+		/// <code><![CDATA[
+		/// this.navigationBar1.UserName = "Jane Doe";
+		/// this.navigationBar1.UserAvatar = this.navigationBar1.GetGravatarUrl("jane.doe@example.com");
+		/// ]]></code>
+		/// </example>
 		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
 		[SRCategory("CatAppearance")]
@@ -383,6 +491,9 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the user name to display in the user panel.
 		/// </summary>
+		/// <remarks>
+		/// The user name is hidden when <see cref="CompactView"/> is true.
+		/// </remarks>
 		[DefaultValue("")]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the user name to display in the user panel.")]
@@ -395,6 +506,11 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the height of the child <see cref="NavigationBarItem"/> elements.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than 0 or greater than 32000.</exception>
+		/// <remarks>
+		/// The height, in pixels, is applied to the header of all the items at every level,
+		/// including items added later.
+		/// </remarks>
 		[DefaultValue(45)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the height of the child NavigationBarItem elements.")]
@@ -425,6 +541,21 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns the collection of items to display in the <see cref="NavigationBar"/>.
 		/// </summary>
+		/// <remarks>
+		/// This collection contains only the top-level items. Child items are added to the
+		/// <see cref="NavigationBarItem.Items"/> collection of their parent item.
+		/// </remarks>
+		/// <example>
+		/// Creating a two-level menu:
+		/// <code><![CDATA[
+		/// var customers = new NavigationBarItem { Name = "customers", Text = "Customers", Icon = "Images/customers.svg" };
+		/// customers.Items.Add("customerList", "All Customers");
+		/// customers.Items.Add("customerNew", "New Customer");
+		///
+		/// this.navigationBar1.Items.Add(customers);
+		/// this.navigationBar1.Items.Add("settings", "Settings", "Images/settings.svg");
+		/// ]]></code>
+		/// </example>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns the collection of items in the NavigationBar.")]
@@ -440,8 +571,15 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Allows the user to change the <see cref="SelectedItem"/> using the keyboard.
+		/// Returns or sets whether the user can change the <see cref="SelectedItem"/> using the keyboard.
 		/// </summary>
+		/// <remarks>
+		/// When enabled, the <see cref="NavigationBar"/> becomes focusable and handles these keys:
+		/// Up and Down move to the previous or next visible item; Right selects the first child item;
+		/// Left selects the parent item; Home and End select the first and last top-level item;
+		/// Space and Enter toggle <see cref="NavigationBarItem.Expanded"/>; "+" expands and "-" collapses the selected item.
+		/// Keyboard navigation changes the <see cref="SelectedItem"/> without firing the <see cref="ItemClick"/> event.
+		/// </remarks>
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
 		[Description("Allows the user to change the SelectedItem using the keyboard.")]
@@ -476,11 +614,23 @@ namespace Wisej.Web.Ext.NavigationBar
 		#region Methods
 
 		/// <summary>
-		/// Returns the URL for the <see href="https://en.gravatar.com"/> associated
-		/// to specified <paramref name="email"/> address.
+		/// Returns the URL of the <see href="https://gravatar.com">gravatar</see> image associated
+		/// with the specified <paramref name="email"/> address.
 		/// </summary>
 		/// <param name="email">Email address for which to retrieve the gravatar URL.</param>
-		/// <returns></returns>
+		/// <returns>The gravatar URL in the format <c>https://gravatar.com/avatar/{md5 hash}</c>.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="email"/> is null.</exception>
+		/// <remarks>
+		/// The email address is trimmed and converted to lower case before computing its MD5 hash.
+		/// The URL is computed locally and it's not validated: if the email is not registered with
+		/// gravatar, the service returns its default image. This method doesn't change <see cref="UserAvatar"/>.
+		/// </remarks>
+		/// <example>
+		/// Setting the avatar of the logged-in user:
+		/// <code><![CDATA[
+		/// this.navigationBar1.UserAvatar = this.navigationBar1.GetGravatarUrl("jane.doe@example.com");
+		/// ]]></code>
+		/// </example>
 		public string GetGravatarUrl(string email)
 		{
 			if (email is null)
@@ -500,6 +650,7 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		#region Unsupported properties and events
 
+		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

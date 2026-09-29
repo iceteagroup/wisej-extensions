@@ -37,6 +37,16 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// </summary>
 		/// <param name="name">The name of the <see cref="RibbonBarGroup"/> to retrieve.</param>
 		/// <returns>The first <see cref="RibbonBarGroup"/> with the specified name or null.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+		/// <remarks>
+		/// The comparison with the <see cref="RibbonBarGroup.Name"/> property is case insensitive.
+		/// </remarks>
+		/// <example>
+		/// Retrieving a <see cref="RibbonBarGroup"/> by name:
+		/// <code><![CDATA[
+		/// this.ribbonBarPage1.Groups["clipboard"].Enabled = false;
+		/// ]]></code>
+		/// </example>
 		public RibbonBarGroup this[string name]
 		{
 			get
@@ -56,9 +66,18 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// Adds the specified <para>item</para> to the collection.
+		/// Adds the specified <paramref name="item"/> to the collection.
 		/// </summary>
 		/// <param name="item">The <see cref="RibbonBarGroup"/> to add to the collection.</param>
+		/// <remarks>
+		/// The <see cref="RibbonBarGroup.Parent"/> of the <paramref name="item"/> is set to the <see cref="RibbonBarPage"/> that owns this collection.
+		/// </remarks>
+		/// <example>
+		/// Adding a new <see cref="RibbonBarGroup"/>:
+		/// <code><![CDATA[
+		/// this.ribbonBarPage1.Groups.Add(new RibbonBarGroup { Name = "editing", Text = "Editing", ShowButton = true });
+		/// ]]></code>
+		/// </example>
 		public override void Add(RibbonBarGroup item)
 		{
 			item.Parent = this.Owner;
@@ -66,11 +85,20 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// Inserts the specified <para>item</para> in the collection at the
-		/// specified <para>index</para>.
+		/// Inserts the specified <paramref name="item"/> in the collection at the
+		/// specified <paramref name="index"/>.
 		/// </summary>
 		/// <param name="index">The position to insert the specified <see cref="RibbonBarGroup"/> at.</param>
 		/// <param name="item">The <see cref="RibbonBarGroup"/> to insert in the collection.</param>
+		/// <remarks>
+		/// The <see cref="RibbonBarGroup.Parent"/> of the <paramref name="item"/> is set to the <see cref="RibbonBarPage"/> that owns this collection.
+		/// </remarks>
+		/// <example>
+		/// Inserting a <see cref="RibbonBarGroup"/> at a specific position:
+		/// <code><![CDATA[
+		/// this.ribbonBarPage1.Groups.Insert(0, new RibbonBarGroup { Name = "clipboard", Text = "Clipboard" });
+		/// ]]></code>
+		/// </example>
 		public override void Insert(int index, RibbonBarGroup item)
 		{
 			item.Parent = this.Owner;

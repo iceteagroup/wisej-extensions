@@ -25,8 +25,16 @@ namespace Wisej.Ext.WebAuthn
 	/// Relying Party's requirements for client-side discoverable credentials.
 	/// </summary>
 	/// <remarks>
-	/// <See href="https://www.w3.org/TR/webauthn-2/#enum-residentKeyRequirement"/>
+	/// Used by <see cref="AuthenticatorSelectionCriteria.UserVerification"/>.
+	/// See <see href="https://www.w3.org/TR/webauthn-2/#enum-residentKeyRequirement"/>.
 	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var selection = new AuthenticatorSelectionCriteria(
+	/// 	AuthenticatorAttachment.Platform,
+	/// 	userVerification: ResidentKeyRequirement.Required);
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("WebAuthn")]
 	public enum ResidentKeyRequirement
     {

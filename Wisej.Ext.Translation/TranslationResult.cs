@@ -28,14 +28,35 @@ namespace Wisej.Ext.Translation
 	public class TranslationResult
 	{
 		/// <summary>
-		/// Constructs a new instance of <see cref="T:Wisej.Ext.Translation.TranslationResult"/>.
+		/// Constructs a new instance of <see cref="TranslationResult"/>.
 		/// </summary>
 		/// <param name="originalText">The original text.</param>
-		/// <param name="translatedText">The translated text - or null if an error occurred.</param>
+		/// <param name="translatedText">The translated text, or null if an error occurred.</param>
 		/// <param name="from">The language of the original text.</param>
 		/// <param name="to">The language of the translated text.</param>
-		/// <param name="errorCode">The error code returned by the translatation service, or -1 if the service returned an error message without an error code. Zero if the request was successful.</param>
-		/// <param name="errorMessage">The error messsage returned by the translation service, or null if the request was successful.</param>
+		/// <param name="errorCode">The error code returned by the translation service, or -1 if the service returned an error message without an error code. Zero if the request was successful.</param>
+		/// <param name="errorMessage">The error message returned by the translation service, or null if the request was successful.</param>
+		/// <remarks>
+		/// Instances are normally created by a <see cref="TranslationProviderBase"/> implementation and returned by
+		/// <see cref="Translation.Translate(string, string, string)"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// // Successful translation.
+		/// var ok = new TranslationResult("Hello", "Hallo", "en", "de", 0, null);
+		///
+		/// // Failed translation.
+		/// var failed = new TranslationResult("Hello", null, "en", "de", 401, "API key is invalid");
+		///
+		/// foreach (var result in new[] { ok, failed })
+		/// {
+		/// 	if (result.ErrorCode == 0)
+		/// 		Console.WriteLine($"{result.OriginalText} -> {result.TranslatedText}");
+		/// 	else
+		/// 		Console.WriteLine($"Error {result.ErrorCode}: {result.ErrorMessage}");
+		/// }
+		/// ]]></code>
+		/// </example>
 		public TranslationResult(string originalText, string translatedText, string from, string to, int errorCode, string errorMessage)
 		{
 			this.OriginalText = originalText;
@@ -45,12 +66,12 @@ namespace Wisej.Ext.Translation
 		}
 
 		/// <summary>
-		/// The error code returned by the translatation service, or -1 if the service returned an error message without an error code. Zero if the request was successful.
+		/// The error code returned by the translation service, or -1 if the service returned an error message without an error code. Zero if the request was successful.
 		/// </summary>
 		public int ErrorCode { get; private set; }
 
 		/// <summary>
-		/// The error messsage returned by the translation service, or null if the request was successful.
+		/// The error message returned by the translation service, or null if the request was successful.
 		/// </summary>
 		public string ErrorMessage { get; private set; }
 
@@ -60,7 +81,7 @@ namespace Wisej.Ext.Translation
 		public string OriginalText { get; private set; }
 
 		/// <summary>
-		/// The translated text - or null if an error occurred.
+		/// The translated text, or null if an error occurred.
 		/// </summary>
 		public string TranslatedText { get; private set; }
 

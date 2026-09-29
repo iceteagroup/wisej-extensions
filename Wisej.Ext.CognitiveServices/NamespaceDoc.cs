@@ -20,12 +20,14 @@
 
 namespace Wisej.Ext.CognitiveServices
 {
-	/// <summary>
-	/// <para>
-	/// CognitiveServices component. Adds cognitive services to Wisej applications.
-	/// </para>
-	/// </summary>
-	internal class NamespaceDoc
+    /// <summary>
+    /// <summary>
+    /// Provides the <see cref="CognitiveServices"/> component, which analyzes images in Wisej applications
+    /// using the Azure Cognitive Services Computer Vision API, and the types that describe the request
+    /// options (<see cref="VisualFeatures"/>, <see cref="Details"/>) and the analysis result (<see cref="Request"/>).
+    /// </summary>
+    /// </summary>
+    internal class NamespaceDoc
 	{
 	}
 }

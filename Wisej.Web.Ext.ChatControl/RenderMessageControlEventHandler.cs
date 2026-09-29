@@ -22,34 +22,83 @@ using System;
 namespace Wisej.Web.Ext.ChatControl
 {
 	/// <summary>
-	/// Event handler for providing message controls.
+	/// Represents the method that will handle the <see cref="ChatBox.RenderMessageControl"/> event, fired when a
+	/// <see cref="Message"/> needs a control to be displayed in the <see cref="ChatBox"/>.
 	/// </summary>
 	/// <param name="sender">The source of the event.</param>
-	/// <param name="e">An instance of <see cref="MessageEventArgs"/> containing the message event data.</param>
+	/// <param name="e">An instance of <see cref="RenderMessageControlEventArgs"/> containing the message that requires a control.</param>
+	/// <remarks>
+	/// Assign <see cref="RenderMessageControlEventArgs.Control"/> to supply a custom control. When no control is
+	/// supplied, the message is displayed using an <see cref="AutoSizeLabel"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// chatBox.RenderMessageControl += (object sender, RenderMessageControlEventArgs e) =>
+	/// {
+	///     if (e.Message.ContentType == "image")
+	///         e.Control = new PictureBox { ImageSource = e.Message.Content, Size = new Size(200, 150) };
+	/// };
+	/// ]]></code>
+	/// </example>
 	public delegate void RenderMessageControlEventHandler(object sender, RenderMessageControlEventArgs e);
 
 	/// <summary>
-	/// Event args for providing message controls.
+	/// Provides data for the <see cref="ChatBox.RenderMessageControl"/> event.
 	/// </summary>
+	/// <example>
+	/// <code><![CDATA[
+	/// private void chatBox_RenderMessageControl(object sender, RenderMessageControlEventArgs e)
+	/// {
+	///     if (e.Message.ContentType == "link")
+	///         e.Control = new LinkLabel { Text = e.Message.Content, AutoSize = true };
+	/// }
+	/// ]]></code>
+	/// </example>
 	public class RenderMessageControlEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Creates a new instance of <see cref="RenderMessageControlEventArgs"/> with the given Message.
+		/// Creates a new instance of <see cref="RenderMessageControlEventArgs"/> with the given <see cref="ChatControl.Message"/>.
 		/// </summary>
-		/// <param name="message"></param>
+		/// <param name="message">The <see cref="ChatControl.Message"/> that requires a control.</param>
+		/// <example>
+		/// <code><![CDATA[
+		/// var args = new RenderMessageControlEventArgs(new Message("Hello"));
+		/// args.Control = new Label { Text = args.Message.Content };
+		/// ]]></code>
+		/// </example>
 		public RenderMessageControlEventArgs(Message message)
 		{
 			this.Message = message;
 		}
 
 		/// <summary>
-		/// Gets the Message that is requesting a control.
+		/// Returns the <see cref="ChatControl.Message"/> that is requesting a control.
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// private void chatBox_RenderMessageControl(object sender, RenderMessageControlEventArgs e)
+		/// {
+		///     var text = e.Message.Content;
+		///     e.Control = new Label { Text = text.ToUpper(), AutoSize = true };
+		/// }
+		/// ]]></code>
+		/// </example>
 		public Message Message { get; }
 
 		/// <summary>
-		/// Gets or sets the <see cref="Web.Control"/> to use with the message.
+		/// Returns or sets the <see cref="Web.Control"/> to use to display the message.
 		/// </summary>
+		/// <value>The custom control for the message; the default is <c>null</c>, in which case an
+		/// <see cref="AutoSizeLabel"/> displaying <see cref="ChatControl.Message.Content"/> is used.</value>
+		/// <example>
+		/// <code><![CDATA[
+		/// private void chatBox_RenderMessageControl(object sender, RenderMessageControlEventArgs e)
+		/// {
+		///     if (e.Message.ContentType == "button")
+		///         e.Control = new Button { Text = e.Message.Content };
+		/// }
+		/// ]]></code>
+		/// </example>
 		public Control Control { get; set; }
 	}
 }

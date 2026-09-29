@@ -25,7 +25,7 @@ namespace Wisej.Ext.WebAuthn
 	/// Names and identifier for the user account performing the registration.
 	/// </summary>
 	/// <remarks>
-	/// <See href="https://w3c.github.io/webauthn/#dom-publickeycredentialcreationoptions-user"/>
+	/// See <see href="https://w3c.github.io/webauthn/#dom-publickeycredentialcreationoptions-user"/>.
 	/// </remarks>
 	[ApiCategory("WebAuthn")]
 	public class PublicKeyCredentialUserEntity
@@ -48,6 +48,16 @@ namespace Wisej.Ext.WebAuthn
         /// <summary>
         /// Creates a new instance of <see cref="PublicKeyCredentialUserEntity"/>.
         /// </summary>
+        /// <example>
+        /// <code><![CDATA[
+        /// var user = new PublicKeyCredentialUserEntity
+        /// {
+        /// 	Id = "user-1234",
+        /// 	Name = "jane.doe@example.com",
+        /// 	DisplayName = "Jane Doe"
+        /// };
+        /// ]]></code>
+        /// </example>
         public PublicKeyCredentialUserEntity()
         {
         }
@@ -55,9 +65,17 @@ namespace Wisej.Ext.WebAuthn
         /// <summary>
         /// Creates a new instance of <see cref="PublicKeyCredentialUserEntity"/> with the given configuration.
         /// </summary>
-        /// <param name="id">The user handle.</param>
-        /// <param name="name">The user name.</param>
-        /// <param name="displayName">The user display name.</param>
+        /// <param name="id">The user handle. Use a stable, opaque identifier without personal information; it is returned in <see cref="CredentialsResponse.UserHandle"/> on login.</param>
+        /// <param name="name">The user name, e.g. an email address.</param>
+        /// <param name="displayName">The name shown to the user by the authenticator.</param>
+        /// <example>
+        /// <code><![CDATA[
+        /// var user = new PublicKeyCredentialUserEntity("user-1234", "jane.doe@example.com", "Jane Doe");
+        ///
+        /// CredentialsResponse response = await WebAuthn.CreateAsync(
+        /// 	challenge, rp, user, parameters, selection, 60000, AttestationConveyancePreference.None);
+        /// ]]></code>
+        /// </example>
         public PublicKeyCredentialUserEntity(string id, string name, string displayName)
         {
             this.Id = id;

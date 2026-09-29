@@ -42,6 +42,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// Initializes an instance of the <see cref="T:Wisej.Web.Ext.GoogleMaps.MarkerDragEventArgs" /> class.
 		/// </summary>
 		/// <param name="e">The event data from the client.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="e"/> is null.</exception>
 		public MarkerDragEventArgs(WidgetEventArgs e)
 		{
 			if (e == null)
@@ -53,18 +54,31 @@ namespace Wisej.Web.Ext.GoogleMaps
 		}
 
 		/// <summary>
-		/// The ID of the clicked marker that was dragged.
+		/// Returns the ID of the marker that was dragged.
 		/// </summary>
 		public string Marker { get; private set; }
 
 		/// <summary>
-		/// The coordinates of the marker.
+		/// Returns the coordinates of the marker.
 		/// </summary>
+		/// <remarks>
+		/// For <see cref="GoogleMap.MarkerDragEnd"/> it's the new location of the marker, for <see cref="GoogleMap.MarkerDragStart"/>
+		/// the location at the start of the drag operation.
+		/// </remarks>
+		/// <example>
+		/// Saving the new position of a marker:
+		/// <code><![CDATA[
+		/// private void googleMap1_MarkerDragEnd(object sender, MarkerDragEventArgs e)
+		/// {
+		///     SaveMarkerPosition(e.Marker, e.Location.Lat, e.Location.Lng);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public LatLng Location { get; private set; }
 
 		/// <summary>
-		/// The position of the marker in pixels.
-		///</summary>
+		/// Returns the position of the marker in pixels, as reported by the Google Maps drag event.
+		/// </summary>
 		public Point Position { get; private set; }
 
 	}

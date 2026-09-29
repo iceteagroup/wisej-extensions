@@ -25,8 +25,25 @@ namespace Wisej.Ext.WebAuthn
 	/// Information about the authenticator.
 	/// </summary>
 	/// <remarks>
-	/// <See href="https://w3c.github.io/webauthn/#sctn-authenticator-data."/>
-	/// </remarks>	
+	/// Returned in <see cref="CredentialsResponse.AuthenticatorData"/>.
+	/// <see cref="WebAuthn.CreateAsync"/> fills <see cref="PublicKey"/>; <see cref="WebAuthn.GetAsync"/> fills
+	/// <see cref="RPIDHash"/>, the user flags and <see cref="Base64"/>.
+	/// See <see href="https://w3c.github.io/webauthn/#sctn-authenticator-data"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// CredentialsResponse response = await WebAuthn.GetAsync(challenge, allowCredentials, 60000);
+	/// AuthenticatorData data = response.AuthenticatorData;
+	///
+	/// if (!data.UserPresent || !data.UserVerified)
+	/// {
+	/// 	AlertBox.Show("The user was not verified by the authenticator.");
+	/// 	return;
+	/// }
+	///
+	/// bool valid = WebAuthn.Validate(publicKey, data.Base64, response.ClientData.Base64, response.Signature);
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("WebAuthn")]
 	public class AuthenticatorData
 	{

@@ -27,6 +27,11 @@ namespace Wisej.Web.Ext.NavigationBar
 	/// <summary>
 	/// Represents a navigation item in the <see cref="NavigationBar"/> control.
 	/// </summary>
+	/// <remarks>
+	/// A <see cref="NavigationBarItem"/> displays an <see cref="Icon"/>, a title (<see cref="Text"/>), an optional
+	/// info "bubble" (<see cref="InfoText"/>), an optional shortcut button (<see cref="ShowShortcut"/>) and
+	/// an open/close icon when it contains child items in its <see cref="Items"/> collection.
+	/// </remarks>
 	[ToolboxItem(false)]
 	[DesignTimeVisible(false)]
 	[ApiCategory("NavigationBar")]
@@ -169,6 +174,9 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns the owner <see cref="NavigationBar"/>.
 		/// </summary>
+		/// <remarks>
+		/// Returns null when the item has not been added to a <see cref="NavigationBar"/> (directly or through a parent item) yet.
+		/// </remarks>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public NavigationBar NavigationBar
@@ -195,6 +203,10 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns the parent <see cref="NavigationBarItem"/> or null.
 		/// </summary>
+		/// <remarks>
+		/// Returns null for top-level items, which belong directly to the <see cref="NavigationBar.Items"/> collection.
+		/// This property hides <see cref="Control.Parent"/>, which returns the internal container panel.
+		/// </remarks>
 		[Browsable(false)]
 		public new NavigationBarItem Parent
 		{
@@ -214,6 +226,10 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the icon of the <see cref="NavigationBarItem"/>.
 		/// </summary>
+		/// <remarks>
+		/// The value can be a URL, a relative path to an image file, or the name of a theme icon.
+		/// The icon is the only part of the item that remains visible when <see cref="NavigationBar.CompactView"/> is true.
+		/// </remarks>
 		[DefaultValue(null)]
 		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
@@ -224,7 +240,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Returns or sets the icon of the <see cref="NavigationBarItem"/>.
+		/// Returns or sets the cursor displayed when the mouse pointer is over the <see cref="NavigationBarItem"/>.
 		/// </summary>
 		[DefaultValue(typeof(Cursor), "Hand")]
 		public override Cursor Cursor { get => base.Cursor; set => base.Cursor = value; }
@@ -232,6 +248,10 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the title of the <see cref="NavigationBarItem"/>.
 		/// </summary>
+		/// <remarks>
+		/// The title is hidden when <see cref="NavigationBar.CompactView"/> is true; in that case it's shown
+		/// as the tooltip of the item unless <see cref="Control.ToolTipText"/> is set.
+		/// </remarks>
 		[DefaultValue("")]
 		public override string Text
 		{
@@ -240,7 +260,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Returns or sets a value indicating that the control can display HTML in the Text property.
+		/// Returns or sets a value indicating that the control can display HTML in the <see cref="Text"/> property.
 		/// </summary>
 		[DefaultValue(false)]
 		public bool AllowHtml
@@ -261,8 +281,22 @@ namespace Wisej.Web.Ext.NavigationBar
 		private bool _iconVisible = true;
 
 		/// <summary>
-		/// Returns the collection of items to display in the <see cref="NavigationBarItem"/>.
+		/// Returns the collection of child items to display in the <see cref="NavigationBarItem"/>.
 		/// </summary>
+		/// <remarks>
+		/// Child items are visible only when the item is <see cref="Expanded"/>. Adding a child item shows the
+		/// open/close icon and applies the <see cref="NavigationBar.ItemHeight"/> and <see cref="NavigationBar.Indentation"/>
+		/// of the owner <see cref="NavigationBar"/>.
+		/// </remarks>
+		/// <example>
+		/// Adding child items and expanding the parent:
+		/// <code><![CDATA[
+		/// var reports = this.navigationBar1.Items["reports"];
+		/// reports.Items.Add("sales", "Sales", "Images/sales.svg");
+		/// reports.Items.Add("inventory", "Inventory", "Images/inventory.svg");
+		/// reports.Expanded = true;
+		/// ]]></code>
+		/// </example>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public NavigationBarItemCollection Items
 		{
@@ -283,6 +317,9 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the background color.
 		/// </summary>
+		/// <remarks>
+		/// The color is applied to the header of the item (icon and title row), not to the area containing the child items.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ControlBackColorDescr")]
 		public new Color BackColor
@@ -296,6 +333,17 @@ namespace Wisej.Web.Ext.NavigationBar
 			return this.header.BackColor != Color.Transparent;
 		}
 
+		/// <summary>
+		/// Resets the <see cref="BackColor"/> property to its default value.
+		/// </summary>
+		/// <example>
+		/// Restoring the themed background after highlighting an item:
+		/// <code><![CDATA[
+		/// this.navigationBarItem1.BackColor = Color.LightYellow;
+		/// // ...
+		/// this.navigationBarItem1.ResetBackColor();
+		/// ]]></code>
+		/// </example>
 		public override void ResetBackColor()
 		{
 			this.header.BackColor = Color.Empty;
@@ -304,6 +352,9 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the text color.
 		/// </summary>
+		/// <remarks>
+		/// The color is applied to the header of the item (icon and title row), not to the child items.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ControlForeColorDescr")]
 		public new Color ForeColor
@@ -317,13 +368,24 @@ namespace Wisej.Web.Ext.NavigationBar
 			return TypeDescriptor.GetProperties(this.header)["ForeColor"].ShouldSerializeValue(this.header);
 		}
 
+		/// <summary>
+		/// Resets the <see cref="ForeColor"/> property to its default value.
+		/// </summary>
+		/// <example>
+		/// Restoring the themed text color:
+		/// <code><![CDATA[
+		/// this.navigationBarItem1.ForeColor = Color.Red;
+		/// // ...
+		/// this.navigationBarItem1.ResetForeColor();
+		/// ]]></code>
+		/// </example>
 		public override void ResetForeColor()
 		{
 			TypeDescriptor.GetProperties(this.header)["ForeColor"].ResetValue(this.header);
 		}
 
 		/// <summary>
-		/// Determines whether to expand or collapse the item when clicking the item rather than
+		/// Returns or sets whether to expand or collapse the item when clicking the item rather than
 		/// having to click the open/close icon.
 		/// </summary>
 		[DefaultValue(true)]
@@ -335,8 +397,23 @@ namespace Wisej.Web.Ext.NavigationBar
 		private bool _expandOnClick = true;
 
 		/// <summary>
-		/// Expands or collapses child items.
+		/// Returns or sets whether the child items are expanded (visible).
 		/// </summary>
+		/// <remarks>
+		/// Changing the value fires the <see cref="Expand"/> or <see cref="Collapse"/> event.
+		/// When <see cref="NavigationBar.CompactView"/> is true, setting this property to true doesn't expand the item:
+		/// if it's a top-level item with child items, its children are shown in a popup <see cref="NavigationBarMenu"/>
+		/// and the value remains false.
+		/// </remarks>
+		/// <example>
+		/// Expanding all the top-level items:
+		/// <code><![CDATA[
+		/// foreach (var item in this.navigationBar1.Items)
+		/// {
+		///     item.Expanded = true;
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		public bool Expanded
 		{
@@ -375,6 +452,9 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns the indentation level of this <see cref="NavigationBarItem"/> item.
 		/// </summary>
+		/// <remarks>
+		/// Top-level items have level 0, their children level 1, and so on.
+		/// </remarks>
 		[Browsable(false)]
 		public int Level
 		{
@@ -392,6 +472,10 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns whether the <see cref="NavigationBarItem"/> is the currently selected item.
 		/// </summary>
+		/// <remarks>
+		/// To select an item, set the <see cref="NavigationBar.SelectedItem"/> property. The selected item
+		/// is rendered using the "selected" state of the theme.
+		/// </remarks>
 		[Bindable(false)]
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -410,6 +494,19 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the text to show in the info "bubble" next to the item.
 		/// </summary>
+		/// <remarks>
+		/// The bubble is visible only when the text is not empty and <see cref="NavigationBar.CompactView"/> is false.
+		/// Clicking it fires the <see cref="InfoClick"/> and <see cref="NavigationBar.ItemInfoClick"/> events.
+		/// </remarks>
+		/// <example>
+		/// Showing the number of unread messages and hiding the bubble when there are none:
+		/// <code><![CDATA[
+		/// var count = GetUnreadMessageCount();
+		/// this.navigationBar1.Items["inbox"].InfoText = count > 0 ? count.ToString() : "";
+		/// this.navigationBar1.Items["inbox"].InfoTextBackColor = Color.Red;
+		/// this.navigationBar1.Items["inbox"].InfoTextForeColor = Color.White;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("")]
 		public string InfoText
 		{
@@ -460,8 +557,21 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Shows or hides the shortcut button.
+		/// Returns or sets whether the shortcut button is visible.
 		/// </summary>
+		/// <remarks>
+		/// The shortcut button displays the <see cref="ShortcutIcon"/> and it's hidden when <see cref="NavigationBar.CompactView"/> is true.
+		/// Clicking it fires the <see cref="ShortcutClick"/> and <see cref="NavigationBar.ItemShortcutClick"/> events.
+		/// </remarks>
+		/// <example>
+		/// Using the shortcut button to create a new record:
+		/// <code><![CDATA[
+		/// var customers = this.navigationBar1.Items["customers"];
+		/// customers.ShowShortcut = true;
+		/// customers.ShortcutIcon = "icon-add";
+		/// customers.ShortcutClick += (s, e) => new CustomerForm().Show();
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		public bool ShowShortcut
 		{
@@ -477,6 +587,10 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Returns or sets the shortcut icon.
 		/// </summary>
+		/// <remarks>
+		/// The value can be a URL, a relative path to an image file, or the name of a theme icon.
+		/// The icon is displayed only when <see cref="ShowShortcut"/> is true.
+		/// </remarks>
 		[DefaultValue("spinner-plus")]
 		[Editor("Wisej.Design.ImageSourceEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
 				"System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
@@ -513,8 +627,12 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// Returns or sets the visibility of the <see cref="NavigationBarItem"/>.
+		/// Returns or sets whether the <see cref="NavigationBarItem"/> is hidden.
 		/// </summary>
+		/// <remarks>
+		/// Setting this property to true sets <see cref="Visible"/> to false, and vice versa.
+		/// Unlike <see cref="Visible"/>, this property is serializable by the designer.
+		/// </remarks>
 		[DefaultValue(false)]
 		public bool Hidden
 		{
@@ -550,6 +668,7 @@ namespace Wisej.Web.Ext.NavigationBar
 
 		#region Unsupported properties and events
 
+		/// <exclude/>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -888,6 +1007,18 @@ namespace Wisej.Web.Ext.NavigationBar
 				&& this.items.Controls.Count > 0;
 		}
 
+		/// <summary>
+		/// Updates the client side widget.
+		/// </summary>
+		/// <remarks>
+		/// In design mode it also updates the owner <see cref="NavigationBar"/>.
+		/// </remarks>
+		/// <example>
+		/// Refreshing the item after changing several properties:
+		/// <code><![CDATA[
+		/// this.navigationBarItem1.Update();
+		/// ]]></code>
+		/// </example>
 		public override void Update()
 		{
 			base.Update();

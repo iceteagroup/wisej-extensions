@@ -26,11 +26,20 @@ namespace Wisej.Web.Ext.ToolStrip
 {
 	public partial class ToolStripTextBox
 	{
+		/// <summary>
+		/// Represents the <see cref="Wisej.Web.TextBox"/> hosted by a <see cref="ToolStripTextBox"/>.
+		/// </summary>
+		/// <remarks>
+		/// Instances are created by <see cref="ToolStripTextBox"/>; use <see cref="ToolStripTextBox.TextBox"/> to access the hosted control.
+		/// </remarks>
 		public class ToolStripTextBoxControl : TextBox
 		{
 
 			#region Constructors
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ToolStripTextBoxControl"/> class.
+			/// </summary>
 			public ToolStripTextBoxControl()
 			{
 				// TODO: Implement
@@ -40,6 +49,9 @@ namespace Wisej.Web.Ext.ToolStrip
 
 			#region Properties
 
+			/// <summary>
+			/// Returns or sets the font of the text displayed by the hosted text box.
+			/// </summary>
 			public override Font Font
 			{
 				get
@@ -57,6 +69,9 @@ namespace Wisej.Web.Ext.ToolStrip
 
 			private Font _font;
 
+			/// <summary>
+			/// Returns or sets the <see cref="ToolStripTextBox"/> that hosts this control.
+			/// </summary>
 			public ToolStripTextBox Owner
 			{
 				get

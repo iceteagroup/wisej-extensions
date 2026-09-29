@@ -25,6 +25,19 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	/// <summary>
 	/// Observable collection for chart datasets that keeps chart back-references in sync.
 	/// </summary>
+	/// <remarks>
+	/// The data sets map to the Chart.js <c>data.datasets</c> array. Items added to the collection are bound to the
+	/// owning <see cref="Chart"/> (and unbound when removed or replaced), and every change to the collection refreshes
+	/// the chart. The collection can be assigned from a <c>ChartDataSet[]</c> or a <c>List&lt;ChartDataSet&gt;</c>
+	/// through the implicit conversion operators.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// chart.DataSets.Add(new BarDataSet { Label = "2024", Data = new object[] { 3, 5, 2 } });
+	/// chart.DataSets.Add(new BarDataSet { Label = "2025", Data = new object[] { 4, 6, 3 } });
+	/// chart.DataSets.RemoveAt(0);
+	/// ]]></code>
+	/// </example>
 	public class DataSetCollection : ObservableCollection<ChartDataSet>
 	{
 		private ChartJS4? _chart;
@@ -32,6 +45,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Initializes a new empty dataset collection.
 		/// </summary>
+		/// <remarks>The collection is not bound to a chart until it is assigned to <see cref="ChartJS4.DataSets"/>.</remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var dataSets = new DataSetCollection();
+		/// dataSets.Add(new LineDataSet { Label = "Sales" });
+		/// chart.DataSets = dataSets;
+		/// ]]></code>
+		/// </example>
 		public DataSetCollection()
 		{
 		}
@@ -39,6 +60,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Initializes a new empty dataset collection bound to a chart.
 		/// </summary>
+		/// <param name="chart">The owning <see cref="ChartJS4"/> control, or <c>null</c>.</param>
+		/// <example>
+		/// <code><![CDATA[
+		/// var dataSets = new DataSetCollection(chart);
+		/// chart.DataSets = dataSets;
+		/// ]]></code>
+		/// </example>
 		public DataSetCollection(ChartJS4? chart)
 		{
 			Chart = chart;
@@ -47,6 +75,13 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Initializes a new dataset collection with initial items.
 		/// </summary>
+		/// <param name="items">The initial data sets, or <c>null</c> to create an empty collection.</param>
+		/// <example>
+		/// <code><![CDATA[
+		/// var items = new List<ChartDataSet> { new LineDataSet { Label = "A" }, new LineDataSet { Label = "B" } };
+		/// chart.DataSets = new DataSetCollection(items);
+		/// ]]></code>
+		/// </example>
 		public DataSetCollection(IEnumerable<ChartDataSet>? items)
 		{
 			if (items == null)
@@ -57,8 +92,19 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Gets or sets the owning chart.
+		/// Returns or sets the owning chart.
 		/// </summary>
+		/// <value>The <see cref="ChartJS4"/> control that owns the data sets, or <c>null</c>.</value>
+		/// <remarks>
+		/// Set automatically when the collection is assigned to <see cref="ChartJS4.DataSets"/>. Changing the value
+		/// rebinds the <see cref="ChartModelBase.Chart"/> reference of every data set in the collection.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var dataSets = new DataSetCollection(new[] { new PieDataSet() });
+		/// dataSets.Chart = chart; // dataSets[0].Chart == chart
+		/// ]]></code>
+		/// </example>
 		public ChartJS4? Chart
 		{
 			get => _chart;
@@ -80,6 +126,17 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Implicitly converts an array to a dataset collection.
 		/// </summary>
+		/// <param name="items">The data sets to copy into the new collection.</param>
+		/// <returns>A new <see cref="DataSetCollection"/> containing <paramref name="items"/>, or <c>null</c> if <paramref name="items"/> is <c>null</c>.</returns>
+		/// <example>
+		/// <code><![CDATA[
+		/// chart.DataSets = new ChartDataSet[]
+		/// {
+		///     new LineDataSet { Label = "Min", Data = new object[] { 1, 2, 3 } },
+		///     new LineDataSet { Label = "Max", Data = new object[] { 4, 5, 6 } }
+		/// };
+		/// ]]></code>
+		/// </example>
 		public static implicit operator DataSetCollection?(ChartDataSet[]? items)
 		{
 			return items == null
@@ -90,6 +147,14 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		/// <summary>
 		/// Implicitly converts a list to a dataset collection.
 		/// </summary>
+		/// <param name="items">The data sets to copy into the new collection.</param>
+		/// <returns>A new <see cref="DataSetCollection"/> containing <paramref name="items"/>, or <c>null</c> if <paramref name="items"/> is <c>null</c>.</returns>
+		/// <example>
+		/// <code><![CDATA[
+		/// var list = new List<ChartDataSet> { new BarDataSet { Label = "Units" } };
+		/// chart.DataSets = list;
+		/// ]]></code>
+		/// </example>
 		public static implicit operator DataSetCollection?(List<ChartDataSet>? items)
 		{
 			return items == null

@@ -28,8 +28,15 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.WebARIA
 {
 	/// <summary>
-	/// Represents the set of ARIA properties associated to a control.
+	/// Extender component that adds the <see cref="ARIA"/> (WAI-ARIA) property to all controls in the same container,
+	/// allowing the application to assign <c>aria-*</c> attributes to the accessibility element of each control.
 	/// </summary>
+	/// <remarks>
+	/// Drop the component on a container (i.e. a <see cref="Form"/> or <see cref="Page"/>) and use the
+	/// "Aria" property added to each control in the designer, or call <see cref="GetAria(Control)"/> in code.
+	/// The attributes are applied on the client to the control's accessibility element. Controls that are not created yet
+	/// (i.e. not visible) are registered when they are created.
+	/// </remarks>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(WebARIA))]
 	[ProvideProperty("Aria", typeof(Control))]
@@ -43,16 +50,17 @@ namespace Wisej.Web.Ext.WebARIA
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="WebARIA" /> without a specified container.
+		/// Initializes a new instance of the <see cref="WebARIA" /> extender without a specified container.
 		/// </summary>
 		public WebARIA()
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="WebARIA" /> class with a specified container.
+		/// Initializes a new instance of the <see cref="WebARIA" /> extender with a specified container.
 		/// </summary>
-		/// <param name="container">An <see cref="System.ComponentModel.IContainer" />container. </param>
+		/// <param name="container">An <see cref="System.ComponentModel.IContainer" /> that represents the container of the <see cref="WebARIA" /> extender.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="container"/> is null.</exception>
 		public WebARIA(IContainer container)
 			: this()
 		{
@@ -69,18 +77,56 @@ namespace Wisej.Web.Ext.WebARIA
 		/// <summary>
 		/// Returns true if <see cref="WebARIA" /> can offer an extender property to the specified target component.
 		/// </summary>
-		/// <returns>true if the <see cref="WebARIA" /> class can offer one or more extender properties; otherwise, false.</returns>
-		/// <param name="target">The target object to add an extender property to. </param>
+		/// <param name="target">The target object to add an extender property to.</param>
+		/// <returns>true if <paramref name="target"/> is a <see cref="Control"/>; otherwise, false.</returns>
+		/// <remarks>
+		/// This method is used by the designer to determine which components receive the "Aria" property.
+		/// </remarks>
+		/// <example>
+		/// Checking whether a component can receive ARIA attributes:
+		/// <code><![CDATA[
+		/// if (this.webARIA1.CanExtend(this.textBox1))
+		/// {
+		///     this.webARIA1.GetAria(this.textBox1).Label = "Customer name";
+		/// }
+		/// ]]></code>
+		/// </example>
 		public bool CanExtend(object target)
 		{
 			return (target is Control);
 		}
 
 		/// <summary>
-		/// Returns the <see cref="ARIA"/>  properties for the specified <see cref="Control"/>.
+		/// Returns the <see cref="ARIA"/> properties for the specified <see cref="Control"/>.
 		/// </summary>
 		/// <param name="control"><see cref="Control"/> for which to return the <see cref="ARIA"/> properties.</param>
-		/// <returns></returns>
+		/// <returns>The <see cref="ARIA"/> instance associated with <paramref name="control"/>. It's created the first time it's requested.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="control"/> is null.</exception>
+		/// <remarks>
+		/// The returned object is kept by the extender until the control is disposed or <see cref="Clear"/> is called.
+		/// The attributes are sent to the client when the extender is rendered. Changing the <see cref="ARIA"/> properties
+		/// invalidates the owner control; call <c>Update()</c> on the extender to refresh the attributes
+		/// of controls that are already displayed.
+		/// </remarks>
+		/// <example>
+		/// Assigning ARIA attributes to a text box and a numeric field:
+		/// <code><![CDATA[
+		/// private void Form1_Load(object sender, EventArgs e)
+		/// {
+		///     var aria = this.webARIA1.GetAria(this.textBoxEmail);
+		///     aria.Label = "Email address";
+		///     aria.Required = TriState.True;
+		///     aria.DescribedBy = this.labelEmailHint;
+		///
+		///     var quantity = this.webARIA1.GetAria(this.numericUpDownQuantity);
+		///     quantity.ValueMin = 1;
+		///     quantity.ValueMax = 100;
+		///     quantity.ValueNow = 10;
+		///
+		///     this.webARIA1.Update();
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DisplayName("Aria")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public ARIA GetAria(Control control)
@@ -155,8 +201,20 @@ namespace Wisej.Web.Ext.WebARIA
 		}
 
 		/// <summary>
-		/// Removes all bubbles.
+		/// Removes the <see cref="ARIA"/> properties from all the controls managed by this extender.
 		/// </summary>
+		/// <remarks>
+		/// The <c>aria-*</c> attributes previously assigned on the client are removed.
+		/// </remarks>
+		/// <example>
+		/// Removing all the ARIA attributes:
+		/// <code><![CDATA[
+		/// private void buttonReset_Click(object sender, EventArgs e)
+		/// {
+		///     this.webARIA1.Clear();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Clear()
 		{
 			if (this.controls != null)

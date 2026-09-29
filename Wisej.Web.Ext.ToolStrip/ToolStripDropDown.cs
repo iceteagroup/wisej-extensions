@@ -27,16 +27,22 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Represents a control that allows the user to select a single item from a list that is displayed when the user clicks a <see cref="ToolStripDropDownButton" />. Although <see cref="ToolStripDropDownMenu" /> and <see cref="ToolStripDropDown" /> replace and add functionality to the <see cref="Menu" /> control of previous versions, <see cref="Menu" /> is retained for both backward compatibility and future use if you choose.
-	///</summary>
+	/// Represents a control that displays a list of <see cref="ToolStripItem"/> objects in a popup, typically when the user
+	/// clicks a <see cref="ToolStripDropDownButton" />, a <see cref="ToolStripMenuItem"/> or the <see cref="ToolStripOverflowButton"/>.
+	/// </summary>
+	/// <remarks>
+	/// A <see cref="ToolStripDropDown"/> can also be displayed on its own using one of the <see cref="Show()"/> overloads
+	/// and closed using <see cref="Close()"/>. The <see cref="Opening"/>, <see cref="Opened"/>, <see cref="Closing"/> and
+	/// <see cref="Closed"/> events are raised when the drop down is shown and hidden.
+	/// </remarks>
 	public class ToolStripDropDown : ToolStrip
 	{
 
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripDropDown" /> class. 
-		///</summary>
+		/// Initializes a new instance of the <see cref="ToolStripDropDown" /> class.
+		/// </summary>
 		public ToolStripDropDown()
 		{
 			// TODO: Implement
@@ -636,7 +642,7 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
+		/// </summary>
 		/// <returns>true to enable item reordering; otherwise, false.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -658,9 +664,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _allowItemReorder;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripDropDown.Opacity" /> of the form can be adjusted.
-		///</summary>
-		/// <returns>true if the <see cref="ToolStripDropDown.Opacity" /> of the form can be adjusted; otherwise, false. </returns>
+		/// Returns or sets a value indicating whether the <see cref="Opacity" /> of the <see cref="ToolStripDropDown"/> can be adjusted.
+		/// </summary>
+		/// <returns>true if the <see cref="Opacity" /> of the <see cref="ToolStripDropDown"/> can be adjusted; otherwise, false.</returns>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
 		[SRDescription("ControlAllowTransparencyDescr")]
@@ -683,8 +689,8 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
-		/// <returns>One of the <see cref="AnchorStyles" /> values.</returns>
+		/// </summary>
+		/// <returns>A bitwise combination of the <see cref="AnchorStyles" /> values.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[SRCategory("CatLayout")]
@@ -709,8 +715,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private AnchorStyles _anchor;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripDropDown" /> automatically adjusts its size when the form is resized. 
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripDropDown" /> automatically adjusts its size to fit its items.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripDropDown" /> control automatically resizes; otherwise, false. The default is true.</returns>
 		[DefaultValue(true)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -737,9 +743,20 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _autoSize;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripDropDown" /> control should automatically close when it has lost activation.  
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripDropDown" /> control should automatically close when it has lost activation.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripDropDown" /> control automatically closes; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// When set to false, the drop down stays open when the user clicks outside of it or clicks one of its items,
+		/// and it must be closed by calling <see cref="Close()"/>.
+		/// </remarks>
+		/// <example>
+		/// Keeping a drop down open until the user presses a "Done" item:
+		/// <code><![CDATA[
+		/// this.dropDown1.AutoClose = false;
+		/// this.buttonDone.Click += (s, e) => this.dropDown1.Close(ToolStripDropDownCloseReason.ItemClicked);
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("ToolStripDropDownAutoCloseDescr")]
@@ -761,8 +778,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _autoClose;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the items in a <see cref="ToolStripDropDown" /> can be sent to an overflow menu.
-		///</summary>
+		/// Returns or sets a value indicating whether the items in a <see cref="ToolStripDropDown" /> can be sent to an overflow menu.
+		/// </summary>
 		/// <returns>true to send <see cref="ToolStripDropDown" /> items to an overflow menu; otherwise, false. The default is false.</returns>
 		[DefaultValue(false)]
 		[Browsable(false)]
@@ -784,6 +801,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private bool _canOverflow;
 
+		/// <summary>
+		/// Returns a value indicating whether ToolTips are shown for the <see cref="ToolStripDropDown" /> by default.
+		/// </summary>
+		/// <returns>true if ToolTips are shown by default; otherwise, false.</returns>
 		public override bool DefaultShowItemToolTips
 		{
 			get
@@ -794,6 +815,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private bool _defaultShowItemToolTips;
 
+		/// <summary>
+		/// Returns the default docking location of the <see cref="ToolStripDropDown" />.
+		/// </summary>
+		/// <returns>One of the <see cref="DockStyle" /> values. A drop down is not docked, the default is <see cref="DockStyle.None"/>.</returns>
 		public override DockStyle DefaultDock
 		{
 			get
@@ -805,9 +830,15 @@ namespace Wisej.Web.Ext.ToolStrip
 		private DockStyle _defaultDock;
 
 		/// <summary>
-		/// Gets or sets the direction in which the <see cref="ToolStripDropDown" /> is displayed relative to the <see cref="ToolStrip" />.
-		///</summary>
+		/// Returns or sets the direction in which the child drop downs of this <see cref="ToolStripDropDown" /> are displayed relative to it.
+		/// </summary>
 		/// <returns>One of the <see cref="ToolStripDropDownDirection" /> values.</returns>
+		/// <example>
+		/// Opening the sub menus of a drop down on the left side:
+		/// <code><![CDATA[
+		/// this.dropDown1.DefaultDropDownDirection = ToolStripDropDownDirection.Left;
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripDefaultDropDownDirectionDescr")]
 		[Browsable(false)]
 		[SRCategory("CatBehavior")]
@@ -830,8 +861,8 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
-		/// <returns>One of the <see cref="DockStyle" /> values.</returns>
+		/// </summary>
+		/// <returns>One of the <see cref="DockStyle" /> values. The default is <see cref="DockStyle.None"/>.</returns>
 		[DefaultValue(DockStyle.None)]
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Always)]
@@ -856,8 +887,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private DockStyle _dock;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether a three-dimensional shadow effect appears when the <see cref="ToolStripDropDown" /> is displayed. 
-		///</summary>
+		/// Returns or sets a value indicating whether a shadow effect appears when the <see cref="ToolStripDropDown" /> is displayed.
+		/// </summary>
 		/// <returns>true to enable the shadow effect; otherwise, false.</returns>
 		public bool DropShadowEnabled
 		{
@@ -877,8 +908,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _dropShadowEnabled;
 
 		/// <summary>
-		/// Gets or sets the font of the text displayed on the <see cref="ToolStripDropDown" />.
-		///</summary>
+		/// Returns or sets the font of the text displayed on the <see cref="ToolStripDropDown" />.
+		/// </summary>
 		/// <returns>The <see cref="System.Drawing.Font" /> to apply to the text displayed by the control.</returns>
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
@@ -902,8 +933,8 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
-		/// <returns>One of <see cref="ToolStripGripDisplayStyle" /> the values.</returns>
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripGripDisplayStyle" /> values.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public ToolStripGripDisplayStyle GripDisplayStyle
@@ -918,7 +949,7 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Rectangle" />.</returns>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[Browsable(false)]
@@ -934,7 +965,7 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
+		/// </summary>
 		/// <returns>A <see cref="Padding" /> value.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -958,8 +989,8 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
-		/// <returns>One of the <see cref="ToolStripGripStyle" /> values.</returns>
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripGripStyle" /> values. The default is <see cref="ToolStripGripStyle.Hidden"/>.</returns>
 		[DefaultValue(ToolStripGripStyle.Hidden)]
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -981,9 +1012,13 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripGripStyle _gripStyle;
 
 		/// <summary>
-		/// Gets a value indicating whether this <see cref="ToolStripDropDown" /> was automatically generated. 
-		///</summary>
+		/// Returns a value indicating whether this <see cref="ToolStripDropDown" /> was automatically generated.
+		/// </summary>
 		/// <returns>true if this <see cref="ToolStripDropDown" /> is generated automatically; otherwise, false.</returns>
+		/// <remarks>
+		/// A drop down is generated automatically when the <see cref="ToolStripDropDownItem.DropDown"/> of an item is created
+		/// on demand (for example when adding items to <see cref="ToolStripDropDownItem.DropDownItems"/>) instead of being assigned explicitly.
+		/// </remarks>
 		[Browsable(false)]
 		public bool IsAutoGenerated
 		{
@@ -997,8 +1032,11 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Point" />.</returns>
+		/// <remarks>
+		/// Use one of the <see cref="Show()"/> overloads to position the <see cref="ToolStripDropDown"/>.
+		/// </remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
@@ -1020,9 +1058,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Point _location;
 
 		/// <summary>
-		/// Determines the opacity of the form.
-		///</summary>
-		/// <returns>The level of opacity for the form. The default is 1.00.</returns>
+		/// Returns or sets the opacity of the <see cref="ToolStripDropDown"/>.
+		/// </summary>
+		/// <returns>The level of opacity, from 0.0 (fully transparent) to 1.0 (fully opaque). The default is 1.0.</returns>
+		/// <remarks>
+		/// The value is applied only when <see cref="AllowTransparency"/> is true.
+		/// </remarks>
+		/// <example>
+		/// Displaying a semi-transparent drop down:
+		/// <code><![CDATA[
+		/// this.dropDown1.AllowTransparency = true;
+		/// this.dropDown1.Opacity = 0.85;
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatWindowStyle")]
 		[SRDescription("FormOpacityDescr")]
 		[DefaultValue(1D)]
@@ -1047,7 +1095,7 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
+		/// </summary>
 		/// <returns>A <see cref="ToolStripOverflowButton" />.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -1062,9 +1110,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripOverflowButton _overflowButton;
 
 		/// <summary>
-		/// Gets or sets the <see cref="ToolStripItem" /> that is the owner of this <see cref="ToolStripDropDown" />.
-		///</summary>
-		/// <returns>The <see cref="ToolStripItem" /> that is the owner of this <see cref="ToolStripDropDown" />. The default value is null.</returns>
+		/// Returns or sets the <see cref="ToolStripItem" /> that is the owner of this <see cref="ToolStripDropDown" />.
+		/// </summary>
+		/// <returns>The <see cref="ToolStripItem" /> that is the owner of this <see cref="ToolStripDropDown" />. The default is null.</returns>
+		/// <remarks>
+		/// The owner item is the item (usually a <see cref="ToolStripDropDownItem"/>) that opens this drop down.
+		/// </remarks>
 		[Browsable(false)]
 		[DefaultValue(null)]
 		public ToolStripItem OwnerItem
@@ -1085,8 +1136,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItem _ownerItem;
 
 		/// <summary>
-		/// Gets or sets the window region associated with the <see cref="ToolStripDropDown" />.
-		///</summary>
+		/// Returns or sets the window region associated with the <see cref="ToolStripDropDown" />.
+		/// </summary>
 		/// <returns>The window <see cref="System.Drawing.Region" /> associated with the control.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Always)]
@@ -1107,6 +1158,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private Region _region;
 
+		/// <summary>
+		/// Returns or sets a value indicating whether the items of the <see cref="ToolStripDropDown"/> are aligned to support locales using right-to-left fonts.
+		/// </summary>
+		/// <returns>One of the <see cref="RightToLeft"/> values.</returns>
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
 		[SRDescription("ControlRightToLeftDescr")]
@@ -1129,7 +1184,7 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
+		/// </summary>
 		/// <returns>true to enable stretching; otherwise, false.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -1151,8 +1206,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _stretch;
 
 		/// <summary>
-		/// Specifies the direction in which to draw the text on the item.
-		///</summary>
+		/// Returns or sets the direction in which to draw the text on the items of the <see cref="ToolStripDropDown"/>.
+		/// </summary>
 		/// <returns>One of the <see cref="ToolStripTextDirection" /> values. The default is <see cref="ToolStripTextDirection.Horizontal" />.</returns>
 		[Browsable(false)]
 		[DefaultValue(ToolStripTextDirection.Horizontal)]
@@ -1176,8 +1231,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripTextDirection _textDirection;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the form should be displayed as a topmost form.
-		///</summary>
+		/// Returns a value indicating whether the <see cref="ToolStripDropDown"/> is displayed on top of all the other windows.
+		/// </summary>
 		/// <returns>true in all cases.</returns>
 		public virtual bool TopMost
 		{
@@ -1190,8 +1245,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _topMost;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripDropDown" /> is a top-level control.
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripDropDown" /> is a top-level control.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripDropDown" /> is a top-level control; otherwise, false.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -1215,7 +1270,7 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
+		/// </summary>
 		/// <returns>An <see cref="System.Int32" />.</returns>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -1238,9 +1293,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private int _tabIndex;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripDropDown" /> is visible or hidden. 
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripDropDown" /> is visible or hidden.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripDropDown" /> is visible; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// Use the <see cref="Show()"/> overloads to display the drop down at a specific location and <see cref="Close()"/> to hide it.
+		/// </remarks>
 		[DefaultValue(false)]
 		[Localizable(true)]
 		[SRDescription("ControlVisibleDescr")]
@@ -1429,7 +1487,19 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Closes the <see cref="ToolStripDropDown" /> control.
-		///</summary>
+		/// </summary>
+		/// <remarks>
+		/// The <see cref="Closing"/> and <see cref="Closed"/> events are raised with the <see cref="ToolStripDropDownCloseReason.CloseCalled"/> reason.
+		/// </remarks>
+		/// <example>
+		/// Closing a drop down from code:
+		/// <code><![CDATA[
+		/// private void buttonCancel_Click(object sender, EventArgs e)
+		/// {
+		///     this.dropDown1.Close();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Close()
 		{
 			// TODO: Implement
@@ -1437,8 +1507,17 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Closes the <see cref="ToolStripDropDown" /> control for the specified reason.
-		///</summary>
+		/// </summary>
 		/// <param name="reason">One of the <see cref="ToolStripDropDownCloseReason" /> values.</param>
+		/// <remarks>
+		/// The <paramref name="reason"/> is passed to the <see cref="Closing"/> and <see cref="Closed"/> event handlers.
+		/// </remarks>
+		/// <example>
+		/// Closing the drop down as if one of its items had been clicked:
+		/// <code><![CDATA[
+		/// this.dropDown1.Close(ToolStripDropDownCloseReason.ItemClicked);
+		/// ]]></code>
+		/// </example>
 		public void Close(ToolStripDropDownCloseReason reason)
 		{
 			// TODO: Implement
@@ -1446,7 +1525,13 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Displays the <see cref="ToolStripDropDown" /> control in its default position.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Showing a drop down:
+		/// <code><![CDATA[
+		/// this.dropDown1.Show();
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public void Show()
@@ -1456,10 +1541,22 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Positions the <see cref="ToolStripDropDown" /> relative to the specified control location.
-		///</summary>
-		/// <exception cref="System.ArgumentNullException">The control specified by the <paramref name="control" /> parameter is null.</exception>
+		/// </summary>
 		/// <param name="control">The control (typically, a <see cref="ToolStripDropDownButton" />) that is the reference point for the <see cref="ToolStripDropDown" /> position.</param>
-		/// <param name="position">The horizontal and vertical location of the reference control's upper-left corner, in pixels.</param>
+		/// <param name="position">The horizontal and vertical location, in pixels, relative to the upper-left corner of <paramref name="control"/>.</param>
+		/// <exception cref="System.ArgumentNullException">The control specified by the <paramref name="control" /> parameter is null.</exception>
+		/// <example>
+		/// Showing a drop down below a button:
+		/// <code><![CDATA[
+		/// private void button1_Click(object sender, EventArgs e)
+		/// {
+		///     var dropDown = new ToolStripDropDown();
+		///     dropDown.Items.Add(new ToolStripButton("Copy"));
+		///     dropDown.Items.Add(new ToolStripButton("Paste"));
+		///     dropDown.Show(this.button1, new Point(0, this.button1.Height));
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Show(Control control, Point position)
 		{
 			// TODO: Implement
@@ -1467,52 +1564,86 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Positions the <see cref="ToolStripDropDown" /> relative to the specified control at the specified location and with the specified direction relative to the parent control.
-		///</summary>
-		/// <exception cref="System.ArgumentNullException">The control specified by the <paramref name="control" /> parameter is null.</exception>
+		/// </summary>
 		/// <param name="control">The control (typically, a <see cref="ToolStripDropDownButton" />) that is the reference point for the <see cref="ToolStripDropDown" /> position.</param>
-		/// <param name="position">The horizontal and vertical location of the reference control's upper-left corner, in pixels.</param>
+		/// <param name="position">The horizontal and vertical location, in pixels, relative to the upper-left corner of <paramref name="control"/>.</param>
 		/// <param name="direction">One of the <see cref="ToolStripDropDownDirection" /> values.</param>
+		/// <exception cref="System.ArgumentNullException">The control specified by the <paramref name="control" /> parameter is null.</exception>
+		/// <example>
+		/// Showing a drop down above a button:
+		/// <code><![CDATA[
+		/// this.dropDown1.Show(this.button1, new Point(0, 0), ToolStripDropDownDirection.AboveRight);
+		/// ]]></code>
+		/// </example>
 		public void Show(Control control, Point position, ToolStripDropDownDirection direction)
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// Positions the <see cref="ToolStripDropDown" /> relative to the specified control's horizontal and vertical screen coordinates.
-		///</summary>
-		/// <exception cref="System.ArgumentNullException">The control specified by the <paramref name="control" /> parameter is null.</exception>
+		/// Positions the <see cref="ToolStripDropDown" /> relative to the specified control at the specified coordinates.
+		/// </summary>
 		/// <param name="control">The control (typically, a <see cref="ToolStripDropDownButton" />) that is the reference point for the <see cref="ToolStripDropDown" /> position.</param>
-		/// <param name="x">The horizontal screen coordinate of the control, in pixels.</param>
-		/// <param name="y">The vertical screen coordinate of the control, in pixels.</param>
+		/// <param name="x">The horizontal coordinate, in pixels, relative to the left edge of <paramref name="control"/>.</param>
+		/// <param name="y">The vertical coordinate, in pixels, relative to the top edge of <paramref name="control"/>.</param>
+		/// <exception cref="System.ArgumentNullException">The control specified by the <paramref name="control" /> parameter is null.</exception>
+		/// <example>
+		/// Showing a drop down at the mouse position inside a panel:
+		/// <code><![CDATA[
+		/// private void panel1_MouseUp(object sender, MouseEventArgs e)
+		/// {
+		///     if (e.Button == MouseButtons.Right)
+		///         this.dropDown1.Show(this.panel1, e.X, e.Y);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Show(Control control, int x, int y)
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// Positions the <see cref="ToolStripDropDown" /> relative to the specified screen location.
-		///</summary>
-		/// <param name="screenLocation">The horizontal and vertical location of the screen's upper-left corner, in pixels.</param>
+		/// Positions the <see cref="ToolStripDropDown" /> at the specified screen location.
+		/// </summary>
+		/// <param name="screenLocation">The horizontal and vertical location of the upper-left corner of the <see cref="ToolStripDropDown"/>, in screen coordinates (pixels).</param>
+		/// <example>
+		/// Showing a drop down at a fixed position on the screen:
+		/// <code><![CDATA[
+		/// this.dropDown1.Show(new Point(200, 150));
+		/// ]]></code>
+		/// </example>
 		public void Show(Point screenLocation)
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// Positions the <see cref="ToolStripDropDown" /> relative to the specified control location and with the specified direction relative to the parent control.
-		///</summary>
-		/// <param name="position">The horizontal and vertical location of the reference control's upper-left corner, in pixels.</param>
+		/// Positions the <see cref="ToolStripDropDown" /> at the specified screen location and with the specified direction.
+		/// </summary>
+		/// <param name="position">The horizontal and vertical location, in screen coordinates (pixels), used as the reference point.</param>
 		/// <param name="direction">One of the <see cref="ToolStripDropDownDirection" /> values.</param>
+		/// <example>
+		/// Showing a drop down that opens upward from a point near the bottom of the page:
+		/// <code><![CDATA[
+		/// this.dropDown1.Show(new Point(20, 600), ToolStripDropDownDirection.AboveRight);
+		/// ]]></code>
+		/// </example>
 		public void Show(Point position, ToolStripDropDownDirection direction)
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// Positions the <see cref="ToolStripDropDown" /> relative to the specified screen coordinates.
-		///</summary>
+		/// Positions the <see cref="ToolStripDropDown" /> at the specified screen coordinates.
+		/// </summary>
 		/// <param name="x">The horizontal screen coordinate, in pixels.</param>
 		/// <param name="y">The vertical screen coordinate, in pixels.</param>
+		/// <example>
+		/// Showing a drop down at a fixed position on the screen:
+		/// <code><![CDATA[
+		/// this.dropDown1.Show(200, 150);
+		/// ]]></code>
+		/// </example>
 		public void Show(int x, int y)
 		{
 			// TODO: Implement

@@ -34,9 +34,10 @@ namespace Wisej.Web.Ext.PrintPreview
 	/// <para>
 	/// Supports two preview modes: <see cref="PrintPreviewDialogViewerType.PDF"/> and
 	/// <see cref="PrintPreviewDialogViewerType.WMF"/>. When using the PDF mode, it prints the
-	/// document to a temporary PDF file using the "Microsoft Print to PDF" printer drivers.
+	/// document to a temporary PDF file using the "Microsoft Print to PDF" printer driver installed on the server
+	/// and displays it in the embedded PDF.js viewer.
 	/// When using the WMF mode, it uses the <see cref="System.Drawing.Printing.PreviewPrintController"/> to
-	/// print to Windows Meta Files (WMF) images and renders then on the browser.
+	/// print to Windows Meta Files (WMF) images and renders them in the browser.
 	/// </para>
 	/// 
 	/// </remarks>
@@ -47,6 +48,9 @@ namespace Wisej.Web.Ext.PrintPreview
 		/// <summary>
 		/// Initializes a new instance of <see cref="PrintPreviewControl"/> using the default values.
 		/// </summary>
+		/// <remarks>
+		/// The new instance uses the <see cref="PrintPreviewDialogViewerType.PDF"/> viewer.
+		/// </remarks>
 		public PrintPreviewControl()
 		{
 			InitializeComponent();
@@ -60,9 +64,35 @@ namespace Wisej.Web.Ext.PrintPreview
 		/// Returns or sets the <see cref="PrintDocument"/> to preview.
 		/// </summary>
 		/// <exception cref="InvalidPrinterException">
-		/// When <see cref="ViewerType"/> is set to <see cref="PrintPreviewDialogViewerType.PDF"/>
-		/// and the printer driver "Microsoft Print to PDF" is not found.
+		/// The printer driver "Microsoft Print to PDF" is not installed on the server. The check is performed
+		/// when a non-null document is assigned, regardless of the <see cref="ViewerType"/>.
 		/// </exception>
+		/// <remarks>
+		/// <para>
+		/// The document is printed when the preview is displayed: in PDF mode its <see cref="PrintDocument.PrintController"/>
+		/// and <see cref="PrintDocument.PrinterSettings"/> are changed to print to a temporary PDF file, in WMF mode its
+		/// <see cref="PrintDocument.PrintController"/> is replaced with a <see cref="PreviewPrintController"/>.
+		/// Set the <see cref="ViewerType"/> and the document before the preview is displayed.
+		/// </para>
+		/// <para>
+		/// The document is disposed together with the control.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Previewing a document in a control placed on a page:
+		/// <code><![CDATA[
+		/// var document = new PrintDocument();
+		/// document.DocumentName = "Invoice";
+		/// document.PrintPage += (s, e) =>
+		/// {
+		///     e.Graphics.DrawString("Invoice #1001", new Font("Arial", 18), Brushes.Black, 100, 100);
+		///     e.HasMorePages = false;
+		/// };
+		///
+		/// this.printPreviewControl1.ViewerType = PrintPreviewDialogViewerType.PDF;
+		/// this.printPreviewControl1.Document = document;
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public PrintDocument Document
@@ -91,6 +121,11 @@ namespace Wisej.Web.Ext.PrintPreview
 		/// Returns or sets the type of viewer to use to display the
 		/// print preview.
 		/// </summary>
+		/// <remarks>
+		/// <see cref="PrintPreviewDialogViewerType.PDF"/> requires the "Microsoft Print to PDF" printer driver on the server.
+		/// <see cref="PrintPreviewDialogViewerType.WMF"/> renders each page as an image on the server and displays the
+		/// pages in a scrollable panel.
+		/// </remarks>
 		[DefaultValue(PrintPreviewDialogViewerType.PDF)]
 		public PrintPreviewDialogViewerType ViewerType
 		{

@@ -11,8 +11,18 @@ using Wisej.Web.Ext.Camera;
 namespace Wisej.Web.Ext.ScreenRecorder
 {
 	/// <summary>
-	/// TODO:
+	/// Records the user's screen (a monitor, window or browser tab chosen by the user) and uploads the recording to the server.
 	/// </summary>
+	/// <remarks>
+	/// <para>
+	/// The component uses the browser's <c>getDisplayMedia()</c> API: the browser asks the user which screen to share when the
+	/// component is rendered on the client. Call <see cref="StartRecording"/> and <see cref="StopRecording"/> to record the shared
+	/// screen with a <c>MediaRecorder</c>; the recorded video is posted back to the component and delivered through the <see cref="Uploaded"/> event.
+	/// </para>
+	/// <para>
+	/// Screen capture requires a secure context (HTTPS or localhost) and a browser that supports the Screen Capture API.
+	/// </para>
+	/// </remarks>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(ScreenRecorder))]
 	[Description("The Screen Recorder component makes it possible to record the user's screen.")]
@@ -21,16 +31,17 @@ namespace Wisej.Web.Ext.ScreenRecorder
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Ext.Camera" /> class.
+		/// Initializes a new instance of the <see cref="ScreenRecorder" /> class.
 		/// </summary>
 		public ScreenRecorder()
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Ext.Camera" /> class with a specified container.
+		/// Initializes a new instance of the <see cref="ScreenRecorder" /> class with a specified container.
 		/// </summary>
-		/// <param name="component"></param>
+		/// <param name="container">An <see cref="IContainer"/> that represents the container of the component.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="container"/> is null.</exception>
 		public ScreenRecorder(IContainer container)
 		{
 			if (container == null)
@@ -110,8 +121,13 @@ namespace Wisej.Web.Ext.ScreenRecorder
 		#region Properties
 
 		/// <summary>
-		/// Specifies whether audio should be recorded.
+		/// Returns or sets whether audio should be recorded together with the screen.
 		/// </summary>
+		/// <remarks>
+		/// The value is passed as the <c>audio</c> constraint to <c>getDisplayMedia()</c>. Changing it after the component
+		/// is rendered requests the screen capture again, and the browser prompts the user again. Whether audio is actually
+		/// captured depends on the browser and on the source selected by the user.
+		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue(false)]
 		public bool Audio
@@ -136,9 +152,26 @@ namespace Wisej.Web.Ext.ScreenRecorder
 		#region Methods
 
 		/// <summary>
-		/// Returns the current image from the screen recorder.
+		/// Retrieves the current frame of the captured screen as an <see cref="Image"/>.
 		/// </summary>
-		/// <param name="callback">Callback method to receive the <see cref="Image"/> or null.</param>
+		/// <param name="callback">Callback method that receives the <see cref="Image"/>, or null when the image is not available.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
+		/// <remarks>
+		/// The image is captured asynchronously on the client and <paramref name="callback"/> is invoked when the image is received.
+		/// </remarks>
+		/// <example>
+		/// Taking a snapshot of the shared screen:
+		/// <code><![CDATA[
+		/// private void buttonSnapshot_Click(object sender, EventArgs e)
+		/// {
+		///     this.screenRecorder1.GetImage(image =>
+		///     {
+		///         if (image != null)
+		///             this.pictureBox1.Image = image;
+		///     });
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void GetImage(Action<Image> callback)
 		{
 			if (callback == null)
@@ -152,9 +185,20 @@ namespace Wisej.Web.Ext.ScreenRecorder
 		}
 
 		/// <summary>
-		/// Returns the current image from the screen recorder asynchronously.
+		/// Asynchronously retrieves the current frame of the captured screen as an <see cref="Image"/>.
 		/// </summary>
-		/// <returns>An awaitable <see cref="Task"/>.</returns>
+		/// <returns>An awaitable <see cref="Task"/> that contains the <see cref="Image"/>, or null when the image is not available.</returns>
+		/// <example>
+		/// Taking a snapshot of the shared screen using <c>await</c>:
+		/// <code><![CDATA[
+		/// private async void buttonSnapshot_Click(object sender, EventArgs e)
+		/// {
+		///     var image = await this.screenRecorder1.GetImageAsync();
+		///     if (image != null)
+		///         this.pictureBox1.Image = image;
+		/// }
+		/// ]]></code>
+		/// </example>
 		public Task<Image> GetImageAsync()
 		{
 			var tcs = new TaskCompletionSource<Image>();
@@ -168,12 +212,41 @@ namespace Wisej.Web.Ext.ScreenRecorder
 
 
 		/// <summary>
-		/// Starts recording.
+		/// Starts recording the shared screen.
 		/// </summary>
-		/// <param name="format">The video encoding mime type format, <see href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types"/>.</param>
-		/// <param name="bitsPerSecond">Audio and video bits per second. <see href="https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder"/>.</param>
+		/// <param name="format">The video encoding mime type format, i.e. "video/webm" or "video/webm;codecs=vp9". See <see href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types"/>.</param>
+		/// <param name="bitsPerSecond">Audio and video bits per second. See <see href="https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder"/>.</param>
 		/// <param name="updateInterval">Update interval in seconds. The default is zero causing the video to be uploaded on <see cref="StopRecording"/>.</param>
-		/// <remarks>You must call <see cref="StopRecording"/>to end recording.</remarks>
+		/// <remarks>
+		/// <para>
+		/// You must call <see cref="StopRecording"/> to end recording. The user must have already shared a screen, otherwise
+		/// the recording doesn't start and an error is reported on the client.
+		/// </para>
+		/// <para>
+		/// When <paramref name="updateInterval"/> is greater than zero, the data recorded so far is uploaded every <paramref name="updateInterval"/>
+		/// seconds and the <see cref="Uploaded"/> event is fired for each chunk; only the first chunk contains the video header.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Starting and stopping the recording:
+		/// <code><![CDATA[
+		/// private void buttonStart_Click(object sender, EventArgs e)
+		/// {
+		///     this.screenRecorder1.StartRecording("video/webm", 4000000);
+		/// }
+		///
+		/// private void buttonStop_Click(object sender, EventArgs e)
+		/// {
+		///     this.screenRecorder1.StopRecording();
+		/// }
+		///
+		/// private void screenRecorder1_Uploaded(object sender, UploadedEventArgs e)
+		/// {
+		///     var file = e.Files[0];
+		///     file.SaveAs(Path.Combine(Application.StartupPath, "Recordings", $"{DateTime.Now:yyyyMMdd-HHmmss}.webm"));
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void StartRecording(string format = "video/webm", int bitsPerSecond = 2500000, int updateInterval = 0)
 		{
 			Call("startRecording", format, bitsPerSecond, updateInterval);
@@ -182,6 +255,19 @@ namespace Wisej.Web.Ext.ScreenRecorder
 		/// <summary>
 		/// Stops recording and uploads the recorded stream to the <see cref="Uploaded"/> event.
 		/// </summary>
+		/// <remarks>
+		/// The upload is asynchronous: the <see cref="Uploaded"/> event is fired when the browser has finished posting the recording.
+		/// Calling this method when there is no active recording reports an error on the client.
+		/// </remarks>
+		/// <example>
+		/// Stopping the recording:
+		/// <code><![CDATA[
+		/// private void buttonStop_Click(object sender, EventArgs e)
+		/// {
+		///     this.screenRecorder1.StopRecording();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void StopRecording()
 		{
 			Call("stopRecording");

@@ -34,6 +34,35 @@ namespace Wisej.Web.Ext.TourPanel
 	/// Provides a tour panel template that can be used to create
 	/// a guided tour of an application.
 	/// </summary>
+	/// <remarks>
+	/// <para>
+	/// A <see cref="TourPanel"/> is a top-level popup that displays the <see cref="TourStep.Title"/> and
+	/// <see cref="TourStep.Text"/> of each <see cref="TourStep"/> in the <see cref="Steps"/> array next to the
+	/// step's target control, optionally highlighting the target with a mask that covers the rest of the page.
+	/// </para>
+	/// <para>
+	/// The usual approach is to add a new class that inherits from <see cref="TourPanel"/> to the project, design
+	/// it in the Visual Studio designer (change the buttons, colors, layout) and define the steps in the
+	/// <see cref="Steps"/> property. The tour is then started calling <see cref="Show(ContainerControl)"/>.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// Creating a tour in code and starting it for the current form:
+	/// <code><![CDATA[
+	/// private void buttonHelp_Click(object sender, EventArgs e)
+	/// {
+	///     var tour = new TourPanel();
+	///     tour.Steps = new[]
+	///     {
+	///         new TourStep { Title = "Welcome", Text = "This short tour shows you the main features." },
+	///         new TourStep { Title = "Search", Text = "Type here to search the <b>customers</b>.", TargetName = "textBoxSearch" },
+	///         new TourStep { Title = "Save", Text = "Click to save your changes.", TargetName = "panelTools.buttonSave", Alignment = Placement.RightMiddle }
+	///     };
+	///     tour.Ended += (s, args) => AlertBox.Show("Tour completed!");
+	///     tour.Show(this);
+	/// }
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(false)]
 	[DefaultEvent("Load")]
 	[DesignerCategory("UserControl")]
@@ -48,8 +77,13 @@ namespace Wisej.Web.Ext.TourPanel
 		#region Constructors
 
 		/// <summary>
-		/// Default constructor.
+		/// Initializes a new instance of the <see cref="TourPanel"/> class.
 		/// </summary>
+		/// <remarks>
+		/// The standard buttons (<see cref="ExitButton"/>, <see cref="BackButton"/>, <see cref="NextButton"/>,
+		/// <see cref="CloseButton"/> and <see cref="PlayButton"/>) that are hidden in the designer of a derived class are
+		/// never shown by the <see cref="TourPanel"/>.
+		/// </remarks>
 		public TourPanel()
 		{
 			InitializeComponent();
@@ -80,10 +114,10 @@ namespace Wisej.Web.Ext.TourPanel
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TourPanel"/> control
-		/// and assigns it to the specified <para>parent</para>.
+		/// and assigns it to the specified <paramref name="parent"/>.
 		/// </summary>
 		/// <param name="parent">The parent control that owns this tour panel.</param>
-		/// <exception cref="ArgumentNullException">The value of <para>parent</para> is null.</exception>
+		/// <exception cref="ArgumentNullException">The value of <paramref name="parent"/> is null.</exception>
 		public TourPanel(Control parent)
 		{
 			if (parent == null)
@@ -258,6 +292,27 @@ namespace Wisej.Web.Ext.TourPanel
 		/// Fires the <see cref="BeforeStep"/> event.
 		/// </summary>
 		/// <param name="e">A <see cref="TourPanelEventArgs" /> that contains the event data. </param>
+		/// <remarks>
+		/// After the <see cref="BeforeStep"/> handlers run, this method also fires the <see cref="TourStep.Show"/> event
+		/// of the step in <see cref="TourPanelEventArgs.Step"/> and sets its <see cref="TourStep.IsVisible"/> to true.
+		/// Setting <see cref="CancelEventArgs.Cancel"/> to true in a handler prevents the step from being shown.
+		/// It's called by the <see cref="TourPanel"/> when changing steps; override it in a derived class to customize the behavior.
+		/// </remarks>
+		/// <example>
+		/// Overriding the method in a custom tour to load the content of a step on demand:
+		/// <code><![CDATA[
+		/// public class MyTour : TourPanel
+		/// {
+		///     public override void OnBeforeStep(TourPanelEventArgs e)
+		///     {
+		///         if (String.IsNullOrEmpty(e.Step.Text))
+		///             e.Step.Text = LoadHelpText(e.Step.TargetName);
+		///
+		///         base.OnBeforeStep(e);
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		public virtual void OnBeforeStep(TourPanelEventArgs e)
 		{
 			Debug.Assert(e.Step != null);
@@ -281,6 +336,25 @@ namespace Wisej.Web.Ext.TourPanel
 		/// Fires the <see cref="AfterStep"/> event.
 		/// </summary>
 		/// <param name="e">A <see cref="TourPanelEventArgs" /> that contains the event data. </param>
+		/// <remarks>
+		/// After the <see cref="AfterStep"/> handlers run, this method also fires the <see cref="TourStep.Hide"/> event
+		/// of the step in <see cref="TourPanelEventArgs.Step"/> and sets its <see cref="TourStep.IsVisible"/> to false.
+		/// It's called by the <see cref="TourPanel"/> when leaving a step; override it in a derived class to customize the behavior.
+		/// </remarks>
+		/// <example>
+		/// Overriding the method in a custom tour to track the steps the user has seen:
+		/// <code><![CDATA[
+		/// public class MyTour : TourPanel
+		/// {
+		///     public override void OnAfterStep(TourPanelEventArgs e)
+		///     {
+		///         base.OnAfterStep(e);
+		///
+		///         Application.Session.lastTourStep = e.StepIndex;
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		public virtual void OnAfterStep(TourPanelEventArgs e)
 		{
 			Debug.Assert(e.Step != null);
@@ -613,9 +687,13 @@ namespace Wisej.Web.Ext.TourPanel
 		#endregion
 
 		/// <summary>
-		/// Determines whether the TourPanel automatically adjusts
-		/// its dimension when the step changes.
+		/// Returns or sets whether the <see cref="TourPanel"/> automatically adjusts
+		/// its size when the step changes.
 		/// </summary>
+		/// <remarks>
+		/// When true, the size is calculated asynchronously by measuring the HTML in <see cref="TourStep.Text"/>
+		/// using the font of <see cref="HtmlText"/>, and it's limited to the size of the browser.
+		/// </remarks>
 		[Browsable(true)]
 		[DesignerActionList]
 		[DefaultValue(true)]
@@ -636,9 +714,12 @@ namespace Wisej.Web.Ext.TourPanel
 		private bool _autoSize = true;
 
 		/// <summary>
-		/// Determines whether the TourPanel will close automatically 
+		/// Returns or sets whether the <see cref="TourPanel"/> closes automatically
 		/// when the user clicks outside of the control.
 		/// </summary>
+		/// <remarks>
+		/// When the panel is closed this way, the <see cref="Closed"/> event is fired but <see cref="Ended"/> is not.
+		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
@@ -658,8 +739,22 @@ namespace Wisej.Web.Ext.TourPanel
 		private bool _autoClose = false;
 
 		/// <summary>
-		/// Determines whether the TourPanel will start showing the steps automatically.
+		/// Returns or sets whether the <see cref="TourPanel"/> advances the steps automatically.
 		/// </summary>
+		/// <remarks>
+		/// Setting this property to true immediately calls <see cref="Play"/> and setting it to false calls <see cref="Pause"/>.
+		/// When true, <see cref="Show(ContainerControl)"/> also starts playing. The time each step is displayed is set by
+		/// <see cref="TourStep.AutoPlayTime"/> or <see cref="DefaultAutoPlayTime"/>.
+		/// </remarks>
+		/// <example>
+		/// Running a tour that advances every 3 seconds:
+		/// <code><![CDATA[
+		/// var tour = new MyTour();
+		/// tour.DefaultAutoPlayTime = 3;
+		/// tour.Show(this);
+		/// tour.AutoPlay = true;
+		/// ]]></code>
+		/// </example>
 		[DesignerActionList]
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
@@ -685,6 +780,18 @@ namespace Wisej.Web.Ext.TourPanel
 		/// <summary>
 		/// Returns or sets the current <see cref="TourStep"/>.
 		/// </summary>
+		/// <exception cref="ArgumentNullException">The value is null.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">The value is not in the <see cref="Steps"/> array.</exception>
+		/// <remarks>
+		/// Returns null when no step is displayed. Setting this property is equivalent to setting <see cref="SelectedIndex"/>
+		/// to the index of the step in <see cref="Steps"/>, which fires <see cref="AfterStep"/> and <see cref="BeforeStep"/>.
+		/// </remarks>
+		/// <example>
+		/// Jumping to a specific step:
+		/// <code><![CDATA[
+		/// this.tour.CurrentStep = this.tour.Steps.First(s => s.TargetName == "buttonSave");
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public TourStep CurrentStep
@@ -714,6 +821,14 @@ namespace Wisej.Web.Ext.TourPanel
 		/// Returns or sets the index of the current <see cref="TourStep"/>
 		/// in the <see cref="Steps"/> collection.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than 0 or greater than the length of <see cref="Steps"/>.</exception>
+		/// <remarks>
+		/// The value is -1 before the first step is shown. Setting a new index fires <see cref="AfterStep"/> for the current step
+		/// and <see cref="BeforeStep"/> for the new one, then resolves the target, makes it visible (selecting its tab page,
+		/// expanding its panel, scrolling it into view, etc.) and places the panel next to it. The new step is shown even if
+		/// <see cref="TourStep.Enabled"/> is false; use <see cref="Next"/> and <see cref="Back"/> to skip disabled steps.
+		/// If the <see cref="BeforeStep"/> event is canceled, the index doesn't change.
+		/// </remarks>
 		[DefaultValue(0)]
 		[Browsable(true)]
 		[SRCategory("CatAppearance")]
@@ -737,11 +852,12 @@ namespace Wisej.Web.Ext.TourPanel
 
 		/// <summary>
 		/// Returns or sets the default <see cref="Wisej.Web.Placement"/> of the
-		/// TourPanel.
+		/// <see cref="TourPanel"/> in relation to the target of the step.
 		/// </summary>
 		/// <remarks>
-		/// Each <see cref="Wisej.Web.Ext.TourPanel.TourStep"/> can override the
-		/// DefaultAlignment and change the placement of the TourStep.
+		/// Each <see cref="TourStep"/> can override the default value using the <see cref="TourStep.Alignment"/> property.
+		/// The panel is moved to a different side automatically when there isn't enough space in the browser.
+		/// Steps without a target are always shown at the top of the <see cref="Container"/>.
 		/// </remarks>
 		[DefaultValue(Placement.BottomCenter)]
 		[SRCategory("CatLayout")]
@@ -764,9 +880,16 @@ namespace Wisej.Web.Ext.TourPanel
 		/// Returns or sets the default offset from the target, in pixels.
 		/// </summary>
 		/// <remarks>
-		/// Each <see cref="TourStep"/> can override the
-		/// DefaultOffset and change the offset of the TourStep.
+		/// The <see cref="Padding"/> sides are used according to the placement: for example <see cref="Padding.Top"/> adds space
+		/// between the target and a panel placed below it, and <see cref="Padding.Left"/> between the target and a panel placed
+		/// at its right. Each <see cref="TourStep"/> can override the default value using the <see cref="TourStep.Offset"/> property.
 		/// </remarks>
+		/// <example>
+		/// Leaving a 10 pixels gap between the panel and the target:
+		/// <code><![CDATA[
+		/// this.tour.DefaultOffset = new Padding(10);
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatLayout")]
 		[SRDescription("Returns or sets the default offset from the target, in pixels.")]
 		public Padding DefaultOffset
@@ -796,12 +919,11 @@ namespace Wisej.Web.Ext.TourPanel
 
 		/// <summary>
 		/// Returns or sets the default number of seconds before showing the next step
-		/// when the <see cref="TourPanel.AutoPlay"/> property
-		/// is set to true.
+		/// when the <see cref="TourPanel"/> is playing the steps automatically
+		/// (see <see cref="AutoPlay"/> and <see cref="Play"/>).
 		/// </summary>
 		/// <remarks>
-		/// Each <see cref="TourStep"/> can override the
-		/// DefaultAutoPlayTime and change the AutoPlayTime of the TourStep.
+		/// Each <see cref="TourStep"/> can override the default value using the <see cref="TourStep.AutoPlayTime"/> property.
 		/// </remarks>
 		/// <exception cref="System.ArgumentException">
 		/// When the value is less than 1.
@@ -827,12 +949,12 @@ namespace Wisej.Web.Ext.TourPanel
 		private int _defaultAutoPlayTime = 5;
 
 		/// <summary>
-		/// Determines whether the 
-		/// <see cref="TourPanel"/>
-		/// shows the <see cref="TourPanel.CloseButton"/> and <see cref="TourPanel.ExitButton"/> buttons.
+		/// Returns or sets whether the <see cref="TourPanel"/>
+		/// shows the <see cref="CloseButton"/> and <see cref="ExitButton"/> buttons.
 		/// </summary>
 		/// <remarks>
-		/// The <see cref="TourPanel.ExitButton"/> is always shown on the last step.
+		/// The <see cref="ExitButton"/> is always shown on the last step. Each <see cref="TourStep"/> can override
+		/// the default value using the <see cref="TourStep.ShowClose"/> property.
 		/// </remarks>
 		[DefaultValue(true)]
 		[SRCategory("CatAppearance")]
@@ -852,8 +974,22 @@ namespace Wisej.Web.Ext.TourPanel
 		private bool _defaultShowClose = true;
 
 		/// <summary>
-		/// Collection of the steps to show in this TourPanel.
+		/// Returns or sets the steps to show in this <see cref="TourPanel"/>.
 		/// </summary>
+		/// <remarks>
+		/// Never returns null: when no steps are set it returns an empty array. Assigning a new array sets the
+		/// <see cref="TourStep.Tour"/> property of each step; since the value is an array, replacing or adding
+		/// single elements doesn't update the owner of the steps, so always assign a new array.
+		/// Steps with <see cref="TourStep.Enabled"/> set to false are skipped by <see cref="First"/>, <see cref="Next"/> and <see cref="Back"/>.
+		/// </remarks>
+		/// <example>
+		/// Adding a step to an existing tour:
+		/// <code><![CDATA[
+		/// var steps = this.tour.Steps.ToList();
+		/// steps.Add(new TourStep { Title = "Reports", Text = "Open the reports from here.", TargetName = "menuBar1.menuReports" });
+		/// this.tour.Steps = steps.ToArray();
+		/// ]]></code>
+		/// </example>
 		[DesignerActionList]
 		[SRCategory("CatBehavior")]
 		[SRDescription("Collection of the steps to show in this TourPanel.")]
@@ -898,6 +1034,10 @@ namespace Wisej.Web.Ext.TourPanel
 		/// <summary>
 		/// Returns or sets a value indicating whether the current target is highlighted.
 		/// </summary>
+		/// <remarks>
+		/// When true, the page is covered by a mask of <see cref="HighlightColor"/> with a hole over the target of the current step.
+		/// When false and <see cref="TourStep.AllowPointerEvents"/> is also false, a transparent mask still blocks the pointer events on the page.
+		/// </remarks>
 		[DefaultValue(true)]
 		[SRCategory("CatAppearance")]
 		[SRDescription("Returns or sets a value indicating whether the current target is highlighted.")]
@@ -916,9 +1056,19 @@ namespace Wisej.Web.Ext.TourPanel
 		private bool _highlightTarget = true;
 
 		/// <summary>
-		/// Returns or sets the color index for the highlight mask.
-		/// Uses the highlightColor set in the theme when this property is <see cref="Color.Empty"/>.
+		/// Returns or sets the color of the highlight mask.
 		/// </summary>
+		/// <remarks>
+		/// Uses the highlightColor set in the theme when this property is <see cref="Color.Empty"/>.
+		/// Use a semi-transparent color to let the user see the page under the mask.
+		/// </remarks>
+		/// <example>
+		/// Using a semi-transparent dark mask:
+		/// <code><![CDATA[
+		/// this.tour.HighlightTarget = true;
+		/// this.tour.HighlightColor = Color.FromArgb(128, 0, 0, 0);
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(typeof(Color), "")]
 		[SRCategory("CatAppearance")]
 		[SRDescription(" Returns or sets the color index for the highlighter mask.")]
@@ -937,8 +1087,11 @@ namespace Wisej.Web.Ext.TourPanel
 		private Color _highlightColor;
 
 		/// <summary>
-		/// Returns whether the TourPanel is currently playing the steps.
+		/// Returns whether the <see cref="TourPanel"/> is currently playing the steps automatically.
 		/// </summary>
+		/// <remarks>
+		/// The value is changed by <see cref="Play"/> and <see cref="Pause"/>, and by the play button.
+		/// </remarks>
 		[Browsable(false)]
 		public bool IsPlaying
 		{
@@ -1027,6 +1180,19 @@ namespace Wisej.Web.Ext.TourPanel
 		/// <summary>
 		/// Shows the first step.
 		/// </summary>
+		/// <remarks>
+		/// Shows the first step in <see cref="Steps"/> with <see cref="TourStep.Enabled"/> set to true.
+		/// Nothing happens if there are no enabled steps or if the first enabled step is already the current step.
+		/// </remarks>
+		/// <example>
+		/// Restarting the tour from the beginning:
+		/// <code><![CDATA[
+		/// private void buttonRestart_Click(object sender, EventArgs e)
+		/// {
+		///     this.tour.First();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void First()
 		{
 			var steps = this.Steps;
@@ -1041,8 +1207,22 @@ namespace Wisej.Web.Ext.TourPanel
 		}
 
 		/// <summary>
-		/// Shows the next step
+		/// Shows the next step.
 		/// </summary>
+		/// <remarks>
+		/// Skips the steps with <see cref="TourStep.Enabled"/> set to false. When there are no more steps it fires the
+		/// <see cref="Ended"/> event and, if the tour is playing, hides the <see cref="TourPanel"/>.
+		/// </remarks>
+		/// <example>
+		/// Advancing the tour when the user completes the action described in the current step:
+		/// <code><![CDATA[
+		/// private void textBoxSearch_TextChanged(object sender, EventArgs e)
+		/// {
+		///     if (this.tour.CurrentStep?.TargetName == "textBoxSearch")
+		///         this.tour.Next();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Next()
 		{
 			var steps = this.Steps;
@@ -1061,6 +1241,18 @@ namespace Wisej.Web.Ext.TourPanel
 		/// <summary>
 		/// Shows the previous step.
 		/// </summary>
+		/// <remarks>
+		/// Skips the steps with <see cref="TourStep.Enabled"/> set to false. Nothing happens when the current step is the first enabled step.
+		/// </remarks>
+		/// <example>
+		/// Going back one step from a custom button:
+		/// <code><![CDATA[
+		/// private void buttonPrevious_Click(object sender, EventArgs e)
+		/// {
+		///     this.tour.Back();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Back()
 		{
 			var steps = this.Steps;
@@ -1077,6 +1269,20 @@ namespace Wisej.Web.Ext.TourPanel
 		/// <summary>
 		/// Starts auto-advancing the steps.
 		/// </summary>
+		/// <remarks>
+		/// Starts a timer that calls <see cref="Next"/> after the number of seconds set in <see cref="TourStep.AutoPlayTime"/>
+		/// or <see cref="DefaultAutoPlayTime"/>, sets <see cref="IsPlaying"/>, changes the icon of the <see cref="PlayButton"/>
+		/// to "icon-pause" and fires the <see cref="Playing"/> event. If the current step is the last one, the tour restarts from
+		/// the first step. Nothing happens if the tour is already playing.
+		/// </remarks>
+		/// <example>
+		/// Showing a tour and playing it automatically:
+		/// <code><![CDATA[
+		/// var tour = new MyTour();
+		/// tour.Show(this);
+		/// tour.Play();
+		/// ]]></code>
+		/// </example>
 		public void Play()
 		{
 			if (this.IsPlaying)
@@ -1096,6 +1302,21 @@ namespace Wisej.Web.Ext.TourPanel
 		/// <summary>
 		/// Pauses auto-advancing the steps.
 		/// </summary>
+		/// <remarks>
+		/// Stops the timer, resets <see cref="IsPlaying"/>, changes the icon of the <see cref="PlayButton"/>
+		/// to "icon-play" and fires the <see cref="Paused"/> event. Nothing happens if the tour is not playing.
+		/// Call <see cref="Play"/> to resume from the current step.
+		/// </remarks>
+		/// <example>
+		/// Pausing the tour while the user interacts with a target:
+		/// <code><![CDATA[
+		/// private void textBoxSearch_Enter(object sender, EventArgs e)
+		/// {
+		///     if (this.tour.IsPlaying)
+		///         this.tour.Pause();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Pause()
 		{
 			if (!this.IsPlaying)
@@ -1135,6 +1356,23 @@ namespace Wisej.Web.Ext.TourPanel
 		/// <summary>
 		/// Shows the <see cref="TourPanel"/> without a container.
 		/// </summary>
+		/// <remarks>
+		/// Without a container, the first name in <see cref="TourStep.TargetName"/> is resolved as the name of an open
+		/// <see cref="Form"/> or <see cref="Page"/>, or as "Desktop" or "MainPage". All the steps should specify a
+		/// <see cref="TourStep.TargetName"/> or a <see cref="TourStep.Target"/>, otherwise the <see cref="NotFound"/> event is fired.
+		/// </remarks>
+		/// <example>
+		/// Touring controls in different windows:
+		/// <code><![CDATA[
+		/// var tour = new TourPanel();
+		/// tour.Steps = new[]
+		/// {
+		///     new TourStep { Title = "Navigation", Text = "Use this menu to navigate.", TargetName = "MainPage.navigationBar1" },
+		///     new TourStep { Title = "Customer", Text = "Edit the customer here.", TargetName = "CustomerForm.textBoxName" }
+		/// };
+		/// tour.Show();
+		/// ]]></code>
+		/// </example>
 		public new void Show()
 		{
 			Show(null);
@@ -1147,6 +1385,22 @@ namespace Wisej.Web.Ext.TourPanel
 		/// The <see cref="ContainerControl"/> that hosts the controls
 		/// that are the target for this <see cref="TourPanel"/>.
 		/// </param>
+		/// <remarks>
+		/// The <see cref="TourStep.TargetName"/> of each step is resolved starting from the controls in <paramref name="container"/>,
+		/// and steps without a target are shown at the top of the <paramref name="container"/>.
+		/// This method sets <see cref="Container"/>, shows the first enabled step, moves the focus to the <see cref="NextButton"/>
+		/// (or the <see cref="BackButton"/>) and starts playing when <see cref="AutoPlay"/> is true.
+		/// </remarks>
+		/// <example>
+		/// Starting the tour of the current page:
+		/// <code><![CDATA[
+		/// private void Page1_Load(object sender, EventArgs e)
+		/// {
+		///     var tour = new MyTour();
+		///     tour.Show(this);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Show(ContainerControl container)
 		{
 			this.Container = container;
@@ -1166,9 +1420,12 @@ namespace Wisej.Web.Ext.TourPanel
 		}
 
 		/// <summary>
-		/// Returns the <see cref="ContainerControl"/> that this TourPanel
+		/// Returns the <see cref="ContainerControl"/> that this <see cref="TourPanel"/>
 		/// is attached to.
 		/// </summary>
+		/// <remarks>
+		/// The value is set by <see cref="Show(ContainerControl)"/> and it's null when the tour was started with <see cref="Show()"/>.
+		/// </remarks>
 		public new ContainerControl Container
 		{
 			get;
@@ -1178,6 +1435,19 @@ namespace Wisej.Web.Ext.TourPanel
 		/// <summary>
 		/// Closes the <see cref="TourPanel"/>.
 		/// </summary>
+		/// <remarks>
+		/// Fires the <see cref="Ended"/> event and hides the panel, which fires the <see cref="Closed"/> event
+		/// when the client widget disappears. The close and exit buttons call this method. The <see cref="TourPanel"/> is not disposed.
+		/// </remarks>
+		/// <example>
+		/// Closing the tour from a custom button:
+		/// <code><![CDATA[
+		/// private void buttonSkipTour_Click(object sender, EventArgs e)
+		/// {
+		///     this.tour.Close();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public virtual void Close()
 		{
 			OnEnded(EventArgs.Empty);
@@ -1757,14 +2027,18 @@ namespace Wisej.Web.Ext.TourPanel
 		#region Child Classes
 
 		/// <summary>
-		/// Label.
+		/// Represents the label that displays the <see cref="TourStep.Title"/> of the current step in the <see cref="TourPanel"/>.
 		/// </summary>
 		/// <exclude/>
 		public class Label : Wisej.Web.Label
 		{
 			/// <summary>
-			/// Text property.
+			/// Returns or sets the text of the label.
 			/// </summary>
+			/// <remarks>
+			/// The text is set automatically by the <see cref="TourPanel"/> using the <see cref="TourStep.Title"/> of the current step
+			/// and it's not serialized by the designer.
+			/// </remarks>
 			[Browsable(false)]
 			[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 			public override string Text
@@ -1775,14 +2049,18 @@ namespace Wisej.Web.Ext.TourPanel
 		}
 
 		/// <summary>
-		/// HtmlPanel inside the TourPanel.
+		/// Represents the <see cref="Wisej.Web.HtmlPanel"/> that displays the <see cref="TourStep.Text"/> of the current step in the <see cref="TourPanel"/>.
 		/// </summary>
 		/// <exclude/>
 		public class HtmlPanel : Wisej.Web.HtmlPanel
 		{
 			/// <summary>
-			/// Html text.
+			/// Returns or sets the HTML text displayed in the panel.
 			/// </summary>
+			/// <remarks>
+			/// The HTML is set automatically by the <see cref="TourPanel"/> using the <see cref="TourStep.Text"/> of the current step
+			/// and it's not serialized by the designer.
+			/// </remarks>
 			[Browsable(false)]
 			[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 			public new string Html
@@ -1792,8 +2070,11 @@ namespace Wisej.Web.Ext.TourPanel
 			}
 
 			/// <summary>
-			/// Anchor property.
+			/// Returns or sets the edges of the container to which the panel is bound.
 			/// </summary>
+			/// <remarks>
+			/// The default value anchors the panel to all four edges of the <see cref="TourPanel"/>.
+			/// </remarks>
 			[DefaultValue(AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom)]
 			public override AnchorStyles Anchor
 			{

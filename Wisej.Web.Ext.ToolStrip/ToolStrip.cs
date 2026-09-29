@@ -28,8 +28,13 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Provides a container for toolbar objects. 
-	///</summary>
+	/// Provides a container for toolbar objects such as <see cref="ToolStripButton"/>, <see cref="ToolStripLabel"/>,
+	/// <see cref="ToolStripSeparator"/> and <see cref="ToolStripDropDownButton"/> items.
+	/// </summary>
+	/// <remarks>
+	/// This class is a port of the WinForms <c>System.Windows.Forms.ToolStrip</c> control. The items displayed
+	/// by the tool strip are managed through the <see cref="Items"/> collection.
+	/// </remarks>
 	public class ToolStrip : ScrollableControl, IWisejControl, IWisejDesignTarget2
 	{
 
@@ -37,12 +42,29 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ToolStrip" /> class.
-		///</summary>
+		/// </summary>
 		public ToolStrip()
 		{
 			// TODO: Implement
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToolStrip" /> class with the specified array of <see cref="ToolStripItem"/> objects.
+		/// </summary>
+		/// <param name="items">An array of <see cref="ToolStripItem"/> objects to add to the <see cref="Items"/> collection.</param>
+		/// <example>
+		/// Creating a tool strip with a set of buttons:
+		/// <code><![CDATA[
+		/// var toolStrip = new ToolStrip(new ToolStripItem[]
+		/// {
+		///     new ToolStripButton("New"),
+		///     new ToolStripButton("Open"),
+		///     new ToolStripSeparator(),
+		///     new ToolStripButton("Save")
+		/// });
+		/// this.Controls.Add(toolStrip);
+		/// ]]></code>
+		/// </example>
 		public ToolStrip(ToolStripItem[] items)
 		{
 			//this._items = items;
@@ -342,9 +364,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the control is automatically resized to display its entire contents.
-		///</summary>
-		/// <returns>true if the control adjusts its width to closely fit its contents; otherwise, false. The default is true.</returns>
+		/// Returns or sets a value indicating whether the control is automatically resized to display its entire contents.
+		/// </summary>
+		/// <returns>true if the control adjusts its size to closely fit its contents; otherwise, false. The default is true.</returns>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		[Browsable(true)]
 		[EditorBrowsable(EditorBrowsableState.Always)]
@@ -371,9 +393,9 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant for this class.
-		///</summary>
-		/// <exception cref="System.NotSupportedException">Automatic scrolling is not supported by <see cref="ToolStrip" /> controls.</exception>
+		/// </summary>
 		/// <returns>true to automatically scroll; otherwise, false.</returns>
+		/// <exception cref="System.NotSupportedException">Automatic scrolling is not supported by <see cref="ToolStrip" /> controls.</exception>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -400,7 +422,7 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant for this class.
-		///</summary>
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Size" /> value.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -424,7 +446,7 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant for this class.
-		///</summary>
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Size" /> value.</returns>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -448,7 +470,7 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant for this class.
-		///</summary>
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Point" /> value.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -471,10 +493,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Point _autoScrollPosition;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether drag-and-drop and item reordering are handled through events that you implement.
-		///</summary>
-		/// <exception cref="System.ArgumentException"><see cref="ToolStrip.AllowDrop" /> and <see cref="ToolStrip.AllowItemReorder" /> are both set to true. </exception>
-		/// <returns>true to control drag-and-drop and item reordering through events that you implement; otherwise, false.</returns>
+		/// Returns or sets a value indicating whether drag-and-drop and item reordering are handled through events that you implement.
+		/// </summary>
+		/// <returns>true to control drag-and-drop and item reordering through events that you implement; otherwise, false. The default is false.</returns>
+		/// <exception cref="System.ArgumentException"><see cref="AllowDrop" /> and <see cref="AllowItemReorder" /> are both set to true.</exception>
+		/// <remarks>
+		/// <see cref="AllowDrop"/> and <see cref="AllowItemReorder"/> are mutually exclusive: use <see cref="AllowDrop"/> to handle
+		/// the drag-and-drop events yourself, or <see cref="AllowItemReorder"/> to let the <see cref="ToolStrip"/> reorder its items.
+		/// </remarks>
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("ControlAllowDropDescr")]
@@ -496,10 +522,20 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _allowDrop;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether drag-and-drop and item reordering are handled privately by the <see cref="ToolStrip" /> class.
-		///</summary>
-		/// <exception cref="System.ArgumentException"><see cref="ToolStrip.AllowDrop" /> and <see cref="ToolStrip.AllowItemReorder" /> are both set to true. </exception>
-		/// <returns>true to cause the <see cref="ToolStrip" /> class to handle drag-and-drop and item reordering automatically; otherwise, false. The default value is false.</returns>
+		/// Returns or sets a value indicating whether drag-and-drop and item reordering are handled privately by the <see cref="ToolStrip" /> class.
+		/// </summary>
+		/// <returns>true to cause the <see cref="ToolStrip" /> class to handle drag-and-drop and item reordering automatically; otherwise, false. The default is false.</returns>
+		/// <exception cref="System.ArgumentException"><see cref="AllowDrop" /> and <see cref="AllowItemReorder" /> are both set to true.</exception>
+		/// <remarks>
+		/// This property cannot be set to true when <see cref="AllowDrop"/> is also true.
+		/// </remarks>
+		/// <example>
+		/// Letting the user reorder the items of a tool strip:
+		/// <code><![CDATA[
+		/// this.toolStrip1.AllowDrop = false;
+		/// this.toolStrip1.AllowItemReorder = true;
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripAllowItemReorderDescr")]
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
@@ -521,9 +557,24 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _allowItemReorder;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether multiple <see cref="MenuStrip" />, <see cref="ToolStripDropDownMenu" />, <see cref="ToolStripMenuItem" />, and other types can be combined. 
-		///</summary>
-		/// <returns>true if combining of types is allowed; otherwise, false. The default is false.</returns>
+		/// Returns or sets a value indicating whether the items of this <see cref="ToolStrip"/> can be combined with the items of another
+		/// <see cref="ToolStrip"/>, <see cref="ToolStripDropDownMenu"/> or <see cref="ToolStripMenuItem"/> using <see cref="ToolStripManager.Merge(ToolStrip, ToolStrip)"/>.
+		/// </summary>
+		/// <returns>true if merging is allowed; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// The way each item is merged is controlled by the <see cref="ToolStripItem.MergeAction"/> and <see cref="ToolStripItem.MergeIndex"/>
+		/// properties of the items in the source tool strip.
+		/// </remarks>
+		/// <example>
+		/// Merging the tool strip of a child view into the main tool strip:
+		/// <code><![CDATA[
+		/// this.mainToolStrip.AllowMerge = true;
+		/// this.childToolStrip.AllowMerge = true;
+		///
+		/// var manager = new ToolStripManager();
+		/// manager.Merge(this.childToolStrip, this.mainToolStrip);
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripAllowMergeDescr")]
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
@@ -545,9 +596,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _allowMerge;
 
 		/// <summary>
-		/// Gets or sets the edges of the container to which a <see cref="ToolStrip" /> is bound and determines how a <see cref="ToolStrip" /> is resized with its parent.
-		///</summary>
-		/// <returns>One of the <see cref="AnchorStyles" /> values.</returns>
+		/// Returns or sets the edges of the container to which a <see cref="ToolStrip" /> is bound and determines how a <see cref="ToolStrip" /> is resized with its parent.
+		/// </summary>
+		/// <returns>A bitwise combination of the <see cref="AnchorStyles" /> values. The default is <c>Top, Left</c>.</returns>
 		[SRCategory("CatLayout")]
 		[Localizable(true)]
 		[DefaultValue(AnchorStyles.Top | AnchorStyles.Left)]
@@ -570,9 +621,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private AnchorStyles _anchor;
 
 		/// <summary>
-		/// Gets or sets the background color for the <see cref="ToolStrip" />.
-		///</summary>
-		/// <returns>A <see cref="System.Drawing.Color" /> that represents the background color of the <see cref="ToolStrip" />. The default is the value of the <see cref="Control.DefaultBackColor" /> property.</returns>
+		/// Returns or sets the background color for the <see cref="ToolStrip" />.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Color" /> that represents the background color of the <see cref="ToolStrip" />.</returns>
 		[SRDescription("ToolStripBackColorDescr")]
 		[SRCategory("CatAppearance")]
 		public Color BackColor
@@ -593,8 +644,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Color _backColor;
 
 		/// <summary>
-		/// Gets or sets the binding context for the <see cref="ToolStrip" />.
-		///</summary>
+		/// Returns or sets the binding context for the <see cref="ToolStrip" />.
+		/// </summary>
 		/// <returns>A <see cref="BindingContext" /> for the <see cref="ToolStrip" />.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -618,9 +669,22 @@ namespace Wisej.Web.Ext.ToolStrip
 		private BindingContext _bindingContext;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether items in the <see cref="ToolStrip" /> can be sent to an overflow menu.
-		///</summary>
-		/// <returns>true to send <see cref="ToolStrip" /> items to an overflow menu; otherwise, false. The default value is true.</returns>
+		/// Returns or sets a value indicating whether items in the <see cref="ToolStrip" /> can be sent to an overflow menu.
+		/// </summary>
+		/// <returns>true to send <see cref="ToolStrip" /> items to an overflow menu; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// When enabled, items that don't fit in the <see cref="ToolStrip"/> and have their <see cref="ToolStripItem.Overflow"/>
+		/// property set to <see cref="ToolStripItemOverflow.AsNeeded"/> (or <see cref="ToolStripItemOverflow.Always"/>) are moved
+		/// to the drop down of the <see cref="OverflowButton"/>.
+		/// </remarks>
+		/// <example>
+		/// Keeping the most important button always visible while the others can overflow:
+		/// <code><![CDATA[
+		/// this.toolStrip1.CanOverflow = true;
+		/// this.buttonSave.Overflow = ToolStripItemOverflow.Never;
+		/// this.buttonExport.Overflow = ToolStripItemOverflow.AsNeeded;
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripCanOverflowDescr")]
 		[DefaultValue(true)]
 		[SRCategory("CatLayout")]
@@ -642,9 +706,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _canOverflow;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStrip" /> causes validation to be performed on any controls that require validation when it receives focus.
-		///</summary>
-		/// <returns>false in all cases.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStrip" /> causes validation to be performed on any controls that require validation when it receives focus.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStrip"/> causes validation; otherwise, false. The default is false.</returns>
 		[Browsable(false)]
 		[DefaultValue(false)]
 		public bool CausesValidation
@@ -666,8 +730,11 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant for this class.
-		///</summary>
+		/// </summary>
 		/// <returns>A <see cref="Control.ControlCollection" /> representing the collection of controls contained within the <see cref="ToolStrip" />.</returns>
+		/// <remarks>
+		/// Use the <see cref="Items"/> collection to add items to the <see cref="ToolStrip"/>.
+		/// </remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public ControlCollection Controls
@@ -681,8 +748,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ControlCollection _controls;
 
 		/// <summary>
-		/// Gets or sets the cursor that is displayed when the mouse pointer is over the <see cref="ToolStrip" />.
-		///</summary>
+		/// Returns or sets the cursor that is displayed when the mouse pointer is over the <see cref="ToolStrip" />.
+		/// </summary>
 		/// <returns>A <see cref="Cursor" /> that represents the cursor to display when the mouse pointer is over the <see cref="ToolStrip" />.</returns>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -706,9 +773,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Cursor _cursor;
 
 		/// <summary>
-		/// Gets or sets the font used to display text in the control.
-		///</summary>
-		/// <returns>The current default font.</returns>
+		/// Returns or sets the font used to display text in the control.
+		/// </summary>
+		/// <returns>The <see cref="System.Drawing.Font"/> used to display the text of the <see cref="ToolStrip"/> items.</returns>
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
 		[SRDescription("ControlFontDescr")]
@@ -730,8 +797,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Font _font;
 
 		/// <summary>
-		/// Gets the default size of the <see cref="ToolStrip" />.
-		///</summary>
+		/// Returns the default size of the <see cref="ToolStrip" />.
+		/// </summary>
 		/// <returns>The default <see cref="System.Drawing.Size" /> of the <see cref="ToolStrip" />.</returns>
 		public new Size DefaultSize
 		{
@@ -775,9 +842,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _defaultMargin;
 
 		/// <summary>
-		/// Gets the docking location of the <see cref="ToolStrip" />, indicating which borders are docked to the container.
-		///</summary>
-		/// <returns>One of the <see cref="DockStyle" /> values. The default is <see cref="Wisej.Web.Ext.DockStyle.Top" />.</returns>
+		/// Returns the default docking location of the <see cref="ToolStrip" />, indicating which borders are docked to the container.
+		/// </summary>
+		/// <returns>One of the <see cref="DockStyle" /> values. The default is <see cref="DockStyle.Top" />.</returns>
 		public virtual DockStyle DefaultDock
 		{
 			get
@@ -789,9 +856,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private DockStyle _defaultDock;
 
 		/// <summary>
-		/// Gets the default spacing, in pixels, between the sizing grip and the edges of the <see cref="ToolStrip" />.
-		///</summary>
+		/// Returns the default spacing, in pixels, between the sizing grip and the edges of the <see cref="ToolStrip" />.
+		/// </summary>
 		/// <returns><see cref="Padding" /> values representing the spacing, in pixels.</returns>
+		/// <remarks>
+		/// This is the value used by <see cref="GripMargin"/> when it's not set explicitly.
+		/// </remarks>
 		public virtual Padding DefaultGripMargin
 		{
 			get
@@ -803,9 +873,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _defaultGripMargin;
 
 		/// <summary>
-		/// Gets a value indicating whether ToolTips are shown for the <see cref="ToolStrip" /> by default.
-		///</summary>
+		/// Returns a value indicating whether ToolTips are shown for the <see cref="ToolStrip" /> by default.
+		/// </summary>
 		/// <returns>true in all cases.</returns>
+		/// <remarks>
+		/// Derived classes can override this property to change the initial value of <see cref="ShowItemToolTips"/>.
+		/// </remarks>
 		public virtual bool DefaultShowItemToolTips
 		{
 			get
@@ -817,10 +890,21 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _defaultShowItemToolTips;
 
 		/// <summary>
-		/// Gets or sets a value representing the default direction in which a <see cref="ToolStripDropDown" /> control is displayed relative to the <see cref="ToolStrip" />.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The specified value is not one of the <see cref="ToolStripDropDownDirection" /> values.</exception>
+		/// Returns or sets a value representing the default direction in which a <see cref="ToolStripDropDown" /> control is displayed relative to the <see cref="ToolStrip" />.
+		/// </summary>
 		/// <returns>One of the <see cref="ToolStripDropDownDirection" /> values.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The specified value is not one of the <see cref="ToolStripDropDownDirection" /> values.</exception>
+		/// <remarks>
+		/// The value is used by the drop downs of the items in this <see cref="ToolStrip"/> unless an item specifies its own
+		/// <see cref="ToolStripDropDownItem.DropDownDirection"/>.
+		/// </remarks>
+		/// <example>
+		/// Opening all the drop downs of a tool strip docked at the bottom of the page upward:
+		/// <code><![CDATA[
+		/// this.statusToolStrip.Dock = DockStyle.Bottom;
+		/// this.statusToolStrip.DefaultDropDownDirection = ToolStripDropDownDirection.AboveRight;
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripDefaultDropDownDirectionDescr")]
 		[Browsable(false)]
 		[SRCategory("CatBehavior")]
@@ -842,9 +926,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripDropDownDirection _defaultDropDownDirection;
 
 		/// <summary>
-		/// Gets or sets which <see cref="ToolStrip" /> borders are docked to its parent control and determines how a <see cref="ToolStrip" /> is resized with its parent.
-		///</summary>
-		/// <returns>One of the <see cref="DockStyle" /> values. The default value is <see cref="Wisej.Web.Ext.DockStyle.Top" />.</returns>
+		/// Returns or sets which <see cref="ToolStrip" /> borders are docked to its parent control and determines how a <see cref="ToolStrip" /> is resized with its parent.
+		/// </summary>
+		/// <returns>One of the <see cref="DockStyle" /> values. The default is <see cref="DockStyle.Top" />.</returns>
 		[DefaultValue(DockStyle.Top)]
 		[SRCategory("CatLayout")]
 		[Localizable(true)]
@@ -867,8 +951,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private DockStyle _dock;
 
 		/// <summary>
-		/// Retrieves the current display rectangle.
-		///</summary>
+		/// Returns the current display rectangle.
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Rectangle" /> representing the <see cref="ToolStrip" /> area for item layout.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -885,8 +969,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Rectangle _displayRectangle;
 
 		/// <summary>
-		/// Gets or sets the foreground color of the <see cref="ToolStrip" />.
-		///</summary>
+		/// Returns or sets the foreground color of the <see cref="ToolStrip" />.
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Color" /> representing the foreground color.</returns>
 		[Browsable(false)]
 		public Color ForeColor
@@ -907,10 +991,10 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Color _foreColor;
 
 		/// <summary>
-		/// Gets or sets whether the <see cref="ToolStrip" /> move handle is visible or hidden.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The specified value is not one of the <see cref="ToolStripGripStyle" /> values. </exception>
-		/// <returns>One of the <see cref="ToolStripGripStyle" /> values. The default value is <see cref="Wisej.Web.Ext.ToolStripGripStyle.Visible" />.</returns>
+		/// Returns or sets whether the <see cref="ToolStrip" /> move handle is visible or hidden.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripGripStyle" /> values. The default is <see cref="ToolStripGripStyle.Visible" />.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The specified value is not one of the <see cref="ToolStripGripStyle" /> values.</exception>
 		[SRDescription("ToolStripGripStyleDescr")]
 		[SRCategory("CatAppearance")]
 		[DefaultValue(ToolStripGripStyle.Visible)]
@@ -932,9 +1016,13 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripGripStyle _gripStyle;
 
 		/// <summary>
-		/// Gets the orientation of the <see cref="ToolStrip" /> move handle.
-		///</summary>
-		/// <returns>One of the <see cref="ToolStripGripDisplayStyle" /> values. Possible values are <see cref="Wisej.Web.Ext.ToolStripGripDisplayStyle.Horizontal" /> and <see cref="Wisej.Web.Ext.ToolStripGripDisplayStyle.Vertical" />.</returns>
+		/// Returns the orientation of the <see cref="ToolStrip" /> move handle.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripGripDisplayStyle" /> values: <see cref="ToolStripGripDisplayStyle.Horizontal" /> or <see cref="ToolStripGripDisplayStyle.Vertical" />.</returns>
+		/// <remarks>
+		/// The grip orientation is the opposite of the <see cref="Orientation"/> of the <see cref="ToolStrip"/>: a horizontal
+		/// tool strip has a vertical grip and vice versa.
+		/// </remarks>
 		[Browsable(false)]
 		public ToolStripGripDisplayStyle GripDisplayStyle
 		{
@@ -947,9 +1035,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripGripDisplayStyle _gripDisplayStyle;
 
 		/// <summary>
-		/// Gets or sets the space around the <see cref="ToolStrip" /> move handle.
-		///</summary>
-		/// <returns>A <see cref="Padding" />, which represents the spacing.</returns>
+		/// Returns or sets the space around the <see cref="ToolStrip" /> move handle.
+		/// </summary>
+		/// <returns>A <see cref="Padding" />, which represents the spacing. The default is the value of <see cref="DefaultGripMargin"/>.</returns>
 		[SRCategory("CatLayout")]
 		[SRDescription("ToolStripGripDisplayStyleDescr")]
 		public Padding GripMargin
@@ -970,9 +1058,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _gripMargin;
 
 		/// <summary>
-		/// Gets the boundaries of the <see cref="ToolStrip" /> move handle.
-		///</summary>
-		/// <returns>An object of type <see cref="System.Drawing.Rectangle" />, representing the move handle boundaries. If the boundaries are not visible, the <see cref="ToolStrip.GripRectangle" /> property returns <see cref="System.Drawing.Rectangle.Empty" />.</returns>
+		/// Returns the boundaries of the <see cref="ToolStrip" /> move handle.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Rectangle" /> representing the move handle boundaries. If the move handle is not visible, the <see cref="GripRectangle" /> property returns <see cref="System.Drawing.Rectangle.Empty" />.</returns>
 		[Browsable(false)]
 		public Rectangle GripRectangle
 		{
@@ -986,8 +1074,8 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant for this class.
-		///</summary>
-		/// <returns>true if the <see cref="ToolStrip" /> has children; otherwise, false. </returns>
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStrip" /> has children; otherwise, false.</returns>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -1003,8 +1091,8 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant for this class.
-		///</summary>
-		/// <returns>An instance of the <see cref="HScrollProperties" /> class, which provides basic properties for an <see cref="HScrollBar" />.</returns>
+		/// </summary>
+		/// <returns>An instance of the <see cref="HScrollProperties" /> class, which provides basic properties for a horizontal scroll bar.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public HScrollProperties HorizontalScroll
@@ -1018,9 +1106,20 @@ namespace Wisej.Web.Ext.ToolStrip
 		private HScrollProperties _horizontalScroll;
 
 		/// <summary>
-		/// Gets or sets the size, in pixels, of an image used on a <see cref="ToolStrip" />.
-		///</summary>
+		/// Returns or sets the size, in pixels, of an image used on a <see cref="ToolStrip" />.
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Size" /> value representing the size of the image, in pixels. The default is 16 x 16 pixels.</returns>
+		/// <remarks>
+		/// The size is applied only to the images of the items that have their <see cref="ToolStripItem.ImageScaling"/> property
+		/// set to <see cref="ToolStripItemImageScaling.SizeToFit"/>.
+		/// </remarks>
+		/// <example>
+		/// Displaying larger icons on a tool strip:
+		/// <code><![CDATA[
+		/// this.toolStrip1.ImageScalingSize = new Size(32, 32);
+		/// this.buttonPrint.ImageScaling = ToolStripItemImageScaling.SizeToFit;
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripImageScalingSizeDescr")]
 		public Size ImageScalingSize
@@ -1041,9 +1140,20 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Size _imageScalingSize;
 
 		/// <summary>
-		/// Gets or sets the image list that contains the image displayed on a <see cref="ToolStrip" /> item.
-		///</summary>
-		/// <returns>An object of type <see cref="ImageList" />.</returns>
+		/// Returns or sets the image list that contains the images displayed on the <see cref="ToolStrip" /> items.
+		/// </summary>
+		/// <returns>An object of type <see cref="ImageList" />. The default is null.</returns>
+		/// <remarks>
+		/// The items select their image from this list using <see cref="ToolStripItem.ImageIndex"/> or <see cref="ToolStripItem.ImageKey"/>.
+		/// </remarks>
+		/// <example>
+		/// Assigning images to the tool strip items by key:
+		/// <code><![CDATA[
+		/// this.toolStrip1.ImageList = this.imageList1;
+		/// this.buttonNew.ImageKey = "new.png";
+		/// this.buttonOpen.ImageKey = "open.png";
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripImageListDescr")]
 		[SRCategory("CatAppearance")]
 		[DefaultValue(null)]
@@ -1066,8 +1176,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ImageList _imageList;
 
 		/// <summary>
-		/// Gets a value indicating whether the user is currently moving the <see cref="ToolStrip" /> from one <see cref="ToolStripContainer" /> to another. 
-		///</summary>
+		/// Returns a value indicating whether the user is currently moving the <see cref="ToolStrip" /> from one <see cref="ToolStripContainer" /> to another.
+		/// </summary>
 		/// <returns>true if the user is currently moving the <see cref="ToolStrip" /> from one <see cref="ToolStripContainer" /> to another; otherwise, false.</returns>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		[Browsable(false)]
@@ -1082,9 +1192,25 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _isCurrentlyDragging;
 
 		/// <summary>
-		/// Gets all the items that belong to a <see cref="ToolStrip" />.
-		///</summary>
+		/// Returns all the items that belong to a <see cref="ToolStrip" />.
+		/// </summary>
 		/// <returns>An object of type <see cref="ToolStripItemCollection" />, representing all the elements contained by a <see cref="ToolStrip" />.</returns>
+		/// <remarks>
+		/// Adding or removing items raises the <see cref="ItemAdded"/> and <see cref="ItemRemoved"/> events.
+		/// </remarks>
+		/// <example>
+		/// Adding items to a tool strip and handling their clicks in one place:
+		/// <code><![CDATA[
+		/// this.toolStrip1.Items.Add(new ToolStripButton("Save") { Name = "save" });
+		/// this.toolStrip1.Items.Add(new ToolStripSeparator());
+		/// this.toolStrip1.Items.Add(new ToolStripButton("Print") { Name = "print" });
+		///
+		/// this.toolStrip1.ItemClicked += (s, e) =>
+		/// {
+		///     AlertBox.Show("Clicked: " + e.ClickedItem.Name);
+		/// };
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatData")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		[SRDescription("ToolStripItemsDescr")]
@@ -1099,8 +1225,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItemCollection _items;
 
 		/// <summary>
-		/// Gets a value indicating whether a <see cref="ToolStrip" /> is a <see cref="ToolStripDropDown" /> control.
-		///</summary>
+		/// Returns a value indicating whether a <see cref="ToolStrip" /> is a <see cref="ToolStripDropDown" /> control.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStrip" /> is a <see cref="ToolStripDropDown" /> control; otherwise, false.</returns>
 		[Browsable(false)]
 		public bool IsDropDown
@@ -1113,10 +1239,21 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _isDropDown;
 
 		/// <summary>
-		/// Gets or sets a value indicating how the <see cref="ToolStrip" /> lays out the items collection.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value of <see cref="ToolStrip.LayoutStyle" /> is not one of the <see cref="ToolStripLayoutStyle" /> values.</exception>
-		/// <returns>One of the <see cref="ToolStripLayoutStyle" /> values. The possible values are <see cref="Wisej.Web.Ext.ToolStripLayoutStyle.Table" />, <see cref="Wisej.Web.Ext.ToolStripLayoutStyle.Flow" />, <see cref="Wisej.Web.Ext.ToolStripLayoutStyle.StackWithOverflow" />, <see cref="Wisej.Web.Ext.ToolStripLayoutStyle.HorizontalStackWithOverflow" />, and <see cref="Wisej.Web.Ext.ToolStripLayoutStyle.VerticalStackWithOverflow" />.</returns>
+		/// Returns or sets a value indicating how the <see cref="ToolStrip" /> lays out the items collection.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripLayoutStyle" /> values: <see cref="ToolStripLayoutStyle.Table" />, <see cref="ToolStripLayoutStyle.Flow" />, <see cref="ToolStripLayoutStyle.StackWithOverflow" />, <see cref="ToolStripLayoutStyle.HorizontalStackWithOverflow" /> or <see cref="ToolStripLayoutStyle.VerticalStackWithOverflow" />.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value of <see cref="LayoutStyle" /> is not one of the <see cref="ToolStripLayoutStyle" /> values.</exception>
+		/// <remarks>
+		/// Changing the value raises the <see cref="LayoutStyleChanged"/> event. Only the stack layouts move items to the
+		/// overflow menu when <see cref="CanOverflow"/> is true.
+		/// </remarks>
+		/// <example>
+		/// Laying out the items vertically:
+		/// <code><![CDATA[
+		/// this.toolStrip1.Dock = DockStyle.Left;
+		/// this.toolStrip1.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatLayout")]
 		[SRDescription("ToolStripLayoutStyle")]
 		public ToolStripLayoutStyle LayoutStyle
@@ -1136,9 +1273,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripLayoutStyle _layoutStyle;
 
 		/// <summary>
-		/// Gets the <see cref="ToolStripItem" /> that is the overflow button for a <see cref="ToolStrip" /> with overflow enabled.
-		///</summary>
-		/// <returns>An object of type <see cref="ToolStripOverflowButton" /> with its <see cref="ToolStripItemAlignment" /> set to <see cref="Wisej.Web.Ext.ToolStripItemAlignment.Right" /> and its <see cref="ToolStripItemOverflow" /> value set to <see cref="Wisej.Web.Ext.ToolStripItemOverflow.Never" />.</returns>
+		/// Returns the <see cref="ToolStripItem" /> that is the overflow button for a <see cref="ToolStrip" /> with overflow enabled.
+		/// </summary>
+		/// <returns>An object of type <see cref="ToolStripOverflowButton" /> with its <see cref="ToolStripItem.Alignment" /> set to <see cref="ToolStripItemAlignment.Right" /> and its <see cref="ToolStripItem.Overflow" /> value set to <see cref="ToolStripItemOverflow.Never" />.</returns>
+		/// <remarks>
+		/// The button is displayed only when <see cref="CanOverflow"/> is true and at least one item doesn't fit in the <see cref="ToolStrip"/>.
+		/// </remarks>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		public ToolStripOverflowButton OverflowButton
@@ -1152,9 +1292,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripOverflowButton _overflowButton;
 
 		/// <summary>
-		/// Gets the orientation of the <see cref="ToolStripPanel" />.
-		///</summary>
-		/// <returns>One of the <see cref="Orientation" /> values. The default is <see cref="Wisej.Web.Ext.Orientation.Horizontal" />.</returns>
+		/// Returns the orientation of the <see cref="ToolStrip" />.
+		/// </summary>
+		/// <returns>One of the <see cref="Orientation" /> values. The default is <see cref="Orientation.Horizontal" />.</returns>
+		/// <remarks>
+		/// The orientation is determined by the <see cref="LayoutStyle"/> and, for <see cref="ToolStripLayoutStyle.StackWithOverflow"/>, by the <see cref="Dock"/> value.
+		/// </remarks>
 		[Browsable(false)]
 		public Orientation Orientation
 		{
@@ -1167,8 +1310,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Orientation _orientation;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStrip" /> stretches from end to end in the <see cref="ToolStripContainer" />.
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="ToolStrip" /> stretches from end to end in the <see cref="ToolStripContainer" />.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStrip" /> stretches from end to end in its <see cref="ToolStripContainer" />; otherwise, false. The default is false.</returns>
 		[SRDescription("ToolStripStretchDescr")]
 		[SRCategory("CatLayout")]
@@ -1191,8 +1334,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _stretch;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether ToolTips are to be displayed on <see cref="ToolStrip" /> items. 
-		///</summary>
+		/// Returns or sets a value indicating whether ToolTips are to be displayed on <see cref="ToolStrip" /> items.
+		/// </summary>
 		/// <returns>true if ToolTips are to be displayed; otherwise, false. The default is true.</returns>
 		[DefaultValue(true)]
 		[SRDescription("ToolStripShowItemToolTipsDescr")]
@@ -1214,10 +1357,20 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _showItemToolTips;
 
 		/// <summary>
-		/// Gets or sets the direction in which to draw text on a <see cref="ToolStrip" />.
-		///</summary>
+		/// Returns or sets the direction in which to draw text on a <see cref="ToolStrip" />.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripTextDirection" /> values. The default is <see cref="ToolStripTextDirection.Horizontal" />.</returns>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The specified value is not one of the <see cref="ToolStripTextDirection" /> values.</exception>
-		/// <returns>One of the <see cref="ToolStripTextDirection" /> values. The default is <see cref="Wisej.Web.Ext.ToolStripTextDirection.Horizontal" />. </returns>
+		/// <remarks>
+		/// Items that have their <see cref="ToolStripItem.TextDirection"/> set to <see cref="ToolStripTextDirection.Inherit"/> use this value.
+		/// </remarks>
+		/// <example>
+		/// Rotating the text of a vertical tool strip:
+		/// <code><![CDATA[
+		/// this.toolStrip1.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
+		/// this.toolStrip1.TextDirection = ToolStripTextDirection.Vertical90;
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripTextDirectionDescr")]
 		[DefaultValue(ToolStripTextDirection.Horizontal)]
 		[SRCategory("CatAppearance")]
@@ -1239,8 +1392,8 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant for this class.
-		///</summary>
-		/// <returns>An instance of the <see cref="VScrollProperties" /> class, which provides basic properties for a <see cref="VScrollBar" />.</returns>
+		/// </summary>
+		/// <returns>An instance of the <see cref="VScrollProperties" /> class, which provides basic properties for a vertical scroll bar.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public VScrollProperties VerticalScroll
@@ -1268,11 +1421,23 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Retrieves the next <see cref="ToolStripItem" /> from the specified reference point and moving in the specified direction.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The specified value of the <paramref name="direction" /> parameter is not one of the values of <see cref="ArrowDirection" />.</exception>
-		/// <returns>A <see cref="ToolStripItem" /> that is specified by the <paramref name="start" /> parameter and is next in the order as specified by the <paramref name="direction" /> parameter.</returns>
+		/// </summary>
 		/// <param name="start">The <see cref="ToolStripItem" /> that is the reference point from which to begin the retrieval of the next item.</param>
-		/// <param name="direction">One of the values of <see cref="ToolStrip.ArrowDirection" /> that specifies the direction to move.</param>
+		/// <param name="direction">One of the values of <see cref="ArrowDirection" /> that specifies the direction to move.</param>
+		/// <returns>A <see cref="ToolStripItem" /> that is specified by the <paramref name="start" /> parameter and is next in the order as specified by the <paramref name="direction" /> parameter.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The specified value of the <paramref name="direction" /> parameter is not one of the values of <see cref="ArrowDirection" />.</exception>
+		/// <remarks>
+		/// Use <see cref="ArrowDirection.Left"/> and <see cref="ArrowDirection.Right"/> for horizontal tool strips and
+		/// <see cref="ArrowDirection.Up"/> and <see cref="ArrowDirection.Down"/> for vertical tool strips.
+		/// </remarks>
+		/// <example>
+		/// Selecting the item to the right of the current button:
+		/// <code><![CDATA[
+		/// var next = this.toolStrip1.GetNextItem(this.buttonOpen, ArrowDirection.Right);
+		/// if (next != null)
+		///     next.Select();
+		/// ]]></code>
+		/// </example>
 		public virtual ToolStripItem GetNextItem(ToolStripItem start, ArrowDirection direction)
 		{
 			// TODO: Implement
@@ -1492,9 +1657,18 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This method is not relevant for this class.
-		///</summary>
-		/// <returns>A <see cref="Control" />.</returns>
+		/// </summary>
 		/// <param name="point">A <see cref="System.Drawing.Point" />.</param>
+		/// <returns>A <see cref="Control" />.</returns>
+		/// <remarks>
+		/// Use <see cref="GetItemAt(Point)"/> to find the <see cref="ToolStripItem"/> at a location.
+		/// </remarks>
+		/// <example>
+		/// Use <see cref="GetItemAt(Point)"/> instead:
+		/// <code><![CDATA[
+		/// var item = this.toolStrip1.GetItemAt(new Point(40, 10));
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public Control GetChildAtPoint(Point point)
 		{
@@ -1504,10 +1678,19 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This method is not relevant for this class.
-		///</summary>
-		/// <returns>A <see cref="Control" />.</returns>
+		/// </summary>
 		/// <param name="pt">A <see cref="System.Drawing.Point" /> value.</param>
-		/// <param name="skipValue">A <see cref="GetChildAtPointSkip" />  value.</param>
+		/// <param name="skipValue">A <see cref="GetChildAtPointSkip" /> value.</param>
+		/// <returns>A <see cref="Control" />.</returns>
+		/// <remarks>
+		/// Use <see cref="GetItemAt(Point)"/> to find the <see cref="ToolStripItem"/> at a location.
+		/// </remarks>
+		/// <example>
+		/// Use <see cref="GetItemAt(Point)"/> instead:
+		/// <code><![CDATA[
+		/// var item = this.toolStrip1.GetItemAt(new Point(40, 10));
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public Control GetChildAtPoint(Point pt, GetChildAtPointSkip skipValue)
 		{
@@ -1517,10 +1700,21 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Returns the item located at the specified x- and y-coordinates of the <see cref="ToolStrip" /> client area.
-		///</summary>
+		/// </summary>
+		/// <param name="x">The horizontal coordinate, in pixels, from the left edge of the client area.</param>
+		/// <param name="y">The vertical coordinate, in pixels, from the top edge of the client area.</param>
 		/// <returns>The <see cref="ToolStripItem" /> located at the specified location, or null if the <see cref="ToolStripItem" /> is not found.</returns>
-		/// <param name="x">The horizontal coordinate, in pixels, from the left edge of the client area. </param>
-		/// <param name="y">The vertical coordinate, in pixels, from the top edge of the client area. </param>
+		/// <example>
+		/// Finding the item under the mouse pointer:
+		/// <code><![CDATA[
+		/// private void toolStrip1_MouseDown(object sender, MouseEventArgs e)
+		/// {
+		///     var item = this.toolStrip1.GetItemAt(e.X, e.Y);
+		///     if (item != null)
+		///         AlertBox.Show(item.Text);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public ToolStripItem GetItemAt(int x, int y)
 		{
 			// TODO: Implement
@@ -1530,9 +1724,20 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Returns the item located at the specified point in the client area of the <see cref="ToolStrip" />.
-		///</summary>
+		/// </summary>
+		/// <param name="point">The <see cref="System.Drawing.Point" /> at which to search for the <see cref="ToolStripItem" />.</param>
 		/// <returns>The <see cref="ToolStripItem" /> at the specified location, or null if the <see cref="ToolStripItem" /> is not found.</returns>
-		/// <param name="point">The <see cref="System.Drawing.Point" /> at which to search for the <see cref="ToolStripItem" />. </param>
+		/// <example>
+		/// Finding the item under the mouse pointer:
+		/// <code><![CDATA[
+		/// private void toolStrip1_MouseDown(object sender, MouseEventArgs e)
+		/// {
+		///     var item = this.toolStrip1.GetItemAt(e.Location);
+		///     if (item != null)
+		///         AlertBox.Show(item.Text);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public ToolStripItem GetItemAt(Point point)
 		{
 			// TODO: Implement
@@ -1542,9 +1747,18 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This method is not relevant for this class.
-		///</summary>
-		/// <param name="x">An <see cref="System.Int32" />.</param>
-		/// <param name="y">An <see cref="System.Int32" />.</param>
+		/// </summary>
+		/// <param name="x">The horizontal margin, in pixels.</param>
+		/// <param name="y">The vertical margin, in pixels.</param>
+		/// <remarks>
+		/// Automatic scrolling is not supported by <see cref="ToolStrip"/> controls.
+		/// </remarks>
+		/// <example>
+		/// The call has no effect on a <see cref="ToolStrip"/>:
+		/// <code><![CDATA[
+		/// this.toolStrip1.SetAutoScrollMargin(0, 0);
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public void SetAutoScrollMargin(int x, int y)
 		{
@@ -1559,17 +1773,58 @@ namespace Wisej.Web.Ext.ToolStrip
 			// TODO: Implement
 		}
 
+		/// <summary>
+		/// Returns a string that represents the <see cref="ToolStrip"/>.
+		/// </summary>
+		/// <returns>A string that represents the current <see cref="ToolStrip"/>.</returns>
+		/// <example>
+		/// Logging the tool strip:
+		/// <code><![CDATA[
+		/// System.Diagnostics.Debug.WriteLine(this.toolStrip1.ToString());
+		/// ]]></code>
+		/// </example>
 		public override String ToString()
 		{
 			// TODO: Implement
 			return "";
 		}
 
+		/// <summary>
+		/// Returns whether the designer should draw the design-time border around the <see cref="ToolStrip"/>.
+		/// </summary>
+		/// <returns>true if the designer should draw the border; otherwise, false.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and is not meant to be called from application code.
+		/// </remarks>
+		/// <example>
+		/// Checking the design-time border setting:
+		/// <code><![CDATA[
+		/// bool drawBorder = this.toolStrip1.ShouldDrawBorder();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldDrawBorder()
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// Processes Windows mouse messages forwarded by the designer.
+		/// </summary>
+		/// <param name="m">The <see cref="System.Windows.Forms.Message"/> forwarded by the designer.</param>
+		/// <returns>true to prevent the base class from processing the message; otherwise, false.</returns>
+		/// <remarks>
+		/// This method is used by the Visual Studio designer and is not meant to be called from application code.
+		/// </remarks>
+		/// <example>
+		/// Forwarding a message from a custom designer:
+		/// <code><![CDATA[
+		/// protected override void WndProc(ref System.Windows.Forms.Message m)
+		/// {
+		///     if (!this.toolStrip.DesignerWndProc(ref m))
+		///         base.WndProc(ref m);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public bool DesignerWndProc(ref System.Windows.Forms.Message m)
 		{
 			throw new NotImplementedException();

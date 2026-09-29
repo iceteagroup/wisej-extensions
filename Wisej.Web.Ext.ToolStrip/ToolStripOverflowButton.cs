@@ -24,17 +24,20 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Hosts a <see cref="ToolStripDropDown" /> that displays items that overflow the <see cref="ToolStrip" />.
-	///</summary>
+	/// Represents the button that hosts a <see cref="ToolStripDropDown" /> displaying the items that overflow the <see cref="ToolStrip" />.
+	/// </summary>
+	/// <remarks>
+	/// The button is created by the <see cref="ToolStrip"/> and is accessible through <see cref="ToolStrip.OverflowButton"/>.
+	/// </remarks>
 	public class ToolStripOverflowButton : ToolStripDropDownButton
 	{
 
 		#region Properties
 
 		/// <summary>
-		/// Gets a value indicating whether the <see cref="ToolStripOverflowButton" /> has items that overflow the <see cref="ToolStrip" />.
-		///</summary>
-		/// <returns>true if the <see cref="ToolStripOverflowButton" /> has overflow items; otherwise, false. </returns>
+		/// Returns a value indicating whether the <see cref="ToolStripOverflowButton" /> has items that overflow the <see cref="ToolStrip" />.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripOverflowButton" /> has overflow items; otherwise, false.</returns>
 		[Browsable(false)]
 		public override bool HasDropDownItems
 		{
@@ -48,7 +51,7 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
+		/// </summary>
 		/// <returns>true to enable automatic mirroring; otherwise, false.</returns>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[Browsable(false)]

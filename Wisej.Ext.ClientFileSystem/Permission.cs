@@ -19,10 +19,11 @@
 
 namespace Wisej.Ext.ClientFileSystem
 {
-	/// <summary>
-	/// File system permissions
-	/// </summary>
-	public enum Permission
+    /// <summary>
+    /// Represents the different permissions available for file system operations.
+    /// This enumeration defines the access rights that can be assigned to files and directories within the file system.
+    /// </summary>
+    public enum Permission
 	{
 		/// <summary>
 		/// "Read" permission on the file system

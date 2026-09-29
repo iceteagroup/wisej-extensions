@@ -30,6 +30,11 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// Represents a group of buttons in a <see cref="RibbonBarGroup"/>
 	/// organized horizontally.
 	/// </summary>
+	/// <remarks>
+	/// The button group itself doesn't display a text or an image and doesn't fire the click events: each
+	/// <see cref="RibbonBarItemButton"/> in <see cref="Buttons"/> fires its own <see cref="RibbonBarItem.Click"/>
+	/// event and the <see cref="RibbonBar.ItemClick"/> event.
+	/// </remarks>
 	[ToolboxItem(false)]
 	[DesignTimeVisible(false)]
 	[ApiCategory("RibbonBar")]
@@ -152,6 +157,23 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns the collection of <see cref="RibbonBarItemButton"/> children.
 		/// </summary>
+		/// <remarks>
+		/// Buttons added to the collection are changed to <see cref="Orientation.Horizontal"/> and their
+		/// <see cref="RibbonBarItem.Parent"/> is set to the <see cref="RibbonBarGroup"/> that contains the button group.
+		/// Add the button group to its <see cref="RibbonBarGroup"/> before adding the buttons, otherwise the buttons
+		/// have no parent and their click events are not fired.
+		/// </remarks>
+		/// <example>
+		/// Creating a row of alignment buttons:
+		/// <code><![CDATA[
+		/// var alignment = new RibbonBarItemButtonGroup();
+		/// this.ribbonBarGroupParagraph.Items.Add(alignment);
+		///
+		/// alignment.Buttons.Add(new RibbonBarItemButton { Name = "alignLeft", ImageSource = "icon-left", ToolTipText = "Align Left" });
+		/// alignment.Buttons.Add(new RibbonBarItemButton { Name = "alignCenter", ImageSource = "icon-center", ToolTipText = "Center" });
+		/// alignment.Buttons.Add(new RibbonBarItemButton { Name = "alignRight", ImageSource = "icon-right", ToolTipText = "Align Right" });
+		/// ]]></code>
+		/// </example>
 		[Localizable(true)]
 		[SRCategory("CatBehavior")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -232,7 +254,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		#region Button Collection
 
 		/// <summary>
-		/// Represents a collection of <see cref="RibbonBarItemButton"/> in a <see cref="RibbonBarItemButtonGroup"/>
+		/// Represents a collection of <see cref="RibbonBarItemButton"/> in a <see cref="RibbonBarItemButtonGroup"/>.
 		/// </summary>
 		public class ButtonCollection : RibbonBarCollectionBase<RibbonBarItemButtonGroup, RibbonBarItemButton>
 		{
@@ -241,9 +263,19 @@ namespace Wisej.Web.Ext.RibbonBar
 			}
 
 			/// <summary>
-			/// Adds the specified <para>item</para> to the collection.
+			/// Adds the specified <paramref name="item"/> to the collection.
 			/// </summary>
 			/// <param name="item">The <see cref="RibbonBarItemButton"/> to add to the collection.</param>
+			/// <remarks>
+			/// The <see cref="RibbonBarItemButton.Orientation"/> of the <paramref name="item"/> is changed to <see cref="Orientation.Horizontal"/>
+			/// and its <see cref="RibbonBarItem.Parent"/> is set to the <see cref="RibbonBarGroup"/> that contains the button group.
+			/// </remarks>
+			/// <example>
+			/// Adding a button to a button group:
+			/// <code><![CDATA[
+			/// this.buttonGroupAlign.Buttons.Add(new RibbonBarItemButton { Name = "justify", ImageSource = "icon-justify" });
+			/// ]]></code>
+			/// </example>
 			public override void Add(RibbonBarItemButton item)
 			{
 				item.Parent = this.Owner.Parent;
@@ -252,11 +284,21 @@ namespace Wisej.Web.Ext.RibbonBar
 			}
 
 			/// <summary>
-			/// Inserts the specified <para>item</para> in the collection at the
-			/// specified <para>index</para>.
+			/// Inserts the specified <paramref name="item"/> in the collection at the
+			/// specified <paramref name="index"/>.
 			/// </summary>
 			/// <param name="index">The position to insert the specified <see cref="RibbonBarItemButton"/> at.</param>
 			/// <param name="item">The <see cref="RibbonBarItemButton"/> to insert in the collection.</param>
+			/// <remarks>
+			/// The <see cref="RibbonBarItemButton.Orientation"/> of the <paramref name="item"/> is changed to <see cref="Orientation.Horizontal"/>
+			/// and its <see cref="RibbonBarItem.Parent"/> is set to the <see cref="RibbonBarGroup"/> that contains the button group.
+			/// </remarks>
+			/// <example>
+			/// Inserting a button as the first button of a button group:
+			/// <code><![CDATA[
+			/// this.buttonGroupAlign.Buttons.Insert(0, new RibbonBarItemButton { Name = "alignLeft", ImageSource = "icon-left" });
+			/// ]]></code>
+			/// </example>
 			public override void Insert(int index, RibbonBarItemButton item)
 			{
 				item.Parent = this.Owner.Parent;

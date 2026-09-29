@@ -27,8 +27,13 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Represents a Windows progress bar control contained in a <see cref="StatusStrip" />.
-	///</summary>
+	/// Represents a progress bar hosted in a <see cref="ToolStrip" />.
+	/// </summary>
+	/// <remarks>
+	/// The hosted <see cref="Wisej.Web.ProgressBar"/> is created by the item with an initial size of 100 x 15 pixels
+	/// and is accessible through the <see cref="ProgressBar"/> property. <see cref="Minimum"/>, <see cref="Maximum"/>,
+	/// <see cref="Step"/> and <see cref="Value"/> are forwarded to the hosted control.
+	/// </remarks>
 	public partial class ToolStripProgressBar : ToolStripControlHost
 	{
 		internal static readonly object EventRightToLeftLayoutChanged = new object();
@@ -40,6 +45,21 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		#region Constructors
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToolStripProgressBar"/> class.
+		/// </summary>
+		/// <example>
+		/// Adding a progress bar to a tool strip:
+		/// <code><![CDATA[
+		/// var progress = new ToolStripProgressBar
+		/// {
+		///     Minimum = 0,
+		///     Maximum = 100,
+		///     Value = 25
+		/// };
+		/// this.toolStrip1.Items.Add(progress);
+		/// ]]></code>
+		/// </example>
 		public ToolStripProgressBar()
 			: base(CreateControlInstance())
 		{
@@ -49,6 +69,10 @@ namespace Wisej.Web.Ext.ToolStrip
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToolStripProgressBar"/> class with the specified name.
+		/// </summary>
+		/// <param name="name">The name of the <see cref="ToolStripProgressBar"/>.</param>
 		public ToolStripProgressBar(string name)
 			: this()
 		{
@@ -60,9 +84,17 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		///  Create a strongly typed accessor for the class
+		/// Returns the hosted <see cref="Wisej.Web.ProgressBar"/> control.
 		/// </summary>
-		/// <value></value>
+		/// <remarks>
+		/// Use this property to access members of the progress bar that are not exposed by <see cref="ToolStripProgressBar"/>.
+		/// </remarks>
+		/// <example>
+		/// Changing the color of the hosted progress bar:
+		/// <code><![CDATA[
+		/// this.toolStripProgressBar1.ProgressBar.ForeColor = Color.SeaGreen;
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public ProgressBar ProgressBar
@@ -73,6 +105,9 @@ namespace Wisej.Web.Ext.ToolStrip
 			}
 		}
 
+		/// <summary>
+		/// This property is not relevant to this class.
+		/// </summary>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -82,6 +117,9 @@ namespace Wisej.Web.Ext.ToolStrip
 			set => base.BackgroundImage = value;
 		}
 
+		/// <summary>
+		/// This property is not relevant to this class.
+		/// </summary>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -92,9 +130,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		///  Specify what size you want the item to start out at
+		/// Returns the default size of the <see cref="ToolStripProgressBar"/>, in pixels.
 		/// </summary>
-		/// <value></value>
+		/// <returns>A <see cref="System.Drawing.Size"/> of 100 x 15 pixels.</returns>
 		public new Size DefaultSize
 		{
 			get
@@ -134,6 +172,10 @@ namespace Wisej.Web.Ext.ToolStrip
 		//	set { ProgressBar.MarqueeAnimationSpeed = value; }
 		//}
 
+		/// <summary>
+		/// Returns or sets the upper bound of the range of the <see cref="ToolStripProgressBar"/>.
+		/// </summary>
+		/// <returns>An integer representing the upper bound of the range. The default is 100.</returns>
 		[DefaultValue(100)]
 		[SRCategory("CatBehavior")]
 		[RefreshProperties(RefreshProperties.Repaint)]
@@ -150,6 +192,10 @@ namespace Wisej.Web.Ext.ToolStrip
 			}
 		}
 
+		/// <summary>
+		/// Returns or sets the lower bound of the range of the <see cref="ToolStripProgressBar"/>.
+		/// </summary>
+		/// <returns>An integer representing the lower bound of the range. The default is 0.</returns>
 		[DefaultValue(0)]
 		[SRCategory("CatBehavior")]
 		[RefreshProperties(RefreshProperties.Repaint)]
@@ -167,11 +213,6 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		//ITG:TODO: Review
-		/// <summary>
-		///  This is used for international applications where the language is written from RightToLeft.
-		///  When this property is true, and the RightToLeft is true, mirroring will be turned on on
-		///  the form, and control placement and text will be from right to left.
-		/// </summary>
 		//[SRCategory("CatAppearance")]
 		//[Localizable(true)]
 		//[DefaultValue(false)]
@@ -190,9 +231,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		//}
 
 		/// <summary>
-		///  Wrap some commonly used properties
+		/// Returns or sets the amount by which <see cref="PerformStep"/> increases the current position of the progress bar.
 		/// </summary>
-		/// <value></value>
+		/// <returns>The amount by which to increment the progress bar with each call to <see cref="PerformStep"/>. The default is 10.</returns>
 		[DefaultValue(10)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("ProgressBarStepDescr")]
@@ -208,10 +249,6 @@ namespace Wisej.Web.Ext.ToolStrip
 			}
 		}
 		//ITG:TODO: Review
-		/// <summary>
-		///  Wrap some commonly used properties
-		/// </summary>
-		/// <value></value>
 		//[DefaultValue(ProgressBarStyle.Blocks)]
 		//[SRCategory("CatBehavior")]
 		//[SRDescription("ProgressBarStyleDescr")]
@@ -228,7 +265,7 @@ namespace Wisej.Web.Ext.ToolStrip
 		//}
 
 		/// <summary>
-		///  Hide the property.
+		/// This property is not relevant to this class.
 		/// </summary>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -246,9 +283,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		///  Wrap some commonly used properties
+		/// Returns or sets the current position of the <see cref="ToolStripProgressBar"/>.
 		/// </summary>
-		/// <value></value>
+		/// <returns>The position within the range defined by <see cref="Minimum"/> and <see cref="Maximum"/>. The default is 0.</returns>
 		[DefaultValue(0)]
 		[SRCategory("CatBehavior")]
 		[Bindable(true)]
@@ -412,11 +449,40 @@ namespace Wisej.Web.Ext.ToolStrip
 			base.OnUnsubscribeControlEvents(control);
 		}
 
+		/// <summary>
+		/// Advances the current position of the progress bar by the specified amount.
+		/// </summary>
+		/// <param name="value">The amount by which to increment the current position of the progress bar.</param>
+		/// <example>
+		/// Advancing the progress bar after each file is processed:
+		/// <code><![CDATA[
+		/// this.toolStripProgressBar1.Maximum = files.Length;
+		/// foreach (string file in files)
+		/// {
+		///     ProcessFile(file);
+		///     this.toolStripProgressBar1.Increment(1);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Increment(int value)
 		{
 			ProgressBar.Increment(value);
 		}
 
+		/// <summary>
+		/// Advances the current position of the progress bar by the amount of the <see cref="Step"/> property.
+		/// </summary>
+		/// <example>
+		/// Advancing the progress bar in steps of 20 percent:
+		/// <code><![CDATA[
+		/// this.toolStripProgressBar1.Step = 20;
+		/// for (int i = 0; i < 5; i++)
+		/// {
+		///     RunPhase(i);
+		///     this.toolStripProgressBar1.PerformStep();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void PerformStep()
 		{
 			ProgressBar.PerformStep();
