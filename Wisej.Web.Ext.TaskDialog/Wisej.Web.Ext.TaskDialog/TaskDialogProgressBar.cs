@@ -27,30 +27,38 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.TaskDialog
 {
 	/// <summary>
-	/// 
-	///              Represents a progress bar control of a task dialog.
-	///            
-	///</summary>
+	/// Represents a progress bar control of a task dialog.
+	/// </summary>
+	/// <example>
+	/// Showing a progress bar and updating it while the dialog is shown:
+	/// <code><![CDATA[
+	/// var progress = new TaskDialogProgressBar(TaskDialogProgressBarState.Normal)
+	/// {
+	///     Minimum = 0,
+	///     Maximum = 100
+	/// };
+	/// page.ProgressBar = progress;
+	///
+	/// // later, while the dialog is shown.
+	/// progress.Value = 40;
+	/// ]]></code>
+	/// </example>
 	public class TaskDialogProgressBar : TaskDialogControl
 	{
 
 		#region Constructors
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class.
+		/// </summary>
 		public TaskDialogProgressBar()
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class
-		///              using the given <paramref name="state" />.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class
+		/// using the given <paramref name="state" />.
+		/// </summary>
 		/// <param name="state">The state of the progress bar.</param>
 		public TaskDialogProgressBar(TaskDialogProgressBarState state)
 		{
@@ -61,20 +69,34 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Properties
 		/// <summary>
-		/// 
-		///              Gets or sets the state of the progress bar.
-		///            
-		///</summary>
+		/// Returns or sets the state of the progress bar.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a progress bar instance that is currently bound to a task dialog, but the value
-		///              to be set is <see cref="F:System.Windows.Forms.TaskDialogProgressBarState.None" />.
-		///              - or -
-		///              The property is set on a progress bar instance that is currently bound to a task dialog, but it's not visible as its initial
-		///              <see cref="P:System.Windows.Forms.TaskDialogProgressBar.State" /> property value was <see cref="F:System.Windows.Forms.TaskDialogProgressBarState.None" />.
-		///              - or -
-		///              The property is set on a progress bar instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a progress bar instance that is currently bound to a task dialog, but the value
+		/// to be set is <see cref="TaskDialogProgressBarState.None" />.
+		/// - or -
+		/// The property is set on a progress bar instance that is currently bound to a task dialog, but it's not visible as its initial
+		/// <see cref="State" /> property value was <see cref="TaskDialogProgressBarState.None" />.
+		/// - or -
+		/// The property is set on a progress bar instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
+		/// <remarks>
+		/// The progress bar is only created when the initial state is not <see cref="TaskDialogProgressBarState.None"/>;
+		/// use <see cref="TaskDialogProgressBarState.Marquee"/> when the duration of the operation is unknown
+		/// and <see cref="TaskDialogProgressBarState.Paused"/> or <see cref="TaskDialogProgressBarState.Error"/>
+		/// to reflect the state of the operation.
+		/// </remarks>
+		/// <example>
+		/// Switching from a marquee to a regular progress bar once the total is known:
+		/// <code><![CDATA[
+		/// page.ProgressBar = new TaskDialogProgressBar(TaskDialogProgressBarState.Marquee);
+		///
+		/// // later, while the dialog is shown.
+		/// page.ProgressBar.State = TaskDialogProgressBarState.Normal;
+		/// page.ProgressBar.Maximum = fileCount;
+		/// ]]></code>
+		/// </example>
 		public TaskDialogProgressBarState State
 		{
 			get
@@ -93,20 +115,18 @@ namespace Wisej.Web.Ext.TaskDialog
 		private TaskDialogProgressBarState _state;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the minimum value of the range of the control.
-		///            
-		///</summary>
+		/// Returns or sets the minimum value of the range of the control.
+		/// </summary>
 		/// <exception cref="T:System.ArgumentOutOfRangeException">
-		///              The value is less than 0 or greater than <see cref="F:System.UInt16.MaxValue" />.
-		///            </exception>
+		/// The value is less than 0 or greater than <see cref="F:System.UInt16.MaxValue" />.
+		/// </exception>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a progress bar instance that is currently bound to a task dialog, but it's not visible as its initial
-		///              <see cref="P:System.Windows.Forms.TaskDialogProgressBar.State" /> property value was <see cref="F:System.Windows.Forms.TaskDialogProgressBarState.None" />.
-		///              - or -
-		///              The property is set on a progress bar instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a progress bar instance that is currently bound to a task dialog, but it's not visible as its initial
+		/// <see cref="State" /> property value was <see cref="TaskDialogProgressBarState.None" />.
+		/// - or -
+		/// The property is set on a progress bar instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public int Minimum
 		{
 			get
@@ -125,20 +145,18 @@ namespace Wisej.Web.Ext.TaskDialog
 		private int _minimum;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the maximum value of the range of the control.
-		///            
-		///</summary>
+		/// Returns or sets the maximum value of the range of the control.
+		/// </summary>
 		/// <exception cref="T:System.ArgumentOutOfRangeException">
-		///              The value is less than 0 or greater than <see cref="F:System.UInt16.MaxValue" />.
-		///            </exception>
+		/// The value is less than 0 or greater than <see cref="F:System.UInt16.MaxValue" />.
+		/// </exception>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a progress bar instance that is currently bound to a task dialog, but it's not visible as its initial
-		///              <see cref="P:System.Windows.Forms.TaskDialogProgressBar.State" /> property value was <see cref="F:System.Windows.Forms.TaskDialogProgressBarState.None" />.
-		///              - or -
-		///              The property is set on a progress bar instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a progress bar instance that is currently bound to a task dialog, but it's not visible as its initial
+		/// <see cref="State" /> property value was <see cref="TaskDialogProgressBarState.None" />.
+		/// - or -
+		/// The property is set on a progress bar instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public int Maximum
 		{
 			get
@@ -157,20 +175,21 @@ namespace Wisej.Web.Ext.TaskDialog
 		private int _maximum;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the current position of the progress bar.
-		///            
-		///</summary>
+		/// Returns or sets the current position of the progress bar.
+		/// </summary>
 		/// <exception cref="T:System.ArgumentOutOfRangeException">
-		///              The value is less than 0 or greater than <see cref="F:System.UInt16.MaxValue" />.
-		///            </exception>
+		/// The value is less than 0 or greater than <see cref="F:System.UInt16.MaxValue" />.
+		/// </exception>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a progress bar instance that is currently bound to a task dialog, but it's not visible as its initial
-		///              <see cref="P:System.Windows.Forms.TaskDialogProgressBar.State" /> property value was <see cref="F:System.Windows.Forms.TaskDialogProgressBarState.None" />.
-		///              - or -
-		///              The property is set on a progress bar instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a progress bar instance that is currently bound to a task dialog, but it's not visible as its initial
+		/// <see cref="State" /> property value was <see cref="TaskDialogProgressBarState.None" />.
+		/// - or -
+		/// The property is set on a progress bar instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
+		/// <remarks>
+		/// The value should be between <see cref="Minimum"/> and <see cref="Maximum"/>.
+		/// </remarks>
 		public int Value
 		{
 			get
@@ -189,17 +208,18 @@ namespace Wisej.Web.Ext.TaskDialog
 		private int _value;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the speed of the marquee display of a progress bar.
-		///            
-		///</summary>
+		/// Returns or sets the speed of the marquee display of a progress bar.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a progress bar instance that is currently bound to a task dialog, but it's not visible as its initial
-		///              <see cref="P:System.Windows.Forms.TaskDialogProgressBar.State" /> property value was <see cref="F:System.Windows.Forms.TaskDialogProgressBarState.None" />.
-		///              - or -
-		///              The property is set on a progress bar instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a progress bar instance that is currently bound to a task dialog, but it's not visible as its initial
+		/// <see cref="State" /> property value was <see cref="TaskDialogProgressBarState.None" />.
+		/// - or -
+		/// The property is set on a progress bar instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
+		/// <remarks>
+		/// The value only applies when <see cref="State"/> is <see cref="TaskDialogProgressBarState.Marquee"/>.
+		/// </remarks>
 		public int MarqueeSpeed
 		{
 			get

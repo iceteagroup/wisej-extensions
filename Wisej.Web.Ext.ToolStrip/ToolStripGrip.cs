@@ -24,11 +24,21 @@ using Wisej.Core;
 
 namespace Wisej.Web.Ext.ToolStrip
 {
+	/// <summary>
+	/// Represents the move handle (grip) displayed on a <see cref="ToolStrip"/> when <see cref="ToolStrip.GripStyle"/> is <see cref="ToolStripGripStyle.Visible"/>.
+	/// </summary>
+	/// <remarks>
+	/// The grip lets the user drag the <see cref="ToolStrip"/> within or between the panels of a <see cref="ToolStripContainer"/>.
+	/// </remarks>
 	public class ToolStripGrip : ToolStripButton
 	{
 
 		#region Properties
 
+		/// <summary>
+		/// Returns a value indicating whether the grip can be selected.
+		/// </summary>
+		/// <returns>false; the grip cannot receive the selection.</returns>
 		[Browsable(false)]
 		public override bool CanSelect
 		{

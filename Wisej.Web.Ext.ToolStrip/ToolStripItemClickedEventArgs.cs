@@ -28,8 +28,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripItemClickedEventArgs" /> class, specifying the <see cref="ToolStripItem" /> that was clicked. 
-		///</summary>
+		/// Initializes a new instance of the <see cref="ToolStripItemClickedEventArgs" /> class, specifying the <see cref="ToolStripItem" /> that was clicked.
+		/// </summary>
 		/// <param name="clickedItem">The <see cref="ToolStripItem" /> that was clicked.</param>
 		public ToolStripItemClickedEventArgs(ToolStripItem clickedItem)
 		{
@@ -42,8 +42,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets the item that was clicked on the <see cref="ToolStrip" />.
-		///</summary>
+		/// Returns the item that was clicked on the <see cref="ToolStrip" />.
+		/// </summary>
 		/// <returns>The <see cref="ToolStripItem" /> that was clicked.</returns>
 		public ToolStripItem ClickedItem
 		{

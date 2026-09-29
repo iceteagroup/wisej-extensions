@@ -26,8 +26,21 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Represents a panel in a <see cref="StatusStrip" /> control. 
-	///</summary>
+	/// Represents a panel in a <see cref="ToolStrip" /> used as a status bar.
+	/// </summary>
+	/// <example>
+	/// Building a status bar with a stretched message panel and a fixed panel:
+	/// <code><![CDATA[
+	/// var message = new ToolStripStatusLabel("Ready");
+	/// message.Spring = true;
+	/// message.TextAlign = ContentAlignment.MiddleLeft;
+	///
+	/// var user = new ToolStripStatusLabel(Application.Session.UserName);
+	/// user.BorderSides = ToolStripStatusLabelBorderSides.Left;
+	///
+	/// this.statusToolStrip.Items.AddRange(new ToolStripItem[] { message, user });
+	/// ]]></code>
+	/// </example>
 	public class ToolStripStatusLabel : ToolStripLabel
 	{
 
@@ -43,8 +56,8 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ToolStripStatusLabel" /> class that displays the specified text.
-		///</summary>
-		/// <param name="text">A <see cref="System.String" /> representing the text to be displayed on the <see cref="ToolStripStatusLabel" />.</param>
+		/// </summary>
+		/// <param name="text">The text to be displayed on the <see cref="ToolStripStatusLabel" />.</param>
 		public ToolStripStatusLabel(string text)
 		{
 			this.Text = text;
@@ -63,8 +76,8 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ToolStripStatusLabel" /> class that displays the specified image and text.
-		///</summary>
-		/// <param name="text">A <see cref="System.String" /> representing the text to be displayed on the <see cref="ToolStripStatusLabel" />.</param>
+		/// </summary>
+		/// <param name="text">The text to be displayed on the <see cref="ToolStripStatusLabel" />.</param>
 		/// <param name="image">An <see cref="System.Drawing.Image" /> that is displayed on the <see cref="ToolStripStatusLabel" />.</param>
 		public ToolStripStatusLabel(string text, Image image)
 		{
@@ -78,8 +91,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets a value that determines where the <see cref="ToolStripStatusLabel" /> is aligned on the <see cref="StatusStrip" />.
-		///</summary>
+		/// Returns or sets a value that determines where the <see cref="ToolStripStatusLabel" /> is aligned on the status bar.
+		/// </summary>
 		/// <returns>One of the <see cref="ToolStripItemAlignment" /> values.</returns>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		[Browsable(false)]
@@ -101,10 +114,13 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItemAlignment _alignment;
 
 		/// <summary>
-		/// Gets or sets the border style of the <see cref="ToolStripStatusLabel" />.
-		///</summary>
+		/// Returns or sets the border style of the <see cref="ToolStripStatusLabel" />.
+		/// </summary>
+		/// <returns>One of the <see cref="BorderStyle" /> values. The default is <see cref="BorderStyle.Solid" />.</returns>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value of <see cref="ToolStripStatusLabel.BorderStyle" /> is not one of the <see cref="BorderStyle" /> values.</exception>
-		/// <returns>One of the <see cref="BorderStyle" /> values. The default is <see cref="BorderStyle.Flat" />.</returns>
+		/// <remarks>
+		/// The border is drawn only on the sides specified by <see cref="ToolStripStatusLabel.BorderSides" />, which is <see cref="ToolStripStatusLabelBorderSides.None" /> by default.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripStatusLabelBorderStyleDescr")]
 		[DefaultValue(BorderStyle.Solid)]
@@ -126,9 +142,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private BorderStyle _borderStyle;
 
 		/// <summary>
-		/// Gets or sets a value that indicates which sides of the <see cref="ToolStripStatusLabel" /> show borders.
-		///</summary>
-		/// <returns>One of the <see cref="ToolStripStatusLabelBorderSides" /> values. The default is <see cref="ToolStripStatusLabelBorderSides.None" />.</returns>
+		/// Returns or sets a value that indicates which sides of the <see cref="ToolStripStatusLabel" /> show borders.
+		/// </summary>
+		/// <returns>A combination of the <see cref="ToolStripStatusLabelBorderSides" /> values. The default is <see cref="ToolStripStatusLabelBorderSides.None" />.</returns>
+		/// <remarks>
+		/// The values can be combined; the style of the border is determined by <see cref="ToolStripStatusLabel.BorderStyle" />.
+		/// </remarks>
+		/// <example>
+		/// Separating a status panel from its neighbors with vertical lines:
+		/// <code><![CDATA[
+		/// this.toolStripStatusLabelUser.BorderSides = ToolStripStatusLabelBorderSides.Left | ToolStripStatusLabelBorderSides.Right;
+		/// this.toolStripStatusLabelUser.BorderStyle = BorderStyle.Solid;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(ToolStripStatusLabelBorderSides.None)]
 		[SRDescription("ToolStripStatusLabelBorderSidesDescr")]
 		[SRCategory("CatAppearance")]
@@ -150,9 +176,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripStatusLabelBorderSides _borderSides;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripStatusLabel" /> automatically fills the available space on the <see cref="StatusStrip" /> as the form is resized. 
-		///</summary>
-		/// <returns>true if the <see cref="ToolStripStatusLabel" /> automatically fills the available space on the <see cref="StatusStrip" /> as the form is resized; otherwise, false. The default is false.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripStatusLabel" /> automatically fills the available space on the status bar as the form is resized.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripStatusLabel" /> automatically fills the available space; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// When more than one label has <see cref="ToolStripStatusLabel.Spring" /> set to true, the available space is shared equally among them.
+		/// </remarks>
+		/// <example>
+		/// Letting the message panel take all the remaining space:
+		/// <code><![CDATA[
+		/// this.toolStripStatusLabelMessage.Spring = true;
+		/// this.toolStripStatusLabelMessage.TextAlign = ContentAlignment.MiddleLeft;
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripStatusLabelSpringDescr")]
 		[DefaultValue(false)]
 		[SRCategory("CatAppearance")]

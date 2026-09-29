@@ -1,13 +1,27 @@
 namespace Wisej.Web.Ext.QuillJS
 {
 	/// <summary>
-	/// Represents custom formats for the QuillJS editor.
+	/// Provides the names and values of the formats supported by the QuillJS editor.
 	/// </summary>
+	/// <remarks>
+	/// Use the constants in the nested classes instead of string literals when calling
+	/// <see cref="QuillJSEditor.Format"/>, <see cref="QuillJSEditor.FormatText"/> or <see cref="QuillJSEditor.FormatLine"/>,
+	/// or when building the <see cref="QuillJSEditor.Toolbar"/> configuration.
+	/// Some formats (i.e. <see cref="Formats.Formula"/>, <see cref="Formats.Table"/>, <see cref="Formats.Mention"/>)
+	/// require additional QuillJS modules that are not included in the default packages.
+	/// </remarks>
 	public class QuillFormat
 	{
 		/// <summary>
-		/// Predefined formats supported by QuillJS.
+		/// Provides the names of the formats supported by QuillJS.
 		/// </summary>
+		/// <remarks>
+		/// <see cref="Bold"/>, <see cref="Italic"/>, <see cref="Underline"/>, <see cref="Strike"/>, <see cref="Script"/>,
+		/// <see cref="Size"/>, <see cref="Color"/>, <see cref="Background"/>, <see cref="Font"/> and <see cref="Link"/> are inline formats;
+		/// <see cref="Header"/>, <see cref="Blockquote"/>, <see cref="Code"/>, <see cref="List"/>, <see cref="Indent"/>,
+		/// <see cref="Direction"/> and <see cref="Align"/> are line (block) formats.
+		/// <see cref="Clean"/> is only used as a toolbar button that removes the formatting.
+		/// </remarks>
 		public static class Formats
 		{
 			public const string Bold = "bold";
@@ -37,7 +51,7 @@ namespace Wisej.Web.Ext.QuillJS
 		}
 
 		/// <summary>
-		/// Predefined sizes for text.
+		/// Provides the values of the <see cref="Formats.Size"/> format supported by the default QuillJS configuration.
 		/// </summary>
 		public static class Sizes
 		{
@@ -48,7 +62,7 @@ namespace Wisej.Web.Ext.QuillJS
 		}
 
 		/// <summary>
-		/// Predefined alignment options.
+		/// Provides the values of the <see cref="Formats.Align"/> format.
 		/// </summary>
 		public static class Alignments
 		{
@@ -59,7 +73,7 @@ namespace Wisej.Web.Ext.QuillJS
 		}
 
 		/// <summary>
-		/// Script types for superscript and subscript.
+		/// Provides the values of the <see cref="Formats.Script"/> format (subscript and superscript).
 		/// </summary>
 		public static class Scripts
 		{
@@ -68,7 +82,7 @@ namespace Wisej.Web.Ext.QuillJS
 		}
 
 		/// <summary>
-		/// List types.
+		/// Provides the values of the <see cref="Formats.List"/> format.
 		/// </summary>
 		public static class Lists
 		{
@@ -78,7 +92,7 @@ namespace Wisej.Web.Ext.QuillJS
 		}
 
 		/// <summary>
-		/// Direction options for text.
+		/// Provides the values of the <see cref="Formats.Direction"/> format.
 		/// </summary>
 		public static class Directions
 		{
@@ -87,8 +101,12 @@ namespace Wisej.Web.Ext.QuillJS
 		}
 
 		/// <summary>
-		/// Predefined font families.
+		/// Provides common font family names for the <see cref="Formats.Font"/> format.
 		/// </summary>
+		/// <remarks>
+		/// The default QuillJS configuration only accepts the "serif" and "monospace" font values; these names
+		/// can be used only when the font format has been registered with a matching whitelist on the client.
+		/// </remarks>
 		public static class Fonts
 		{
 			public const string Arial = "Arial";
@@ -102,8 +120,12 @@ namespace Wisej.Web.Ext.QuillJS
 		}
 
 		/// <summary>
-		/// Predefined font sizes.
+		/// Provides CSS font size names for the <see cref="Formats.Size"/> format.
 		/// </summary>
+		/// <remarks>
+		/// The default QuillJS configuration only accepts the values in <see cref="Sizes"/>; these names can be used
+		/// only when the size format has been registered with a matching whitelist on the client.
+		/// </remarks>
 		public static class FontSizes
 		{
 			public const string XSmall = "x-small";
@@ -118,41 +140,57 @@ namespace Wisej.Web.Ext.QuillJS
 	/// <summary>
 	/// Represents a custom format definition for QuillJS.
 	/// </summary>
+	/// <remarks>
+	/// This class only describes a format: it's not used by <see cref="QuillJSEditor"/> and a custom format
+	/// must be registered on the client using the QuillJS API.
+	/// </remarks>
 	public class CustomFormat
 	{
 		/// <summary>
-		/// Gets or sets the tag name for the format.
+		/// Returns or sets the HTML tag name for the format, i.e. "span" or "div".
 		/// </summary>
 		public string TagName { get; set; }
 
 		/// <summary>
-		/// Gets or sets the class name for the format.
+		/// Returns or sets the CSS class name for the format.
 		/// </summary>
 		public string ClassName { get; set; }
 
 		/// <summary>
-		/// Gets or sets whether this format is inline.
+		/// Returns or sets a value indicating whether this format is inline (true) or a block format (false).
 		/// </summary>
 		public bool IsInline { get; set; }
 
 		/// <summary>
-		/// Gets or sets whether this format allows nested formats.
+		/// Returns or sets a value indicating whether this format allows nested formats.
 		/// </summary>
 		public bool AllowNested { get; set; }
 
 		/// <summary>
-		/// Gets or sets the allowed attributes for this format.
+		/// Returns or sets the names of the HTML attributes allowed for this format.
 		/// </summary>
 		public string[] AllowedAttributes { get; set; }
 
 		/// <summary>
-		/// Gets or sets whether to add this format to the toolbar.
+		/// Returns or sets a value indicating whether to add this format to the toolbar.
 		/// </summary>
 		public bool AddToToolbar { get; set; }
 
 		/// <summary>
 		/// Creates a new custom format for a specific tag.
 		/// </summary>
+		/// <param name="tagName">The HTML tag name of the format.</param>
+		/// <param name="isInline">Whether the format is inline. The default is true.</param>
+		/// <param name="allowNested">Whether the format allows nested formats. The default is true.</param>
+		/// <param name="addToToolbar">Whether to add the format to the toolbar. The default is false.</param>
+		/// <param name="allowedAttributes">The names of the allowed HTML attributes.</param>
+		/// <returns>A new <see cref="CustomFormat"/> instance.</returns>
+		/// <example>
+		/// Describing an inline format rendered as a <c>mark</c> element:
+		/// <code><![CDATA[
+		/// var highlight = CustomFormat.CreateTag("mark", true, true, true, "title");
+		/// ]]></code>
+		/// </example>
 		public static CustomFormat CreateTag(string tagName, bool isInline = true, bool allowNested = true, bool addToToolbar = false, params string[] allowedAttributes)
 		{
 			return new CustomFormat
@@ -168,6 +206,19 @@ namespace Wisej.Web.Ext.QuillJS
 		/// <summary>
 		/// Creates a new custom format with a class.
 		/// </summary>
+		/// <param name="tagName">The HTML tag name of the format.</param>
+		/// <param name="className">The CSS class name of the format.</param>
+		/// <param name="isInline">Whether the format is inline. The default is true.</param>
+		/// <param name="allowNested">Whether the format allows nested formats. The default is true.</param>
+		/// <param name="addToToolbar">Whether to add the format to the toolbar. The default is false.</param>
+		/// <param name="allowedAttributes">The names of the allowed HTML attributes.</param>
+		/// <returns>A new <see cref="CustomFormat"/> instance.</returns>
+		/// <example>
+		/// Describing an inline format rendered as a <c>span</c> element with a CSS class:
+		/// <code><![CDATA[
+		/// var warning = CustomFormat.CreateClass("span", "text-warning");
+		/// ]]></code>
+		/// </example>
 		public static CustomFormat CreateClass(string tagName, string className, bool isInline = true, bool allowNested = true, bool addToToolbar = false, params string[] allowedAttributes)
 		{
 			return new CustomFormat
@@ -184,6 +235,17 @@ namespace Wisej.Web.Ext.QuillJS
 		/// <summary>
 		/// Creates a new custom format for a block element.
 		/// </summary>
+		/// <param name="tagName">The HTML tag name of the block element.</param>
+		/// <param name="className">The optional CSS class name of the format.</param>
+		/// <param name="addToToolbar">Whether to add the format to the toolbar. The default is false.</param>
+		/// <param name="allowedAttributes">The names of the allowed HTML attributes.</param>
+		/// <returns>A new block (not inline) <see cref="CustomFormat"/> instance that allows nested formats.</returns>
+		/// <example>
+		/// Describing a block format rendered as an <c>aside</c> element:
+		/// <code><![CDATA[
+		/// var note = CustomFormat.CreateBlock("aside", "note");
+		/// ]]></code>
+		/// </example>
 		public static CustomFormat CreateBlock(string tagName, string className = null, bool addToToolbar = false, params string[] allowedAttributes)
 		{
 			return new CustomFormat

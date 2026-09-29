@@ -26,17 +26,21 @@ using Wisej.Web.Layout;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Manages the overflow behavior of a <see cref="ToolStrip" />.
-	///</summary>
+	/// Represents the drop down that displays the items that overflow a <see cref="ToolStrip" />.
+	/// </summary>
+	/// <remarks>
+	/// The overflow drop down is opened by the <see cref="ToolStrip.OverflowButton"/> and contains the items whose
+	/// <see cref="ToolStripItem.Placement"/> is <see cref="ToolStripItemPlacement.Overflow"/>.
+	/// </remarks>
 	public class ToolStripOverflow : ToolStripDropDown
 	{
 
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripOverflow" /> class derived from a base <see cref="ToolStripItem" />.
-		///</summary>
-		/// <param name="parentItem">The <see cref="ToolStripItem" /> from which to derive this <see cref="ToolStripOverflow" /> instance. </param>
+		/// Initializes a new instance of the <see cref="ToolStripOverflow" /> class owned by the specified <see cref="ToolStripItem" />.
+		/// </summary>
+		/// <param name="parentItem">The <see cref="ToolStripItem" /> (usually the <see cref="ToolStripOverflowButton"/>) that owns this <see cref="ToolStripOverflow" /> instance.</param>
 		public ToolStripOverflow(ToolStripItem parentItem)
 		{
 			this._parentItem = parentItem;
@@ -48,9 +52,22 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets all of the items on the <see cref="ToolStrip" />, whether they are currently being displayed or not.
-		///</summary>
+		/// Returns all of the items on the <see cref="ToolStrip" /> that owns the overflow, whether they are currently being displayed or not.
+		/// </summary>
 		/// <returns>A <see cref="ToolStripItemCollection" /> containing all of the items.</returns>
+		/// <remarks>
+		/// Only the items with <see cref="ToolStripItem.Placement"/> set to <see cref="ToolStripItemPlacement.Overflow"/> are displayed in the overflow drop down.
+		/// </remarks>
+		/// <example>
+		/// Listing the items currently in the overflow:
+		/// <code><![CDATA[
+		/// foreach (ToolStripItem item in this.toolStrip1.OverflowButton.DropDown.Items)
+		/// {
+		///     if (item.IsOnOverflow)
+		///         System.Diagnostics.Debug.WriteLine(item.Text);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripItemsDescr")]
 		[SRCategory("CatData")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -64,6 +81,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private ToolStripItemCollection _items;
 
+		/// <summary>
+		/// Returns the <see cref="Wisej.Web.Layout.LayoutEngine"/> used to arrange the overflow items.
+		/// </summary>
+		/// <returns>The <see cref="Wisej.Web.Layout.LayoutEngine"/> that lays out the items.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		public override LayoutEngine LayoutEngine
@@ -90,10 +111,17 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Retrieves the size of a rectangular area into which a control can be fitted.
-		///</summary>
-		/// <returns>An ordered pair of type <see cref="System.Drawing.Size" /> representing the width and height of a rectangle.</returns>
+		/// Retrieves the size of a rectangular area into which the overflow drop down can be fitted.
+		/// </summary>
 		/// <param name="constrainingSize">The custom-sized area for a control.</param>
+		/// <returns>An ordered pair of type <see cref="System.Drawing.Size" /> representing the width and height of a rectangle.</returns>
+		/// <example>
+		/// Measuring the overflow drop down:
+		/// <code><![CDATA[
+		/// var overflow = (ToolStripOverflow)this.toolStrip1.OverflowButton.DropDown;
+		/// var size = overflow.GetPreferredSize(new Size(300, 0));
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		public override Size GetPreferredSize(Size constrainingSize)
 		{

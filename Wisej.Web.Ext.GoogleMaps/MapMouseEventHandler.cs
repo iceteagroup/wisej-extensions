@@ -36,9 +36,10 @@ namespace Wisej.Web.Ext.GoogleMaps
 	public class MapMouseEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Initializes an instance of the <see cref="T:Wisej.Web.Ext.GoogleMaps.MouseEventArgs" /> class.
+		/// Initializes an instance of the <see cref="T:Wisej.Web.Ext.GoogleMaps.MapMouseEventArgs" /> class.
 		/// </summary>
 		/// <param name="e">The event data from the client.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="e"/> is null.</exception>
 		public MapMouseEventArgs(WidgetEventArgs e)
 		{
 			if (e == null)
@@ -50,18 +51,33 @@ namespace Wisej.Web.Ext.GoogleMaps
 		}
 
 		/// <summary>
-		/// The ID of the clicked marker. Null if the click landed on the map outside of a marker.
+		/// Returns the ID of the clicked marker. Null if the click landed on the map outside of a marker.
 		/// </summary>
+		/// <example>
+		/// Distinguishing clicks on markers from clicks on the map:
+		/// <code><![CDATA[
+		/// private void googleMap1_MapClick(object sender, MapMouseEventArgs e)
+		/// {
+		///     if (e.Marker != null)
+		///         this.googleMap1.ShowInfoWindow(e.Marker, "Marker " + e.Marker);
+		///     else
+		///         this.googleMap1.CenterMap(e.Location);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public string Marker { get; private set; }
 
 		/// <summary>
-		/// The coordinates of  the click.
+		/// Returns the coordinates of the click.
 		/// </summary>
 		public LatLng Location { get; private set; }
 
 		/// <summary>
 		/// Returns which mouse button was pressed.
-		///</summary>
+		/// </summary>
+		/// <remarks>
+		/// <see cref="MouseButtons.Right"/> for right clicks, <see cref="MouseButtons.Left"/> in all other cases.
+		/// </remarks>
 		/// <returns>One of the <see cref="T:Wisej.Web.MouseButtons" /> values.</returns>
 		public MouseButtons Button { get; private set; }
 

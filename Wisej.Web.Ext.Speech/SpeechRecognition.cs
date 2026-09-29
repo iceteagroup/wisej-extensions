@@ -30,8 +30,39 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.Speech
 {
 	/// <summary>
-	/// The SpeechRecognition interface of Web Speech API allows JavaScript to have access to a browser's audio stream and convert it to text.
+	/// Represents a component that uses the SpeechRecognition interface of the Web Speech API to capture the browser's
+	/// audio stream and convert it to text. It also extends <see cref="TextBoxBase"/> controls to enable dictation.
 	/// </summary>
+	/// <remarks>
+	/// <para>
+	/// Speech recognition runs in the browser and requires a browser that supports the Web Speech API
+	/// (i.e. Chrome, Edge, Safari), a secure (HTTPS) connection and the user's permission to use the microphone.
+	/// When the browser doesn't support it, the component does nothing.
+	/// </para>
+	/// <para>
+	/// Set <see cref="Enabled"/> to true to listen continuously (the recognition service is restarted automatically
+	/// every time it ends), or call <see cref="Start"/> to listen for a single session. Recognized text is returned by
+	/// the <see cref="Result"/> event and, for the extended text controls that have the focus, assigned to their
+	/// <see cref="Control.Text"/> property.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// Enabling dictation in a text box and handling the results:
+	/// <code><![CDATA[
+	/// var speech = new SpeechRecognition { Language = "en-US" };
+	/// speech.GetSpeechRecognition(this.textBoxNotes).Enabled = true;
+	/// speech.GetSpeechRecognition(this.textBoxNotes).RecognitionMode = SpeechRecognition.RecognitionMode.WhenFocused;
+	/// 
+	/// speech.Result += (s, e) =>
+	/// {
+	///     foreach (var result in e.Results)
+	///         Application.Session.LastTranscript = result.Transcript;
+	/// };
+	/// speech.Error += (s, e) => AlertBox.Show(e.Error, MessageBoxIcon.Error);
+	/// 
+	/// speech.Enabled = true;
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(SpeechRecognition))]
 	[ProvideProperty("SpeechRecognition", typeof(Control))]
@@ -43,6 +74,9 @@ namespace Wisej.Web.Ext.Speech
 		private Dictionary<Control, Properties> listeners;
 
 		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognition"/> component.
+		/// </summary>
 		public SpeechRecognition()
 		{
 			this.listeners = new Dictionary<Control, Properties>();
@@ -148,8 +182,13 @@ namespace Wisej.Web.Ext.Speech
 		#region Properties
 
 		/// <summary>
-		/// Controls whether continuous results are returned for each recognition, or only a single result.
+		/// Returns or sets whether continuous results are returned for each recognition, or only a single result.
 		/// </summary>
+		/// <remarks>
+		/// When false (default), the recognition session ends after the first final result. When true, the browser keeps
+		/// listening and fires a <see cref="Result"/> event for each recognized phrase until <see cref="Stop"/> is called.
+		/// The value is used when the recognition session starts.
+		/// </remarks>
 		[DefaultValue(false)]
 		[Description("Controls whether continuous results are returned for each recognition, or only a single result.")]
 		public bool Continuous
@@ -167,9 +206,18 @@ namespace Wisej.Web.Ext.Speech
 		private bool _continuous = false;
 
 		/// <summary>
-		/// Returns and sets the language of the current SpeechRecognition. 
+		/// Returns or sets the language of the current SpeechRecognition.
 		/// If not specified, this defaults to the HTML lang attribute value, or the user agent's language setting if that isn't set either.
 		/// </summary>
+		/// <remarks>
+		/// The value is a BCP 47 language tag, i.e. "en-US", "de-DE", "it-IT". An empty string is converted to null.
+		/// </remarks>
+		/// <example>
+		/// Recognizing the language of the current session culture:
+		/// <code><![CDATA[
+		/// this.speechRecognition1.Language = Application.CurrentCulture.Name;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[Description("Gets and sets the language of the current SpeechRecognition.")]
 		public string Language
@@ -190,8 +238,13 @@ namespace Wisej.Web.Ext.Speech
 		private string _language = null;
 
 		/// <summary>
-		/// Returns and sets the maximum number of alternatives provided per each speech recognition result.
+		/// Returns or sets the maximum number of alternatives provided per each speech recognition result.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than 0 or greater than 10.</exception>
+		/// <remarks>
+		/// The default is 1. Each alternative is returned as a separate <see cref="SpeechRecognitionResult"/> in
+		/// <see cref="SpeechRecognitionEventArgs.Results"/>, with its own <see cref="SpeechRecognitionResult.Confidence"/>.
+		/// </remarks>
 		[DefaultValue(1)]
 		[Description("Gets and sets the volume that the utterance will be spoken at. The default is 1 (maximum).")]
 		public int MaxAlternatives
@@ -212,9 +265,13 @@ namespace Wisej.Web.Ext.Speech
 		private int _maxAlternatives = 1;
 
 		/// <summary>
-		/// Controls whether interim results should be returned (true) or not (false.)
-		/// Interim results are results that are not yet final (e.g. the SpeechRecognitionResult.isFinal property is false.)
+		/// Returns or sets whether interim results should be returned (true) or not (false.)
+		/// Interim results are results that are not yet final (e.g. the <see cref="SpeechRecognitionResult.IsFinal"/> property is false.)
 		/// </summary>
+		/// <remarks>
+		/// Interim results are delivered only to the <see cref="Result"/> event handlers; the extended text controls
+		/// are updated only with final results.
+		/// </remarks>
 		[DefaultValue(false)]
 		[Description("Controls whether interim results should be returned (true) or not (false.)")]
 		public bool InterimResults
@@ -232,8 +289,13 @@ namespace Wisej.Web.Ext.Speech
 		private bool _interimResults = false;
 
 		/// <summary>
-		/// Enables or disables the this <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognition" /> extender.
+		/// Returns or sets whether the <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognition" /> component is listening.
 		/// </summary>
+		/// <remarks>
+		/// Setting this property to true starts the recognition service and restarts it automatically every time it ends,
+		/// until the property is set back to false (which calls <see cref="Stop"/> on the client). The default is false.
+		/// The browser asks the user for permission to use the microphone the first time.
+		/// </remarks>
 		[DefaultValue(false)]
 		[Description("Enables or disables the speech recognition.")]
 		public bool Enabled
@@ -251,8 +313,21 @@ namespace Wisej.Web.Ext.Speech
 		private bool _enabled = false;
 
 		/// <summary>
-		/// Returns and sets a collection of grammar definitions - using the JSpeech Grammar Format (JSGF) <see href="https://www.w3.org/TR/jsgf/"/>.
+		/// Returns or sets a collection of grammar definitions - using the JSpeech Grammar Format (JSGF) <see href="https://www.w3.org/TR/jsgf/"/>.
 		/// </summary>
+		/// <remarks>
+		/// Each string is a complete JSGF grammar, added to the browser's grammar list with weight 1. Grammars are only hints
+		/// and many browsers ignore them.
+		/// </remarks>
+		/// <example>
+		/// Limiting the recognition to a list of colors:
+		/// <code><![CDATA[
+		/// this.speechRecognition1.Grammars = new[]
+		/// {
+		///     "#JSGF V1.0; grammar colors; public <color> = red | green | blue | yellow ;"
+		/// };
+		/// ]]></code>
+		/// </example>
 		[Localizable(true)]
 		[Description("Gets and sets a collection of grammar definitions - using the JSpeech Grammar Format (JSGF) <see href=\"https://www.w3.org/TR/jsgf/.\"/>")]
 		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
@@ -288,6 +363,24 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Starts the speech recognition service listening to incoming audio.
 		/// </summary>
+		/// <remarks>
+		/// The call is ignored if the service is already listening. Unless <see cref="Enabled"/> is true, the session ends
+		/// after the first result (or after the silence timeout) when <see cref="Continuous"/> is false.
+		/// </remarks>
+		/// <example>
+		/// Listening while a button is pressed:
+		/// <code><![CDATA[
+		/// private void buttonMic_MouseDown(object sender, MouseEventArgs e)
+		/// {
+		///     this.speechRecognition1.Start();
+		/// }
+		/// 
+		/// private void buttonMic_MouseUp(object sender, MouseEventArgs e)
+		/// {
+		///     this.speechRecognition1.Stop();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Start()
 		{
 			Call("start");
@@ -296,6 +389,18 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Stops the speech recognition service from listening to incoming audio, and attempts to return a result using the audio captured so far.
 		/// </summary>
+		/// <remarks>
+		/// If <see cref="Enabled"/> is true, the service is restarted automatically; set <see cref="Enabled"/> to false to stop listening.
+		/// </remarks>
+		/// <example>
+		/// Stopping and processing the audio captured so far:
+		/// <code><![CDATA[
+		/// private void buttonDone_Click(object sender, EventArgs e)
+		/// {
+		///     this.speechRecognition1.Stop();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Stop()
 		{
 			Call("stop");
@@ -304,6 +409,18 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Stops the speech recognition service from listening to incoming audio, and doesn't attempt to return a result.
 		/// </summary>
+		/// <remarks>
+		/// If <see cref="Enabled"/> is true, the service is restarted automatically; set <see cref="Enabled"/> to false to stop listening.
+		/// </remarks>
+		/// <example>
+		/// Discarding the current recognition:
+		/// <code><![CDATA[
+		/// private void buttonCancel_Click(object sender, EventArgs e)
+		/// {
+		///     this.speechRecognition1.Abort();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Abort()
 		{
 			Call("abort");
@@ -312,8 +429,21 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Returns true if <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognition" /> can offer an extender property to the specified target component.
 		/// </summary>
-		/// <returns>true if the <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognition" /> class can offer one or more extender properties; otherwise, false.</returns>
 		/// <param name="target">The target object to add an extender property to. </param>
+		/// <returns>true if the <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognition" /> class can offer one or more extender properties; otherwise, false.</returns>
+		/// <remarks>
+		/// Only controls derived from <see cref="TextBoxBase"/> can be extended.
+		/// </remarks>
+		/// <example>
+		/// Enabling dictation in all the text boxes of a form:
+		/// <code><![CDATA[
+		/// foreach (Control control in this.Controls)
+		/// {
+		///     if (this.speechRecognition1.CanExtend(control))
+		///         this.speechRecognition1.GetSpeechRecognition(control).Enabled = true;
+		/// }
+		/// ]]></code>
+		/// </example>
 		public bool CanExtend(object target)
 		{
 			return (target is TextBoxBase);
@@ -330,10 +460,25 @@ namespace Wisej.Web.Ext.Speech
 		}
 
 		/// <summary>
-		/// SpeechRecognition properties.
+		/// Returns the speech recognition properties associated with the specified control.
 		/// </summary>
-		/// <returns>A <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognition.Properties" /> instance with the SpeechRecognition properties.</returns>
 		/// <param name="control">The <see cref="T:Wisej.Web.Control" /> for which to retrieve the speech properties. </param>
+		/// <returns>A <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognition.Properties" /> instance with the SpeechRecognition properties.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="control"/> is null.</exception>
+		/// <remarks>
+		/// The properties are created the first time they are requested for a control and are removed automatically
+		/// when the control is disposed.
+		/// </remarks>
+		/// <example>
+		/// Filling a text box with the next phrase spoken while it has the focus:
+		/// <code><![CDATA[
+		/// var props = this.speechRecognition1.GetSpeechRecognition(this.textBoxSearch);
+		/// props.RecognitionMode = SpeechRecognition.RecognitionMode.WhenFocusedOnce;
+		/// props.Enabled = true;
+		/// 
+		/// this.speechRecognition1.Enabled = true;
+		/// ]]></code>
+		/// </example>
 		[DisplayName("SpeechRecognition")]
 		[Description("SpeechRecognition properties")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -365,6 +510,15 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Removes all speech extenders.
 		/// </summary>
+		/// <remarks>
+		/// After this call the recognized text is no longer assigned to any control; the <see cref="Result"/> event is still fired.
+		/// </remarks>
+		/// <example>
+		/// Disabling dictation in all controls:
+		/// <code><![CDATA[
+		/// this.speechRecognition1.Clear();
+		/// ]]></code>
+		/// </example>
 		public void Clear()
 		{
 			lock (this.listeners)
@@ -391,8 +545,19 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Assigns the speech recognition properties to the control.
 		/// </summary>
-		/// <param name="control">The control to rotate.</param>
-		/// <param name="properties">An instance of <see cref="T:Wisej.Web.SpeechRecognition.Properties"/> defining the speech listeners.</param>
+		/// <param name="control">The control that receives the recognized text.</param>
+		/// <param name="properties">An instance of <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognition.Properties"/> defining the speech listeners.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="control"/> or <paramref name="properties"/> is null.</exception>
+		/// <example>
+		/// Assigning a new set of properties to a text box:
+		/// <code><![CDATA[
+		/// this.speechRecognition1.SetSpeechRecognition(this.textBoxNotes, new SpeechRecognition.Properties
+		/// {
+		///     Enabled = true,
+		///     RecognitionMode = SpeechRecognition.RecognitionMode.WhenFocused
+		/// });
+		/// ]]></code>
+		/// </example>
 		public void SetSpeechRecognition(Control control, Properties properties)
 		{
 			if (control == null)
@@ -511,6 +676,9 @@ namespace Wisej.Web.Ext.Speech
 			/// <summary>
 			/// Creates a new instance of the speech recognition properties.
 			/// </summary>
+			/// <remarks>
+			/// The new instance is not connected to any control until it's assigned using <see cref="SetSpeechRecognition"/>.
+			/// </remarks>
 			public Properties()
 			{
 
@@ -543,8 +711,14 @@ namespace Wisej.Web.Ext.Speech
 			}
 
 			/// <summary>
-			/// Determines how the <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognition" /> extender applies to the extended control.
+			/// Returns or sets how the <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognition" /> extender applies to the extended control.
 			/// </summary>
+			/// <remarks>
+			/// The recognized text is assigned only to the extended control that has the focus. With
+			/// <see cref="SpeechRecognition.RecognitionMode.WhenFocusedOnce"/> (default), <see cref="Enabled"/> is reset to false
+			/// after the first final result is assigned to the control; with <see cref="SpeechRecognition.RecognitionMode.WhenFocused"/>
+			/// every final result replaces the text of the control while it has the focus.
+			/// </remarks>
 			[DefaultValue(RecognitionMode.WhenFocusedOnce)]
 			[Description("Determines how the speak extender applies to the extended control.")]
 			public RecognitionMode RecognitionMode
@@ -562,8 +736,13 @@ namespace Wisej.Web.Ext.Speech
 			private RecognitionMode _reconMode = RecognitionMode.WhenFocusedOnce;
 
 			/// <summary>
-			/// Enables or disables speech recognition on the control.
+			/// Returns or sets whether the recognized text is assigned to the control.
 			/// </summary>
+			/// <remarks>
+			/// When enabled and the control has the focus, the final result with the highest confidence replaces the text
+			/// of the control and the caret is moved to the end. The component itself must be listening: set
+			/// <see cref="SpeechRecognition.Enabled"/> to true or call <see cref="SpeechRecognition.Start"/>.
+			/// </remarks>
 			[DefaultValue(false)]
 			[Description("Enables or disables speech recognition on the control.")]
 			public bool Enabled

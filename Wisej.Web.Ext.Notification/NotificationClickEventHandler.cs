@@ -30,14 +30,14 @@ namespace Wisej.Web.Ext.Notification
 	public delegate void NotificationClickEventHandler(object sender, NotificationClickEventArgs e);
 
 	/// <summary>
-	/// Provides data for the <see cref="E:Wisej.Web.Ext.Notification.Notification.Click"/> events.
+	/// Provides data for the <see cref="E:Wisej.Web.Ext.Notification.Notification.Click"/> event.
 	/// </summary>
 	[ApiCategory("Notification")]
 	public class NotificationClickEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Notification.NotificationClickEventArgs" /> class.
-		///</summary>
+		/// </summary>
 		/// <param name="title">Title of the clicked notification.</param>
 		/// <param name="id">Id of the clicked notification.</param>
 		public NotificationClickEventArgs(string title, string id = null) {
@@ -49,6 +49,9 @@ namespace Wisej.Web.Ext.Notification
 		/// <summary>
 		/// Returns the ID of the notification that was clicked.
 		/// </summary>
+		/// <remarks>
+		/// The value passed to the id parameter of <see cref="Notification.Show"/>; null if it was not specified.
+		/// </remarks>
 		public string Id
 		{
 			get;

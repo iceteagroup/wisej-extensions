@@ -47,8 +47,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets the size and location of the <see cref="ToolStripPanelRow" />, including its nonclient elements, in pixels, relative to the parent control.
-		///</summary>
+		/// Returns the size and location of the <see cref="ToolStripPanelRow" />, including its nonclient elements, in pixels, relative to the parent control.
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Rectangle" /> representing the size and location.</returns>
 		public virtual Rectangle Bounds
 		{
@@ -61,9 +61,13 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Rectangle _bounds;
 
 		/// <summary>
-		/// Gets the controls in the <see cref="ToolStripPanelRow" />.
-		///</summary>
+		/// Returns the controls in the <see cref="ToolStripPanelRow" />.
+		/// </summary>
 		/// <returns>An array of controls.</returns>
+		/// <remarks>
+		/// The array is a snapshot of the controls in the row; to add or move a <see cref="ToolStrip"/> into a row use
+		/// <see cref="ToolStripPanel.Join(ToolStrip, int)"/>.
+		/// </remarks>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[SRDescription("ControlControlsDescr")]
@@ -78,8 +82,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Control[] _controls;
 
 		/// <summary>
-		/// Gets the space, in pixels, that is specified by default between controls.
-		///</summary>
+		/// Returns the space, in pixels, that is specified by default between controls.
+		/// </summary>
 		/// <returns>A <see cref="Padding" /> that represents the default space between controls.</returns>
 		public virtual Padding DefaultMargin
 		{
@@ -92,8 +96,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _defaultMargin;
 
 		/// <summary>
-		/// Gets the internal spacing, in pixels, of the contents of a control.
-		///</summary>
+		/// Returns the internal spacing, in pixels, of the contents of a control.
+		/// </summary>
 		/// <returns>A <see cref="Padding" /> that represents the internal spacing of the contents of a control.</returns>
 		public virtual Padding DefaultPadding
 		{
@@ -106,8 +110,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _defaultPadding;
 
 		/// <summary>
-		/// Gets the display area of the control.
-		///</summary>
+		/// Returns the display area of the row.
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Rectangle" /> representing the size and location.</returns>
 		public Rectangle DisplayRectangle
 		{
@@ -120,9 +124,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Rectangle _displayRectangle;
 
 		/// <summary>
-		/// Gets an instance of the control's layout engine.
-		///</summary>
-		/// <returns>The <see cref="Layout.LayoutEngine" /> for the control's contents.</returns>
+		/// Returns an instance of the row's layout engine.
+		/// </summary>
+		/// <returns>The <see cref="Layout.LayoutEngine" /> for the row's contents.</returns>
 		public LayoutEngine LayoutEngine
 		{
 			get
@@ -134,8 +138,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private LayoutEngine _layoutEngine;
 
 		/// <summary>
-		/// Gets or sets the space between controls.
-		///</summary>
+		/// Returns or sets the space between controls.
+		/// </summary>
 		/// <returns>A <see cref="Padding" /> representing the space between controls.</returns>
 		public Padding Margin
 		{
@@ -155,9 +159,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _margin;
 
 		/// <summary>
-		/// Gets or sets padding within the control.
-		///</summary>
-		/// <returns>A <see cref="Padding" /> representing the control's internal spacing characteristics.</returns>
+		/// Returns or sets padding within the row.
+		/// </summary>
+		/// <returns>A <see cref="Padding" /> representing the row's internal spacing characteristics.</returns>
 		public virtual Padding Padding
 		{
 			get
@@ -176,8 +180,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _padding;
 
 		/// <summary>
-		/// Gets the <see cref="ToolStripPanel" /> that contains the <see cref="ToolStripPanelRow" />.
-		///</summary>
+		/// Returns the <see cref="ToolStripPanel" /> that contains the <see cref="ToolStripPanelRow" />.
+		/// </summary>
 		/// <returns>The <see cref="ToolStripPanel" /> that contains the <see cref="ToolStripPanelRow" />.</returns>
 		public ToolStripPanel ToolStripPanel
 		{
@@ -190,8 +194,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripPanel _parent;
 
 		/// <summary>
-		/// Gets the layout direction of the <see cref="ToolStripPanelRow" /> relative to its containing <see cref="ToolStripPanel" />.
-		///</summary>
+		/// Returns the layout direction of the <see cref="ToolStripPanelRow" /> relative to its containing <see cref="ToolStripPanel" />.
+		/// </summary>
 		/// <returns>One of the <see cref="Orientation" /> values.</returns>
 		public Orientation Orientation
 		{
@@ -208,10 +212,20 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Methods
 
 		/// <summary>
-		/// Gets or sets a value indicating whether a <see cref="ToolStrip" /> can be dragged and dropped into a <see cref="ToolStripPanelRow" />.
-		///</summary>
-		/// <returns>true if there is enough space in the <see cref="ToolStripPanelRow" /> to receive the <see cref="ToolStrip" />; otherwise, false. </returns>
+		/// Returns a value indicating whether a <see cref="ToolStrip" /> can be dragged and dropped into the <see cref="ToolStripPanelRow" />.
+		/// </summary>
 		/// <param name="toolStripToDrag">The <see cref="ToolStrip" /> to be dragged and dropped into the <see cref="ToolStripPanelRow" />.</param>
+		/// <returns>true if there is enough space in the <see cref="ToolStripPanelRow" /> to receive the <see cref="ToolStrip" />; otherwise, false.</returns>
+		/// <example>
+		/// Moving a tool strip into the first row only when it fits:
+		/// <code><![CDATA[
+		/// ToolStripPanelRow firstRow = this.toolStripPanel1.Rows[0];
+		/// if (firstRow.CanMove(this.toolStrip2))
+		/// {
+		///     this.toolStripPanel1.Join(this.toolStrip2, 0);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public bool CanMove(ToolStrip toolStripToDrag)
 		{
 			// TODO: Implement

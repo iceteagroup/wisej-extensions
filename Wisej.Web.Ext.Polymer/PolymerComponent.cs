@@ -25,9 +25,26 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.Polymer
 {
 	/// <summary>
-	/// Represents a polymer (https://elements.polymer-project.org/) non-visual component.
+	/// Represents a Polymer (<see href="https://www.polymer-project.org"/>) non-visual component.
 	/// Used to import polymer libraries, such as iron-icons sets and others.
 	/// </summary>
+	/// <remarks>
+	/// The libraries listed in <see cref="Imports"/> are imported in the browser using <c>&lt;link rel="import"&gt;</c>
+	/// elements. Each library is loaded only once per browser page.
+	/// </remarks>
+	/// <example>
+	/// Importing the iron-icons sets used by <see cref="PolymerWidget"/> controls:
+	/// <code><![CDATA[
+	/// var polymerComponent = new PolymerComponent(this.components)
+	/// {
+	///     Imports = new[]
+	///     {
+	///         "iron-icons/iron-icons.html",
+	///         "iron-icons/social-icons.html"
+	///     }
+	/// };
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(PolymerWidget))]
 	[ToolboxItemFilter("Wisej.Web", ToolboxItemFilterType.Require)]
@@ -39,16 +56,17 @@ namespace Wisej.Web.Ext.Polymer
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Polymer.PolymerComponent" /> class.
+		/// Initializes a new instance of the <see cref="PolymerComponent" /> class.
 		/// </summary>
 		public PolymerComponent()
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Polymer.PolymerComponent" /> class together with the specified container.
+		/// Initializes a new instance of the <see cref="PolymerComponent" /> class together with the specified container.
 		/// </summary>
-		/// <param name="container">A <see cref="T:System.ComponentModel.IContainer" /> that represents the container for the component. </param>
+		/// <param name="container">A <see cref="IContainer" /> that represents the container for the component.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="container"/> is null.</exception>
 		public PolymerComponent(IContainer container)
 			: this()
 		{
@@ -63,8 +81,25 @@ namespace Wisej.Web.Ext.Polymer
 		#region Properties
 
 		/// <summary>
-		/// Returns or sets the base url for the polymer files.
+		/// Returns or sets the base URL for the polymer files.
 		/// </summary>
+		/// <remarks>
+		/// Relative entries in <see cref="Imports"/> and the elements created by <see cref="PolymerWidget"/> are loaded
+		/// from this URL; it must end with a slash. The default is <c>"https://wisej.s3.amazonaws.com/libs/polymers/"</c>.
+		/// This is a static setting shared by all sessions, but the new value is sent only to the browser of the current
+		/// session: set it before creating any Polymer control, i.e. in <c>Program.Main</c>, for every session.
+		/// A null value is converted to an empty string.
+		/// </remarks>
+		/// <example>
+		/// Loading the Polymer libraries from the application's own folder:
+		/// <code><![CDATA[
+		/// static void Main()
+		/// {
+		///     PolymerComponent.PolymerBaseUrl = "https://myapp.example.com/polymer/";
+		///     new MainPage().Show();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public static string PolymerBaseUrl
 		{
 			get { return _polymerBaseUrl; }
@@ -83,6 +118,20 @@ namespace Wisej.Web.Ext.Polymer
 		/// <summary>
 		/// Returns or sets the list of polymer libraries to import.
 		/// </summary>
+		/// <remarks>
+		/// Each entry is either an absolute URL (starting with <c>http:</c> or <c>https:</c>) or a path relative to
+		/// <see cref="PolymerBaseUrl"/>. Libraries already loaded in the browser are not loaded again.
+		/// </remarks>
+		/// <example>
+		/// Importing a relative and an absolute library:
+		/// <code><![CDATA[
+		/// this.polymerComponent1.Imports = new[]
+		/// {
+		///     "iron-icons/maps-icons.html",
+		///     "https://cdn.example.com/elements/my-element.html"
+		/// };
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[MergableProperty(false)]
 		[Editor("System.Windows.Forms.Design.StringArrayEditor, System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", 
@@ -106,6 +155,9 @@ namespace Wisej.Web.Ext.Polymer
 		/// Returns or sets the <see cref="T:System.ComponentModel.ISite" /> associated with 
 		/// the <see cref="T:System.ComponentModel.IComponent" />.
 		/// </summary>
+		/// <remarks>
+		/// This property is used by the designer. Setting it also updates the design mode state of the component.
+		/// </remarks>
 		/// <returns>The <see cref="T:System.ComponentModel.ISite" /> object associated with the component; or null, if the component does not have a site.</returns>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

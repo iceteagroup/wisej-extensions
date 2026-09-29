@@ -29,22 +29,31 @@ namespace Wisej.Web.Ext.GoogleMaps
 	/// <remarks>
 	/// 
 	/// Latitude ranges between -90 and 90 degrees, inclusive. 
-	/// Values above or below this range will be clamped to the range [-90, 90]. 
+	/// When the value is used by the Google Maps library on the client, values above or below this range are clamped to the range [-90, 90]. 
 	/// This means that if the value specified is less than -90, it will be set to -90. And if the value is greater than 90, it will be set to 90.
 	/// 
-	/// Longitude ranges between -180 and 180 degrees, inclusive.Values above or below this range will be wrapped so that they fall within the range.
+	/// Longitude ranges between -180 and 180 degrees, inclusive. Values above or below this range are wrapped by the Google Maps library so that they fall within the range.
 	/// For example, a value of -190 will be converted to 170. A value of 190 will be converted to -170. This reflects the fact that longitudes wrap around the globe.
 	/// 
 	/// Although the default map projection associates longitude with the x-coordinate of the map, and latitude 
 	/// with the y-coordinate, the latitude coordinate is always written first, followed by the longitude.
-	/// Notice that you cannot modify the coordinates of a LatLng. If you want to compute another point, you have to create a new one.
+	/// The <see cref="LatLng"/> class doesn't validate, clamp or wrap the values assigned to <see cref="Lat"/> and <see cref="Lng"/>.
 	/// 
 	/// </remarks>
+	/// <example>
+	/// Creating a location and using it to center the map:
+	/// <code><![CDATA[
+	/// var location = new LatLng { Lat = 37.7749, Lng = -122.4194 };
+	/// this.googleMap1.Options.center = location;
+	/// this.googleMap1.AddMarker("sf", location);
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("GoogleMaps")]
 	public class LatLng
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.GoogleMaps.LatLng"/> class.
+		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.GoogleMaps.LatLng"/> class
+		/// with latitude and longitude set to 0.
 		/// </summary>
 		public LatLng()
 		{
@@ -62,19 +71,28 @@ namespace Wisej.Web.Ext.GoogleMaps
 		}
 
 		/// <summary>
-		/// The latitude in degrees.
+		/// Returns or sets the latitude in degrees.
 		/// </summary>
 		public double Lat { get; set; }
 
 		/// <summary>
-		/// The longitude in degrees.
+		/// Returns or sets the longitude in degrees.
 		/// </summary>
 		public double Lng { get; set; }
 
 		/// <summary>
 		/// Returns a string representation of a <see cref="T:Wisej.Web.Ext.GoogleMaps.LatLng"/> object.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>A string in the format <c>{Lat=45.4642, Lng=9.19}</c>, formatted using the current culture.</returns>
+		/// <example>
+		/// Displaying the location clicked by the user:
+		/// <code><![CDATA[
+		/// private void googleMap1_MapClick(object sender, MapMouseEventArgs e)
+		/// {
+		///     AlertBox.Show(e.Location.ToString());
+		/// }
+		/// ]]></code>
+		/// </example>
 		public override string ToString()
 		{
 			return String.Concat(

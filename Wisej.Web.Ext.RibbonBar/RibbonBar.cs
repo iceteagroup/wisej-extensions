@@ -41,8 +41,38 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// quicker learning of the application, and makes users feel more in control of their experience with the application.
 	/// </para><para>
 	/// The RibbonBar replaces the traditional menu bar and toolbars.
+	/// </para><para>
+	/// The content is organized in a hierarchy: the <see cref="Pages"/> collection contains <see cref="RibbonBarPage"/> tabs,
+	/// each page contains <see cref="RibbonBarGroup"/> panels (<see cref="RibbonBarPage.Groups"/>), and each group contains
+	/// <see cref="RibbonBarItem"/> components (<see cref="RibbonBarGroup.Items"/>) such as <see cref="RibbonBarItemButton"/>,
+	/// <see cref="RibbonBarItemCheckBox"/> or <see cref="RibbonBarItemComboBox"/>.
+	/// </para><para>
+	/// The events fired by the child components are also routed to the RibbonBar (<see cref="ItemClick"/>,
+	/// <see cref="MenuButtonItemClick"/>, <see cref="GroupClick"/>, <see cref="ItemValueChanged"/>), allowing
+	/// the application to handle all the ribbon commands in a single handler.
 	/// </para>
 	/// </remarks>
+	/// <example>
+	/// Building a simple ribbon in code and handling all the item clicks in one place:
+	/// <code><![CDATA[
+	/// var ribbonBar = new RibbonBar();
+	///
+	/// var home = new RibbonBarPage { Text = "&Home" };
+	/// var clipboard = new RibbonBarGroup { Text = "Clipboard" };
+	/// clipboard.Items.Add(new RibbonBarItemButton { Name = "paste", Text = "Paste", ImageSource = "icon-paste" });
+	/// clipboard.Items.Add(new RibbonBarItemButton { Name = "cut", Text = "Cut", Orientation = Orientation.Horizontal });
+	/// clipboard.Items.Add(new RibbonBarItemButton { Name = "copy", Text = "Copy", Orientation = Orientation.Horizontal });
+	/// home.Groups.Add(clipboard);
+	/// ribbonBar.Pages.Add(home);
+	///
+	/// ribbonBar.ItemClick += (s, e) =>
+	/// {
+	///     AlertBox.Show("Clicked: " + e.Item.Name);
+	/// };
+	///
+	/// this.Controls.Add(ribbonBar);
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[DefaultEvent("Load")]
 	[ApiCategory("RibbonBar")]
@@ -58,6 +88,10 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RibbonBar"/> control.
 		/// </summary>
+		/// <remarks>
+		/// The new control is docked to the top (<see cref="DockStyle.Top"/>), has <see cref="AutoSize"/> set to true,
+		/// is not focusable and doesn't cause validation (<see cref="CausesValidation"/> is false).
+		/// </remarks>
 		public RibbonBar()
 		{
 			base.AutoSize = true;
@@ -556,6 +590,13 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets a value that indicates whether the control resizes based on its contents.
 		/// </summary>
 		/// <returns>true if the control automatically resizes based on its contents; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// When true, the height of the <see cref="RibbonBar"/> is measured on the client (it depends on the theme and on the
+		/// content of the pages) and sent back to the server, see <see cref="GetPreferredSize"/>. The measured height is
+		/// limited by <see cref="Control.MinimumSize"/> and <see cref="Control.MaximumSize"/>.
+		/// The height is not adjusted when the control is docked to the left, right or fill, or when it's anchored to both
+		/// the top and the bottom.
+		/// </remarks>
 		[Browsable(true)]
 		[EditorBrowsable(EditorBrowsableState.Always)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -571,6 +612,35 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// </summary>
 		/// <returns>true if clicking RibbonBar items causes validation to be performed 
 		/// on the active control; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// When true, the active control is validated before the <see cref="ItemClick"/> and <see cref="MenuButtonItemClick"/>
+		/// events (and the corresponding events on the items) are fired. If the validation is cancelled, the events are not fired.
+		/// The <see cref="GroupClick"/> and <see cref="ItemValueChanged"/> events are not affected. Note that the
+		/// <see cref="RibbonBarItemCheckBox.Checked"/> and <see cref="RibbonBarItemRadioButton.Checked"/> values are
+		/// updated before the validation takes place.
+		/// </remarks>
+		/// <example>
+		/// Validating the field being edited before executing a ribbon command:
+		/// <code><![CDATA[
+		/// this.ribbonBar1.CausesValidation = true;
+		///
+		/// private void textBoxAmount_Validating(object sender, CancelEventArgs e)
+		/// {
+		///     if (!decimal.TryParse(this.textBoxAmount.Text, out _))
+		///     {
+		///         AlertBox.Show("Please enter a valid amount.");
+		///         e.Cancel = true;
+		///     }
+		/// }
+		///
+		/// // not called when textBoxAmount fails validation.
+		/// private void ribbonBar1_ItemClick(object sender, RibbonBarItemEventArgs e)
+		/// {
+		///     if (e.Item.Name == "save")
+		///         SaveDocument();
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets whether clicking RibbonBar items causes validation to be performed on the active control.")]
@@ -616,9 +686,28 @@ namespace Wisej.Web.Ext.RibbonBar
 		//private bool _autoOverflow = true;
 
 		/// <summary>
-		/// Represents the application button displayed before the first
+		/// Returns the application button displayed before the first
 		/// <see cref="RibbonBarPage"/>.
 		/// </summary>
+		/// <remarks>
+		/// The <see cref="RibbonBarAppButton"/> instance is always available and created on first use, but it's hidden
+		/// by default: set <see cref="RibbonBarAppButton.Visible"/> to true to show it. Clicking the button fires the
+		/// <see cref="AppButtonClick"/> event.
+		/// </remarks>
+		/// <example>
+		/// Showing the application button and opening a menu page when it's clicked:
+		/// <code><![CDATA[
+		/// this.ribbonBar1.AppButton.Text = "File";
+		/// this.ribbonBar1.AppButton.BackColor = Color.SteelBlue;
+		/// this.ribbonBar1.AppButton.ForeColor = Color.White;
+		/// this.ribbonBar1.AppButton.Visible = true;
+		///
+		/// this.ribbonBar1.AppButtonClick += (s, e) =>
+		/// {
+		///     new FileMenuDialog().ShowDialog();
+		/// };
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatBehavior")]
 		[Description("Represents the application button displayed before the first RibbonBarPage.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -633,6 +722,27 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns the instance of <see cref="Wisej.Web.ComponentToolCollection"/> associated with this control.
 		/// </summary>
+		/// <remarks>
+		/// The tools are displayed as small icon buttons in the tab strip, next to the <see cref="RibbonBarPage"/> tabs.
+		/// Clicking a tool fires the <see cref="ToolClick"/> event.
+		/// </remarks>
+		/// <example>
+		/// Adding a help tool to the tab strip:
+		/// <code><![CDATA[
+		/// this.ribbonBar1.Tools.Add(new ComponentTool
+		/// {
+		///     Name = "help",
+		///     ImageSource = "icon-help",
+		///     ToolTipText = "Help"
+		/// });
+		///
+		/// this.ribbonBar1.ToolClick += (s, e) =>
+		/// {
+		///     if (e.Tool.Name == "help")
+		///         Application.Navigate("https://docs.wisej.com", "_blank");
+		/// };
+		/// ]]></code>
+		/// </example>
 		[Browsable(true)]
 		[MergableProperty(false)]
 		[SRCategory("CatBehavior")]
@@ -652,6 +762,29 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets the currently active <see cref="RibbonBarPage"/>.
 		/// </summary>
+		/// <exception cref="ArgumentNullException">The value is null.</exception>
+		/// <exception cref="ArgumentException">The <see cref="RibbonBarPage"/> doesn't belong to this <see cref="RibbonBar"/>.</exception>
+		/// <remarks>
+		/// When no page has been selected yet, the getter returns the first visible page in <see cref="Pages"/>, or null
+		/// when there are no visible pages. Changing the value, either in code or when the user clicks a tab,
+		/// fires the <see cref="SelectedPageChanged"/> event. You can also use <see cref="RibbonBarPage.Selected"/>.
+		/// </remarks>
+		/// <example>
+		/// Switching to a contextual page when the user selects a picture:
+		/// <code><![CDATA[
+		/// private void pictureBox1_Click(object sender, EventArgs e)
+		/// {
+		///     var page = this.ribbonBar1.Pages["pictureTools"];
+		///     page.Visible = true;
+		///     this.ribbonBar1.SelectedPage = page;
+		/// }
+		///
+		/// private void ribbonBar1_SelectedPageChanged(object sender, EventArgs e)
+		/// {
+		///     this.labelStatus.Text = "Page: " + this.ribbonBar1.SelectedPage?.Text;
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets the currently active RibbonBarPage.")]
@@ -704,6 +837,25 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns the collection of <see cref="RibbonBarPage"/> pages in the <see cref="RibbonBar"/>.
 		/// </summary>
+		/// <remarks>
+		/// Each page is displayed as a tab in the ribbon. Adding a page to the collection sets its
+		/// <see cref="RibbonBarPage.Parent"/> to this <see cref="RibbonBar"/>. When the selected page is removed,
+		/// the first visible page becomes the <see cref="SelectedPage"/>. Pages can be retrieved by index or
+		/// by name (case insensitive).
+		/// </remarks>
+		/// <example>
+		/// Adding a page with a group and finding it again by name:
+		/// <code><![CDATA[
+		/// var insert = new RibbonBarPage { Name = "insert", Text = "&Insert" };
+		/// var tables = new RibbonBarGroup { Text = "Tables" };
+		/// tables.Items.Add(new RibbonBarItemButton { Name = "insertTable", Text = "Table", ImageSource = "icon-table" });
+		/// insert.Groups.Add(tables);
+		/// this.ribbonBar1.Pages.Add(insert);
+		///
+		/// // later...
+		/// this.ribbonBar1.Pages["insert"].Enabled = false;
+		/// ]]></code>
+		/// </example>
 		[DesignerActionList]
 		[Localizable(true)]
 		[SRCategory("CatBehavior")]
@@ -754,6 +906,18 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets the collection of images available to the RibbonBar items.
 		///</summary>
 		/// <returns>An <see cref="T:Wisej.Web.ImageList" /> that contains images available to the <see cref="RibbonBarItem" /> controls. The default is null.</returns>
+		/// <remarks>
+		/// The images in the list are referenced by the <see cref="RibbonBarItem.ImageIndex"/> and <see cref="RibbonBarItem.ImageKey"/>
+		/// properties of the items and by <see cref="RibbonBarAppButton.ImageIndex"/> and <see cref="RibbonBarAppButton.ImageKey"/>.
+		/// </remarks>
+		/// <example>
+		/// Assigning images to the ribbon items using an <see cref="T:Wisej.Web.ImageList"/>:
+		/// <code><![CDATA[
+		/// this.ribbonBar1.ImageList = this.imageList1;
+		/// this.buttonSave.ImageKey = "save.png";
+		/// this.buttonPrint.ImageIndex = 2;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the collection of images available to the RibbonBar items.")]
@@ -781,6 +945,29 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets the compact view mode.
 		/// </summary>
+		/// <returns>true if only the tab strip is visible; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// In compact view only the tab buttons are displayed and no page is shown as selected. When the user clicks a tab,
+		/// the page is displayed temporarily on top of the content below the <see cref="RibbonBar"/> and it collapses again
+		/// when the user clicks anywhere outside of the ribbon (clicks on its drop down menus and popups are ignored).
+		/// The server-side <see cref="SelectedPage"/> keeps the last page selected by the user.
+		/// The height of the control is saved when entering the compact view and restored when leaving it.
+		/// Changing the value fires the <see cref="CompactViewChanged"/> event.
+		/// </remarks>
+		/// <example>
+		/// Toggling the compact view from a button:
+		/// <code><![CDATA[
+		/// private void buttonCollapse_Click(object sender, EventArgs e)
+		/// {
+		///     this.ribbonBar1.CompactView = !this.ribbonBar1.CompactView;
+		/// }
+		///
+		/// private void ribbonBar1_CompactViewChanged(object sender, EventArgs e)
+		/// {
+		///     this.buttonCollapse.ImageSource = this.ribbonBar1.CompactView ? "icon-down" : "icon-up";
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the compact view mode.")]
@@ -861,6 +1048,19 @@ namespace Wisej.Web.Ext.RibbonBar
 		///</summary>
 		/// <param name="proposedSize">The custom size specified for the control.</param>
 		/// <returns>The <see cref="System.Drawing.Size" /> representing the preferred size of the control.</returns>
+		/// <remarks>
+		/// The <paramref name="proposedSize"/> is ignored. The returned size is the current size of the control with the height
+		/// replaced by the height measured on the client, limited by <see cref="Control.MinimumSize"/> and
+		/// <see cref="Control.MaximumSize"/>. The current size is returned unchanged when the height is not known yet or
+		/// when the control is docked to the left, right or fill, or anchored to both the top and the bottom.
+		/// </remarks>
+		/// <example>
+		/// Reading the height that the <see cref="RibbonBar"/> needs:
+		/// <code><![CDATA[
+		/// var size = this.ribbonBar1.GetPreferredSize(Size.Empty);
+		/// this.panelContent.Top = size.Height;
+		/// ]]></code>
+		/// </example>
 		public override Size GetPreferredSize(Size proposedSize)
 		{
 			var size = this.Size;

@@ -30,8 +30,29 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.jSequence
 {
 	/// <summary>
-	/// The Sequence control turns text into UML sequence diagrams: <see href="https://bramp.github.io/js-sequence-diagrams/"/>.
+	/// Represents a control that turns text into UML sequence diagrams using the js-sequence-diagrams library:
+	/// <see href="https://bramp.github.io/js-sequence-diagrams/"/>.
 	/// </summary>
+	/// <remarks>
+	/// The diagram is defined by the <see cref="UML"/> text and rendered as SVG on the client using the
+	/// selected <see cref="Theme"/>. Clicking a text element of the diagram fires the <see cref="ElementClick"/> event.
+	/// </remarks>
+	/// <example>
+	/// Creating a simple sequence diagram:
+	/// <code><![CDATA[
+	/// var sequence = new Sequence
+	/// {
+	///     Dock = DockStyle.Fill,
+	///     Theme = "Hand",
+	///     UML = "Browser->Server: GET /orders\n" +
+	///           "Server->Database: SELECT * FROM Orders\n" +
+	///           "Database-->Server: rows\n" +
+	///           "Server-->Browser: 200 OK"
+	/// };
+	/// sequence.ElementClick += (s, e) => AlertBox.Show("Clicked: " + e.Element);
+	/// this.Controls.Add(sequence);
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Sequence))]
 	[DefaultEvent("ElementClick")]
@@ -39,7 +60,7 @@ namespace Wisej.Web.Ext.jSequence
 	public class Sequence : Widget
 	{
 		/// <summary>
-		/// Constructs a new <see cref="T: Wisej.Web.Ext.jSequence.Sequence"/> control.
+		/// Initializes a new instance of the <see cref="Sequence"/> control.
 		/// </summary>
 		public Sequence()
 		{
@@ -73,6 +94,23 @@ namespace Wisej.Web.Ext.jSequence
 		/// <summary>
 		/// Returns or sets the UML definition of the diagram using this syntax: <see href="https://github.com/bramp/js-sequence-diagrams/blob/master/src/grammar.jison"/>.
 		/// </summary>
+		/// <remarks>
+		/// Each line defines a participant, a message (<c>A-&gt;B: text</c> for a solid line, <c>A--&gt;B: text</c> for a dashed line,
+		/// <c>A-&gt;&gt;B: text</c> for an open arrow), a note (<c>Note left of A: text</c>, <c>Note over A,B: text</c>)
+		/// or a title (<c>Title: text</c>). Setting this property redraws the whole diagram. A null value is converted to an empty string.
+		/// </remarks>
+		/// <example>
+		/// Defining a diagram with a title, participants, messages and a note:
+		/// <code><![CDATA[
+		/// this.sequence1.UML = string.Join("\n",
+		///     "Title: Login",
+		///     "participant User",
+		///     "participant App",
+		///     "User->App: Enter credentials",
+		///     "Note right of App: Validate password",
+		///     "App-->User: Welcome!");
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("")]
 		[DesignerActionList]
 		[Editor("Wisej.Design.HtmlEditor, Wisej.Framework.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171", 
@@ -95,6 +133,10 @@ namespace Wisej.Web.Ext.jSequence
 		/// <summary>
 		/// Returns or sets the name of the theme to use to draw the UML diagram.
 		/// </summary>
+		/// <remarks>
+		/// The supported values are <c>"Simple"</c> (the default) and <c>"Hand"</c> (hand-drawn look).
+		/// The name is case insensitive.
+		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue("Simple")]
 		[TypeConverter(typeof(ThemeTypeConverter))]
@@ -114,7 +156,7 @@ namespace Wisej.Web.Ext.jSequence
 		private string _theme = "Simple";
 
 		/// <summary>
-		/// Overridden to return our list of script resources.
+		/// Returns the list of packages (jQuery, WebFont, Snap.svg, Underscore and js-sequence-diagrams) loaded on the client before the diagram is created.
 		/// </summary>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -157,8 +199,12 @@ namespace Wisej.Web.Ext.jSequence
 		}
 
 		/// <summary>
-		/// Overridden to create our initialization script.
+		/// Returns the initialization script that renders the diagram on the client.
 		/// </summary>
+		/// <remarks>
+		/// The script is built from the embedded <c>startup.js</c> resource using the current <see cref="UML"/> and
+		/// <see cref="Theme"/> values. The setter is ignored.
+		/// </remarks>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override string InitScript
@@ -233,10 +279,27 @@ namespace Wisej.Web.Ext.jSequence
 		#region Methods
 
 		/// <summary>
-		/// Returns the sequence image.
+		/// Retrieves an image of the rendered diagram and passes it to the <paramref name="callback"/> method.
 		/// </summary>
-		/// <param name="callback">Callback method that receives the <see cref="Image"/> object.</param>
-		/// <exception cref="ArgumentNullException">If any of the arguments is null.</exception>
+		/// <param name="callback">Callback method that receives the <see cref="Image"/> object, or null if the diagram is empty.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="callback"/> is null.</exception>
+		/// <remarks>
+		/// The SVG diagram is rasterized in the browser to a PNG image with the current size of the control,
+		/// and sent back to the server. The <paramref name="callback"/> is invoked asynchronously when the image is received.
+		/// </remarks>
+		/// <example>
+		/// Saving the diagram image to a file:
+		/// <code><![CDATA[
+		/// private void buttonSave_Click(object sender, EventArgs e)
+		/// {
+		///     this.sequence1.GetImage(image =>
+		///     {
+		///         if (image != null)
+		///             image.Save(Application.MapPath("Diagrams/login.png"), ImageFormat.Png);
+		///     });
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void GetImage(Action<Image> callback)
 		{
 			if (callback == null)
@@ -253,9 +316,21 @@ namespace Wisej.Web.Ext.jSequence
 		}
 
 		/// <summary>
-		/// Asynchronously returns the sequence image.
+		/// Asynchronously returns an image of the rendered diagram.
 		/// </summary>
-		/// <returns>An awaitable <see cref="Task"/> that contains the image.</returns>
+		/// <returns>An awaitable <see cref="Task"/> that contains the <see cref="Image"/>, or null if the diagram is empty.</returns>
+		/// <remarks>
+		/// The SVG diagram is rasterized in the browser to a PNG image with the current size of the control.
+		/// </remarks>
+		/// <example>
+		/// Displaying the diagram image in a <see cref="PictureBox"/>:
+		/// <code><![CDATA[
+		/// private async void buttonSnapshot_Click(object sender, EventArgs e)
+		/// {
+		///     this.pictureBox1.Image = await this.sequence1.GetImageAsync();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public Task<Image> GetImageAsync()
 		{
 			var tcs = new TaskCompletionSource<Image>();

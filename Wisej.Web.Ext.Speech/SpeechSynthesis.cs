@@ -31,9 +31,32 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.Speech
 {
 	/// <summary>
-	/// The SpeechSynthesis interface of the Web Speech API is the controller interface for the speech service; this can be used to retrieve 
-	/// information about the synthesis voices available on the device, start and pause speech, and other commands besides.
+	/// Represents a component that uses the SpeechSynthesis interface of the Web Speech API to speak text in the browser;
+	/// it can also be used to retrieve information about the synthesis voices available on the device, start and pause speech,
+	/// and extends controls to speak their text or value when they are activated or deactivated.
 	/// </summary>
+	/// <remarks>
+	/// <para>
+	/// The speech is produced by the browser using the voices installed on the user's device. When the browser doesn't
+	/// support the Web Speech API the component does nothing. Browsers may refuse to speak before the user has interacted with the page.
+	/// </para>
+	/// <para>
+	/// <see cref="Voice"/>, <see cref="Language"/>, <see cref="Volume"/>, <see cref="Rate"/> and <see cref="Pitch"/> apply to all the
+	/// utterances, including those spoken automatically for the extended controls.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// Speaking a message and reading a field aloud when it gets the focus:
+	/// <code><![CDATA[
+	/// var speech = new SpeechSynthesis { Language = "en-US", Rate = 1.2f };
+	/// 
+	/// var props = speech.GetSpeechSynthesis(this.textBoxName);
+	/// props.SpeakMode = SpeechSynthesis.SpeakMode.TextOnEnter;
+	/// props.TextToSpeak = "Please enter your name.";
+	/// 
+	/// speech.Speak("Welcome back!");
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(SpeechSynthesis))]
 	[ProvideProperty("SpeechSynthesis", typeof(Control))]
@@ -46,7 +69,7 @@ namespace Wisej.Web.Ext.Speech
 
 		#region Constructors
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Speech"/> class.
+		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Speech.SpeechSynthesis"/> class.
 		/// </summary>
 		public SpeechSynthesis()
 		{
@@ -57,8 +80,28 @@ namespace Wisej.Web.Ext.Speech
 		#region Properties
 
 		/// <summary>
-		/// Returns or sets the voice that will be used to speak the utterance.
+		/// Returns or sets the name of the voice that will be used to speak the utterance.
 		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// The value must match exactly the name of one of the voices installed in the browser, as returned by
+		/// <see cref="GetVoicesAsync"/>, i.e. "Google UK English Female" or "Microsoft Zira - English (United States)".
+		/// When a matching voice is found, it overrides <see cref="Language"/>.
+		/// </para>
+		/// <para>
+		/// The default is "native": since no voice has this name, the browser picks the default voice for the <see cref="Language"/>.
+		/// Setting null or an empty string restores "native".
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Selecting the first English voice available in the browser:
+		/// <code><![CDATA[
+		/// var voices = await this.speechSynthesis1.GetVoicesAsync();
+		/// var english = voices?.FirstOrDefault(v => v.Contains("English"));
+		/// if (english != null)
+		///     this.speechSynthesis1.Voice = english;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("native")]
 		[Description("Gets or sets the voice that will be used to speak the utterance.")]
 		public string Voice
@@ -81,6 +124,10 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Returns or sets the language of the utterance.
 		/// </summary>
+		/// <remarks>
+		/// The value is a BCP 47 language tag, i.e. "en-US", "fr-FR". When empty (default) the browser uses the language of the page
+		/// or of the user agent. It's ignored when <see cref="Voice"/> matches an installed voice.
+		/// </remarks>
 		[DefaultValue("")]
 		[Description("Gets or sets the language of the utterance.")]
 		public string Language
@@ -102,6 +149,10 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Returns or sets the volume that the utterance will be spoken at. The default is 1 (maximum).
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than 0 or greater than 1.</exception>
+		/// <remarks>
+		/// The value ranges from 0 (silent) to 1 (maximum).
+		/// </remarks>
 		[DefaultValue(1f)]
 		[Description("Gets or sets the volume that the utterance will be spoken at. The default is 1 (maximum).")]
 		public float Volume
@@ -123,8 +174,13 @@ namespace Wisej.Web.Ext.Speech
 
 
 		/// <summary>
-		/// Returns and sets the speed at which the utterance will be spoken at.
+		/// Returns or sets the speed at which the utterance will be spoken at.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than 0 or greater than 10.</exception>
+		/// <remarks>
+		/// The default is 1 (normal speed); 2 is twice as fast and 0.5 is half as fast. The Web Speech API accepts values from 0.1 to 10,
+		/// although most voices support a narrower range.
+		/// </remarks>
 		[DefaultValue(1f)]
 		[Description("Gets and sets the speed at which the utterance will be spoken at.")]
 		public float Rate
@@ -145,8 +201,12 @@ namespace Wisej.Web.Ext.Speech
 		private float _rate = 1;
 
 		/// <summary>
-		/// Returns and sets the pitch at which the utterance will be spoken at.
+		/// Returns or sets the pitch at which the utterance will be spoken at.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than 0 or greater than 2.</exception>
+		/// <remarks>
+		/// The value ranges from 0 (lowest) to 2 (highest); the default is 1.
+		/// </remarks>
 		[DefaultValue(1f)]
 		[Description("Gets and sets the pitch at which the utterance will be spoken at.")]
 		public float Pitch
@@ -167,8 +227,12 @@ namespace Wisej.Web.Ext.Speech
 		private float _pitch = 1;
 
 		/// <summary>
-		/// Enables or disables the this <see cref="T:Wisej.Web.Ext.Speech.SpeechSynthesis" /> extender.
+		/// Returns or sets whether the <see cref="T:Wisej.Web.Ext.Speech.SpeechSynthesis" /> extender speaks for the extended controls.
 		/// </summary>
+		/// <remarks>
+		/// When false, the extended controls are not spoken when activated or deactivated. It doesn't affect <see cref="Speak"/>.
+		/// The default is true.
+		/// </remarks>
 		[DefaultValue(true)]
 		[Description("Enables or disables speech synthesis.")]
 		public bool Enabled
@@ -192,6 +256,22 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Puts the SpeechSynthesis object into a paused state.
 		/// </summary>
+		/// <remarks>
+		/// The speech can be continued from the same point with <see cref="Resume"/>. The pause applies to the browser's speech queue,
+		/// shared by all the <see cref="SpeechSynthesis"/> components in the page.
+		/// </remarks>
+		/// <example>
+		/// Toggling pause and resume with a check box:
+		/// <code><![CDATA[
+		/// private void checkBoxPause_CheckedChanged(object sender, EventArgs e)
+		/// {
+		///     if (this.checkBoxPause.Checked)
+		///         this.speechSynthesis1.Pause();
+		///     else
+		///         this.speechSynthesis1.Resume();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Pause()
 		{
 			Call("pause");
@@ -200,7 +280,21 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Adds an utterance to the utterance queue; it will be spoken when any other utterances queued before it have been spoken.
 		/// </summary>
-		/// <param name="text"></param>
+		/// <param name="text">The text to speak. Null or empty values are ignored.</param>
+		/// <remarks>
+		/// The utterance uses the current values of <see cref="Voice"/>, <see cref="Language"/>, <see cref="Volume"/>,
+		/// <see cref="Rate"/> and <see cref="Pitch"/>. It's spoken also when <see cref="Enabled"/> is false.
+		/// </remarks>
+		/// <example>
+		/// Announcing the result of an operation:
+		/// <code><![CDATA[
+		/// private void buttonSave_Click(object sender, EventArgs e)
+		/// {
+		///     SaveDocument(this.document);
+		///     this.speechSynthesis1.Speak("The document has been saved.");
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Speak(string text)
 		{
 			Call("speak", text);
@@ -209,6 +303,15 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Resumes speaking if the SpeechSynthesis object was already paused.
 		/// </summary>
+		/// <example>
+		/// Resuming the speech paused by <see cref="Pause"/>:
+		/// <code><![CDATA[
+		/// private void buttonResume_Click(object sender, EventArgs e)
+		/// {
+		///     this.speechSynthesis1.Resume();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Resume()
 		{
 			Call("resume");
@@ -218,6 +321,15 @@ namespace Wisej.Web.Ext.Speech
 		/// Removes all utterances from the utterance queue.
 		/// If an utterance is currently being spoken, speaking will stop immediately.
 		/// </summary>
+		/// <example>
+		/// Stopping the speech when the user closes the form:
+		/// <code><![CDATA[
+		/// private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+		/// {
+		///     this.speechSynthesis1.Cancel();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Cancel()
 		{
 			Call("cancel");
@@ -226,6 +338,26 @@ namespace Wisej.Web.Ext.Speech
 		/**
 		 * Returns the list of voices available in the browser.
 		 */
+		/// <summary>
+		/// Asynchronously returns the names of the voices available in the browser.
+		/// </summary>
+		/// <returns>A task that represents the asynchronous operation. The task result contains the names of the voices,
+		/// or null when the browser doesn't support speech synthesis or hasn't loaded the voices yet.</returns>
+		/// <remarks>
+		/// Some browsers load the list of voices asynchronously, the first call may return null: call it again later.
+		/// Use one of the returned names to set <see cref="Voice"/>.
+		/// </remarks>
+		/// <example>
+		/// Filling a combo box with the available voices:
+		/// <code><![CDATA[
+		/// private async void Form1_Load(object sender, EventArgs e)
+		/// {
+		///     var voices = await this.speechSynthesis1.GetVoicesAsync();
+		///     if (voices != null)
+		///         this.comboBoxVoices.Items.AddRange(voices);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public async Task<string[]> GetVoicesAsync()
 		{
 			return await CallAsync("getVoices");
@@ -234,8 +366,18 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Returns true if <see cref="T:Wisej.Web.Ext.Speech.SpeechSynthesis" /> can offer an extender property to the specified target component.
 		/// </summary>
-		/// <returns>true if the <see cref="T:Wisej.Web.Ext.Speech.SpeechSynthesis" /> class can offer one or more extender properties; otherwise, false.</returns>
 		/// <param name="target">The target object to add an extender property to. </param>
+		/// <returns>true if the <see cref="T:Wisej.Web.Ext.Speech.SpeechSynthesis" /> class can offer one or more extender properties; otherwise, false.</returns>
+		/// <remarks>
+		/// All controls can be extended.
+		/// </remarks>
+		/// <example>
+		/// Checking whether a component can be extended:
+		/// <code><![CDATA[
+		/// if (this.speechSynthesis1.CanExtend(this.buttonOK))
+		///     this.speechSynthesis1.GetSpeechSynthesis(this.buttonOK).TextToSpeak = "OK";
+		/// ]]></code>
+		/// </example>
 		public bool CanExtend(object target)
 		{
 			return (target is Control);
@@ -252,10 +394,22 @@ namespace Wisej.Web.Ext.Speech
 		}
 
 		/// <summary>
-		/// SpeechSynthesis properties.
+		/// Returns the speech synthesis properties associated with the specified control.
 		/// </summary>
-		/// <returns>A <see cref="T:Wisej.Web.Ext.Speech.SpeechSynthesis.Properties" /> instance with the SpeechSynthesis properties.</returns>
 		/// <param name="control">The <see cref="T:Wisej.Web.Control" /> for which to retrieve the speech properties. </param>
+		/// <returns>A <see cref="T:Wisej.Web.Ext.Speech.SpeechSynthesis.Properties" /> instance with the SpeechSynthesis properties.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="control"/> is null.</exception>
+		/// <remarks>
+		/// The properties are created the first time they are requested for a control and are removed automatically
+		/// when the control is disposed. Changing them updates the component on the client.
+		/// </remarks>
+		/// <example>
+		/// Reading the value of a text box aloud when the user leaves it:
+		/// <code><![CDATA[
+		/// var props = this.speechSynthesis1.GetSpeechSynthesis(this.textBoxAmount);
+		/// props.SpeakMode = SpeechSynthesis.SpeakMode.ValueOnLeave;
+		/// ]]></code>
+		/// </example>
 		[DisplayName("SpeechSynthesis")]
 		[Description("SpeechSynthesis properties")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -287,6 +441,16 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Removes all speech extenders.
 		/// </summary>
+		/// <remarks>
+		/// The component is not updated on the client by this method: the controls stop speaking the next time the
+		/// component is updated, i.e. when one of its properties changes.
+		/// </remarks>
+		/// <example>
+		/// Removing the speech from all controls:
+		/// <code><![CDATA[
+		/// this.speechSynthesis1.RemoveAll();
+		/// ]]></code>
+		/// </example>
 		public void RemoveAll()
 		{
 			lock (this.utterances)
@@ -303,6 +467,21 @@ namespace Wisej.Web.Ext.Speech
 			base.Update();
 		}
 
+		/// <summary>
+		/// Required by the designer to make the extender property writable; this method doesn't do anything.
+		/// </summary>
+		/// <param name="control">The extended control.</param>
+		/// <param name="speechSynthesis">The speech synthesis properties. The value is ignored.</param>
+		/// <remarks>
+		/// Use <see cref="GetSpeechSynthesis"/> and change the returned <see cref="T:Wisej.Web.Ext.Speech.SpeechSynthesis.Properties"/> instead.
+		/// </remarks>
+		/// <example>
+		/// Changing the speech properties of a control:
+		/// <code><![CDATA[
+		/// // SetSpeechSynthesis() has no effect, modify the existing properties instead.
+		/// this.speechSynthesis1.GetSpeechSynthesis(this.buttonOK).SpeakMode = SpeechSynthesis.SpeakMode.TextOnEnter;
+		/// ]]></code>
+		/// </example>
 		public void SetSpeechSynthesis(Control control, Properties speechSynthesis)
 		{
 			// don't do anything. this is here only to enable the property for writing.
@@ -450,8 +629,26 @@ namespace Wisej.Web.Ext.Speech
 			}
 
 			/// <summary>
-			/// Determines how the <see cref="T:Wisej.Web.Ext.Speech.SpeechSynthesis" /> extender applies to the extended control.
+			/// Returns or sets how the <see cref="T:Wisej.Web.Ext.Speech.SpeechSynthesis" /> extender applies to the extended control.
 			/// </summary>
+			/// <remarks>
+			/// <para>
+			/// The Text modes speak <see cref="TextToSpeak"/>, the Value modes speak the current value of the control on the client
+			/// (i.e. the text of a text box). Enter and Leave refer to the control being activated (focused) and deactivated.
+			/// Nothing is spoken when the text is empty.
+			/// </para>
+			/// <para>
+			/// The Once modes speak only the first time; the default is <see cref="SpeechSynthesis.SpeakMode.Never"/>.
+			/// </para>
+			/// </remarks>
+			/// <example>
+			/// Giving an audible hint the first time a field is focused:
+			/// <code><![CDATA[
+			/// var props = this.speechSynthesis1.GetSpeechSynthesis(this.textBoxEmail);
+			/// props.TextToSpeak = "Enter the email address used to register.";
+			/// props.SpeakMode = SpeechSynthesis.SpeakMode.TextOnEnterOnce;
+			/// ]]></code>
+			/// </example>
 			[DefaultValue(SpeakMode.Never)]
 			[Description("Determines how the speak extender applies to the extended control.")]
 			public SpeakMode SpeakMode
@@ -471,6 +668,9 @@ namespace Wisej.Web.Ext.Speech
 			/// <summary>
 			/// Returns or sets the text to speak.
 			/// </summary>
+			/// <remarks>
+			/// Used by the Text modes of <see cref="SpeakMode"/>. An empty string is converted to null.
+			/// </remarks>
 			[Localizable(true)]
 			[DefaultValue(null)]
 			[Description("Gets or sets the text to speak.")]

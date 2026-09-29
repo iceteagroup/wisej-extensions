@@ -27,35 +27,33 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.TaskDialog
 {
 	/// <summary>
-	/// 
-	///              Represents a button control of a task dialog.
-	///            
-	///</summary>
+	/// Represents a button control of a task dialog.
+	/// </summary>
+	/// <remarks>
+	/// Add instances to the <see cref="TaskDialogPage.Buttons"/> collection of a page. The button clicked
+	/// by the user to close the dialog is returned by <see cref="TaskDialog.ShowDialog(TaskDialogPage, TaskDialogStartupLocation)"/>.
+	/// </remarks>
 	public class TaskDialogButton : Wisej.Web.Button
 	{
 
 		#region Constructors
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogButton" /> class.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogButton" /> class.
+		/// </summary>
 		public TaskDialogButton()
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogButton" /> class
-		///              using the given text and, optionally, a description text.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogButton" /> class
+		/// using the given text.
+		/// </summary>
 		/// <param name="text">The text of the control.</param>
 		/// <param name="enabled">A value that indicates if the button should be enabled.</param>
 		/// <param name="allowCloseDialog">A value that indicates whether the task dialog should close
-		///              when this button is clicked.
-		///            </param>
+		/// when this button is clicked.
+		/// </param>
 		public TaskDialogButton(string text, bool enabled, bool allowCloseDialog)
 		{
 			this._text = text;
@@ -76,10 +74,8 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Properties
 		/// <summary>
-		/// 
-		///             Gets a standard <see cref="TaskDialogButton" /> instance representing the <c>OK</c> button.
-		///            
-		///</summary>
+		/// Returns a standard <see cref="TaskDialogButton" /> instance representing the <c>OK</c> button.
+		/// </summary>
 		public TaskDialogButton OK
 		{
 			get
@@ -91,10 +87,8 @@ namespace Wisej.Web.Ext.TaskDialog
 		private static TaskDialogButton _oK;
 
 		/// <summary>
-		/// 
-		///             Gets a standard <see cref="TaskDialogButton" /> instance representing the <c>Cancel</c> button.
-		///            
-		///</summary>
+		/// Returns a standard <see cref="TaskDialogButton" /> instance representing the <c>Cancel</c> button.
+		/// </summary>
 		public TaskDialogButton Cancel
 		{
 			get
@@ -106,10 +100,8 @@ namespace Wisej.Web.Ext.TaskDialog
 		private static TaskDialogButton _cancel;
 
 		/// <summary>
-		/// 
-		///             Gets a standard <see cref="TaskDialogButton" /> instance representing the <c>Abort</c> button.
-		///            
-		///</summary>
+		/// Returns a standard <see cref="TaskDialogButton" /> instance representing the <c>Abort</c> button.
+		/// </summary>
 		public TaskDialogButton Abort
 		{
 			get
@@ -121,10 +113,8 @@ namespace Wisej.Web.Ext.TaskDialog
 		private static TaskDialogButton _abort;
 
 		/// <summary>
-		/// 
-		///             Gets a standard <see cref="TaskDialogButton" /> instance representing the <c>Retry</c> button.
-		///            
-		///</summary>
+		/// Returns a standard <see cref="TaskDialogButton" /> instance representing the <c>Retry</c> button.
+		/// </summary>
 		public TaskDialogButton Retry
 		{
 			get
@@ -136,10 +126,8 @@ namespace Wisej.Web.Ext.TaskDialog
 		private static TaskDialogButton _retry;
 
 		/// <summary>
-		/// 
-		///             Gets a standard <see cref="TaskDialogButton" /> instance representing the <c>Ignore</c> button.
-		///            
-		///</summary>
+		/// Returns a standard <see cref="TaskDialogButton" /> instance representing the <c>Ignore</c> button.
+		/// </summary>
 		public TaskDialogButton Ignore
 		{
 			get
@@ -151,10 +139,8 @@ namespace Wisej.Web.Ext.TaskDialog
 		private static TaskDialogButton _ignore;
 
 		/// <summary>
-		/// 
-		///             Gets a standard <see cref="TaskDialogButton" /> instance representing the <c>Yes</c> button.
-		///            
-		///</summary>
+		/// Returns a standard <see cref="TaskDialogButton" /> instance representing the <c>Yes</c> button.
+		/// </summary>
 		public TaskDialogButton Yes
 		{
 			get
@@ -166,10 +152,8 @@ namespace Wisej.Web.Ext.TaskDialog
 		private static TaskDialogButton _yes;
 
 		/// <summary>
-		/// 
-		///             Gets a standard <see cref="TaskDialogButton" /> instance representing the <c>No</c> button.
-		///            
-		///</summary>
+		/// Returns a standard <see cref="TaskDialogButton" /> instance representing the <c>No</c> button.
+		/// </summary>
 		public TaskDialogButton No
 		{
 			get
@@ -181,10 +165,8 @@ namespace Wisej.Web.Ext.TaskDialog
 		private static TaskDialogButton _no;
 
 		/// <summary>
-		/// 
-		///             Gets a standard <see cref="TaskDialogButton" /> instance representing the <c>Close</c> button.
-		///            
-		///</summary>
+		/// Returns a standard <see cref="TaskDialogButton" /> instance representing the <c>Close</c> button.
+		/// </summary>
 		public TaskDialogButton Close
 		{
 			get
@@ -196,10 +178,8 @@ namespace Wisej.Web.Ext.TaskDialog
 		private static TaskDialogButton _close;
 
 		/// <summary>
-		/// 
-		///             Gets a standard <see cref="TaskDialogButton" /> instance representing the <c>Help</c> button.
-		///            
-		///</summary>
+		/// Returns a standard <see cref="TaskDialogButton" /> instance representing the <c>Help</c> button.
+		/// </summary>
 		public TaskDialogButton Help
 		{
 			get
@@ -211,10 +191,8 @@ namespace Wisej.Web.Ext.TaskDialog
 		private static TaskDialogButton _help;
 
 		/// <summary>
-		/// 
-		///             Gets a standard <see cref="TaskDialogButton" /> instance representing the <c>Try Again</c> button.
-		///            
-		///</summary>
+		/// Returns a standard <see cref="TaskDialogButton" /> instance representing the <c>Try Again</c> button.
+		/// </summary>
 		public TaskDialogButton TryAgain
 		{
 			get
@@ -226,10 +204,8 @@ namespace Wisej.Web.Ext.TaskDialog
 		private static TaskDialogButton _tryAgain;
 
 		/// <summary>
-		/// 
-		///             Gets a standard <see cref="TaskDialogButton" /> instance representing the <c>Continue</c> button.
-		///            
-		///</summary>
+		/// Returns a standard <see cref="TaskDialogButton" /> instance representing the <c>Continue</c> button.
+		/// </summary>
 		public TaskDialogButton Continue
 		{
 			get
@@ -241,13 +217,23 @@ namespace Wisej.Web.Ext.TaskDialog
 		private static TaskDialogButton _continue;
 
 		/// <summary>
-		/// 
-		///              Gets or sets a value that indicates whether the task dialog should close
-		///              when this button is clicked. Or, if this button is the
-		///              <see cref="P:System.Windows.Forms.TaskDialogButton.Help" /> button, indicates whether the
-		///              <see cref="E:System.Windows.Forms.TaskDialogPage.HelpRequest" /> should be raised.
-		///            
-		///</summary>
+		/// Returns or sets a value that indicates whether the task dialog should close
+		/// when this button is clicked. Or, if this button is the
+		/// <see cref="Help" /> button, indicates whether the
+		/// <see cref="TaskDialogPage.HelpRequest" /> event should be raised.
+		/// </summary>
+		/// <remarks>
+		/// Set it to <see langword="false"/> to handle the <see cref="Click"/> event while keeping the dialog open,
+		/// for example to validate the user's input or to navigate to a different page.
+		/// </remarks>
+		/// <example>
+		/// Keeping the dialog open and navigating to a progress page when the button is clicked:
+		/// <code><![CDATA[
+		/// var start = new TaskDialogButton("Start", true, false);
+		/// start.Click += (s, e) => this.mainPage.Navigate(this.progressPage);
+		/// this.mainPage.Buttons.Add(start);
+		/// ]]></code>
+		/// </example>
 		public bool AllowCloseDialog
 		{
 			get
@@ -266,14 +252,12 @@ namespace Wisej.Web.Ext.TaskDialog
 		private bool _allowCloseDialog;
 
 		/// <summary>
-		/// 
-		///              Gets or sets a value indicating whether the button can respond to user interaction.
-		///            
-		///</summary>
+		/// Returns or sets a value indicating whether the button can respond to user interaction.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a button that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a button that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public bool Enabled
 		{
 			get
@@ -292,16 +276,14 @@ namespace Wisej.Web.Ext.TaskDialog
 		private bool _enabled;
 
 		/// <summary>
-		/// 
-		///              Gets or sets a value that indicates if the User Account Control (UAC) shield icon
-		///              should be shown near the button; that is, whether the action invoked by the button
-		///              requires elevation.
-		///            
-		///</summary>
+		/// Returns or sets a value that indicates if the User Account Control (UAC) shield icon
+		/// should be shown near the button; that is, whether the action invoked by the button
+		/// requires elevation.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a button that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a button that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public bool ShowShieldIcon
 		{
 			get
@@ -320,15 +302,13 @@ namespace Wisej.Web.Ext.TaskDialog
 		private bool _showShieldIcon;
 
 		/// <summary>
-		/// 
-		///              Gets or sets a value that indicates if this
-		///              <see cref="TaskDialogButton" /> should be shown when displaying
-		///              the task dialog.
-		///            
-		///</summary>
+		/// Returns or sets a value that indicates if this
+		/// <see cref="TaskDialogButton" /> should be shown when displaying
+		/// the task dialog.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this button instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this button instance is currently bound to a task dialog.
+		/// </exception>
 		public bool Visible
 		{
 			get
@@ -347,15 +327,13 @@ namespace Wisej.Web.Ext.TaskDialog
 		private bool _visible;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the text associated with this control.
-		///            
-		///</summary>
+		/// Returns or sets the text associated with this control.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this button instance is a standard button, for which the text is provided by the OS.
-		///              - or -
-		///              The property is set and this button instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this button instance is a standard button, for which the text is predefined.
+		/// - or -
+		/// The property is set and this button instance is currently bound to a task dialog.
+		/// </exception>
 		public string Text
 		{
 			get
@@ -378,28 +356,73 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Methods
 		/// <summary>
-		/// 
-		///              Simulates a click on this button.
-		///            
-		///</summary>
+		/// Simulates a click on this button.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              This button instance is not currently bound to a task dialog.
-		///              - or -
-		///              The task dialog has started navigating to a new page containing this button instance, but the <see cref="E:System.Windows.Forms.TaskDialogPage.Created" /> event has not been raised yet.
-		///              - or -
-		///              This button is currently bound to a task dialog, but the dialog has just started navigating to a different page.
-		///            </exception>
+		/// This button instance is not currently bound to a task dialog.
+		/// - or -
+		/// The task dialog has started navigating to a new page containing this button instance, but the <see cref="TaskDialogPage.Created" /> event has not been raised yet.
+		/// - or -
+		/// This button is currently bound to a task dialog, but the dialog has just started navigating to a different page.
+		/// </exception>
+		/// <remarks>
+		/// This method is not implemented yet in this version and has no effect.
+		/// </remarks>
+		/// <example>
+		/// Closing the dialog automatically when a background operation completes:
+		/// <code><![CDATA[
+		/// private void OnDownloadCompleted()
+		/// {
+		///     this.buttonClose.PerformClick();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void PerformClick()
 		{
 			// TODO: Implement
 		}
 
+		/// <summary>
+		/// Determines whether the specified object is equal to the current <see cref="TaskDialogButton"/>.
+		/// </summary>
+		/// <param name="obj">The object to compare with the current button.</param>
+		/// <returns><see langword="true"/> if the specified object is equal to the current button; otherwise, <see langword="false"/>.</returns>
+		/// <remarks>
+		/// This method is not implemented yet in this version and always returns <see langword="false"/>.
+		/// </remarks>
+		/// <example>
+		/// Comparing the button returned by the dialog with a button of the page:
+		/// <code><![CDATA[
+		/// var result = new TaskDialog().ShowDialog(page, TaskDialogStartupLocation.CenterScreen);
+		/// if (result.Equals(buttonSave))
+		/// {
+		///     SaveDocument();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public override bool Equals(Object obj)
 		{
 			// TODO: Implement
 			return false;
 		}
 
+		/// <summary>
+		/// Returns the hash code for this <see cref="TaskDialogButton"/>.
+		/// </summary>
+		/// <returns>A 32-bit signed integer hash code.</returns>
+		/// <remarks>
+		/// This method is not implemented yet in this version and always returns 0.
+		/// </remarks>
+		/// <example>
+		/// Using buttons as dictionary keys:
+		/// <code><![CDATA[
+		/// var actions = new Dictionary<TaskDialogButton, Action>
+		/// {
+		///     { buttonSave, SaveDocument },
+		///     { buttonDiscard, DiscardChanges }
+		/// };
+		/// ]]></code>
+		/// </example>
 		public override int GetHashCode()
 		{
 			// TODO: Implement
@@ -415,11 +438,19 @@ namespace Wisej.Web.Ext.TaskDialog
 		}
 
 		/// <summary>
-		/// 
-		///              Returns a string that represents the current <see cref="TaskDialogButton" /> control.
-		///            
-		///</summary>
+		/// Returns a string that represents the current <see cref="TaskDialogButton" /> control.
+		/// </summary>
 		/// <returns>A string that contains the control text.</returns>
+		/// <remarks>
+		/// This method is not implemented yet in this version and returns an empty string.
+		/// </remarks>
+		/// <example>
+		/// Logging the button clicked by the user:
+		/// <code><![CDATA[
+		/// var result = new TaskDialog().ShowDialog(page, TaskDialogStartupLocation.CenterScreen);
+		/// System.Diagnostics.Trace.WriteLine("Clicked: " + result.ToString());
+		/// ]]></code>
+		/// </example>
 		public override String ToString()
 		{
 			// TODO: Implement

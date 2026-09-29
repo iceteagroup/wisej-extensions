@@ -28,8 +28,32 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.OfficeViewer
 {
 	/// <summary>
-	/// Microsoft Office Viewer panel. Uses <see href="https://products.office.com/en-us/office-online/view-office-documents-online"/>.
+	/// Represents a panel that displays Microsoft Office documents (Word, Excel, PowerPoint) using the
+	/// Microsoft Office Online viewer. See <see href="https://products.office.com/en-us/office-online/view-office-documents-online"/>.
 	/// </summary>
+	/// <remarks>
+	/// <para>
+	/// The document is rendered inside an IFrame that loads <c>https://view.officeapps.live.com/op/view.aspx</c>.
+	/// Microsoft's servers download the file from the URL passed to the viewer, therefore the file (or the Wisej
+	/// application when using a relative <see cref="FileSource"/> or a <see cref="FileStream"/>) must be reachable
+	/// from the public internet. Documents served from <c>localhost</c> or an intranet cannot be displayed.
+	/// </para>
+	/// <para>
+	/// Relative paths and streams are served by the control itself through its Wisej service URL; handle
+	/// <see cref="FileRequested"/> to write the response yourself.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// Displaying a public document:
+	/// <code><![CDATA[
+	/// var viewer = new OfficeViewer
+	/// {
+	///     Dock = DockStyle.Fill,
+	///     FileSource = "https://www.example.com/files/report.docx"
+	/// };
+	/// this.Controls.Add(viewer);
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("OfficeViewer")]
 	public class OfficeViewer : IFramePanel, IWisejHandler
 	{
@@ -92,8 +116,29 @@ namespace Wisej.Web.Ext.OfficeViewer
 
 		/// <summary>
 		/// Returns or sets the path of the Office file to view.
-		/// It can be a relative or absolute URL.
+		/// It can be a relative path or an absolute URL.
 		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// An absolute <c>http:</c> or <c>https:</c> URL is passed directly to the Office Online viewer.
+		/// Any other value is treated as a path relative to the application's root folder (resolved with
+		/// <see cref="Application.MapPath"/>) and the file is streamed to the viewer by this control.
+		/// </para>
+		/// <para>
+		/// Setting this property fires <see cref="FileSourceChanged"/>, clears <see cref="FileStream"/> and
+		/// updates <see cref="Url"/>. Setting it to null is the same as setting it to an empty string.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Showing a file stored in the application's folder, or a file hosted elsewhere:
+		/// <code><![CDATA[
+		/// // relative to the application root, served by the Wisej application.
+		/// this.officeViewer1.FileSource = "Documents/Budget.xlsx";
+		///
+		/// // absolute URL, downloaded directly by the Office Online viewer.
+		/// this.officeViewer1.FileSource = "https://www.example.com/files/Presentation.pptx";
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("")]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets the path of the Office file to view.")]
@@ -123,6 +168,28 @@ namespace Wisej.Web.Ext.OfficeViewer
 		/// <summary>
 		/// Returns or sets the stream of the Office file to view.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">The value is not null and <see cref="FileName"/> is empty.</exception>
+		/// <remarks>
+		/// <para>
+		/// <see cref="FileName"/> must be set, including the file extension, before assigning a stream;
+		/// otherwise an <see cref="InvalidOperationException"/> is thrown. The extension is used by the
+		/// Office Online viewer to detect the document type.
+		/// </para>
+		/// <para>
+		/// Assigning a stream clears <see cref="FileSource"/>. The stream must remain open and readable:
+		/// it is rewound (when seekable) and copied to the response each time the viewer requests the file.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Displaying a document generated in memory:
+		/// <code><![CDATA[
+		/// var stream = new MemoryStream();
+		/// CreateInvoice(stream);
+		///
+		/// this.officeViewer1.FileName = "Invoice.docx";
+		/// this.officeViewer1.FileStream = stream;
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Stream FileStream
@@ -150,7 +217,9 @@ namespace Wisej.Web.Ext.OfficeViewer
 		/// Returns or sets the file name with extension to return to the office viewer.
 		/// </summary>
 		/// <remarks>
-		/// This property is required when using <see cref="FileStream"/> instead of <see cref="FileSource"/>.
+		/// This property is required when using <see cref="FileStream"/> instead of <see cref="FileSource"/>,
+		/// and must be set before assigning the stream. When <see cref="FileSource"/> is set, the file name
+		/// is taken from <see cref="FileSource"/> and this property is ignored.
 		/// </remarks>
 		[DefaultValue("")]
 		[SRCategory("CatBehavior")]
@@ -165,6 +234,10 @@ namespace Wisej.Web.Ext.OfficeViewer
 		/// <summary>
 		/// Returns or sets the source URL of the IFrame.
 		/// </summary>
+		/// <remarks>
+		/// This property is managed by the control: it is overwritten with the Office Online viewer URL
+		/// whenever <see cref="FileSource"/> or <see cref="FileStream"/> change. Use those properties instead.
+		/// </remarks>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override string Url

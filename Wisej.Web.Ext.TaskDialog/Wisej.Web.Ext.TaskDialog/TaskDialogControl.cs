@@ -27,19 +27,22 @@ using System.Xml.Linq;
 namespace Wisej.Web.Ext.TaskDialog
 {
 	/// <summary>
-	/// 
-	///              Represents a control of a task dialog.
-	///            
-	///</summary>
+	/// Represents the base class of the controls that can be displayed in a <see cref="TaskDialogPage"/>.
+	/// </summary>
 	public abstract class TaskDialogControl : Wisej.Web.Control
 	{
 
 		#region Properties
 		/// <summary>
-		/// 
-		///              Gets or sets the object that contains data about the control.
-		///            
-		///</summary>
+		/// Returns or sets the object that contains data about the control.
+		/// </summary>
+		/// <example>
+		/// Associating an application object with a task dialog control:
+		/// <code><![CDATA[
+		/// var footnote = new TaskDialogFootnote("Last synchronized 5 minutes ago.");
+		/// footnote.Tag = this.currentAccount;
+		/// ]]></code>
+		/// </example>
 		public object Tag
 		{
 			get
@@ -58,11 +61,13 @@ namespace Wisej.Web.Ext.TaskDialog
 		private object _tag;
 
 		/// <summary>
-		/// 
-		///              Gets the <see cref="TaskDialogPage" /> instance which this control
-		///              is currently bound to.
-		///            
-		///</summary>
+		/// Returns or sets the <see cref="TaskDialogPage" /> instance which this control
+		/// is currently bound to.
+		/// </summary>
+		/// <remarks>
+		/// The value is <see langword="null"/> when the control is not part of a page that is currently
+		/// displayed in a <see cref="TaskDialog"/>.
+		/// </remarks>
 		public TaskDialogPage BoundPage
 		{
 			get

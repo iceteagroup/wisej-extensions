@@ -22,7 +22,7 @@ using System.ComponentModel;
 namespace Wisej.Web.Ext.GoogleMaps
 {
 	/// <summary>
-	/// Indicates additional data about the specified location.
+	/// Specifies the type of routing requested by the AddRoute methods of <see cref="GoogleMap"/>.
 	/// </summary>
 	[ApiCategory("GoogleMaps")]
 	public enum TravelMode

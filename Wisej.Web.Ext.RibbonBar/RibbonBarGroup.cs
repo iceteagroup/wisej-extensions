@@ -28,6 +28,11 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <summary>
 	/// Represents a group of <see cref="RibbonBarItem"/> in a <see cref="RibbonBarPage"/>.
 	/// </summary>
+	/// <remarks>
+	/// The group displays its <see cref="Items"/> in vertical columns (see <see cref="RibbonBarItem.ColumnBreak"/>) above
+	/// the title set in <see cref="Text"/>. When <see cref="ShowButton"/> is true, a small button is displayed next to the title;
+	/// clicking it fires the <see cref="Click"/> event and the <see cref="RibbonBar.GroupClick"/> event.
+	/// </remarks>
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
@@ -74,8 +79,11 @@ namespace Wisej.Web.Ext.RibbonBar
 		private RibbonBarPage _parent;
 
 		/// <summary>
-		/// Returns the <see cref="RibbonBar"/> that contains this <see cref="RibbonBarGroup"/>;
+		/// Returns the <see cref="RibbonBar"/> that contains this <see cref="RibbonBarGroup"/>.
 		/// </summary>
+		/// <remarks>
+		/// Returns null until the group is added to a <see cref="RibbonBarPage"/> that belongs to a <see cref="RibbonBar"/>.
+		/// </remarks>
 		[Browsable(false)]
 		public RibbonBar RibbonBar
 		{
@@ -85,6 +93,11 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets whether the items in the <see cref="RibbonBarGroup"/> can respond to user interaction.
 		/// </summary>
+		/// <returns>true if the group and its items can respond to user interaction; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// Disabling the group disables all its child items on the client, including the group button, without changing the
+		/// <see cref="RibbonBarItem.Enabled"/> property of the items.
+		/// </remarks>
 		[Localizable(true)]
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
@@ -107,6 +120,10 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets the name of the <see cref="RibbonBarGroup"/>.
 		/// </summary>
 		/// <returns>The name of the <see cref="RibbonBarGroup"/>. The default is an empty string ("").</returns>
+		/// <remarks>
+		/// The name can be used to retrieve the group from the <see cref="RibbonBarPage.Groups"/> collection (case insensitive).
+		/// At design time it's the name of the component in the designer.
+		/// </remarks>
 		[Browsable(false)]
 		public string Name
 		{
@@ -135,6 +152,10 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets whether the <see cref="RibbonBarGroup"/> is visible or hidden.
 		/// </summary>
+		/// <returns>true if the group is visible; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// A hidden group doesn't take any space in the <see cref="RibbonBarPage"/>.
+		/// </remarks>
 		[Localizable(true)]
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
@@ -156,6 +177,22 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns the collection of <see cref="RibbonBarItem"/> children.
 		/// </summary>
+		/// <remarks>
+		/// Adding an item to the collection sets its <see cref="RibbonBarItem.Parent"/> to this group.
+		/// The items are stacked vertically in columns in the order they appear in the collection;
+		/// see <see cref="RibbonBarItem.ColumnBreak"/>.
+		/// </remarks>
+		/// <example>
+		/// Adding a large button, a separator and a column of small items:
+		/// <code><![CDATA[
+		/// var group = this.ribbonBarGroup1;
+		/// group.Items.Add(new RibbonBarItemButton { Name = "find", Text = "Find", ImageSource = "icon-search" });
+		/// group.Items.Add(new RibbonBarItemSeparator());
+		/// group.Items.Add(new RibbonBarItemCheckBox { Name = "matchCase", Text = "Match case" });
+		/// group.Items.Add(new RibbonBarItemCheckBox { Name = "wholeWord", Text = "Whole word" });
+		/// group.Items.Add(new RibbonBarItemTextBox { Name = "searchText", Text = "Find:" });
+		/// ]]></code>
+		/// </example>
 		[Localizable(true)]
 		[SRCategory("CatBehavior")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -176,6 +213,21 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets whether the <see cref="RibbonBarGroup"/> shows the expand
 		/// button next to the group's title.
 		/// </summary>
+		/// <returns>true to show the button next to the title; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// Clicking the button fires the <see cref="Click"/> event on the group and the <see cref="RibbonBar.GroupClick"/>
+		/// event on the <see cref="RibbonBar"/>. It's typically used to open a dialog with additional options.
+		/// </remarks>
+		/// <example>
+		/// Opening a dialog with more options when the group button is clicked:
+		/// <code><![CDATA[
+		/// this.ribbonBarGroupFont.ShowButton = true;
+		/// this.ribbonBarGroupFont.Click += (s, e) =>
+		/// {
+		///     new FontOptionsDialog().ShowDialog();
+		/// };
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets whether the RibbonBarGroup shows the expand button next to the group's title.")]
@@ -196,7 +248,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets the object that contains data about the control.
 		/// </summary>
-		/// <return>An object that contains user-defined data about the control. The default is null.</return>
+		/// <returns>An object that contains user-defined data about the control. The default is null.</returns>
 		[Bindable(true)]
 		[DefaultValue(null)]
 		[Localizable(false)]
@@ -213,6 +265,9 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets the title of the <see cref="RibbonBarGroup"/>.
 		///</summary>
 		/// <returns>The text displayed at the bottom of the group.</returns>
+		/// <remarks>
+		/// The title is hidden when the text is empty.
+		/// </remarks>
 		[Localizable(true)]
 		[DefaultValue("")]
 		[SRCategory("CatAppearance")]
@@ -261,6 +316,16 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Updates the component on the client.
 		/// </summary>
+		/// <remarks>
+		/// Changing the properties of the group already updates the client. At design time the entire
+		/// <see cref="RibbonBar"/> is updated.
+		/// </remarks>
+		/// <example>
+		/// Forcing the group to be updated on the client:
+		/// <code><![CDATA[
+		/// this.ribbonBarGroup1.Update();
+		/// ]]></code>
+		/// </example>
 		public override void Update()
 		{
 			if (this.DesignMode)
@@ -273,6 +338,18 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns a string that represents the current object.
 		/// </summary>
 		/// <returns>A <see cref="string"/> that represents the current object.</returns>
+		/// <remarks>
+		/// The returned string contains the value returned by the base implementation followed by the <see cref="Text"/> property.
+		/// </remarks>
+		/// <example>
+		/// Logging the group that was clicked:
+		/// <code><![CDATA[
+		/// private void ribbonBar1_GroupClick(object sender, RibbonBarGroupEventArgs e)
+		/// {
+		///     System.Diagnostics.Debug.WriteLine(e.Group.ToString());
+		/// }
+		/// ]]></code>
+		/// </example>
 		public override string ToString()
 		{
 			return String.Concat(base.ToString(), ", Text: ", this.Text);

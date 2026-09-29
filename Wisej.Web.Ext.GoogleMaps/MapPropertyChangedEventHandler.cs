@@ -41,6 +41,7 @@ namespace Wisej.Web.Ext.GoogleMaps
 		/// Initializes an instance of the <see cref="T:Wisej.Web.Ext.GoogleMaps.MapPropertyChangedEventArgs" /> class.
 		/// </summary>
 		/// <param name="e">The event data from the client.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="e"/> is null.</exception>
 		public MapPropertyChangedEventArgs(WidgetEventArgs e)
 		{
 			if (e == null)
@@ -63,13 +64,40 @@ namespace Wisej.Web.Ext.GoogleMaps
 		}
 
 		/// <summary>
-		/// The name of the property that has changed.
+		/// Returns the name of the property that has changed.
 		/// </summary>
+		/// <remarks>
+		/// One of "zoom", "tilt", "mapTypeId", "center", "bounds", "heading" or "projection".
+		/// </remarks>
 		public string Name { get; private set; }
 
 		/// <summary>
-		/// The new value of the property.
+		/// Returns the new value of the property.
 		/// </summary>
+		/// <remarks>
+		/// The type depends on <see cref="Name"/>: a <see cref="LatLng"/> for "center", a <see cref="LatLngBounds"/> for "bounds",
+		/// a number for "zoom", "tilt" and "heading", and a string for "mapTypeId". It can be null when the client
+		/// cannot serialize the value.
+		/// </remarks>
+		/// <example>
+		/// Tracking the zoom level and the center of the map:
+		/// <code><![CDATA[
+		/// private void googleMap1_MapPropertyChanged(object sender, MapPropertyChangedEventArgs e)
+		/// {
+		///     switch (e.Name)
+		///     {
+		///         case "zoom":
+		///             this.labelZoom.Text = "Zoom: " + Convert.ToInt32(e.Value);
+		///             break;
+		/// 
+		///         case "center":
+		///             var center = (LatLng)e.Value;
+		///             this.labelCenter.Text = $"{center.Lat:F4}, {center.Lng:F4}";
+		///             break;
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		public object Value { get; private set; }
 	}
 }

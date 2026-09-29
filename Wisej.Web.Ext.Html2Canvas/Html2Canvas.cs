@@ -28,25 +28,24 @@ using System.Threading.Tasks;
 namespace Wisej.Web.Ext.Html2Canvas
 {
 	/// <summary>
-	/// Implementation of the html2canvas (https://html2canvas.hertzen.com/)
+	/// Implementation of the html2canvas (<see href="https://html2canvas.hertzen.com/"/>)
 	/// library. It's a singleton instance that can take a screenshot of
 	/// a specific control or the entire browser and send the image back
 	/// to the server.
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// Usage is quite easy:
+	/// Use the static methods directly, the session instance is created automatically:
 	/// </para>
 	/// <code language="cs">
-	///		Html2Canvas.Screenshot(this, (image) => {
-	///		image.Save(@"\images\screen.png");
+	/// Html2Canvas.Screenshot(this, (image) => {
+	///     image.Save(@"\images\screen.png");
 	/// });
-	///		
-	///		// or using asynchronous code:
-	///		
-	///		var image = await Html2Canvas.Screenshot(this.panel1);
-	///		image.Save(@"\images\screen.png");
-	///		
+	///
+	/// // or using asynchronous code:
+	///
+	/// var image = await Html2Canvas.ScreenshotAsync(this.panel1);
+	/// image.Save(@"\images\screen.png");
 	/// </code>
 	/// </remarks>
 	[ToolboxItem(false)]
@@ -114,8 +113,31 @@ namespace Wisej.Web.Ext.Html2Canvas
 		/// <summary>
 		/// Takes a screenshot of the browser.
 		/// </summary>
-		/// <param name="callback">Callback method that receives the <see cref="Image"/> object.</param>
+		/// <param name="callback">Callback method that receives the <see cref="Image"/> object, or null if the image couldn't be decoded.</param>
 		/// <exception cref="ArgumentNullException">If any of the arguments is null.</exception>
+		/// <remarks>
+		/// <para>
+		/// The screenshot is rendered asynchronously in the browser by the html2canvas library (<see href="https://html2canvas.hertzen.com/"/>),
+		/// which re-creates the image from the DOM and the CSS styles; it's not an actual screen capture, so some content
+		/// (i.e. cross-origin images or iframes) may not be rendered. The image is returned as a PNG <see cref="Bitmap"/>.
+		/// </para>
+		/// <para>
+		/// The method returns immediately and <paramref name="callback"/> is invoked when the image is received from the browser.
+		/// If the client reports an error, the exception is thrown when the response is processed, not by this method.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Saving a screenshot of the whole browser page:
+		/// <code><![CDATA[
+		/// private void buttonCapture_Click(object sender, EventArgs e)
+		/// {
+		///     Html2Canvas.Screenshot(image =>
+		///     {
+		///         image?.Save(Path.Combine(Application.StartupPath, "Screenshots", "page.png"));
+		///     });
+		/// }
+		/// ]]></code>
+		/// </example>
 		public static void Screenshot(Action<Image> callback)
 		{
 			if (callback == null)
@@ -131,11 +153,37 @@ namespace Wisej.Web.Ext.Html2Canvas
 		}
 
 		/// <summary>
-		/// Takes a screenshot of the browser.
+		/// Takes a screenshot of the browser using the specified <paramref name="options"/>.
 		/// </summary>
 		/// <param name="options">The <see cref="Html2CanvasOptions"/> to pass to the html2canvas call.</param>
-		/// <param name="callback">Callback method that receives the <see cref="Image"/> object.</param>
+		/// <param name="callback">Callback method that receives the <see cref="Image"/> object, or null if the image couldn't be decoded.</param>
 		/// <exception cref="ArgumentNullException">If any of the arguments is null.</exception>
+		/// <remarks>
+		/// <para>
+		/// The screenshot is rendered asynchronously in the browser by the html2canvas library (<see href="https://html2canvas.hertzen.com/"/>),
+		/// which re-creates the image from the DOM and the CSS styles; it's not an actual screen capture, so some content
+		/// (i.e. cross-origin images or iframes) may not be rendered. The image is returned as a PNG <see cref="Bitmap"/>.
+		/// </para>
+		/// <para>
+		/// The method returns immediately and <paramref name="callback"/> is invoked when the image is received from the browser.
+		/// If the client reports an error, the exception is thrown when the response is processed, not by this method.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Taking a screenshot with a white background at the original size:
+		/// <code><![CDATA[
+		/// var options = new Html2CanvasOptions
+		/// {
+		///     BackgroundColor = Color.White,
+		///     Scale = 1
+		/// };
+		///
+		/// Html2Canvas.Screenshot(options, image =>
+		/// {
+		///     this.pictureBox1.Image = image;
+		/// });
+		/// ]]></code>
+		/// </example>
 		public static void Screenshot(Html2CanvasOptions options, Action<Image> callback)
 		{
 			if (options == null)
@@ -156,10 +204,36 @@ namespace Wisej.Web.Ext.Html2Canvas
 		/// Takes a screenshot of the specified <see cref="Control"/>.
 		/// </summary>
 		/// <param name="target">
-		/// The <see cref="Control"/> to render to an <see cref="Image"/>
+		/// The <see cref="Control"/> to render to an <see cref="Image"/>.
 		/// </param>
-		/// <param name="callback">Callback method that receives the <see cref="Image"/> object.</param>
+		/// <param name="callback">Callback method that receives the <see cref="Image"/> object, or null if the image couldn't be decoded.</param>
 		/// <exception cref="ArgumentNullException">If any of the arguments is null.</exception>
+		/// <remarks>
+		/// <para>
+		/// The screenshot is rendered asynchronously in the browser by the html2canvas library (<see href="https://html2canvas.hertzen.com/"/>),
+		/// which re-creates the image from the DOM and the CSS styles; it's not an actual screen capture, so some content
+		/// (i.e. cross-origin images or iframes) may not be rendered. The image is returned as a PNG <see cref="Bitmap"/>.
+		/// </para>
+		/// <para>
+		/// The method returns immediately and <paramref name="callback"/> is invoked when the image is received from the browser.
+		/// If the client reports an error, the exception is thrown when the response is processed, not by this method.
+		/// </para>
+		/// <para>
+		/// The <paramref name="target"/> control must be created and visible on the client.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Displaying a snapshot of a panel in a picture box:
+		/// <code><![CDATA[
+		/// private void buttonCapture_Click(object sender, EventArgs e)
+		/// {
+		///     Html2Canvas.Screenshot(this.panelChart, image =>
+		///     {
+		///         this.pictureBoxPreview.Image = image;
+		///     });
+		/// }
+		/// ]]></code>
+		/// </example>
 		public static void Screenshot(Control target, Action<Image> callback)
 		{
 			if (target == null)
@@ -177,14 +251,37 @@ namespace Wisej.Web.Ext.Html2Canvas
 		}
 
 		/// <summary>
-		/// Takes a screenshot of the specified <see cref="Control"/>.
+		/// Takes a screenshot of the specified <see cref="Control"/> using the specified <paramref name="options"/>.
 		/// </summary>
 		/// <param name="target">
-		/// The <see cref="Control"/> to render to an <see cref="Image"/>
+		/// The <see cref="Control"/> to render to an <see cref="Image"/>.
 		/// </param>
-		/// <param name="callback">Callback method that receives the <see cref="Image"/> object.</param>
 		/// <param name="options">The <see cref="Html2CanvasOptions"/> to pass to the html2canvas call.</param>
+		/// <param name="callback">Callback method that receives the <see cref="Image"/> object, or null if the image couldn't be decoded.</param>
 		/// <exception cref="ArgumentNullException">If any of the arguments is null.</exception>
+		/// <remarks>
+		/// <para>
+		/// The screenshot is rendered asynchronously in the browser by the html2canvas library (<see href="https://html2canvas.hertzen.com/"/>),
+		/// which re-creates the image from the DOM and the CSS styles; it's not an actual screen capture, so some content
+		/// (i.e. cross-origin images or iframes) may not be rendered. The image is returned as a PNG <see cref="Bitmap"/>.
+		/// </para>
+		/// <para>
+		/// The method returns immediately and <paramref name="callback"/> is invoked when the image is received from the browser.
+		/// If the client reports an error, the exception is thrown when the response is processed, not by this method.
+		/// </para>
+		/// <para>
+		/// The <paramref name="target"/> control must be created and visible on the client.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Capturing a form at double resolution:
+		/// <code><![CDATA[
+		/// Html2Canvas.Screenshot(this, new Html2CanvasOptions { BackgroundColor = Color.White, Scale = 2 }, image =>
+		/// {
+		///     image?.Save(Path.Combine(Application.StartupPath, "Screenshots", "form.png"));
+		/// });
+		/// ]]></code>
+		/// </example>
 		public static void Screenshot(Control target, Html2CanvasOptions options, Action<Image> callback)
 		{
 			if (target == null)
@@ -207,8 +304,25 @@ namespace Wisej.Web.Ext.Html2Canvas
 		/// Asynchronously returns an <see cref="Image"/> that represents a screenshot
 		/// of the browser.
 		/// </summary>
-		/// <param name="options">The <see cref="Html2CanvasOptions"/> to pass to the html2canvas call.</param>
-		/// <returns>An awaitable <see cref="Task"/> that contains the screenshot.</returns>
+		/// <param name="options">The <see cref="Html2CanvasOptions"/> to pass to the html2canvas call, or null to use the defaults.</param>
+		/// <returns>An awaitable <see cref="Task"/> that contains the screenshot, or null if the image couldn't be decoded.</returns>
+		/// <remarks>
+		/// The screenshot is rendered in the browser by the html2canvas library (<see href="https://html2canvas.hertzen.com/"/>),
+		/// which re-creates the image from the DOM and the CSS styles; it's not an actual screen capture, so some content
+		/// (i.e. cross-origin images or iframes) may not be rendered. The image is returned as a PNG <see cref="Bitmap"/>.
+		/// If the client reports an error, the returned task is faulted with the exception.
+		/// </remarks>
+		/// <example>
+		/// Attaching a screenshot of the page to a support request:
+		/// <code><![CDATA[
+		/// private async void buttonReport_Click(object sender, EventArgs e)
+		/// {
+		///     var image = await Html2Canvas.ScreenshotAsync();
+		///     if (image != null)
+		///         SendSupportRequest(this.textBoxDescription.Text, image);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public static Task<Image> ScreenshotAsync(Html2CanvasOptions options = null)
 		{
 			var tcs = new TaskCompletionSource<Image>();
@@ -229,10 +343,28 @@ namespace Wisej.Web.Ext.Html2Canvas
 		/// of the specified <see cref="Control"/> as it appears on the browser.
 		/// </summary>
 		/// <param name="target">
-		/// The <see cref="Control"/> to render to an <see cref="Image"/>
+		/// The <see cref="Control"/> to render to an <see cref="Image"/>.
 		/// </param>
-		/// <param name="options">The <see cref="Html2CanvasOptions"/> to pass to the html2canvas call.</param>
-		/// <returns>An awaitable <see cref="Task"/> that contains the screenshot.</returns>
+		/// <param name="options">The <see cref="Html2CanvasOptions"/> to pass to the html2canvas call, or null to use the defaults.</param>
+		/// <returns>An awaitable <see cref="Task"/> that contains the screenshot, or null if the image couldn't be decoded.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
+		/// <remarks>
+		/// The screenshot is rendered in the browser by the html2canvas library (<see href="https://html2canvas.hertzen.com/"/>),
+		/// which re-creates the image from the DOM and the CSS styles; it's not an actual screen capture, so some content
+		/// (i.e. cross-origin images or iframes) may not be rendered. The image is returned as a PNG <see cref="Bitmap"/>.
+		/// If the client reports an error, the returned task is faulted with the exception.
+		/// The <paramref name="target"/> control must be created and visible on the client.
+		/// </remarks>
+		/// <example>
+		/// Capturing a panel with <c>await</c>:
+		/// <code><![CDATA[
+		/// private async void buttonCapture_Click(object sender, EventArgs e)
+		/// {
+		///     var image = await Html2Canvas.ScreenshotAsync(this.panelDashboard, new Html2CanvasOptions { BackgroundColor = Color.White, Scale = 1 });
+		///     this.pictureBox1.Image = image;
+		/// }
+		/// ]]></code>
+		/// </example>
 		public static Task<Image> ScreenshotAsync(Control target, Html2CanvasOptions options = null)
 		{
 			if (target == null)

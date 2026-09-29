@@ -26,6 +26,17 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <summary>
 	/// Represents a vertical separator in a <see cref="RibbonBarGroup"/>.
 	/// </summary>
+	/// <remarks>
+	/// The separator fills the height of the group in a column of its own, the items that follow it start a new column.
+	/// </remarks>
+	/// <example>
+	/// Separating two sets of buttons in a group:
+	/// <code><![CDATA[
+	/// this.ribbonBarGroup1.Items.Add(new RibbonBarItemButton { Text = "New" });
+	/// this.ribbonBarGroup1.Items.Add(new RibbonBarItemSeparator());
+	/// this.ribbonBarGroup1.Items.Add(new RibbonBarItemButton { Text = "Print" });
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]

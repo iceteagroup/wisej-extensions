@@ -23,8 +23,12 @@ using System.ComponentModel;
 namespace Wisej.Web.Ext.TourPanel
 {
 	/// <summary>
-	/// Provides data for <see cref="E:Wisej.Web.Ext.TourPanel.TourPanelEventHandler" /> event.
+	/// Provides data for the <see cref="TourPanel.BeforeStep" /> and <see cref="TourPanel.AfterStep" /> events.
 	/// </summary>
+	/// <remarks>
+	/// Set <see cref="CancelEventArgs.Cancel"/> to true in a <see cref="TourPanel.BeforeStep"/> handler to prevent the step
+	/// from being shown. The <see cref="TourPanel.AfterStep"/> event cannot be canceled.
+	/// </remarks>
 	[ApiCategory("TourPanel")]
 	public class TourPanelEventArgs : CancelEventArgs
 	{
@@ -33,6 +37,7 @@ namespace Wisej.Web.Ext.TourPanel
 		/// </summary>
 		/// <param name="step">The <see cref="T:Wisej.Web.Ext.TourPanel.TourStep" /> the event is occurring for.</param>
 		/// <param name="index">The index of the <see cref="T:Wisej.Web.Ext.TourPanel.TourStep" /> the event is occurring for.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="step"/> is null.</exception>
 		public TourPanelEventArgs(TourStep step, int index)
 		{
 			if (step == null)
@@ -43,7 +48,7 @@ namespace Wisej.Web.Ext.TourPanel
 		}
 
 		/// <summary>
-		/// The <see cref="T:Wisej.Web.Ext.TourPanel.TourStep" /> the event is occurring for.
+		/// Returns the <see cref="T:Wisej.Web.Ext.TourPanel.TourStep" /> the event is occurring for.
 		/// </summary>
 		public TourStep Step
 		{
@@ -52,7 +57,8 @@ namespace Wisej.Web.Ext.TourPanel
 		}
 
 		/// <summary>
-		/// The index of the <see cref="T:Wisej.Web.Ext.TourPanel.TourStep" /> the event is occurring for.
+		/// Returns the index of the <see cref="T:Wisej.Web.Ext.TourPanel.TourStep" /> the event is occurring for
+		/// in the <see cref="TourPanel.Steps"/> array.
 		/// </summary>
 		public int StepIndex
 		{

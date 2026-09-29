@@ -32,9 +32,13 @@ namespace Wisej.Web.Ext.FullCalendar
 	public delegate void DayClickEventHandler(object sender, DayClickEventArgs e);
 
 	/// <summary>
-	/// Provides data for the <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.DayClick" /> event of 
+	/// Provides data for the <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.DayClick" /> and
+	/// <see cref="E:Wisej.Web.Ext.FullCalendar.FullCalendar.DayDoubleClick" /> events of
 	/// the <see cref="T:Wisej.Web.Ext.FullCalendar.FullCalendar" /> control.
 	/// </summary>
+	/// <remarks>
+	/// The mouse location is relative to the <see cref="T:Wisej.Web.Ext.FullCalendar.FullCalendar"/> control. Right clicks are reported with the <see cref="F:Wisej.Web.MouseButtons.Right"/> button.
+	/// </remarks>
 	[ApiCategory("FullCalendar")]
 	public class DayClickEventArgs : MouseEventArgs
 	{
@@ -66,6 +70,10 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// <summary>
 		/// Returns the <see cref="T:System.DateTime"/> that represents the day/time that was clicked in the <see cref="T:Wisej.Web.Ext.FullCalendar.FullCalendar"/> control.
 		/// </summary>
+		/// <remarks>
+		/// When the user clicks a time slot, the value contains the time of the slot; when the user clicks a whole-day cell
+		/// (i.e. in the month view or in the all-day slot), the time is 00:00.
+		/// </remarks>
 		public DateTime Day
 		{
 			get;

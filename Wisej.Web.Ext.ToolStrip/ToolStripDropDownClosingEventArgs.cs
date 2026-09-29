@@ -19,10 +19,17 @@
 
 namespace Wisej.Web.Ext.ToolStrip
 {
+	/// <summary>
+	/// Provides data for the <see cref="ToolStripDropDown.Closing" /> event.
+	/// </summary>
 	public class ToolStripDropDownClosingEventArgs
 	{
 
 		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToolStripDropDownClosingEventArgs" /> class with the specified reason.
+		/// </summary>
+		/// <param name="reason">One of the <see cref="ToolStripDropDownCloseReason" /> values.</param>
 		public ToolStripDropDownClosingEventArgs(ToolStripDropDownCloseReason reason)
 		{
 			this._closeReason = reason;
@@ -33,6 +40,20 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		#region Properties
 
+		/// <summary>
+		/// Returns the reason that the <see cref="ToolStripDropDown" /> is closing.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripDropDownCloseReason" /> values.</returns>
+		/// <example>
+		/// Checking why the drop down is closing:
+		/// <code><![CDATA[
+		/// private void dropDown1_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+		/// {
+		///     if (e.CloseReason == ToolStripDropDownCloseReason.ItemClicked)
+		///         SaveSelection();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public ToolStripDropDownCloseReason CloseReason
 		{
 			get

@@ -27,32 +27,37 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.TaskDialog
 {
 	/// <summary>
-	/// 
-	///              Represents an expander button and the associated expanded area
-	///              of a task dialog.
-	///            
-	///</summary>
+	/// Represents an expander button and the associated expanded area
+	/// of a task dialog.
+	/// </summary>
+	/// <example>
+	/// Showing technical details in a collapsible area:
+	/// <code><![CDATA[
+	/// page.Expander = new TaskDialogExpander("Error 0x80070005: access denied to C:\\Data\\orders.db.")
+	/// {
+	///     CollapsedButtonText = "Show details",
+	///     ExpandedButtonText = "Hide details",
+	///     Position = TaskDialogExpanderPosition.AfterFootnote
+	/// };
+	/// ]]></code>
+	/// </example>
 	public class TaskDialogExpander : TaskDialogControl
 	{
 
 		#region Constructors
 
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogExpander" /> class.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogExpander" /> class.
+		/// </summary>
 		public TaskDialogExpander()
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogExpander" /> class
-		///              using the given text.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogExpander" /> class
+		/// using the given text.
+		/// </summary>
 		/// <param name="text">The text to be displayed in the dialog's expanded area.</param>
 		public TaskDialogExpander(string text) : this()
 		{
@@ -77,17 +82,15 @@ namespace Wisej.Web.Ext.TaskDialog
 		#region Properties
 
 		/// <summary>
-		/// 
-		///              Gets or sets the text to be displayed in the dialog's expanded area.
-		///            
-		///</summary>
+		/// Returns or sets the text to be displayed in the dialog's expanded area.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on an expander instance that is currently bound to a task dialog, but it's not visible as its initial
-		///              <see cref="P:System.Windows.Forms.TaskDialogExpander.Text" /> property value was <see langword="null" /> or an empty string.
-		///              - or -
-		///              The property is set on an expander instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on an expander instance that is currently bound to a task dialog, but it's not visible as its initial
+		/// <see cref="Text" /> property value was <see langword="null" /> or an empty string.
+		/// - or -
+		/// The property is set on an expander instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public string Text
 		{
 			get
@@ -106,14 +109,12 @@ namespace Wisej.Web.Ext.TaskDialog
 		private string _text;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the text to be displayed in the expander button when it
-		///              is in the expanded state.
-		///            
-		///</summary>
+		/// Returns or sets the text to be displayed in the expander button when it
+		/// is in the expanded state.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this expander instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this expander instance is currently bound to a task dialog.
+		/// </exception>
 		public string ExpandedButtonText
 		{
 			get
@@ -132,14 +133,12 @@ namespace Wisej.Web.Ext.TaskDialog
 		private string _expandedButtonText;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the text to be displayed in the expander button when it
-		///              is in the collapsed state.
-		///            
-		///</summary>
+		/// Returns or sets the text to be displayed in the expander button when it
+		/// is in the collapsed state.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this expander instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this expander instance is currently bound to a task dialog.
+		/// </exception>
 		public string CollapsedButtonText
 		{
 			get
@@ -158,14 +157,12 @@ namespace Wisej.Web.Ext.TaskDialog
 		private string _collapsedButtonText;
 
 		/// <summary>
-		/// 
-		///              Gets or sets a value that indicates whether the expander button is in the
-		///              expanded state (so that the dialog's expanded area is visible).
-		///            
-		///</summary>
+		/// Returns or sets a value that indicates whether the expander button is in the
+		/// expanded state (so that the dialog's expanded area is visible).
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this expander instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this expander instance is currently bound to a task dialog.
+		/// </exception>
 		public bool Expanded
 		{
 			get
@@ -184,14 +181,12 @@ namespace Wisej.Web.Ext.TaskDialog
 		private bool _expanded;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the <see cref="TaskDialogExpanderPosition" /> that specifies where
-		///              the expanded area of the task dialog is to be displayed.
-		///            
-		///</summary>
+		/// Returns or sets the <see cref="TaskDialogExpanderPosition" /> that specifies where
+		/// the expanded area of the task dialog is to be displayed.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this expander instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this expander instance is currently bound to a task dialog.
+		/// </exception>
 		public TaskDialogExpanderPosition Position
 		{
 			get
@@ -214,11 +209,18 @@ namespace Wisej.Web.Ext.TaskDialog
 		#region Methods
 
 		/// <summary>
-		/// 
-		///              Returns a string that represents the current <see cref="TaskDialogExpander" /> control.
-		///            
-		///</summary>
+		/// Returns a string that represents the current <see cref="TaskDialogExpander" /> control.
+		/// </summary>
 		/// <returns>A string that contains the control text.</returns>
+		/// <remarks>
+		/// This method is not implemented yet in this version and returns an empty string.
+		/// </remarks>
+		/// <example>
+		/// Getting the text of the expander:
+		/// <code><![CDATA[
+		/// var details = page.Expander.ToString();
+		/// ]]></code>
+		/// </example>
 		public override String ToString()
 		{
 			// TODO: Implement

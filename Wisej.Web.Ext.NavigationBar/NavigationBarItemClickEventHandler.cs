@@ -30,7 +30,8 @@ namespace Wisej.Web.Ext.NavigationBar
 	public delegate void NavigationBarItemClickEventHandler(object sender, NavigationBarItemClickEventArgs e);
 
 	/// <summary>
-	/// Provides data for the <see cref="NavigationBar.ItemClick"/> event.
+	/// Provides data for the <see cref="NavigationBar.ItemClick"/>, <see cref="NavigationBar.ItemInfoClick"/>
+	/// and <see cref="NavigationBar.ItemShortcutClick"/> events.
 	/// </summary>
 	[ApiCategory("NavigationBar")]
 	public class NavigationBarItemClickEventArgs: EventArgs
@@ -39,6 +40,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Initializes a new instance of <see cref="NavigationBarItemClickEventArgs"/>.
 		/// </summary>
 		/// <param name="item">The <see cref="NavigationBarItem"/> that triggered the event.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="item"/> is null.</exception>
 		public NavigationBarItemClickEventArgs(NavigationBarItem item)
 		{
 			if (item == null)
@@ -48,7 +50,7 @@ namespace Wisej.Web.Ext.NavigationBar
 		}
 
 		/// <summary>
-		/// The <see cref="NavigationBarItem"/> that triggered the event.
+		/// Returns the <see cref="NavigationBarItem"/> that triggered the event.
 		/// </summary>
 		public NavigationBarItem Item
 		{

@@ -28,8 +28,12 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <summary>
 	/// Base implementation of the component collections managed in the <see cref="RibbonBar"/> control.
 	/// </summary>
-	/// <typeparam name="TOwner"></typeparam>
-	/// <typeparam name="TElement"></typeparam>
+	/// <typeparam name="TOwner">Type of the component that owns the collection.</typeparam>
+	/// <typeparam name="TElement">Type of the components stored in the collection.</typeparam>
+	/// <remarks>
+	/// Adding, inserting or removing elements updates the owner on the client automatically.
+	/// Elements cannot be replaced using the indexer; remove the element and insert the new one instead.
+	/// </remarks>
 	/// <exclude/>
 	[ApiCategory("RibbonBar")]
 	[ListBindable(false)]
@@ -84,6 +88,16 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <param name="index">The index of the <typeparamref name="TElement"/> to retrieve.</param>
 		/// <returns>The <typeparamref name="TElement"/> at the specified index.</returns>
 		/// <exception cref="NotSupportedException">Cannot assign a <typeparamref name="TElement"/> item.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than 0 or greater than or equal to <see cref="Count"/>.</exception>
+		/// <example>
+		/// Iterating the pages in a <see cref="RibbonBar"/> by index:
+		/// <code><![CDATA[
+		/// for (int i = 0; i < this.ribbonBar1.Pages.Count; i++)
+		/// {
+		///     this.ribbonBar1.Pages[i].Enabled = (i == 0);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public TElement this[int index]
 		{
 			get { return this.items[index]; }
@@ -109,9 +123,15 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// Adds the specified <para>item</para> to the collection.
+		/// Adds the specified <paramref name="item"/> to the collection.
 		/// </summary>
 		/// <param name="item">The <typeparamref name="TElement"/> to add to the collection.</param>
+		/// <example>
+		/// Adding a button to a group:
+		/// <code><![CDATA[
+		/// this.ribbonBarGroup1.Items.Add(new RibbonBarItemButton { Text = "Refresh", ImageSource = "icon-refresh" });
+		/// ]]></code>
+		/// </example>
 		public virtual void Add(TElement item)
 		{
 			this.items.Add(item);
@@ -123,6 +143,15 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Removes all the items from the collection.
 		/// </summary>
+		/// <remarks>
+		/// The removed items are not disposed. Use <see cref="Clear(bool)"/> to dispose them.
+		/// </remarks>
+		/// <example>
+		/// Removing all the items from a group to rebuild it:
+		/// <code><![CDATA[
+		/// this.ribbonBarGroup1.Items.Clear();
+		/// ]]></code>
+		/// </example>
 		public virtual void Clear()
 		{
 			Clear(false);
@@ -131,6 +160,13 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Removes and optionally disposes all the items from the collection.
 		/// </summary>
+		/// <param name="dispose">true to dispose the removed items; false to only remove them.</param>
+		/// <example>
+		/// Removing and disposing all the groups in a page:
+		/// <code><![CDATA[
+		/// this.ribbonBarPage1.Groups.Clear(true);
+		/// ]]></code>
+		/// </example>
 		public virtual void Clear(bool dispose)
 		{
 			TElement[] items = null;
@@ -154,51 +190,89 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// Checks whether the specified <para>item</para> exists in the collection.
+		/// Checks whether the specified <paramref name="item"/> exists in the collection.
 		/// </summary>
 		/// <param name="item">The <typeparamref name="TElement"/> to find in the collection.</param>
-		/// <returns>True if the specified <para>item</para> exists in the collection, otherwise false.</returns>
+		/// <returns>true if the specified <paramref name="item"/> exists in the collection; otherwise, false.</returns>
+		/// <example>
+		/// Adding a page only if it's not already in the <see cref="RibbonBar"/>:
+		/// <code><![CDATA[
+		/// if (!this.ribbonBar1.Pages.Contains(this.pageReview))
+		///     this.ribbonBar1.Pages.Add(this.pageReview);
+		/// ]]></code>
+		/// </example>
 		public virtual bool Contains(TElement item)
 		{
 			return this.items.Contains(item);
 		}
 
 		/// <summary>
-		/// Copies all the items in the collection to the specified <para>array</para> starting at the
-		/// specified <para>index</para>.
+		/// Copies all the items in the collection to the specified <paramref name="array"/> starting at the
+		/// specified <paramref name="index"/>.
 		/// </summary>
 		/// <param name="array">The target array.</param>
 		/// <param name="index">The starting index in the target array.</param>
+		/// <example>
+		/// Copying the items of a group to an array:
+		/// <code><![CDATA[
+		/// var items = new RibbonBarItem[this.ribbonBarGroup1.Items.Count];
+		/// this.ribbonBarGroup1.Items.CopyTo(items, 0);
+		/// ]]></code>
+		/// </example>
 		public void CopyTo(TElement[] array, int index)
 		{
 			this.items.CopyTo(array, index);
 		}
 
 		/// <summary>
-		/// Returns an <see cref="IEnumerator"/> to iterated the items in the collection.
+		/// Returns an <see cref="IEnumerator{T}"/> to iterate the items in the collection.
 		/// </summary>
-		/// <returns>An instance of <see cref="IEnumerator{TElement}"/>.</returns>
+		/// <returns>An instance of <see cref="IEnumerator{T}"/>.</returns>
+		/// <example>
+		/// Disabling all the items in a group:
+		/// <code><![CDATA[
+		/// foreach (var item in this.ribbonBarGroup1.Items)
+		/// {
+		///     item.Enabled = false;
+		/// }
+		/// ]]></code>
+		/// </example>
 		public IEnumerator<TElement> GetEnumerator()
 		{
 			return this.items.GetEnumerator();
 		}
 
 		/// <summary>
-		/// Returns the position of the specified <para>item</para> in the collection.
+		/// Returns the position of the specified <paramref name="item"/> in the collection.
 		/// </summary>
 		/// <param name="item">The <typeparamref name="TElement"/> to find in the collection.</param>
-		/// <returns>The index of the <para>item</para> or -1 if not found.</returns>
+		/// <returns>The index of the <paramref name="item"/> or -1 if not found.</returns>
+		/// <example>
+		/// Inserting a new button right after an existing one:
+		/// <code><![CDATA[
+		/// var index = this.ribbonBarGroup1.Items.IndexOf(this.buttonCopy);
+		/// if (index > -1)
+		///     this.ribbonBarGroup1.Items.Insert(index + 1, new RibbonBarItemButton { Text = "Copy Format" });
+		/// ]]></code>
+		/// </example>
 		public virtual int IndexOf(TElement item)
 		{
 			return this.items.IndexOf(item);
 		}
 
 		/// <summary>
-		/// Inserts the specified <para>item</para> in the collection at the
-		/// specified <para>index</para>.
+		/// Inserts the specified <paramref name="item"/> in the collection at the
+		/// specified <paramref name="index"/>.
 		/// </summary>
 		/// <param name="index">The position to insert the specified <typeparamref name="TElement"/> at.</param>
 		/// <param name="item">The <typeparamref name="TElement"/> to insert in the collection.</param>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than 0 or greater than <see cref="Count"/>.</exception>
+		/// <example>
+		/// Inserting a page as the first tab:
+		/// <code><![CDATA[
+		/// this.ribbonBar1.Pages.Insert(0, new RibbonBarPage { Text = "Start" });
+		/// ]]></code>
+		/// </example>
 		public virtual void Insert(int index, TElement item)
 		{
 			this.items.Insert(index, item);
@@ -211,7 +285,16 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Removes the specified <typeparamref name="TElement"/> from the collection.
 		/// </summary>
 		/// <param name="item">The <typeparamref name="TElement"/> to remove from the collection.</param>
-		/// <returns>True if the specified <para>item</para> has been removed from the collection.</returns>
+		/// <returns>true if the specified <paramref name="item"/> has been removed from the collection; false if it was not found.</returns>
+		/// <remarks>
+		/// The removed item is not disposed. Call <see cref="IDisposable.Dispose"/> on the item instead to remove it and dispose it.
+		/// </remarks>
+		/// <example>
+		/// Removing a button from its group:
+		/// <code><![CDATA[
+		/// this.ribbonBarGroup1.Items.Remove(this.buttonMacros);
+		/// ]]></code>
+		/// </example>
 		public virtual bool Remove(TElement item)
 		{
 			if (!this.items.Remove(item))
@@ -223,9 +306,21 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// Returns the <typeparamref name="TElement"/> at the specified position.
+		/// Removes the <typeparamref name="TElement"/> at the specified position.
 		/// </summary>
-		/// <param name="index">The index of the <typeparamref name="TElement"/> to removed from the collection.</param>
+		/// <param name="index">The index of the <typeparamref name="TElement"/> to remove from the collection.</param>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than 0 or greater than or equal to <see cref="Count"/>.</exception>
+		/// <remarks>
+		/// The removed item is not disposed.
+		/// </remarks>
+		/// <example>
+		/// Removing the last page of the <see cref="RibbonBar"/>:
+		/// <code><![CDATA[
+		/// var pages = this.ribbonBar1.Pages;
+		/// if (pages.Count > 0)
+		///     pages.RemoveAt(pages.Count - 1);
+		/// ]]></code>
+		/// </example>
 		public virtual void RemoveAt(int index)
 		{
 			var item = this[index];

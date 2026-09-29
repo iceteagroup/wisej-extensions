@@ -27,14 +27,33 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.CoolClock
 {
 	/// <summary>
-	/// CoolClock is a customizable javascript analog clock from <see href="http://randomibis.com/coolclock"/>.
+	/// Represents an analog clock control based on the CoolClock JavaScript library
+	/// (<see href="http://randomibis.com/coolclock"/>), rendered on an HTML canvas.
 	/// </summary>
+	/// <remarks>
+	/// The clock face is always round; its radius is half of the smaller of <see cref="Control.Width"/>
+	/// and <see cref="Control.Height"/> and it is centered horizontally. The time displayed is the browser's time,
+	/// optionally shifted using <see cref="GmtOffset"/>.
+	/// </remarks>
+	/// <example>
+	/// Adding a clock showing the time in Tokyo to a page:
+	/// <code><![CDATA[
+	/// var clock = new CoolClock
+	/// {
+	///     Size = new Size(200, 200),
+	///     Skin = CoolClockSkin.Classic,
+	///     ShowDigital = true,
+	///     GmtOffset = 9
+	/// };
+	/// this.Controls.Add(clock);
+	/// ]]></code>
+	/// </example>
 	[ToolboxBitmap(typeof(CoolClock))]
 	[ApiCategory("CoolClock")]
 	public class CoolClock : Widget
 	{
 		/// <summary>
-		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.CoolClock.CoolClock"/> control.
+		/// Initializes a new instance of the <see cref="CoolClock"/> control.
 		/// </summary>
 		public CoolClock()
 		{
@@ -84,8 +103,19 @@ namespace Wisej.Web.Ext.CoolClock
 		}
 
 		/// <summary>
-		/// Returns or sets the tick delay.
+		/// Returns or sets the interval in milliseconds between redraws of the clock when <see cref="ShowSecondHand"/> is <c>true</c>.
 		/// </summary>
+		/// <remarks>
+		/// When <see cref="ShowSecondHand"/> is <c>false</c>, <see cref="LongTickDelay"/> is used instead.
+		/// The default is 1000 (one second).
+		/// </remarks>
+		/// <example>
+		/// Setting the redraw intervals for both modes:
+		/// <code><![CDATA[
+		/// this.coolClock1.TickDelay = 1000;       // redraw every second with the second hand.
+		/// this.coolClock1.LongTickDelay = 30000;  // redraw every 30 seconds without it.
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(1000)]
 		public int TickDelay
 		{
@@ -103,8 +133,12 @@ namespace Wisej.Web.Ext.CoolClock
 		private int _tickDelay = 1000;
 
 		/// <summary>
-		/// Returns or sets the long tick delay.
+		/// Returns or sets the interval in milliseconds between redraws of the clock when <see cref="ShowSecondHand"/> is <c>false</c>.
 		/// </summary>
+		/// <remarks>
+		/// When <see cref="ShowSecondHand"/> is <c>true</c>, <see cref="TickDelay"/> is used instead.
+		/// The default is 15000 (15 seconds).
+		/// </remarks>
 		[DefaultValue(15000)]
 		public int LongTickDelay
 		{
@@ -122,8 +156,12 @@ namespace Wisej.Web.Ext.CoolClock
 		private int _longTickDelay = 15000;
 
 		/// <summary>
-		/// Shows or hides the second hand.
+		/// Returns or sets whether the clock displays the second hand.
 		/// </summary>
+		/// <remarks>
+		/// This property also determines whether the clock is redrawn every <see cref="TickDelay"/>
+		/// or every <see cref="LongTickDelay"/> milliseconds.
+		/// </remarks>
 		[DefaultValue(true)]
 		[DesignerActionList]
 		public bool ShowSecondHand
@@ -141,8 +179,11 @@ namespace Wisej.Web.Ext.CoolClock
 		private bool _showSecondHand = true;
 
 		/// <summary>
-		/// Returns or sets the skin used to render the CoolClock.
+		/// Returns or sets the skin used to render the clock.
 		/// </summary>
+		/// <remarks>
+		/// See <see cref="CoolClockSkin"/> for the available skins. The default is <see cref="CoolClockSkin.ChunkySwiss"/>.
+		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue(CoolClockSkin.ChunkySwiss)]
 		public CoolClockSkin Skin
@@ -163,6 +204,10 @@ namespace Wisej.Web.Ext.CoolClock
 		/// <summary>
 		/// Returns or sets the type of clock to render.
 		/// </summary>
+		/// <remarks>
+		/// <see cref="CoolClockType.Logarithmic"/> and <see cref="CoolClockType.LogarithmicReversed"/> draw the
+		/// hands and tick marks on a logarithmic scale instead of the standard linear dial.
+		/// </remarks>
 		[DefaultValue(CoolClockType.Standard)]
 		public CoolClockType ClockType
 		{
@@ -180,7 +225,7 @@ namespace Wisej.Web.Ext.CoolClock
 		private CoolClockType _clockType = CoolClockType.Standard;
 
 		/// <summary>
-		/// Shows the digital clock.
+		/// Returns or sets whether the time is also displayed in digital format inside the clock face.
 		/// </summary>
 		[DefaultValue(false)]
 		public bool ShowDigital
@@ -198,8 +243,20 @@ namespace Wisej.Web.Ext.CoolClock
 		private bool _showDigital = false;
 
 		/// <summary>
-		/// Returns or sets the GMT offset.
+		/// Returns or sets the offset from GMT, in hours, of the time displayed by the clock.
 		/// </summary>
+		/// <remarks>
+		/// When the value is not 0, the clock shows the UTC time plus the specified number of hours.
+		/// When the value is 0 (the default), the clock shows the local time of the browser, not the GMT time.
+		/// </remarks>
+		/// <example>
+		/// Displaying clocks for different time zones:
+		/// <code><![CDATA[
+		/// this.clockNewYork.GmtOffset = -5;
+		/// this.clockBerlin.GmtOffset = 1;
+		/// this.clockLocal.GmtOffset = 0; // browser's local time.
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(0)]
 		public int GmtOffset
 		{
@@ -216,8 +273,11 @@ namespace Wisej.Web.Ext.CoolClock
 		private int _gmtOffset = 0;
 
 		/// <summary>
-		/// Overridden to create our initialization script.
+		/// Returns the initialization script that creates the clock on the client.
 		/// </summary>
+		/// <remarks>
+		/// The script is loaded from the embedded resource <c>startup.js</c> and cannot be changed; the setter is ignored.
+		/// </remarks>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override string InitScript
@@ -229,8 +289,13 @@ namespace Wisej.Web.Ext.CoolClock
 		}
 
 		/// <summary>
-		/// Overridden.
+		/// Returns the options object sent to the client-side CoolClock instance.
 		/// </summary>
+		/// <remarks>
+		/// The options are built from the <see cref="Skin"/>, <see cref="TickDelay"/>, <see cref="LongTickDelay"/>,
+		/// <see cref="ShowSecondHand"/>, <see cref="ShowDigital"/>, <see cref="GmtOffset"/> and <see cref="ClockType"/>
+		/// properties and the current size of the control. The setter is ignored; use the individual properties instead.
+		/// </remarks>
 		[Browsable(false)]
 		[WisejSerializerOptions(WisejSerializerOptions.None)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -259,7 +324,7 @@ namespace Wisej.Web.Ext.CoolClock
 		}
 
 		/// <summary>
-		/// Overridden to return our list of script resources.
+		/// Returns the list of packages (the <c>coolclock.js</c> library) loaded on the client before the clock is created.
 		/// </summary>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

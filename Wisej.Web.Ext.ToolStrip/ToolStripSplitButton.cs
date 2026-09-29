@@ -26,11 +26,22 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Represents a selectable <see cref="ToolStripItem" /> that can contain text and images. 
-	///</summary>
-	/// <summary>
-	/// Represents a combination of a standard button on the left and a drop-down button on the right, or the other way around if the value of <see cref="RightToLeft" /> is Yes.
-	///</summary>
+	/// Represents a combination of a standard button on the left and a drop-down button on the right, or the other way around if the value of <see cref="ToolStripItem.RightToLeft" /> is <see cref="RightToLeft.Yes" />.
+	/// </summary>
+	/// <remarks>
+	/// Clicking the standard button portion raises the <see cref="ToolStripSplitButton.ButtonClick" /> event; clicking the arrow portion opens the
+	/// <see cref="ToolStripDropDownItem.DropDown" />.
+	/// </remarks>
+	/// <example>
+	/// Creating a "Paste" split button with additional paste options:
+	/// <code><![CDATA[
+	/// var paste = new ToolStripSplitButton("Paste");
+	/// paste.ButtonClick += (s, e) => PasteText();
+	/// paste.DropDownItems.Add("Paste as plain text", null, (s, e) => PastePlainText());
+	/// paste.DropDownItems.Add("Paste special...", null, (s, e) => ShowPasteSpecialDialog());
+	/// this.toolStrip1.Items.Add(paste);
+	/// ]]></code>
+	/// </example>
 	public class ToolStripSplitButton : ToolStripDropDownItem
 	{
 
@@ -45,8 +56,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripSplitButton" /> class with the specified text. 
-		///</summary>
+		/// Initializes a new instance of the <see cref="ToolStripSplitButton" /> class with the specified text.
+		/// </summary>
 		/// <param name="text">The text to be displayed on the <see cref="ToolStripSplitButton" />.</param>
 		public ToolStripSplitButton(string text)
 		{
@@ -55,8 +66,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripSplitButton" /> class with the specified image. 
-		///</summary>
+		/// Initializes a new instance of the <see cref="ToolStripSplitButton" /> class with the specified image.
+		/// </summary>
 		/// <param name="image">The <see cref="System.Drawing.Image" /> to be displayed on the <see cref="ToolStripSplitButton" />.</param>
 		public ToolStripSplitButton(Image image)
 		{
@@ -76,6 +87,12 @@ namespace Wisej.Web.Ext.ToolStrip
 			// TODO: Implement
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToolStripSplitButton" /> class with the specified text and image and the items displayed in the drop-down.
+		/// </summary>
+		/// <param name="text">The text to be displayed on the <see cref="ToolStripSplitButton" />.</param>
+		/// <param name="image">The <see cref="System.Drawing.Image" /> to be displayed on the <see cref="ToolStripSplitButton" />.</param>
+		/// <param name="dropDownItems">The items to add to <see cref="ToolStripDropDownItem.DropDownItems" />.</param>
 		public ToolStripSplitButton(string text, Image image, ToolStripItem[] dropDownItems)
 		{
 			this.Text = text;
@@ -114,9 +131,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets a value indicating whether default or custom <see cref="ToolTip" /> text is displayed on the <see cref="ToolStripSplitButton" />.
-		///</summary>
-		/// <returns>true if default <see cref="ToolTip" /> text is displayed; otherwise, false. The default is true.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripItem.Text" /> of the <see cref="ToolStripSplitButton" /> is used as its tooltip when no custom tooltip text is set.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripItem.Text" /> is used as the tooltip; otherwise, false. The default is true.</returns>
 		[DefaultValue(true)]
 		public bool AutoToolTip
 		{
@@ -136,8 +153,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _autoToolTip;
 
 		/// <summary>
-		/// Gets the size and location of the standard button portion of a <see cref="ToolStripSplitButton" />.
-		///</summary>
+		/// Returns the size and location of the standard button portion of a <see cref="ToolStripSplitButton" />.
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Rectangle" /> that represents the size and location of the standard button portion of a <see cref="ToolStripSplitButton" />.</returns>
 		[Browsable(false)]
 		public Rectangle ButtonBounds
@@ -151,8 +168,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Rectangle _buttonBounds;
 
 		/// <summary>
-		/// Gets a value indicating whether the button portion of the <see cref="ToolStripSplitButton" /> is in the pressed state. 
-		///</summary>
+		/// Returns a value indicating whether the button portion of the <see cref="ToolStripSplitButton" /> is in the pressed state.
+		/// </summary>
 		/// <returns>true if the button portion of the <see cref="ToolStripSplitButton" /> is in the pressed state; otherwise, false.</returns>
 		[Browsable(false)]
 		public bool ButtonPressed
@@ -166,9 +183,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _buttonPressed;
 
 		/// <summary>
-		/// Gets a value indicating whether the standard button portion of a <see cref="ToolStripSplitButton" /> is selected or the <see cref="ToolStripSplitButton.DropDownButtonPressed" /> property is true.
-		///</summary>
-		/// <returns>true if the button portion of a <see cref="ToolStripSplitButton" /> is selected or whether <see cref="ToolStripSplitButton.DropDownButtonPressed" /> is true; otherwise, false.</returns>
+		/// Returns a value indicating whether the standard button portion of a <see cref="ToolStripSplitButton" /> is selected or the <see cref="ToolStripSplitButton.DropDownButtonPressed" /> property is true.
+		/// </summary>
+		/// <returns>true if the button portion of a <see cref="ToolStripSplitButton" /> is selected or <see cref="ToolStripSplitButton.DropDownButtonPressed" /> is true; otherwise, false.</returns>
 		[Browsable(false)]
 		public bool ButtonSelected
 		{
@@ -181,8 +198,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _buttonSelected;
 
 		/// <summary>
-		/// Gets a value indicating whether to display the <see cref="ToolTip" /> that is defined as the default. 
-		///</summary>
+		/// Returns the default value of the <see cref="ToolStripSplitButton.AutoToolTip" /> property.
+		/// </summary>
 		/// <returns>true in all cases.</returns>
 		public override bool DefaultAutoToolTip
 		{
@@ -195,9 +212,23 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _defaultAutoToolTip;
 
 		/// <summary>
-		/// Gets or sets the portion of the <see cref="ToolStripSplitButton" /> that is activated when the control is first selected.
-		///</summary>
-		/// <returns>A Forms.ToolStripItem representing the portion of the <see cref="ToolStripSplitButton" /> that is activated when first selected. The default value is null.</returns>
+		/// Returns or sets the drop-down item whose <see cref="ToolStripItem.Click" /> event is raised when the standard button portion of the <see cref="ToolStripSplitButton" /> is clicked.
+		/// </summary>
+		/// <returns>The <see cref="ToolStripItem" /> activated by the button portion of the <see cref="ToolStripSplitButton" />. The default value is null.</returns>
+		/// <remarks>
+		/// When set, clicking the button portion raises <see cref="ToolStripSplitButton.ButtonClick" /> and then performs a click on the default item.
+		/// Changing the value raises the <see cref="ToolStripSplitButton.DefaultItemChanged" /> event.
+		/// </remarks>
+		/// <example>
+		/// Repeating the last option chosen from the drop-down when the button is clicked:
+		/// <code><![CDATA[
+		/// private void toolStripSplitButtonExport_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+		/// {
+		///     this.toolStripSplitButtonExport.DefaultItem = e.ClickedItem;
+		///     this.toolStripSplitButtonExport.Text = "Export " + e.ClickedItem.Text;
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DefaultValue(null)]
 		public ToolStripItem DefaultItem
@@ -218,9 +249,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItem _defaultItem;
 
 		/// <summary>
-		/// Gets the size and location, in screen coordinates, of the drop-down button portion of a <see cref="ToolStripSplitButton" />.
-		///</summary>
-		/// <returns>A <see cref="System.Drawing.Rectangle" /> that represents the size and location of the drop-down button portion of a <see cref="ToolStripSplitButton" />, in screen coordinates.</returns>
+		/// Returns the size and location of the drop-down button portion of a <see cref="ToolStripSplitButton" />.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Rectangle" /> that represents the size and location of the drop-down button portion of a <see cref="ToolStripSplitButton" />.</returns>
 		[Browsable(false)]
 		public Rectangle DropDownButtonBounds
 		{
@@ -233,8 +264,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Rectangle _dropDownButtonBounds;
 
 		/// <summary>
-		/// Gets a value indicating whether the drop-down portion of the <see cref="ToolStripSplitButton" /> is in the pressed state. 
-		///</summary>
+		/// Returns a value indicating whether the drop-down portion of the <see cref="ToolStripSplitButton" /> is in the pressed state.
+		/// </summary>
 		/// <returns>true if the drop-down portion of the <see cref="ToolStripSplitButton" /> is in the pressed state; otherwise, false.</returns>
 		[Browsable(false)]
 		public bool DropDownButtonPressed
@@ -248,8 +279,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _dropDownButtonPressed;
 
 		/// <summary>
-		/// Gets a value indicating whether the drop-down button portion of a <see cref="ToolStripSplitButton" /> is selected.
-		///</summary>
+		/// Returns a value indicating whether the drop-down button portion of a <see cref="ToolStripSplitButton" /> is selected.
+		/// </summary>
 		/// <returns>true if the drop-down button portion of a <see cref="ToolStripSplitButton" /> is selected; otherwise, false.</returns>
 		[Browsable(false)]
 		public bool DropDownButtonSelected
@@ -263,10 +294,13 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _dropDownButtonSelected;
 
 		/// <summary>
-		/// The width, in pixels, of the drop-down button portion of a <see cref="ToolStripSplitButton" />.
-		///</summary>
-		/// <exception cref="System.ArgumentOutOfRangeException">The specified value is less than zero (0). </exception>
+		/// Returns or sets the width, in pixels, of the drop-down button portion of a <see cref="ToolStripSplitButton" />.
+		/// </summary>
 		/// <returns>An <see cref="System.Int32" /> representing the width in pixels.</returns>
+		/// <exception cref="System.ArgumentOutOfRangeException">The specified value is less than zero (0).</exception>
+		/// <remarks>
+		/// Call <see cref="ToolStripSplitButton.ResetDropDownButtonWidth" /> to restore the default width.
+		/// </remarks>
 		[SRCategory("CatLayout")]
 		[SRDescription("ToolStripSplitButtonDropDownButtonWidthDescr")]
 		public int DropDownButtonWidth
@@ -287,8 +321,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private int _dropDownButtonWidth;
 
 		/// <summary>
-		/// Gets the boundaries of the separator between the standard and drop-down button portions of a <see cref="ToolStripSplitButton" />.
-		///</summary>
+		/// Returns the boundaries of the separator between the standard and drop-down button portions of a <see cref="ToolStripSplitButton" />.
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Rectangle" /> that represents the size and location of the separator.</returns>
 		[Browsable(false)]
 		public Rectangle SplitterBounds
@@ -394,8 +428,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// This method is not relevant to this class.
-		///</summary>
+		/// Resets the <see cref="ToolStripSplitButton.DropDownButtonWidth" /> property to its default value.
+		/// </summary>
+		/// <example>
+		/// Restoring the default arrow width:
+		/// <code><![CDATA[
+		/// this.toolStripSplitButton1.ResetDropDownButtonWidth();
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public virtual void ResetDropDownButtonWidth()
 		{
@@ -414,8 +454,17 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// If the <see cref="ToolStripItem.Enabled" /> property is true, calls the <see cref="ToolStripSplitButton.OnButtonClick(System.EventArgs)" /> method.
-		///</summary>
+		/// Raises the <see cref="ToolStripSplitButton.ButtonClick" /> event, as if the user clicked the standard button portion, if the <see cref="ToolStripItem.Enabled" /> property is true.
+		/// </summary>
+		/// <example>
+		/// Triggering the default action of a split button from code:
+		/// <code><![CDATA[
+		/// private void buttonSend_Click(object sender, EventArgs e)
+		/// {
+		///     this.toolStripSplitButtonSend.PerformButtonClick();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void PerformButtonClick()
 		{
 			// TODO: Implement

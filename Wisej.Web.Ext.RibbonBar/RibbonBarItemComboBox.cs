@@ -27,6 +27,11 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <summary>
 	/// Represents a combobox in a <see cref="RibbonBarGroup"/>.
 	/// </summary>
+	/// <remarks>
+	/// The <see cref="RibbonBarItem.Text"/> and the image are displayed as a label to the left of the combo box; the list of
+	/// options is set in <see cref="Items"/> and the current value is in the <see cref="Value"/> property. The user can move
+	/// between the combo boxes and text boxes in the same <see cref="RibbonBarGroup"/> using the Tab and Shift+Tab keys.
+	/// </remarks>
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
@@ -63,6 +68,24 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets the currently selected item or the
 		/// value in the editable field of the <see cref="RibbonBarItemComboBox"/>.
 		/// </summary>
+		/// <returns>The selected or typed text. The default is null.</returns>
+		/// <remarks>
+		/// When <see cref="Editable"/> is true, the value can be any text typed by the user, not only one of the <see cref="Items"/>.
+		/// Every change, including assigning the value in code, fires the <see cref="ValueChanged"/> event on the item and the
+		/// <see cref="RibbonBar.ItemValueChanged"/> event on the <see cref="RibbonBar"/>.
+		/// </remarks>
+		/// <example>
+		/// Selecting a value in code and reacting to the user's selection:
+		/// <code><![CDATA[
+		/// this.comboBoxZoom.Items = new[] { "50%", "75%", "100%", "150%", "200%" };
+		/// this.comboBoxZoom.Value = "100%";
+		///
+		/// private void comboBoxZoom_ValueChanged(object sender, EventArgs e)
+		/// {
+		///     SetZoom(int.Parse(this.comboBoxZoom.Value.TrimEnd('%')));
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[Description("")]
 		public string Value
@@ -85,8 +108,9 @@ namespace Wisej.Web.Ext.RibbonBar
 
 		/// <summary>
 		/// Returns or sets whether the user can edit the combobox. When this property
-		/// is false, the user can only select one of the drop down items. The default  is false.
+		/// is false, the user can only select one of the drop down items.
 		/// </summary>
+		/// <returns>true if the user can type any text in the field; otherwise, false. The default is false.</returns>
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets whether the user can edit the combobox. The default is false.")]
@@ -107,6 +131,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets the width of the ComboBox field inside the <see cref="RibbonBarItemComboBox"/>.
 		/// </summary>
+		/// <returns>The width of the combo box field in pixels, not including the label. The default is 120.</returns>
 		[DefaultValue(120)]
 		[SRCategory("CatLayout")]
 		[Description("Returns or sets the width of the TextBox field inside the RibbonBarItemComboBox.")]
@@ -125,9 +150,23 @@ namespace Wisej.Web.Ext.RibbonBar
 		private int _fieldWidth = 120;
 
 		/// <summary>
-		/// Returns the array of items displayed in this <see cref="RibbonBarItemComboBox" />.
+		/// Returns or sets the array of items displayed in this <see cref="RibbonBarItemComboBox" />.
 		/// </summary>
-		/// <returns>A an array containing the items in the <see cref="RibbonBarItemComboBox" />.</returns>
+		/// <returns>An array containing the items in the <see cref="RibbonBarItemComboBox" />.</returns>
+		/// <remarks>
+		/// The getter returns null until a value is assigned; assigning null sets an empty array.
+		/// The drop down list on the client is rebuilt only when a new array is assigned: changing the elements of the
+		/// array returned by the getter doesn't update the client.
+		/// </remarks>
+		/// <example>
+		/// Filling the drop down list with a list of font names:
+		/// <code><![CDATA[
+		/// this.comboBoxFont.Items = new[] { "Arial", "Calibri", "Segoe UI", "Times New Roman" };
+		///
+		/// // add an item: assign a new array.
+		/// this.comboBoxFont.Items = this.comboBoxFont.Items.Concat(new[] { "Verdana" }).ToArray();
+		/// ]]></code>
+		/// </example>
 		[Localizable(true)]
 		[MergableProperty(false)]
 		[SRCategory("CatData")]

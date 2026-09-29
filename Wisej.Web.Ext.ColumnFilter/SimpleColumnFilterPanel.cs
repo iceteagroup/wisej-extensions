@@ -27,6 +27,19 @@ namespace Wisej.Web.Ext.ColumnFilter
 	/// the bound column in a checked list box. The user can select
 	/// multiple values, clear the selection or select all.
 	/// </summary>
+	/// <remarks>
+	/// Values are compared using the formatted value of the cells. The list is populated when the panel is shown
+	/// and it's reloaded after the rows of the <see cref="DataGridView"/> change or are sorted.
+	/// When no value or all the values are checked, the column is not filtered.
+	/// </remarks>
+	/// <example>
+	/// Using this panel with the <see cref="ColumnFilter"/> extender:
+	/// <code><![CDATA[
+	/// this.columnFilter1.FilterPanelType = typeof(SimpleColumnFilterPanel);
+	/// this.columnFilter1.SortItems = true;
+	/// this.columnFilter1.SetShowFilter(this.dataGridView1.Columns["Country"], true);
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(false)]
 	[ApiCategory("ColumnFilter")]
 	public partial class SimpleColumnFilterPanel : ColumnFilterPanel
@@ -78,8 +91,12 @@ namespace Wisej.Web.Ext.ColumnFilter
 		private bool reloadItems = false;
 
 		/// <summary>
-		/// If true sorts the items alphabetically.
+		/// Returns or sets whether the list of values is sorted alphabetically.
 		/// </summary>
+		/// <remarks>
+		/// When the panel is created by the <see cref="ColumnFilter"/> extender, this property is initialized
+		/// from <see cref="Wisej.Web.Ext.ColumnFilter.ColumnFilter.SortItems"/>. The values are compared as formatted strings.
+		/// </remarks>
 		/// <since>3.2.6</since>
 		[DefaultValue(false)]
 		public bool SortItems
@@ -259,9 +276,19 @@ namespace Wisej.Web.Ext.ColumnFilter
 		}
 
 		/// <summary>
-		/// Clear the filter panel
+		/// Clears the filter panel by unchecking all the values.
 		/// </summary>
-		/// <param name="applyFilters"></param>
+		/// <param name="applyFilters">True (default) to re-apply the filters of all the columns and close the panel.</param>
+		/// <remarks>
+		/// When no value is checked the column is not filtered.
+		/// </remarks>
+		/// <example>
+		/// Removing the filter from a specific column:
+		/// <code><![CDATA[
+		/// var panel = this.dataGridView1.Columns["Country"].UserData.FilterPanel as SimpleColumnFilterPanel;
+		/// panel?.Clear();
+		/// ]]></code>
+		/// </example>
 		public override void Clear(bool applyFilters = true)
 		{
 			foreach (int i in this.items.CheckedIndices)

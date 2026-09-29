@@ -30,8 +30,29 @@ namespace Wisej.Web.Ext.CustomWallpaper
 {
 	/// <summary>
 	/// Changes the background image of the <see cref="T:Wisej.Web.Desktop"/> or any
-	/// target <see cref="Control"/>  to use a custom list of images.
+	/// target <see cref="Control"/> to rotate through a custom list of images.
 	/// </summary>
+	/// <remarks>
+	/// The images are cross-faded (see <see cref="FadeTime"/>) every <see cref="RotationInterval"/> milliseconds,
+	/// optionally with a slow zoom effect (see <see cref="EnableAnimation"/>). Images can be
+	/// <see cref="Image"/> objects, which are served by the component itself, or URLs.
+	/// </remarks>
+	/// <example>
+	/// Rotating three images on the desktop every 30 seconds:
+	/// <code><![CDATA[
+	/// var wallpaper = new CustomWallpaper
+	/// {
+	///     RotationInterval = 30000,
+	///     FadeTime = 2000,
+	///     Images = new[]
+	///     {
+	///         new ImageListEntry("Images/Wallpapers/beach.jpg"),
+	///         new ImageListEntry("Images/Wallpapers/mountains.jpg"),
+	///         new ImageListEntry("https://example.com/images/city.jpg")
+	///     }
+	/// };
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(CustomWallpaper))]
 	[SRDescription("Changes the background image of the Desktop or any Control to use a custom list of images.")]
@@ -41,16 +62,17 @@ namespace Wisej.Web.Ext.CustomWallpaper
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.CustomWallpaper" /> class.
+		/// Initializes a new instance of the <see cref="CustomWallpaper" /> class.
 		/// </summary>
 		public CustomWallpaper()
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.CustomWallpaper" /> class together with the specified container.
+		/// Initializes a new instance of the <see cref="CustomWallpaper" /> class together with the specified container.
 		/// </summary>
-		/// <param name="container">A <see cref="T:System.ComponentModel.IContainer" /> that represents the container for the component. </param>
+		/// <param name="container">A <see cref="IContainer" /> that represents the container for the component.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="container"/> is null.</exception>
 		public CustomWallpaper(IContainer container)
 			: this()
 		{
@@ -65,8 +87,11 @@ namespace Wisej.Web.Ext.CustomWallpaper
 		#region Properties
 
 		/// <summary>
-		/// Enables or disables a simple zoom animation when rotating images.
+		/// Returns or sets whether a simple zoom animation is applied when rotating images.
 		/// </summary>
+		/// <remarks>
+		/// When enabled, the incoming image is slowly scaled to 105% over five times the <see cref="FadeTime"/>.
+		/// </remarks>
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
 		[Description("Enables or disables a simple zoom animation when rotating images.")]
@@ -87,6 +112,12 @@ namespace Wisej.Web.Ext.CustomWallpaper
 		/// <summary>
 		/// Returns or sets the fade in/out time in milliseconds.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than 0 or greater than 10000 (10 seconds).</exception>
+		/// <remarks>
+		/// This is the duration of the cross-fade between the current image and the next one.
+		/// When <see cref="EnableAnimation"/> is <c>true</c>, the zoom animation lasts five times this value.
+		/// The default is 1000.
+		/// </remarks>
 		[DefaultValue(1000)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets the fade in/out interval in milliseconds.")]
@@ -110,6 +141,17 @@ namespace Wisej.Web.Ext.CustomWallpaper
 		/// <summary>
 		/// Returns or sets the rotation interval in milliseconds.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than 0 or greater than 36000000 (10 hours).</exception>
+		/// <remarks>
+		/// Set to 0 to disable the rotation: only the first image is displayed. The default is 60000 (one minute).
+		/// </remarks>
+		/// <example>
+		/// Changing the image every 5 minutes with a 3 seconds cross-fade:
+		/// <code><![CDATA[
+		/// this.customWallpaper1.RotationInterval = 5 * 60 * 1000;
+		/// this.customWallpaper1.FadeTime = 3000;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(60000)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets the rotation interval in milliseconds.")]
@@ -131,8 +173,11 @@ namespace Wisej.Web.Ext.CustomWallpaper
 		private int _rotationInterval = 60000;
 
 		/// <summary>
-		/// Returns or sets if the images will be displayed in random order.
+		/// Returns or sets whether the images are displayed in random order.
 		/// </summary>
+		/// <remarks>
+		/// The list is shuffled every time the component is updated and sent to the client.
+		/// </remarks>
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets if the images will be displayed in random order.")]
@@ -151,9 +196,19 @@ namespace Wisej.Web.Ext.CustomWallpaper
 		private bool _randomOrder = false;
 
 		/// <summary>
-		/// Returns or sets the control that will receive the background images. If left to null it will
-		/// automatically use the current Desktop.
+		/// Returns or sets the control that will receive the background images.
 		/// </summary>
+		/// <remarks>
+		/// When null (the default), the images are applied to the current <see cref="T:Wisej.Web.Desktop"/> or,
+		/// if the application doesn't use a desktop, to the main <see cref="Page"/>.
+		/// The property is reset to null automatically when the target control is disposed.
+		/// </remarks>
+		/// <example>
+		/// Using the wallpaper as the background of a panel:
+		/// <code><![CDATA[
+		/// this.customWallpaper1.Control = this.panelHeader;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets the control that will receive the background images.")]
@@ -185,9 +240,24 @@ namespace Wisej.Web.Ext.CustomWallpaper
 		}
 
 		/// <summary>
-		/// List of images to rotate.
+		/// Returns or sets the list of images to rotate.
 		/// </summary>
-		/// <returns>The collection of images.</returns>
+		/// <remarks>
+		/// Each <see cref="ImageListEntry"/> can specify either an <see cref="Image"/> object, which is streamed to the
+		/// browser by the component, or an image source (URL or application-relative path). Images are scaled
+		/// to cover the target control. Assigning a new array immediately fades in the next image;
+		/// changing the elements of the existing array doesn't update the client.
+		/// </remarks>
+		/// <example>
+		/// Mixing an embedded image with image URLs:
+		/// <code><![CDATA[
+		/// this.customWallpaper1.Images = new[]
+		/// {
+		///     new ImageListEntry(Properties.Resources.CompanyBackground),
+		///     new ImageListEntry("Images/Wallpapers/office.jpg")
+		/// };
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[MergableProperty(false)]
 		[SRCategory("CatAppearance")]

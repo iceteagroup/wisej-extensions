@@ -26,9 +26,26 @@ using System.Linq.Dynamic.Core;
 namespace Wisej.Web.Ext.ColumnFilter
 {
 	/// <summary>
-	/// Where column filter panel showing a list of operators and values based on the Columns ValueType
-	///	
+	/// Column filter panel that lets the user build up to five conditions, each made of an operator and a value,
+	/// combined with AND/OR. The available operators depend on the <see cref="DataGridViewColumn.ValueType"/> of the column.
 	/// </summary>
+	/// <remarks>
+	/// String columns (and <see cref="DataGridViewComboBoxColumn"/> columns) offer text operators such as equal to, contains, starts with
+	/// and a "match case" option; the comparison uses the formatted value of the cells. <see cref="DateTime"/> columns compare only the date part
+	/// using a date picker. Boolean columns offer is true / is false / is null / is not null. <see cref="Int32"/>,
+	/// <see cref="Int64"/>, <see cref="Decimal"/> and <see cref="Double"/> columns offer the relational operators.
+	/// Other value types are not filtered.
+	/// The conditions are converted to a System.Linq.Dynamic.Core expression; the expressions of all the filtered columns are
+	/// combined with AND and evaluated against the rows of the <see cref="DataGridView"/>.
+	/// </remarks>
+	/// <example>
+	/// Using this panel with the <see cref="ColumnFilter"/> extender:
+	/// <code><![CDATA[
+	/// this.dataGridView1.Columns["OrderDate"].ValueType = typeof(DateTime);
+	/// this.columnFilter1.FilterPanelType = typeof(WhereColumnFilterPanel);
+	/// this.columnFilter1.SetShowFilter(this.dataGridView1.Columns["OrderDate"], true);
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(false)]
 	[ApiCategory("ColumnFilter")]
 	public partial class WhereColumnFilterPanel : ColumnFilterPanel
@@ -451,9 +468,19 @@ namespace Wisej.Web.Ext.ColumnFilter
 		}
 
 		/// <summary>
-		/// Clear the filter panel
+		/// Clears the filter panel by resetting all the operators, values and dates.
 		/// </summary>
-		/// <param name="applyFilters"></param>
+		/// <param name="applyFilters">True (default) to re-apply the filters of all the columns and close the panel.</param>
+		/// <remarks>
+		/// When no operator is selected the column is not filtered.
+		/// </remarks>
+		/// <example>
+		/// Removing the filter from a specific column:
+		/// <code><![CDATA[
+		/// var panel = this.dataGridView1.Columns["OrderDate"].UserData.FilterPanel as WhereColumnFilterPanel;
+		/// panel?.Clear();
+		/// ]]></code>
+		/// </example>
 		public override void Clear(bool applyFilters = true)
 		{
 			foreach (Control c in this.flowLayoutPanel.Controls)

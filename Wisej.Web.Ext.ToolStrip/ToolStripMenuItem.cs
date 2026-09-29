@@ -26,8 +26,26 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Represents a selectable option displayed on a <see cref="MenuStrip" /> or <see cref="ContextMenuStrip" />. Although <see cref="ToolStripMenuItem" /> replaces and adds functionality to the <see cref="MenuItem" /> control of previous versions, <see cref="MenuItem" /> is retained for both backward compatibility and future use if you choose.
-	///</summary>
+	/// Represents a selectable option displayed on a <see cref="ToolStrip" /> used as a menu bar or on a <see cref="ToolStripDropDownMenu" />.
+	/// </summary>
+	/// <remarks>
+	/// A <see cref="ToolStripMenuItem" /> can display a check mark (<see cref="ToolStripMenuItem.Checked" />), shortcut keys
+	/// (<see cref="ToolStripMenuItem.ShortcutKeys" />) and a sub-menu (<see cref="ToolStripDropDownItem.DropDownItems" />).
+	/// </remarks>
+	/// <example>
+	/// Building a "File" menu with sub items:
+	/// <code><![CDATA[
+	/// var open = new ToolStripMenuItem("Open");
+	/// open.Click += (s, e) => OpenDocument();
+	///
+	/// var save = new ToolStripMenuItem("Save");
+	/// save.ShortcutKeys = Keys.Control | Keys.S;
+	/// save.Click += (s, e) => SaveDocument();
+	///
+	/// var file = new ToolStripMenuItem("File", null, new ToolStripItem[] { open, save });
+	/// this.menuToolStrip.Items.Add(file);
+	/// ]]></code>
+	/// </example>
 	public class ToolStripMenuItem : ToolStripDropDownItem
 	{
 
@@ -73,6 +91,12 @@ namespace Wisej.Web.Ext.ToolStrip
 			// TODO: Implement
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToolStripMenuItem" /> class that displays the specified text and image and that contains the specified <see cref="ToolStripItem" /> collection.
+		/// </summary>
+		/// <param name="text">The text to display on the menu item.</param>
+		/// <param name="image">The <see cref="System.Drawing.Image" /> to display on the control.</param>
+		/// <param name="dropDownItems">The menu items to display when the control is clicked, added to <see cref="ToolStripDropDownItem.DropDownItems" />.</param>
 		public ToolStripMenuItem(string text, Image image, ToolStripItem[] dropDownItems)
 		{
 			this.Text = text;
@@ -102,9 +126,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets the default size of the <see cref="ToolStripMenuItem" />.
-		///</summary>
-		/// <returns>The <see cref="System.Drawing.Size" /> of the <see cref="ToolStripMenuItem" />, measured in pixels. The default is 100 pixels horizontally.</returns>
+		/// Returns the default size of the <see cref="ToolStripMenuItem" />.
+		/// </summary>
+		/// <returns>The <see cref="System.Drawing.Size" /> of the <see cref="ToolStripMenuItem" />, measured in pixels.</returns>
 		public override Size DefaultSize
 		{
 			get
@@ -116,8 +140,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Size _defaultSize;
 
 		/// <summary>
-		/// Gets the internal spacing within the <see cref="ToolStripMenuItem" />.
-		///</summary>
+		/// Returns the default internal spacing within the <see cref="ToolStripMenuItem" />.
+		/// </summary>
 		/// <returns>A <see cref="Padding" /> value representing the spacing.</returns>
 		public new Padding DefaultPadding
 		{
@@ -130,9 +154,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _defaultPadding;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the control is enabled. 
-		///</summary>
-		/// <returns>true if the control is enabled; otherwise, false. The default is true.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripMenuItem" /> is enabled.
+		/// </summary>
+		/// <returns>true if the menu item is enabled; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// A disabled menu item doesn't raise the <see cref="ToolStripItem.Click" /> event, doesn't open its drop-down and doesn't respond to its <see cref="ToolStripMenuItem.ShortcutKeys" />.
+		/// </remarks>
 		[Localizable(true)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("ToolStripItemEnabledDescr")]
@@ -155,9 +182,26 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _enabled;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripMenuItem" /> is checked.
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripMenuItem" /> is checked.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripMenuItem" /> is checked or is in an indeterminate state; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// <see cref="ToolStripMenuItem.Checked" /> and <see cref="ToolStripMenuItem.CheckState" /> are synchronized. Changing the value raises the
+		/// <see cref="ToolStripMenuItem.CheckedChanged" /> event. To toggle the value automatically when the item is clicked, set <see cref="ToolStripMenuItem.CheckOnClick" /> to true.
+		/// </remarks>
+		/// <example>
+		/// Implementing a group of mutually exclusive menu items:
+		/// <code><![CDATA[
+		/// private void viewMenuItem_Click(object sender, EventArgs e)
+		/// {
+		///     foreach (ToolStripItem item in this.toolStripMenuItemView.DropDownItems)
+		///     {
+		///         if (item is ToolStripMenuItem menuItem)
+		///             menuItem.Checked = (menuItem == sender);
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[SRCategory("CatAppearance")]
 		[SRDescription("CheckBoxCheckedDescr")]
@@ -179,9 +223,20 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _checked;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripMenuItem" /> should automatically appear checked and unchecked when clicked.
-		///</summary>
-		/// <returns>true if the <see cref="ToolStripMenuItem" /> should automatically appear checked when clicked; otherwise, false. The default is false.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripMenuItem" /> should automatically appear checked and unchecked when clicked.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripMenuItem" /> toggles its <see cref="ToolStripMenuItem.Checked" /> state when clicked; otherwise, false. The default is false.</returns>
+		/// <example>
+		/// Toggling the visibility of a status bar from a menu:
+		/// <code><![CDATA[
+		/// this.toolStripMenuItemStatusBar.CheckOnClick = true;
+		/// this.toolStripMenuItemStatusBar.Checked = true;
+		/// this.toolStripMenuItemStatusBar.CheckedChanged += (s, e) =>
+		/// {
+		///     this.statusToolStrip.Visible = this.toolStripMenuItemStatusBar.Checked;
+		/// };
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("ToolStripButtonCheckOnClickDescr")]
@@ -203,10 +258,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _checkOnClick;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether a <see cref="ToolStripMenuItem" /> is in the checked, unchecked, or indeterminate state.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The <see cref="ToolStripMenuItem.CheckState" /> property is not set to one of the <see cref="CheckState" /> values. </exception>
-		/// <returns>One of the <see cref="CheckState" /> values. The default is Unchecked.</returns>
+		/// Returns or sets a value indicating whether a <see cref="ToolStripMenuItem" /> is in the checked, unchecked, or indeterminate state.
+		/// </summary>
+		/// <returns>One of the <see cref="CheckState" /> values. The default is <see cref="CheckState.Unchecked" />.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The <see cref="ToolStripMenuItem.CheckState" /> property is not set to one of the <see cref="CheckState" /> values.</exception>
+		/// <remarks>
+		/// Setting <see cref="ToolStripMenuItem.CheckState" /> also updates <see cref="ToolStripMenuItem.Checked" />. Changing the value raises the
+		/// <see cref="ToolStripMenuItem.CheckStateChanged" /> event.
+		/// </remarks>
 		[SRDescription("CheckBoxCheckStateDescr")]
 		[SRCategory("CatAppearance")]
 		[DefaultValue(CheckState.Unchecked)]
@@ -228,9 +287,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private CheckState _checkState;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripMenuItem" /> is attached to the <see cref="ToolStrip" /> or the <see cref="ToolStripOverflowButton" /> or whether it can float between the two.
-		///</summary>
-		/// <returns>One of the <see cref="ToolStripItemOverflow" /> values. The default is Never.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripMenuItem" /> is attached to the <see cref="ToolStrip" /> or the <see cref="ToolStripOverflowButton" /> or whether it can float between the two.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripItemOverflow" /> values. The default is <see cref="ToolStripItemOverflow.Never" />.</returns>
 		[DefaultValue(ToolStripItemOverflow.Never)]
 		[SRDescription("ToolStripItemOverflowDescr")]
 		[SRCategory("CatLayout")]
@@ -252,10 +311,21 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItemOverflow _overflow;
 
 		/// <summary>
-		/// Gets or sets the shortcut keys associated with the <see cref="ToolStripMenuItem" />.
-		///</summary>
+		/// Returns or sets the shortcut keys associated with the <see cref="ToolStripMenuItem" />.
+		/// </summary>
+		/// <returns>One of the <see cref="Keys" /> values, usually a key combined with one or more modifiers. The default is <see cref="Keys.None" />.</returns>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The property was not set to one of the <see cref="Keys" /> values.</exception>
-		/// <returns>One of the <see cref="Keys" /> values. The default is <see cref="Keys.None" />.</returns>
+		/// <remarks>
+		/// Pressing the shortcut raises the <see cref="ToolStripItem.Click" /> event of the item even when its drop-down is closed.
+		/// The shortcut is displayed next to the text when <see cref="ToolStripMenuItem.ShowShortcutKeys" /> is true; use
+		/// <see cref="ToolStripMenuItem.ShortcutKeyDisplayString" /> to customize the displayed text.
+		/// </remarks>
+		/// <example>
+		/// Assigning Ctrl+Shift+S to a "Save As" menu item:
+		/// <code><![CDATA[
+		/// this.toolStripMenuItemSaveAs.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+		/// ]]></code>
+		/// </example>
 		[Localizable(true)]
 		[DefaultValue(Keys.None)]
 		[SRDescription("MenuItemShortCutDescr")]
@@ -277,9 +347,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Keys _shortcutKeys;
 
 		/// <summary>
-		/// Gets or sets the shortcut key text.
-		///</summary>
-		/// <returns>A <see cref="System.String" /> representing the shortcut key.</returns>
+		/// Returns or sets the shortcut key text displayed next to the menu item.
+		/// </summary>
+		/// <returns>A <see cref="System.String" /> representing the shortcut key, or null to display the text generated from <see cref="ToolStripMenuItem.ShortcutKeys" />. The default is null.</returns>
+		/// <remarks>
+		/// The text is displayed only when <see cref="ToolStripMenuItem.ShowShortcutKeys" /> is true. It doesn't change the keys that activate the item.
+		/// </remarks>
+		/// <example>
+		/// Displaying a localized shortcut label:
+		/// <code><![CDATA[
+		/// this.toolStripMenuItemCopy.ShortcutKeys = Keys.Control | Keys.C;
+		/// this.toolStripMenuItemCopy.ShortcutKeyDisplayString = "Strg+C";
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripMenuItemShortcutKeyDisplayStringDescr")]
 		[SRCategory("CatAppearance")]
 		[DefaultValue(null)]
@@ -302,9 +382,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private string _shortcutKeyDisplayString;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the shortcut keys that are associated with the <see cref="ToolStripMenuItem" /> are displayed next to the <see cref="ToolStripMenuItem" />. 
-		///</summary>
+		/// Returns or sets a value indicating whether the shortcut keys that are associated with the <see cref="ToolStripMenuItem" /> are displayed next to the <see cref="ToolStripMenuItem" />.
+		/// </summary>
 		/// <returns>true if the shortcut keys are shown; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// Hiding the shortcut text doesn't disable the shortcut keys.
+		/// </remarks>
 		[Localizable(true)]
 		[DefaultValue(true)]
 		[SRDescription("MenuItemShowShortCutDescr")]
@@ -326,8 +409,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _showShortcutKeys;
 
 		/// <summary>
-		/// Gets a value indicating whether the <see cref="ToolStripMenuItem" /> appears on a multiple document interface (MDI) window list.
-		///</summary>
+		/// Returns a value indicating whether the <see cref="ToolStripMenuItem" /> appears on a multiple document interface (MDI) window list.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripMenuItem" /> appears on a MDI window list; otherwise, false.</returns>
 		[Browsable(false)]
 		public bool IsMdiWindowListEntry

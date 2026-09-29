@@ -27,16 +27,22 @@ using Wisej.Web.Layout;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Creates a container within which other controls can share horizontal or vertical space.
-	///</summary>
+	/// Represents a container within which <see cref="ToolStrip"/> controls share horizontal or vertical space,
+	/// arranged in one or more <see cref="ToolStripPanelRow"/> rows.
+	/// </summary>
+	/// <remarks>
+	/// A <see cref="ToolStripContainer"/> creates one <see cref="ToolStripPanel"/> for each side
+	/// (see <see cref="ToolStripContainer.TopToolStripPanel"/>). A <see cref="ToolStripPanel"/> can also be used on its own,
+	/// docked to an edge of a form or page.
+	/// </remarks>
 	public class ToolStripPanel : Wisej.Web.Panel
 	{
 
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripPanel" /> class. 
-		///</summary>
+		/// Initializes a new instance of the <see cref="ToolStripPanel" /> class.
+		/// </summary>
 		public ToolStripPanel()
 		{
 			// TODO: Implement
@@ -196,8 +202,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Size _autoScrollMinSize;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripPanel" /> automatically adjusts its size when the form is resized.
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripPanel" /> automatically adjusts its size to fit its rows when the form is resized.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripPanel" /> automatically resizes; otherwise, false. The default is true.</returns>
 		[DefaultValue(true)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -223,6 +229,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private bool _autoSize;
 
+		/// <summary>
+		/// Returns the default internal spacing, in pixels, of the <see cref="ToolStripPanel" />.
+		/// </summary>
+		/// <returns>A <see cref="Padding" /> representing the default internal spacing.</returns>
 		public new Padding DefaultPadding
 		{
 			get
@@ -233,6 +243,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private Padding _defaultPadding;
 
+		/// <summary>
+		/// Returns the default spacing, in pixels, around the <see cref="ToolStripPanel" />.
+		/// </summary>
+		/// <returns>A <see cref="Padding" /> representing the default space around the panel.</returns>
 		public new Padding DefaultMargin
 		{
 			get
@@ -244,9 +258,15 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _defaultMargin;
 
 		/// <summary>
-		/// Gets or sets the spacing, in pixels, between the <see cref="ToolStripPanelRow" />s and the <see cref="ToolStripPanel" />.
-		///</summary>
+		/// Returns or sets the spacing, in pixels, between the <see cref="ToolStripPanelRow" /> rows and the <see cref="ToolStripPanel" />.
+		/// </summary>
 		/// <returns>A <see cref="Padding" /> value representing the spacing, in pixels.</returns>
+		/// <example>
+		/// Leaving a small gap to the left of every row and between the rows:
+		/// <code><![CDATA[
+		/// this.toolStripPanel1.RowMargin = new Padding(3, 0, 0, 2);
+		/// ]]></code>
+		/// </example>
 		public Padding RowMargin
 		{
 			get
@@ -264,6 +284,14 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private Padding _rowMargin;
 
+		/// <summary>
+		/// Returns or sets which edge of the parent container the <see cref="ToolStripPanel" /> is docked to.
+		/// </summary>
+		/// <returns>One of the <see cref="DockStyle" /> values. The default is <see cref="DockStyle.None" />.</returns>
+		/// <remarks>
+		/// The panels created by a <see cref="ToolStripContainer"/> are docked to <see cref="DockStyle.Top"/>,
+		/// <see cref="DockStyle.Bottom"/>, <see cref="DockStyle.Left"/> and <see cref="DockStyle.Right"/> by the container.
+		/// </remarks>
 		[Localizable(true)]
 		[SRCategory("CatLayout")]
 		[DefaultValue(DockStyle.None)]
@@ -285,6 +313,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private DockStyle _dock;
 
+		/// <summary>
+		/// Returns the layout engine used to arrange the rows of the <see cref="ToolStripPanel" />.
+		/// </summary>
+		/// <returns>The <see cref="Wisej.Web.Layout.LayoutEngine" /> for the panel's contents.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		public override LayoutEngine LayoutEngine
@@ -298,9 +330,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private LayoutEngine _layoutEngine;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripPanel" /> can be moved or resized.
-		///</summary>
-		/// <returns>true if the <see cref="ToolStripPanel" /> can be moved or resized; otherwise, false. The default is false.</returns>
+		/// Returns or sets a value indicating whether the controls in the <see cref="ToolStripPanel" /> are locked in place and cannot be moved or resized.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripPanel" /> is locked; otherwise, false. The default is false.</returns>
 		[DefaultValue(false)]
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -322,8 +354,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _locked;
 
 		/// <summary>
-		/// Gets or sets a value indicating the horizontal or vertical orientation of the <see cref="ToolStripPanel" />.
-		///</summary>
+		/// Returns or sets a value indicating the horizontal or vertical orientation of the <see cref="ToolStripPanel" />.
+		/// </summary>
 		/// <returns>One of the <see cref="Orientation" /> values.</returns>
 		public Orientation Orientation
 		{
@@ -343,8 +375,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Orientation _orientation;
 
 		/// <summary>
-		/// Gets or sets a <see cref="ToolStripRenderer" /> used to customize the appearance of a <see cref="ToolStripPanel" />.
-		///</summary>
+		/// Returns or sets a <see cref="ToolStripRenderer" /> used to customize the appearance of a <see cref="ToolStripPanel" />.
+		/// </summary>
 		/// <returns>A <see cref="ToolStripRenderer" /> that handles painting.</returns>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
@@ -366,8 +398,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripRenderer _renderer;
 
 		/// <summary>
-		/// Gets or sets the painting styles to be applied to the <see cref="ToolStripPanel" />.
-		///</summary>
+		/// Returns or sets the painting styles to be applied to the <see cref="ToolStripPanel" />.
+		/// </summary>
 		/// <returns>One of the <see cref="ToolStripRenderMode" /> values.</returns>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripRenderModeDescr")]
@@ -389,9 +421,23 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripRenderMode _renderMode;
 
 		/// <summary>
-		/// Gets the <see cref="ToolStripPanelRow" />s in this <see cref="ToolStripPanel" />.
-		///</summary>
-		/// <returns>A <see cref="ToolStripPanel.ToolStripPanelRowCollection" /> representing the <see cref="ToolStripPanelRow" />s in this <see cref="ToolStripPanel" />.</returns>
+		/// Returns the <see cref="ToolStripPanelRow" /> rows in this <see cref="ToolStripPanel" />.
+		/// </summary>
+		/// <returns>An array of <see cref="ToolStripPanelRow" /> objects representing the rows in this <see cref="ToolStripPanel" />.</returns>
+		/// <example>
+		/// Listing the controls in each row of the top panel:
+		/// <code><![CDATA[
+		/// var names = new List<string>();
+		/// foreach (ToolStripPanelRow row in this.toolStripContainer1.TopToolStripPanel.Rows)
+		/// {
+		///     foreach (Control control in row.Controls)
+		///     {
+		///         names.Add(control.Name);
+		///     }
+		/// }
+		/// AlertBox.Show(string.Join(", ", names));
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[SRDescription("ToolStripPanelRowsDescr")]
@@ -486,9 +532,15 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Adds the specified <see cref="ToolStrip" /> to a <see cref="ToolStripPanel" /> at the specified location.
-		///</summary>
+		/// </summary>
 		/// <param name="toolStripToDrag">The <see cref="ToolStrip" /> to add to the <see cref="ToolStripPanel" />.</param>
 		/// <param name="location">A <see cref="System.Drawing.Point" /> value representing the x- and y-client coordinates, in pixels, of the new location for the <see cref="ToolStrip" />.</param>
+		/// <example>
+		/// Placing a tool strip 120 pixels from the left edge of the first row:
+		/// <code><![CDATA[
+		/// this.toolStripPanel1.Join(this.toolStrip1, new Point(120, 0));
+		/// ]]></code>
+		/// </example>
 		public void Join(ToolStrip toolStripToDrag, Point location)
 		{
 			// TODO: Implement
@@ -579,7 +631,19 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Begins the initialization of a <see cref="ToolStripPanel" />.
-		///</summary>
+		/// </summary>
+		/// <remarks>
+		/// Call <see cref="EndInit"/> when done. The designer generated code wraps the initialization of the panel in these two calls.
+		/// </remarks>
+		/// <example>
+		/// Initializing a panel and its tool strips in one batch:
+		/// <code><![CDATA[
+		/// this.toolStripPanel1.BeginInit();
+		/// this.toolStripPanel1.Join(this.toolStrip1, 0);
+		/// this.toolStripPanel1.Join(this.toolStrip2, 1);
+		/// this.toolStripPanel1.EndInit();
+		/// ]]></code>
+		/// </example>
 		public void BeginInit()
 		{
 			// TODO: Implement
@@ -587,7 +651,18 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Ends the initialization of a <see cref="ToolStripPanel" />.
-		///</summary>
+		/// </summary>
+		/// <remarks>
+		/// Must be paired with a previous call to <see cref="BeginInit"/>.
+		/// </remarks>
+		/// <example>
+		/// Initializing a panel and its tool strips in one batch:
+		/// <code><![CDATA[
+		/// this.toolStripPanel1.BeginInit();
+		/// this.toolStripPanel1.Join(this.toolStrip1, 0);
+		/// this.toolStripPanel1.EndInit();
+		/// ]]></code>
+		/// </example>
 		public void EndInit()
 		{
 			// TODO: Implement
@@ -606,8 +681,14 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Adds the specified <see cref="ToolStrip" /> to a <see cref="ToolStripPanel" />.
-		///</summary>
+		/// </summary>
 		/// <param name="toolStripToDrag">The <see cref="ToolStrip" /> to add to the <see cref="ToolStripPanel" />.</param>
+		/// <example>
+		/// Adding a tool strip to the top panel of a <see cref="ToolStripContainer"/>:
+		/// <code><![CDATA[
+		/// this.toolStripContainer1.TopToolStripPanel.Join(this.toolStrip1);
+		/// ]]></code>
+		/// </example>
 		public void Join(ToolStrip toolStripToDrag)
 		{
 			// TODO: Implement
@@ -615,10 +696,17 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Adds the specified <see cref="ToolStrip" /> to a <see cref="ToolStripPanel" /> in the specified row.
-		///</summary>
-		/// <exception cref="System.ArgumentOutOfRangeException">The <paramref name="row" /> parameter is less than zero (0).</exception>
+		/// </summary>
 		/// <param name="toolStripToDrag">The <see cref="ToolStrip" /> to add to the <see cref="ToolStripPanel" />.</param>
 		/// <param name="row">An <see cref="System.Int32" /> representing the <see cref="ToolStripPanelRow" /> to which the <see cref="ToolStrip" /> is added.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">The <paramref name="row" /> parameter is less than zero (0).</exception>
+		/// <example>
+		/// Placing two tool strips on separate rows:
+		/// <code><![CDATA[
+		/// this.toolStripPanel1.Join(this.toolStripFile, 0);
+		/// this.toolStripPanel1.Join(this.toolStripFormat, 1);
+		/// ]]></code>
+		/// </example>
 		public void Join(ToolStrip toolStripToDrag, int row)
 		{
 			// TODO: Implement
@@ -626,10 +714,16 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Adds the specified <see cref="ToolStrip" /> to a <see cref="ToolStripPanel" /> at the specified coordinates.
-		///</summary>
+		/// </summary>
 		/// <param name="toolStripToDrag">The <see cref="ToolStrip" /> to add to the <see cref="ToolStripPanel" />.</param>
 		/// <param name="x">The horizontal client coordinate, in pixels.</param>
 		/// <param name="y">The vertical client coordinate, in pixels.</param>
+		/// <example>
+		/// Placing a tool strip 120 pixels from the left edge of the first row:
+		/// <code><![CDATA[
+		/// this.toolStripPanel1.Join(this.toolStrip1, 120, 0);
+		/// ]]></code>
+		/// </example>
 		public void Join(ToolStrip toolStripToDrag, int x, int y)
 		{
 			// TODO: Implement
@@ -637,9 +731,23 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Retrieves the <see cref="ToolStripPanelRow" /> given a point within the <see cref="ToolStripPanel" /> client area.
-		///</summary>
-		/// <returns>The <see cref="ToolStripPanelRow" /> that contains the <paramref name="raftingContainerPoint" />, or null if no such <see cref="ToolStripPanelRow" /> exists.</returns>
+		/// </summary>
 		/// <param name="clientLocation">A <see cref="System.Drawing.Point" /> used as a reference to find the <see cref="ToolStripPanelRow" />.</param>
+		/// <returns>The <see cref="ToolStripPanelRow" /> that contains the <paramref name="clientLocation" />, or null if no such <see cref="ToolStripPanelRow" /> exists.</returns>
+		/// <example>
+		/// Checking whether a tool strip fits into the row under the mouse pointer:
+		/// <code><![CDATA[
+		/// private void toolStripPanel1_MouseUp(object sender, MouseEventArgs e)
+		/// {
+		///     var location = new Point(e.X, e.Y);
+		///     ToolStripPanelRow row = this.toolStripPanel1.PointToRow(location);
+		///     if (row != null && row.CanMove(this.toolStrip1))
+		///     {
+		///         this.toolStripPanel1.Join(this.toolStrip1, location);
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		public ToolStripPanelRow PointToRow(Point clientLocation)
 		{
 			// TODO: Implement

@@ -27,6 +27,12 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <summary>
 	/// Represents a single item in a <see cref="RibbonBarGroup"/>.
 	/// </summary>
+	/// <remarks>
+	/// This is the abstract base class of all the ribbon items: <see cref="RibbonBarItemButton"/>, <see cref="RibbonBarItemSplitButton"/>,
+	/// <see cref="RibbonBarItemButtonGroup"/>, <see cref="RibbonBarItemCheckBox"/>, <see cref="RibbonBarItemRadioButton"/>,
+	/// <see cref="RibbonBarItemTextBox"/>, <see cref="RibbonBarItemComboBox"/>, <see cref="RibbonBarItemControl"/> and
+	/// <see cref="RibbonBarItemSeparator"/>. Items are arranged vertically in columns inside the group, see <see cref="ColumnBreak"/>.
+	/// </remarks>
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
@@ -74,8 +80,12 @@ namespace Wisej.Web.Ext.RibbonBar
 		private RibbonBarGroup _parent;
 
 		/// <summary>
-		/// Returns the <see cref="RibbonBar"/> that contains this <see cref="RibbonBarItem"/>;
+		/// Returns the <see cref="RibbonBar"/> that contains this <see cref="RibbonBarItem"/>.
 		/// </summary>
+		/// <remarks>
+		/// Returns null until the item is added to a <see cref="RibbonBarGroup"/> that belongs to a <see cref="RibbonBarPage"/>
+		/// in a <see cref="RibbonBar"/>. The events of an item that is not connected to a <see cref="RibbonBar"/> are not fired.
+		/// </remarks>
 		[Browsable(false)]
 		public RibbonBar RibbonBar
 		{
@@ -86,6 +96,23 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets a value indicating whether a new column starts after
 		/// this <see cref="RibbonBarItem"/>.
 		/// </summary>
+		/// <returns>true if the next item in the <see cref="RibbonBarGroup"/> is placed in a new column; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// The items in a <see cref="RibbonBarGroup"/> are stacked vertically in a column; a new column is started
+		/// after an item that has <see cref="ColumnBreak"/> set to true. Large (vertical) buttons and controls and separators
+		/// always occupy a column of their own.
+		/// </remarks>
+		/// <example>
+		/// Stacking three small buttons in a column followed by a second column:
+		/// <code><![CDATA[
+		/// var group = new RibbonBarGroup { Text = "Font" };
+		/// group.Items.Add(new RibbonBarItemButton { Text = "Bold", Orientation = Orientation.Horizontal });
+		/// group.Items.Add(new RibbonBarItemButton { Text = "Italic", Orientation = Orientation.Horizontal });
+		/// group.Items.Add(new RibbonBarItemButton { Text = "Underline", Orientation = Orientation.Horizontal, ColumnBreak = true });
+		/// group.Items.Add(new RibbonBarItemCheckBox { Text = "Superscript" });
+		/// group.Items.Add(new RibbonBarItemCheckBox { Text = "Subscript" });
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatLayout")]
 		[Description("Returns or sets a value indicating whether a new column starts after this RibbonBarItem.")]
 		public virtual bool ColumnBreak
@@ -115,6 +142,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets whether the <see cref="RibbonBarItem"/> can respond to user interaction.
 		/// </summary>
+		/// <returns>true if the item can respond to user interaction; otherwise, false. The default is true.</returns>
 		[Localizable(true)]
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
@@ -136,6 +164,10 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets whether the <see cref="RibbonBarItem"/> is visible or hidden.
 		/// </summary>
+		/// <returns>true if the item is visible; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// A hidden item doesn't take any space in the <see cref="RibbonBarGroup"/> layout.
+		/// </remarks>
 		[Localizable(true)]
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
@@ -157,7 +189,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets the object that contains data about the control.
 		/// </summary>
-		/// <return>An object that contains user-defined data about the control. The default is null.</return>
+		/// <returns>An object that contains user-defined data about the control. The default is null.</returns>
 		[Bindable(true)]
 		[DefaultValue(null)]
 		[Localizable(false)]
@@ -201,6 +233,11 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets the name of the <see cref="RibbonBarItem" />. 
 		///</summary>
 		/// <returns>The name of the <see cref="RibbonBarItem" />.</returns>
+		/// <remarks>
+		/// The name can be used to retrieve the item from the <see cref="RibbonBarGroup.Items"/> collection
+		/// (case insensitive) and to identify the item in the <see cref="RibbonBar.ItemClick"/> event.
+		/// At design time it's the name of the component in the designer.
+		/// </remarks>
 		[Browsable(false)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the name for the RibbonBarItem.")]
@@ -267,6 +304,13 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets the theme name or URL for the image to display next to a <see cref="RibbonBarItem" />.
 		/// </summary>
 		/// <returns>The theme name or URL for the image to display next to the <see cref="RibbonBarItem" />.</returns>
+		/// <example>
+		/// Using a theme icon or a URL as the image of an item:
+		/// <code><![CDATA[
+		/// this.buttonSave.ImageSource = "icon-save";
+		/// this.buttonExport.ImageSource = "Images/export.png";
+		/// ]]></code>
+		/// </example>
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the theme name or URL for the image to display next to a RibbonBarItem.")]
@@ -301,6 +345,10 @@ namespace Wisej.Web.Ext.RibbonBar
 		///</summary>
 		/// <returns>The index value of the <see cref="T:System.Drawing.Image" /> assigned to the <see cref="RibbonBarItem" />. The default is -1.</returns>
 		/// <exception cref="T:System.ArgumentOutOfRangeException">The specified index is less than -1.</exception>
+		/// <remarks>
+		/// The index refers to an image in the <see cref="RibbonBar.ImageList"/> of the <see cref="RibbonBar"/> that
+		/// contains this item.
+		/// </remarks>
 		[DefaultValue(-1)]
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
@@ -318,6 +366,10 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets the name of the image assigned to the <see cref="RibbonBarItem" />.
 		///</summary>
 		/// <returns>The name of the <see cref="T:System.Drawing.Image" /> assigned to the <see cref="RibbonBarItem" />.</returns>
+		/// <remarks>
+		/// The key refers to an image in the <see cref="RibbonBar.ImageList"/> of the <see cref="RibbonBar"/> that
+		/// contains this item.
+		/// </remarks>
 		[DefaultValue("")]
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
@@ -405,6 +457,16 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Updates the component on the client.
 		/// </summary>
+		/// <remarks>
+		/// Changing the properties of the item already updates the client. At design time the entire
+		/// <see cref="RibbonBar"/> is updated.
+		/// </remarks>
+		/// <example>
+		/// Forcing the item to be updated on the client:
+		/// <code><![CDATA[
+		/// this.buttonSave.Update();
+		/// ]]></code>
+		/// </example>
 		public override void Update()
 		{
 			if (this.DesignMode)
@@ -417,6 +479,18 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns a string that represents the current object.
 		/// </summary>
 		/// <returns>A <see cref="string"/> that represents the current object.</returns>
+		/// <remarks>
+		/// The returned string contains the value returned by the base implementation followed by the <see cref="Text"/> property.
+		/// </remarks>
+		/// <example>
+		/// Logging the item that was clicked:
+		/// <code><![CDATA[
+		/// private void ribbonBar1_ItemClick(object sender, RibbonBarItemEventArgs e)
+		/// {
+		///     System.Diagnostics.Debug.WriteLine(e.Item.ToString());
+		/// }
+		/// ]]></code>
+		/// </example>
 		public override string ToString()
 		{
 			return String.Concat(base.ToString(), ", Text: ", this.Text);

@@ -28,6 +28,10 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <summary>
 	/// Represents a checkbox in a <see cref="RibbonBarGroup"/>.
 	/// </summary>
+	/// <remarks>
+	/// The check state is toggled on the client when the user clicks the item; the new value is then sent to the server
+	/// and assigned to <see cref="Checked"/>.
+	/// </remarks>
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
@@ -61,9 +65,22 @@ namespace Wisej.Web.Ext.RibbonBar
 		#region Properties
 
 		/// <summary>
-		/// Returns or whether the <see cref="RibbonBarItemCheckBox" /> is in the checked state.
+		/// Returns or sets whether the <see cref="RibbonBarItemCheckBox" /> is in the checked state.
 		/// </summary>
-		/// <returns>true if the <see cref="RibbonBarItemCheckBox" /> is in the checked state; otherwise, false.</returns>
+		/// <returns>true if the <see cref="RibbonBarItemCheckBox" /> is in the checked state; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// Changing the value fires the <see cref="CheckedChanged"/> event. When the user clicks the checkbox, the value is
+		/// updated first, then the <see cref="RibbonBarItem.Click"/> and <see cref="RibbonBar.ItemClick"/> events are fired.
+		/// </remarks>
+		/// <example>
+		/// Showing or hiding a panel when the user toggles the check box:
+		/// <code><![CDATA[
+		/// private void checkBoxRuler_CheckedChanged(object sender, EventArgs e)
+		/// {
+		///     this.panelRuler.Visible = this.checkBoxRuler.Checked;
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[Category("CatAppearance")]
 		[Description("Returns or whether the RibbonBarItemCheckBox is in the checked state.")]

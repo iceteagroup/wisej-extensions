@@ -27,9 +27,29 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ColumnFilter
 {
 	/// <summary>
-	/// Adds a custom filter button to <see cref="DataGridViewColumn"/> to
-	/// display a custom filter panel.
+	/// Extender component that adds a filter button to the header of <see cref="DataGridViewColumn"/> columns.
+	/// Clicking the button opens a <see cref="ColumnFilterPanel"/> that filters the rows of the <see cref="DataGridView"/>.
 	/// </summary>
+	/// <remarks>
+	/// Set <see cref="FilterPanelType"/> to the <see cref="ColumnFilterPanel"/> subclass to use
+	/// (i.e. <see cref="SimpleColumnFilterPanel"/> or <see cref="WhereColumnFilterPanel"/>) and enable
+	/// the button on each column using the ShowFilter extender property or <see cref="SetShowFilter"/>.
+	/// Filters are applied by hiding the rows that don't match; they are re-applied automatically when the
+	/// <see cref="DataGridView"/> is sorted or its data binding completes.
+	/// </remarks>
+	/// <example>
+	/// Adding a filter button to all the columns of a <see cref="DataGridView"/>:
+	/// <code><![CDATA[
+	/// var columnFilter = new ColumnFilter();
+	/// columnFilter.FilterPanelType = typeof(SimpleColumnFilterPanel);
+	/// columnFilter.RowsFiltered += (s, e) => this.labelCount.Text = $"{e.FilteredRowCount} rows";
+	///
+	/// foreach (DataGridViewColumn column in this.dataGridView1.Columns)
+	/// {
+	///     columnFilter.SetShowFilter(column, true);
+	/// }
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(ColumnFilter))]
 	[ProvideProperty("ShowFilter", typeof(DataGridViewColumn))]
@@ -46,8 +66,11 @@ namespace Wisej.Web.Ext.ColumnFilter
 		private List<DataGridView> dataGrids = new List<DataGridView>();
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="ColumnFilter"/>
+		/// Initializes a new instance of the <see cref="ColumnFilter"/> class.
 		/// </summary>
+		/// <remarks>
+		/// The <see cref="ImageSource"/> of the filter button is initialized to "icon-search".
+		/// </remarks>
 		public ColumnFilter()
 		{
 			this.ImageSource = "icon-search";
@@ -56,7 +79,8 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ColumnFilter" /> class with a specified container.
 		/// </summary>
-		/// <param name="container">An <see cref="IContainer" />container. </param>
+		/// <param name="container">An <see cref="IContainer" /> that represents the container of the component.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="container"/> is null.</exception>
 		public ColumnFilter(IContainer container)
 			: this()
 		{
@@ -71,9 +95,35 @@ namespace Wisej.Web.Ext.ColumnFilter
 		#region Properties
 
 		/// <summary>
-		/// Returns or sets the <see cref="ColumnFilterPanel"/> to associate
+		/// Returns or sets the type of the <see cref="ColumnFilterPanel"/> to associate
 		/// with this <see cref="ColumnFilter"/> extender.
 		/// </summary>
+		/// <exception cref="ArgumentException">The value is not a subclass of <see cref="ColumnFilterPanel"/>.</exception>
+		/// <remarks>
+		/// The type must be a subclass of <see cref="ColumnFilterPanel"/> with a public parameterless constructor.
+		/// A new instance is created for each column the first time the user clicks its filter button and it's reused afterwards;
+		/// changing this property doesn't replace panels that have already been created.
+		/// This property must be set before the user clicks a filter button: the default value null causes an exception.
+		/// </remarks>
+		/// <example>
+		/// Using the built-in panel that lets the user build conditions with operators:
+		/// <code><![CDATA[
+		/// this.columnFilter1.FilterPanelType = typeof(WhereColumnFilterPanel);
+		/// ]]></code>
+		/// Using a custom panel derived from <see cref="ColumnFilterPanel"/>:
+		/// <code><![CDATA[
+		/// public class MyFilterPanel : ColumnFilterPanel
+		/// {
+		///     protected override bool OnApplyFilter()
+		///     {
+		///         // hide the rows that don't match and return true when a filter is active.
+		///         return false;
+		///     }
+		/// }
+		///
+		/// this.columnFilter1.FilterPanelType = typeof(MyFilterPanel);
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[TypeConverter(typeof(ColumnFilterPanelTypeConverter))]
 		public Type FilterPanelType
@@ -111,6 +161,11 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// Returns or sets the image that is displayed in the filter button.
 		/// </summary>
 		/// <returns>The <see cref="System.Drawing.Image" /> to display.</returns>
+		/// <remarks>
+		/// The image is copied to each filter button when the button is created and it's also restored when
+		/// a column's filter is cleared. Changing it at runtime doesn't update the buttons already created until the filters of the column are re-applied.
+		/// When both <see cref="Image"/> and <see cref="ImageSource"/> are set, <see cref="Image"/> takes precedence.
+		/// </remarks>
 		[Bindable(true)]
 		[Localizable(true)]
 		[Wisej.Base.SRCategory("CatAppearance")]
@@ -125,6 +180,17 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// Returns or sets the theme name or URL for the image to display in the filter button.
 		/// </summary>
 		/// <returns>The theme name or URL for the image to display in the filter button.</returns>
+		/// <remarks>
+		/// The default value is "icon-search". The value is copied to each filter button when the button is created
+		/// and it's restored when a column's filter is cleared.
+		/// </remarks>
+		/// <example>
+		/// Using a different theme icon for the filter button and for the active filter state:
+		/// <code><![CDATA[
+		/// this.columnFilter1.ImageSource = "icon-filter";
+		/// this.columnFilter1.FilteredImageSource = "Images/filter-active.svg";
+		/// ]]></code>
+		/// </example>
 		[Localizable(true)]
 		[Wisej.Base.SRCategory("CatAppearance")]
 		[Description("Returns or sets the theme name or URL for the image to display in the filter button.")]
@@ -174,6 +240,10 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// there is an active filter. Can be null.
 		/// </summary>
 		/// <returns>The <see cref="System.Drawing.Image" /> to display.</returns>
+		/// <remarks>
+		/// The image is assigned to the filter button of each column that has an active filter when the filters are applied.
+		/// When both <see cref="FilteredImage"/> and <see cref="FilteredImageSource"/> are null, the button keeps its current image.
+		/// </remarks>
 		[Bindable(true)]
 		[Localizable(true)]
 		[Wisej.Base.SRCategory("CatAppearance")]
@@ -189,6 +259,10 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// there is an active filter. Can be null.
 		/// </summary>
 		/// <returns>The theme name or URL for the image to display in the filter button.</returns>
+		/// <remarks>
+		/// Used only when <see cref="FilteredImage"/> is null. The value is assigned to the filter button of each column
+		/// that has an active filter when the filters are applied.
+		/// </remarks>
 		[Localizable(true)]
 		[Wisej.Base.SRCategory("CatAppearance")]
 		[Description("Returns or sets the theme name or URL for the image to display in the filter button.")]
@@ -219,9 +293,13 @@ namespace Wisej.Web.Ext.ColumnFilter
 		}
 
 		/// <summary>
-		/// Sort items before displaying them.
+		/// Returns or sets whether the filter panel sorts the items before displaying them.
 		/// </summary>
-		/// <remarks>If supported by filter type</remarks>
+		/// <remarks>
+		/// Only supported by <see cref="SimpleColumnFilterPanel"/>: the value is copied to <see cref="SimpleColumnFilterPanel.SortItems"/>
+		/// when the panel for a column is created (the first time its filter button is clicked). Changing it later doesn't affect
+		/// panels that have already been created.
+		/// </remarks>
 		/// <since>3.2.6</since>
 		[DefaultValue(false)]
 		[Wisej.Base.SRCategory("CatBehavior")]
@@ -233,8 +311,11 @@ namespace Wisej.Web.Ext.ColumnFilter
 		} = false;
 
 		/// <summary>
-		/// Show the filter button only when the mouse is over the column header.
+		/// Returns or sets whether the filter button is shown only when the mouse is over the column header.
 		/// </summary>
+		/// <remarks>
+		/// When true, the filter button remains visible while the column has an active filter or its filter panel is open.
+		/// </remarks>
 		[DefaultValue(false)]
 		[Wisej.Base.SRCategory("CatBehavior")]
 		[Description("Show the filter button only when the mouse is over the column header.")]
@@ -259,8 +340,12 @@ namespace Wisej.Web.Ext.ColumnFilter
 		private bool _showOnHover;
 
 		/// <summary>
-		/// Size of the filter button image.
+		/// Returns or sets the size of the filter button in the column header, in pixels.
 		/// </summary>
+		/// <remarks>
+		/// The default value is 24 x 24. Changing the value resizes the filter buttons of all the registered columns.
+		/// The image is centered in the button and it's not scaled.
+		/// </remarks>
 		[DefaultValue(typeof(Size), "24, 24")]
 		[Wisej.Base.SRCategory("CatAppearance")]
 		[Description("Size of the filter button image.")]
@@ -294,6 +379,14 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// </summary>
 		/// <param name="column">The <see cref="DataGridViewColumn"/> to query.</param>
 		/// <returns>True if the <see cref="DataGridViewColumn"/> shows the filter button.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="column"/> is null.</exception>
+		/// <example>
+		/// Toggling the filter button of a column:
+		/// <code><![CDATA[
+		/// var column = this.dataGridView1.Columns["Country"];
+		/// this.columnFilter1.SetShowFilter(column, !this.columnFilter1.GetShowFilter(column));
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[Description("Returns whether the specified DataGridViewColumn shows the filter button in its header.")]
 		public bool GetShowFilter(DataGridViewColumn column)
@@ -309,6 +402,22 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// </summary>
 		/// <param name="column">The <see cref="DataGridViewColumn"/> for which to show or hide the filter button.</param>
 		/// <param name="show">True to show the filter button or false to remove it.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="column"/> is null.</exception>
+		/// <remarks>
+		/// Showing the filter button replaces the control in the column's header cell (<c>column.HeaderCell.Control</c>) with the control
+		/// returned by <see cref="CreateFilterButton"/>. Removing it disposes that control and sets it to null.
+		/// If the column was associated with a different <see cref="ColumnFilter"/>, it's detached from it
+		/// and its existing filter panel is disposed.
+		/// </remarks>
+		/// <example>
+		/// Showing the filter button on all the columns except the first:
+		/// <code><![CDATA[
+		/// foreach (DataGridViewColumn column in this.dataGridView1.Columns)
+		/// {
+		///     this.columnFilter1.SetShowFilter(column, column.Index > 0);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Description("Shows or hides the filter button on a DataGridViewColumn header.")]
 		public void SetShowFilter(DataGridViewColumn column, bool show)
 		{
@@ -373,8 +482,29 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// <summary>
 		/// Creates the filter button to add to the target column's header.
 		/// </summary>
-		/// <param name="column"></param>
-		/// <returns></returns>
+		/// <param name="column">The <see cref="DataGridViewColumn"/> that will display the filter button.</param>
+		/// <returns>The <see cref="Control"/> to place in the column header. The default implementation returns
+		/// a <see cref="PictureBox"/> docked to the right, sized to <see cref="ImageSize"/>, showing <see cref="Image"/> or <see cref="ImageSource"/>.</returns>
+		/// <remarks>
+		/// Called by <see cref="SetShowFilter"/> when a column is registered. The click and mouse enter/leave handlers that
+		/// open the filter panel and implement <see cref="ShowOnHover"/> are attached by the default implementation;
+		/// an override should call the base implementation and customize the returned control.
+		/// Other members of the library (i.e. <see cref="ColumnFilterPanel.FilterButton"/>) expect the control to be a <see cref="PictureBox"/>.
+		/// </remarks>
+		/// <example>
+		/// Customizing the filter button in a derived extender:
+		/// <code><![CDATA[
+		/// public class MyColumnFilter : ColumnFilter
+		/// {
+		///     public override Control CreateFilterButton(DataGridViewColumn column)
+		///     {
+		///         var button = base.CreateFilterButton(column);
+		///         button.ToolTipText = "Filter " + column.HeaderText;
+		///         return button;
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		public virtual Control CreateFilterButton(DataGridViewColumn column)
 		{
 			var search = new PictureBox()
@@ -448,8 +578,26 @@ namespace Wisej.Web.Ext.ColumnFilter
 		}
 
 		/// <summary>
-		/// Reapplys the filters to the specified <see cref="DataGridView"/>.
+		/// Re-applies the filters to the specified <see cref="DataGridView"/>.
 		/// </summary>
+		/// <param name="dataGridView">The <see cref="DataGridView"/> to filter.</param>
+		/// <remarks>
+		/// The filters of all the columns of <paramref name="dataGridView"/> are applied using the first
+		/// <see cref="ColumnFilterPanel"/> found. Filter panels are created when the user first clicks a filter
+		/// button, so this method doesn't do anything until at least one panel exists.
+		/// Filters are re-applied automatically when the <see cref="DataGridView"/> is sorted or its data binding completes.
+		/// The built-in panels fire the <see cref="RowsFiltered"/> event after applying the filters.
+		/// </remarks>
+		/// <example>
+		/// Re-applying the filters after changing the data in code:
+		/// <code><![CDATA[
+		/// private void buttonRefresh_Click(object sender, EventArgs e)
+		/// {
+		///     this.dataGridView1.Rows.Add("Rome", "Italy");
+		///     this.columnFilter1.ApplyFilters(this.dataGridView1);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void ApplyFilters(DataGridView dataGridView)
 			=> ApplyFiltersInternal(dataGridView);
 
@@ -553,7 +701,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		public event EventHandler<RowsFilteredEventArg> RowsFiltered;
 
 		/// <summary>
-		/// FiltersApplied event argument
+		/// Provides data for the <see cref="RowsFiltered"/> event.
 		/// </summary>
 		public class RowsFilteredEventArg : EventArgs
 		{
@@ -637,7 +785,18 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// <summary>
 		/// Fires the <see cref="RowsFiltered"/> event.
 		/// </summary>
-		/// <param name="filteredRowCount"></param>
+		/// <param name="filteredRowCount">The number of rows that are visible after applying the filters.</param>
+		/// <remarks>
+		/// Called by <see cref="SimpleColumnFilterPanel"/> and <see cref="WhereColumnFilterPanel"/> after applying the filters.
+		/// Custom <see cref="ColumnFilterPanel"/> implementations should call it to notify the application.
+		/// </remarks>
+		/// <example>
+		/// Firing the event from a custom filter panel after the rows have been filtered:
+		/// <code><![CDATA[
+		/// var dataGrid = this.DataGridViewColumn.DataGridView;
+		/// this.ColumnFilter.OnRowsFiltered(dataGrid.Rows.GetRowCount(DataGridViewElementStates.Visible));
+		/// ]]></code>
+		/// </example>
 		public virtual void OnRowsFiltered(int filteredRowCount)
 		{
 			if (this.RowsFiltered != null)

@@ -19,6 +19,11 @@
 
 namespace Wisej.Web.Ext.ToolStrip
 {
+	/// <summary>
+	/// Represents the method that will handle the <see cref="ToolStripDropDown.Closing" /> event of a <see cref="ToolStripDropDown" />.
+	/// </summary>
+	/// <param name="sender">The source of the event.</param>
+	/// <param name="e">A <see cref="ToolStripDropDownClosingEventArgs" /> that contains the event data.</param>
 	public delegate void ToolStripDropDownClosingEventHandler(object sender, ToolStripDropDownClosingEventArgs e);
 
 }

@@ -26,8 +26,13 @@ namespace Wisej.Web.Ext.SideButton
 {
 	/// <summary>
 	/// Represents a retractable animated
-	/// button that can be used expand or collapse other panels.
+	/// button that can be used to expand or collapse other panels.
 	/// </summary>
+	/// <remarks>
+	/// When <see cref="Collapsed"/> is true the button shrinks to the collapsed width defined by the
+	/// theme (appearance "side-button") and slides back out to its full <see cref="Control.Width"/>
+	/// when the pointer hovers over it. The height of the button is always taken from the theme.
+	/// </remarks>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(SideButton))]
 	[Description("Retractable animated side button.")]
@@ -36,6 +41,9 @@ namespace Wisej.Web.Ext.SideButton
 	{
 		#region Constructor
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SideButton"/> class.
+		/// </summary>
 		public SideButton()
 		{
 		}
@@ -47,6 +55,21 @@ namespace Wisej.Web.Ext.SideButton
 		/// <summary>
 		/// Returns or sets the alignment and direction of the <see cref="SideButton"/>.
 		/// </summary>
+		/// <remarks>
+		/// Indicates the side the button retracts to when <see cref="Collapsed"/> is true:
+		/// <see cref="LeftRightAlignment.Left"/> retracts toward the left edge and
+		/// <see cref="LeftRightAlignment.Right"/> keeps the button anchored to its right end
+		/// and retracts toward the right. The value is also applied as a "left" or "right"
+		/// state that the theme can style.
+		/// </remarks>
+		/// <example>
+		/// Placing a side button on the right edge of a form that retracts to the right:
+		/// <code><![CDATA[
+		/// this.sideButton1.Alignment = LeftRightAlignment.Right;
+		/// this.sideButton1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+		/// this.sideButton1.Collapsed = true;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(LeftRightAlignment.Left)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets the alignment and direction of the SideButton.")]
@@ -68,8 +91,24 @@ namespace Wisej.Web.Ext.SideButton
 		private LeftRightAlignment _alignment;
 
 		/// <summary>
-		/// Returns or sets the collapsed state of the <see cref="SideButton"/>
+		/// Returns or sets the collapsed state of the <see cref="SideButton"/>.
 		/// </summary>
+		/// <remarks>
+		/// When collapsed, the button is reduced to the collapsed width defined by the theme and
+		/// expands temporarily to its full <see cref="Control.Width"/> while the pointer is over it.
+		/// Changing this property also changes the height of the button to the theme height of the
+		/// "collapsed" or "default" state.
+		/// </remarks>
+		/// <example>
+		/// Toggling a side panel and the collapsed state of the button when it is clicked:
+		/// <code><![CDATA[
+		/// private void sideButton1_Click(object sender, EventArgs e)
+		/// {
+		///     this.panelNavigation.Visible = !this.panelNavigation.Visible;
+		///     this.sideButton1.Collapsed = !this.panelNavigation.Visible;
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets the collapsed state of the SideButton.")]

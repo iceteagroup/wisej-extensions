@@ -28,19 +28,15 @@ namespace Wisej.Web.Ext.TaskDialog
 {
 	//TODO: fix missing properties
 	/// <summary>
-	/// 
-	///              Represents a collection of <see cref="TaskDialogRadioButton" /> objects.
-	///            
-	///</summary>
+	/// Represents a collection of <see cref="TaskDialogRadioButton" /> objects.
+	/// </summary>
 	public class TaskDialogRadioButtonCollection : Collection<TaskDialogRadioButton>
 	{
 
 		#region Constructors
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogRadioButtonCollection" /> class.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogRadioButtonCollection" /> class.
+		/// </summary>
 		public TaskDialogRadioButtonCollection()
 		{
 			// TODO: Implement
@@ -49,15 +45,23 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Methods
 		/// <summary>
-		/// 
-		///              Creates and adds a <see cref="TaskDialogRadioButton" /> to the collection.
-		///            
-		///</summary>
-		/// <exception cref="T:System.InvalidOperationException">
-		///              This collection is currently bound to a task dialog.
-		///            </exception>
-		/// <returns>The created <see cref="TaskDialogRadioButton" />.</returns>
+		/// Creates and adds a <see cref="TaskDialogRadioButton" /> to the collection.
+		/// </summary>
 		/// <param name="text">The text of the radio button.</param>
+		/// <returns>The created <see cref="TaskDialogRadioButton" />.</returns>
+		/// <exception cref="T:System.InvalidOperationException">
+		/// This collection is currently bound to a task dialog.
+		/// </exception>
+		/// <remarks>
+		/// This method is not implemented yet in this version: it doesn't add the radio button to the collection.
+		/// </remarks>
+		/// <example>
+		/// Adding a group of options to a page:
+		/// <code><![CDATA[
+		/// page.RadioButtons.Add("Keep my current settings").Checked = true;
+		/// page.RadioButtons.Add("Restore the default settings");
+		/// ]]></code>
+		/// </example>
 		public TaskDialogRadioButton Add(string text)
 		{
 			// TODO: Implement

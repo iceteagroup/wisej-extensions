@@ -22,8 +22,12 @@ using System.Drawing;
 namespace Wisej.Web.Ext.Html2Canvas
 {
 	/// <summary>
-	/// Defines the options to pass to the <see cref="Html2Canvas.Screenshot"/> method.
+	/// Defines the options to pass to the <see cref="Html2Canvas.Screenshot(Html2CanvasOptions, System.Action{Image})"/>
+	/// and <see cref="Html2Canvas.ScreenshotAsync(Html2CanvasOptions)"/> methods and their overloads.
 	/// </summary>
+	/// <remarks>
+	/// The fields are passed to the html2canvas call; see <see href="https://html2canvas.hertzen.com/configuration"/>.
+	/// </remarks>
 	public class Html2CanvasOptions
 	{
 		/// <summary>

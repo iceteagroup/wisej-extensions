@@ -67,8 +67,12 @@ namespace Wisej.Web.Ext.Mermaid
 		}
 
 		/// <summary>
-		/// Returns the element in the Mermaid diagram that was clicked by the user.
+		/// Returns the text of the element in the Mermaid diagram that was clicked by the user.
 		/// </summary>
+		/// <remarks>
+		/// This is the trimmed text content of the clicked element or, when it has no text, of its parent
+		/// Mermaid node, edge or cluster. The event is not fired for elements without any text.
+		/// </remarks>
 		public string Element
 		{
 			get;
@@ -91,7 +95,22 @@ namespace Wisej.Web.Ext.Mermaid
 		/// <item><description><c>parentDataId</c> - Parent element's data-id</description></item>
 		/// <item><description><c>ariaLabel</c> - Aria label (useful for edges)</description></item>
 		/// </list>
+		/// <para>
+		/// The object also contains the raw <c>button</c>, <c>x</c> and <c>y</c> values sent by the browser.
+		/// Fields that are not available are null or missing.
+		/// </para>
 		/// </remarks>
+		/// <example>
+		/// Navigating to the details of the clicked node:
+		/// <code><![CDATA[
+		/// private void mermaid1_ElementClick(object sender, ElementClickEventArgs e)
+		/// {
+		///     string type = e.Data?.elementType;
+		///     if (type != null && type.StartsWith("node"))
+		///         ShowDetails(e.Element, (string)e.Data.parentId);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public dynamic Data
 		{
 			get;

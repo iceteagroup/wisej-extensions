@@ -26,8 +26,14 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Hosts custom controls or Windows Forms controls.
-	///</summary>
+	/// Hosts a Wisej control, either a standard control such as a <see cref="DateTimePicker"/> or a custom control, as an item of a <see cref="ToolStrip" />.
+	/// </summary>
+	/// <remarks>
+	/// Most appearance and behavior properties (<see cref="BackColor"/>, <see cref="ForeColor"/>, <see cref="Font"/>,
+	/// <see cref="Enabled"/>, <see cref="Text"/>, <see cref="CausesValidation"/>, <see cref="RightToLeft"/>) are forwarded to the
+	/// hosted <see cref="Control"/>. <see cref="ToolStripComboBox"/>, <see cref="ToolStripTextBox"/> and
+	/// <see cref="ToolStripProgressBar"/> are specialized hosts for the most common controls.
+	/// </remarks>
 	public partial class ToolStripControlHost : ToolStripItem
 	{
 
@@ -35,9 +41,19 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ToolStripControlHost" /> class that hosts the specified control.
-		///</summary>
+		/// </summary>
+		/// <param name="c">The <see cref="Control" /> hosted by this <see cref="ToolStripControlHost" /> class.</param>
 		/// <exception cref="System.ArgumentNullException">The control referred to by the <paramref name="c" /> parameter is null.</exception>
-		/// <param name="c">The <see cref="Control" /> hosted by this <see cref="ToolStripControlHost" /> class. </param>
+		/// <example>
+		/// Hosting a <see cref="DateTimePicker"/> in a tool strip:
+		/// <code><![CDATA[
+		/// var picker = new DateTimePicker
+		/// {
+		///     Width = 120
+		/// };
+		/// this.toolStrip1.Items.Add(new ToolStripControlHost(picker));
+		/// ]]></code>
+		/// </example>
 		public ToolStripControlHost(Control c)
 		{
 			this._c = c;
@@ -46,7 +62,7 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ToolStripControlHost" /> class that hosts the specified control and that has the specified name.
-		///</summary>
+		/// </summary>
 		/// <param name="c">The <see cref="Control" /> hosted by this <see cref="ToolStripControlHost" /> class.</param>
 		/// <param name="name">The name of the <see cref="ToolStripControlHost" />.</param>
 		public ToolStripControlHost(Control c, string name)
@@ -138,6 +154,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		#region Properties
 
+		/// <summary>
+		/// Returns or sets the background color of the hosted control.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Color" /> representing the background color of the hosted control.</returns>
 		[SRDescription("ToolStripItemBackColorDescr")]
 		[SRCategory("CatAppearance")]
 		public override Color BackColor
@@ -147,9 +167,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets or sets the background image displayed in the control.
-		///</summary>
-		/// <returns>An <see cref="System.Drawing.Image" /> that represents the image to display in the background of the control.</returns>
+		/// Returns or sets the background image displayed in the hosted control.
+		/// </summary>
+		/// <returns>An <see cref="System.Drawing.Image" /> that represents the image to display in the background of the hosted control.</returns>
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripItemImageDescr")]
@@ -161,9 +181,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets or sets the background image layout as defined in the ImageLayout enumeration.
-		///</summary>
-		/// <returns>One of the values of <see cref="ImageLayout" />:<see cref="Wisej.Web.ImageLayout.Center" /><see cref="Wisej.Web.ImageLayout.None" /><see cref="Wisej.Web.ImageLayout.Stretch" /><see cref="Wisej.Web.ImageLayout.Tile" /> (default)<see cref="Wisej.Web.ImageLayout.Zoom" /></returns>
+		/// Returns or sets the background image layout of the hosted control.
+		/// </summary>
+		/// <returns>One of the <see cref="ImageLayout" /> values. The default is <see cref="Wisej.Web.ImageLayout.Tile" />.</returns>
 		[Localizable(true)]
 		[DefaultValue(ImageLayout.Tile)]
 		[SRCategory("CatAppearance")]
@@ -175,9 +195,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether the control can be selected.
-		///</summary>
-		/// <returns>true if the control can be selected; otherwise, false.</returns>
+		/// Returns a value indicating whether the hosted control can be selected.
+		/// </summary>
+		/// <returns>true if the hosted control can be selected; otherwise, false.</returns>
+		/// <remarks>
+		/// Always returns true at design time, and false when there is no hosted control.
+		/// </remarks>
 		[Browsable(false)]
 		public override bool CanSelect
 		{
@@ -193,8 +216,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the hosted control causes and raises validation events on other controls when the hosted control receives focus.
-		///</summary>
+		/// Returns or sets a value indicating whether the hosted control causes and raises validation events on other controls when the hosted control receives focus.
+		/// </summary>
 		/// <returns>true if the hosted control causes and raises validation events on other controls when the hosted control receives focus; otherwise, false. The default is true.</returns>
 		[SRCategory("CatFocus")]
 		[DefaultValue(true)]
@@ -206,10 +229,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets or sets the alignment of the control on the form.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The <see cref="ToolStripControlHost.ControlAlign" /> property is set to a value that is not one of the <see cref="System.Drawing.ContentAlignment" /> values.</exception>
+		/// Returns or sets the alignment of the hosted control within the bounds of the <see cref="ToolStripControlHost" />.
+		/// </summary>
 		/// <returns>One of the <see cref="System.Drawing.ContentAlignment" /> values. The default is <see cref="System.Drawing.ContentAlignment.MiddleCenter" />.</returns>
+		/// <remarks>
+		/// Changing the value updates the bounds of the item.
+		/// </remarks>
 		[DefaultValue(ContentAlignment.MiddleCenter)]
 		[Browsable(false)]
 		public ContentAlignment ControlAlign
@@ -231,9 +256,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ContentAlignment _controlAlign;
 
 		/// <summary>
-		/// Gets the <see cref="Control" /> that this <see cref="ToolStripControlHost" /> is hosting.
-		///</summary>
+		/// Returns the <see cref="Control" /> that this <see cref="ToolStripControlHost" /> is hosting.
+		/// </summary>
 		/// <returns>The <see cref="Control" /> that this <see cref="ToolStripControlHost" /> is hosting.</returns>
+		/// <remarks>
+		/// The hosted control is disposed together with the <see cref="ToolStripControlHost"/>, after which this property returns null.
+		/// </remarks>
+		/// <example>
+		/// Reading the value of a hosted <see cref="DateTimePicker"/>:
+		/// <code><![CDATA[
+		/// var picker = (DateTimePicker)this.toolStripControlHost1.Control;
+		/// AlertBox.Show(picker.Value.ToShortDateString());
+		/// ]]></code>
+		/// </example>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
 		public Control Control
@@ -247,9 +282,13 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Control _control;
 
 		/// <summary>
-		/// Gets the default size of the control.
-		///</summary>
-		/// <returns>The default <see cref="System.Drawing.Size" /> of the control.</returns>
+		/// Returns the default size of the item.
+		/// </summary>
+		/// <returns>The default <see cref="System.Drawing.Size" /> of the item.</returns>
+		/// <remarks>
+		/// Returns the current size of the hosted control, since a control initializes its size to its own default size when
+		/// it is created. When there is no hosted control, the default size of <see cref="ToolStripItem"/> is returned.
+		/// </remarks>
 		public override Size DefaultSize
 		{
 			get
@@ -294,8 +333,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets or sets the font to be used on the hosted control.
-		///</summary>
+		/// Returns or sets the font to be used on the hosted control.
+		/// </summary>
 		/// <returns>The <see cref="System.Drawing.Font" /> for the hosted control.</returns>
 		[SRDescription("ToolStripItemFontDescr")]
 		[Localizable(true)]
@@ -307,9 +346,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the parent control of the <see cref="ToolStripItem" /> is enabled.
-		///</summary>
-		/// <returns>true if the parent control of the <see cref="ToolStripItem" /> is enabled; otherwise, false. The default is true.</returns>
+		/// Returns or sets a value indicating whether the hosted control is enabled.
+		/// </summary>
+		/// <returns>true if the hosted control is enabled; otherwise, false. The default is true.</returns>
 		[Localizable(true)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("ToolStripItemEnabledDescr")]
@@ -321,9 +360,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether the control has input focus.
-		///</summary>
-		/// <returns>true if the control has input focus; otherwise, false. </returns>
+		/// Returns a value indicating whether the hosted control has input focus.
+		/// </summary>
+		/// <returns>true if the hosted control has input focus; otherwise, false.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Always)]
 		public virtual bool Focused
@@ -335,8 +374,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets or sets the foreground color of the hosted control.
-		///</summary>
+		/// Returns or sets the foreground color of the hosted control.
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Color" /> representing the foreground color of the hosted control.</returns>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripItemForeColorDescr")]
@@ -403,6 +442,14 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private ContentAlignment _imageAlign;
 
+		/// <summary>
+		/// Returns or sets a value indicating whether the hosted control is drawn right-to-left, to support locales using right-to-left fonts.
+		/// </summary>
+		/// <returns>One of the <see cref="Wisej.Web.RightToLeft"/> values.</returns>
+		/// <remarks>
+		/// The value is read from and written to the hosted control. When there is no hosted control, the getter returns the value
+		/// inherited from <see cref="ToolStripItem"/> and the setter has no effect.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[Localizable(true)]
 		[SRDescription("ToolStripItemRightToLeftDescr")]
@@ -440,9 +487,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether the item is selected.
-		///</summary>
-		/// <returns>true if the <see cref="ToolStripItem" /> is selected; otherwise, false.</returns>
+		/// Returns a value indicating whether the item is selected.
+		/// </summary>
+		/// <returns>true if the hosted control has the focus; otherwise, false.</returns>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override bool Selected
@@ -454,8 +501,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets or sets the size of the <see cref="ToolStripItem" />.
-		///</summary>
+		/// Returns or sets the size of the <see cref="ToolStripItem" />.
+		/// </summary>
 		/// <returns>An ordered pair of type <see cref="System.Drawing.Size" /> representing the width and height of a rectangle.</returns>
 		[Localizable(true)]
 		[SRCategory("CatLayout")]
@@ -467,9 +514,13 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gets or sets the site of the hosted control.
-		///</summary>
-		/// <returns>The <see cref="System.ComponentModel.ISite" /> associated with the control.</returns>
+		/// Returns or sets the site of the item.
+		/// </summary>
+		/// <returns>The <see cref="System.ComponentModel.ISite" /> associated with the item.</returns>
+		/// <remarks>
+		/// Setting a site also assigns to the hosted control an internal site that forwards the container, name, design mode and
+		/// services to the site of the <see cref="ToolStripControlHost"/>; setting null removes the site from the hosted control.
+		/// </remarks>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -493,8 +544,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ISite _site;
 
 		/// <summary>
-		/// Gets or sets the text to be displayed on the hosted control.
-		///</summary>
+		/// Returns or sets the text to be displayed on the hosted control.
+		/// </summary>
 		/// <returns>A <see cref="System.String" /> representing the text.</returns>
 		[DefaultValue("")]
 		[SRCategory("CatAppearance")]
@@ -508,8 +559,8 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
-		/// <returns>A <see cref="VisualStyles.ContentAlignment" />.</returns>
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.ContentAlignment" />.</returns>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[Browsable(false)]
 		public ContentAlignment TextAlign
@@ -749,7 +800,13 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This method is not relevant to this class.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Set the <see cref="BackColor"/> property to change the background color of the hosted control instead:
+		/// <code><![CDATA[
+		/// this.toolStripControlHost1.BackColor = Color.LightYellow;
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public override void ResetBackColor()
 		{
@@ -758,7 +815,13 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This method is not relevant to this class.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Set the <see cref="ForeColor"/> property to change the text color of the hosted control instead:
+		/// <code><![CDATA[
+		/// this.toolStripControlHost1.ForeColor = Color.DarkBlue;
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public override void ResetForeColor()
 		{
@@ -766,8 +829,17 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Gives the focus to a control.
-		///</summary>
+		/// Gives the focus to the hosted control.
+		/// </summary>
+		/// <example>
+		/// Moving the focus to a search box hosted in the tool strip when the page is shown:
+		/// <code><![CDATA[
+		/// private void Page1_Appear(object sender, EventArgs e)
+		/// {
+		///     this.toolStripTextBoxSearch.Focus();
+		/// }
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		public void Focus()
 		{

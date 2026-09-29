@@ -30,6 +30,11 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// Represents the main application button in a <see cref="RibbonBar"/> displayed
 	/// before the first <see cref="RibbonBarPage"/>.
 	/// </summary>
+	/// <remarks>
+	/// The single instance is created by the <see cref="RibbonBar"/> and is accessible through the
+	/// <see cref="RibbonBar.AppButton"/> property. It's hidden by default. When the user clicks the button, the
+	/// <see cref="RibbonBar"/> fires the <see cref="RibbonBar.AppButtonClick"/> event.
+	/// </remarks>
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
@@ -62,7 +67,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// Returns the <see cref="RibbonBar"/> that contains this <see cref="RibbonBarAppButton"/>;
+		/// Returns the <see cref="RibbonBar"/> that contains this <see cref="RibbonBarAppButton"/>.
 		/// </summary>
 		[Browsable(false)]
 		public RibbonBar RibbonBar
@@ -73,6 +78,11 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets whether the <see cref="RibbonBarAppButton"/> is visible or hidden.
 		/// </summary>
+		/// <returns>true if the application button is visible; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// The application button is hidden by default and the <see cref="RibbonBar.AppButtonClick"/> event is fired only
+		/// while the button is visible.
+		/// </remarks>
 		[Localizable(true)]
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
@@ -94,6 +104,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets the background color of the <see cref="RibbonBarAppButton"/> tab button.
 		/// </summary>
+		/// <returns>The background <see cref="Color"/> of the button. The default is <see cref="Color.Empty"/>, which uses the color defined in the theme.</returns>
 		[DefaultValue(typeof(Color), "")]
 		[SRCategory("CatAppearance")]
 		[SRDescription("Returns or sets the background color of the RibbonBarApplicationButton tab button.")]
@@ -114,6 +125,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets the text color of the <see cref="RibbonBarAppButton"/> tab button.
 		/// </summary>
+		/// <returns>The text <see cref="Color"/> of the button. The default is <see cref="Color.Empty"/>, which uses the color defined in the theme.</returns>
 		[DefaultValue(typeof(Color), "")]
 		[SRCategory("CatAppearance")]
 		[SRDescription("Returns or sets the text color of the RibbonBarApplicationButton tab button.")]
@@ -203,6 +215,13 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets the theme name or URL for the image to display in the <see cref="RibbonBarAppButton" />.
 		/// </summary>
 		/// <returns>The theme name or URL for the image to display in the <see cref="RibbonBarAppButton" />.</returns>
+		/// <example>
+		/// Showing the application button with an icon:
+		/// <code><![CDATA[
+		/// this.ribbonBar1.AppButton.ImageSource = "Images/logo.png";
+		/// this.ribbonBar1.AppButton.Visible = true;
+		/// ]]></code>
+		/// </example>
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the theme name or URL for the image to display in the RibbonBarApplicationButton.")]
@@ -237,6 +256,9 @@ namespace Wisej.Web.Ext.RibbonBar
 		///</summary>
 		/// <returns>The index value of the <see cref="T:System.Drawing.Image" /> assigned to the <see cref="RibbonBarAppButton" />. The default is -1.</returns>
 		/// <exception cref="T:System.ArgumentOutOfRangeException">The specified index is less than -1.</exception>
+		/// <remarks>
+		/// The index refers to an image in the <see cref="RibbonBar.ImageList"/> of the owner <see cref="RibbonBar"/>.
+		/// </remarks>
 		[DefaultValue(-1)]
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
@@ -254,6 +276,9 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets the name of the image assigned to the <see cref="RibbonBarAppButton" />.
 		///</summary>
 		/// <returns>The name of the <see cref="T:System.Drawing.Image" /> assigned to the <see cref="RibbonBarAppButton" />.</returns>
+		/// <remarks>
+		/// The key refers to an image in the <see cref="RibbonBar.ImageList"/> of the owner <see cref="RibbonBar"/>.
+		/// </remarks>
 		[DefaultValue("")]
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
@@ -319,6 +344,16 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Updates the component on the client.
 		/// </summary>
+		/// <remarks>
+		/// Changing the properties of the button already updates the client. At design time the owner
+		/// <see cref="RibbonBar"/> is refreshed as well.
+		/// </remarks>
+		/// <example>
+		/// Forcing the application button to be updated on the client:
+		/// <code><![CDATA[
+		/// this.ribbonBar1.AppButton.Update();
+		/// ]]></code>
+		/// </example>
 		public override void Update()
 		{
 			if (this.RibbonBar?.Site?.DesignMode ?? false)
@@ -331,6 +366,15 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns a string that represents the current object.
 		/// </summary>
 		/// <returns>A <see cref="string"/> that represents the current object.</returns>
+		/// <remarks>
+		/// Returns the value of the <see cref="Text"/> property.
+		/// </remarks>
+		/// <example>
+		/// Reading the text of the application button:
+		/// <code><![CDATA[
+		/// var caption = this.ribbonBar1.AppButton.ToString();
+		/// ]]></code>
+		/// </example>
 		public override string ToString()
 		{
 			return this.Text;

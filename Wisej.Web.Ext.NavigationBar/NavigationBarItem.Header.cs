@@ -25,9 +25,14 @@ namespace Wisej.Web.Ext.NavigationBar
 	public partial class NavigationBarItem
 	{
 		/// <summary>
-		/// Implementation of the top header part in the <see cref="NavigationBarItem"/>.
-		/// Used to switch the sender when redirecting pointer events.
+		/// Represents the top header part of the <see cref="NavigationBarItem"/> that contains
+		/// the icon, title, info "bubble", shortcut button and open/close icon.
 		/// </summary>
+		/// <remarks>
+		/// The header redirects its pointer events (click, tap, long tap, swipe, mouse down/up/enter/leave)
+		/// to the owner <see cref="NavigationBarItem"/>, so that the item is the sender of the events.
+		/// This class is used internally by <see cref="NavigationBarItem"/>.
+		/// </remarks>
 		public class Header : FlexLayoutPanel
 		{
 			private NavigationBarItem NavigationBarItem
