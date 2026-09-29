@@ -48,7 +48,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	[ApiCategory("RibbonBar")]
 	[ToolboxBitmap(typeof(RibbonBar))]
 	[Description("The RibbonBar organizes the features of an application into a series of tabs.")]
-	public class RibbonBar : Control, IWisejControl, IWisejDesignTarget
+	public class RibbonBar : Control, IWisejControl, IWisejDesignTarget, IWisejDesignHitTest
 	{
 		// autosize height
 		private int _requestedHeight;
@@ -1039,6 +1039,22 @@ namespace Wisej.Web.Ext.RibbonBar
 		bool IWisejDesignTarget.OnMouseClick(Point location)
 		{
 			return SelectClickedTab(location) || SelectClickedItem(location);
+		}
+
+		// Returns true when the pointer is over a page tab, group or item.
+		bool IWisejDesignHitTest.HitTest(Point location)
+		{
+			Rectangle[] tabRects = this.UserData.DesignTabRects;
+			if (tabRects != null)
+			{
+				foreach (var tabRect in tabRects)
+				{
+					if (tabRect.Contains(location))
+						return true;
+				}
+			}
+
+			return FindDesignChildComponent(location) != null;
 		}
 
 		// Represents the child item that is selected in the designer.
