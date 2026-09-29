@@ -23,8 +23,8 @@ namespace Wisej.Web.Ext.ChatControl
 {
 
 	/// <summary>
-	/// Represents the method that will handle the <see cref="ChatBox.SendingMessage"/> event, fired when a message
-	/// is about to be added to the <see cref="ChatBox"/>.
+	/// Represents the method that will handle the <see cref="ChatBox.SendingMessage"/> event, fired when the user
+	/// submits a message through the chat UI, before it is added to the <see cref="ChatBox"/>.
 	/// </summary>
 	/// <param name="sender">The source of the event, the <see cref="ChatBox"/>.</param>
 	/// <param name="e">An instance of <see cref="SendingMessageEventArgs"/> containing event data. Set
@@ -78,12 +78,18 @@ namespace Wisej.Web.Ext.ChatControl
 		/// Returns whether the message is from the <see cref="ChatBox.User"/>.
 		/// </summary>
 		/// <value><c>true</c> if the message's <see cref="ChatControl.Message.User"/> is the <see cref="ChatBox.User"/>; otherwise <c>false</c>.</value>
+		/// <remarks>
+		/// <see cref="ChatBox.SendingMessage"/> is raised only for messages the user submits through the
+		/// chat UI, which are always authored by the <see cref="ChatBox.User"/>, so this value is always
+		/// <c>true</c> for that event.
+		/// </remarks>
 		/// <example>
 		/// <code><![CDATA[
 		/// private void chatBox_SendingMessage(object sender, SendingMessageEventArgs e)
 		/// {
-		///     // only allow messages typed by the current user.
-		///     e.Cancel = !e.IsChatBoxUser;
+		///     // block messages that the current user sends with a banned word.
+		///     if (e.IsChatBoxUser && e.Message.Content.Contains("password"))
+		///         e.Cancel = true;
 		/// }
 		/// ]]></code>
 		/// </example>
