@@ -29,10 +29,12 @@ namespace Wisej.Web.Ext.TaskDialog
 {
 	//TODO: fix missing properties
 	/// <summary>
-	/// 
-	///              Represents a collection of <see cref="TaskDialogButton" /> objects.
-	///            
-	///</summary>
+	/// Represents a collection of <see cref="TaskDialogButton" /> objects.
+	/// </summary>
+	/// <remarks>
+	/// The same button instance cannot be added twice or be part of more than one collection, and the
+	/// collection cannot be modified while its page is bound to a task dialog.
+	/// </remarks>
 	public class TaskDialogButtonCollection : Collection<TaskDialogButton>
 	{
 		// HashSet to detect duplicate items.
@@ -40,10 +42,8 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Constructors
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogButtonCollection" /> class.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogButtonCollection" /> class.
+		/// </summary>
 		public TaskDialogButtonCollection()
 		{
 			// TODO: Implement
@@ -58,19 +58,27 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Methods
 		/// <summary>
-		/// 
-		///              Creates and adds a <see cref="TaskDialogButton" /> to the collection.
-		///            
-		///</summary>
-		/// <exception cref="T:System.InvalidOperationException">
-		///              This collection is currently bound to a task dialog.
-		///            </exception>
-		/// <returns>The created <see cref="TaskDialogButton" />.</returns>
+		/// Creates and adds a <see cref="TaskDialogButton" /> to the collection.
+		/// </summary>
 		/// <param name="text">The text of the custom button.</param>
 		/// <param name="enabled">A value indicating whether the button can respond to user interaction.</param>
 		/// <param name="allowCloseDialog">A value that indicates whether the task dialog should close
-		///              when this button is clicked.
-		///            </param>
+		/// when this button is clicked.
+		/// </param>
+		/// <returns>The created <see cref="TaskDialogButton" />.</returns>
+		/// <exception cref="T:System.InvalidOperationException">
+		/// This collection is currently bound to a task dialog.
+		/// </exception>
+		/// <example>
+		/// Adding a button that closes the dialog and one that is initially disabled:
+		/// <code><![CDATA[
+		/// var install = page.Buttons.Add("Install", false, true);
+		/// page.Buttons.Add("Cancel", true, true);
+		///
+		/// page.Verification = new TaskDialogVerificationCheckBox("I accept the license agreement", false);
+		/// page.Verification.CheckedChanged += (s, e) => install.Enabled = page.Verification.Checked;
+		/// ]]></code>
+		/// </example>
 		public TaskDialogButton Add(string text, bool enabled, bool allowCloseDialog)
 		{
 			var button = new TaskDialogButton(text, enabled, allowCloseDialog);

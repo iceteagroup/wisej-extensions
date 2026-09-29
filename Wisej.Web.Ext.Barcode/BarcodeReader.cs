@@ -31,6 +31,34 @@ namespace Wisej.Web.Ext.Barcode
 	/// <summary>
 	/// A component for extending the functionality of the Wisej Camera to include barcode detection.
 	/// </summary>
+	/// <remarks>
+	/// Set the <see cref="Camera"/> property to a Wisej.Web.Ext.Camera.Camera control and handle the
+	/// <see cref="ScanSuccess"/> event. The barcodes are detected in the browser, so the video frames are not sent
+	/// to the server. Use <see cref="ScanMode"/> to choose whether the reader scans continuously, stops after the
+	/// first barcode, or scans only when <see cref="ScanImage"/> is called.
+	/// </remarks>
+	/// <example>
+	/// The following example scans barcodes continuously with a camera and adds them to a list:
+	/// <code><![CDATA[
+	/// private BarcodeReader barcodeReader;
+	///
+	/// private void Page1_Load(object sender, EventArgs e)
+	/// {
+	///     this.barcodeReader = new BarcodeReader(this.components)
+	///     {
+	///         Camera = this.camera1,
+	///         ScanMode = ScanMode.Automatic
+	///     };
+	///
+	///     this.barcodeReader.ScanSuccess += barcodeReader_ScanSuccess;
+	/// }
+	///
+	/// private void barcodeReader_ScanSuccess(object sender, ScanEventArgs e)
+	/// {
+	///     this.listBoxCodes.Items.Add(e.Data);
+	/// }
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(Barcode))]
 	[ApiCategory("Barcode")]
@@ -41,6 +69,13 @@ namespace Wisej.Web.Ext.Barcode
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Barcode.BarcodeReader" /> without a specified container.
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var reader = new BarcodeReader();
+		/// reader.Camera = this.camera1;
+		/// reader.ScanSuccess += (s, e) => AlertBox.Show(e.Data);
+		/// ]]></code>
+		/// </example>
 		public BarcodeReader()
 		{
 
@@ -50,6 +85,19 @@ namespace Wisej.Web.Ext.Barcode
 		/// Initializes a new instance of the <see cref="Wisej.Web.Ext.Barcode.BarcodeReader"/> class with a specified container.
 		/// </summary>
 		/// <param name="container">An <see cref="System.ComponentModel.IContainer"/>container.</param>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="container"/> is null.</exception>
+		/// <remarks>
+		/// Adding the component to a container ensures that it's disposed together with the container,
+		/// for example when the owning page or form is disposed.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// // "components" is the container created by the designer for the page or form.
+		/// var reader = new BarcodeReader(this.components);
+		/// reader.Camera = this.camera1;
+		/// reader.ScanMode = ScanMode.AutomaticOnce;
+		/// ]]></code>
+		/// </example>
 		public BarcodeReader(IContainer container) : this()
 		{
 			if (container == null)
@@ -147,18 +195,37 @@ namespace Wisej.Web.Ext.Barcode
 		}
 		private Control _camera;
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		/// <summary>
-		/// Decodes a barcode from the given image.
-		/// </summary>
-		/// <param name="image">The image of the barcode.</param>
-		/// <returns>The data encoded in the barcode.</returns>
-		/// 
-		/// <remarks>Uses the ZXing.NET library to parse the image.</remarks>
-		public string DecodeBarcode(Image image)
+        /// <summary>
+        /// Decodes a barcode from the given image.
+        /// </summary>
+        /// <param name="image">The image of the barcode.</param>
+        /// <returns>The data encoded in the barcode, or an empty string if no barcode is found in the image.</returns>
+        /// 
+        /// <remarks>Uses the ZXing.NET library to parse the image. The image is decoded on the server,
+        /// so this method doesn't need the <see cref="Camera"/>.</remarks>
+        /// <example>
+        /// The following example decodes a barcode from an image uploaded by the user:
+        /// <code><![CDATA[
+        /// private void upload1_Uploaded(object sender, UploadedEventArgs e)
+        /// {
+        ///     using (var image = Image.FromStream(e.Files[0].InputStream))
+        ///     {
+        ///         var data = this.barcodeReader1.DecodeBarcode(image);
+        ///
+        ///         if (data == "")
+        ///				this.textBoxCode.Text = "";
+        ///             AlertBox.Show("No barcode found.");
+        ///         else
+        ///             this.textBoxCode.Text = data;
+        ///     }
+        /// }
+        /// ]]></code>
+        /// </example>
+        public string DecodeBarcode(Image image)
 		{
 			var reader = new ZXing.BarcodeReader();			
 
@@ -174,7 +241,28 @@ namespace Wisej.Web.Ext.Barcode
 		/// <summary>
 		/// Scans the last frame from the attached Camera for a barcode.
 		/// </summary>
-		/// <remarks>Either the <see cref="ScanError"/></remarks>
+		/// <remarks>
+		/// Fires the <see cref="ScanSuccess"/> event when a barcode is detected, or the <see cref="ScanError"/>
+		/// event when no barcode is found or the camera image isn't available. Use this method when
+		/// <see cref="ScanMode"/> is set to <see cref="ScanMode.Manual"/>. The events are sent to the server
+		/// only when a handler is attached to <see cref="ScanSuccess"/>.
+		/// </remarks>
+		/// <example>
+		/// The following example scans the camera image when the user clicks a button:
+		/// <code><![CDATA[
+		/// private void Page1_Load(object sender, EventArgs e)
+		/// {
+		///     this.barcodeReader1.ScanMode = ScanMode.Manual;
+		///     this.barcodeReader1.ScanSuccess += (s, args) => this.textBoxCode.Text = args.Data;
+		///     this.barcodeReader1.ScanError += (s, args) => AlertBox.Show("No barcode found. Try again.");
+		/// }
+		///
+		/// private void buttonScan_Click(object sender, EventArgs e)
+		/// {
+		///     this.barcodeReader1.ScanImage();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void ScanImage()
 		{
 			Call("scanImage");
@@ -183,6 +271,23 @@ namespace Wisej.Web.Ext.Barcode
 		/// <summary>
 		/// Resets the scanner in <see cref="ScanMode.AutomaticOnce"/> mode.
 		/// </summary>
+		/// <remarks>
+		/// In <see cref="ScanMode.AutomaticOnce"/> mode the reader stops after the first barcode is detected.
+		/// Call this method to start scanning for the next barcode. It has no effect in the other modes.
+		/// </remarks>
+		/// <example>
+		/// The following example scans one barcode at a time and restarts the scanner after the user confirms it:
+		/// <code><![CDATA[
+		/// private async void barcodeReader1_ScanSuccess(object sender, ScanEventArgs e)
+		/// {
+		///     var result = await MessageBox.ShowAsync($"Add item {e.Data}?", buttons: MessageBoxButtons.YesNo);
+		///     if (result == DialogResult.Yes)
+		///         this.listBoxItems.Items.Add(e.Data);
+		///
+		///     this.barcodeReader1.ResetScanner();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void ResetScanner()
 		{
 			Call("resetScanner");
@@ -193,10 +298,21 @@ namespace Wisej.Web.Ext.Barcode
 		#region IExtenderProvider
 
 		/// <summary>
-		/// 
+		/// Returns whether this component can provide its extender properties to the specified object.
 		/// </summary>
-		/// <param name="extendee"></param>
-		/// <returns></returns>
+		/// <param name="extendee">The object to check.</param>
+		/// <returns>true if <paramref name="extendee"/> is a <see cref="Control"/>; otherwise false.</returns>
+		/// <remarks>
+		/// This method is part of the <see cref="IExtenderProvider"/> implementation and is used by the designer.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var reader = new BarcodeReader();
+		///
+		/// Console.WriteLine(reader.CanExtend(this.camera1)); // True
+		/// Console.WriteLine(reader.CanExtend("text"));       // False
+		/// ]]></code>
+		/// </example>
 		public bool CanExtend(object extendee)
 		{
 			return (extendee is Control); // TODO: Camera.

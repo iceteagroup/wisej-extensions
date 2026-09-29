@@ -24,6 +24,9 @@ using System.Threading.Tasks;
 
 namespace Wisej.Web.Ext.Navigator
 {
+	/// <summary>
+	/// Reserved for future use. This class is currently empty and not used by the <see cref="Navigator"/>.
+	/// </summary>
 	public class NavigatorPathCollection
 	{
 	}

@@ -22,18 +22,45 @@ using System;
 namespace Wisej.Web.Ext.ChartJS.Design
 {
 	/// <summary>
-	/// Editor for javascript, JSON or css string values.
+	/// Dialog used at design time to edit the chart options in a property grid.
 	/// </summary>
 	internal partial class OptionsEditorUI : System.Windows.Forms.Form
 	{
+		/// <summary>
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.Design.OptionsEditorUI"/> dialog.
+		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// using (var editorUI = new OptionsEditorUI())
+		/// {
+		///     editorUI.Value = options;
+		///     editorService.ShowDialog(editorUI);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public OptionsEditorUI()
 		{
 			InitializeComponent();
 		}
 
 		/// <summary>
-		/// Returns or sets the code in the editor.
+		/// Returns or sets the options edited in the dialog.
 		/// </summary>
+		/// <value>
+		/// The <see cref="T:Wisej.Web.Ext.ChartJS.OptionsBase"/> instance displayed in the property grid.
+		/// </value>
+		/// <remarks>
+		/// Setting the value selects it in the property grid and expands all the grid items.
+		/// The object is edited in place; <see cref="T:Wisej.Web.Ext.ChartJS.Design.OptionsEditor"/> assigns a clone so the changes can be discarded.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var editorUI = new OptionsEditorUI();
+		/// editorUI.Value = ((OptionsBase)value).Clone();
+		/// if (editorService.ShowDialog(editorUI) == DialogResult.OK)
+		///     value = editorUI.Value;
+		/// ]]></code>
+		/// </example>
 		public OptionsBase Value
 		{
 			get

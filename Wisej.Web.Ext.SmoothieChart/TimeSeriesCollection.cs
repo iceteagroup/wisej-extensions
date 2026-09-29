@@ -65,8 +65,18 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// <summary>
 		/// Returns or sets the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> at the specified index.
 		/// </summary>
-		/// <param name="index"></param>
-		/// <returns></returns>
+		/// <param name="index">The zero-based index of the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/>.</param>
+		/// <returns>The <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> at the specified index.</returns>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than 0 or equal to or greater than <see cref="Count"/>.</exception>
+		/// <remarks>
+		/// Replacing an element sends all the lines to the client again, clearing the data points already plotted.
+		/// </remarks>
+		/// <example>
+		/// Changing the color of the first line:
+		/// <code><![CDATA[
+		/// this.smoothieChart1.TimeSeries[0] = new TimeSeries { LineColor = Color.Red, LineWidth = 2 };
+		/// ]]></code>
+		/// </example>
 		public TimeSeries this[int index]
 		{
 			get { return this.list[index]; }
@@ -91,6 +101,16 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// Adds a new <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> to the collection.
 		/// </summary>
 		/// <param name="series">The <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> to add to the collection.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="series"/> is null.</exception>
+		/// <remarks>
+		/// All the lines are sent to the client again, clearing the data points already plotted.
+		/// </remarks>
+		/// <example>
+		/// Adding a new line:
+		/// <code><![CDATA[
+		/// this.smoothieChart1.TimeSeries.Add(new TimeSeries { LineColor = Color.Yellow });
+		/// ]]></code>
+		/// </example>
 		public void Add(TimeSeries series)
 		{
 			if (series == null)
@@ -104,8 +124,15 @@ namespace Wisej.Web.Ext.SmoothieChart
 		}
 
 		/// <summary>
-		/// Removes all data sets.
+		/// Removes all the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> lines from the collection and updates the chart.
 		/// </summary>
+		/// <example>
+		/// Replacing all the lines:
+		/// <code><![CDATA[
+		/// this.smoothieChart1.TimeSeries.Clear();
+		/// this.smoothieChart1.TimeSeries.Add(new TimeSeries { LineColor = Color.Cyan });
+		/// ]]></code>
+		/// </example>
 		public void Clear()
 		{
 			this.list.Clear();
@@ -118,17 +145,31 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// Checks if the specified <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> exists in the collection.
 		/// </summary>
 		/// <param name="series">The <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> to look for.</param>
-		/// <returns></returns>
+		/// <returns>true if <paramref name="series"/> is found in the collection; otherwise, false.</returns>
+		/// <example>
+		/// Adding a line only once:
+		/// <code><![CDATA[
+		/// if (!this.smoothieChart1.TimeSeries.Contains(this.temperatureLine))
+		///     this.smoothieChart1.TimeSeries.Add(this.temperatureLine);
+		/// ]]></code>
+		/// </example>
 		public bool Contains(TimeSeries series)
 		{
 			return this.list.Contains(series);
 		}
 
 		/// <summary>
-		/// Copies all data sets to the specified array.
+		/// Copies all the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> lines to the specified array.
 		/// </summary>
 		/// <param name="array">The destination array.</param>
-		/// <param name="arrayIndex">The index at which to begin the copy.</param>
+		/// <param name="arrayIndex">The index in <paramref name="array"/> at which to begin the copy.</param>
+		/// <example>
+		/// Copying the lines to an array:
+		/// <code><![CDATA[
+		/// var lines = new TimeSeries[this.smoothieChart1.TimeSeries.Count];
+		/// this.smoothieChart1.TimeSeries.CopyTo(lines, 0);
+		/// ]]></code>
+		/// </example>
 		public void CopyTo(TimeSeries[] array, int arrayIndex)
 		{
 			this.list.CopyTo(array, arrayIndex);
@@ -138,17 +179,44 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// Returns the index of the specified <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> in the collection.
 		/// </summary>
 		/// <param name="series">The <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> to look for.</param>
-		/// <returns></returns>
+		/// <returns>The zero-based index of <paramref name="series"/>, or -1 if it's not in the collection.</returns>
+		/// <remarks>
+		/// The index is the value of <see cref="DataNeededEventArgs.LineIndex"/> when the <see cref="SmoothieChart.DataNeeded"/>
+		/// event is fired for the line.
+		/// </remarks>
+		/// <example>
+		/// Providing the value of a specific line:
+		/// <code><![CDATA[
+		/// private void smoothieChart1_DataNeeded(object sender, DataNeededEventArgs e)
+		/// {
+		///     if (e.LineIndex == this.smoothieChart1.TimeSeries.IndexOf(this.temperatureLine))
+		///         e.Value = ReadTemperature();
+		///     else
+		///         e.Value = ReadHumidity();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public int IndexOf(TimeSeries series)
 		{
 			return this.list.IndexOf(series);
 		}
 
 		/// <summary>
-		/// Returns the index of the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> in the collection.
+		/// Inserts the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> in the collection at the specified index and updates the chart.
 		/// </summary>
-		/// <param name="index">The index where the new <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> should be insert at.</param>
+		/// <param name="index">The index where the new <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> should be inserted.</param>
 		/// <param name="series">The <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> to insert in the collection.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="series"/> is null.</exception>
+		/// <remarks>
+		/// The index of the lines that follow <paramref name="index"/> changes, and so does the <see cref="DataNeededEventArgs.LineIndex"/>
+		/// used to request their data.
+		/// </remarks>
+		/// <example>
+		/// Inserting a line at the top of the collection:
+		/// <code><![CDATA[
+		/// this.smoothieChart1.TimeSeries.Insert(0, new TimeSeries { LineColor = Color.White });
+		/// ]]></code>
+		/// </example>
 		public void Insert(int index, TimeSeries series)
 		{
 			if (series == null)
@@ -164,7 +232,14 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// Removes the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> from the collection and updates the chart.
 		/// </summary>
 		/// <param name="series">The <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> to remove.</param>
-		/// <returns></returns>
+		/// <returns>true if <paramref name="series"/> was removed; otherwise, false.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="series"/> is null.</exception>
+		/// <example>
+		/// Removing a line:
+		/// <code><![CDATA[
+		/// this.smoothieChart1.TimeSeries.Remove(this.temperatureLine);
+		/// ]]></code>
+		/// </example>
 		public bool Remove(TimeSeries series)
 		{
 			if (series == null)
@@ -182,6 +257,15 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// Removes the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> at the specified index from the collection and updates the chart.
 		/// </summary>
 		/// <param name="index">The index of the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> to remove.</param>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than 0 or equal to or greater than <see cref="Count"/>.</exception>
+		/// <example>
+		/// Removing the last line:
+		/// <code><![CDATA[
+		/// var lines = this.smoothieChart1.TimeSeries;
+		/// if (lines.Count > 0)
+		///     lines.RemoveAt(lines.Count - 1);
+		/// ]]></code>
+		/// </example>
 		public void RemoveAt(int index)
 		{
 			this.list[index].Owner = null;
@@ -193,7 +277,14 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// <summary>
 		/// Returns an enumerator that iterates all the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> objects in the collection.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>An <see cref="IEnumerator{T}"/> for the collection.</returns>
+		/// <example>
+		/// Iterating the lines:
+		/// <code><![CDATA[
+		/// foreach (var line in this.smoothieChart1.TimeSeries)
+		///     System.Diagnostics.Debug.WriteLine(line.LineColor);
+		/// ]]></code>
+		/// </example>
 		public IEnumerator<TimeSeries> GetEnumerator()
 		{
 			return this.list.GetEnumerator();

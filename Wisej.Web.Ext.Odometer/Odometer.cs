@@ -28,16 +28,20 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.Odometer
 {
 	/// <summary>
-	/// Represents an odometer widget to display smoothly transitioning numbers. 
-	/// 
-	/// See: <see href="http://github.hubspot.com/odometer/"/>
-	/// 
+	/// Represents an odometer widget to display smoothly transitioning numbers.
 	/// </summary>
+	/// <remarks>
+	/// Wraps the HubSpot Odometer library: <see href="http://github.hubspot.com/odometer/"/>.
+	/// Changing <see cref="Value"/> animates the digits from the current value to the new value.
+	/// </remarks>
 	public class Odometer : Widget
 	{
 		/// <summary>
-		/// Creates a new instance of the <see cref="T:Wisej.Web.Ext.Odometer"/> control.
+		/// Creates a new instance of the <see cref="Odometer"/> control.
 		/// </summary>
+		/// <remarks>
+		/// The control is not selectable and doesn't take part in the tab order.
+		/// </remarks>
 		public Odometer()
 		{
 			base.TabStop = false;
@@ -530,6 +534,30 @@ namespace Wisej.Web.Ext.Odometer
 		/// <summary>
 		/// Returns or sets the value to display in the odometer.
 		/// </summary>
+		/// <remarks>
+		/// When the value changes after the widget is displayed, the digits roll to the new value in the time set in
+		/// <see cref="Duration"/> and the <see cref="OdometerDone"/> handler is invoked when the animation completes.
+		/// </remarks>
+		/// <example>
+		/// Incrementing a counter and reacting when the animation ends:
+		/// <code><![CDATA[
+		/// public Form1()
+		/// {
+		///     InitializeComponent();
+		///     this.odometer1.OdometerDone += this.odometer1_OdometerDone;
+		/// }
+		///
+		/// private void buttonAdd_Click(object sender, EventArgs e)
+		/// {
+		///     this.odometer1.Value += 1000;
+		/// }
+		///
+		/// private void odometer1_OdometerDone(object sender, EventArgs e)
+		/// {
+		///     AlertBox.Show("Total: " + this.odometer1.Value);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DesignerActionList]
 		[DefaultValue(0)]
 		[Description("Gets or sets the value to display in the odometer.")]
@@ -550,6 +578,10 @@ namespace Wisej.Web.Ext.Odometer
 		/// <summary>
 		/// Returns or sets the font size of the odometer in pixels.
 		/// </summary>
+		/// <remarks>
+		/// The size is applied as an inline CSS font size to the odometer element; a value of 0 leaves the size defined by the skin.
+		/// The <see cref="Font"/> property is not used by this control.
+		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue(13)]
 		[Description("Gets or sets the font size of the odometer in pixels.")]
@@ -570,6 +602,10 @@ namespace Wisej.Web.Ext.Odometer
 		/// <summary>
 		/// Returns or sets the duration of the animation to the final value, in milliseconds.
 		/// </summary>
+		/// <remarks>
+		/// The duration is passed to the odometer library when the widget is created; changing it later
+		/// doesn't affect the widget already displayed in the browser.
+		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue(750)]
 		[Description("Gets or sets the duration of the animation to the final value, in milliseconds.")]
@@ -588,8 +624,12 @@ namespace Wisej.Web.Ext.Odometer
 		private int _duration = 750;
 
 		/// <summary>
-		/// Returns or sets the name of skin used to render the odometer.
+		/// Returns or sets the skin used to render the odometer.
 		/// </summary>
+		/// <remarks>
+		/// The skin is applied when the widget is created; changing it later
+		/// doesn't affect the widget already displayed in the browser.
+		/// </remarks>
 		[DesignerActionList]
 		[DefaultValue(OdometerSkin.Default)]
 		public OdometerSkin Skin
@@ -607,7 +647,7 @@ namespace Wisej.Web.Ext.Odometer
 		private OdometerSkin _skin = OdometerSkin.Default;
 
 		/// <summary>
-		/// Overridden to create our initialization script.
+		/// Overridden to return the initialization script embedded in this assembly. Setting this property has no effect.
 		/// </summary>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -620,7 +660,8 @@ namespace Wisej.Web.Ext.Odometer
 		}
 
 		/// <summary>
-		/// Overridden.
+		/// Overridden to return the options generated from <see cref="Skin"/>, <see cref="Value"/>, <see cref="Duration"/>
+		/// and <see cref="FontSize"/>. Setting this property has no effect.
 		/// </summary>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -663,7 +704,7 @@ namespace Wisej.Web.Ext.Odometer
 		}
 
 		/// <summary>
-		/// Overridden to return our list of script resources.
+		/// Overridden to return the odometer script and the CSS files of all the skins embedded in this assembly.
 		/// </summary>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

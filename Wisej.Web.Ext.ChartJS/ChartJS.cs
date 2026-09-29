@@ -30,8 +30,27 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.ChartJS
 {
 	/// <summary>
-	/// ChartJS is a simple yet flexible JavaScript charting for designers and developers from <see href="http://www.chartjs.org/"/>. 
+	/// ChartJS is a simple yet flexible JavaScript charting library for designers and developers from <see href="http://www.chartjs.org/"/>.
 	/// </summary>
+	/// <remarks>
+	/// The control wraps Chart.js 2.7.2 and the chartjs-plugin-datalabels plugin.
+	/// Configure the chart using <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.ChartType"/>, <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.Options"/>,
+	/// <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.Labels"/> and <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.DataSets"/>. Changing any of them
+	/// redraws the whole chart on the client. To change only the data values with an animated transition, call
+	/// <see cref="M:Wisej.Web.Ext.ChartJS.ChartJS.UpdateData(System.Int32)"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// private void Page1_Load(object sender, EventArgs e)
+	/// {
+	///     this.chartJS1.ChartType = ChartType.Bar;
+	///     this.chartJS1.Labels = new[] { "Jan", "Feb", "Mar", "Apr" };
+	///
+	///     var sales = this.chartJS1.DataSets.Add("Sales");
+	///     sales.Data = new object[] { 120, 95, 140, 110 };
+	/// }
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(ChartJS))]
 	[DefaultEvent("ChartClick")]
@@ -42,6 +61,19 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control.
 		/// </summary>
+		/// <remarks>
+		/// The new control uses the <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Line"/> chart type and has no labels and no data sets.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS();
+		/// chart.Dock = DockStyle.Fill;
+		/// chart.ChartType = ChartType.Pie;
+		/// chart.Labels = new[] { "Red", "Green", "Blue" };
+		/// chart.DataSets.Add("Votes").Data = new object[] { 12, 19, 7 };
+		/// this.Controls.Add(chart);
+		/// ]]></code>
+		/// </example>
 		public ChartJS()
 		{
 		}
@@ -51,6 +83,25 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Fired when the user clicks a data point on the chart.
 		/// </summary>
+		/// <remarks>
+		/// The event is fired only at runtime and only when the click hits at least one chart element.
+		/// The <see cref="T:Wisej.Web.Ext.ChartJS.ChartClickEventArgs"/> argument contains the data sets, the data point indexes
+		/// and the values of the elements under the click point, as well as the element directly underneath it.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// public Page1()
+		/// {
+		///     InitializeComponent();
+		///     this.chartJS1.ChartClick += this.chartJS1_ChartClick;
+		/// }
+		///
+		/// private void chartJS1_ChartClick(object sender, ChartClickEventArgs e)
+		/// {
+		///     AlertBox.Show($"{e.SelectedDataSet.Label}: {e.SelectedValue}");
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Description("Fired when the user clicks a data point on the chart.")]
 		public event ChartClickEventHandler ChartClick
 		{
@@ -72,8 +123,29 @@ namespace Wisej.Web.Ext.ChartJS
 		#region Properties
 
 		/// <summary>
-		/// Returns or sets the <see cref="Wisej.Web.Ext.ChartJS.ChartType"/>.
+		/// Returns or sets the <see cref="T:Wisej.Web.Ext.ChartJS.ChartType"/> of the chart.
 		/// </summary>
+		/// <value>
+		/// One of the <see cref="T:Wisej.Web.Ext.ChartJS.ChartType"/> values. The default is <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Line"/>.
+		/// </value>
+		/// <remarks>
+		/// Changing the chart type replaces <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.Options"/> with a new instance specific
+		/// for the new type (i.e. <see cref="T:Wisej.Web.Ext.ChartJS.BarOptions"/> for <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Bar"/>),
+		/// copying the shared options from the previous instance. It also replaces <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.DataSets"/>
+		/// with a new collection of data sets matching the new type, copying the properties that the old and new data set classes
+		/// have in common. <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Bubble"/> and <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Scatter"/>
+		/// charts use <see cref="T:Wisej.Web.Ext.ChartJS.LineDataSet"/> data sets. Then the chart is redrawn.
+		/// Set the chart type before configuring the options and the data sets, since references to the previous instances are no longer used by the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// this.chartJS1.ChartType = ChartType.Doughnut;
+		///
+		/// // the options are now an instance of DoughnutOptions.
+		/// var options = (DoughnutOptions)this.chartJS1.Options;
+		/// options.CutoutPercentage = 60;
+		/// ]]></code>
+		/// </example>
 		[DesignerActionList]
 		[DefaultValue(ChartType.Line)]
 		[RefreshProperties(RefreshProperties.All)]
@@ -101,6 +173,30 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Chart options specific for the value of <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.ChartType"/>.
 		/// </summary>
+		/// <value>
+		/// An <see cref="T:Wisej.Web.Ext.ChartJS.Options"/> instance. When the chart type is <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Line"/>
+		/// it is a <see cref="T:Wisej.Web.Ext.ChartJS.LineOptions"/>, when it is <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.Bar"/> or
+		/// <see cref="F:Wisej.Web.Ext.ChartJS.ChartType.HorizontalBar"/> it is a <see cref="T:Wisej.Web.Ext.ChartJS.BarOptions"/>, and so on.
+		/// </value>
+		/// <remarks>
+		/// The options are created automatically when first read and are recreated when <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.ChartType"/> changes.
+		/// They are sent to the client as the Chart.js options object, using camel case property names and omitting null values.
+		/// Assigning a new instance attaches it to this control and redraws the chart. The assigned instance should match the current
+		/// <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.ChartType"/>.
+		/// This property hides the inherited <see cref="P:Wisej.Web.Widget.Options"/> property.
+		/// </remarks>
+		/// <exception cref="T:System.ArgumentNullException">The value is null.</exception>
+		/// <exception cref="T:System.InvalidOperationException">The options instance already belongs to another <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control.</exception>
+		/// <example>
+		/// <code><![CDATA[
+		/// this.chartJS1.ChartType = ChartType.Line;
+		/// this.chartJS1.Options.Title.Display = true;
+		/// this.chartJS1.Options.Title.Text = "Monthly Visitors";
+		///
+		/// // or replace the whole set of options.
+		/// this.chartJS1.Options = new LineOptions { ShowLines = true, Stacked = true };
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[MergableProperty(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -129,8 +225,27 @@ namespace Wisej.Web.Ext.ChartJS
 		private Options _options = null;
 
 		/// <summary>
-		/// Returns or sets the data sets to plot the chart.
+		/// Returns the data sets to plot the chart.
 		/// </summary>
+		/// <value>
+		/// A <see cref="T:Wisej.Web.Ext.ChartJS.DataSetCollection"/> containing the <see cref="T:Wisej.Web.Ext.ChartJS.DataSet"/> objects to plot.
+		/// </value>
+		/// <remarks>
+		/// The collection is created automatically and is recreated when <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.ChartType"/> changes.
+		/// Use <see cref="M:Wisej.Web.Ext.ChartJS.DataSetCollection.Add(System.String)"/> to create a data set of the type that matches the current chart type.
+		/// Adding, removing or replacing data sets redraws the chart. To animate changes to the values of existing data sets,
+		/// change their <see cref="P:Wisej.Web.Ext.ChartJS.DataSet.Data"/> and call <see cref="M:Wisej.Web.Ext.ChartJS.ChartJS.UpdateData(System.Int32)"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// this.chartJS1.DataSets.Clear();
+		///
+		/// var revenue = (LineDataSet)this.chartJS1.DataSets.Add("Revenue");
+		/// revenue.Data = new object[] { 10, 22, 15, 30 };
+		/// revenue.BorderColor = Color.SteelBlue;
+		/// revenue.Fill = false;
+		/// ]]></code>
+		/// </example>
 		[MergableProperty(false)]
 		[Description("Returns or sets the data sets to plot the chart.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -164,6 +279,20 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Returns or sets the labels for the data points.
 		/// </summary>
+		/// <value>
+		/// An array of strings. The default is an empty array; setting it to null assigns an empty array.
+		/// </value>
+		/// <remarks>
+		/// Each label corresponds to the value at the same index in the <see cref="P:Wisej.Web.Ext.ChartJS.DataSet.Data"/> array
+		/// of each data set. Setting this property redraws the chart.
+		/// At design time, when there are no data sets with data, the designer draws a sample data set with random values, one for each label.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// this.chartJS1.Labels = new[] { "Q1", "Q2", "Q3", "Q4" };
+		/// this.chartJS1.DataSets.Add("Profit").Data = new object[] { 4.2, 5.1, 3.8, 6.0 };
+		/// ]]></code>
+		/// </example>
 		[DesignerActionList]
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
@@ -193,8 +322,24 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
-		/// Overridden to create our initialization script.
+		/// Overridden to return the initialization script that creates the Chart.js chart on the client.
 		/// </summary>
+		/// <remarks>
+		/// The script is loaded from the embedded resource "Wisej.Web.Ext.ChartJS.JavaScript.startup.js". Assigning a value has no effect.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// // a derived chart that adds a client-side function to the widget.
+		/// public class MyChart : ChartJS
+		/// {
+		///     public override string InitScript
+		///     {
+		///         get { return base.InitScript + "\r\nthis.refresh = function() { this.chart.update(); };"; }
+		///         set { }
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override string InitScript
@@ -206,8 +351,20 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
-		/// Overridden to return our list of script resources.
+		/// Overridden to return the list of script resources required by the chart.
 		/// </summary>
+		/// <remarks>
+		/// The first time it is read, the list is filled with moment.js 2.29.4, Chart.js 2.7.2 and chartjs-plugin-datalabels,
+		/// all loaded from the resources embedded in the extension assembly.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// foreach (var package in this.chartJS1.Packages)
+		/// {
+		///     System.Diagnostics.Debug.WriteLine(package.Name + ": " + package.Source);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public override List<Package> Packages
@@ -277,7 +434,22 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Returns the chart as a PNG image.
 		/// </summary>
-		/// <returns>An <see cref="Image"/> with a representation of the chart.</returns>
+		/// <returns>A task that completes with an <see cref="T:System.Drawing.Image"/> with a representation of the chart, or null if the image could not be retrieved.</returns>
+		/// <remarks>
+		/// The image is rendered by the client canvas and sent back to the server asynchronously.
+		/// The chart is drawn over the <see cref="P:Wisej.Web.Control.BackColor"/> of the control.
+		/// The result is null when the chart has not been rendered yet or the image data cannot be decoded.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// private async void buttonSnapshot_Click(object sender, EventArgs e)
+		/// {
+		///     var image = await this.chartJS1.GetImageAsync();
+		///     if (image != null)
+		///         this.pictureBox1.Image = image;
+		/// }
+		/// ]]></code>
+		/// </example>
 		public async Task<Image> GetImageAsync()
 		{
 			var tcs = new TaskCompletionSource<Image>();
@@ -288,10 +460,24 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
-		/// Returns the chart as a PNG image.
+		/// Retrieves the chart as a PNG image and passes it to the <paramref name="callback"/> method.
 		/// </summary>
-		/// <param name="callback">Callback method that receives the image.</param>
-		/// <returns>An <see cref="Image"/> with a representation of the chart.</returns>
+		/// <param name="callback">Callback method that receives the <see cref="T:System.Drawing.Image"/> with a representation of the chart, or null if the image could not be retrieved.</param>
+		/// <remarks>
+		/// The image is rendered by the client canvas and the callback is invoked when the client returns it.
+		/// The chart is drawn over the <see cref="P:Wisej.Web.Control.BackColor"/> of the control.
+		/// Use <see cref="M:Wisej.Web.Ext.ChartJS.ChartJS.GetImageAsync"/> to await the image instead.
+		/// </remarks>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="callback"/> is null.</exception>
+		/// <example>
+		/// <code><![CDATA[
+		/// this.chartJS1.GetImage(image =>
+		/// {
+		///     if (image != null)
+		///         image.Save(Application.MapPath("chart.png"), System.Drawing.Imaging.ImageFormat.Png);
+		/// });
+		/// ]]></code>
+		/// </example>
 		public void GetImage(Action<Image> callback)
 		{
 			if (callback == null)
@@ -350,6 +536,25 @@ namespace Wisej.Web.Ext.ChartJS
 		/// It performs a smooth animated transition from one data set to the new one.
 		/// </summary>
 		/// <param name="duration">Duration of the update animation in milliseconds. The default is 300 milliseconds.</param>
+		/// <remarks>
+		/// Only the <see cref="P:Wisej.Web.Ext.ChartJS.DataSet.Data"/> and <see cref="P:Wisej.Web.Ext.ChartJS.DataSet.Formatted"/> values
+		/// of each data set and the <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.Labels"/> are sent to the client; other data set properties are not updated.
+		/// The data sets must correspond to the ones already displayed: to add or remove data sets, change <see cref="P:Wisej.Web.Ext.ChartJS.ChartJS.DataSets"/>,
+		/// which redraws the chart. If the control is already scheduled for a full redraw, this method does nothing since the redraw includes the new data.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// private void timer1_Tick(object sender, EventArgs e)
+		/// {
+		///     var random = new Random();
+		///     var data = this.chartJS1.DataSets[0].Data;
+		///     for (int i = 0; i < data.Length; i++)
+		///         data[i] = random.Next(100);
+		///
+		///     this.chartJS1.UpdateData(500);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void UpdateData(int duration = 300)
 		{
 			// if the control is already scheduled for a full update, there is no

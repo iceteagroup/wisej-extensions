@@ -31,22 +31,40 @@ namespace Wisej.Web.Ext.ChartJS3.Design
     internal class OptionsEditor : System.Drawing.Design.UITypeEditor
     {
 		/// <summary>
-		/// Return the drop down style for this editor.
+		/// Returns the editing style used by this editor.
 		/// </summary>
-		/// <param name="context"></param>
-		/// <returns></returns>
+		/// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides information about the property being edited.</param>
+		/// <returns>Always <see cref="F:System.Drawing.Design.UITypeEditorEditStyle.Modal"/>: the options are edited in a modal dialog.</returns>
+		/// <example>
+		/// <code><![CDATA[
+		/// var editor = new OptionsEditor();
+		/// var style = editor.GetEditStyle(null); // UITypeEditorEditStyle.Modal
+		/// ]]></code>
+		/// </example>
 		public override System.Drawing.Design.UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
 		{
 			return System.Drawing.Design.UITypeEditorEditStyle.Modal;
 		}
 
 		/// <summary>
-		/// Edit the property value.
+		/// Edits the property value.
 		/// </summary>
-		/// <param name="context"></param>
-		/// <param name="provider"></param>
-		/// <param name="value"></param>
-		/// <returns></returns>
+		/// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides information about the property being edited.</param>
+		/// <param name="provider">An <see cref="T:System.IServiceProvider"/> used to obtain the designer services.</param>
+		/// <param name="value">The <see cref="T:Wisej.Web.Ext.ChartJS3.OptionsBase"/> instance to edit.</param>
+		/// <returns>The edited copy of the options if the user clicks OK; otherwise the original <paramref name="value"/>.</returns>
+		/// <remarks>
+		/// Shows the <see cref="T:Wisej.Web.Ext.ChartJS3.Design.OptionsEditorUI"/> dialog with a property grid bound to a clone of the options,
+		/// using the dialog font of the IDE. Changes are discarded when the user cancels the dialog.
+		/// When <paramref name="provider"/> is null or doesn't supply an <see cref="T:System.Windows.Forms.Design.IWindowsFormsEditorService"/>,
+		/// the value is returned unchanged.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var editor = new OptionsEditor();
+		/// var edited = (Options)editor.EditValue(context, serviceProvider, this.chartJS31.Options);
+		/// ]]></code>
+		/// </example>
 		public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
 		{
 			if (provider != null)

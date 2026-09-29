@@ -50,6 +50,10 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// <summary>
 		/// Returns or sets the time of the data point.
 		/// </summary>
+		/// <remarks>
+		/// It's initialized to the current server time (<see cref="DateTime.Now"/>). The client calculates the difference
+		/// between its clock and the time of the first point it receives, and uses it to align all the following points.
+		/// </remarks>
 		public DateTime TimeStamp
 		{
 			get;
@@ -59,6 +63,24 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// <summary>
 		/// Returns or sets the value to plot on the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> line.
 		/// </summary>
+		/// <remarks>
+		/// The same event data instance is used for all the lines of a single request: always set the value, otherwise
+		/// the line receives the value assigned for the previous line (or 0 for the first line).
+		/// </remarks>
+		/// <example>
+		/// Providing a value for each line:
+		/// <code><![CDATA[
+		/// private void smoothieChart1_DataNeeded(object sender, DataNeededEventArgs e)
+		/// {
+		///     switch (e.LineIndex)
+		///     {
+		///         case 0: e.Value = GetCpuUsage(); break;
+		///         case 1: e.Value = GetMemoryUsage(); break;
+		///         default: e.Value = 0; break;
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		public int Value
 		{
 			get;
@@ -68,6 +90,9 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// <summary>
 		/// Returns the index of the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> line that is requesting the data point.
 		/// </summary>
+		/// <remarks>
+		/// This is the index of the line in the <see cref="SmoothieChart.TimeSeries"/> collection.
+		/// </remarks>
 		public int LineIndex
 		{
 			get;

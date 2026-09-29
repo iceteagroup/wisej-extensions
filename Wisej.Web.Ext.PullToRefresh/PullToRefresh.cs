@@ -28,8 +28,38 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.PullToRefresh
 {
 	/// <summary>
-	/// Adds pull-to-refresh functionality to a given <see cref="ScrollableControl"/> target.
+	/// Adds pull-to-refresh functionality to one or more <see cref="ScrollableControl"/> targets.
 	/// </summary>
+	/// <remarks>
+	/// When the user drags a registered control down while it is scrolled to the top, a loader panel
+	/// (see <see cref="ImageSource"/>, <see cref="BackColor"/> and <see cref="DropDownHeight"/>) slides in above
+	/// the content and, when the pointer is released, the <see cref="Refresh"/> event is fired on the server
+	/// with the refreshed control as the <c>sender</c>.
+	/// Use <see cref="SetPullToRefresh"/> to enable the functionality for each control.
+	/// </remarks>
+	/// <example>
+	/// Enabling pull-to-refresh on a panel and reloading its data:
+	/// <code><![CDATA[
+	/// public partial class Page1 : Page
+	/// {
+	///     private PullToRefresh pullToRefresh1 = new PullToRefresh();
+	///
+	///     public Page1()
+	///     {
+	///         InitializeComponent();
+	///
+	///         this.pullToRefresh1.SetPullToRefresh(this.panel1, true);
+	///         this.pullToRefresh1.Refresh += this.pullToRefresh1_Refresh;
+	///     }
+	///
+	///     private void pullToRefresh1_Refresh(object sender, EventArgs e)
+	///     {
+	///         var panel = (Panel)sender;
+	///         LoadNews(panel);
+	///     }
+	/// }
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[Description("Adds pull to refresh functionality to any ScrollableContainer.")]
 	[ApiCategory("PullToRefresh")]
@@ -42,7 +72,7 @@ namespace Wisej.Web.Ext.PullToRefresh
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.PullToRefresh" /> class.
+		/// Initializes a new instance of the <see cref="PullToRefresh" /> class.
 		/// </summary>
 		public PullToRefresh()
 		{
@@ -50,9 +80,10 @@ namespace Wisej.Web.Ext.PullToRefresh
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.PullToRefresh" /> class together with the specified container.
+		/// Initializes a new instance of the <see cref="PullToRefresh" /> class together with the specified container.
 		/// </summary>
-		/// <param name="container">A <see cref="T:System.ComponentModel.IContainer" /> that represents the container for the component. </param>
+		/// <param name="container">A <see cref="IContainer" /> that represents the container for the component.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="container"/> is null.</exception>
 		public PullToRefresh(IContainer container)
 			: this()
 		{
@@ -91,8 +122,24 @@ namespace Wisej.Web.Ext.PullToRefresh
 		#region Methods
 
 		/// <summary>
-		/// Clears all refresh components.
+		/// Removes the pull-to-refresh functionality from all the registered controls.
 		/// </summary>
+		/// <remarks>
+		/// All the controls previously registered with <see cref="SetPullToRefresh"/> are removed from the extender
+		/// and the client loaders are removed. To enable the functionality again call <see cref="SetPullToRefresh"/>.
+		/// </remarks>
+		/// <example>
+		/// Removing pull-to-refresh from all the registered controls:
+		/// <code><![CDATA[
+		/// private void checkBoxEnableRefresh_CheckedChanged(object sender, EventArgs e)
+		/// {
+		///     if (this.checkBoxEnableRefresh.Checked)
+		///         this.pullToRefresh1.SetPullToRefresh(this.panel1, true);
+		///     else
+		///         this.pullToRefresh1.Clear();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Clear()
 		{
 			lock (this.items)
@@ -133,20 +180,41 @@ namespace Wisej.Web.Ext.PullToRefresh
 		}
 
 		/// <summary>
-		/// Returns whether pull to refresh is enabled for the given scrollable control.
+		/// Returns whether pull-to-refresh is enabled for the given scrollable control.
 		/// </summary>
-		/// <param name="control"></param>
-		/// <returns></returns>
+		/// <param name="control">The <see cref="ScrollableControl"/> to check.</param>
+		/// <returns><c>true</c> if pull-to-refresh is enabled for <paramref name="control"/>; otherwise <c>false</c>.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="control"/> is null.</exception>
+		/// <example>
+		/// Toggling pull-to-refresh on a panel:
+		/// <code><![CDATA[
+		/// bool enabled = this.pullToRefresh1.GetPullToRefresh(this.panel1);
+		/// this.pullToRefresh1.SetPullToRefresh(this.panel1, !enabled);
+		/// ]]></code>
+		/// </example>
 		public bool GetPullToRefresh(ScrollableControl control)
 		{
 			return GetContainer(control).Enabled;
 		}
 
 		/// <summary>
-		/// Sets whether pull to refresh is enabled for the given scrollable control.
+		/// Sets whether pull-to-refresh is enabled for the given scrollable control.
 		/// </summary>
-		/// <param name="control"></param>
-		/// <param name="enabled"></param>
+		/// <param name="control">The <see cref="ScrollableControl"/> (i.e. a <see cref="Panel"/> or <see cref="FlowLayoutPanel"/>) to extend.</param>
+		/// <param name="enabled"><c>true</c> to enable pull-to-refresh on <paramref name="control"/>; <c>false</c> to disable it.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="control"/> is null.</exception>
+		/// <remarks>
+		/// The pull gesture is recognized only when <paramref name="control"/> is scrolled to the top.
+		/// If the control has not been created yet, it is registered on the client as soon as it is created.
+		/// Handle the <see cref="Refresh"/> event to reload the content; the event's <c>sender</c> is the refreshed control.
+		/// </remarks>
+		/// <example>
+		/// Enabling pull-to-refresh on a list panel:
+		/// <code><![CDATA[
+		/// this.pullToRefresh1.SetPullToRefresh(this.flowLayoutPanel1, true);
+		/// this.pullToRefresh1.Refresh += (s, e) => ReloadItems((FlowLayoutPanel)s);
+		/// ]]></code>
+		/// </example>
 		public void SetPullToRefresh(ScrollableControl control, bool enabled)
 		{
 			GetContainer(control).Enabled = enabled;
@@ -186,8 +254,11 @@ namespace Wisej.Web.Ext.PullToRefresh
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets the background color of the refresh component.
+		/// Returns or sets the background color of the loader panel displayed while pulling.
 		/// </summary>
+		/// <remarks>
+		/// The default is <see cref="Color.Transparent"/>.
+		/// </remarks>
 		[Description("Gets or sets the background color of the refresh component.")]
 		public Color BackColor
 		{
@@ -208,8 +279,18 @@ namespace Wisej.Web.Ext.PullToRefresh
 		private Color _backColor = Color.Transparent;
 
 		/// <summary>
-		/// Gets or sets the refresh drop down height in pixels.
+		/// Returns or sets the height in pixels of the loader panel displayed while pulling.
 		/// </summary>
+		/// <remarks>
+		/// This value is also the maximum distance the content can be dragged down. The loader image is
+		/// scaled to <c>DropDownHeight - 20</c> pixels. Changing this value recreates the loaders on the client.
+		/// </remarks>
+		/// <example>
+		/// Using a taller loader panel:
+		/// <code><![CDATA[
+		/// this.pullToRefresh1.DropDownHeight = 80; // loader image is 60px
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(50)]
 		[Description("Gets or sets the refresh drop down height in pixels.")]
 		public int DropDownHeight
@@ -231,8 +312,19 @@ namespace Wisej.Web.Ext.PullToRefresh
 		private int _dropDownHeight = 50;
 
 		/// <summary>
-		/// Gets or sets the loader image to use for the pull to refresh component.
+		/// Returns or sets the loader image displayed in the loader panel while pulling.
 		/// </summary>
+		/// <remarks>
+		/// The value can be a URL, an application-relative path, or a theme image name. The image is
+		/// centered in the loader panel and not animated by the extender; use an animated SVG or GIF
+		/// for a spinning effect. The default is <c>"resource.wx/loader.svg"</c>.
+		/// </remarks>
+		/// <example>
+		/// Using a custom animated image from the application folder:
+		/// <code><![CDATA[
+		/// this.pullToRefresh1.ImageSource = "Images/spinner.gif";
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("resource.wx/loader.svg")]
 		[Description("Gets or sets the loader image to use for the pull to refresh component.")]
 		[TypeConverter("Wisej.Web.ImageSourceConverter, Wisej.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17bef35e11b84171")]

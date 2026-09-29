@@ -27,7 +27,15 @@ namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
 	/// Represents a nonselectable <see cref="ToolStripItem" /> that renders text and images and can display hyperlinks.
-	///</summary>
+	/// </summary>
+	/// <example>
+	/// Adding a label that works as a link:
+	/// <code><![CDATA[
+	/// var help = new ToolStripLabel("Online help", null, true);
+	/// help.Click += (s, e) => Application.Navigate("https://docs.wisej.com", "_blank");
+	/// this.toolStrip1.Items.Add(help);
+	/// ]]></code>
+	/// </example>
 	public class ToolStripLabel : ToolStripItem
 	{
 
@@ -75,10 +83,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ToolStripLabel" /> class, specifying the text and image to display and whether the <see cref="ToolStripLabel" /> acts as a link.
-		///</summary>
+		/// </summary>
 		/// <param name="text">The text to display on the <see cref="ToolStripLabel" />.</param>
 		/// <param name="image">The <see cref="System.Drawing.Image" /> to display on the <see cref="ToolStripLabel" />.</param>
-		/// <param name="isLink">true if the <see cref="ToolStripLabel" /> acts as a link; otherwise, false. </param>
+		/// <param name="isLink">true if the <see cref="ToolStripLabel" /> acts as a link; otherwise, false. See <see cref="ToolStripLabel.IsLink" />.</param>
 		public ToolStripLabel(string text, Image image, bool isLink)
 		{
 			this.Text = text;
@@ -92,8 +100,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets a value indicating the selectable state of a <see cref="ToolStripLabel" />.
-		///</summary>
+		/// Returns a value indicating the selectable state of a <see cref="ToolStripLabel" />.
+		/// </summary>
 		/// <returns>false in all cases.</returns>
 		[Browsable(false)]
 		public override bool CanSelect
@@ -107,9 +115,25 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _canSelect;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripLabel" /> is a hyperlink. 
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripLabel" /> is a hyperlink.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripLabel" /> is a hyperlink; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// When true, the text is rendered using <see cref="ToolStripLabel.LinkColor" />, <see cref="ToolStripLabel.ActiveLinkColor" /> and
+		/// <see cref="ToolStripLabel.VisitedLinkColor" /> according to <see cref="ToolStripLabel.LinkBehavior" />.
+		/// The label doesn't navigate by itself: handle the <see cref="ToolStripItem.Click" /> event to open the target.
+		/// </remarks>
+		/// <example>
+		/// Opening a web page when the link is clicked and marking it as visited:
+		/// <code><![CDATA[
+		/// this.toolStripLabelSupport.IsLink = true;
+		/// this.toolStripLabelSupport.Click += (s, e) =>
+		/// {
+		///     Application.Navigate("https://wisej.com/support", "_blank");
+		///     this.toolStripLabelSupport.LinkVisited = true;
+		/// };
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripLabelIsLinkDescr")]
 		[SRCategory("CatBehavior")]
 		[DefaultValue(false)]
@@ -131,9 +155,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _isLink;
 
 		/// <summary>
-		/// Gets or sets the color used to display an active link.
-		///</summary>
-		/// <returns>A <see cref="System.Drawing.Color" /> that represents the color to display an active link. The default color is specified by the system. Typically, this color is Color.Red.</returns>
+		/// Returns or sets the color used to display an active link.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Color" /> that represents the color used to display an active link.</returns>
+		/// <remarks>
+		/// Used only when <see cref="ToolStripLabel.IsLink" /> is true.
+		/// </remarks>
 		[SRDescription("ToolStripLabelActiveLinkColorDescr")]
 		[SRCategory("CatAppearance")]
 		public Color ActiveLinkColor
@@ -154,9 +181,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Color _activeLinkColor;
 
 		/// <summary>
-		/// Gets or sets a value that represents the behavior of a link.
-		///</summary>
-		/// <returns>One of the <see cref="LinkBehavior" /> values. The default is LinkBehavior.SystemDefault.</returns>
+		/// Returns or sets a value that represents the behavior of a link.
+		/// </summary>
+		/// <returns>One of the <see cref="LinkBehavior" /> values. The default is <see cref="LinkBehavior.SystemDefault" />.</returns>
+		/// <remarks>
+		/// Determines when the link text is underlined. Used only when <see cref="ToolStripLabel.IsLink" /> is true.
+		/// </remarks>
 		[DefaultValue(LinkBehavior.SystemDefault)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("ToolStripLabelLinkBehaviorDescr")]
@@ -178,9 +208,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private LinkBehavior _linkBehavior;
 
 		/// <summary>
-		/// Gets or sets the color used when displaying a normal link.
-		///</summary>
-		/// <returns>A <see cref="System.Drawing.Color" /> that represents the color used to displaying a normal link. The default color is specified by the system. Typically, this color is Color.Blue.</returns>
+		/// Returns or sets the color used when displaying a normal link.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Color" /> that represents the color used to display a normal link.</returns>
+		/// <remarks>
+		/// Used only when <see cref="ToolStripLabel.IsLink" /> is true and <see cref="ToolStripLabel.LinkVisited" /> is false.
+		/// </remarks>
 		[SRDescription("ToolStripLabelLinkColorDescr")]
 		[SRCategory("CatAppearance")]
 		public Color LinkColor
@@ -201,9 +234,13 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Color _linkColor;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether a link should be displayed as though it were visited.
-		///</summary>
+		/// Returns or sets a value indicating whether a link should be displayed as though it were visited.
+		/// </summary>
 		/// <returns>true if links should display as though they were visited; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// The value is not changed automatically when the link is clicked; set it in the <see cref="ToolStripItem.Click" /> handler.
+		/// When true, the link is rendered using <see cref="ToolStripLabel.VisitedLinkColor" />.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[DefaultValue(false)]
 		[SRDescription("ToolStripLabelLinkVisitedDescr")]
@@ -225,9 +262,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _linkVisited;
 
 		/// <summary>
-		/// Gets or sets the color used when displaying a link that that has been previously visited.
-		///</summary>
-		/// <returns>A <see cref="System.Drawing.Color" /> that represents the color used to display links that have been visited. The default color is specified by the system. Typically, this color is Color.Purple.</returns>
+		/// Returns or sets the color used when displaying a link that has been previously visited.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Color" /> that represents the color used to display links that have been visited.</returns>
+		/// <remarks>
+		/// Used only when <see cref="ToolStripLabel.IsLink" /> and <see cref="ToolStripLabel.LinkVisited" /> are both true.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripLabelVisitedLinkColorDescr")]
 		public Color VisitedLinkColor

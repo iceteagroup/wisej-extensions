@@ -29,6 +29,10 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <summary>
 	/// Represents a user defined control in a <see cref="RibbonBarGroup"/>.
 	/// </summary>
+	/// <remarks>
+	/// The hosted <see cref="Control"/> fills the item and is resized together with it. The <see cref="RibbonBarItem.Text"/>
+	/// and image properties of the item are not displayed.
+	/// </remarks>
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
@@ -41,6 +45,32 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets the <see cref="Control"/> to be hosted inside the
 		/// <see cref="RibbonBarItemControl"/>.
 		/// </summary>
+		/// <returns>The hosted <see cref="Wisej.Web.Control"/>, or null. The default is null.</returns>
+		/// <exception cref="ArgumentException">The value is the <see cref="RibbonBar"/> that contains this item.</exception>
+		/// <remarks>
+		/// <para>
+		/// The control is moved into the <see cref="RibbonBar"/> that contains this item, its <see cref="Wisej.Web.Control.AutoSize"/>
+		/// property is set to false and its size follows the size of the item on the client. Assign the control after the item has
+		/// been added to a <see cref="RibbonBarGroup"/> that is already part of a <see cref="RibbonBar"/>, otherwise the control
+		/// has no parent.
+		/// </para><para>
+		/// When a different control is assigned, the previous control is moved to the parent of the <see cref="RibbonBar"/>.
+		/// When the hosted control is disposed, this property is reset to null; when the item is disposed, the hosted control is disposed as well.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Hosting a <see cref="T:Wisej.Web.DateTimePicker"/> in a ribbon group:
+		/// <code><![CDATA[
+		/// var item = new RibbonBarItemControl { Orientation = Orientation.Horizontal };
+		/// this.ribbonBarGroupFilter.Items.Add(item);
+		///
+		/// item.Control = new DateTimePicker
+		/// {
+		///     Width = 140,
+		///     Format = DateTimePickerFormat.Short
+		/// };
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the Control to be hosted inside the RibbonBarItemControl.")]
@@ -115,6 +145,12 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// <summary>
 		/// Returns or sets the layout orientation of the <see cref="RibbonBarItemControl"/>.
 		/// </summary>
+		/// <returns>One of the <see cref="Orientation"/> values. The default is <see cref="Orientation.Vertical"/>.</returns>
+		/// <remarks>
+		/// <see cref="Orientation.Vertical"/> makes the item fill the height of the group in a column of its own.
+		/// <see cref="Orientation.Horizontal"/> uses the height of the hosted control and stacks the item with the other small
+		/// items in the same column until an item has <see cref="ColumnBreak"/> set to true.
+		/// </remarks>
 		[DefaultValue(Orientation.Vertical)]
 		[RefreshProperties(RefreshProperties.Repaint)]
 		[SRCategory("CatAppearance")]
@@ -137,6 +173,11 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// Returns or sets a value indicating whether a new column starts after
 		/// this <see cref="RibbonBarItem"/>.
 		/// </summary>
+		/// <returns>true if the next item in the <see cref="RibbonBarGroup"/> is placed in a new column; otherwise, false.</returns>
+		/// <remarks>
+		/// Always returns true when <see cref="Orientation"/> is <see cref="Orientation.Vertical"/>. The value set is used only
+		/// when <see cref="Orientation"/> is <see cref="Orientation.Horizontal"/>.
+		/// </remarks>
 		public override bool ColumnBreak
 		{
 			get { return base.ColumnBreak || this.Orientation == Orientation.Vertical; }

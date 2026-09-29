@@ -27,30 +27,33 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.TaskDialog
 {
 	/// <summary>
-	/// 
-	///              Represents the footnote area of a task dialog.
-	///            
-	///</summary>
+	/// Represents the footnote area of a task dialog.
+	/// </summary>
+	/// <example>
+	/// Adding a footnote with an icon:
+	/// <code><![CDATA[
+	/// page.Footnote = new TaskDialogFootnote("Changes take effect after the next login.")
+	/// {
+	///     Icon = new TaskDialogIcon(Properties.Resources.InfoIcon)
+	/// };
+	/// ]]></code>
+	/// </example>
 	public class TaskDialogFootnote : TaskDialogControl
 	{
 
 		#region Constructors
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogFootnote" /> class.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogFootnote" /> class.
+		/// </summary>
 		public TaskDialogFootnote()
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogFootnote" /> class
-		///              using the given <paramref name="text" />.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogFootnote" /> class
+		/// using the given <paramref name="text" />.
+		/// </summary>
 		/// <param name="text">The text to be displayed in the dialog's footnote area.</param>
 		public TaskDialogFootnote(string text)
 		{
@@ -61,17 +64,15 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Properties
 		/// <summary>
-		/// 
-		///              Gets or sets the text to be displayed in the dialog's footnote area.
-		///            
-		///</summary>
+		/// Returns or sets the text to be displayed in the dialog's footnote area.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a footnote instance that is currently bound to a task dialog, but it's not visible as its initial
-		///              <see cref="P:System.Windows.Forms.TaskDialogFootnote.Text" /> property value was <see langword="null" /> or an empty string.
-		///              - or -
-		///              The property is set on a footnote instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a footnote instance that is currently bound to a task dialog, but it's not visible as its initial
+		/// <see cref="Text" /> property value was <see langword="null" /> or an empty string.
+		/// - or -
+		/// The property is set on a footnote instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public string Text
 		{
 			get
@@ -90,20 +91,18 @@ namespace Wisej.Web.Ext.TaskDialog
 		private string _text;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the footnote icon.
-		///            
-		///</summary>
+		/// Returns or sets the footnote icon.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a footnote instance that is currently bound to a task dialog, but it's not visible as its initial
-		///              <see cref="P:System.Windows.Forms.TaskDialogFootnote.Text" /> property value was <see langword="null" /> or an empty string.
-		///              - or -
-		///              The property is set and the task dialog has started navigating to a new page containing this footnote instance, but the
-		///              <see cref="E:System.Windows.Forms.TaskDialogPage.Created" /> event has not been raised yet.
-		///              - or -
-		///              The property is set on a footnote instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a footnote instance that is currently bound to a task dialog, but it's not visible as its initial
+		/// <see cref="Text" /> property value was <see langword="null" /> or an empty string.
+		/// - or -
+		/// The property is set and the task dialog has started navigating to a new page containing this footnote instance, but the
+		/// <see cref="TaskDialogPage.Created" /> event has not been raised yet.
+		/// - or -
+		/// The property is set on a footnote instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public TaskDialogIcon Icon
 		{
 			get
@@ -124,11 +123,18 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Methods
 		/// <summary>
-		/// 
-		///              Returns a string that represents the current <see cref="TaskDialogFootnote" /> control.
-		///            
-		///</summary>
+		/// Returns a string that represents the current <see cref="TaskDialogFootnote" /> control.
+		/// </summary>
 		/// <returns>A string that contains the control text.</returns>
+		/// <remarks>
+		/// This method is not implemented yet in this version and returns an empty string.
+		/// </remarks>
+		/// <example>
+		/// Getting the text of the footnote:
+		/// <code><![CDATA[
+		/// var note = page.Footnote.ToString();
+		/// ]]></code>
+		/// </example>
 		public override String ToString()
 		{
 			// TODO: Implement

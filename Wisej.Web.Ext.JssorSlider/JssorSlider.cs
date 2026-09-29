@@ -23,12 +23,19 @@ using System.Runtime.CompilerServices;
 
 namespace Wisej.Web.Ext.JssorSlider
 {
+	/// <summary>
+	/// Represents an image slider control based on the Jssor Slider library (<see href="https://www.jssor.com"/>).
+	/// </summary>
+	/// <remarks>
+	/// The navigation elements of the slider are configured using <see cref="ArrowOptions"/>, <see cref="BulletOptions"/>
+	/// and <see cref="ThumbnailOptions"/>.
+	/// </remarks>
 	public class JssorSlider : Widget
 	{
 		#region Properties
 
 		/// <summary>
-		/// Overridden to return our list of script resources.
+		/// Returns the list of packages (JavaScript libraries) loaded on the client before the slider is created.
 		/// </summary>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

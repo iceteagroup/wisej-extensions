@@ -24,10 +24,16 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.Mermaid
 {
 	/// <summary>
-	/// Mermaid initialization options passed to <c>mermaid.initialize(...)</c>.
+	/// Represents the Mermaid initialization options passed to <c>mermaid.initialize(...)</c>.
 	/// </summary>
 	/// <remarks>
-	/// Set properties on this object to control Mermaid initialization.
+	/// <para>
+	/// Instances of this class are created internally and are bound to a <see cref="Mermaid"/> widget: changing a
+	/// property updates the owner widget. The <see cref="Mermaid"/> widget exposes the same settings directly
+	/// through <see cref="Mermaid.Look"/>, <see cref="Mermaid.Theme"/>, <see cref="Mermaid.SecurityLevel"/>,
+	/// <see cref="Mermaid.LogLevel"/>, <see cref="Mermaid.DeterministicIds"/>, <see cref="Mermaid.FontFamily"/>,
+	/// <see cref="Mermaid.ThemeVariables"/> and <see cref="Mermaid.Options"/>.
+	/// </para>
 	/// </remarks>
 	[WisejSerializerOptions(WisejSerializerOptions.CamelCase)]
 	public class MermaidConfiguration
@@ -40,16 +46,11 @@ namespace Wisej.Web.Ext.Mermaid
 		}
 
 		/// <summary>
-		/// Diagram look (e.g. <c>classic</c>, <c>neo</c>, <c>handDrawn</c>).
+		/// Returns or sets the diagram look (e.g. <c>classic</c>, <c>neo</c>, <c>handDrawn</c>).
 		/// </summary>
 		/// <remarks>
 		/// This maps to Mermaid's <c>look</c> initialization option.
 		/// </remarks>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.Look = "handDrawn";
-		/// ]]></code>
-		/// </example>
 		[DefaultValue("classic")]
 		public string Look
 		{
@@ -66,13 +67,11 @@ namespace Wisej.Web.Ext.Mermaid
 		string _look = "classic";
 
 		/// <summary>
-		/// Theme name (e.g. <c>default</c>, <c>dark</c>, <c>forest</c>, <c>neutral</c>).
+		/// Returns or sets the theme name (e.g. <c>default</c>, <c>dark</c>, <c>forest</c>, <c>neutral</c>, <c>base</c>).
 		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.Theme = "neutral";
-		/// ]]></code>
-		/// </example>
+		/// <remarks>
+		/// This maps to Mermaid's <c>theme</c> initialization option. The default is <c>default</c>.
+		/// </remarks>
 		[DefaultValue("default")]
 		public string Theme
 		{
@@ -89,21 +88,13 @@ namespace Wisej.Web.Ext.Mermaid
 		string _theme = "default";
 
 		/// <summary>
-		/// Theme variables (maps to Mermaid's <c>themeVariables</c>).
+		/// Returns the theme variables (maps to Mermaid's <c>themeVariables</c>).
 		/// </summary>
 		/// <remarks>
-		/// Common keys include <c>fontFamily</c> and <c>fontSize</c>.
+		/// Common keys include <c>fontFamily</c>, <c>fontSize</c>, <c>primaryColor</c> and <c>lineColor</c>. The property is
+		/// read-only; add or change entries on the returned instance. Changing the entries doesn't update the owner widget
+		/// automatically. Mermaid applies the variables only with the <c>base</c> theme.
 		/// </remarks>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.ThemeVariables = new Dictionary<string, object>
-		/// {
-		///     ["fontFamily"] = "\"Segoe UI\", sans-serif",
-		///     ["fontSize"] = "14px",
-		///     ["lineColor"] = "#999999"
-		/// };
-		/// ]]></code>
-		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Dictionary<string, object> ThemeVariables
@@ -113,13 +104,11 @@ namespace Wisej.Web.Ext.Mermaid
 		Dictionary<string, object> _themeVariables = new Dictionary<string, object>();
 
 		/// <summary>
-		/// Security level (maps to Mermaid's <c>securityLevel</c>).
+		/// Returns or sets the security level (maps to Mermaid's <c>securityLevel</c>).
 		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.SecurityLevel = Wisej.Web.Ext.Mermaid.MermaidSecurityLevel.Strict;
-		/// ]]></code>
-		/// </example>
+		/// <remarks>
+		/// The default is <see cref="MermaidSecurityLevel.Strict"/>.
+		/// </remarks>
 		[DefaultValue(MermaidSecurityLevel.Strict)]
 		public MermaidSecurityLevel SecurityLevel
 		{
@@ -136,13 +125,11 @@ namespace Wisej.Web.Ext.Mermaid
 		MermaidSecurityLevel _securityLevel = MermaidSecurityLevel.Strict;
 
 		/// <summary>
-		/// Log level (maps to Mermaid's <c>logLevel</c>).
+		/// Returns or sets the level of the messages logged to the browser console (maps to Mermaid's <c>logLevel</c>).
 		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.LogLevel = Wisej.Web.Ext.Mermaid.MermaidLogLevel.Info;
-		/// ]]></code>
-		/// </example>
+		/// <remarks>
+		/// The default is <see cref="MermaidLogLevel.Trace"/>, the most verbose level.
+		/// </remarks>
 		[DefaultValue(MermaidLogLevel.Trace)]
 		public MermaidLogLevel LogLevel
 		{
@@ -159,13 +146,11 @@ namespace Wisej.Web.Ext.Mermaid
 		MermaidLogLevel _logLevel = MermaidLogLevel.Trace;
 
 		/// <summary>
-		/// When set, Mermaid generates deterministic IDs for rendered elements.
+		/// Returns or sets whether Mermaid generates deterministic IDs for the rendered elements.
 		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.DeterministicIds = true;
-		/// ]]></code>
-		/// </example>
+		/// <remarks>
+		/// Maps to Mermaid's <c>deterministicIds</c> option. The default is true.
+		/// </remarks>
 		[DefaultValue(true)]
 		public bool DeterministicIds
 		{
@@ -182,14 +167,11 @@ namespace Wisej.Web.Ext.Mermaid
 		bool _deterministicIds = true;
 
 		/// <summary>
-		/// Maximum text size allowed in diagrams (maps to Mermaid's <c>maxTextSize</c>).
+		/// Returns or sets the maximum number of characters allowed in the diagram source (maps to Mermaid's <c>maxTextSize</c>).
 		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// // Increase the maximum allowed size when working with very large diagrams.
-		/// mermaid.Config.MaxTextSize = 250_000;
-		/// ]]></code>
-		/// </example>
+		/// <remarks>
+		/// The default is 32000. Diagrams with a longer source are not rendered by Mermaid.
+		/// </remarks>
 		[DefaultValue(32000)]
 		public int MaxTextSize
 		{
@@ -206,16 +188,12 @@ namespace Wisej.Web.Ext.Mermaid
 		int _maxTextSize = 32000;
 
 		/// <summary>
-		/// Font family applied to the diagram text.
+		/// Returns or sets the font family applied to the diagram text.
 		/// </summary>
 		/// <remarks>
-		/// This maps to Mermaid's <c>fontFamily</c> option. For size, use <see cref="ThemeVariables"/>.
+		/// This maps to Mermaid's <c>fontFamily</c> option and accepts a CSS font-family list. When not set, it returns
+		/// the name of the owner widget's <see cref="Control.Font"/>. For the size, use the <c>fontSize</c> key in <see cref="ThemeVariables"/>.
 		/// </remarks>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.FontFamily = "\"Inter\", \"Segoe UI\", sans-serif";
-		/// ]]></code>
-		/// </example>
 		public string FontFamily
 		{
 			get => _fontFamily ?? _owner.Font.Name;
@@ -237,13 +215,8 @@ namespace Wisej.Web.Ext.Mermaid
 			=> FontFamily = null;
 
 		/// <summary>
-		/// Flowchart-specific options.
+		/// Returns the flowchart-specific options (maps to Mermaid's <c>flowchart</c> option).
 		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.Flowchart.HtmlLabels = true;
-		/// ]]></code>
-		/// </example>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public MermaidFlowchartConfiguration Flowchart
 		{
@@ -252,13 +225,8 @@ namespace Wisej.Web.Ext.Mermaid
 		MermaidFlowchartConfiguration _flowchart;
 
 		/// <summary>
-		/// Sequence diagram specific options.
+		/// Returns the sequence diagram specific options (maps to Mermaid's <c>sequence</c> option).
 		/// </summary>
-		/// <example>
-		/// <code><![CDATA[
-		/// mermaid.Config.Sequence.ShowSequenceNumbers = true;
-		/// ]]></code>
-		/// </example>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public MermaidSequenceConfiguration Sequence
 		{

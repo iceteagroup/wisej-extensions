@@ -26,12 +26,36 @@ namespace Wisej.Web.Ext.ChartJS
 	/// <summary>
 	/// Represents the options for the chart title.
 	/// </summary>
+	/// <remarks>
+	/// Use the <see cref="P:Wisej.Web.Ext.ChartJS.Options.Title"/> property to access the title options of a <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control.
+	/// When not set, the text, font and color of the title are taken from the <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// OptionsTitle title = this.chartJS1.Options.Title;
+	/// title.Display = true;
+	/// title.Text = "Sales 2024";
+	/// title.FontColor = Color.DarkBlue;
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("ChartJS")]
 	public class OptionsTitle : OptionsBase
 	{
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
+		/// <remarks>
+		/// Creates a standalone set of title options that can be assigned to <see cref="P:Wisej.Web.Ext.ChartJS.Options.Title"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new OptionsTitle();
+		/// title.Text = "Inventory";
+		/// title.Position = HeaderPosition.Bottom;
+		///
+		/// this.chartJS1.Options.Title = title;
+		/// ]]></code>
+		/// </example>
 		public OptionsTitle()
 		{
 		}
@@ -39,15 +63,35 @@ namespace Wisej.Web.Ext.ChartJS
 		/// <summary>
 		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.OptionsTitle"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.OptionsBase"/> set of options that owns this set of options.</param>
+		/// <remarks>
+		/// The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control that displays the title is resolved through <paramref name="owner"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new OptionsTitle(this.chartJS1.Options);
+		/// title.Text = "Expenses";
+		/// this.chartJS1.Options.Title = title;
+		/// ]]></code>
+		/// </example>
 		public OptionsTitle(OptionsBase owner)
 		{
 			this.Owner = owner;
 		}
 
 		/// <summary>
-		/// Position of the title.
+		/// Returns or sets the position of the title.
 		/// </summary>
+		/// <value>One of the <see cref="T:Wisej.Web.HeaderPosition"/> values. The default is <see cref="F:Wisej.Web.HeaderPosition.Top"/>.</value>
+		/// <remarks>
+		/// Serialized as the Chart.js <c>title.position</c> option.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// // display the title below the chart.
+		/// this.chartJS1.Options.Title.Position = HeaderPosition.Bottom;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(HeaderPosition.Top)]
 		[Description("Position of the title.")]
 		public HeaderPosition Position
@@ -65,8 +109,16 @@ namespace Wisej.Web.Ext.ChartJS
 		private HeaderPosition _position = HeaderPosition.Top;
 
 		/// <summary>
-		/// Number of pixels to add above and below the title text.
+		/// Returns or sets the number of pixels to add above and below the title text.
 		/// </summary>
+		/// <value>The padding in pixels. The default is 10.</value>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = this.chartJS1.Options.Title;
+		/// title.Text = "Weekly Downloads";
+		/// title.Padding = 20;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(10)]
 		[Description("Number of pixels to add above and below the title text.")]
 		public int Padding
@@ -84,8 +136,18 @@ namespace Wisej.Web.Ext.ChartJS
 		private int _padding = 10;
 
 		/// <summary>
-		/// Font of the title.
+		/// Returns or sets the font of the title.
 		/// </summary>
+		/// <value>The <see cref="T:System.Drawing.Font"/> used to render the title. The default is null.</value>
+		/// <remarks>
+		/// When the value is null, the property returns the <see cref="P:Wisej.Web.Control.Font"/> of the owner <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control.
+		/// The font is converted on the client into the Chart.js <c>fontSize</c>, <c>fontFamily</c> and <c>fontStyle</c> options.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// this.chartJS1.Options.Title.Font = new Font("Segoe UI", 16, FontStyle.Bold);
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[Description("Font of the title.")]
 		public Font Font
@@ -110,8 +172,15 @@ namespace Wisej.Web.Ext.ChartJS
 		private Font _font;
 
 		/// <summary>
-		/// Show the title block.
+		/// Returns or sets whether the title block is shown.
 		/// </summary>
+		/// <value>true to show the title; otherwise, false. The default is true.</value>
+		/// <example>
+		/// <code><![CDATA[
+		/// // hide the chart title.
+		/// this.chartJS1.Options.Title.Display = false;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(true)]
 		[Description("Show the title block.")]
 		public bool Display
@@ -129,8 +198,21 @@ namespace Wisej.Web.Ext.ChartJS
 		private bool _display = true;
 
 		/// <summary>
-		/// Title text.
+		/// Returns or sets the title text.
 		/// </summary>
+		/// <value>The text displayed in the title.</value>
+		/// <remarks>
+		/// When the text is null or empty, the property returns the <see cref="P:Wisej.Web.Control.Text"/> of the owner <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control.
+		/// Assigning null sets the text to an empty string.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// this.chartJS1.Text = "Default Title";
+		///
+		/// // overrides the text of the control.
+		/// this.chartJS1.Options.Title.Text = "Revenue by Quarter";
+		/// ]]></code>
+		/// </example>
 		[Description("Title text.")]
 		public string Text
 		{
@@ -168,8 +250,20 @@ namespace Wisej.Web.Ext.ChartJS
 		}
 
 		/// <summary>
-		/// Title color.
+		/// Returns or sets the title color.
 		/// </summary>
+		/// <value>The <see cref="T:System.Drawing.Color"/> of the title text. The default is <see cref="F:System.Drawing.Color.Empty"/>.</value>
+		/// <remarks>
+		/// When the value is <see cref="F:System.Drawing.Color.Empty"/>, the property returns the <see cref="P:Wisej.Web.Control.ForeColor"/>
+		/// of the owner <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> control. Themed colors are resolved on the client.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = this.chartJS1.Options.Title;
+		/// title.Text = "Alerts";
+		/// title.FontColor = Color.Red;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(typeof(Color),"")]
 		[Description("Title color.")]
 		public Color FontColor

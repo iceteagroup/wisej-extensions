@@ -27,19 +27,37 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.TaskDialog
 {
 	/// <summary>
-	/// 
-	///              Represents a page of content of a task dialog.
-	///            
-	///</summary>
+	/// Represents a page of content of a task dialog.
+	/// </summary>
+	/// <remarks>
+	/// A page is displayed by passing it to <see cref="TaskDialog.ShowDialog(TaskDialogPage, TaskDialogStartupLocation)"/>
+	/// and can be replaced while the dialog is shown by calling <see cref="Navigate"/>. Most properties cannot be
+	/// changed while the page is bound to a task dialog.
+	/// </remarks>
+	/// <example>
+	/// Creating a page with an icon, radio buttons, an expander and a footnote:
+	/// <code><![CDATA[
+	/// var page = new TaskDialogPage
+	/// {
+	///     Caption = "Backup",
+	///     Heading = "Choose the backup type",
+	///     Text = "The backup will run in the background.",
+	///     Icon = new TaskDialogIcon(Properties.Resources.BackupIcon),
+	///     Expander = new TaskDialogExpander("Incremental backups only copy the files changed since the last backup."),
+	///     Footnote = new TaskDialogFootnote("The last backup was completed yesterday.")
+	/// };
+	/// page.RadioButtons.Add("Full backup").Checked = true;
+	/// page.RadioButtons.Add("Incremental backup");
+	/// page.Buttons.Add("Start", true, true);
+	/// ]]></code>
+	/// </example>
 	public class TaskDialogPage : Wisej.Web.Panel
 	{
 
 		#region Constructors
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogPage" /> class.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogPage" /> class.
+		/// </summary>
 		public TaskDialogPage()
 		{
 			// TODO: Implement
@@ -76,14 +94,20 @@ namespace Wisej.Web.Ext.TaskDialog
 		#region Properties
 
 		/// <summary>
-		/// 
-		///              Gets or sets the collection of push buttons
-		///              to be shown in this page.
-		///            
-		///</summary>
+		/// Returns or sets the collection of push buttons
+		/// to be shown in this page.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this page instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this page instance is currently bound to a task dialog.
+		/// </exception>
+		/// <example>
+		/// Adding custom buttons and selecting the default button:
+		/// <code><![CDATA[
+		/// var retry = page.Buttons.Add("Retry", true, true);
+		/// page.Buttons.Add("Cancel", true, true);
+		/// page.DefaultButton = retry;
+		/// ]]></code>
+		/// </example>
 		public TaskDialogButtonCollection Buttons
 		{
 			get
@@ -102,10 +126,11 @@ namespace Wisej.Web.Ext.TaskDialog
 		private TaskDialogButtonCollection _buttons;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the default button in the task dialog.
-		///            
-		///</summary>
+		/// Returns or sets the default button in the task dialog.
+		/// </summary>
+		/// <remarks>
+		/// The button should be one of the buttons in the <see cref="Buttons"/> collection.
+		/// </remarks>
 		public TaskDialogButton DefaultButton
 		{
 			get
@@ -124,14 +149,23 @@ namespace Wisej.Web.Ext.TaskDialog
 		private TaskDialogButton _defaultButton;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the collection of radio buttons
-		///              to be shown in this page.
-		///            
-		///</summary>
+		/// Returns or sets the collection of radio buttons
+		/// to be shown in this page.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this page instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this page instance is currently bound to a task dialog.
+		/// </exception>
+		/// <example>
+		/// Adding radio buttons and reading the selection after the dialog is closed:
+		/// <code><![CDATA[
+		/// var pdf = page.RadioButtons.Add("PDF");
+		/// var excel = page.RadioButtons.Add("Excel");
+		/// pdf.Checked = true;
+		///
+		/// new TaskDialog().ShowDialog(page, TaskDialogStartupLocation.CenterScreen);
+		/// var format = excel.Checked ? "xlsx" : "pdf";
+		/// ]]></code>
+		/// </example>
 		public TaskDialogRadioButtonCollection RadioButtons
 		{
 			get
@@ -150,13 +184,11 @@ namespace Wisej.Web.Ext.TaskDialog
 		private TaskDialogRadioButtonCollection _radioButtons;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the verification checkbox to be shown in this page.
-		///            
-		///</summary>
+		/// Returns or sets the verification checkbox to be shown in this page.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this page instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this page instance is currently bound to a task dialog.
+		/// </exception>
 		public TaskDialogVerificationCheckBox Verification
 		{
 			get
@@ -175,13 +207,11 @@ namespace Wisej.Web.Ext.TaskDialog
 		private TaskDialogVerificationCheckBox _verification;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the dialog expander to be shown in this page.
-		///            
-		///</summary>
+		/// Returns or sets the dialog expander to be shown in this page.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this page instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this page instance is currently bound to a task dialog.
+		/// </exception>
 		public TaskDialogExpander Expander
 		{
 			get
@@ -200,13 +230,11 @@ namespace Wisej.Web.Ext.TaskDialog
 		private TaskDialogExpander _expander;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the footnote to be shown in this page.
-		///            
-		///</summary>
+		/// Returns or sets the footnote to be shown in this page.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this page instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this page instance is currently bound to a task dialog.
+		/// </exception>
 		public TaskDialogFootnote Footnote
 		{
 			get
@@ -225,13 +253,11 @@ namespace Wisej.Web.Ext.TaskDialog
 		private TaskDialogFootnote _footnote;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the progress bar to be shown in this page.
-		///            
-		///</summary>
+		/// Returns or sets the progress bar to be shown in this page.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this page instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this page instance is currently bound to a task dialog.
+		/// </exception>
 		public TaskDialogProgressBar ProgressBar
 		{
 			get
@@ -250,17 +276,15 @@ namespace Wisej.Web.Ext.TaskDialog
 		private TaskDialogProgressBar _progressBar;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the text to display in the title bar of the task dialog.
-		///            
-		///</summary>
+		/// Returns or sets the text to display in the title bar of the task dialog.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and the task dialog has started navigating to this page instance,
-		///              but the <see cref="E:System.Windows.Forms.TaskDialogPage.Created" /> event has not been raised yet.
-		///              - or -
-		///              The property is set on a page instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set and the task dialog has started navigating to this page instance,
+		/// but the <see cref="Created" /> event has not been raised yet.
+		/// - or -
+		/// The property is set on a page instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public string Caption
 		{
 			get
@@ -279,14 +303,12 @@ namespace Wisej.Web.Ext.TaskDialog
 		private string _caption;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the heading (main instruction).
-		///            
-		///</summary>
+		/// Returns or sets the heading (main instruction).
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a page instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a page instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public string Heading
 		{
 			get
@@ -305,14 +327,12 @@ namespace Wisej.Web.Ext.TaskDialog
 		private string _heading;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the dialog's primary text content.
-		///            
-		///</summary>
+		/// Returns or sets the dialog's primary text content.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a page instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a page instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public string Text
 		{
 			get
@@ -331,17 +351,15 @@ namespace Wisej.Web.Ext.TaskDialog
 		private string _text;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the main icon.
-		///            
-		///</summary>
+		/// Returns or sets the main icon.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and the task dialog has started navigating to this page instance,
-		///              but the <see cref="E:System.Windows.Forms.TaskDialogPage.Created" /> event has not been raised yet.
-		///              - or -
-		///              The property is set on a page instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set and the task dialog has started navigating to this page instance,
+		/// but the <see cref="Created" /> event has not been raised yet.
+		/// - or -
+		/// The property is set on a page instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public TaskDialogIcon Icon
 		{
 			get
@@ -360,16 +378,14 @@ namespace Wisej.Web.Ext.TaskDialog
 		private TaskDialogIcon _icon;
 
 		/// <summary>
-		/// 
-		///              Gets or sets a value that indicates whether the task dialog can be closed with
-		///              <see cref="P:System.Windows.Forms.TaskDialogButton.Cancel" /> as resulting button by pressing ESC or Alt+F4
-		///              or by clicking the title bar's close button, even if a <see cref="P:System.Windows.Forms.TaskDialogButton.Cancel" />
-		///              button isn't added to the <see cref="P:System.Windows.Forms.TaskDialogPage.Buttons" /> collection.
-		///            
-		///</summary>
+		/// Returns or sets a value that indicates whether the task dialog can be closed with
+		/// <see cref="TaskDialogButton.Cancel" /> as resulting button by pressing ESC or Alt+F4
+		/// or by clicking the title bar's close button, even if a <see cref="TaskDialogButton.Cancel" />
+		/// button isn't added to the <see cref="Buttons" /> collection.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this page instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this page instance is currently bound to a task dialog.
+		/// </exception>
 		public bool AllowCancel
 		{
 			get
@@ -388,14 +404,12 @@ namespace Wisej.Web.Ext.TaskDialog
 		private bool _allowCancel;
 
 		/// <summary>
-		/// 
-		///              Gets or sets a value that indicates whether text and controls are displayed
-		///              reading right to left.
-		///            
-		///</summary>
+		/// Returns or sets a value that indicates whether text and controls are displayed
+		/// reading right to left.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this page instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this page instance is currently bound to a task dialog.
+		/// </exception>
 		public bool RightToLeftLayout
 		{
 			get
@@ -414,14 +428,12 @@ namespace Wisej.Web.Ext.TaskDialog
 		private bool _rightToLeftLayout;
 
 		/// <summary>
-		/// 
-		///              Gets or sets a value that indicates whether the task dialog can be minimized
-		///              when it is shown modeless.
-		///            
-		///</summary>
+		/// Returns or sets a value that indicates whether the task dialog can be minimized
+		/// when it is shown modeless.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this page instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this page instance is currently bound to a task dialog.
+		/// </exception>
 		public bool AllowMinimize
 		{
 			get
@@ -440,14 +452,12 @@ namespace Wisej.Web.Ext.TaskDialog
 		private bool _allowMinimize;
 
 		/// <summary>
-		/// 
-		///              Indicates that the width of the task dialog is determined by the width
-		///              of its content area (similar to Message Box sizing behavior).
-		///            
-		///</summary>
+		/// Returns or sets a value that indicates whether the width of the task dialog is determined by the width
+		/// of its content area (similar to the <see cref="MessageBox"/> sizing behavior).
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this page instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this page instance is currently bound to a task dialog.
+		/// </exception>
 		public bool SizeToContent
 		{
 			get
@@ -466,11 +476,12 @@ namespace Wisej.Web.Ext.TaskDialog
 		private bool _sizeToContent;
 
 		/// <summary>
-		/// 
-		///              Gets the <see cref="TaskDialog" /> instance which this page
-		///              is currently bound to.
-		///            
-		///</summary>
+		/// Returns or sets the <see cref="TaskDialog" /> instance which this page
+		/// is currently bound to.
+		/// </summary>
+		/// <remarks>
+		/// The value is <see langword="null"/> when the page is not currently displayed in a task dialog.
+		/// </remarks>
 		public TaskDialog BoundDialog
 		{
 			get
@@ -493,26 +504,40 @@ namespace Wisej.Web.Ext.TaskDialog
 		#region Methods
 
 		/// <summary>
-		/// 
-		///             Shows the new content in the current task dialog.
-		///            <paramref name="page" />.
-		///            
-		///</summary>
-		/// <exception cref="T:System.ArgumentNullException"><paramref name="page" /> is <see langword="null" />.
-		///            </exception>
-		/// <exception cref="T:System.InvalidOperationException">
-		///              The page instance is not currently bound to a dialog, <see cref="P:System.Windows.Forms.TaskDialogPage.BoundDialog" /> is <see langword="null" />.
-		///              - or -
-		///              This page instance contains an invalid configuration.
-		///              - or -
-		///              This method is called from within the <see cref="E:System.Windows.Forms.TaskDialogRadioButton.CheckedChanged" /> event
-		///              of one of the radio buttons of the current task dialog.
-		///              - or -
-		///              The task dialog has already been closed.
-		///            </exception>
+		/// Shows the new content in the current task dialog.
+		/// </summary>
 		/// <param name="page">
-		///              The page instance that contains the contents which this task dialog will display.
-		///            </param>
+		/// The page instance that contains the contents which this task dialog will display.
+		/// </param>
+		/// <exception cref="T:System.ArgumentNullException"><paramref name="page" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="T:System.InvalidOperationException">
+		/// The page instance is not currently bound to a dialog, <see cref="BoundDialog" /> is <see langword="null" />.
+		/// - or -
+		/// This page instance contains an invalid configuration.
+		/// - or -
+		/// This method is called from within the <see cref="TaskDialogRadioButton.CheckedChanged" /> event
+		/// of one of the radio buttons of the current task dialog.
+		/// - or -
+		/// The task dialog has already been closed.
+		/// </exception>
+		/// <remarks>
+		/// This method is not implemented yet in this version and has no effect.
+		/// </remarks>
+		/// <example>
+		/// Switching to a progress page when the user confirms the operation:
+		/// <code><![CDATA[
+		/// var progressPage = new TaskDialogPage
+		/// {
+		///     Heading = "Installing updates...",
+		///     ProgressBar = new TaskDialogProgressBar(TaskDialogProgressBarState.Marquee)
+		/// };
+		///
+		/// var install = new TaskDialogButton("Install", true, false);
+		/// install.Click += (s, e) => confirmPage.Navigate(progressPage);
+		/// confirmPage.Buttons.Add(install);
+		/// ]]></code>
+		/// </example>
 		public void Navigate(TaskDialogPage page)
 		{
 			// TODO: Implement

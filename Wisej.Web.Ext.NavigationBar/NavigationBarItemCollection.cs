@@ -63,6 +63,15 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <exception cref="T:System.ArgumentNullException">
 		///   <paramref name="value" /> is null. </exception>
 		/// <returns>The <see cref="NavigationBarItem" /> at the specified index.</returns>
+		/// <remarks>
+		/// Setting an item replaces the existing item at <paramref name="index"/>, which is removed from the collection but not disposed.
+		/// </remarks>
+		/// <example>
+		/// Replacing the first item:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items[0] = new NavigationBarItem { Name = "home", Text = "Home", Icon = "Images/home.svg" };
+		/// ]]></code>
+		/// </example>
 		public NavigationBarItem this[int index]
 		{
 			get { return (NavigationBarItem)this.controls[index]; }
@@ -85,6 +94,17 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		/// <returns>The <see cref="NavigationBarItem" /> with the specified key.</returns>
 		/// <param name="name">The name of the item to retrieve.</param>
+		/// <remarks>
+		/// Returns null when an item with the specified <paramref name="name"/> is not found. The search is not recursive: only the items in this collection are searched.
+		/// </remarks>
+		/// <example>
+		/// Retrieving an item by name:
+		/// <code><![CDATA[
+		/// var reports = this.navigationBar1.Items["reports"];
+		/// if (reports != null)
+		///     reports.Expanded = true;
+		/// ]]></code>
+		/// </example>
 		public NavigationBarItem this[string name]
 		{
 			get
@@ -100,6 +120,15 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <returns>The zero-based index of the item; -1 if it cannot be found.</returns>
 		/// <param name="item">The <see cref="NavigationBarItem" /> to locate in the collection. </param>
 		/// <exception cref="ArgumentNullException">The value of <paramref name="item" /> is null. </exception>
+		/// <example>
+		/// Selecting the item that follows the current one:
+		/// <code><![CDATA[
+		/// var items = this.navigationBar1.Items;
+		/// var index = items.IndexOf(this.navigationBar1.SelectedItem);
+		/// if (index > -1 && index < items.Count - 1)
+		///     this.navigationBar1.SelectedItem = items[index + 1];
+		/// ]]></code>
+		/// </example>
 		public int IndexOf(NavigationBarItem item)
 		{
 			if (item == null)
@@ -113,6 +142,16 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		/// <returns>The zero-based index of the first occurrence of a <see cref="NavigationBarItem" /> with the specified key, if found; otherwise, -1.</returns>
 		/// <param name="key">The name of the <see cref="NavigationBarItem" /> to find in the collection.</param>
+		/// <remarks>
+		/// Returns -1 when <paramref name="key"/> is null or empty.
+		/// </remarks>
+		/// <example>
+		/// Inserting an item after the item named "reports":
+		/// <code><![CDATA[
+		/// var index = this.navigationBar1.Items.IndexOfKey("reports");
+		/// this.navigationBar1.Items.Insert(index + 1, "analytics", "Analytics");
+		/// ]]></code>
+		/// </example>
 		public int IndexOfKey(string key)
 		{
 			if (String.IsNullOrEmpty(key))
@@ -126,6 +165,19 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		/// <param name="item">The <see cref="NavigationBarItem" /> to add. </param>
 		/// <exception cref="T:System.ArgumentNullException">The specified <paramref name="item" /> is null. </exception>
+		/// <example>
+		/// Adding an item created in code:
+		/// <code><![CDATA[
+		/// var item = new NavigationBarItem
+		/// {
+		///     Name = "inbox",
+		///     Text = "Inbox",
+		///     Icon = "Images/inbox.svg",
+		///     InfoText = "5"
+		/// };
+		/// this.navigationBar1.Items.Add(item);
+		/// ]]></code>
+		/// </example>
 		public void Add(NavigationBarItem item)
 		{
 			if (item == null)
@@ -139,6 +191,12 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Creates a <see cref="NavigationBarItem" /> with the specified text, and adds it to the collection.
 		/// </summary>
 		/// <param name="text">The text to display on the <see cref="NavigationBarItem" />.</param>
+		/// <example>
+		/// Adding an item with only a title:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items.Add("Help");
+		/// ]]></code>
+		/// </example>
 		public void Add(string text)
 		{
 			Add(new NavigationBarItem()
@@ -152,6 +210,13 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		/// <param name="key">The name of the <see cref="NavigationBarItem" />.</param>
 		/// <param name="text">The text to display on the <see cref="NavigationBarItem" />.</param>
+		/// <example>
+		/// Adding an item that can be retrieved by name:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items.Add("help", "Help");
+		/// this.navigationBar1.Items["help"].Icon = "Images/help.svg";
+		/// ]]></code>
+		/// </example>
 		public void Add(string key, string text)
 		{
 			var item = new NavigationBarItem()
@@ -168,6 +233,12 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <param name="key">The name of the <see cref="NavigationBarItem" />.</param>
 		/// <param name="text">The text to display on the <see cref="NavigationBarItem" />.</param>
 		/// <param name="icon">The Url or name of the icon to display on the <see cref="NavigationBarItem" />.</param>
+		/// <example>
+		/// Adding an item with an icon:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items.Add("settings", "Settings", "Images/settings.svg");
+		/// ]]></code>
+		/// </example>
 		public void Add(string key, string text, string icon)
 		{
 			var item = new NavigationBarItem()
@@ -184,6 +255,17 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		/// <param name="items">An array of type <see cref="NavigationBarItem" /> that contains the <see cref="NavigationBarItem" /> to add. </param>
 		/// <exception cref="T:System.ArgumentNullException">The value of items is null. </exception>
+		/// <example>
+		/// Adding several items at once:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items.AddRange(new[]
+		/// {
+		///     new NavigationBarItem { Name = "dashboard", Text = "Dashboard", Icon = "Images/dashboard.svg" },
+		///     new NavigationBarItem { Name = "orders", Text = "Orders", Icon = "Images/orders.svg" },
+		///     new NavigationBarItem { Name = "customers", Text = "Customers", Icon = "Images/customers.svg" }
+		/// });
+		/// ]]></code>
+		/// </example>
 		public void AddRange(NavigationBarItem[] items)
 		{
 			if (items == null)
@@ -198,15 +280,31 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <summary>
 		/// Removes all the <see cref="NavigationBarItem" /> instances from the collection.
 		/// </summary>
+		/// <remarks>
+		/// The removed items are not disposed. Use <see cref="Clear(bool)"/> to dispose them.
+		/// </remarks>
+		/// <example>
+		/// Removing all the items before rebuilding the menu:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items.Clear();
+		/// this.navigationBar1.Items.Add("home", "Home", "Images/home.svg");
+		/// ]]></code>
+		/// </example>
 		public void Clear()
 		{
 			Clear(false);
 		}
 
 		/// <summary>
-		/// Removes and disposes all <see cref="NavigationBarItem" /> instances from the collection.
+		/// Removes all the <see cref="NavigationBarItem" /> instances from the collection and optionally disposes them.
 		/// </summary>
 		/// <param name="dispose">Indicates whether to dispose the <see cref="NavigationBarItem" /> instances removed from the collection.</param>
+		/// <example>
+		/// Removing and disposing all the items:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items.Clear(true);
+		/// ]]></code>
+		/// </example>
 		public void Clear(bool dispose)
 		{
 			if (this.owner is NavigationBar)
@@ -221,6 +319,13 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <returns>true if the specified <see cref="NavigationBarItem" /> is in the collection; otherwise, false.</returns>
 		/// <param name="item">The <see cref="NavigationBarItem" /> to locate in the collection. </param>
 		/// <exception cref="ArgumentNullException">The value of <paramref name="item" /> is null. </exception>
+		/// <example>
+		/// Checking whether an item is a top-level item:
+		/// <code><![CDATA[
+		/// if (this.navigationBar1.Items.Contains(this.navigationBar1.SelectedItem))
+		///     AlertBox.Show("Top-level item selected.");
+		/// ]]></code>
+		/// </example>
 		public bool Contains(NavigationBarItem item)
 		{
 			if (item == null)
@@ -234,6 +339,13 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		/// <returns>true to indicate a <see cref="NavigationBarItem" /> with the specified key was found in the collection; otherwise, false. </returns>
 		/// <param name="key">The name of the <see cref="NavigationBarItem" /> to search for.</param>
+		/// <example>
+		/// Adding an item only once:
+		/// <code><![CDATA[
+		/// if (!this.navigationBar1.Items.ContainsKey("admin"))
+		///     this.navigationBar1.Items.Add("admin", "Administration", "Images/admin.svg");
+		/// ]]></code>
+		/// </example>
 		public virtual bool ContainsKey(string key)
 		{
 			return this.controls.ContainsKey(key);
@@ -247,9 +359,16 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <exception cref="ArgumentNullException">
 		///   <paramref name="array" /> is null.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">
-		///   <paramref name="array" /> is less than zero.</exception>
+		///   <paramref name="index" /> is less than zero.</exception>
 		/// <exception cref="ArgumentException">
 		///   <paramref name="array" /> is multidimensional or the number of elements in the <see cref="NavigationBarItemCollection" /> is greater than the available space from index to the end of <paramref name="array" />.</exception>
+		/// <example>
+		/// Copying the items to an array:
+		/// <code><![CDATA[
+		/// var items = new NavigationBarItem[this.navigationBar1.Items.Count];
+		/// this.navigationBar1.Items.CopyTo(items, 0);
+		/// ]]></code>
+		/// </example>
 		public void CopyTo(NavigationBarItem[] array, int index)
 		{
 			if (array == null)
@@ -263,6 +382,17 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		/// <param name="item">The <see cref="NavigationBarItem" /> to remove. </param>
 		/// <exception cref="T:System.ArgumentNullException">The <paramref name="item" /> parameter is null. </exception>
+		/// <remarks>
+		/// If the removed item is the <see cref="NavigationBar.SelectedItem"/>, the selection is cleared. The item is not disposed.
+		/// </remarks>
+		/// <example>
+		/// Removing the selected top-level item:
+		/// <code><![CDATA[
+		/// var item = this.navigationBar1.SelectedItem;
+		/// if (item != null && item.Parent == null)
+		///     this.navigationBar1.Items.Remove(item);
+		/// ]]></code>
+		/// </example>
 		public void Remove(NavigationBarItem item)
 		{
 			if (item == null)
@@ -278,6 +408,17 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Removes the <see cref="NavigationBarItem" /> at the specified index from the collection.
 		/// </summary>
 		/// <param name="index">The zero-based index of the <see cref="NavigationBarItem" /> to remove. </param>
+		/// <remarks>
+		/// If the removed item is the <see cref="NavigationBar.SelectedItem"/>, the selection is cleared. The item is not disposed.
+		/// </remarks>
+		/// <example>
+		/// Removing the last item:
+		/// <code><![CDATA[
+		/// var items = this.navigationBar1.Items;
+		/// if (items.Count > 0)
+		///     items.RemoveAt(items.Count - 1);
+		/// ]]></code>
+		/// </example>
 		public void RemoveAt(int index)
 		{
 			Remove((NavigationBarItem)this.controls[index]);
@@ -287,6 +428,15 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// Removes the <see cref="NavigationBarItem" /> with the specified key from the collection.
 		/// </summary>
 		/// <param name="key">The name of the <see cref="NavigationBarItem" /> to remove.</param>
+		/// <remarks>
+		/// Unlike <see cref="Remove"/>, this method doesn't clear <see cref="NavigationBar.SelectedItem"/> when the removed item is selected.
+		/// </remarks>
+		/// <example>
+		/// Removing an item by name:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items.RemoveByKey("admin");
+		/// ]]></code>
+		/// </example>
 		public void RemoveByKey(string key)
 		{
 			this.controls.RemoveByKey(key);
@@ -297,6 +447,12 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		/// <param name="index">The zero-based index location where the <see cref="NavigationBarItem" /> is inserted.</param>
 		/// <param name="item">The <see cref="NavigationBarItem" /> to insert in the collection.</param>
+		/// <example>
+		/// Inserting an item at the top:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items.Insert(0, new NavigationBarItem { Name = "home", Text = "Home", Icon = "Images/home.svg" });
+		/// ]]></code>
+		/// </example>
 		public void Insert(int index, NavigationBarItem item)
 		{
 			Add(item);
@@ -308,6 +464,12 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// </summary>
 		/// <param name="index">The zero-based index location where the <see cref="NavigationBarItem" /> is inserted.</param>
 		/// <param name="text">The text to display in the <see cref="NavigationBarItem" />.</param>
+		/// <example>
+		/// Inserting an item with only a title at the top:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items.Insert(0, "Home");
+		/// ]]></code>
+		/// </example>
 		public void Insert(int index, string text)
 		{
 			Insert(index, new NavigationBarItem()
@@ -322,6 +484,12 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <param name="index">The zero-based index location where the <see cref="NavigationBarItem" /> is inserted.</param>
 		/// <param name="key">The name of the <see cref="NavigationBarItem" />.</param>
 		/// <param name="text">The text to display on the <see cref="NavigationBarItem" />.</param>
+		/// <example>
+		/// Inserting a named item in the second position:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items.Insert(1, "news", "News");
+		/// ]]></code>
+		/// </example>
 		public void Insert(int index, string key, string text)
 		{
 			NavigationBarItem item = new NavigationBarItem()
@@ -339,6 +507,12 @@ namespace Wisej.Web.Ext.NavigationBar
 		/// <param name="key">The name of the item.</param>
 		/// <param name="text">The text to display on the <see cref="NavigationBarItem" />.</param>
 		/// <param name="icon">The Url or name of the icon to display on the <see cref="NavigationBarItem" />.</param>
+		/// <example>
+		/// Inserting an item with an icon in the second position:
+		/// <code><![CDATA[
+		/// this.navigationBar1.Items.Insert(1, "news", "News", "Images/news.svg");
+		/// ]]></code>
+		/// </example>
 		public void Insert(int index, string key, string text, string icon)
 		{
 			NavigationBarItem item = new NavigationBarItem()

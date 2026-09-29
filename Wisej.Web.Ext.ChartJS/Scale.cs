@@ -79,7 +79,7 @@ namespace Wisej.Web.Ext.ChartJS
 		/// </summary>
 		day,
 		/// <summary>
-		/// Weeks ;ll'
+		/// Weeks 'll'
 		/// </summary>
 		week,
 		/// <summary>
@@ -97,29 +97,74 @@ namespace Wisej.Web.Ext.ChartJS
 	}
 
 	/// <summary>
-	/// Options when using a time scale
+	/// Options used when the axis is a time scale.
 	/// </summary>
+	/// <remarks>
+	/// An instance of this class is exposed by the <b>Time</b> property of each axis
+	/// in <see cref="P:Wisej.Web.Ext.ChartJS.OptionsScales.xAxes"/> and <see cref="P:Wisej.Web.Ext.ChartJS.OptionsScales.yAxes"/>
+	/// and maps to the <c>time</c> configuration of the Chart.js axis. The options are serialized only
+	/// when the axis <b>Type</b> is <see cref="F:Wisej.Web.Ext.ChartJS.ScaleType.Time"/>.
+	/// Chart.js uses the Moment.js library to parse and format the dates.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var xAxis = this.chartJS1.Options.Scales.xAxes[0];
+	/// xAxis.Type = ScaleType.Time;
+	/// xAxis.Time.Unit = TimeScaleTimeUnit.day;
+	/// xAxis.Time.TooltipFormat = "MMM D, YYYY";
+	/// ]]></code>
+	/// </example>
 	public class ScaleTime : OptionsBase
 	{
 		/// <summary>
 		/// Constructs a new instance.
 		/// </summary>
+		/// <remarks>
+		/// Creates a set of time scale options that is not yet attached to an owner.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var time = new ScaleTime();
+		/// time.Unit = TimeScaleTimeUnit.month;
+		/// this.chartJS1.Options.Scales.xAxes[0].Type = ScaleType.Time;
+		/// this.chartJS1.Options.Scales.xAxes[0].Time = time;
+		/// ]]></code>
+		/// </example>
 		public ScaleTime()
 		{
 		}
 
 		/// <summary>
-		/// Constructs a new instance.
+		/// Constructs a new instance of the <see cref="T:Wisej.Web.Ext.ChartJS.ScaleTime"/> set.
 		/// </summary>
-		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.ChartJS"/> that owns this set of options.</param>
+		/// <param name="owner">The <see cref="T:Wisej.Web.Ext.ChartJS.OptionsBase"/> instance (usually the axis options) that owns this set of options.</param>
+		/// <exception cref="T:System.InvalidOperationException">Thrown when the owner is already assigned to a different instance.</exception>
+		/// <example>
+		/// <code><![CDATA[
+		/// var xAxis = this.chartJS1.Options.Scales.xAxes[0];
+		/// var time = new ScaleTime(xAxis);
+		/// time.Unit = TimeScaleTimeUnit.week;
+		/// xAxis.Time = time;
+		/// ]]></code>
+		/// </example>
 		public ScaleTime(OptionsBase owner)
 		{
 			this.Owner = owner;
 		}
 
 		/// <summary>
-		/// Rounds the dates to the start of this unit.
+		/// Returns or sets the unit to which the dates are rounded (to the start of the unit).
 		/// </summary>
+		/// <value>
+		/// One of the <see cref="T:Wisej.Web.Ext.ChartJS.TimeScaleTimeUnit"/> values, or null (default) to disable rounding.
+		/// </value>
+		/// <example>
+		/// <code><![CDATA[
+		/// // round all the timestamps to the start of the hour.
+		/// this.chartJS1.Options.Scales.xAxes[0].Type = ScaleType.Time;
+		/// this.chartJS1.Options.Scales.xAxes[0].Time.Round = TimeScaleTimeUnit.hour;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[Description("Rounds the dates to the start of this unit.")]
 		public TimeScaleTimeUnit? Round
@@ -138,8 +183,19 @@ namespace Wisej.Web.Ext.ChartJS
 		private TimeScaleTimeUnit? _round = null;
 
 		/// <summary>
-		/// Force the unit to be a certain type.
+		/// Returns or sets the time unit used for the ticks of the scale.
 		/// </summary>
+		/// <value>
+		/// One of the <see cref="T:Wisej.Web.Ext.ChartJS.TimeScaleTimeUnit"/> values, or null (default)
+		/// to let Chart.js determine the most appropriate unit from the data.
+		/// </value>
+		/// <example>
+		/// <code><![CDATA[
+		/// var xAxis = this.chartJS1.Options.Scales.xAxes[0];
+		/// xAxis.Type = ScaleType.Time;
+		/// xAxis.Time.Unit = TimeScaleTimeUnit.month;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[Description("Force the unit to be a certain type.")]
 		public TimeScaleTimeUnit? Unit
@@ -157,8 +213,22 @@ namespace Wisej.Web.Ext.ChartJS
 		private TimeScaleTimeUnit? _unit = null;
 
 		/// <summary>
-		/// The number of units between grid lines.
+		/// Returns or sets the number of units between grid lines.
 		/// </summary>
+		/// <value>
+		/// The default is 1.
+		/// </value>
+		/// <remarks>
+		/// Maps to the <c>time.unitStepSize</c> option of Chart.js.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// // a tick every 15 minutes.
+		/// var time = this.chartJS1.Options.Scales.xAxes[0].Time;
+		/// time.Unit = TimeScaleTimeUnit.minute;
+		/// time.UnitStepSize = 15;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(1)]
 		[Description("The number of units between grid lines.")]
 		public int UnitStepSize
@@ -176,8 +246,20 @@ namespace Wisej.Web.Ext.ChartJS
 		private int _unitStepSize = 1;
 
 		/// <summary>
-		/// The moment js format string to use for the tooltip
+		/// Returns or sets the Moment.js format string used to display the dates in the tooltips.
 		/// </summary>
+		/// <value>
+		/// A Moment.js format string. The default is an empty string, which uses the Chart.js default.
+		/// </value>
+		/// <remarks>
+		/// See <see href="https://momentjs.com/docs/#/displaying/format/"/> for the format tokens.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// this.chartJS1.Options.Scales.xAxes[0].Type = ScaleType.Time;
+		/// this.chartJS1.Options.Scales.xAxes[0].Time.TooltipFormat = "ddd, MMM D YYYY h:mm a";
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("")]
 		[Description("The moment js format string to use for the tooltip.")]
 		public string TooltipFormat
@@ -195,8 +277,26 @@ namespace Wisej.Web.Ext.ChartJS
 		private string _tooltipFormat = "";
 
 		/// <summary>
-		/// Sets how different time units are displayed.
+		/// Returns or sets how the different time units are formatted on the axis ticks.
 		/// </summary>
+		/// <value>
+		/// An object whose property names are the time units (i.e. <c>day</c>, <c>month</c>) and values
+		/// are Moment.js format strings; null (default) uses the Chart.js defaults.
+		/// </value>
+		/// <remarks>
+		/// The object is serialized as-is to the <c>time.displayFormats</c> option of Chart.js;
+		/// an anonymous type is the simplest way to specify it.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var time = this.chartJS1.Options.Scales.xAxes[0].Time;
+		/// time.DisplayFormats = new
+		/// {
+		/// 	day = "DD/MM",
+		/// 	month = "MMM YY"
+		/// };
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[Description("Sets how different time units are displayed.")]
 		public object DisplayFormats
@@ -217,8 +317,22 @@ namespace Wisej.Web.Ext.ChartJS
 		private object _displayFormats;
 
 		/// <summary>
-		/// A custom format to be used by Moment.js to parse the date.
+		/// Returns or sets a custom format to be used by Moment.js to parse the dates.
 		/// </summary>
+		/// <value>
+		/// A Moment.js format string. The default is an empty string, which lets Moment.js detect the format.
+		/// </value>
+		/// <remarks>
+		/// Use it when the data values are strings in a format that Moment.js cannot recognize automatically.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var xAxis = this.chartJS1.Options.Scales.xAxes[0];
+		/// xAxis.Type = ScaleType.Time;
+		/// xAxis.Time.Parser = "DD/MM/YYYY";
+		/// this.chartJS1.Labels = new[] { "01/03/2024", "02/03/2024", "03/03/2024" };
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("")]
 		[Description("A custom format to be used by Moment.js to parse the date.")]
 		public string Parser

@@ -27,16 +27,20 @@ using Wisej.Web.Layout;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Provides basic functionality for the <see cref="ContextMenuStrip" /> control. Although <see cref="ToolStripDropDownMenu" /> and <see cref="ToolStripDropDown" /> replace and add functionality to the <see cref="Menu" /> control of previous versions, <see cref="Menu" /> is retained for both backward compatibility and future use if you choose.
-	///</summary>
+	/// Provides the basic functionality of a drop down menu: a <see cref="ToolStripDropDown"/> that displays
+	/// <see cref="ToolStripMenuItem"/> objects with an optional image margin and check margin.
+	/// </summary>
+	/// <remarks>
+	/// This is the type of drop down used by <see cref="ToolStripDropDownItem.DropDown"/> to display the sub items of a menu item.
+	/// </remarks>
 	public class ToolStripDropDownMenu : ToolStripDropDown
 	{
 
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripDropDownMenu" /> class. 
-		///</summary>
+		/// Initializes a new instance of the <see cref="ToolStripDropDownMenu" /> class.
+		/// </summary>
 		public ToolStripDropDownMenu()
 		{
 			// TODO: Implement
@@ -47,9 +51,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets the internal spacing, in pixels, of the control.
-		///</summary>
-		/// <returns>A Padding object representing the spacing.</returns>
+		/// Returns the default internal spacing, in pixels, of the control.
+		/// </summary>
+		/// <returns>A <see cref="Padding"/> object representing the spacing.</returns>
 		public new Padding DefaultPadding
 		{
 			get
@@ -61,9 +65,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _defaultPadding;
 
 		/// <summary>
-		/// Gets the rectangle that represents the display area of the <see cref="ToolStripDropDownMenu" />.
-		///</summary>
+		/// Returns the rectangle that represents the display area of the <see cref="ToolStripDropDownMenu" />.
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Rectangle" /> that represents the display area.</returns>
+		/// <remarks>
+		/// The display area excludes the image and check margins.
+		/// </remarks>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -78,6 +85,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private Rectangle _displayRectangle;
 
+		/// <summary>
+		/// Returns the <see cref="Wisej.Web.Layout.LayoutEngine"/> used to arrange the items of the <see cref="ToolStripDropDownMenu"/>.
+		/// </summary>
+		/// <returns>The <see cref="Wisej.Web.Layout.LayoutEngine"/> that lays out the items.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		public override LayoutEngine LayoutEngine
@@ -91,9 +102,16 @@ namespace Wisej.Web.Ext.ToolStrip
 		private LayoutEngine _layoutEngine;
 
 		/// <summary>
-		/// Gets or sets a value indicating how the items of <see cref="ContextMenuStrip" /> are displayed.
-		///</summary>
+		/// Returns or sets a value indicating how the items of the <see cref="ToolStripDropDownMenu" /> are displayed.
+		/// </summary>
 		/// <returns>One of the <see cref="ToolStripLayoutStyle" /> values. The default is <see cref="ToolStripLayoutStyle.Flow" />.</returns>
+		/// <example>
+		/// Arranging the items of a menu in a table:
+		/// <code><![CDATA[
+		/// var menu = new ToolStripDropDownMenu();
+		/// menu.LayoutStyle = ToolStripLayoutStyle.Table;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(ToolStripLayoutStyle.Flow)]
 		public ToolStripLayoutStyle LayoutStyle
 		{
@@ -113,9 +131,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripLayoutStyle _layoutStyle;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether space for an image is shown on the left edge of the <see cref="ToolStripMenuItem" />.
-		///</summary>
+		/// Returns or sets a value indicating whether space for an image is shown on the left edge of the <see cref="ToolStripMenuItem" /> items.
+		/// </summary>
 		/// <returns>true if the image margin is shown; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// When both <see cref="ShowImageMargin"/> and <see cref="ShowCheckMargin"/> are true, the check mark and the image are displayed side by side.
+		/// </remarks>
 		[SRDescription("ToolStripDropDownMenuShowImageMarginDescr")]
 		[DefaultValue(true)]
 		[SRCategory("CatAppearance")]
@@ -137,9 +158,22 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _showImageMargin;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether space for a check mark is shown on the left edge of the <see cref="ToolStripMenuItem" />. 
-		///</summary>
+		/// Returns or sets a value indicating whether space for a check mark is shown on the left edge of the <see cref="ToolStripMenuItem" /> items.
+		/// </summary>
 		/// <returns>true if the check margin is shown; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// When <see cref="ShowCheckMargin"/> is false and <see cref="ShowImageMargin"/> is true, the check mark of a checked
+		/// <see cref="ToolStripMenuItem"/> is displayed in the image margin.
+		/// </remarks>
+		/// <example>
+		/// Showing both check marks and images in a menu:
+		/// <code><![CDATA[
+		/// var menu = (ToolStripDropDownMenu)this.menuItemView.DropDown;
+		/// menu.ShowCheckMargin = true;
+		/// menu.ShowImageMargin = true;
+		/// this.menuItemShowGrid.CheckOnClick = true;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[SRDescription("ToolStripDropDownMenuShowCheckMarginDescr")]
 		[SRCategory("CatAppearance")]

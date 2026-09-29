@@ -26,8 +26,23 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Represents a line used to group items of a <see cref="ToolStrip" /> or the drop-down items of a <see cref="MenuStrip" /> or <see cref="ContextMenuStrip" /> or other <see cref="ToolStripDropDown" /> control.
-	///</summary>
+	/// Represents a line used to group items of a <see cref="ToolStrip" /> or the drop-down items of a <see cref="ToolStripDropDown" />.
+	/// </summary>
+	/// <remarks>
+	/// The separator is rendered as a vertical line on a horizontal <see cref="ToolStrip" /> and as a horizontal line on a drop-down.
+	/// Most appearance properties inherited from <see cref="ToolStripItem" /> are not relevant to this class.
+	/// </remarks>
+	/// <example>
+	/// Grouping the buttons of a tool bar:
+	/// <code><![CDATA[
+	/// this.toolStrip1.Items.AddRange(new ToolStripItem[] {
+	///     new ToolStripButton("New"),
+	///     new ToolStripButton("Open"),
+	///     new ToolStripSeparator(),
+	///     new ToolStripButton("Print")
+	/// });
+	/// ]]></code>
+	/// </example>
 	public class ToolStripSeparator : ToolStripItem
 	{
 
@@ -196,7 +211,7 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ImageLayout _backgroundImageLayout;
 
 		/// <summary>
-		/// Gets a value indicating whether the <see cref="ToolStripSeparator" /> can be selected. 
+		/// Returns a value indicating whether the <see cref="ToolStripSeparator" /> can be selected.
 		///</summary>
 		/// <returns>true if the component using the <see cref="ToolStripSeparator" /> is in design mode; otherwise, false.</returns>
 		[Browsable(false)]
@@ -210,6 +225,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private bool _canSelect;
 
+		/// <summary>
+		/// Returns the default size of the <see cref="ToolStripSeparator" />.
+		/// </summary>
+		/// <returns>The default <see cref="System.Drawing.Size" /> of the <see cref="ToolStripSeparator" />, in pixels.</returns>
 		public override Size DefaultSize
 		{
 			get
@@ -325,8 +344,8 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// This property is not relevant to this class.
-		///</summary>
-		/// <returns>A <see cref="VisualStyles.ContentAlignment" /> value.</returns>
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.ContentAlignment" /> value.</returns>
 		[Browsable(false)]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

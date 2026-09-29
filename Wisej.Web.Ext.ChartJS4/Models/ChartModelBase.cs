@@ -27,13 +27,39 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 	/// <summary>
 	/// Base class for chart models that need a back-reference to the owning chart.
 	/// </summary>
+	/// <remarks>
+	/// Derived models (options and data sets) use the back-reference to refresh the owning <see cref="ChartJS4"/>
+	/// control when one of their properties changes. When a property is assigned a child <see cref="ChartModelBase"/>
+	/// instance, the child is automatically bound to the same chart.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var dataSet = new LineDataSet { Label = "Temperature" };
+	/// chart.DataSets.Add(dataSet);
+	/// // dataSet.Chart == chart: changing a property now refreshes the chart.
+	/// dataSet.BorderWidth = 3;
+	/// ]]></code>
+	/// </example>
 	public abstract class ChartModelBase
 	{
 		private ChartJS4? _chart;
 
 		/// <summary>
-		/// Gets or sets the owning chart instance.
+		/// Returns or sets the owning chart instance.
 		/// </summary>
+		/// <value>The <see cref="ChartJS4"/> control that owns this model, or <c>null</c> if the model is not attached to a chart.</value>
+		/// <remarks>
+		/// The value is set automatically when the model is assigned to <see cref="ChartJS4.ChartOptions"/>, added to
+		/// <see cref="ChartJS4.DataSets"/>, or assigned to a property of another attached model. It is excluded from
+		/// JSON serialization and hidden from the property grid.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var owner = chart.ChartOptions.Chart; // == chart
+		/// var dataSet = new BarDataSet();
+		/// chart.DataSets.Add(dataSet);          // dataSet.Chart == chart
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[JsonIgnore(Condition = JsonIgnoreCondition.Always)]
 		public ChartJS4? Chart

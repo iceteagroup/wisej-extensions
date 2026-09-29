@@ -26,7 +26,7 @@ namespace Wisej.Ext.WebAuthn
 	/// Contains information about the desired properties of the credential to be created.
 	/// </summary>
 	/// <remarks>
-	/// <See href="https://www.w3.org/TR/webauthn-2/#dictdef-publickeycredentialparameters"/>
+	/// See <see href="https://www.w3.org/TR/webauthn-2/#dictdef-publickeycredentialparameters"/>.
 	/// </remarks>
 	[ApiCategory("WebAuthn")]
 	public class PublicKeyCredentialParameters
@@ -46,6 +46,14 @@ namespace Wisej.Ext.WebAuthn
 		/// <summary>
 		/// Creates a new instance of <see cref="PublicKeyCredentialParameters"/>.
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var parameter = new PublicKeyCredentialParameters
+		/// {
+		/// 	Alg = COSEAlgorithmIdentifier.ES256
+		/// };
+		/// ]]></code>
+		/// </example>
 		public PublicKeyCredentialParameters()
         {
         }
@@ -53,18 +61,39 @@ namespace Wisej.Ext.WebAuthn
 		/// <summary>
 		/// Creates a new instance of <see cref="PublicKeyCredentialParameters"/> with the given configuration.
 		/// </summary>
-		/// <param name="type">The type of credential key (i.e. "public-key").</param>
-		/// <param name="alg"></param>
+		/// <param name="alg">The signature algorithm the new credential will use.</param>
+		/// <param name="type">The type of credential key. Defaults to "public-key".</param>
+		/// <example>
+		/// <code><![CDATA[
+		/// // List the accepted algorithms in order of preference.
+		/// var parameters = new[]
+		/// {
+		/// 	new PublicKeyCredentialParameters(COSEAlgorithmIdentifier.ES256),
+		/// 	new PublicKeyCredentialParameters(COSEAlgorithmIdentifier.RS256)
+		/// };
+		///
+		/// CredentialsResponse response = await WebAuthn.CreateAsync(
+		/// 	challenge, rp, user, parameters, selection, 60000, AttestationConveyancePreference.None);
+		/// ]]></code>
+		/// </example>
 		public PublicKeyCredentialParameters(COSEAlgorithmIdentifier alg, string type="public-key")
         {
             this.Type = type;
             this.Alg = alg;
         }
 
-		/// <summary>
-		/// Returns a JSON representation of the current object.
-		/// </summary>
-		/// <returns>The JSON object representation.</returns>
+        /// <summary>
+        /// Returns a JSON representation of the current object.
+        /// </summary>
+        /// <returns>A JSON string with the <c>type</c> and <c>alg</c> members, where <c>alg</c> is the numeric COSE identifier.</returns>
+        /// <example>
+        /// <code><![CDATA[
+        /// var parameter = new PublicKeyCredentialParameters(COSEAlgorithmIdentifier.ES256);
+        ///
+        /// string json = parameter.ToJSON();
+        /// // {"type":"public-key","alg":-7}
+        /// ]]></code>
+        /// </example>
         public string ToJSON() 
 		{
 			return new

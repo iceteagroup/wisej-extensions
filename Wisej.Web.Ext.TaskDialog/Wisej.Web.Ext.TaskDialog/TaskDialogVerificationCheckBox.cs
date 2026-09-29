@@ -27,19 +27,25 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.TaskDialog
 {
 	/// <summary>
-	/// 
-	///              Represents a verification checkbox control of a task dialog.
-	///            
-	///</summary>
+	/// Represents a verification checkbox control of a task dialog.
+	/// </summary>
+	/// <example>
+	/// Adding a "Don't show again" checkbox and reading its value after the dialog is closed:
+	/// <code><![CDATA[
+	/// page.Verification = new TaskDialogVerificationCheckBox("Don't show this message again", false);
+	/// new TaskDialog().ShowDialog(page, TaskDialogStartupLocation.CenterScreen);
+	///
+	/// if (page.Verification.Checked)
+	///     Application.Session.HideWelcome = true;
+	/// ]]></code>
+	/// </example>
 	public class TaskDialogVerificationCheckBox : TaskDialogControl
 	{
 
 		#region Constructors
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogVerificationCheckBox" /> class.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogVerificationCheckBox" /> class.
+		/// </summary>
 		public TaskDialogVerificationCheckBox()
 		{
 			// TODO: Implement
@@ -47,8 +53,8 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TaskDialogVerificationCheckBox" /> class with
-		///the given text.          
-		///</summary>
+		/// the given text.
+		/// </summary>
 		/// <param name="text">A text associated with this control.</param>
 		/// <param name="isChecked">A value indicating whether the <see cref="TaskDialogVerificationCheckBox" /> is in the checked state.</param>
 		public TaskDialogVerificationCheckBox(string text, bool isChecked)
@@ -71,13 +77,14 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Properties
 		/// <summary>
-		/// 
-		///              Gets or sets the text associated with this control.
-		///            
-		///</summary>
+		/// Returns or sets the text associated with this control.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this verification checkbox instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this verification checkbox instance is currently bound to a task dialog.
+		/// </exception>
+		/// <remarks>
+		/// The checkbox is only displayed when the text is not <see langword="null"/> or an empty string.
+		/// </remarks>
 		public string Text
 		{
 			get
@@ -96,21 +103,19 @@ namespace Wisej.Web.Ext.TaskDialog
 		private string _text;
 
 		/// <summary>
-		/// 
-		///              Gets or set a value indicating whether the <see cref="TaskDialogVerificationCheckBox" /> is in
-		///              the checked state.
-		///            
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="TaskDialogVerificationCheckBox" /> is in
+		/// the checked state.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a verification checkbox instance that is currently bound to a task dialog, but it's not visible as its initial
-		///              <see cref="P:System.Windows.Forms.TaskDialogVerificationCheckBox.Text" /> property value was <see langword="null" /> or an empty string.
-		///              - or -
-		///              The property is set and the task dialog has started navigating to a new page containing this verification checkbox instance,
-		///              but the <see cref="E:System.Windows.Forms.TaskDialogPage.Created" /> event has not been raised yet.
-		///              - or -
-		///              The property is set on a verification checkbox instance that is currently bound to a task dialog, but the dialog has just
-		///              started navigating to a different page.
-		///            </exception>
+		/// The property is set on a verification checkbox instance that is currently bound to a task dialog, but it's not visible as its initial
+		/// <see cref="Text" /> property value was <see langword="null" /> or an empty string.
+		/// - or -
+		/// The property is set and the task dialog has started navigating to a new page containing this verification checkbox instance,
+		/// but the <see cref="TaskDialogPage.Created" /> event has not been raised yet.
+		/// - or -
+		/// The property is set on a verification checkbox instance that is currently bound to a task dialog, but the dialog has just
+		/// started navigating to a different page.
+		/// </exception>
 		public bool Checked
 		{
 			get
@@ -132,11 +137,18 @@ namespace Wisej.Web.Ext.TaskDialog
 		#region Methods
 
 		/// <summary>
-		/// 
-		///              Returns a string that represents the current <see cref="TaskDialogVerificationCheckBox" /> control.
-		///            
-		///</summary>
+		/// Returns a string that represents the current <see cref="TaskDialogVerificationCheckBox" /> control.
+		/// </summary>
 		/// <returns>The control text.</returns>
+		/// <remarks>
+		/// This method is not implemented yet in this version and returns an empty string.
+		/// </remarks>
+		/// <example>
+		/// Getting the text of the verification checkbox:
+		/// <code><![CDATA[
+		/// var label = page.Verification.ToString();
+		/// ]]></code>
+		/// </example>
 		public override String ToString()
 		{
 			// TODO: Implement

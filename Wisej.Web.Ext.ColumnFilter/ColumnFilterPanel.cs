@@ -29,6 +29,32 @@ namespace Wisej.Web.Ext.ColumnFilter
 	/// Base class for the filter panels to use in conjunction with the
 	/// <see cref="ColumnFilter"/> extender.
 	/// </summary>
+	/// <remarks>
+	/// The panel is a <see cref="UserPopup"/> that the <see cref="ColumnFilter"/> creates for each column the first time
+	/// the user clicks the column's filter button. Pressing Enter applies the filters of all the columns,
+	/// pressing Escape closes the panel. Derived classes implement <see cref="OnApplyFilter"/> to hide the rows
+	/// that don't match the criteria selected by the user. Note that the base class doesn't make the rows visible again
+	/// before applying the filters and doesn't close the panel: the built-in panels do it in their override of <c>ApplyFilters</c>.
+	/// </remarks>
+	/// <example>
+	/// A custom filter panel that shows only the rows with a non-empty value:
+	/// <code><![CDATA[
+	/// public class NotEmptyFilterPanel : ColumnFilterPanel
+	/// {
+	///     protected override bool OnApplyFilter()
+	///     {
+	///         var column = this.DataGridViewColumn;
+	///         var dataGrid = column.DataGridView;
+	///         foreach (var row in dataGrid.Rows)
+	///         {
+	///             if (!row.IsNewRow && string.IsNullOrEmpty(Convert.ToString(row[column.Index].Value)))
+	///                 row.Visible = false;
+	///         }
+	///         return true;
+	///     }
+	/// }
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(false)]
 	[ApiCategory("ColumnFilter")]
 	public partial class ColumnFilterPanel : Wisej.Web.UserPopup
@@ -36,7 +62,7 @@ namespace Wisej.Web.Ext.ColumnFilter
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="ColumnFilterPanel"/>.
+		/// Initializes a new instance of the <see cref="ColumnFilterPanel"/> class.
 		/// </summary>
 		public ColumnFilterPanel()
 		{
@@ -51,6 +77,9 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// Returns the <see cref="DataGridViewColumn"/> bound
 		/// to this <see cref="ColumnFilterPanel"/>.
 		/// </summary>
+		/// <remarks>
+		/// Set by the <see cref="ColumnFilter"/> when it creates the panel; it's null after the panel is disposed.
+		/// </remarks>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public DataGridViewColumn DataGridViewColumn
@@ -62,6 +91,10 @@ namespace Wisej.Web.Ext.ColumnFilter
 		/// <summary>
 		/// Returns the control used as the filter button.
 		/// </summary>
+		/// <remarks>
+		/// Returns the control in the header cell of <see cref="DataGridViewColumn"/>, or null if it's not a <see cref="PictureBox"/>
+		/// (i.e. when <see cref="Wisej.Web.Ext.ColumnFilter.ColumnFilter.CreateFilterButton"/> has been overridden to return a different control).
+		/// </remarks>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public PictureBox FilterButton
@@ -307,9 +340,23 @@ namespace Wisej.Web.Ext.ColumnFilter
 		}
 
 		/// <summary>
-		/// Clear the filter
+		/// Clears the filter criteria of this panel.
 		/// </summary>
-		/// <param name="applyFilters"></param>
+		/// <param name="applyFilters">True (default) to re-apply the filters of all the columns after clearing the criteria.</param>
+		/// <remarks>
+		/// The base implementation doesn't do anything; derived panels override it to reset their controls.
+		/// </remarks>
+		/// <example>
+		/// Clearing the filters of all the columns of a <see cref="DataGridView"/>:
+		/// <code><![CDATA[
+		/// foreach (DataGridViewColumn column in this.dataGridView1.Columns)
+		/// {
+		///     var panel = column.UserData.FilterPanel as ColumnFilterPanel;
+		///     panel?.Clear(false);
+		/// }
+		/// this.columnFilter1.ApplyFilters(this.dataGridView1);
+		/// ]]></code>
+		/// </example>
 		public virtual void Clear(bool applyFilters = true)
 		{
 		}

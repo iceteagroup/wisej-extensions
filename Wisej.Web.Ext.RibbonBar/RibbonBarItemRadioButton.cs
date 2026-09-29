@@ -27,6 +27,9 @@ namespace Wisej.Web.Ext.RibbonBar
 	/// <summary>
 	/// Represents a radio button in a <see cref="RibbonBarGroup"/>.
 	/// </summary>
+	/// <remarks>
+	/// All the radio buttons in the same <see cref="RibbonBarGroup"/> are mutually exclusive.
+	/// </remarks>
 	[ToolboxItem(false)]
 	[DefaultProperty("Text")]
 	[DesignTimeVisible(false)]
@@ -61,9 +64,30 @@ namespace Wisej.Web.Ext.RibbonBar
 		#region Properties
 
 		/// <summary>
-		/// Returns or whether the <see cref="RibbonBarItemRadioButton" /> is in the checked state.
+		/// Returns or sets whether the <see cref="RibbonBarItemRadioButton" /> is in the checked state.
 		/// </summary>
-		/// <returns>true if the <see cref="RibbonBarItemRadioButton" /> is in the checked state; otherwise, false.</returns>
+		/// <returns>true if the <see cref="RibbonBarItemRadioButton" /> is in the checked state; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// Changing the value fires the <see cref="CheckedChanged"/> event. When the user clicks the radio button, the value is
+		/// updated first, then the <see cref="RibbonBarItem.Click"/> and <see cref="RibbonBar.ItemClick"/> events are fired.
+		/// When the user checks a radio button, all the other <see cref="RibbonBarItemRadioButton"/> items in the same
+		/// <see cref="RibbonBarGroup"/> are unchecked, which updates their <see cref="Checked"/> property and fires their
+		/// events as well. When the value is set in code, the other radio buttons are
+		/// unchecked on the client but their <see cref="Checked"/> property on the server is not changed: uncheck them in code as well.
+		/// </remarks>
+		/// <example>
+		/// Checking a radio button in code and unchecking the others in the same group:
+		/// <code><![CDATA[
+		/// private void SelectView(RibbonBarItemRadioButton selected)
+		/// {
+		///     foreach (var item in selected.Parent.Items)
+		///     {
+		///         if (item is RibbonBarItemRadioButton radio)
+		///             radio.Checked = (radio == selected);
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[Category("CatAppearance")]
 		[Description("Returns or whether the RibbonBarItemRadioButton is in the checked state.")]

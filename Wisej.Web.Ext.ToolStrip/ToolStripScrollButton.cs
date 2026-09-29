@@ -23,11 +23,18 @@ using Wisej.Core;
 
 namespace Wisej.Web.Ext.ToolStrip
 {
+	/// <summary>
+	/// Represents the up or down arrow button used to scroll the items of a <see cref="ToolStripDropDownMenu"/> that doesn't fit on the screen.
+	/// </summary>
 	public partial class ToolStripScrollButton : ToolStripControlHost
 	{
 
 		#region Constructors
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToolStripScrollButton"/> class.
+		/// </summary>
+		/// <param name="up">true to create the button that scrolls up, displaying <see cref="UpImage"/>; false to create the button that scrolls down, displaying <see cref="DownImage"/>.</param>
 		public ToolStripScrollButton(bool up)
 			: base(CreateControlInstance(up))
 		{
@@ -39,6 +46,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		#region Properties
 
+		/// <summary>
+		/// Returns the default internal spacing, in pixels, of the scroll button.
+		/// </summary>
+		/// <returns>A <see cref="Padding"/> object representing the spacing.</returns>
 		public new Padding DefaultPadding
 		{
 			get
@@ -47,7 +58,28 @@ namespace Wisej.Web.Ext.ToolStrip
 			}
 		}
 
+		/// <summary>
+		/// Returns the image displayed on the scroll up buttons.
+		/// </summary>
+		/// <returns>The image shared by all the scroll up buttons.</returns>
+		/// <remarks>
+		/// The value is shared by all the instances and is read when a button is created.
+		/// </remarks>
+		/// <example>
+		/// Reading the shared scroll images:
+		/// <code><![CDATA[
+		/// object up = ToolStripScrollButton.UpImage;
+		/// object down = ToolStripScrollButton.DownImage;
+		/// ]]></code>
+		/// </example>
 		public static object UpImage { get; private set; }
+		/// <summary>
+		/// Returns the image displayed on the scroll down buttons.
+		/// </summary>
+		/// <returns>The image shared by all the scroll down buttons.</returns>
+		/// <remarks>
+		/// The value is shared by all the instances and is read when a button is created.
+		/// </remarks>
 		public static object DownImage { get; private set; }
 
 		private Padding _defaultPadding;

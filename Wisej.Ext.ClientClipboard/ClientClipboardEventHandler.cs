@@ -47,10 +47,14 @@ namespace Wisej.Ext.ClientClipboard
 			this.Content = content;
 		}
 
-		/// <summary>
-		/// Indicates the clipboard action executed by the user.
-		/// </summary>
-		public ClientClipboardChangeType Type
+        /// <summary>
+        /// Indicates the clipboard action executed by the user.
+        /// </summary>
+        /// /// <value>
+        /// A <see cref="ClientClipboardChangeType"/> enumeration value that specifies
+        /// the particular clipboard operation, such as copy, cut, or paste.
+        /// </value>
+        public ClientClipboardChangeType Type
 		{
 			get;
 			private set;

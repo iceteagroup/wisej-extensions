@@ -28,8 +28,13 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.JustGage
 {
 	/// <summary>
-	/// Represents a JustGage (http://justgage.com/) control.
+	/// Represents an animated gauge control based on the JustGage (http://justgage.com/) JavaScript library.
 	/// </summary>
+	/// <remarks>
+	/// The gauge displays <see cref="Value"/> within the range defined by <see cref="Minimum"/> and <see cref="Maximum"/>.
+	/// Changing <see cref="Value"/> animates the gauge level to the new value, changing any other property
+	/// recreates the gauge on the client.
+	/// </remarks>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(JustGage))]
 	[DefaultProperty("Value")]
@@ -158,6 +163,20 @@ namespace Wisej.Web.Ext.JustGage
 		/// <summary>
 		/// Returns or sets a numeric value that represents the current position of the JustGage widget.
 		/// </summary>
+		/// <remarks>
+		/// The value is not clamped to the range defined by <see cref="Minimum"/> and <see cref="Maximum"/>.
+		/// When the value changes, the gauge animates to the new value on the client using the
+		/// <see cref="RefreshAnimationType"/> animation and the <see cref="ValueChanged"/> event is fired.
+		/// </remarks>
+		/// <example>
+		/// Updating the gauge periodically from a timer:
+		/// <code><![CDATA[
+		/// private void timer1_Tick(object sender, EventArgs e)
+		/// {
+		///     this.justGage1.Value = GetCurrentTemperature();
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Bindable(true)]
 		[DefaultValue(0)]
 		[DesignerActionList]
@@ -186,6 +205,18 @@ namespace Wisej.Web.Ext.JustGage
 		/// <summary>
 		/// Returns or sets the lower limit of the range.
 		/// </summary>
+		/// <remarks>
+		/// The minimum value is displayed below the left end of the gauge when <see cref="ShowMinMax"/> is true.
+		/// Set <see cref="Minimum"/> and <see cref="Maximum"/> so that the minimum is less than the maximum.
+		/// </remarks>
+		/// <example>
+		/// Setting up a gauge for a value between -50 and 50:
+		/// <code><![CDATA[
+		/// this.justGage1.Maximum = 50;
+		/// this.justGage1.Minimum = -50;
+		/// this.justGage1.Differential = true;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(0)]
 		[DesignerActionList]
 		[RefreshProperties(RefreshProperties.All)]
@@ -215,6 +246,10 @@ namespace Wisej.Web.Ext.JustGage
 		/// <summary>
 		/// Returns or sets the upper limit of the range.
 		/// </summary>
+		/// <remarks>
+		/// The maximum value is displayed below the right end of the gauge when <see cref="ShowMinMax"/> is true.
+		/// Set <see cref="Minimum"/> and <see cref="Maximum"/> so that the minimum is less than the maximum.
+		/// </remarks>
 		[DefaultValue(100)]
 		[DesignerActionList]
 		[RefreshProperties(RefreshProperties.All)]
@@ -242,8 +277,12 @@ namespace Wisej.Web.Ext.JustGage
 		private float _maximum = 100;
 
         /// <summary>
-        /// Returns or sets the title of the JustGage control. (Deprecated)
+        /// Returns or sets the text of the JustGage control. (Deprecated)
         /// </summary>
+        /// <remarks>
+        /// This property is obsolete, use <see cref="Label"/> instead. The text is displayed as the label
+        /// below the value only while the <see cref="Label"/> property has never been assigned.
+        /// </remarks>
         /// <since>3.5.4</since>
         [DesignerActionList]
         [SRCategory("CatAppearance")]
@@ -258,6 +297,10 @@ namespace Wisej.Web.Ext.JustGage
 		/// <summary>
 		/// Returns or sets a value that indicates whether the title should be above or below the gauge.
 		/// </summary>
+		/// <remarks>
+		/// The value is passed to the client library as "above" or "below". The bundled JustGage 1.7.0 library
+		/// doesn't render a title, therefore this property currently has no visible effect.
+		/// </remarks>
 		[DefaultValue(JustGageTitlePosition.Above)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets a value that indicates whether the title should be above or below the gauge.")]
@@ -298,6 +341,10 @@ namespace Wisej.Web.Ext.JustGage
 		/// <summary>
 		/// Returns or sets a value that indicates whether the min and max labels should be displayed.
 		/// </summary>
+		/// <remarks>
+		/// The labels show the values of <see cref="Minimum"/> and <see cref="Maximum"/> below the ends of the gauge,
+		/// using the <see cref="LabelColor"/>.
+		/// </remarks>
 		[DefaultValue(true)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets a value that indicates whether the min and max labels should be displayed.")]
@@ -346,6 +393,9 @@ namespace Wisej.Web.Ext.JustGage
 		/// <summary>
 		/// Returns or sets a value that indicates whether the gauge display should be reversed.
 		/// </summary>
+		/// <remarks>
+		/// When true, the gauge fills from right to left and the min and max labels are swapped.
+		/// </remarks>
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets a value that indicates whether the gauge display should be reversed.")]
@@ -368,8 +418,12 @@ namespace Wisej.Web.Ext.JustGage
 		private bool _reverse = false;
 
 		/// <summary>
-		/// Returns or sets a value that indicates whether the value should display under the gauge.
+		/// Returns or sets a value that indicates whether the value text should be displayed in the gauge.
 		/// </summary>
+		/// <remarks>
+		/// The value text is formatted according to <see cref="Decimals"/>, <see cref="HumanFriendly"/>,
+		/// <see cref="FormatNumber"/> and <see cref="Symbol"/> and is drawn using the <see cref="ValueColor"/>.
+		/// </remarks>
 		[DefaultValue(true)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets a value that indicates whether the value should display under the gauge.")]
@@ -419,6 +473,10 @@ namespace Wisej.Web.Ext.JustGage
 		/// <summary>
 		/// Returns or sets a value that indicates whether the gauge sectors should change with a gradient.
 		/// </summary>
+		/// <remarks>
+		/// When true, the color of the gauge level blends smoothly between the sector colors; when false,
+		/// the color changes in steps. This property is ignored when <see cref="CustomSectors"/> is set.
+		/// </remarks>
 		[DefaultValue(true)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets a value that indicates whether the gauge sectors should change with a gradient.")]
@@ -443,8 +501,20 @@ namespace Wisej.Web.Ext.JustGage
 
 		/// <summary>
 		/// Returns or sets a value that indicates whether large numbers are displayed in a human friendly fashion for min/max and value.
-		/// ie. 1234567 -> 1.2M
 		/// </summary>
+		/// <remarks>
+		/// Numbers are divided by 1000 for each step and suffixed with K, M, G, T, P or E, i.e. 1234567 is displayed as 1M,
+		/// or as 1.2M when <see cref="Decimals"/> is 1. When true, <see cref="FormatNumber"/> is ignored.
+		/// </remarks>
+		/// <example>
+		/// Displaying large values with one decimal place:
+		/// <code><![CDATA[
+		/// this.justGage1.Maximum = 5000000;
+		/// this.justGage1.HumanFriendly = true;
+		/// this.justGage1.Decimals = 1;
+		/// this.justGage1.Value = 1234567; // displays "1.2M"
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets a value that indicates whether large numbers are displayed in a human friendly fashion for min/max and value.")]
@@ -469,8 +539,11 @@ namespace Wisej.Web.Ext.JustGage
 
 		/// <summary>
 		/// Returns or sets the number of decimal places to display.
-		/// Ignored (by JustGage) if humanFriendly is true.
 		/// </summary>
+		/// <remarks>
+		/// When <see cref="HumanFriendly"/> is true, the value is used as the number of decimal places of the
+		/// abbreviated numbers. It's ignored when <see cref="FormatNumber"/> is true and <see cref="HumanFriendly"/> is false.
+		/// </remarks>
 		[DefaultValue(0)]
 		[RefreshProperties(RefreshProperties.All)]
 		[SRCategory("CatBehavior")]
@@ -492,8 +565,11 @@ namespace Wisej.Web.Ext.JustGage
 
 		/// <summary>
 		/// Returns or sets a value that indicates whether the number should be displayed with thousand separators.
-		/// (Ignored if humanFriendly is true)
 		/// </summary>
+		/// <remarks>
+		/// The separator is always a comma, regardless of the current culture, and the number is displayed
+		/// without rounding to <see cref="Decimals"/>. This property is ignored when <see cref="HumanFriendly"/> is true.
+		/// </remarks>
 		[DefaultValue(false)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets a value that indicates whether the number should be displayed with thousand separators.")]
@@ -516,8 +592,12 @@ namespace Wisej.Web.Ext.JustGage
 		private bool _formatNumber = false;
 
 		/// <summary>
-		/// Returns or sets a value that indicates whether the value change should be animated.
+		/// Returns or sets a value that indicates whether the value text should be animated.
 		/// </summary>
+		/// <remarks>
+		/// When true, the value text counts up (or down) to the new value while the gauge level animates;
+		/// when false, the final value is displayed immediately.
+		/// </remarks>
 		[DefaultValue(false)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets a value that indicates whether the value change should be animated.")]
@@ -542,6 +622,10 @@ namespace Wisej.Web.Ext.JustGage
         /// <summary>
         /// Returns or sets a value that indicates whether the Gauge will fill starting from the center, rather than from the min value.
         /// </summary>
+        /// <remarks>
+        /// Useful with a range centered on zero, i.e. <see cref="Minimum"/> = -50 and <see cref="Maximum"/> = 50:
+        /// positive values fill to the right of the center and negative values to the left.
+        /// </remarks>
         [DefaultValue(false)]
         [SRCategory("CatAppearance")]
         [Description("Returns or sets a value that indicates whether the Gauge will fill starting from the center, rather than from the min value.")]
@@ -562,8 +646,11 @@ namespace Wisej.Web.Ext.JustGage
         private bool _differential = false;
 
         /// <summary>
-        /// Returns or sets a value that indicates the type of animation used by the gage.
+        /// Returns or sets a value that indicates the type of animation used when the gauge is first displayed.
         /// </summary>
+        /// <remarks>
+        /// The gauge is recreated, and the start animation is played again, every time a property other than <see cref="Value"/> changes.
+        /// </remarks>
         [DefaultValue(JustGageAnimationType.EaseIn)]
         [SRCategory("CatAppearance")]
         [Description("Returns or sets a value that indicates the type of animation used by the gage.")]
@@ -585,6 +672,9 @@ namespace Wisej.Web.Ext.JustGage
 		/// <summary>
 		/// Returns or sets a value that indicates the type of animation used when the value is refreshed.
 		/// </summary>
+		/// <remarks>
+		/// The refresh animation is played when the <see cref="Value"/> property changes.
+		/// </remarks>
 		[DefaultValue(JustGageAnimationType.EaseIn)]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets a value that indicates the type of animation used when the value is refreshed.")]
@@ -663,8 +753,25 @@ namespace Wisej.Web.Ext.JustGage
 		}
 
 		/// <summary>
-		/// Gets or sets custom sectors for the gauge.
+		/// Returns or sets the custom sectors for the gauge.
 		/// </summary>
+		/// <remarks>
+		/// Each <see cref="CustomSector"/> defines a range of absolute values and the color used to draw the gauge level
+		/// when the value is within the range. When custom sectors are set, <see cref="Gradient"/> is ignored; values that
+		/// don't fall in any sector use the default colors. Changes to the items of the array are not detected:
+		/// assign a new array to update the gauge.
+		/// </remarks>
+		/// <example>
+		/// Coloring the gauge green, yellow and red depending on the value:
+		/// <code><![CDATA[
+		/// this.justGage1.CustomSectors = new CustomSector[]
+		/// {
+		///     new CustomSector { Lo = 0, Hi = 60, Color = Color.Green },
+		///     new CustomSector { Lo = 61, Hi = 85, Color = Color.Gold },
+		///     new CustomSector { Lo = 86, Hi = 100, Color = Color.Red }
+		/// };
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[MergableProperty(false)]
 		[TypeConverter(typeof(ArrayConverter))]
@@ -688,8 +795,11 @@ namespace Wisej.Web.Ext.JustGage
 		private CustomSector[] _customSectors;
 
 		/// <summary>
-		/// Returns or sets the label to display below the gage.
+		/// Returns or sets the label to display below the value.
 		/// </summary>
+		/// <remarks>
+		/// The label is drawn using the <see cref="LabelColor"/>. Setting this property to null sets it to an empty string.
+		/// </remarks>
 		[DefaultValue("")]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the label to display below the gage.")]
@@ -718,6 +828,17 @@ namespace Wisej.Web.Ext.JustGage
 		/// <summary>
 		/// Returns or sets the symbol to display with the value.
 		/// </summary>
+		/// <remarks>
+		/// The symbol is appended to the value text, i.e. "%" or " km/h". Setting this property to null sets it to an empty string.
+		/// </remarks>
+		/// <example>
+		/// Displaying a percentage:
+		/// <code><![CDATA[
+		/// this.justGage1.Symbol = "%";
+		/// this.justGage1.Label = "CPU";
+		/// this.justGage1.Value = 42;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue("")]
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the symbol to display with the value.")]
@@ -745,6 +866,10 @@ namespace Wisej.Web.Ext.JustGage
 		/// <summary>
 		/// Returns or sets the label color.
 		/// </summary>
+		/// <remarks>
+		/// The color is used for the <see cref="Label"/> text and the min and max labels. When not set,
+		/// it's read from the "labelColor" color of the current theme.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the label color.")]
 		public Color LabelColor
@@ -787,6 +912,9 @@ namespace Wisej.Web.Ext.JustGage
 		/// <summary>
 		/// Returns or sets the value color.
 		/// </summary>
+		/// <remarks>
+		/// The color is used for the value text. When not set, it's read from the "valueColor" color of the current theme.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[Description("Returns or sets the value color.")]
 		public Color ValueColor
@@ -827,7 +955,7 @@ namespace Wisej.Web.Ext.JustGage
 		}
 
 		/// <summary>
-		/// Indicates the border style for the control.
+		/// Returns or sets the border style for the control.
 		/// </summary>
 		/// <returns>One of the <see cref="T:Wisej.Web.BorderStyle" /> values. The default is BorderStyle.None.</returns>
 		[DefaultValue(BorderStyle.None)]

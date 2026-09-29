@@ -26,8 +26,43 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.SmoothieChart
 {
 	/// <summary>
-	/// Implements the SmoothieChart (http://smoothiecharts.org/). A JavaScript charting library for streaming data.
+	/// Represents a real-time streaming line chart based on the SmoothieChart JavaScript library
+	/// <see href="http://smoothiecharts.org/"/>.
 	/// </summary>
+	/// <remarks>
+	/// <para>
+	/// The chart polls the server every <see cref="DataFrequency"/> milliseconds and fires the <see cref="DataNeeded"/>
+	/// event once for each line in <see cref="TimeSeries"/>. The handler provides the value of the new point, which is
+	/// appended to the line and scrolled from right to left, delayed by <see cref="UpdateDelay"/> milliseconds to
+	/// produce a smooth animation.
+	/// </para>
+	/// <para>
+	/// The <see cref="Control.BackColor"/> is used for the chart background and the <see cref="Control.ForeColor"/>
+	/// for the labels.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// Streaming the CPU usage and the memory usage in two lines:
+	/// <code><![CDATA[
+	/// var chart = new SmoothieChart
+	/// {
+	///     Dock = DockStyle.Fill,
+	///     MinValue = 0,
+	///     MaxValue = 100,
+	///     DataFrequency = 1000,
+	///     UpdateDelay = 2000
+	/// };
+	/// chart.TimeSeries.Add(new TimeSeries { LineColor = Color.Lime, LineWidth = 2 });
+	/// chart.TimeSeries.Add(new TimeSeries { LineColor = Color.Orange, FillColor = Color.FromArgb(60, Color.Orange) });
+	/// 
+	/// chart.DataNeeded += (s, e) =>
+	/// {
+	///     e.Value = e.LineIndex == 0 ? GetCpuUsage() : GetMemoryUsage();
+	/// };
+	/// 
+	/// this.Controls.Add(chart);
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(SmoothieChart))]
 	[DefaultEvent("DataNeeded")]
@@ -36,8 +71,11 @@ namespace Wisej.Web.Ext.SmoothieChart
 	public class SmoothieChart : Control
 	{
 		/// <summary>
-		/// constructor
+		/// Initializes a new instance of the <see cref="SmoothieChart"/> control.
 		/// </summary>
+		/// <remarks>
+		/// The new chart has a black background, white labels and white grid lines, and it's not focusable.
+		/// </remarks>
 		public SmoothieChart()
 		{
 			this.TabStop = false;
@@ -262,8 +300,20 @@ namespace Wisej.Web.Ext.SmoothieChart
 		#region Properties
 
 		/// <summary>
-		/// UpdateDelay in milliseconds. It is the time lag between the data received from the server and the screen update.
+		/// Returns or sets the delay in milliseconds between the time of a data point and the moment it's displayed in the chart.
 		/// </summary>
+		/// <remarks>
+		/// The chart draws the lines this many milliseconds in the past, so that the points received from the server
+		/// are already available when they scroll into view. Use a value larger than <see cref="DataFrequency"/> plus the
+		/// round-trip time to the server, otherwise the right end of the lines appears to jump. The default is 1000.
+		/// </remarks>
+		/// <example>
+		/// Requesting a new point every 2 seconds and keeping the animation smooth:
+		/// <code><![CDATA[
+		/// this.smoothieChart1.DataFrequency = 2000;
+		/// this.smoothieChart1.UpdateDelay = 3000;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(1000)]
 		[SRCategory("CatBehavior")]
 		[Description("UpdateDelay in milliseconds. It is the time lag between the data received from the server and the screen update.")]
@@ -283,8 +333,13 @@ namespace Wisej.Web.Ext.SmoothieChart
 		private int _updateDelay = 1000;
 
 		/// <summary>
-		/// DataFrequency in milliseconds. It is the interval between data requests.
+		/// Returns or sets the interval in milliseconds between the data requests sent to the server.
 		/// </summary>
+		/// <remarks>
+		/// Each request fires the <see cref="DataNeeded"/> event once for every line in <see cref="TimeSeries"/>.
+		/// A request is skipped if the previous one hasn't completed yet. Set to 0 to stop requesting data.
+		/// The default is 500. See also <see cref="UpdateDelay"/>.
+		/// </remarks>
 		[DefaultValue(500)]
 		[SRCategory("CatBehavior")]
 		[Description("DataFrequency in milliseconds. It is the interval between data requests.")]
@@ -304,8 +359,12 @@ namespace Wisej.Web.Ext.SmoothieChart
 		private int _dataFrequency = 500;
 
 		/// <summary>
-		/// ScrollSpeed in milliseconds/pixel.
+		/// Returns or sets the scroll speed expressed in milliseconds per pixel.
 		/// </summary>
+		/// <remarks>
+		/// Each horizontal pixel represents this many milliseconds: higher values scroll more slowly and show a longer
+		/// time span in the same width. The default is 20 (a 500 pixels wide chart shows 10 seconds).
+		/// </remarks>
 		[DefaultValue(20)]
 		[SRCategory("CatBehavior")]
 		[Description("ScrollSpeed in milliseconds/pixel.")]
@@ -325,8 +384,11 @@ namespace Wisej.Web.Ext.SmoothieChart
 		private int _scrollSpeed = 20;
 
 		/// <summary>
-		/// Returns or sets the background color for the control.
+		/// Returns or sets the background color of the chart.
 		/// </summary>
+		/// <remarks>
+		/// The default is <see cref="Color.Black"/>.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ControlBackColorDescr")]
 		[DefaultValue(typeof(Color), "Black")]
@@ -337,8 +399,11 @@ namespace Wisej.Web.Ext.SmoothieChart
 		}
 
 		/// <summary>
-		/// Returns or sets the text color for the control.
+		/// Returns or sets the color of the labels displayed in the chart.
 		/// </summary>
+		/// <remarks>
+		/// The default is <see cref="Color.White"/>.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ControlBackColorDescr")]
 		[DefaultValue(typeof(Color), "White")]
@@ -349,7 +414,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 		}
 
 		/// <summary>
-		/// Returns or sets the text color for the control.
+		/// Returns or sets the font size in pixels used to display the labels.
 		/// </summary>
 		[SRCategory("CatAppearance")]
 		[Description("The font size used to display the labels.")]
@@ -389,7 +454,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 		private Color _gridLineColor = Color.White;
 
 		/// <summary>
-		/// Returns or sets the size of the grid lines.
+		/// Returns or sets the width of the grid lines in pixels.
 		/// </summary>
 		[DefaultValue(1)]
 		[SRCategory("CatAppearance")]
@@ -451,7 +516,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 		private bool _showTimeStamps = true;
 
 		/// <summary>
-		/// Indicates the border style for the control.
+		/// Returns or sets the border style for the control.
 		/// </summary>
 		/// <returns>One of the <see cref="T:Wisej.Web.BorderStyle" /> values. The default is BorderStyle.None.</returns>
 		[DesignerActionList]
@@ -501,6 +566,10 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// <summary>
 		/// Returns or sets the distance between the vertical grid lines in milliseconds/line.
 		/// </summary>
+		/// <remarks>
+		/// The vertical grid lines scroll with the data; with the default value of 1000 there is a line every second.
+		/// The distance in pixels is this value divided by <see cref="ScrollSpeed"/>.
+		/// </remarks>
 		[DefaultValue(1000)]
 		[DesignerActionList]
 		[SRCategory("CatAppearance")]
@@ -522,6 +591,17 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// <summary>
 		/// Returns or sets the minimum value. Leave null to let the chart dynamically adjust the minimum value.
 		/// </summary>
+		/// <remarks>
+		/// When null (default), the bottom of the chart follows the smallest visible value.
+		/// Set both <see cref="MinValue"/> and <see cref="MaxValue"/> to use a fixed range.
+		/// </remarks>
+		/// <example>
+		/// Using a fixed 0-100 range for percentage values:
+		/// <code><![CDATA[
+		/// this.smoothieChart1.MinValue = 0;
+		/// this.smoothieChart1.MaxValue = 100;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets the minimum value. Leave null to let the chart dynamically adjust the minimum value.")]
@@ -542,6 +622,9 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// <summary>
 		/// Returns or sets the maximum value. Leave null to let the chart dynamically adjust the maximum value.
 		/// </summary>
+		/// <remarks>
+		/// When null (default), the top of the chart follows the largest visible value. See <see cref="MinValue"/>.
+		/// </remarks>
 		[DefaultValue(null)]
 		[SRCategory("CatBehavior")]
 		[Description("Returns or sets the maximum value. Leave null to let the chart dynamically adjust the maximum value.")]
@@ -560,8 +643,25 @@ namespace Wisej.Web.Ext.SmoothieChart
 		private int? _maxValue = null;
 
 		/// <summary>
-		/// Returns or sets the <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> lines to display in the chart.
+		/// Returns the collection of <see cref="T:Wisej.Web.Ext.SmoothieChart.TimeSeries"/> lines to display in the chart.
 		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// The <see cref="DataNeeded"/> event is fired once for each line, the index of the line in this collection is
+		/// passed in <see cref="DataNeededEventArgs.LineIndex"/>.
+		/// </para>
+		/// <para>
+		/// Changing the collection sends all the lines to the client again, where they are recreated:
+		/// the data points already plotted are cleared.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Adding two lines to the chart:
+		/// <code><![CDATA[
+		/// this.smoothieChart1.TimeSeries.Add(new TimeSeries { LineColor = Color.Red, LineWidth = 2 });
+		/// this.smoothieChart1.TimeSeries.Add(new TimeSeries { LineColor = Color.DodgerBlue });
+		/// ]]></code>
+		/// </example>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public TimeSeriesCollection TimeSeries
 		{
@@ -575,7 +675,7 @@ namespace Wisej.Web.Ext.SmoothieChart
 		private TimeSeriesCollection _timeSeries;
 
 		/// <summary>
-		/// Returns or sets the type of interpolation to use when drawing this time series.
+		/// Returns or sets the type of interpolation used to connect the points of all the time series.
 		/// </summary>
 		[DefaultValue(InterpolationType.Bezier)]
 		[SRCategory("CatAppearance")]
@@ -662,6 +762,9 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// the <see cref="P:Wisej.Base.ControlBase.Focusable"/> property is set to true.
 		/// </summary>
 		/// <returns>True if the control can receive the focus using the TAB key. The default is false.</returns>
+		/// <remarks>
+		/// The chart cannot receive the focus: assigning this property has no effect.
+		/// </remarks>
 		[Browsable(false)]
 		[DefaultValue(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -676,6 +779,9 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// Returns or sets whether the control can gain the focus.
 		/// </summary>
 		/// <returns>true if the control is focusable; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// The chart cannot receive the focus: assigning this property has no effect.
+		/// </remarks>
 		[Browsable(false)]
 		[DefaultValue(false)]
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -786,16 +892,43 @@ namespace Wisej.Web.Ext.SmoothieChart
 		#region Methods
 
 		/// <summary>
-		/// Starts the data streaming.
+		/// Starts, or resumes, the scrolling animation of the chart.
 		/// </summary>
+		/// <remarks>
+		/// The chart starts automatically when it's first displayed. This method doesn't affect the data requests,
+		/// which are controlled by <see cref="DataFrequency"/>.
+		/// </remarks>
+		/// <example>
+		/// Resuming the chart:
+		/// <code><![CDATA[
+		/// private void buttonResume_Click(object sender, EventArgs e)
+		/// {
+		///     this.smoothieChart1.Start();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Start()
 		{
 			Call("start");
 		}
 
 		/// <summary>
-		/// Stops the data streaming.
+		/// Stops the scrolling animation of the chart, freezing the current view.
 		/// </summary>
+		/// <remarks>
+		/// The chart keeps requesting data every <see cref="DataFrequency"/> milliseconds and firing <see cref="DataNeeded"/>;
+		/// set <see cref="DataFrequency"/> to 0 to stop the requests as well.
+		/// </remarks>
+		/// <example>
+		/// Pausing the chart and the data requests:
+		/// <code><![CDATA[
+		/// private void buttonPause_Click(object sender, EventArgs e)
+		/// {
+		///     this.smoothieChart1.Stop();
+		///     this.smoothieChart1.DataFrequency = 0;
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void Stop()
 		{
 			Call("stop");
@@ -804,7 +937,19 @@ namespace Wisej.Web.Ext.SmoothieChart
 		/// <summary>
 		/// Returns the data requested by the widget.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>An array with one element for each <see cref="TimeSeries"/> line, each with the <c>time</c> and <c>value</c> of the new point.</returns>
+		/// <remarks>
+		/// This method is called by the client widget every <see cref="DataFrequency"/> milliseconds; it fires the
+		/// <see cref="DataNeeded"/> event once for each line and collects the returned values. Applications don't
+		/// normally need to call it directly.
+		/// </remarks>
+		/// <example>
+		/// Collecting the next data points on the server, i.e. in a unit test:
+		/// <code><![CDATA[
+		/// var points = (object[])this.smoothieChart1.GetData();
+		/// System.Diagnostics.Debug.WriteLine($"{points.Length} points generated.");
+		/// ]]></code>
+		/// </example>
 		[WebMethod]
 		public object GetData()
 		{

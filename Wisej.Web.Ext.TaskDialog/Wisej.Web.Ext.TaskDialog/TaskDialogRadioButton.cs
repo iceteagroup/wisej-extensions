@@ -27,30 +27,29 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.TaskDialog
 {
 	/// <summary>
-	/// 
-	///              Represents a radio button control of a task dialog.
-	///            
-	///</summary>
+	/// Represents a radio button control of a task dialog.
+	/// </summary>
+	/// <remarks>
+	/// Add instances to the <see cref="TaskDialogPage.RadioButtons"/> collection of a page. Only one
+	/// radio button of a page can be checked at a time.
+	/// </remarks>
 	public class TaskDialogRadioButton : TaskDialogControl
 	{
 
 		#region Constructors
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogRadioButton" /> class.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogRadioButton" /> class.
+		/// </summary>
 		public TaskDialogRadioButton()
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogRadioButton" /> class
-		///              using the given <paramref name="text" />.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogRadioButton" /> class
+		/// using the given <paramref name="text" />.
+		/// </summary>
+		/// <param name="text">The text associated with the radio button.</param>
 		public TaskDialogRadioButton(string text)
 		{
 			this._text = text;
@@ -70,14 +69,12 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Properties
 		/// <summary>
-		/// 
-		///              Gets or sets a value indicating whether the button can respond to user interaction.
-		///            
-		///</summary>
+		/// Returns or sets a value indicating whether the button can respond to user interaction.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set on a radio button that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set on a radio button that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
 		public bool Enabled
 		{
 			get
@@ -96,13 +93,11 @@ namespace Wisej.Web.Ext.TaskDialog
 		private bool _enabled;
 
 		/// <summary>
-		/// 
-		///              Gets or sets the text associated with this control.
-		///            
-		///</summary>
+		/// Returns or sets the text associated with this control.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this radio button instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this radio button instance is currently bound to a task dialog.
+		/// </exception>
 		public string Text
 		{
 			get
@@ -121,23 +116,38 @@ namespace Wisej.Web.Ext.TaskDialog
 		private string _text;
 
 		/// <summary>
-		/// 
-		///              Gets or set a value indicating whether the <see cref="TaskDialogRadioButton" /> is
-		///              in the checked state.
-		///            
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="TaskDialogRadioButton" /> is
+		/// in the checked state.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and the task dialog has started navigating to a new page containing this radio button instance,
-		///              but the <see cref="E:System.Windows.Forms.TaskDialogPage.Created" /> event has not been raised yet.
-		///              - or -
-		///              The property is set on a radio button instance that is currently bound to a task dialog,
-		///              but the value to be set is <see langword="false" />.
-		///              - or -
-		///              The property is set within the <see cref="E:System.Windows.Forms.TaskDialogRadioButton.CheckedChanged" /> event of one of the radio buttons of the currently bound task dialog.
-		///              - or -
-		///              The property is set on a radio button instance that is currently bound to a task dialog, but the dialog
-		///              has just started navigating to a different page.
-		///            </exception>
+		/// The property is set and the task dialog has started navigating to a new page containing this radio button instance,
+		/// but the <see cref="TaskDialogPage.Created" /> event has not been raised yet.
+		/// - or -
+		/// The property is set on a radio button instance that is currently bound to a task dialog,
+		/// but the value to be set is <see langword="false" />.
+		/// - or -
+		/// The property is set within the <see cref="CheckedChanged" /> event of one of the radio buttons of the currently bound task dialog.
+		/// - or -
+		/// The property is set on a radio button instance that is currently bound to a task dialog, but the dialog
+		/// has just started navigating to a different page.
+		/// </exception>
+		/// <remarks>
+		/// While the page is shown in a task dialog, a radio button can only be checked; it is unchecked
+		/// automatically when another radio button of the page is checked.
+		/// </remarks>
+		/// <example>
+		/// Pre-selecting an option and reacting when the user changes it:
+		/// <code><![CDATA[
+		/// var daily = page.RadioButtons.Add("Daily");
+		/// var weekly = page.RadioButtons.Add("Weekly");
+		/// weekly.Checked = true;
+		/// daily.CheckedChanged += (s, e) =>
+		/// {
+		///     if (daily.Checked)
+		///         this.schedule = "daily";
+		/// };
+		/// ]]></code>
+		/// </example>
 		public bool Checked
 		{
 			get
@@ -158,11 +168,18 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Methods
 		/// <summary>
-		/// 
-		///              Returns a string that represents the current <see cref="TaskDialogRadioButton" /> control.
-		///            
-		///</summary>
+		/// Returns a string that represents the current <see cref="TaskDialogRadioButton" /> control.
+		/// </summary>
 		/// <returns>A string that contains the control text.</returns>
+		/// <remarks>
+		/// This method is not implemented yet in this version and returns an empty string.
+		/// </remarks>
+		/// <example>
+		/// Getting the text of the checked radio button:
+		/// <code><![CDATA[
+		/// var selected = page.RadioButtons.FirstOrDefault(r => r.Checked)?.ToString();
+		/// ]]></code>
+		/// </example>
 		public override String ToString()
 		{
 			// TODO: Implement

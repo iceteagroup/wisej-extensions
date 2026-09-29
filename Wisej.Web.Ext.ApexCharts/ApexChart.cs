@@ -29,6 +29,37 @@ using Wisej.Base;
 
 namespace Wisej.Web.Ext.ApexCharts
 {
+	/// <summary>
+	/// Integrates the ApexCharts (<see href="https://apexcharts.com/" />) JavaScript charting library.
+	/// </summary>
+	/// <remarks>
+	/// The chart is configured using the <see cref="Widget.Options"/> object, which is passed to the
+	/// ApexCharts constructor on the client. When no options are set, an empty line chart is shown.
+	/// The chart always fills the control, so the <c>chart.width</c> and <c>chart.height</c> options are ignored.
+	/// The JavaScript and CSS files are loaded from the source selected in the
+	/// <c>Wisej.Web.Ext.ApexCharts.json</c> configuration file.
+	/// </remarks>
+	/// <example>
+	/// The following example shows a bar chart with monthly sales:
+	/// <code><![CDATA[
+	/// var chart = new ApexChart
+	/// {
+	///     Dock = DockStyle.Fill
+	/// };
+	///
+	/// chart.Options.chart = new { type = "bar" };
+	/// chart.Options.series = new[]
+	/// {
+	///     new { name = "Sales", data = new[] { 30, 40, 45, 50, 49, 60 } }
+	/// };
+	/// chart.Options.xaxis = new
+	/// {
+	///     categories = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun" }
+	/// };
+	///
+	/// this.Controls.Add(chart);
+	/// ]]></code>
+	/// </example>
 	public class ApexChart : Widget
 	{
 
@@ -317,7 +348,21 @@ namespace Wisej.Web.Ext.ApexCharts
 			/// <summary>
 			/// String representation of <see cref="WidgetTemplate"/>
 			/// </summary>
-			/// <returns></returns>
+			/// <returns>The <see cref="Id"/> of the template, or a "(none)" placeholder if the <see cref="Id"/> is null.</returns>
+			/// <remarks>
+			/// This is the text that identifies the template in the Visual Studio collection editor.
+			/// </remarks>
+			/// <example>
+			/// <code><![CDATA[
+			/// var template = new ApexChart.WidgetTemplate
+			/// {
+			///     Id = "tooltipTemplate",
+			///     Template = "<div class='tooltip'>{{:value}}</div>"
+			/// };
+			///
+			/// Console.WriteLine(template.ToString()); // tooltipTemplate
+			/// ]]></code>
+			/// </example>
 			public override string ToString()
 			{
 				return this.Id ?? SR.GetString("toStringNone");
@@ -393,7 +438,22 @@ namespace Wisej.Web.Ext.ApexCharts
 			/// <summary>
 			/// Gets the string representation of <see cref="WidgetEventHandler"/>
 			/// </summary>
-			/// <returns></returns>
+			/// <returns>The <see cref="Name"/> of the event handler, or a "(none)" placeholder if the <see cref="Name"/> is null.</returns>
+			/// <remarks>
+			/// This is the text that identifies the event handler in the Visual Studio collection editor.
+			/// </remarks>
+			/// <example>
+			/// <code><![CDATA[
+			/// var handler = new ApexChart.WidgetEventHandler
+			/// {
+			///     Name = "dataPointSelection",
+			///     Source = "console.log('Point selected', arguments);"
+			/// };
+			///
+			/// this.apexChart1.WidgetEvents = new[] { handler };
+			/// Console.WriteLine(handler.ToString()); // dataPointSelection
+			/// ]]></code>
+			/// </example>
 			public override string ToString()
 			{
 				return this.Name ?? SR.GetString("toStringNone");
@@ -447,7 +507,29 @@ namespace Wisej.Web.Ext.ApexCharts
 			/// <summary>
 			/// String representation of <see cref="WidgetFunction"/>
 			/// </summary>
-			/// <returns></returns>
+			/// <returns>The <see cref="Name"/> of the function, or a "(none)" placeholder if the <see cref="Name"/> is null.</returns>
+			/// <remarks>
+			/// This is the text that identifies the function in the Visual Studio collection editor.
+			/// </remarks>
+			/// <example>
+			/// The following example adds a function that formats the Y axis labels as currency.
+			/// The option value <c>"(value)=>formatCurrency"</c> tells the widget to use the function:
+			/// <code><![CDATA[
+			/// var formatter = new ApexChart.WidgetFunction
+			/// {
+			///     Name = "formatCurrency",
+			///     Source = "return '$' + value.toFixed(2);"
+			/// };
+			///
+			/// this.apexChart1.WidgetFunctions = new[] { formatter };
+			/// this.apexChart1.Options.yaxis = new
+			/// {
+			///     labels = new { formatter = "(value)=>formatCurrency" }
+			/// };
+			///
+			/// Console.WriteLine(formatter.ToString()); // formatCurrency
+			/// ]]></code>
+			/// </example>
 			public override string ToString()
 			{
 				return this.Name ?? SR.GetString("toStringNone");

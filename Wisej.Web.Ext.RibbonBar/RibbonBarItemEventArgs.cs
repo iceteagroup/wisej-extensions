@@ -34,6 +34,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// using the specified parameters.
 		/// </summary>
 		/// <param name="item">The <see cref="RibbonBarItem"/> that originated the event.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="item"/> is null.</exception>
 		public RibbonBarItemEventArgs(RibbonBarItem item)
 		{
 			if (item == null)
@@ -43,9 +44,21 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// The <see cref="RibbonBarItem"/> that originated the event.
+		/// Returns the <see cref="RibbonBarItem"/> that originated the event.
 		/// </summary>
 		/// <returns>A reference to the <see cref="RibbonBarItem"/> that originated this event.</returns>
+		/// <example>
+		/// Handling the clicks of different item types in the <see cref="RibbonBar.ItemClick"/> event:
+		/// <code><![CDATA[
+		/// private void ribbonBar1_ItemClick(object sender, RibbonBarItemEventArgs e)
+		/// {
+		///     if (e.Item is RibbonBarItemCheckBox checkBox)
+		///         SetOption(checkBox.Name, checkBox.Checked);
+		///     else
+		///         ExecuteCommand(e.Item.Name);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public RibbonBarItem Item
 		{
 			get;

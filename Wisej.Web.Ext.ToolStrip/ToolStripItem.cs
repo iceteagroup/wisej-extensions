@@ -26,8 +26,13 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Represents the abstract base class that manages events and layout for all the elements that a <see cref="ToolStrip" /> or <see cref="ToolStripDropDown" /> can contain.
-	///</summary>
+	/// Represents the base class that manages events and layout for all the elements that a <see cref="ToolStrip" /> or <see cref="ToolStripDropDown" /> can contain.
+	/// </summary>
+	/// <remarks>
+	/// Applications normally use one of the derived classes, such as <see cref="ToolStripButton" />, <see cref="ToolStripLabel" />,
+	/// <see cref="ToolStripSeparator" />, <see cref="ToolStripDropDownButton" />, <see cref="ToolStripSplitButton" /> or <see cref="ToolStripMenuItem" />,
+	/// and add them to the <see cref="ToolStrip.Items" /> collection of the owner <see cref="ToolStrip" />.
+	/// </remarks>
 	public class ToolStripItem : Wisej.Web.Component
 	{
 
@@ -35,18 +40,18 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ToolStripItem" /> class.
-		///</summary>
+		/// </summary>
 		public ToolStripItem()
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripItem" /> class with the specified name, image, and event handler.
-		///</summary>
-		/// <param name="text">A <see cref="System.String" /> representing the name of the <see cref="ToolStripItem" />.</param>
+		/// Initializes a new instance of the <see cref="ToolStripItem" /> class with the specified text, image, and event handler.
+		/// </summary>
+		/// <param name="text">The text to display on the <see cref="ToolStripItem" />.</param>
 		/// <param name="image">The <see cref="System.Drawing.Image" /> to display on the <see cref="ToolStripItem" />.</param>
-		/// <param name="onClick">Raises the <see cref="ToolStripItem.Click" /> event when the user clicks the <see cref="ToolStripItem" />.</param>
+		/// <param name="onClick">The event handler attached to the <see cref="ToolStripItem.Click" /> event.</param>
 		public ToolStripItem(string text, Image image, EventHandler onClick)
 		{
 			//this._text = text;
@@ -56,12 +61,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripItem" /> class with the specified display text, image, event handler, and name. 
-		///</summary>
+		/// Initializes a new instance of the <see cref="ToolStripItem" /> class with the specified display text, image, event handler, and name.
+		/// </summary>
 		/// <param name="text">The text to display on the <see cref="ToolStripItem" />.</param>
-		/// <param name="image">The Image to display on the <see cref="ToolStripItem" />.</param>
-		/// <param name="onClick">The event handler for the <see cref="ToolStripItem.Click" /> event.</param>
-		/// <param name="name">The name of the <see cref="ToolStripItem" />.</param>
+		/// <param name="image">The <see cref="System.Drawing.Image" /> to display on the <see cref="ToolStripItem" />.</param>
+		/// <param name="onClick">The event handler attached to the <see cref="ToolStripItem.Click" /> event.</param>
+		/// <param name="name">The name of the <see cref="ToolStripItem" />, see <see cref="ToolStripItem.Name" />.</param>
 		public ToolStripItem(string text, Image image, EventHandler onClick, string name)
 		{
 			//this._text = text;
@@ -256,10 +261,22 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the item aligns towards the beginning or end of the <see cref="ToolStrip" />.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="ToolStripItemAlignment" /> values. </exception>
-		/// <returns>One of the <see cref="ToolStripItemAlignment" /> values. The default is <see cref="Wisej.Web.Ext.ToolStripItemAlignment.Left" />.</returns>
+		/// Returns or sets a value indicating whether the item aligns towards the beginning or end of the <see cref="ToolStrip" />.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripItemAlignment" /> values. The default is <see cref="ToolStripItemAlignment.Left" />.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="ToolStripItemAlignment" /> values.</exception>
+		/// <remarks>
+		/// Items aligned to <see cref="ToolStripItemAlignment.Right" /> are laid out starting from the end of the <see cref="ToolStrip" />,
+		/// in the order in which they appear in the <see cref="ToolStrip.Items" /> collection.
+		/// </remarks>
+		/// <example>
+		/// Placing a "Help" button at the far end of a tool bar:
+		/// <code><![CDATA[
+		/// var help = new ToolStripButton("Help");
+		/// help.Alignment = ToolStripItemAlignment.Right;
+		/// this.toolStrip1.Items.Add(help);
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(ToolStripItemAlignment.Left)]
 		[SRCategory("CatLayout")]
 		[SRDescription("ToolStripItemAlignmentDescr")]
@@ -280,10 +297,15 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItemAlignment _alignment;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether drag-and-drop and item reordering are handled through events that you implement.
-		///</summary>
-		/// <exception cref="System.ArgumentException"><see cref="ToolStripItem.AllowDrop" /> and <see cref="ToolStrip.AllowItemReorder" /> are both set to true. </exception>
-		/// <returns>true if drag-and-drop operations are allowed in the control; otherwise, false. The default is false.</returns>
+		/// Returns or sets a value indicating whether drag-and-drop and item reordering are handled through events that you implement.
+		/// </summary>
+		/// <returns>true if drag-and-drop operations are allowed on the item; otherwise, false. The default is false.</returns>
+		/// <exception cref="System.ArgumentException"><see cref="ToolStripItem.AllowDrop" /> and <see cref="ToolStrip.AllowItemReorder" /> are both set to true.</exception>
+		/// <remarks>
+		/// When true, the item raises the <see cref="ToolStripItem.DragEnter" />, <see cref="ToolStripItem.DragOver" />,
+		/// <see cref="ToolStripItem.DragLeave" /> and <see cref="ToolStripItem.DragDrop" /> events.
+		/// It cannot be combined with <see cref="ToolStrip.AllowItemReorder" />.
+		/// </remarks>
 		[DefaultValue(false)]
 		[SRCategory("CatDragDrop")]
 		[SRDescription("ToolStripItemAllowDropDescr")]
@@ -307,9 +329,13 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _allowDrop;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the item is automatically sized.
-		///</summary>
+		/// Returns or sets a value indicating whether the item is automatically sized.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripItem" /> is automatically sized; otherwise, false. The default value is true.</returns>
+		/// <remarks>
+		/// When true, the item computes its size from its <see cref="ToolStripItem.Text" />, <see cref="ToolStripItem.Image" />,
+		/// <see cref="ToolStripItem.Font" /> and <see cref="ToolStripItem.Padding" />, and the value assigned to <see cref="ToolStripItem.Size" /> is not used.
+		/// </remarks>
 		[SRCategory("CatBehavior")]
 		[DefaultValue(true)]
 		[Localizable(true)]
@@ -332,9 +358,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _autoSize;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether to use the <see cref="ToolStripItem.Text" /> property or the <see cref="ToolStripItem.ToolTipText" /> property for the <see cref="ToolStripItem" /> ToolTip. 
-		///</summary>
-		/// <returns>true to use the <see cref="ToolStripItem.Text" /> property for the ToolTip; otherwise, false. The default is true.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripItem.Text" /> property is used as the tooltip of the <see cref="ToolStripItem" />
+		/// when no custom tooltip text is set.
+		/// </summary>
+		/// <returns>true to use the <see cref="ToolStripItem.Text" /> property for the tooltip; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// The default value is the value of <see cref="ToolStripItem.DefaultAutoToolTip" />, which is false for the base class and
+		/// true for <see cref="ToolStripButton" />, <see cref="ToolStripDropDownButton" /> and <see cref="ToolStripSplitButton" />.
+		/// </remarks>
 		[DefaultValue(false)]
 		[SRDescription("ToolStripItemAutoToolTipDescr")]
 		[SRCategory("CatBehavior")]
@@ -355,9 +386,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _autoToolTip;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripItem" /> should be placed on a <see cref="ToolStrip" />.
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripItem" /> should be placed on a <see cref="ToolStrip" />.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripItem" /> is placed on a <see cref="ToolStrip" />; otherwise, false.</returns>
+		/// <remarks>
+		/// Setting <see cref="ToolStripItem.Available" /> to false removes the item from the layout without removing it from the
+		/// <see cref="ToolStrip.Items" /> collection. Changing the value raises the <see cref="ToolStripItem.AvailableChanged" /> event.
+		/// </remarks>
+		/// <example>
+		/// Showing an "Admin" button only to administrators:
+		/// <code><![CDATA[
+		/// this.toolStripButtonAdmin.Available = IsAdministrator(Application.Session.UserName);
+		/// ]]></code>
+		/// </example>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[SRDescription("ToolStripItemAvailableDescr")]
 		[Browsable(false)]
@@ -379,9 +420,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _available;
 
 		/// <summary>
-		/// Gets or sets the background image displayed in the item.
-		///</summary>
-		/// <returns>An <see cref="System.Drawing.Image" /> that represents the image to display in the background of the item.</returns>
+		/// Returns or sets the background image displayed in the item.
+		/// </summary>
+		/// <returns>An <see cref="System.Drawing.Image" /> that represents the image to display in the background of the item. The default is null.</returns>
 		[DefaultValue(null)]
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripItemImageDescr")]
@@ -404,9 +445,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Image _backgroundImage;
 
 		/// <summary>
-		/// Gets or sets the background image layout used for the <see cref="ToolStripItem" />.
-		///</summary>
-		/// <returns>One of the <see cref="ImageLayout" /> values. The default value is <see cref="Wisej.Web.Ext.ImageLayout.Tile" />.</returns>
+		/// Returns or sets the background image layout used for the <see cref="ToolStripItem" />.
+		/// </summary>
+		/// <returns>One of the <see cref="ImageLayout" /> values. The default value is <see cref="ImageLayout.Tile" />.</returns>
 		[DefaultValue(ImageLayout.Tile)]
 		[SRCategory("CatAppearance")]
 		[Localizable(true)]
@@ -429,9 +470,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ImageLayout _backgroundImageLayout;
 
 		/// <summary>
-		/// Gets or sets the background color for the item.
-		///</summary>
-		/// <returns>A <see cref="System.Drawing.Color" /> that represents the background color of the item. The default is the value of the <see cref="Control.DefaultBackColor" /> property.</returns>
+		/// Returns or sets the background color for the item.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Color" /> that represents the background color of the item.</returns>
+		/// <remarks>
+		/// Changing the value raises the <see cref="ToolStripItem.BackColorChanged" /> event. Call <see cref="ToolStripItem.ResetBackColor" /> to restore the default color.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripItemBackColorDescr")]
 		public virtual Color BackColor
@@ -452,9 +496,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Color _backColor;
 
 		/// <summary>
-		/// Gets the size and location of the item.
-		///</summary>
-		/// <returns>A <see cref="System.Drawing.Rectangle" /> that represents the size and location of the <see cref="ToolStripItem" />.</returns>
+		/// Returns the size and location of the item.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Rectangle" /> that represents the size and location of the <see cref="ToolStripItem" />, relative to its owner <see cref="ToolStrip" />.</returns>
 		[Browsable(false)]
 		public virtual Rectangle Bounds
 		{
@@ -467,9 +511,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Rectangle _bounds;
 
 		/// <summary>
-		/// Gets the area where content, such as text and icons, can be placed within a <see cref="ToolStripItem" /> without overwriting background borders.
-		///</summary>
-		/// <returns>A <see cref="System.Drawing.Rectangle" /> containing four integers that represent the location and size of <see cref="ToolStripItem" /> contents, excluding its border.</returns>
+		/// Returns the area where content, such as text and icons, can be placed within a <see cref="ToolStripItem" /> without overwriting background borders.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Rectangle" /> that represents the location and size of the <see cref="ToolStripItem" /> contents, excluding its border.</returns>
 		[Browsable(false)]
 		public Rectangle ContentRectangle
 		{
@@ -482,8 +526,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Rectangle _contentRectangle;
 
 		/// <summary>
-		/// Gets a value indicating whether the item can be selected.
-		///</summary>
+		/// Returns a value indicating whether the item can be selected.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripItem" /> can be selected; otherwise, false.</returns>
 		[Browsable(false)]
 		public virtual bool CanSelect
@@ -497,10 +541,10 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _canSelect;
 
 		/// <summary>
-		/// Gets or sets the edges of the container to which a <see cref="ToolStripItem" /> is bound and determines how a <see cref="ToolStripItem" />  is resized with its parent.
-		///</summary>
+		/// Returns or sets the edges of the container to which a <see cref="ToolStripItem" /> is bound and determines how a <see cref="ToolStripItem" /> is resized with its parent.
+		/// </summary>
+		/// <returns>One of the <see cref="AnchorStyles" /> values. The default is <c>Top</c> and <c>Left</c>.</returns>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value is not one of the <see cref="AnchorStyles" /> values.</exception>
-		/// <returns>One of the <see cref="AnchorStyles" /> values.</returns>
 		[DefaultValue(AnchorStyles.Top | AnchorStyles.Left)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
@@ -522,10 +566,10 @@ namespace Wisej.Web.Ext.ToolStrip
 		private AnchorStyles _anchor;
 
 		/// <summary>
-		/// Gets or sets which <see cref="ToolStripItem" /> borders are docked to its parent control and determines how a <see cref="ToolStripItem" /> is resized with its parent.
-		///</summary>
+		/// Returns or sets which <see cref="ToolStripItem" /> borders are docked to its parent control and determines how a <see cref="ToolStripItem" /> is resized with its parent.
+		/// </summary>
+		/// <returns>One of the <see cref="DockStyle" /> values. The default is <see cref="DockStyle.None" />.</returns>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="DockStyle" /> values.</exception>
-		/// <returns>One of the <see cref="DockStyle" /> values. The default is <see cref="Wisej.Web.Ext.DockStyle.None" />.</returns>
 		[DefaultValue(DockStyle.None)]
 		[Browsable(false)]
 		public DockStyle Dock
@@ -546,9 +590,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private DockStyle _dock;
 
 		/// <summary>
-		/// Gets a value indicating whether to display the <see cref="ToolTip" /> that is defined as the default.
-		///</summary>
-		/// <returns>false in all cases.</returns>
+		/// Returns the default value of the <see cref="ToolStripItem.AutoToolTip" /> property.
+		/// </summary>
+		/// <returns>false in all cases for the base <see cref="ToolStripItem" /> class.</returns>
 		public virtual bool DefaultAutoToolTip
 		{
 			get
@@ -560,9 +604,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _defaultAutoToolTip;
 
 		/// <summary>
-		/// Gets the internal spacing characteristics of the item.
-		///</summary>
-		/// <returns>One of the <see cref="Padding" /> values.</returns>
+		/// Returns the default internal spacing of the item.
+		/// </summary>
+		/// <returns>The default <see cref="Padding" /> value of the <see cref="ToolStripItem.Padding" /> property.</returns>
 		public virtual Padding DefaultPadding
 		{
 			get
@@ -574,8 +618,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _defaultPadding;
 
 		/// <summary>
-		/// Gets the default size of the item.
-		///</summary>
+		/// Returns the default size of the item.
+		/// </summary>
 		/// <returns>The default <see cref="System.Drawing.Size" /> of the <see cref="ToolStripItem" />.</returns>
 		public virtual Size DefaultSize
 		{
@@ -588,9 +632,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Size _defaultSize;
 
 		/// <summary>
-		/// Gets a value indicating what is displayed on the <see cref="ToolStripItem" />.
-		///</summary>
-		/// <returns>One of the <see cref="ToolStripItemDisplayStyle" /> values. The default is <see cref="Wisej.Web.Ext.ToolStripItemDisplayStyle.ImageAndText" />.</returns>
+		/// Returns the default value of the <see cref="ToolStripItem.DisplayStyle" /> property.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripItemDisplayStyle" /> values. The default is <see cref="ToolStripItemDisplayStyle.ImageAndText" />.</returns>
 		public virtual ToolStripItemDisplayStyle DefaultDisplayStyle
 		{
 			get
@@ -602,9 +646,27 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItemDisplayStyle _defaultDisplayStyle;
 
 		/// <summary>
-		/// Gets or sets whether text and images are displayed on a <see cref="ToolStripItem" />.
-		///</summary>
-		/// <returns>One of the <see cref="ToolStripItemDisplayStyle" /> values. The default is <see cref="Wisej.Web.Ext.ToolStripItemDisplayStyle.ImageAndText" /> .</returns>
+		/// Returns or sets whether text and images are displayed on a <see cref="ToolStripItem" />.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripItemDisplayStyle" /> values. The default is <see cref="ToolStripItemDisplayStyle.ImageAndText" />.</returns>
+		/// <remarks>
+		/// The item keeps both its <see cref="ToolStripItem.Text" /> and <see cref="ToolStripItem.Image" /> values; <see cref="ToolStripItem.DisplayStyle" />
+		/// only determines which of them is rendered. When both are displayed, their relative position is determined by <see cref="ToolStripItem.TextImageRelation" />.
+		/// Changing the value raises the <see cref="ToolStripItem.DisplayStyleChanged" /> event.
+		/// </remarks>
+		/// <example>
+		/// Showing only the icons of the tool bar buttons and using the text as the tooltip:
+		/// <code><![CDATA[
+		/// foreach (ToolStripItem item in this.toolStrip1.Items)
+		/// {
+		///     if (item is ToolStripButton button)
+		///     {
+		///         button.DisplayStyle = ToolStripItemDisplayStyle.Image;
+		///         button.AutoToolTip = true;
+		///     }
+		/// }
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripItemDisplayStyleDescr")]
 		public virtual ToolStripItemDisplayStyle DisplayStyle
@@ -625,9 +687,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItemDisplayStyle _displayStyle;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripItem" /> can be activated by double-clicking the mouse. 
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripItem" /> can be activated by double-clicking the mouse.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripItem" /> can be activated by double-clicking the mouse; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// The <see cref="ToolStripItem.DoubleClick" /> event is raised only when this property is true.
+		/// </remarks>
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("ToolStripItemDoubleClickedEnabledDescr")]
@@ -649,9 +714,13 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _doubleClickEnabled;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the parent control of the <see cref="ToolStripItem" /> is enabled. 
-		///</summary>
-		/// <returns>true if the parent control of the <see cref="ToolStripItem" /> is enabled; otherwise, false. The default is true.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripItem" /> is enabled.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripItem" /> is enabled; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// A disabled item is rendered grayed out and doesn't raise the <see cref="ToolStripItem.Click" /> event.
+		/// Changing the value raises the <see cref="ToolStripItem.EnabledChanged" /> event.
+		/// </remarks>
 		[DefaultValue(true)]
 		[Localizable(true)]
 		[SRDescription("ToolStripItemEnabledDescr")]
@@ -674,9 +743,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _enabled;
 
 		/// <summary>
-		/// Gets or sets the foreground color of the item.
-		///</summary>
-		/// <returns>The foreground <see cref="System.Drawing.Color" /> of the item. The default is the value of the <see cref="Control.DefaultForeColor" /> property.</returns>
+		/// Returns or sets the foreground color of the item.
+		/// </summary>
+		/// <returns>The foreground <see cref="System.Drawing.Color" /> of the item.</returns>
+		/// <remarks>
+		/// Changing the value raises the <see cref="ToolStripItem.ForeColorChanged" /> event. Call <see cref="ToolStripItem.ResetForeColor" /> to restore the default color.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripItemForeColorDescr")]
 		public virtual Color ForeColor
@@ -697,9 +769,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Color _foreColor;
 
 		/// <summary>
-		/// Gets or sets the font of the text displayed by the item.
-		///</summary>
-		/// <returns>The <see cref="System.Drawing.Font" /> to apply to the text displayed by the <see cref="ToolStripItem" />. The default is the value of the <see cref="Control.DefaultFont" /> property.</returns>
+		/// Returns or sets the font of the text displayed by the item.
+		/// </summary>
+		/// <returns>The <see cref="System.Drawing.Font" /> to apply to the text displayed by the <see cref="ToolStripItem" />.</returns>
+		/// <remarks>
+		/// Call <see cref="ToolStripItem.ResetFont" /> to restore the default font.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[Localizable(true)]
 		[SRDescription("ToolStripItemFontDescr")]
@@ -721,9 +796,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Font _font;
 
 		/// <summary>
-		/// Gets or sets the height, in pixels, of a <see cref="ToolStripItem" />.
-		///</summary>
+		/// Returns or sets the height, in pixels, of a <see cref="ToolStripItem" />.
+		/// </summary>
 		/// <returns>An <see cref="System.Int32" /> representing the height, in pixels.</returns>
+		/// <remarks>
+		/// This is the same value as the <c>Height</c> of <see cref="ToolStripItem.Size" />. It is not used when <see cref="ToolStripItem.AutoSize" /> is true.
+		/// </remarks>
 		[EditorBrowsable(EditorBrowsableState.Always)]
 		[Browsable(false)]
 		[SRCategory("CatLayout")]
@@ -746,10 +824,10 @@ namespace Wisej.Web.Ext.ToolStrip
 		private int _height;
 
 		/// <summary>
-		/// Gets or sets the alignment of the image on a <see cref="ToolStripItem" />.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="System.Drawing.ContentAlignment" /> values. </exception>
-		/// <returns>One of the <see cref="System.Drawing.ContentAlignment" /> values. The default is <see cref="System.Drawing.ContentAlignment.MiddleLeft" />.</returns>
+		/// Returns or sets the alignment of the image on a <see cref="ToolStripItem" />.
+		/// </summary>
+		/// <returns>One of the <see cref="System.Drawing.ContentAlignment" /> values. The default is <see cref="System.Drawing.ContentAlignment.MiddleCenter" />.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="System.Drawing.ContentAlignment" /> values.</exception>
 		[Localizable(true)]
 		[DefaultValue(ContentAlignment.MiddleCenter)]
 		[SRCategory("CatAppearance")]
@@ -772,9 +850,20 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ContentAlignment _imageAlign;
 
 		/// <summary>
-		/// Gets or sets the image that is displayed on a <see cref="ToolStripItem" />.
-		///</summary>
+		/// Returns or sets the image that is displayed on a <see cref="ToolStripItem" />.
+		/// </summary>
 		/// <returns>The <see cref="System.Drawing.Image" /> to be displayed.</returns>
+		/// <remarks>
+		/// The image is displayed only when <see cref="ToolStripItem.DisplayStyle" /> includes the image. As an alternative, you can select an image from the
+		/// <see cref="ToolStrip.ImageList" /> of the owner using <see cref="ToolStripItem.ImageIndex" /> or <see cref="ToolStripItem.ImageKey" />.
+		/// Call <see cref="ToolStripItem.ResetImage" /> to remove the image.
+		/// </remarks>
+		/// <example>
+		/// Assigning an image loaded from the application folder:
+		/// <code><![CDATA[
+		/// this.toolStripButtonSave.Image = Image.FromFile(Application.MapPath("Images/save.png"));
+		/// ]]></code>
+		/// </example>
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripItemImageDescr")]
@@ -796,8 +885,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Image _image;
 
 		/// <summary>
-		/// Gets or sets the color to treat as transparent in a <see cref="ToolStripItem" /> image.
-		///</summary>
+		/// Returns or sets the color to treat as transparent in a <see cref="ToolStripItem" /> image.
+		/// </summary>
 		/// <returns>One of the <see cref="System.Drawing.Color" /> values.</returns>
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
@@ -820,10 +909,22 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Color _imageTransparentColor;
 
 		/// <summary>
-		/// Gets or sets the index value of the image that is displayed on the item.
-		///</summary>
-		/// <exception cref="System.ArgumentException">The value specified is less than -1. </exception>
-		/// <returns>The zero-based index of the image in the <see cref="ToolStrip.ImageList" /> that is displayed for the item. The default is -1, signifying that the image list is empty.</returns>
+		/// Returns or sets the index of the image in the <see cref="ToolStrip.ImageList" /> of the owner that is displayed on the item.
+		/// </summary>
+		/// <returns>The zero-based index of the image in the <see cref="ToolStrip.ImageList" /> that is displayed for the item. The default is -1, signifying that no image is selected.</returns>
+		/// <exception cref="System.ArgumentException">The value specified is less than -1.</exception>
+		/// <remarks>
+		/// <see cref="ToolStripItem.ImageIndex" /> and <see cref="ToolStripItem.ImageKey" /> are mutually exclusive: the last one set is used.
+		/// The value is resolved against the <see cref="ToolStrip.ImageList" /> of the <see cref="ToolStripItem.Owner" />.
+		/// </remarks>
+		/// <example>
+		/// Selecting the images from the tool bar's image list:
+		/// <code><![CDATA[
+		/// this.toolStrip1.ImageList = this.imageList1;
+		/// this.toolStripButtonOpen.ImageIndex = 0;
+		/// this.toolStripButtonSave.ImageKey = "save.png";
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatBehavior")]
 		[Localizable(true)]
 		[SRDescription("ToolStripItemImageIndexDescr")]
@@ -846,9 +947,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private int _imageIndex;
 
 		/// <summary>
-		/// Gets or sets the key accessor for the image in the <see cref="ToolStrip.ImageList" /> that is displayed on a <see cref="ToolStripItem" />.
-		///</summary>
+		/// Returns or sets the key of the image in the <see cref="ToolStrip.ImageList" /> of the owner that is displayed on the <see cref="ToolStripItem" />.
+		/// </summary>
 		/// <returns>A string representing the key of the image.</returns>
+		/// <remarks>
+		/// <see cref="ToolStripItem.ImageKey" /> and <see cref="ToolStripItem.ImageIndex" /> are mutually exclusive: the last one set is used.
+		/// </remarks>
+		/// <example>
+		/// Selecting an image by its key:
+		/// <code><![CDATA[
+		/// this.toolStrip1.ImageList = this.imageList1;
+		/// this.toolStripButtonPrint.ImageKey = "print.png";
+		/// ]]></code>
+		/// </example>
 		[Localizable(true)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("ToolStripItemImageKeyDescr")]
@@ -871,9 +982,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private string _imageKey;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether an image on a <see cref="ToolStripItem" /> is automatically resized to fit in a container.
-		///</summary>
-		/// <returns>One of the <see cref="ToolStripItemImageScaling" /> values. The default is <see cref="Wisej.Web.Ext.ToolStripItemImageScaling.SizeToFit" />.</returns>
+		/// Returns or sets a value indicating whether an image on a <see cref="ToolStripItem" /> is automatically resized to fit in a container.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripItemImageScaling" /> values. The default is <see cref="ToolStripItemImageScaling.SizeToFit" />.</returns>
+		/// <remarks>
+		/// When set to <see cref="ToolStripItemImageScaling.SizeToFit" /> the image is scaled to the <see cref="ToolStrip.ImageScalingSize" /> of the owner.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[DefaultValue(ToolStripItemImageScaling.SizeToFit)]
 		[Localizable(true)]
@@ -896,9 +1010,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItemImageScaling _imageScaling;
 
 		/// <summary>
-		/// Gets a value indicating whether the object has been disposed of.
-		///</summary>
-		/// <returns>true if the control has been disposed of; otherwise, false.</returns>
+		/// Returns a value indicating whether the object has been disposed of.
+		/// </summary>
+		/// <returns>true if the item has been disposed of; otherwise, false.</returns>
 		[Browsable(false)]
 		public bool IsDisposed
 		{
@@ -911,9 +1025,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _isDisposed;
 
 		/// <summary>
-		/// Gets a value indicating whether the container of the current <see cref="Control" /> is a <see cref="ToolStripDropDown" />. 
-		///</summary>
-		/// <returns>true if the container of the current <see cref="Control" /> is a <see cref="ToolStripDropDown" />; otherwise, false.</returns>
+		/// Returns a value indicating whether the container of the current <see cref="ToolStripItem" /> is a <see cref="ToolStripDropDown" />.
+		/// </summary>
+		/// <returns>true if the container of the current <see cref="ToolStripItem" /> is a <see cref="ToolStripDropDown" />; otherwise, false.</returns>
 		[Browsable(false)]
 		public bool IsOnDropDown
 		{
@@ -926,9 +1040,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _isOnDropDown;
 
 		/// <summary>
-		/// Gets a value indicating whether the <see cref="ToolStripItem.Placement" /> property is set to <see cref="Wisej.Web.Ext.ToolStripItemPlacement.Overflow" />.
-		///</summary>
-		/// <returns>true if the <see cref="ToolStripItem.Placement" /> property is set to <see cref="Wisej.Web.Ext.ToolStripItemPlacement.Overflow" />; otherwise, false.</returns>
+		/// Returns a value indicating whether the <see cref="ToolStripItem.Placement" /> property is set to <see cref="ToolStripItemPlacement.Overflow" />.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripItem.Placement" /> property is set to <see cref="ToolStripItemPlacement.Overflow" />; otherwise, false.</returns>
 		[Browsable(false)]
 		public bool IsOnOverflow
 		{
@@ -941,10 +1055,22 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _isOnOverflow;
 
 		/// <summary>
-		/// Gets or sets how child menus are merged with parent menus. 
-		///</summary>
+		/// Returns or sets how child menus are merged with parent menus.
+		/// </summary>
+		/// <returns>One of the <see cref="MergeAction" /> values. The default is <see cref="MergeAction.Append" />.</returns>
 		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="MergeAction" /> values.</exception>
-		/// <returns>One of the <see cref="MergeAction" /> values. The default is <see cref="Wisej.Web.Ext.MergeAction.MatchOnly" />.</returns>
+		/// <remarks>
+		/// This property is used when the <see cref="ToolStrip" /> that contains this item is merged into another <see cref="ToolStrip" /> using <see cref="ToolStripManager" />.
+		/// Source items are matched to target items by their <see cref="ToolStripItem.Text" />; <see cref="MergeAction.Insert" /> uses
+		/// <see cref="ToolStripItem.MergeIndex" /> to determine the position of the item in the target.
+		/// </remarks>
+		/// <example>
+		/// Inserting a child form's menu item at a specific position of the main menu when the menus are merged:
+		/// <code><![CDATA[
+		/// this.toolStripMenuItemReports.MergeAction = MergeAction.Insert;
+		/// this.toolStripMenuItemReports.MergeIndex = 2;
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripMergeActionDescr")]
 		[DefaultValue(MergeAction.Append)]
 		[SRCategory("CatLayout")]
@@ -965,9 +1091,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private MergeAction _mergeAction;
 
 		/// <summary>
-		/// Gets or sets the position of a merged item within the current <see cref="ToolStrip" />.
-		///</summary>
-		/// <returns>An integer representing the index of the merged item, if a match is found, or -1 if a match is not found.</returns>
+		/// Returns or sets the position of a merged item within the target <see cref="ToolStrip" />.
+		/// </summary>
+		/// <returns>An integer representing the zero-based position of the merged item in the target <see cref="ToolStrip" />, or -1 to use the default position. The default is -1.</returns>
+		/// <remarks>
+		/// This value is used together with <see cref="ToolStripItem.MergeAction" /> when the <see cref="ToolStrip" /> that contains this item is merged into another one.
+		/// </remarks>
+		/// <example>
+		/// Inserting the item as the first item of the target when merging:
+		/// <code><![CDATA[
+		/// this.toolStripButtonExport.MergeAction = MergeAction.Insert;
+		/// this.toolStripButtonExport.MergeIndex = 0;
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripMergeIndexDescr")]
 		[DefaultValue(-1)]
 		[SRCategory("CatLayout")]
@@ -989,9 +1125,23 @@ namespace Wisej.Web.Ext.ToolStrip
 		private int _mergeIndex;
 
 		/// <summary>
-		/// Gets or sets the name of the item.
-		///</summary>
+		/// Returns or sets the name of the item.
+		/// </summary>
 		/// <returns>A string representing the name. The default value is null.</returns>
+		/// <remarks>
+		/// The name is used as the key by <see cref="ToolStripItemCollection.ContainsKey" />, <see cref="ToolStripItemCollection.IndexOfKey" />,
+		/// <see cref="ToolStripItemCollection.RemoveByKey" /> and <see cref="ToolStripItemCollection.Find" />.
+		/// </remarks>
+		/// <example>
+		/// Locating an item by name:
+		/// <code><![CDATA[
+		/// var save = new ToolStripButton("Save");
+		/// save.Name = "buttonSave";
+		/// this.toolStrip1.Items.Add(save);
+		///
+		/// int index = this.toolStrip1.Items.IndexOfKey("buttonSave");
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DefaultValue(null)]
 		public string Name
@@ -1011,9 +1161,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		private string _name;
 
 		/// <summary>
-		/// Gets or sets the owner of this item.
-		///</summary>
+		/// Returns or sets the owner of this item.
+		/// </summary>
 		/// <returns>The <see cref="ToolStrip" /> that owns or is to own the <see cref="ToolStripItem" />.</returns>
+		/// <remarks>
+		/// The owner is set automatically when the item is added to the <see cref="ToolStrip.Items" /> collection of a <see cref="ToolStrip" />.
+		/// Changing the value raises the <see cref="ToolStripItem.OwnerChanged" /> event. For items displayed on a drop-down, the owner is the
+		/// <see cref="ToolStripDropDown" />; use <see cref="ToolStripItem.OwnerItem" /> to get the item that opened it.
+		/// </remarks>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public ToolStrip Owner
@@ -1034,9 +1189,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStrip _owner;
 
 		/// <summary>
-		/// Gets the parent <see cref="ToolStripItem" /> of this <see cref="ToolStripItem" />.
-		///</summary>
-		/// <returns>The parent <see cref="ToolStripItem" /> of this <see cref="ToolStripItem" />.</returns>
+		/// Returns the parent <see cref="ToolStripItem" /> of this <see cref="ToolStripItem" />.
+		/// </summary>
+		/// <returns>The <see cref="ToolStripDropDownItem" /> that displays the drop-down containing this item, or null if the item is not on a drop-down.</returns>
+		/// <example>
+		/// Finding the menu that contains a clicked item:
+		/// <code><![CDATA[
+		/// private void toolStripMenuItemCopy_Click(object sender, EventArgs e)
+		/// {
+		///     var item = (ToolStripItem)sender;
+		///     AlertBox.Show("Clicked in: " + item.OwnerItem?.Text);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public ToolStripItem OwnerItem
@@ -1050,10 +1215,21 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItem _ownerItem;
 
 		/// <summary>
-		/// Gets or sets whether the item is attached to the <see cref="ToolStrip" /> or <see cref="ToolStripOverflowButton" /> or can float between the two.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="ToolStripItemOverflow" /> values. </exception>
-		/// <returns>One of the <see cref="ToolStripItemOverflow" /> values. The default is <see cref="Wisej.Web.Ext.ToolStripItemOverflow.AsNeeded" />.</returns>
+		/// Returns or sets whether the item is attached to the <see cref="ToolStrip" /> or <see cref="ToolStripOverflowButton" /> or can float between the two.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripItemOverflow" /> values. The default is <see cref="ToolStripItemOverflow.AsNeeded" />.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="ToolStripItemOverflow" /> values.</exception>
+		/// <remarks>
+		/// With <see cref="ToolStripItemOverflow.AsNeeded" /> the item moves to the overflow drop-down only when there isn't enough room on the <see cref="ToolStrip" />.
+		/// The current location of the item is returned by <see cref="ToolStripItem.Placement" />.
+		/// </remarks>
+		/// <example>
+		/// Keeping the most important button always visible and moving a rarely used one to the overflow menu:
+		/// <code><![CDATA[
+		/// this.toolStripButtonSave.Overflow = ToolStripItemOverflow.Never;
+		/// this.toolStripButtonAbout.Overflow = ToolStripItemOverflow.Always;
+		/// ]]></code>
+		/// </example>
 		[SRDescription("ToolStripItemOverflowDescr")]
 		[DefaultValue(ToolStripItemOverflow.AsNeeded)]
 		[SRCategory("CatLayout")]
@@ -1075,9 +1251,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItemOverflow _overflow;
 
 		/// <summary>
-		/// Gets or sets the internal spacing, in pixels, between the item's contents and its edges.
-		///</summary>
-		/// <returns>A <see cref="Padding" /> representing the item's internal spacing, in pixels.</returns>
+		/// Returns or sets the internal spacing, in pixels, between the item's contents and its edges.
+		/// </summary>
+		/// <returns>A <see cref="Padding" /> representing the item's internal spacing, in pixels. The default is <see cref="ToolStripItem.DefaultPadding" />.</returns>
 		[SRDescription("ToolStripItemPaddingDescr")]
 		[SRCategory("CatLayout")]
 		public virtual Padding Padding
@@ -1098,9 +1274,10 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Padding _padding;
 
 		/// <summary>
-		/// Gets the current layout of the item.
-		///</summary>
-		/// <returns>One of the <see cref="ToolStripItemPlacement" /> values.</returns>
+		/// Returns the current layout of the item.
+		/// </summary>
+		/// <returns>One of the <see cref="ToolStripItemPlacement" /> values: <see cref="ToolStripItemPlacement.Main" /> when the item is displayed on the <see cref="ToolStrip" />,
+		/// <see cref="ToolStripItemPlacement.Overflow" /> when it is displayed in the overflow drop-down, or <see cref="ToolStripItemPlacement.None" /> when it is not displayed.</returns>
 		[Browsable(false)]
 		public ToolStripItemPlacement Placement
 		{
@@ -1113,8 +1290,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripItemPlacement _placement;
 
 		/// <summary>
-		/// Gets a value indicating whether the state of the item is pressed. 
-		///</summary>
+		/// Returns a value indicating whether the state of the item is pressed.
+		/// </summary>
 		/// <returns>true if the state of the item is pressed; otherwise, false.</returns>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -1129,9 +1306,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _pressed;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether items are to be placed from right to left and text is to be written from right to left.
-		///</summary>
-		/// <returns>true if items are to be placed from right to left and text is to be written from right to left; otherwise, false.</returns>
+		/// Returns or sets a value indicating whether items are to be placed from right to left and text is to be written from right to left.
+		/// </summary>
+		/// <returns>One of the <see cref="RightToLeft" /> values.</returns>
+		/// <remarks>
+		/// Changing the value raises the <see cref="ToolStripItem.RightToLeftChanged" /> event. Call <see cref="ToolStripItem.ResetRightToLeft" /> to restore the default value.
+		/// </remarks>
 		[SRCategory("CatAppearance")]
 		[Localizable(true)]
 		[SRDescription("ToolStripItemRightToLeftDescr")]
@@ -1153,8 +1333,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private RightToLeft _rightToLeft;
 
 		/// <summary>
-		/// Mirrors automatically the <see cref="ToolStripItem" /> image when the <see cref="ToolStripItem.RightToLeft" /> property is set to <see cref="Wisej.Web.Ext.RightToLeft.Yes" />.
-		///</summary>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripItem" /> image is mirrored automatically when the <see cref="ToolStripItem.RightToLeft" /> property is set to <see cref="RightToLeft.Yes" />.
+		/// </summary>
 		/// <returns>true to automatically mirror the image; otherwise, false. The default is false.</returns>
 		[DefaultValue(false)]
 		[SRCategory("CatAppearance")]
@@ -1178,8 +1358,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _rightToLeftAutoMirrorImage;
 
 		/// <summary>
-		/// Gets a value indicating whether the item is selected.
-		///</summary>
+		/// Returns a value indicating whether the item is selected.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripItem" /> is selected; otherwise, false.</returns>
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -1194,9 +1374,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _selected;
 
 		/// <summary>
-		/// Gets or sets the size of the item.
-		///</summary>
-		/// <returns>A <see cref="System.Drawing.Size" />, representing the width and height of a rectangle.</returns>
+		/// Returns or sets the size of the item.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Size" />, representing the width and height of the item, in pixels.</returns>
+		/// <remarks>
+		/// The value is used only when <see cref="ToolStripItem.AutoSize" /> is false.
+		/// </remarks>
 		[Localizable(true)]
 		[SRCategory("CatLayout")]
 		[SRDescription("ToolStripItemSizeDescr")]
@@ -1218,9 +1401,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private Size _size;
 
 		/// <summary>
-		/// Gets or sets the object that contains data about the item.
-		///</summary>
-		/// <returns>An <see cref="System.object" /> that contains data about the control. The default is null.</returns>
+		/// Returns or sets the object that contains data about the item.
+		/// </summary>
+		/// <returns>An <see cref="System.Object" /> that contains data about the item. The default is null.</returns>
 		[SRCategory("CatData")]
 		[DefaultValue(null)]
 		[Localizable(false)]
@@ -1243,9 +1426,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		private object _tag;
 
 		/// <summary>
-		/// Gets or sets the text that is to be displayed on the item.
-		///</summary>
+		/// Returns or sets the text that is to be displayed on the item.
+		/// </summary>
 		/// <returns>A string representing the item's text. The default value is the empty string ("").</returns>
+		/// <remarks>
+		/// The text is displayed only when <see cref="ToolStripItem.DisplayStyle" /> includes the text. Changing the value raises the <see cref="ToolStripItem.TextChanged" /> event.
+		/// </remarks>
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
 		[DefaultValue("")]
@@ -1268,10 +1454,10 @@ namespace Wisej.Web.Ext.ToolStrip
 		private string _text;
 
 		/// <summary>
-		/// Gets or sets the alignment of the text on a <see cref="ToolStripLabel" />.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="System.Drawing.ContentAlignment" /> values. </exception>
-		/// <returns>One of the <see cref="System.Drawing.ContentAlignment" /> values. The default is <see cref="System.Drawing.ContentAlignment.MiddleRight" />.</returns>
+		/// Returns or sets the alignment of the text on a <see cref="ToolStripItem" />.
+		/// </summary>
+		/// <returns>One of the <see cref="System.Drawing.ContentAlignment" /> values. The default is <see cref="System.Drawing.ContentAlignment.MiddleCenter" />.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="System.Drawing.ContentAlignment" /> values.</exception>
 		[SRDescription("ToolStripItemTextAlignDescr")]
 		[Localizable(true)]
 		[SRCategory("CatAppearance")]
@@ -1294,9 +1480,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ContentAlignment _textAlign;
 
 		/// <summary>
-		/// Gets the orientation of text used on a <see cref="ToolStripItem" />.
-		///</summary>
+		/// Returns or sets the orientation of text used on a <see cref="ToolStripItem" />.
+		/// </summary>
 		/// <returns>One of the <see cref="ToolStripTextDirection" /> values.</returns>
+		/// <remarks>
+		/// <see cref="ToolStripTextDirection.Inherit" /> uses the text direction of the owner <see cref="ToolStrip" />. Call
+		/// <see cref="ToolStripItem.ResetTextDirection" /> to restore the default value.
+		/// </remarks>
+		/// <example>
+		/// Rendering the text of a button vertically on a tool bar docked to the left:
+		/// <code><![CDATA[
+		/// this.toolStripButtonNotes.TextDirection = ToolStripTextDirection.Vertical270;
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripTextDirectionDescr")]
 		public virtual ToolStripTextDirection TextDirection
@@ -1317,9 +1513,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripTextDirection _textDirection;
 
 		/// <summary>
-		/// Gets or sets the position of <see cref="ToolStripItem" /> text and image relative to each other.
-		///</summary>
-		/// <returns>One of the <see cref="TextImageRelation" /> values. The default is <see cref="Wisej.Web.Ext.TextImageRelation.ImageBeforeText" />.</returns>
+		/// Returns or sets the position of <see cref="ToolStripItem" /> text and image relative to each other.
+		/// </summary>
+		/// <returns>One of the <see cref="TextImageRelation" /> values. The default is <see cref="TextImageRelation.ImageBeforeText" />.</returns>
+		/// <remarks>
+		/// The value is used only when <see cref="ToolStripItem.DisplayStyle" /> is <see cref="ToolStripItemDisplayStyle.ImageAndText" />.
+		/// </remarks>
+		/// <example>
+		/// Displaying large buttons with the icon above the text:
+		/// <code><![CDATA[
+		/// this.toolStripButtonNew.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+		/// this.toolStripButtonNew.TextImageRelation = TextImageRelation.ImageAboveText;
+		/// ]]></code>
+		/// </example>
 		[Localizable(true)]
 		[DefaultValue(TextImageRelation.ImageBeforeText)]
 		[SRDescription("ToolStripItemTextImageRelationDescr")]
@@ -1685,8 +1891,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// This method is not relevant to this class.
-		///</summary>
+		/// Resets the <see cref="ToolStripItem.DisplayStyle" /> property to its default value, <see cref="ToolStripItem.DefaultDisplayStyle" />.
+		/// </summary>
+		/// <example>
+		/// Restoring the default display style:
+		/// <code><![CDATA[
+		/// this.toolStripButton1.ResetDisplayStyle();
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public virtual void ResetDisplayStyle()
 		{
@@ -1694,8 +1906,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// This method is not relevant to this class.
-		///</summary>
+		/// Resets the <see cref="ToolStripItem.Font" /> property to its default value.
+		/// </summary>
+		/// <example>
+		/// Restoring the default font:
+		/// <code><![CDATA[
+		/// this.toolStripButton1.ResetFont();
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public virtual void ResetFont()
 		{
@@ -1703,8 +1921,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// This method is not relevant to this class.
-		///</summary>
+		/// Resets the <see cref="ToolStripItem.Image" /> property to its default value (null).
+		/// </summary>
+		/// <example>
+		/// Removing the image from a button:
+		/// <code><![CDATA[
+		/// this.toolStripButton1.ResetImage();
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public virtual void ResetImage()
 		{
@@ -1712,8 +1936,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// This method is not relevant to this class.
-		///</summary>
+		/// Resets the <see cref="ToolStripItem.RightToLeft" /> property to its default value.
+		/// </summary>
+		/// <example>
+		/// Restoring the default right-to-left setting:
+		/// <code><![CDATA[
+		/// this.toolStripButton1.ResetRightToLeft();
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public virtual void ResetRightToLeft()
 		{
@@ -1721,14 +1951,33 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// This method is not relevant to this class.
-		///</summary>
+		/// Resets the <see cref="ToolStripItem.TextDirection" /> property to its default value.
+		/// </summary>
+		/// <example>
+		/// Restoring the default text direction:
+		/// <code><![CDATA[
+		/// this.toolStripButton1.ResetTextDirection();
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public virtual void ResetTextDirection()
 		{
 			// TODO: Implement
 		}
 
+		/// <summary>
+		/// Returns a string that represents the current <see cref="ToolStripItem" />.
+		/// </summary>
+		/// <returns>A string that represents the current <see cref="ToolStripItem" />.</returns>
+		/// <example>
+		/// Logging the items of a tool bar:
+		/// <code><![CDATA[
+		/// foreach (ToolStripItem item in this.toolStrip1.Items)
+		/// {
+		///     System.Diagnostics.Debug.WriteLine(item.ToString());
+		/// }
+		/// ]]></code>
+		/// </example>
 		public override String ToString()
 		{
 			// TODO: Implement
@@ -1737,10 +1986,19 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Begins a drag-and-drop operation.
-		///</summary>
+		/// </summary>
+		/// <param name="data">The object to be dragged.</param>
+		/// <param name="allowedEffects">The drag operations that can occur.</param>
 		/// <returns>One of the <see cref="DragDropEffects" /> values.</returns>
-		/// <param name="data">The object to be dragged. </param>
-		/// <param name="allowedEffects">The drag operations that can occur. </param>
+		/// <example>
+		/// Starting a drag operation when the user presses the mouse on a button:
+		/// <code><![CDATA[
+		/// private void toolStripButtonDocument_MouseDown(object sender, MouseEventArgs e)
+		/// {
+		///     this.toolStripButtonDocument.DoDragDrop(this.toolStripButtonDocument.Text, DragDropEffects.Copy);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		public DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
 		{
@@ -1750,8 +2008,22 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Retrieves the <see cref="ToolStrip" /> that is the container of the current <see cref="ToolStripItem" />.
-		///</summary>
+		/// </summary>
 		/// <returns>A <see cref="ToolStrip" /> that is the container of the current <see cref="ToolStripItem" />.</returns>
+		/// <remarks>
+		/// The returned container is the <see cref="ToolStrip" /> or <see cref="ToolStripDropDown" /> on which the item is currently displayed,
+		/// which can be the overflow drop-down when <see cref="ToolStripItem.IsOnOverflow" /> is true.
+		/// </remarks>
+		/// <example>
+		/// Retrieving the tool bar that contains the clicked item:
+		/// <code><![CDATA[
+		/// private void toolStripButton1_Click(object sender, EventArgs e)
+		/// {
+		///     ToolStrip parent = ((ToolStripItem)sender).GetCurrentParent();
+		///     AlertBox.Show("Clicked on: " + parent.Name);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public ToolStrip GetCurrentParent()
 		{
 			// TODO: Implement
@@ -1760,16 +2032,29 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Invalidates the entire surface of the <see cref="ToolStripItem" /> and causes it to be redrawn.
-		///</summary>
+		/// </summary>
+		/// <example>
+		/// Redrawing an item after changing data used by a custom <see cref="ToolStripItem.Paint" /> handler:
+		/// <code><![CDATA[
+		/// this.unreadCount = 5;
+		/// this.toolStripButtonInbox.Invalidate();
+		/// ]]></code>
+		/// </example>
 		public void Invalidate()
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// Invalidates the specified region of the <see cref="ToolStripItem" /> by adding it to the update region of the <see cref="ToolStripItem" />, which is the area that will be repainted at the next paint operation, and causes a paint message to be sent to the <see cref="ToolStripItem" />.
-		///</summary>
-		/// <param name="r">A <see cref="System.Drawing.Rectangle" /> that represents the region to invalidate. </param>
+		/// Invalidates the specified region of the <see cref="ToolStripItem" /> and causes it to be redrawn.
+		/// </summary>
+		/// <param name="r">A <see cref="System.Drawing.Rectangle" /> that represents the region to invalidate, in item coordinates.</param>
+		/// <example>
+		/// Redrawing only the content area of the item:
+		/// <code><![CDATA[
+		/// this.toolStripButtonInbox.Invalidate(this.toolStripButtonInbox.ContentRectangle);
+		/// ]]></code>
+		/// </example>
 		public void Invalidate(Rectangle r)
 		{
 			// TODO: Implement
@@ -1786,8 +2071,20 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// Activates the <see cref="ToolStripItem" /> when it is clicked with the mouse.
-		///</summary>
+		/// Generates a <see cref="ToolStripItem.Click" /> event for the <see cref="ToolStripItem" />, as if it was clicked by the user.
+		/// </summary>
+		/// <remarks>
+		/// The event is raised only if the item is <see cref="ToolStripItem.Enabled" /> and <see cref="ToolStripItem.Available" />.
+		/// </remarks>
+		/// <example>
+		/// Executing the "Save" button when the user presses a button on the form:
+		/// <code><![CDATA[
+		/// private void buttonSave_Click(object sender, EventArgs e)
+		/// {
+		///     this.toolStripButtonSave.PerformClick();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public void PerformClick()
 		{
 			// TODO: Implement
@@ -1795,15 +2092,30 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		/// <summary>
 		/// Selects the item.
-		///</summary>
+		/// </summary>
+		/// <remarks>
+		/// The item is selected only if <see cref="ToolStripItem.CanSelect" /> is true. After the call, <see cref="ToolStripItem.Selected" /> returns true.
+		/// </remarks>
+		/// <example>
+		/// Highlighting the first item of a tool bar:
+		/// <code><![CDATA[
+		/// this.toolStrip1.Items[0].Select();
+		/// ]]></code>
+		/// </example>
 		public void Select()
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// This method is not relevant to this class.
-		///</summary>
+		/// Resets the <see cref="ToolStripItem.BackColor" /> property to its default value.
+		/// </summary>
+		/// <example>
+		/// Removing a highlight color:
+		/// <code><![CDATA[
+		/// this.toolStripButton1.ResetBackColor();
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public virtual void ResetBackColor()
 		{
@@ -1811,8 +2123,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// This method is not relevant to this class.
-		///</summary>
+		/// Resets the <see cref="ToolStripItem.ForeColor" /> property to its default value.
+		/// </summary>
+		/// <example>
+		/// Restoring the default text color:
+		/// <code><![CDATA[
+		/// this.toolStripButton1.ResetForeColor();
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public virtual void ResetForeColor()
 		{
@@ -1820,8 +2138,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// This method is not relevant to this class.
-		///</summary>
+		/// Resets the margin of the item to its default value.
+		/// </summary>
+		/// <example>
+		/// Restoring the default margin:
+		/// <code><![CDATA[
+		/// this.toolStripButton1.ResetMargin();
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public void ResetMargin()
 		{
@@ -1829,8 +2153,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 
 		/// <summary>
-		/// This method is not relevant to this class.
-		///</summary>
+		/// Resets the <see cref="ToolStripItem.Padding" /> property to its default value, <see cref="ToolStripItem.DefaultPadding" />.
+		/// </summary>
+		/// <example>
+		/// Restoring the default padding:
+		/// <code><![CDATA[
+		/// this.toolStripButton1.ResetPadding();
+		/// ]]></code>
+		/// </example>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public void ResetPadding()
 		{

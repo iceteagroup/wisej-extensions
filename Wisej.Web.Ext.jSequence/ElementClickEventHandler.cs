@@ -53,6 +53,19 @@ namespace Wisej.Web.Ext.jSequence
 		/// <summary>
 		/// Returns the element in the sequence that was clicked by the user.
 		/// </summary>
+		/// <remarks>
+		/// The value is the text of the clicked label: a participant name, a message text, a note text or the title.
+		/// </remarks>
+		/// <example>
+		/// Reacting to a click on a participant:
+		/// <code><![CDATA[
+		/// private void sequence1_ElementClick(object sender, ElementClickEventArgs e)
+		/// {
+		///     if (e.Element == "Database")
+		///         ShowDatabaseDetails();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public string Element
 		{
 			get;

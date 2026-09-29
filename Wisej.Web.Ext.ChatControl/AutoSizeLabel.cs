@@ -22,8 +22,24 @@ using System.Drawing;
 namespace Wisej.Web.Ext.ChatControl
 {
 	/// <summary>
-	/// A label that sizes itself on the client.
+	/// A <see cref="Label"/> that sizes itself on the client to fit its content.
 	/// </summary>
+	/// <remarks>
+	/// <see cref="AutoSizeLabel"/> is the default control used by <see cref="Message"/> to display its
+	/// <see cref="Message.Content"/> when no custom control is supplied through the
+	/// <see cref="ChatBox.RenderMessageControl"/> event. HTML content is allowed by default
+	/// (<see cref="Label.AllowHtml"/> is set to <c>true</c>). The width and height are computed by the browser,
+	/// constrained by the maximum size last passed to <see cref="GetPreferredSize(Size)"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var label = new AutoSizeLabel
+	/// {
+	///     Text = "<b>Hello</b> from the chat!"
+	/// };
+	/// label.Size = label.GetPreferredSize(new Size(400, 0));
+	/// ]]></code>
+	/// </example>
 	public class AutoSizeLabel : Label
 	{
         #region Client Implementation
@@ -144,13 +160,38 @@ if (!this.__autoSizeImages) {
         private Size _maxSize;
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="AutoSizeLabel"/>.
+		/// Initializes a new instance of <see cref="AutoSizeLabel"/> with <see cref="Label.AllowHtml"/> enabled.
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var label = new AutoSizeLabel();
+		/// label.Text = "Welcome to the <i>chat</i>.";
+		/// ]]></code>
+		/// </example>
 		public AutoSizeLabel()
 		{
 			this.AllowHtml = true;
 		}
 
+		/// <summary>
+		/// Retrieves the size of a rectangular area into which the label can be fitted and
+		/// stores <paramref name="proposedSize"/> as the maximum size used on the client.
+		/// </summary>
+		/// <param name="proposedSize">The custom-sized area for the label. A <see cref="Size.Width"/> or
+		/// <see cref="Size.Height"/> greater than 0 is sent to the client as the maximum width or height;
+		/// a value of 0 means unconstrained.</param>
+		/// <returns>A <see cref="Size"/> representing the preferred width and height of the label.</returns>
+		/// <remarks>
+		/// The label's final size is determined by the browser; the returned value is the server-side
+		/// estimate computed by the base <see cref="Label"/> implementation.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var label = new AutoSizeLabel { Text = "A long message that may wrap." };
+		/// // limit the label to 300 pixels wide, unconstrained height.
+		/// label.Size = label.GetPreferredSize(new Size(300, 0));
+		/// ]]></code>
+		/// </example>
 		public override Size GetPreferredSize(Size proposedSize)
 		{
 			this._maxSize = proposedSize;

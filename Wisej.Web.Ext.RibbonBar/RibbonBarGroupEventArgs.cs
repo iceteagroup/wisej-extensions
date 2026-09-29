@@ -34,6 +34,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		/// using the specified parameters.
 		/// </summary>
 		/// <param name="group">The <see cref="RibbonBarGroup"/> that originated the event.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="group"/> is null.</exception>
 		public RibbonBarGroupEventArgs(RibbonBarGroup group)
 		{
 			if (group == null)
@@ -43,7 +44,7 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// The <see cref="RibbonBarGroup"/> that originated the event.
+		/// Returns the <see cref="RibbonBarGroup"/> that originated the event.
 		/// </summary>
 		/// <returns>A reference to the <see cref="RibbonBarGroup"/> that originated this event.</returns>
 		public RibbonBarGroup Group

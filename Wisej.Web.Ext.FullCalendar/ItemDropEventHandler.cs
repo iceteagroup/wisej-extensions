@@ -56,6 +56,9 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// Returns the <see cref="T:Wisej.Web.Control"/> that is being dropped on the <see cref="T:Wisej.Web.Ext.FullCalendar.FullCalendar"/>.
 		/// </summary>
 		/// <returns>The <see cref="T:Wisej.Web.Control"/> that is being dropped.</returns>
+		/// <remarks>
+		/// The date/time of the drop location is returned by <see cref="P:Wisej.Web.Ext.FullCalendar.DayClickEventArgs.Day"/>.
+		/// </remarks>
 		public Control Item
 		{
 			get;
@@ -65,6 +68,9 @@ namespace Wisej.Web.Ext.FullCalendar
 		/// <summary>
 		/// Returns the id of the <see cref="SchedulerResource"/> where the <see cref="Item"/> is being dropped on.
 		/// </summary>
+		/// <remarks>
+		/// The value is null when the drop location is not associated to a resource.
+		/// </remarks>
 		public string ResourceId
 		{
 			get;

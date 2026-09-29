@@ -27,10 +27,34 @@ using Wisej.Design;
 namespace Wisej.Web.Ext.CountUp
 {
 	/// <summary>
-	/// CountUp.js is a dependency-free, lightweight JavaScript widget that can be used to 
-	/// create animations that display numerical data in a more interesting way.
-	/// <see href="https://github.com/inorganik/countUp.js"/>.
+	/// Represents a control that displays a numeric value with a counting animation, based on
+	/// the CountUp.js library <see href="https://github.com/inorganik/countUp.js"/>.
 	/// </summary>
+	/// <remarks>
+	/// <para>
+	/// When the control is first shown it counts from 0 to <see cref="Value"/>. Every time <see cref="Value"/>
+	/// changes afterwards, it counts from the currently displayed number to the new value, and fires
+	/// <see cref="CountTerminated"/> when the animation ends.
+	/// </para>
+	/// <para>
+	/// The group and decimal separators are taken from <see cref="Application.CurrentCulture"/>.
+	/// </para>
+	/// </remarks>
+	/// <example>
+	/// Creating a counter that animates to a new total:
+	/// <code><![CDATA[
+	/// var counter = new CountUp
+	/// {
+	///     Duration = 1500,
+	///     TextAlign = HorizontalAlignment.Right,
+	///     Font = new Font("Segoe UI", 36f)
+	/// };
+	/// counter.CountTerminated += (s, e) => AlertBox.Show("Done!");
+	/// this.Controls.Add(counter);
+	/// 
+	/// counter.Value = 12500;
+	/// ]]></code>
+	/// </example>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(CountUp))]
 	[DefaultProperty(nameof(Value))]
@@ -82,6 +106,24 @@ namespace Wisej.Web.Ext.CountUp
 		/// <summary>
 		/// Returns or sets a numeric value to count to.
 		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// Changing the value starts a new animation on the client from the currently displayed number
+		/// to the new value; <see cref="CountTerminated"/> is fired when the animation ends.
+		/// </para>
+		/// <para>
+		/// The number is displayed without decimals: fractional values are rounded to the nearest integer.
+		/// </para>
+		/// </remarks>
+		/// <example>
+		/// Updating the counter with the result of a query:
+		/// <code><![CDATA[
+		/// private void buttonRefresh_Click(object sender, EventArgs e)
+		/// {
+		///     this.countUp1.Value = GetOrderCount();
+		/// }
+		/// ]]></code>
+		/// </example>
 		[Bindable(true)]
 		[DefaultValue(0)]
 		[DesignerActionList]
@@ -109,6 +151,10 @@ namespace Wisej.Web.Ext.CountUp
 		/// <summary>
 		/// Returns or sets the duration of the animation in milliseconds.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than 100.</exception>
+		/// <remarks>
+		/// The default is 2500. A change applies to the next animation started by setting <see cref="Value"/>.
+		/// </remarks>
 		[DefaultValue(2500)]
 		[DesignerActionList]
 		[SRCategory("CatBehavior")]
@@ -133,6 +179,10 @@ namespace Wisej.Web.Ext.CountUp
 		/// <summary>
 		/// Returns or sets whether the animation will use easing.
 		/// </summary>
+		/// <remarks>
+		/// When true (default) the counting slows down as it approaches the target value (ease-out exponential);
+		/// when false the number changes at a constant rate.
+		/// </remarks>
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("Returns or sets whether the animation will use easing.")]
@@ -154,6 +204,10 @@ namespace Wisej.Web.Ext.CountUp
 		/// Returns or sets whether the numeric value will be formatted using the
 		/// grouping separator.
 		/// </summary>
+		/// <remarks>
+		/// The separator is the <see cref="System.Globalization.NumberFormatInfo.NumberGroupSeparator"/>
+		/// of <see cref="Application.CurrentCulture"/>, i.e. "1,000,000" in en-US and "1.000.000" in de-DE.
+		/// </remarks>
 		[DefaultValue(true)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("Returns or sets whether the numeric value will be formatted using the grouping separator.")]
@@ -172,8 +226,19 @@ namespace Wisej.Web.Ext.CountUp
 		private bool _useGrouping = true;
 
 		/// <summary>
-		/// Array of custom numerals for the digits from 0 to 9.
+		/// Returns or sets an array of custom numerals used to display the digits from 0 to 9.
 		/// </summary>
+		/// <exception cref="ArgumentException">The array doesn't contain 0 or 10 elements.</exception>
+		/// <remarks>
+		/// The array must be empty (the default, uses the standard digits) or contain exactly 10 strings,
+		/// where the element at index <c>n</c> replaces the digit <c>n</c>. Setting null resets it to an empty array.
+		/// </remarks>
+		/// <example>
+		/// Displaying the value using Eastern Arabic numerals:
+		/// <code><![CDATA[
+		/// this.countUp1.Numerals = new[] { "٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩" };
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatAppearance")]
 		[Description("Array of custom numerals for the digits from 0 to 9.")]
 		public string[] Numerals
@@ -209,7 +274,7 @@ namespace Wisej.Web.Ext.CountUp
 		/// <summary>
 		/// Returns or sets the alignment of the label. The default is <see cref="HorizontalAlignment.Left"/>.
 		/// </summary>
-		/// <returns>On of the <see cref="HorizontalAlignment"/> values. </returns>
+		/// <returns>One of the <see cref="HorizontalAlignment"/> values. </returns>
 		[DefaultValue(HorizontalAlignment.Left)]
 		[Localizable(true)]
 		[ResponsiveProperty]

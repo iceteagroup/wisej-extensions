@@ -27,7 +27,11 @@ namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
 	/// Represents the center panel of a <see cref="ToolStripContainer" /> control.
-	///</summary>
+	/// </summary>
+	/// <remarks>
+	/// The panel is created by the <see cref="ToolStripContainer"/> and returned by <see cref="ToolStripContainer.ContentPanel"/>;
+	/// it is docked to fill the area that is not used by the side <see cref="ToolStripPanel"/> controls.
+	/// </remarks>
 	public class ToolStripContentPanel : Wisej.Web.Panel
 	{
 
@@ -230,8 +234,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		}
 		
 		/// <summary>
-		/// Overridden to ensure that the background color of the <see cref="ToolStripContainer" /> reflects the background color of the <see cref="ToolStripContentPanel" />.
-		///</summary>
+		/// Returns or sets the background color of the <see cref="ToolStripContentPanel" />.
+		/// </summary>
 		/// <returns>A <see cref="System.Drawing.Color" /> structure representing the background color of the <see cref="ToolStripContentPanel" />.</returns>
 		[SRCategory("CatAppearance")]
 		[SRDescription("ControlBackColorDescr")]

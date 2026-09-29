@@ -26,11 +26,16 @@ using System.Threading.Tasks;
 
 namespace Wisej.Ext.ClientFileSystem
 {
-	/// <summary>
-	/// Specifies the type of action to perform on the writable.
-	/// <See: href="https://developer.mozilla.org/en-US/docs/Web/API/FileSystemWritableFileStream/write."/>
-	/// </summary>
-	public enum WritableType
+    /// <summary>
+    /// Specifies the different types of actions that can be performed on a writable resource
+    /// in the context of a file system operation. This enum is utilized to define the specific
+    /// actions that can be taken when interacting with writable file streams.
+    /// </summary>
+	/// /// <remarks>
+	/// For more information on writable file streams, refer to the
+	/// <see href="https://developer.mozilla.org/en-US/docs/Web/API/FileSystemWritableFileStream/write">Mozilla Developer Network documentation</see>.
+	/// </remarks>
+    public enum WritableType
 	{
 		/// <summary>
 		/// Write action.

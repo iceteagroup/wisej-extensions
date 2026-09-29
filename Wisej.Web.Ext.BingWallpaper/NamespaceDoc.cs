@@ -25,6 +25,16 @@ namespace Wisej.Web.Ext.BingWallpaper
 	/// BingWallpaper component. Uses fresh Bing images as the wallpaper of the <see cref="T:Wisej.Web.Desktop"/> component.
 	/// </para>
 	/// </summary>
+	/// <example>
+	/// The following example uses the Bing images of the day as the wallpaper of the current desktop:
+	/// <code><![CDATA[
+	/// var wallpaper = new Wisej.Web.Ext.BingWallpaper.BingWallpaper(this.components)
+	/// {
+	///     MaxImages = 8,
+	///     RotationInterval = 60000
+	/// };
+	/// ]]></code>
+	/// </example>
 	internal class NamespaceDoc
 	{
 	}

@@ -20,15 +20,15 @@
 namespace Wisej.Web.Ext.Mermaid
 {
 	/// <summary>
-	/// Represents the outcome of an operation that may fail and return an optional error payload.
+	/// Represents the result of the validation of a Mermaid diagram.
 	/// </summary>
 	/// <remarks>
-	/// This base type is used by <see cref="ValidationResult"/> returned from
-	/// <see cref="Mermaid.ValidateAsync(string)"/>.
+	/// This type is returned by <see cref="Mermaid.ValidateAsync(string)"/>.
 	/// </remarks>
 	/// <example>
+	/// Checking the current diagram:
 	/// <code><![CDATA[
-	/// MermaidValidationResult result = await mermaid.ValidateAsync(mermaid.Diagram);
+	/// ValidationResult result = await mermaid.ValidateAsync(mermaid.Diagram);
 	/// if (!result.Valid)
 	///     Wisej.Web.MessageBox.Show(result.Message ?? "Validation failed.");
 	/// ]]></code>
@@ -43,12 +43,12 @@ namespace Wisej.Web.Ext.Mermaid
 		}
 
 		/// <summary>
-		/// Returns true if the diagram is valid, or false if the diagram is invalid and the error message contains details about the failure.
+		/// Returns true if the diagram is valid, or false if the diagram is invalid and <see cref="Message"/> contains details about the failure.
 		/// </summary>
 		public bool Valid { get; }
 
 		/// <summary>
-		/// Returns the error message associated with the failure, or null if the operation succeeded.
+		/// Returns the error message associated with the failure, or null if the validation succeeded.
 		/// </summary>
 		public string Message { get; }
 	}

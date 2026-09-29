@@ -26,8 +26,21 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ToolStrip
 {
 	/// <summary>
-	/// Represents a selectable <see cref="ToolStripItem" /> that can contain text and images. 
-	///</summary>
+	/// Represents a selectable <see cref="ToolStripItem" /> that can contain text and images.
+	/// </summary>
+	/// <remarks>
+	/// A <see cref="ToolStripButton" /> can also work as a toggle button: set <see cref="ToolStripButton.CheckOnClick" /> to true to
+	/// switch the <see cref="ToolStripButton.Checked" /> state every time the button is clicked.
+	/// </remarks>
+	/// <example>
+	/// Adding a "Bold" toggle button to a tool bar:
+	/// <code><![CDATA[
+	/// var bold = new ToolStripButton("Bold");
+	/// bold.CheckOnClick = true;
+	/// bold.CheckedChanged += (s, e) => this.textBox1.Font = new Font(this.textBox1.Font, bold.Checked ? FontStyle.Bold : FontStyle.Regular);
+	/// this.toolStrip1.Items.Add(bold);
+	/// ]]></code>
+	/// </example>
 	public class ToolStripButton : ToolStripItem
 	{
 
@@ -94,9 +107,12 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets a value indicating whether default or custom <see cref="ToolTip" /> text is displayed on the <see cref="ToolStripButton" />. 
-		///</summary>
-		/// <returns>true if default <see cref="ToolTip" /> text is displayed; otherwise, false. The default is true.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripItem.Text" /> of the <see cref="ToolStripButton" /> is used as its tooltip when no custom tooltip text is set.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripItem.Text" /> is used as the tooltip; otherwise, false. The default is true.</returns>
+		/// <remarks>
+		/// This is useful when <see cref="ToolStripItem.DisplayStyle" /> is <see cref="ToolStripItemDisplayStyle.Image" /> and the text is not visible.
+		/// </remarks>
 		[DefaultValue(true)]
 		public bool AutoToolTip
 		{
@@ -116,8 +132,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _autoToolTip;
 
 		/// <summary>
-		/// Gets a value indicating whether the <see cref="ToolStripButton" /> can be selected.
-		///</summary>
+		/// Returns a value indicating whether the <see cref="ToolStripButton" /> can be selected.
+		/// </summary>
 		/// <returns>true if the <see cref="ToolStripButton" /> can be selected; otherwise, false.</returns>
 		[Browsable(false)]
 		public override bool CanSelect
@@ -131,9 +147,23 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _canSelect;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripButton" /> should automatically appear pressed in and not pressed in when clicked.
-		///</summary>
-		/// <returns>true if the <see cref="ToolStripButton" /> should automatically appear pressed in and not pressed in when clicked; otherwise, false. The default is false.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripButton" /> should automatically toggle between the pressed and not pressed state when clicked.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripButton" /> toggles its <see cref="ToolStripButton.Checked" /> state when clicked; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// When true, each click toggles <see cref="ToolStripButton.Checked" /> and raises the <see cref="ToolStripButton.CheckedChanged" /> and
+		/// <see cref="ToolStripButton.CheckStateChanged" /> events before the <see cref="ToolStripItem.Click" /> event.
+		/// </remarks>
+		/// <example>
+		/// Using a button as a toggle to show or hide a panel:
+		/// <code><![CDATA[
+		/// this.toolStripButtonPreview.CheckOnClick = true;
+		/// this.toolStripButtonPreview.CheckedChanged += (s, e) =>
+		/// {
+		///     this.panelPreview.Visible = this.toolStripButtonPreview.Checked;
+		/// };
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(false)]
 		[SRCategory("CatBehavior")]
 		[SRDescription("ToolStripButtonCheckOnClickDescr")]
@@ -155,9 +185,14 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _checkOnClick;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripButton" /> is pressed or not pressed.
-		///</summary>
-		/// <returns>true if the <see cref="ToolStripButton" /> is pressed in or not pressed in; otherwise, false. The default is false.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripButton" /> is pressed or not pressed.
+		/// </summary>
+		/// <returns>true if the <see cref="ToolStripButton" /> is pressed; otherwise, false. The default is false.</returns>
+		/// <remarks>
+		/// <see cref="ToolStripButton.Checked" /> and <see cref="ToolStripButton.CheckState" /> are synchronized: <see cref="ToolStripButton.Checked" />
+		/// returns true when <see cref="ToolStripButton.CheckState" /> is <c>Checked</c> or <c>Indeterminate</c>.
+		/// Changing the value raises the <see cref="ToolStripButton.CheckedChanged" /> event.
+		/// </remarks>
 		[DefaultValue(false)]
 		[SRCategory("CatAppearance")]
 		[SRDescription("ToolStripButtonCheckedDescr")]
@@ -179,10 +214,22 @@ namespace Wisej.Web.Ext.ToolStrip
 		private bool _checked;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether the <see cref="ToolStripButton" /> is in the pressed or not pressed state by default, or is in an indeterminate state.
-		///</summary>
-		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="CheckState" /> values. </exception>
-		/// <returns>One of the <see cref="CheckState" /> values. The default is Unchecked.</returns>
+		/// Returns or sets a value indicating whether the <see cref="ToolStripButton" /> is in the pressed or not pressed state, or is in an indeterminate state.
+		/// </summary>
+		/// <returns>One of the <see cref="CheckState" /> values. The default is <see cref="CheckState.Unchecked" />.</returns>
+		/// <exception cref="System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="CheckState" /> values.</exception>
+		/// <remarks>
+		/// Setting <see cref="ToolStripButton.CheckState" /> also updates <see cref="ToolStripButton.Checked" />. Changing the value raises the
+		/// <see cref="ToolStripButton.CheckStateChanged" /> event.
+		/// </remarks>
+		/// <example>
+		/// Showing a mixed state when the selection contains both bold and regular text:
+		/// <code><![CDATA[
+		/// this.toolStripButtonBold.CheckState = selectionIsMixed
+		///     ? CheckState.Indeterminate
+		///     : (selectionIsBold ? CheckState.Checked : CheckState.Unchecked);
+		/// ]]></code>
+		/// </example>
 		[SRCategory("CatAppearance")]
 		[DefaultValue(CheckState.Unchecked)]
 		[SRDescription("CheckBoxCheckStateDescr")]
@@ -204,8 +251,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		private CheckState _checkState;
 
 		/// <summary>
-		/// Gets a value indicating whether to display the ToolTip that is defined as the default. 
-		///</summary>
+		/// Returns the default value of the <see cref="ToolStripButton.AutoToolTip" /> property.
+		/// </summary>
 		/// <returns>true in all cases.</returns>
 		public override bool DefaultAutoToolTip
 		{

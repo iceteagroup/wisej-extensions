@@ -26,38 +26,42 @@ using System.Threading.Tasks;
 namespace Wisej.Web.Ext.TaskDialog
 {
 	/// <summary>
-	/// 
-	///              Represents a command link button control of a task dialog.
-	///            
-	///</summary>
+	/// Represents a command link button control of a task dialog.
+	/// </summary>
+	/// <remarks>
+	/// A command link displays the <see cref="TaskDialogButton.Text"/> in a larger font and the optional
+	/// <see cref="DescriptionText"/> in a separate line below it.
+	/// </remarks>
+	/// <example>
+	/// Offering two options as command links:
+	/// <code><![CDATA[
+	/// page.Buttons.Add(new TaskDialogCommandLinkButton("Replace the file", "Overwrites the existing file on the server."));
+	/// page.Buttons.Add(new TaskDialogCommandLinkButton("Keep both files", "The new file will be renamed to Report (2).docx."));
+	/// ]]></code>
+	/// </example>
 	public class TaskDialogCommandLinkButton : TaskDialogButton
 	{
 
 		#region Constructors
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogButton" /> class.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogCommandLinkButton" /> class.
+		/// </summary>
 		public TaskDialogCommandLinkButton()
 		{
 			// TODO: Implement
 		}
 
 		/// <summary>
-		/// 
-		///              Initializes a new instance of the <see cref="TaskDialogButton" /> class
-		///              using the given text and, optionally, a description text.
-		///            
-		///</summary>
+		/// Initializes a new instance of the <see cref="TaskDialogCommandLinkButton" /> class
+		/// using the given text and, optionally, a description text.
+		/// </summary>
 		/// <param name="text">The text of the control.</param>
 		/// <param name="descriptionText">An additional description text that will be displayed in
-		///            a separate line when the <see cref="TaskDialogButton" />s of the task dialog are
-		///            shown as command links (see <see cref="P:System.Windows.Forms.TaskDialogCommandLinkButton.DescriptionText" />).</param>
+		/// a separate line below the text (see <see cref="DescriptionText" />).</param>
 		/// <param name="enabled">A value that indicates if the button should be enabled.</param>
 		/// <param name="allowCloseDialog">A value that indicates whether the task dialog should close
-		///              when this button is clicked.
-		///            </param>
+		/// when this button is clicked.
+		/// </param>
 		public TaskDialogCommandLinkButton(
 			string? text,
 			string? descriptionText = null,
@@ -71,14 +75,12 @@ namespace Wisej.Web.Ext.TaskDialog
 
 		#region Properties
 		/// <summary>
-		/// 
-		///              Gets or sets an additional description text that will be displayed in a separate
-		///              line.
-		///            
-		///</summary>
+		/// Returns or sets an additional description text that will be displayed in a separate
+		/// line.
+		/// </summary>
 		/// <exception cref="T:System.InvalidOperationException">
-		///              The property is set and this button instance is currently bound to a task dialog.
-		///            </exception>
+		/// The property is set and this button instance is currently bound to a task dialog.
+		/// </exception>
 		public string DescriptionText
 		{
 			get

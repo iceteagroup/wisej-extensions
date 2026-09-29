@@ -25,6 +25,43 @@ namespace Wisej.Web.Ext.AspNetControl
 	/// AspNetControl extension. Adds the AspNetWrapper&lt;T&gt; generic class, able to wrap any ASP.NET control class.
 	/// </para>
 	/// </summary>
+	/// <example>
+	/// The following example wraps the ASP.NET <see cref="T:System.Web.UI.WebControls.Calendar"/> control
+	/// and exposes the selected date to the Wisej application:
+	/// <code><![CDATA[
+	/// public class CalendarWrapper : AspNetWrapper<System.Web.UI.WebControls.Calendar>
+	/// {
+	///     public DateTime SelectedDate { get; set; } = DateTime.Today;
+	///
+	///     public event EventHandler SelectionChanged;
+	///
+	///     protected override void OnInit(EventArgs e)
+	///     {
+	///         base.OnInit(e);
+	///
+	///         // The wrapped control is only available during the page life cycle events.
+	///         this.WrappedControl.SelectionChanged += (s, args) =>
+	///         {
+	///             this.SelectedDate = this.WrappedControl.SelectedDate;
+	///             this.SelectionChanged?.Invoke(this, EventArgs.Empty);
+	///         };
+	///     }
+	///
+	///     protected override void OnLoad(EventArgs e)
+	///     {
+	///         base.OnLoad(e);
+	///
+	///         if (!this.IsPostBack)
+	///             this.WrappedControl.SelectedDate = this.SelectedDate;
+	///     }
+	/// }
+	///
+	/// // Use the wrapper like any other Wisej control:
+	/// var calendar = new CalendarWrapper { Dock = DockStyle.Fill };
+	/// calendar.SelectionChanged += (s, e) => AlertBox.Show(calendar.SelectedDate.ToShortDateString());
+	/// this.Controls.Add(calendar);
+	/// ]]></code>
+	/// </example>
 	internal class NamespaceDoc
 	{
 	}

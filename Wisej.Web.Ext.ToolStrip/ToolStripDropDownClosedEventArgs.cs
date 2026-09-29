@@ -28,8 +28,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripDropDownClosedEventArgs" /> class. 
-		///</summary>
+		/// Initializes a new instance of the <see cref="ToolStripDropDownClosedEventArgs" /> class with the specified reason.
+		/// </summary>
 		/// <param name="reason">One of the <see cref="ToolStripDropDownCloseReason" /> values.</param>
 		public ToolStripDropDownClosedEventArgs(ToolStripDropDownCloseReason reason)
 		{
@@ -42,9 +42,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets the reason that the <see cref="ToolStripDropDown" /> closed.
-		///</summary>
+		/// Returns the reason that the <see cref="ToolStripDropDown" /> closed.
+		/// </summary>
 		/// <returns>One of the <see cref="ToolStripDropDownCloseReason" /> values.</returns>
+		/// <example>
+		/// Reacting only when the drop down was closed with the keyboard:
+		/// <code><![CDATA[
+		/// private void dropDown1_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+		/// {
+		///     if (e.CloseReason == ToolStripDropDownCloseReason.Keyboard)
+		///         this.textBox1.Focus();
+		/// }
+		/// ]]></code>
+		/// </example>
 		public ToolStripDropDownCloseReason CloseReason
 		{
 			get

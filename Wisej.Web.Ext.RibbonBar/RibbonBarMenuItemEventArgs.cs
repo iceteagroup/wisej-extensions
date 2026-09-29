@@ -24,17 +24,21 @@ namespace Wisej.Web.Ext.RibbonBar
 {
 	/// <summary>
 	/// Contains the data for the events in a <see cref="RibbonBar"/> control
-	/// fired by its <see cref="RibbonBarItem"/> components with drop down menu items..
+	/// fired by its <see cref="RibbonBarItemButton"/> components with drop down menu items.
 	/// </summary>
+	/// <remarks>
+	/// <see cref="Item"/> is the button that owns the menu and <see cref="MenuItemEventArgs.MenuItem"/> is the menu item that was clicked.
+	/// </remarks>
 	[ApiCategory("RibbonBar")]
 	public class RibbonBarMenuItemEventArgs : MenuItemEventArgs
 	{
 		/// <summary>
-		/// Initializes a new instance of <see cref="RibbonBarItemEventArgs"/>
+		/// Initializes a new instance of <see cref="RibbonBarMenuItemEventArgs"/>
 		/// using the specified parameters.
 		/// </summary>
 		/// <param name="item">The <see cref="RibbonBarItemButton"/> that originated the event.</param>
 		/// <param name="menuItem">The <see cref="MenuItem"/> that was clicked or tapped.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="item"/> or <paramref name="menuItem"/> is null.</exception>
 		public RibbonBarMenuItemEventArgs(RibbonBarItemButton item, MenuItem menuItem)
 			: base(menuItem)
 		{
@@ -47,9 +51,18 @@ namespace Wisej.Web.Ext.RibbonBar
 		}
 
 		/// <summary>
-		/// The <see cref="RibbonBarItemButton"/> that originated the event.
+		/// Returns the <see cref="RibbonBarItemButton"/> that originated the event.
 		/// </summary>
-		/// <returns>A reference to the <see cref="RibbonBarItem"/> that originated this event.</returns>
+		/// <returns>A reference to the <see cref="RibbonBarItemButton"/> (or <see cref="RibbonBarItemSplitButton"/>) that originated this event.</returns>
+		/// <example>
+		/// Handling the menu items of all the ribbon buttons in one place:
+		/// <code><![CDATA[
+		/// private void ribbonBar1_MenuButtonItemClick(object sender, RibbonBarMenuItemEventArgs e)
+		/// {
+		///     AlertBox.Show(e.Item.Text + " > " + e.MenuItem.Text);
+		/// }
+		/// ]]></code>
+		/// </example>
 		public RibbonBarItemButton Item
 		{
 			get;

@@ -29,17 +29,36 @@ namespace Wisej.Web.Ext.Camera
 	/// <param name="e">A <see cref="CameraErrorEventArgs" /> that contains the event data. </param>
 	public delegate void CameraErrorHandler(object sender, CameraErrorEventArgs e);
 
-	/// <summary>
-	/// Provides data for the <see cref="Camera.Error"/> event of the <see cref="Camera"/> control.
-	/// </summary>
-	[ApiCategory("Camera")]
+    /// <summary>
+    /// Represents the data for the <see cref="Camera.Error"/> event of the <see cref="Camera"/> control.
+    /// This class contains information about errors that occur during camera operations.
+    /// </summary>
+	/// <remarks>
+	/// The <see cref="Camera.Error"/> event is triggered when an error occurs, providing the necessary details
+	/// to handle the situation appropriately. This can include instances of hardware failure, permission issues,
+	/// or other operational errors that prevent the camera from functioning correctly.
+	/// </remarks>
+    [ApiCategory("Camera")]
 	public class CameraErrorEventArgs : EventArgs
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="CameraErrorEventArgs"/> class.
-		/// </summary>
-		/// <param name="message"></param>
-		public CameraErrorEventArgs(string message)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CameraErrorEventArgs"/> class
+        /// with the message describing the error reported by the client.
+        /// </summary>
+        /// <param name="message">
+        /// The error message returned by the browser's media API, for example
+        /// <c>"Permission denied"</c>, <c>"Requested device not found"</c>, or
+        /// <c>"Could not start video source"</c>. The exact wording is browser-specific
+        /// and is exposed through the <see cref="Message"/> property.
+        /// </param>
+        /// <remarks>
+        /// This constructor is called by the <see cref="Camera"/> control when the client reports a failure in the
+        /// camera setup or usage; applications normally receive the instance through the <see cref="Camera.Error"/>
+        /// event rather than creating one. No validation is performed on <paramref name="message"/>, so
+        /// <see cref="Message"/> can be <see langword="null"/> if the browser supplied no description.
+        /// </remarks>
+        /// <seealso cref="Camera.Error"/>
+        public CameraErrorEventArgs(string message)
 		{
 			this.Message = message;
 		}

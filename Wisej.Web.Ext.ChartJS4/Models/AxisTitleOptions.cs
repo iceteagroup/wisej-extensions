@@ -23,8 +23,23 @@ using System.Text.Json.Serialization;
 namespace Wisej.Web.Ext.ChartJS4.Models
 {
 	/// <summary>
-	/// Axis title options.
+	/// Represents the options of an axis title, the label displayed along an axis (Chart.js <c>scales[id].title</c>).
 	/// </summary>
+	/// <remarks>
+	/// An instance is lazily created by <see cref="AxisOptions.Title"/>. The title is hidden by default:
+	/// set <see cref="Display"/> to <c>true</c> and assign <see cref="Text"/> to show it. Additional Chart.js
+	/// options, such as <c>align</c>, can be supplied through <see cref="ExtensionData"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var chart = new ChartJS4();
+	/// var title = chart.ChartOptions.Scales.Y.Title;
+	/// title.Display = true;
+	/// title.Text = "Revenue (USD)";
+	/// title.Color = System.Drawing.Color.DarkBlue;
+	/// title.Font.Size = 14;
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("ChartJS4")]
 	[TypeConverter(typeof(Converter))]
 	public class AxisTitleOptions : OptionsBase
@@ -36,8 +51,21 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		private int _padding;
 
 		/// <summary>
-		/// If true, display the axis title.
+		/// Returns or sets a value indicating whether the axis title is displayed (Chart.js <c>title.display</c>).
 		/// </summary>
+		/// <value>
+		/// <c>true</c> to display the title; otherwise, <c>false</c>. The default is <c>false</c>.
+		/// </value>
+		/// <remarks>
+		/// Setting this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// chart.ChartOptions.Scales.X.Title.Display = true;
+		/// chart.ChartOptions.Scales.X.Title.Text = "Month";
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("display")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
@@ -49,8 +77,21 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Title text.
+		/// Returns or sets the text of the axis title (Chart.js <c>title.text</c>).
 		/// </summary>
+		/// <value>
+		/// The title text, or <c>null</c> (default) for no text.
+		/// </value>
+		/// <remarks>
+		/// The text is shown only when <see cref="Display"/> is <c>true</c>. Setting this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// chart.ChartOptions.Scales.Y.Title.Display = true;
+		/// chart.ChartOptions.Scales.Y.Title.Text = "Temperature (°C)";
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("text")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Title text.")]
@@ -61,8 +102,21 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Color of the title text.
+		/// Returns or sets the color of the axis title text (Chart.js <c>title.color</c>).
 		/// </summary>
+		/// <value>
+		/// A <see cref="System.Drawing.Color"/> or a CSS color string, or <c>null</c> (default) to use the
+		/// Chart.js default font color.
+		/// </value>
+		/// <remarks>
+		/// Setting this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// chart.ChartOptions.Scales.Y.Title.Color = "#336699";
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("color")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Title text color.")]
@@ -73,8 +127,21 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Font configuration.
+		/// Returns or sets the font used to render the axis title (Chart.js <c>title.font</c>).
 		/// </summary>
+		/// <value>
+		/// A <see cref="FontOptions"/> instance. The getter lazily creates a default instance when none is set.
+		/// </value>
+		/// <remarks>
+		/// Changing any of the font values refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// chart.ChartOptions.Scales.X.Title.Font.Size = 16;
+		/// chart.ChartOptions.Scales.X.Title.Font.Weight = "bold";
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("font")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Font configuration.")]
@@ -90,8 +157,20 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Padding around the title.
+		/// Returns or sets the padding around the axis title, in pixels (Chart.js <c>title.padding</c>).
 		/// </summary>
+		/// <value>
+		/// The padding in pixels. The default is <c>0</c>, which is not serialized so that Chart.js applies its own default (<c>4</c>).
+		/// </value>
+		/// <remarks>
+		/// Setting this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// chart.ChartOptions.Scales.Y.Title.Padding = 10;
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("padding")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Padding around title.")]
@@ -102,8 +181,25 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Additional custom properties that can be serialized to JSON.
+		/// Returns or sets additional, arbitrary Chart.js axis title options that are not exposed as typed properties.
 		/// </summary>
+		/// <value>
+		/// A dictionary of option names and values, or <c>null</c> (default).
+		/// </value>
+		/// <remarks>
+		/// This property is marked with <c>[JsonExtensionData]</c>: each entry is written as a sibling
+		/// property of the <c>title</c> JSON object sent to Chart.js (e.g. <c>align</c>: <c>"start"</c> | <c>"center"</c> | <c>"end"</c>).
+		/// It is hidden from the designer and property grid.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// chart.ChartOptions.Scales.X.Title.ExtensionData = new Dictionary<string, object>
+		/// {
+		///     { "align", "end" }
+		/// };
+		/// ]]></code>
+		/// </example>
 		[Browsable(false)]
 		[JsonExtensionData]
 		[DefaultValue(null)]
@@ -119,53 +215,142 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Determines whether the Display property should be serialized by the designer.
+		/// Determines whether the <see cref="Display"/> property should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Display"/> is <c>true</c>; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Used by the Visual Studio designer together with <see cref="ResetDisplay"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new AxisTitleOptions();
+		/// if (title.ShouldSerializeDisplay())
+		///     title.ResetDisplay();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeDisplay() => Display != false;
 
 		/// <summary>
-		/// Resets the Display property to its default value.
+		/// Resets the <see cref="Display"/> property to its default value (<c>false</c>).
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new AxisTitleOptions { Display = true };
+		/// title.ResetDisplay();
+		/// ]]></code>
+		/// </example>
 		public void ResetDisplay() => Display = false;
 
 		/// <summary>
-		/// Determines whether the Text property should be serialized by the designer.
+		/// Determines whether the <see cref="Text"/> property should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Text"/> is not <c>null</c>; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Used by the Visual Studio designer together with <see cref="ResetText"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new AxisTitleOptions();
+		/// if (title.ShouldSerializeText())
+		///     title.ResetText();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeText() => Text != null;
 
 		/// <summary>
-		/// Resets the Text property to its default value.
+		/// Resets the <see cref="Text"/> property to its default value (<c>null</c>).
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new AxisTitleOptions { Text = "Sales" };
+		/// title.ResetText();
+		/// ]]></code>
+		/// </example>
 		public void ResetText() => Text = null;
 
 		/// <summary>
-		/// Determines whether the Color property should be serialized by the designer.
+		/// Determines whether the <see cref="Color"/> property should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Color"/> is not <c>null</c>; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Used by the Visual Studio designer together with <see cref="ResetColor"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new AxisTitleOptions();
+		/// if (title.ShouldSerializeColor())
+		///     title.ResetColor();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeColor() => Color != null;
 
 		/// <summary>
-		/// Resets the Color property to its default value.
+		/// Resets the <see cref="Color"/> property to its default value (<c>null</c>).
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new AxisTitleOptions { Color = "gray" };
+		/// title.ResetColor();
+		/// ]]></code>
+		/// </example>
 		public void ResetColor() => Color = null;
 
 		/// <summary>
-		/// Determines whether the Font property should be serialized by the designer.
+		/// Determines whether the <see cref="Font"/> property should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Font"/> has at least one non-default value; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Used by the Visual Studio designer together with <see cref="ResetFont"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new AxisTitleOptions();
+		/// if (title.ShouldSerializeFont())
+		///     title.ResetFont();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeFont() => Font != null && !Font.IsDefault;
 
 		/// <summary>
-		/// Resets the Font property to its default value.
+		/// Resets the <see cref="Font"/> property to its default value by discarding the current <see cref="FontOptions"/> instance.
 		/// </summary>
+		/// <remarks>
+		/// A new default instance is created the next time <see cref="Font"/> is read.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new AxisTitleOptions();
+		/// title.Font.Size = 18;
+		/// title.ResetFont();
+		/// ]]></code>
+		/// </example>
 		public void ResetFont() => SetProperty(ref _font, null);
 
 		/// <summary>
-		/// Determines whether the Padding property should be serialized by the designer.
+		/// Determines whether the <see cref="Padding"/> property should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Padding"/> is not <c>0</c>; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Used by the Visual Studio designer together with <see cref="ResetPadding"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new AxisTitleOptions();
+		/// if (title.ShouldSerializePadding())
+		///     title.ResetPadding();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializePadding() => Padding != default;
 
 		/// <summary>
-		/// Resets the Padding property to its default value.
+		/// Resets the <see cref="Padding"/> property to its default value (<c>0</c>).
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var title = new AxisTitleOptions { Padding = 8 };
+		/// title.ResetPadding();
+		/// ]]></code>
+		/// </example>
 		public void ResetPadding() => Padding = default;
 
 	}

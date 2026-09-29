@@ -28,9 +28,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ToolStripItemEventArgs" /> class, specifying a <see cref="ToolStripItem" />. 
-		///</summary>
-		/// <param name="item">The <see cref="ToolStripItem" /> for which to specify events.</param>
+		/// Initializes a new instance of the <see cref="ToolStripItemEventArgs" /> class, specifying a <see cref="ToolStripItem" />.
+		/// </summary>
+		/// <param name="item">The <see cref="ToolStripItem" /> associated with the event.</param>
 		public ToolStripItemEventArgs(ToolStripItem item)
 		{
 			this._item = item;
@@ -42,8 +42,8 @@ namespace Wisej.Web.Ext.ToolStrip
 		#region Properties
 
 		/// <summary>
-		/// Gets a <see cref="ToolStripItem" /> for which to handle events.
-		///</summary>
+		/// Returns the <see cref="ToolStripItem" /> associated with the event.
+		/// </summary>
 		/// <returns>A <see cref="ToolStripItem" />.</returns>
 		public ToolStripItem Item
 		{

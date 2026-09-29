@@ -25,8 +25,18 @@ namespace Wisej.Ext.WebAuthn
 	/// Attestation conveyance preferences.
 	/// </summary>
 	/// <remarks>
-	/// <See: href="https://w3c.github.io/webauthn/#attestation-conveyance"/>
+	/// Pass one of these values to the <c>attestation</c> parameter of
+	/// <see cref="WebAuthn.CreateAsync"/> to indicate how important the attestation data is to the registration.
+	/// See <see href="https://w3c.github.io/webauthn/#attestation-conveyance"/>.
 	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// CredentialsResponse response = await WebAuthn.CreateAsync(
+	/// 	challenge, rp, user, parameters, selection,
+	/// 	60000,
+	/// 	AttestationConveyancePreference.None);
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("WebAuthn")]
 	public enum AttestationConveyancePreference
 	{

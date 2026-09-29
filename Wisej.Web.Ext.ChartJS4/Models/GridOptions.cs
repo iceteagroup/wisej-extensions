@@ -23,8 +23,21 @@ using System.Text.Json.Serialization;
 namespace Wisej.Web.Ext.ChartJS4.Models
 {
 	/// <summary>
-	/// Grid line options.
+	/// Represents the grid line options of an axis (Chart.js <c>scales[id].grid</c>).
 	/// </summary>
+	/// <remarks>
+	/// An instance is lazily created by <see cref="AxisOptions.Grid"/>. Additional Chart.js grid options,
+	/// such as <c>drawOnChartArea</c>, <c>drawTicks</c>, <c>tickLength</c> or <c>offset</c>, can be supplied
+	/// through <see cref="ExtensionData"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// var chart = new ChartJS4();
+	/// var grid = chart.ChartOptions.Scales.Y.Grid;
+	/// grid.Color = "rgba(0, 0, 0, 0.1)";
+	/// grid.LineWidth = 2;
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("ChartJS4")]
 	[TypeConverter(typeof(Converter))]
 	public class GridOptions : OptionsBase
@@ -36,8 +49,20 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		private bool _circular;
 
 		/// <summary>
-		/// If true, draw grid lines.
+		/// Returns or sets a value indicating whether the grid lines of the axis are drawn (Chart.js <c>grid.display</c>).
 		/// </summary>
+		/// <value>
+		/// <c>true</c> to draw the grid lines; otherwise, <c>false</c>. The default is <c>true</c>.
+		/// </value>
+		/// <remarks>
+		/// Setting this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// bool gridVisible = chart.ChartOptions.Scales.X.Grid.Display;
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("display")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
@@ -49,8 +74,23 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Grid line color.
+		/// Returns or sets the color of the grid lines (Chart.js <c>grid.color</c>).
 		/// </summary>
+		/// <value>
+		/// A <see cref="System.Drawing.Color"/>, a CSS color string, or an array of colors (the first color is
+		/// applied to the first grid line, the second to the second, and so on), or <c>null</c> (default)
+		/// to use the Chart.js default color.
+		/// </value>
+		/// <remarks>
+		/// Setting this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// chart.ChartOptions.Scales.Y.Grid.Color = System.Drawing.Color.LightGray;
+		/// chart.ChartOptions.Scales.X.Grid.Color = new[] { "red", "green", "blue" };
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("color")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault)]
 		[Description("Grid line color.")]
@@ -61,8 +101,20 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Stroke width of grid lines.
+		/// Returns or sets the stroke width of the grid lines, in pixels (Chart.js <c>grid.lineWidth</c>).
 		/// </summary>
+		/// <value>
+		/// The grid line width in pixels. The default is <c>1</c>.
+		/// </value>
+		/// <remarks>
+		/// Setting this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// chart.ChartOptions.Scales.Y.Grid.LineWidth = 2;
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("lineWidth")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(1)]
@@ -74,8 +126,23 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// If true, draw border at the edge between the axis and the chart area.
+		/// Returns or sets a value indicating whether a border is drawn at the edge between the axis and
+		/// the chart area (Chart.js 3 <c>grid.drawBorder</c>).
 		/// </summary>
+		/// <value>
+		/// <c>true</c> to draw the border; otherwise, <c>false</c>. The default is <c>true</c>.
+		/// </value>
+		/// <remarks>
+		/// In Chart.js 4 this option was replaced by <c>border.display</c>; use
+		/// <see cref="AxisOptions.Border"/> and <see cref="BorderOptions.Display"/> to control the axis border.
+		/// Setting this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// bool drawBorder = chart.ChartOptions.Scales.X.Grid.DrawBorder;
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("drawBorder")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(true)]
@@ -87,8 +154,20 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// If true, gridlines are circular (on radar chart only).
+		/// Returns or sets a value indicating whether the grid lines are circular (Chart.js <c>grid.circular</c>).
 		/// </summary>
+		/// <value>
+		/// <c>true</c> to draw circular grid lines; otherwise, <c>false</c> to draw polygonal lines. The default is <c>false</c>.
+		/// </value>
+		/// <remarks>
+		/// Applies only to radial scales (radar and polar area charts). Setting this property refreshes the chart.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// chart.ChartOptions.Scales.Y.Grid.Circular = true;
+		/// ]]></code>
+		/// </example>
 		[JsonPropertyName("circular")]
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		[DefaultValue(false)]
@@ -100,8 +179,26 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		}
 
 		/// <summary>
-		/// Additional custom properties that can be serialized to JSON.
+		/// Returns or sets additional, arbitrary Chart.js grid options that are not exposed as typed properties.
 		/// </summary>
+		/// <value>
+		/// A dictionary of option names and values, or <c>null</c> (default).
+		/// </value>
+		/// <remarks>
+		/// This property is marked with <c>[JsonExtensionData]</c>: each entry is written as a sibling
+		/// property of the <c>grid</c> JSON object sent to Chart.js (e.g. <c>drawOnChartArea</c>, <c>drawTicks</c>,
+		/// <c>tickLength</c>). It is hidden from the designer and property grid.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var chart = new ChartJS4();
+		/// chart.ChartOptions.Scales.Y.Grid.ExtensionData = new Dictionary<string, object>
+		/// {
+		///     { "drawOnChartArea", false },
+		///     { "tickLength", 8 }
+		/// };
+		/// ]]></code>
+		/// </example>
 		[JsonExtensionData]
 		[DefaultValue(null)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -110,53 +207,138 @@ namespace Wisej.Web.Ext.ChartJS4.Models
 		public System.Collections.Generic.Dictionary<string, object>? ExtensionData { get; set; }
 
 		/// <summary>
-		/// Determines whether the Display property should be serialized by the designer.
+		/// Determines whether the <see cref="Display"/> property should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Display"/> is not <c>true</c>; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Used by the Visual Studio designer together with <see cref="ResetDisplay"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var grid = new GridOptions();
+		/// if (grid.ShouldSerializeDisplay())
+		///     grid.ResetDisplay();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeDisplay() => Display != true;
 
 		/// <summary>
-		/// Resets the Display property to its default value.
+		/// Resets the <see cref="Display"/> property to its default value (<c>true</c>).
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var grid = new GridOptions();
+		/// grid.ResetDisplay();
+		/// ]]></code>
+		/// </example>
 		public void ResetDisplay() => Display = true;
 
 		/// <summary>
-		/// Determines whether the Color property should be serialized by the designer.
+		/// Determines whether the <see cref="Color"/> property should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Color"/> is not <c>null</c>; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Used by the Visual Studio designer together with <see cref="ResetColor"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var grid = new GridOptions();
+		/// if (grid.ShouldSerializeColor())
+		///     grid.ResetColor();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeColor() => Color != null;
 
 		/// <summary>
-		/// Resets the Color property to its default value.
+		/// Resets the <see cref="Color"/> property to its default value (<c>null</c>).
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var grid = new GridOptions { Color = "#eeeeee" };
+		/// grid.ResetColor();
+		/// ]]></code>
+		/// </example>
 		public void ResetColor() => Color = null;
 
 		/// <summary>
-		/// Determines whether the LineWidth property should be serialized by the designer.
+		/// Determines whether the <see cref="LineWidth"/> property should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="LineWidth"/> is not <c>1</c>; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Used by the Visual Studio designer together with <see cref="ResetLineWidth"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var grid = new GridOptions();
+		/// if (grid.ShouldSerializeLineWidth())
+		///     grid.ResetLineWidth();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeLineWidth() => LineWidth != 1;
 
 		/// <summary>
-		/// Resets the LineWidth property to its default value.
+		/// Resets the <see cref="LineWidth"/> property to its default value (<c>1</c>).
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var grid = new GridOptions { LineWidth = 3 };
+		/// grid.ResetLineWidth();
+		/// ]]></code>
+		/// </example>
 		public void ResetLineWidth() => LineWidth = 1;
 
 		/// <summary>
-		/// Determines whether the DrawBorder property should be serialized by the designer.
+		/// Determines whether the <see cref="DrawBorder"/> property should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="DrawBorder"/> is not <c>true</c>; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Used by the Visual Studio designer together with <see cref="ResetDrawBorder"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var grid = new GridOptions();
+		/// if (grid.ShouldSerializeDrawBorder())
+		///     grid.ResetDrawBorder();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeDrawBorder() => DrawBorder != true;
 
 		/// <summary>
-		/// Resets the DrawBorder property to its default value.
+		/// Resets the <see cref="DrawBorder"/> property to its default value (<c>true</c>).
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var grid = new GridOptions();
+		/// grid.ResetDrawBorder();
+		/// ]]></code>
+		/// </example>
 		public void ResetDrawBorder() => DrawBorder = true;
 
 		/// <summary>
-		/// Determines whether the Circular property should be serialized by the designer.
+		/// Determines whether the <see cref="Circular"/> property should be serialized by the designer.
 		/// </summary>
+		/// <returns><c>true</c> if <see cref="Circular"/> is <c>true</c>; otherwise, <c>false</c>.</returns>
+		/// <remarks>
+		/// Used by the Visual Studio designer together with <see cref="ResetCircular"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// var grid = new GridOptions();
+		/// if (grid.ShouldSerializeCircular())
+		///     grid.ResetCircular();
+		/// ]]></code>
+		/// </example>
 		public bool ShouldSerializeCircular() => Circular != false;
 
 		/// <summary>
-		/// Resets the Circular property to its default value.
+		/// Resets the <see cref="Circular"/> property to its default value (<c>false</c>).
 		/// </summary>
+		/// <example>
+		/// <code><![CDATA[
+		/// var grid = new GridOptions { Circular = true };
+		/// grid.ResetCircular();
+		/// ]]></code>
+		/// </example>
 		public void ResetCircular() => Circular = false;
 
 	}

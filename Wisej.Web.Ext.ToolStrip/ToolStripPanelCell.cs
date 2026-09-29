@@ -23,17 +23,30 @@ using Wisej.Web.Layout;
 
 namespace Wisej.Web.Ext.ToolStrip
 {
+	/// <summary>
+	/// Represents a cell of a <see cref="ToolStripPanelRow"/> that hosts a single control, usually a <see cref="ToolStrip"/>,
+	/// and tracks the space assigned to it by the row layout.
+	/// </summary>
 	public class ToolStripPanelCell : Control
 	{
 
 		#region Constructors
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToolStripPanelCell" /> class hosting the specified control.
+		/// </summary>
+		/// <param name="control">The <see cref="Control"/> hosted by the cell.</param>
 		public ToolStripPanelCell(Control control)
 		{
 			this._control = control;
 			// TODO: Implement
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ToolStripPanelCell" /> class hosting the specified control in the specified row.
+		/// </summary>
+		/// <param name="parent">The <see cref="ToolStripPanelRow"/> that contains the cell.</param>
+		/// <param name="control">The <see cref="Control"/> hosted by the cell.</param>
 		public ToolStripPanelCell(ToolStripPanelRow parent, Control control)
 		{
 			this._parent = parent;
@@ -45,6 +58,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		#region Properties
 
+		/// <summary>
+		/// Returns or sets the bounds, in pixels, last calculated for the cell by the row layout.
+		/// </summary>
+		/// <returns>A <see cref="System.Drawing.Rectangle" /> with the cached size and location of the cell.</returns>
 		public Rectangle CachedBounds
 		{
 			get
@@ -62,6 +79,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private Rectangle _cachedBounds;
 
+		/// <summary>
+		/// Returns the control hosted by the cell.
+		/// </summary>
+		/// <returns>The <see cref="Control"/> hosted by the cell.</returns>
 		public Control Control
 		{
 			get
@@ -73,6 +94,9 @@ namespace Wisej.Web.Ext.ToolStrip
 		private ToolStripPanelRow _parent;
 		private Control _control;
 
+		/// <summary>
+		/// Returns whether the hosted control is in design mode.
+		/// </summary>
 		public bool ControlInDesignMode
 		{
 			get
@@ -95,6 +119,9 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		//private IArrangedElement _innerElement;
 
+		/// <summary>
+		/// Returns the control that is being dragged into the cell.
+		/// </summary>
 		public ISupportToolStripPanel DraggedControl
 		{
 			get
@@ -105,6 +132,9 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private ISupportToolStripPanel _draggedControl;
 
+		/// <summary>
+		/// Returns or sets the <see cref="ToolStripPanelRow"/> that contains the cell.
+		/// </summary>
 		public ToolStripPanelRow ToolStripPanelRow
 		{
 			get
@@ -122,6 +152,9 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private ToolStripPanelRow _toolStripPanelRow;
 
+		/// <summary>
+		/// Returns or sets whether the cell is visible.
+		/// </summary>
 		public override bool Visible
 		{
 			get
@@ -139,6 +172,9 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private bool _visible;
 
+		/// <summary>
+		/// Returns the maximum size, in pixels, of the cell.
+		/// </summary>
 		public Size MaximumSize
 		{
 			get
@@ -149,6 +185,10 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		private Size _maximumSize;
 
+		/// <summary>
+		/// Returns the layout engine of the cell.
+		/// </summary>
+		/// <returns>The <see cref="Wisej.Web.Layout.LayoutEngine" /> for the cell's contents.</returns>
 		public override LayoutEngine LayoutEngine
 		{
 			get
@@ -163,12 +203,36 @@ namespace Wisej.Web.Ext.ToolStrip
 
 		#region Methods
 
+		/// <summary>
+		/// Retrieves the size of a rectangular area into which the cell and its hosted control can be fitted.
+		/// </summary>
+		/// <param name="constrainingSize">The custom-sized area for the cell.</param>
+		/// <returns>A <see cref="System.Drawing.Size"/> representing the preferred width and height, in pixels.</returns>
+		/// <example>
+		/// Calculating the space needed by a tool strip in a horizontal row:
+		/// <code><![CDATA[
+		/// var cell = new ToolStripPanelCell(this.toolStrip1);
+		/// Size preferred = cell.GetPreferredSize(new Size(400, 25));
+		/// ]]></code>
+		/// </example>
 		public override Size GetPreferredSize(Size constrainingSize)
 		{
 			// TODO: Implement
 			return new System.Drawing.Size();
 		}
 
+		/// <summary>
+		/// Reduces the size of the cell, along the orientation of its row, by up to the specified number of pixels.
+		/// </summary>
+		/// <param name="shrinkBy">The number of pixels to remove from the cell.</param>
+		/// <returns>The number of pixels the cell was actually reduced by.</returns>
+		/// <example>
+		/// Making room for 40 more pixels in a row:
+		/// <code><![CDATA[
+		/// var cell = new ToolStripPanelCell(this.toolStripPanelRow1, this.toolStrip1);
+		/// int freed = cell.Shrink(40);
+		/// ]]></code>
+		/// </example>
 		public int Shrink(int shrinkBy)
 		{
 			// TODO: Implement
@@ -194,6 +258,19 @@ namespace Wisej.Web.Ext.ToolStrip
 		//	// TODO: Implement
 		//}
 
+		/// <summary>
+		/// Increases the size of the cell, along the orientation of its row, by up to the specified number of pixels.
+		/// </summary>
+		/// <param name="growBy">The number of pixels to add to the cell.</param>
+		/// <returns>The number of pixels the cell was actually increased by.</returns>
+		/// <example>
+		/// Giving the remaining space of a row to a cell:
+		/// <code><![CDATA[
+		/// var cell = new ToolStripPanelCell(this.toolStripPanelRow1, this.toolStrip1);
+		/// int remainingWidth = 120;
+		/// remainingWidth -= cell.Grow(remainingWidth);
+		/// ]]></code>
+		/// </example>
 		public int Grow(int growBy)
 		{
 			// TODO: Implement

@@ -35,7 +35,7 @@ namespace Wisej.Web.Ext.Barcode
 		/// <summary>
 		/// Stops scanning after one successful barcode detection.
 		/// </summary>
-		/// <remarks>Reset the scanner by calling <see cref=""/></remarks>
+		/// <remarks>Reset the scanner by calling <see cref="BarcodeReader.ResetScanner"/>.</remarks>
 		AutomaticOnce,
 
 		/// <summary>

@@ -22,9 +22,14 @@ using System.ComponentModel;
 namespace Wisej.Web.Ext.NavigationBar
 {
 	/// <summary>
-	/// Implements the context menu to show when the <see cref="NavigationBar.CompactView"/> is true
-	/// and the user selects an item with child items.
+	/// Represents the context menu shown when <see cref="NavigationBar.CompactView"/> is true
+	/// and the user expands a top-level item with child items.
 	/// </summary>
+	/// <remarks>
+	/// The menu is created by <see cref="NavigationBarItem"/> with one <see cref="NavigationBarMenuItem"/> for
+	/// each child item (nested items become submenus) and it's disposed when closed. On the client it uses the
+	/// "navbar-menu" appearance, and its items use "navbar-menu/item".
+	/// </remarks>
 	[ToolboxItem(false)]
 	public class NavigationBarMenu : ContextMenu
 	{

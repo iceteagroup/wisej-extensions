@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Wisej.Web.Ext.JssorSlider
 {
+	/// <summary>
+	/// Base class for the option objects that configure the navigation elements of a <see cref="JssorSlider"/>:
+	/// <see cref="ArrowOptions"/>, <see cref="BulletOptions"/> and <see cref="ThumbnailOptions"/>.
+	/// </summary>
 	public abstract class OptionsBase
 	{
 		protected const int STATE_WRAP = 0x0001;
@@ -18,6 +22,10 @@ namespace Wisej.Web.Ext.JssorSlider
 		private int state = 0;
 		private JssorSlider slider;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="OptionsBase"/> class for the specified slider.
+		/// </summary>
+		/// <param name="slider">The <see cref="JssorSlider"/> that owns these options.</param>
 		public OptionsBase(JssorSlider slider)
 		{
 			this.slider = slider;

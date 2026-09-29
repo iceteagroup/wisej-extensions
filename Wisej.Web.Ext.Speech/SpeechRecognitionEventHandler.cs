@@ -33,7 +33,8 @@ namespace Wisej.Web.Ext.Speech
 	public delegate void SpeechRecognitionEventHandler(object sender, SpeechRecognitionEventArgs e);
 
 	/// <summary>
-	/// Provides data for the <see cref="E:Wisej.Web.Ext.Speech.SpeechRecognition.Result" /> events.
+	/// Provides data for the <see cref="E:Wisej.Web.Ext.Speech.SpeechRecognition.Result" /> and
+	/// <see cref="E:Wisej.Web.Ext.Speech.SpeechRecognition.Error" /> events.
 	///</summary>
 	[ApiCategory("Speech")]
 	public class SpeechRecognitionEventArgs : EventArgs
@@ -43,8 +44,9 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Wisej.Web.Ext.Speech.SpeechRecognitionEventArgs" /> class.
 		///</summary>
-		/// <param name="results">The speech recognition results.</param>
-		/// <param name="error">The speech recognition error message.</param>
+		/// <param name="results">The speech recognition results received from the client: an array of dynamic objects with the
+		/// <c>isFinal</c>, <c>confidence</c> and <c>transcript</c> fields, or null.</param>
+		/// <param name="error">The speech recognition error message, or null.</param>
 		public SpeechRecognitionEventArgs(dynamic results, string error)
 		{
 			dynamic[] array = results as dynamic[];
@@ -77,11 +79,35 @@ namespace Wisej.Web.Ext.Speech
 		/// <summary>
 		/// Returns the list of speech recognition results.
 		/// </summary>
+		/// <remarks>
+		/// The array contains all the alternatives (up to <see cref="SpeechRecognition.MaxAlternatives"/>) of the results received,
+		/// including interim results when <see cref="SpeechRecognition.InterimResults"/> is true. It's empty for the
+		/// <see cref="E:Wisej.Web.Ext.Speech.SpeechRecognition.Error"/> event.
+		/// </remarks>
+		/// <example>
+		/// Using the final result with the highest confidence:
+		/// <code><![CDATA[
+		/// private void speechRecognition1_Result(object sender, SpeechRecognitionEventArgs e)
+		/// {
+		///     var best = e.Results
+		///         .Where(r => r.IsFinal)
+		///         .OrderByDescending(r => r.Confidence)
+		///         .FirstOrDefault();
+		/// 
+		///     if (best != null)
+		///         this.labelCommand.Text = best.Transcript;
+		/// }
+		/// ]]></code>
+		/// </example>
 		public SpeechRecognitionResult[] Results { get; private set; }
 
 		/// <summary>
 		/// Returns the error message from the speech recognition object.
 		///</summary>
+		/// <remarks>
+		/// The value is the error code reported by the browser, i.e. "no-speech", "aborted", "audio-capture", "network",
+		/// "not-allowed" or "language-not-supported". It's null for the <see cref="E:Wisej.Web.Ext.Speech.SpeechRecognition.Result"/> event.
+		/// </remarks>
 		public string Error { get; private set; }
 
 		#endregion

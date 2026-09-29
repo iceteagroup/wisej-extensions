@@ -25,23 +25,27 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.ProgressCircle
 {
 	/// <summary>
+	/// Represents a circular progress indicator that displays a percentage value as an arc
+	/// drawn around the perimeter of a circle.
+	/// </summary>
+	/// <remarks>
 	/// The ProgressCircle control is an example on how to create a custom
 	/// component in Wisej by extending the <see cref="T:Wisej.Web.Canvas"/> control.
-	/// 
-	/// The new component is entirely drawn on the client side on a HTML5 Canvas element
-	/// receiving the drawing instructions from the server.
-	/// </summary>
+	/// The component is entirely drawn on the client side on an HTML5 canvas element
+	/// using the drawing instructions sent from the server every time a property changes.
+	/// </remarks>
 	[ToolboxItem(true)]
 	[ToolboxBitmap(typeof(ProgressCircle))]
 	[ApiCategory("ProgressCircle")]
 	public class ProgressCircle : Canvas
 	{
 		/// <summary>
-		/// Sets the appearance key for the theme engine.
+		/// Returns or sets the appearance key for the theme engine.
 		/// </summary>
 		/// <remarks>
-		/// Overridden to change the appearance key without
-		/// serializing the new default in the designer.
+		/// Overridden to change the default appearance key to "progress-circle" without
+		/// serializing the new default in the designer. The theme appearance supplies the
+		/// default values for <see cref="BackColor"/> ("backgroundColor") and <see cref="LineWidth"/> ("lineWidth").
 		/// </remarks>
 		[DefaultValue("progress-circle")]
 		public override string AppearanceKey
@@ -51,9 +55,12 @@ namespace Wisej.Web.Ext.ProgressCircle
 		}
 
 		/// <summary>
-		///  Gets or sets the font of the text displayed by the control.
+		/// Returns or sets the font of the percentage text displayed in the middle of the circle.
 		/// </summary>
 		/// <returns>A <see cref="T:System.Drawing.Font" />.</returns>
+		/// <remarks>
+		/// The text is drawn only when <see cref="ShowValue"/> is true.
+		/// </remarks>
 		[Browsable(true)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public override Font Font
@@ -66,6 +73,9 @@ namespace Wisej.Web.Ext.ProgressCircle
 		/// Returns or sets the foreground color of the control.
 		/// </summary>
 		/// <returns>A <see cref="T:System.Drawing.Color" />.</returns>
+		/// <remarks>
+		/// The foreground color is used to draw the circle outline, the progress arc and the percentage text.
+		/// </remarks>
 		[Browsable(true)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public override Color ForeColor
@@ -75,8 +85,20 @@ namespace Wisej.Web.Ext.ProgressCircle
 		}
 
 		/// <summary>
-		/// Returns or sets the fill color when the property <see cref="P:Wisej.Web.Ext.ProgressCircle.FillCircle"/> is set to true.
+		/// Returns or sets the fill color used when the property <see cref="FillCircle"/> is set to true.
 		/// </summary>
+		/// <remarks>
+		/// When the value is <see cref="Color.Empty"/> (the default), the color is read from the
+		/// "backgroundColor" property of the theme appearance identified by <see cref="AppearanceKey"/>.
+		/// The color fills only the inner area of the circle, inside the progress ring.
+		/// </remarks>
+		/// <example>
+		/// Filling the inner area of the circle with a custom color:
+		/// <code><![CDATA[
+		/// this.progressCircle1.FillCircle = true;
+		/// this.progressCircle1.BackColor = Color.LightYellow;
+		/// ]]></code>
+		/// </example>
 		[Browsable(true)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public override Color BackColor
@@ -116,8 +138,13 @@ namespace Wisej.Web.Ext.ProgressCircle
 		}
 
 		/// <summary>
-		/// Returns or sets the line width use to draw the circle.
+		/// Returns or sets the line width, in pixels, used to draw the progress ring.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than 0.</exception>
+		/// <remarks>
+		/// When not set, the width is read from the "lineWidth" property of the theme appearance
+		/// identified by <see cref="AppearanceKey"/>; if the theme doesn't define a value of at least 1, the default is 5 pixels.
+		/// </remarks>
 		[Browsable(true)]
 		[Description("Gets or sets the line width use to draw the circle.")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -162,7 +189,7 @@ namespace Wisej.Web.Ext.ProgressCircle
 		}
 
 		/// <summary>
-		/// Sets or returns the style of the end caps for a line.
+		/// Returns or sets the style of the end caps of the progress arc.
 		/// </summary>
 		[Browsable(true)]
 		[DefaultValue(CanvasLineCap.Butt)]
@@ -187,6 +214,21 @@ namespace Wisej.Web.Ext.ProgressCircle
 		/// <summary>
 		/// Returns or sets the progress value between 0 and 100.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than 0 or greater than 100.</exception>
+		/// <remarks>
+		/// The value is a percentage: the progress arc spans 360 * <see cref="Value"/> / 100 degrees and,
+		/// when <see cref="ShowValue"/> is true, the text in the middle of the circle shows the value followed by "%".
+		/// Every change redraws the control.
+		/// </remarks>
+		/// <example>
+		/// Converting a count of processed items to a percentage:
+		/// <code><![CDATA[
+		/// private void UpdateProgress(int processed, int total)
+		/// {
+		///     this.progressCircle1.Value = Math.Min(100, processed * 100 / total);
+		/// }
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(0)]
 		[Description("Gets or sets the progress value between 0 and 100.")]
 		public int Value
@@ -209,6 +251,9 @@ namespace Wisej.Web.Ext.ProgressCircle
 		/// <summary>
 		/// Returns or sets a value that indicates whether the circle is filled with the background color.
 		/// </summary>
+		/// <remarks>
+		/// The fill color is the value of the <see cref="BackColor"/> property.
+		/// </remarks>
 		[DefaultValue(false)]
 		[Description("Gets or sets a value that indicates whether the circle is filled with the background color.")]
 		public bool FillCircle
@@ -226,8 +271,11 @@ namespace Wisej.Web.Ext.ProgressCircle
 		private bool _fillCircle = false;
 
 		/// <summary>
-		/// Returns or sets a value that indicates whether the text is displayed in the middle of the circle.
+		/// Returns or sets a value that indicates whether the percentage text is displayed in the middle of the circle.
 		/// </summary>
+		/// <remarks>
+		/// The text is the <see cref="Value"/> followed by "%", drawn using <see cref="Font"/> and <see cref="ForeColor"/>.
+		/// </remarks>
 		[DefaultValue(true)]
 		[Description("Gets or sets a value that indicates whether the text is displayed in the middle of the circle.")]
 		public bool ShowValue

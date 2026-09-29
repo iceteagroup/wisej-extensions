@@ -22,11 +22,21 @@ using System.ComponentModel;
 namespace Wisej.Ext.WebAuthn
 {
 	/// <summary>
-	/// This enumeration’s values describe authenticators' attachment modalities.
+	/// This enumeration's values describe authenticators' attachment modalities.
 	/// </summary>
 	/// <remarks>
-	/// <See href="https://w3c.github.io/webauthn/#enum-attachment."/>
+	/// Used by <see cref="AuthenticatorSelectionCriteria.AuthenticatorAttachment"/>.
+	/// See <see href="https://w3c.github.io/webauthn/#enum-attachment"/>.
 	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// // Require a built-in authenticator such as Windows Hello or Touch ID.
+	/// var platform = new AuthenticatorSelectionCriteria(AuthenticatorAttachment.Platform);
+	///
+	/// // Require a removable authenticator such as a USB or NFC security key.
+	/// var roaming = new AuthenticatorSelectionCriteria(AuthenticatorAttachment.CrossPlatform);
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("WebAuthn")]
 	public enum AuthenticatorAttachment
     {

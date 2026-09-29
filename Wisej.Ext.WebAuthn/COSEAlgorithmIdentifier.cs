@@ -25,8 +25,24 @@ namespace Wisej.Ext.WebAuthn
 	/// Identifies a cryptographic algorithm.
 	/// </summary>
 	/// <remarks>
-	/// href="https://www.w3.org/TR/webauthn-2/#typedefdef-cosealgorithmidentifier"
-	/// </remarks>	
+	/// The values match the COSE algorithm identifiers registered with IANA.
+	/// <see cref="WebAuthn.Validate"/> supports <see cref="ES256"/> and <see cref="RS256"/>.
+	/// See <see href="https://www.w3.org/TR/webauthn-2/#typedefdef-cosealgorithmidentifier"/>.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// // Accept ES256 (preferred) and RS256 keys during registration.
+	/// var parameters = new[]
+	/// {
+	/// 	new PublicKeyCredentialParameters(COSEAlgorithmIdentifier.ES256),
+	/// 	new PublicKeyCredentialParameters(COSEAlgorithmIdentifier.RS256)
+	/// };
+	///
+	/// // Check the algorithm of a stored public key.
+	/// if (publicKey.Algorithm == COSEAlgorithmIdentifier.ES256)
+	/// 	Console.WriteLine("Elliptic curve key (P-256).");
+	/// ]]></code>
+	/// </example>
 	[ApiCategory("WebAuthn")]
 	public enum COSEAlgorithmIdentifier
     {

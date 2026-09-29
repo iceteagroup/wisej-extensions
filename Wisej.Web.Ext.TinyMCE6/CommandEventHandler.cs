@@ -32,21 +32,21 @@ namespace Wisej.Web.Ext.TinyMCE6
 
 
 	/// <summary>
-	/// Provides data for the <see cref="E:Wisej.Web.Ext.TinyMCE.TinyMCE.Command" /> event.
+	/// Provides data for the <see cref="TinyMCE.Command" /> event.
 	/// </summary>
 	public class CommandEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Initializes an instance of the <see cref="T:Wisej.Web.Ext.TinyMCE.CommandEventArgs" /> class.
+		/// Initializes a new instance of the <see cref="CommandEventArgs" /> class.
 		/// </summary>
-		/// <param name="command">The event data from the client.</param>
+		/// <param name="command">The name of the command executed by the editor.</param>
 		public CommandEventArgs(string command)
 		{
 			this.Command = command;
 		}
 
 		/// <summary>
-		/// Returns the name of the command that was executed by the <see cref="T:Wisej.Web.Ext.TinyMCE.TinyMCE" /> control.
+		/// Returns the name of the command that was executed by the <see cref="TinyMCE" /> control, i.e. "mceToggleFormat" or "Bold".
 		/// </summary>
 		public string Command
 		{

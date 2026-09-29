@@ -25,8 +25,12 @@ using Wisej.Core;
 namespace Wisej.Web.Ext.WebARIA
 {
 	/// <summary>
-	/// Represents the WAI-ARIA properties associated to a <see cref="Control"/>.
+	/// Represents the WAI-ARIA properties associated to a <see cref="Control"/> by the <see cref="WebARIA"/> extender.
 	/// </summary>
+	/// <remarks>
+	/// Instances are created by <see cref="WebARIA.GetAria(Control)"/>. Each property that is set (not <see cref="TriState.NotSet"/>,
+	/// null or empty) is rendered as the corresponding <c>aria-*</c> attribute on the control's accessibility element.
+	/// </remarks>
 	[TypeConverter(typeof(ARIA.ExpandableObjectConverter))]
 	[ApiCategory("WebARIA")]
 	public class ARIA
@@ -41,7 +45,7 @@ namespace Wisej.Web.Ext.WebARIA
 		#region Properties
 
 		/// <summary>
-		/// Returns or sets whether the element is visible.
+		/// Returns or sets whether the element is hidden from assistive technologies (<c>aria-hidden</c>).
 		/// </summary>
 		[DefaultValue(TriState.NotSet)]
 		[Description("Returns or sets whether the element is visible.")]
@@ -60,7 +64,7 @@ namespace Wisej.Web.Ext.WebARIA
 		private TriState _hidden = TriState.NotSet;
 
 		/// <summary>
-		/// Returns or set whether a value is required.
+		/// Returns or sets whether a value is required (<c>aria-required</c>).
 		/// </summary>
 		[DefaultValue(TriState.NotSet)]
 		[Description("Returns or set whether a value is required.")]
@@ -79,7 +83,7 @@ namespace Wisej.Web.Ext.WebARIA
 		private TriState _required = TriState.NotSet;
 
 		/// <summary>
-		/// Returns or sets whether the element is read only.
+		/// Returns or sets whether the element is read only (<c>aria-readonly</c>).
 		/// </summary>
 		[DefaultValue(TriState.NotSet)]
 		[Description("Returns or sets whether the element is read only.")]
@@ -98,7 +102,7 @@ namespace Wisej.Web.Ext.WebARIA
 		private TriState _readOnly = TriState.NotSet;
 
 		/// <summary>
-		/// Returns or sets whether the element is selected.
+		/// Returns or sets whether the element is selected (<c>aria-selected</c>).
 		/// </summary>
 		[DefaultValue(TriState.NotSet)]
 		[Description("Returns or sets whether the element is selected.")]
@@ -117,7 +121,7 @@ namespace Wisej.Web.Ext.WebARIA
 		private TriState _selected = TriState.NotSet;
 
 		/// <summary>
-		/// Returns or sets whether the element is expanded.
+		/// Returns or sets whether the element is expanded (<c>aria-expanded</c>).
 		/// </summary>
 		[DefaultValue(TriState.NotSet)]
 		[Description("Returns or sets whether the element is expanded.")]
@@ -136,8 +140,14 @@ namespace Wisej.Web.Ext.WebARIA
 		private TriState _expanded = TriState.NotSet;
 
 		/// <summary>
-		/// Returns or sets the label that the element is labeled by.
+		/// Returns or sets the control that labels the element (<c>aria-labelledby</c>).
 		/// </summary>
+		/// <example>
+		/// Associating a label with a text box:
+		/// <code><![CDATA[
+		/// this.webARIA1.GetAria(this.textBoxName).LabeledBy = this.labelName;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[Description("Returns or sets the label that the element is labeled by.")]
 		public Control LabeledBy
@@ -155,8 +165,14 @@ namespace Wisej.Web.Ext.WebARIA
 		private Control _labeledBy;
 
 		/// <summary>
-		/// Returns or sets the control that the element is described by.
+		/// Returns or sets the control that describes the element (<c>aria-describedby</c>).
 		/// </summary>
+		/// <example>
+		/// Associating a hint label with a password field:
+		/// <code><![CDATA[
+		/// this.webARIA1.GetAria(this.textBoxPassword).DescribedBy = this.labelPasswordRules;
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[Description("Returns or sets the control that the element is described by.")]
 		public Control DescribedBy
@@ -174,8 +190,21 @@ namespace Wisej.Web.Ext.WebARIA
 		private Control _describedBy;
 
 		/// <summary>
-		/// Returns or sets the current value.
+		/// Returns or sets the current value of a range widget (<c>aria-valuenow</c>).
 		/// </summary>
+		/// <remarks>
+		/// Use together with <see cref="ValueMin"/> and <see cref="ValueMax"/>; set to null to omit the attribute.
+		/// </remarks>
+		/// <example>
+		/// Describing a custom progress indicator:
+		/// <code><![CDATA[
+		/// var aria = this.webARIA1.GetAria(this.panelProgress);
+		/// aria.ValueMin = 0;
+		/// aria.ValueMax = 100;
+		/// aria.ValueNow = 45;
+		/// aria.ValueText = "45 percent completed";
+		/// ]]></code>
+		/// </example>
 		[DefaultValue(null)]
 		[Description("Returns or sets the current value.")]
 		public int? ValueNow
@@ -193,8 +222,11 @@ namespace Wisej.Web.Ext.WebARIA
 		private int? _valueNow;
 
 		/// <summary>
-		/// Returns or sets the minimum value.
+		/// Returns or sets the minimum value of a range widget (<c>aria-valuemin</c>).
 		/// </summary>
+		/// <remarks>
+		/// Set to null to omit the attribute. See <see cref="ValueNow"/> for an example.
+		/// </remarks>
 		[DefaultValue(null)]
 		[Description("Returns or sets the minimum value.")]
 		public int? ValueMin
@@ -212,8 +244,11 @@ namespace Wisej.Web.Ext.WebARIA
 		private int? _valueMin;
 
 		/// <summary>
-		/// Returns or sets the maximum value.
+		/// Returns or sets the maximum value of a range widget (<c>aria-valuemax</c>).
 		/// </summary>
+		/// <remarks>
+		/// Set to null to omit the attribute. See <see cref="ValueNow"/> for an example.
+		/// </remarks>
 		[DefaultValue(null)]
 		[Description("Returns or sets the maximum value.")]
 		public int? ValueMax
@@ -231,8 +266,11 @@ namespace Wisej.Web.Ext.WebARIA
 		private int? _valueMax;
 
 		/// <summary>
-		/// Returns or sets the label.
+		/// Returns or sets the accessible label of the element (<c>aria-label</c>).
 		/// </summary>
+		/// <remarks>
+		/// Setting it to null is the same as setting it to an empty string, which omits the attribute.
+		/// </remarks>
 		[DefaultValue("")]
 		[Description("Returns or sets the label.")]
 		public string Label
@@ -250,8 +288,11 @@ namespace Wisej.Web.Ext.WebARIA
 		private string _label = string.Empty;
 
 		/// <summary>
-		/// Returns or sets the value text.
+		/// Returns or sets the human readable text alternative of the current value (<c>aria-valuetext</c>).
 		/// </summary>
+		/// <remarks>
+		/// Setting it to null is the same as setting it to an empty string, which omits the attribute.
+		/// </remarks>
 		[DefaultValue("")]
 		[Description("Returns or sets the value text.")]
 		public string ValueText

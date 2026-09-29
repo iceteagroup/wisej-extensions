@@ -43,7 +43,22 @@ namespace Wisej.Web.Ext.AspNetControl
 		/// <summary>
 		/// Initializes the AspNetControl module.
 		/// </summary>
-		/// <param name="app"></param>
+		/// <param name="app">The <see cref="T:System.Web.HttpApplication"/> that provides access to the methods, properties and events common to all application objects in the ASP.NET application.</param>
+		/// <remarks>
+		/// Registers a virtual path provider that serves the embedded Wisej.AspNetHost.aspx page, which hosts
+		/// the wrapped ASP.NET controls, without saving it to a file. ASP.NET calls this method when the module is loaded.
+		/// The module registers itself through <see cref="HttpModuleStartup.Start"/>, so adding it to Web.config is optional.
+		/// </remarks>
+		/// <example>
+		/// The following example registers the module manually in Web.config:
+		/// <code lang="xml"><![CDATA[
+		/// <system.webServer>
+		///   <modules>
+		///     <add name="WisejAspNetControl" type="Wisej.Web.Ext.AspNetControl.HttpModule, Wisej.Web.Ext.AspNetControl" />
+		///   </modules>
+		/// </system.webServer>
+		/// ]]></code>
+		/// </example>
 		public void Init(HttpApplication app)
 		{
 			HostingEnvironment.RegisterVirtualPathProvider(new WisejVirtualPathProvider());
@@ -52,6 +67,20 @@ namespace Wisej.Web.Ext.AspNetControl
 		/// <summary>
 		/// Disposes resources associated with the module.
 		/// </summary>
+		/// <remarks>
+		/// ASP.NET calls this method when the application shuts down. The module doesn't hold any resources,
+		/// so this method does nothing.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// IHttpModule module = new Wisej.Web.Ext.AspNetControl.HttpModule();
+		/// module.Init(HttpContext.Current.ApplicationInstance);
+		///
+		/// // ...
+		///
+		/// module.Dispose();
+		/// ]]></code>
+		/// </example>
 		public void Dispose()
 		{
 			// nothing to dispose so far.

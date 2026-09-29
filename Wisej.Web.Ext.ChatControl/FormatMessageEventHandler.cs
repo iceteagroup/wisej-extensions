@@ -20,9 +20,25 @@
 namespace Wisej.Web.Ext.ChatControl
 {
 	/// <summary>
-	/// Represents the method that will handle the event when a message can be formatted.
+	/// Represents the method that will handle the <see cref="ChatBox.FormatMessage"/> event, fired when a message
+	/// is added to the <see cref="ChatBox"/> and can be formatted before it is displayed.
 	/// </summary>
-	/// <param name="sender">The source of the event.</param>
+	/// <param name="sender">The source of the event, the <see cref="ChatBox"/>.</param>
 	/// <param name="e">An instance of <see cref="MessageEventArgs"/> containing the message event data.</param>
+	/// <remarks>
+	/// The handler runs before the message control is created, so changes to
+	/// <see cref="Message.Content"/>, <see cref="Message.ContentType"/> or <see cref="Message.BubbleVisible"/>
+	/// are reflected in the rendered message.
+	/// </remarks>
+	/// <example>
+	/// <code><![CDATA[
+	/// chatBox.FormatMessage += (object sender, MessageEventArgs e) =>
+	/// {
+	///     // render messages from other users in bold.
+	///     if (!e.IsChatBoxUser)
+	///         e.Message.Content = "<b>" + e.Message.Content + "</b>";
+	/// };
+	/// ]]></code>
+	/// </example>
 	public delegate void FormatMessageEventHandler(object sender, MessageEventArgs e);
 }

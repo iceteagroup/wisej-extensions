@@ -19,6 +19,10 @@
 
 namespace Wisej.Web.Ext.ToolStrip
 {
+	/// <summary>
+	/// Specifies the kind of action to take if a match is found when combining (merging) <see cref="ToolStripItem"/> objects
+	/// using <see cref="ToolStripManager.Merge(ToolStrip, ToolStrip)"/>.
+	/// </summary>
 	public enum MergeAction
 	{
 		Append,
