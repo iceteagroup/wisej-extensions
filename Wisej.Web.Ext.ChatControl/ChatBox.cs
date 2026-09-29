@@ -225,7 +225,7 @@ namespace Wisej.Web.Ext.ChatControl
 		/// <summary>
 		/// Gets or sets the current timestamp format.
 		/// </summary>
-		[DefaultValue("HH:mmm")]
+		[DefaultValue("HH:mm")]
 		[Description("Gets or sets the current timestamp format.")]
 		public string TimestampFormat
 		{
