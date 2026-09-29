@@ -379,7 +379,7 @@ namespace Wisej.Web.Ext.ChatControl
 		/// chatBox.TimestampFormat = "dd/MM HH:mm";
 		/// ]]></code>
 		/// </example>
-		[DefaultValue("HH:mmm")]
+		[DefaultValue("HH:mm")]
 		[Description("Gets or sets the current timestamp format.")]
 		public string TimestampFormat
 		{
