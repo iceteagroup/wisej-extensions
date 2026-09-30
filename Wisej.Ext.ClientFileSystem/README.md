@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://wisej.com"><img src="https://wisej.com/wp-content/uploads/2022/05/wisej-dotnet-logotype-main-nav-203-05312022.png" alt="Wisej.NET" width="203"></a>
+<a href="https://wisej.com"><picture><source media="(prefers-color-scheme: dark)" srcset="../.github/images/wisej-net-logo-dark.svg"><img src="../.github/images/wisej-net-logo.svg" alt="Wisej.NET" width="240"></picture></a>
 
 # ClientFileSystem
 
