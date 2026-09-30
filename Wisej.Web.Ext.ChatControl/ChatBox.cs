@@ -256,10 +256,23 @@ namespace Wisej.Web.Ext.ChatControl
 		}
 
 		/// <summary>
-		/// Gets or sets the color of the message text box.
+		/// Gets or sets the color of the text in the message text box.
+		/// Use <see cref="InputBackColor"/> to change the background of the message text box.
 		/// </summary>
-		[Description("Gets or sets the color of the message text box.")]
+		[Description("Gets or sets the color of the text in the message text box.")]
 		public override Color ForeColor
+		{
+			get => this.textBoxMessage.ForeColor;
+			set => this.textBoxMessage.ForeColor = value;
+		}
+
+		/// <summary>
+		/// Gets or sets the background color of the message text box.
+		/// Use <see cref="ForeColor"/> to change the color of the text in the message text box.
+		/// </summary>
+		[Category("Appearance")]
+		[Description("Gets or sets the background color of the message text box.")]
+		public Color InputBackColor
 		{
 			get => this.textBoxMessage.BackColor;
 			set => this.textBoxMessage.BackColor = value;
