@@ -296,10 +296,10 @@ namespace Wisej.Web.Ext.ChatControl
 		/// Creates a copy of the current message.
 		/// </summary>
 		/// <returns>A new <see cref="Message"/> with the same <see cref="Id"/>, <see cref="User"/>, <see cref="Content"/>,
-		/// <see cref="UserData"/>, <see cref="Timestamp"/> and <see cref="ContentType"/>.</returns>
+		/// <see cref="UserData"/>, <see cref="Timestamp"/>, <see cref="ContentType"/> and <see cref="BubbleVisible"/>.</returns>
 		/// <remarks>
 		/// The clone gets its own new <see cref="Control"/> (an <see cref="AutoSizeLabel"/> displaying <see cref="Content"/>)
-		/// and does not share the original's control. <see cref="BubbleVisible"/> is not copied.
+		/// and does not share the original's control.
 		/// Derived classes can override this method to copy additional state.
 		/// </remarks>
 		/// <example>
@@ -319,7 +319,8 @@ namespace Wisej.Web.Ext.ChatControl
 				Content = this.Content,
 				UserData = this.UserData,
 				Timestamp = this.Timestamp,
-				ContentType = this.ContentType
+				ContentType = this.ContentType,
+				BubbleVisible = this.BubbleVisible
 			};
 
 			// request a new control (duplicate) for the message. Defaults to AutoSizeLabel.
