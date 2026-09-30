@@ -2,21 +2,19 @@
 
 <a href="https://wisej.com"><img src="https://wisej.com/wp-content/uploads/2022/05/wisej-dotnet-logotype-main-nav-203-05312022.png" alt="Wisej.NET" width="203"></a>
 
-# PrintPreview
+# Navigation App Templates
 
-**Previews and prints PrintDocument objects, in PDF or WMF mode, with a ready-made PrintPreviewDialog and a PrintPreviewControl that fits in any container.**
+**A Visual Studio project template for building a Wisej.NET application with navigation, similar to the Blazor app template.**
 
 <a href="https://docs.wisej.com/extensions/"><img alt="Documentation" src="https://img.shields.io/badge/Documentation-0B6BCB?style=for-the-badge"></a>
-<a href="https://docs.wisej.com/extensions/api/wisej.web.ext.printpreview/"><img alt="API Reference" src="https://img.shields.io/badge/API%20Reference-6E40C9?style=for-the-badge&logo=dotnet&logoColor=white"></a>
 
 </div>
 
 ## Documentation
 
-**PrintPreview** doesn't have a page of its own in the documentation yet.
+**Navigation App Templates** doesn't have a page of its own in the documentation yet.
 
 - 📘 **[Wisej.NET Extensions](https://docs.wisej.com/extensions/)**: the catalog of all the extensions, and how to install them.
-- 🔧 **[API reference](https://docs.wisej.com/extensions/api/wisej.web.ext.printpreview/)**: every class, property, method and event.
 
 ## Installation
 
