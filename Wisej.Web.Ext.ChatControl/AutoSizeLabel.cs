@@ -185,12 +185,13 @@ if (!this.__autoSizeImages) {
 		/// stores <paramref name="proposedSize"/> as the maximum size used on the client.
 		/// </summary>
 		/// <param name="proposedSize">The custom-sized area for the label. A <see cref="Size.Width"/> or
-		/// <see cref="Size.Height"/> greater than 0 is sent to the client as the maximum width or height;
-		/// a value of 0 means unconstrained.</param>
+		/// <see cref="Size.Height"/> greater than 1 is sent to the client as the maximum width or height;
+		/// a value of 0 or 1 means unconstrained, as in <see cref="Control.GetPreferredSize"/>.</param>
 		/// <returns>A <see cref="Size"/> representing the preferred width and height of the label.</returns>
 		/// <remarks>
-		/// The label's final size is determined by the browser; the returned value is the server-side
-		/// estimate computed by the base <see cref="Label"/> implementation.
+		/// The label's final size is determined by the browser. Once the client has reported it, the
+		/// measured size is returned; before that the returned value is the server-side estimate
+		/// computed by the base <see cref="Label"/> implementation, which cannot measure HTML content.
 		/// </remarks>
 		/// <example>
 		/// <code><![CDATA[
