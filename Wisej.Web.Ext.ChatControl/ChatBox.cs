@@ -410,25 +410,60 @@ namespace Wisej.Web.Ext.ChatControl
 		}
 
 		/// <summary>
-		/// Returns or sets the color of the message input text box.
+		/// Returns or sets the color of the text typed in the message input text box.
 		/// </summary>
 		/// <value>
-		/// A <see cref="Color"/> applied to the message input text box.
+		/// A <see cref="Color"/> applied to the text of the message input text box.
 		/// </value>
 		/// <remarks>
-		/// Unlike the inherited <see cref="Control.ForeColor"/>, this property reads and writes the
-		/// <c>BackColor</c> of the inner message input text box.
+		/// This property reads and writes the <c>ForeColor</c> of the inner message input text box.
+		/// To change the background of the message input text box, use <see cref="InputBackColor"/>.
+		/// To change the background of the chat area, use <see cref="Control.BackColor"/>.
 		/// </remarks>
 		/// <example>
 		/// <code><![CDATA[
-		/// chatBox.ForeColor = Color.WhiteSmoke;
+		/// chatBox.ForeColor = Color.Red;
 		/// ]]></code>
 		/// </example>
-		[Description("Gets or sets the color of the message text box.")]
+		[Description("Gets or sets the color of the text in the message text box.")]
 		public override Color ForeColor
+		{
+			get => this.textBoxMessage.ForeColor;
+			set => this.textBoxMessage.ForeColor = value;
+		}
+
+		/// <summary>
+		/// Returns or sets the background color of the message input text box.
+		/// </summary>
+		/// <value>
+		/// A <see cref="Color"/> applied to the background of the message input text box.
+		/// The default is the <c>@toolbar</c> theme color.
+		/// </value>
+		/// <remarks>
+		/// This property reads and writes the <c>BackColor</c> of the inner message input text box.
+		/// To change the color of the typed text, use <see cref="ForeColor"/>.
+		/// </remarks>
+		/// <example>
+		/// <code><![CDATA[
+		/// chatBox.InputBackColor = Color.WhiteSmoke;
+		/// ]]></code>
+		/// </example>
+		[Category("Appearance")]
+		[Description("Gets or sets the background color of the message text box.")]
+		public Color InputBackColor
 		{
 			get => this.textBoxMessage.BackColor;
 			set => this.textBoxMessage.BackColor = value;
+		}
+
+		private bool ShouldSerializeInputBackColor()
+		{
+			return this.InputBackColor != Color.FromName("@toolbar");
+		}
+
+		private void ResetInputBackColor()
+		{
+			this.InputBackColor = Color.FromName("@toolbar");
 		}
 
 		/// <summary>
