@@ -199,12 +199,6 @@ if (!this.__autoSizeImages) {
 		/// label.Size = label.GetPreferredSize(new Size(300, 0));
 		/// ]]></code>
 		/// </example>
-		/// <summary>
-		/// Returns the size measured on the client, when available, and records
-		/// the constraints to send to the client as its maximum size.
-		/// </summary>
-		/// <param name="proposedSize">The custom-sized area for the label.</param>
-		/// <returns>The size measured on the client, or the size measured on the server when the client hasn't reported a size yet.</returns>
 		public override Size GetPreferredSize(Size proposedSize)
 		{
 			// the layout engines pass 0 or 1 for an unconstrained dimension
