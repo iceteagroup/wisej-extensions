@@ -2,9 +2,9 @@
 
 <a href="https://wisej.com"><img src="https://wisej.com/wp-content/uploads/2022/05/wisej-dotnet-logotype-main-nav-203-05312022.png" alt="Wisej.NET" width="203"></a>
 
-# Microsoft OneDrive
+# Mobile Integration
 
-**A file system provider that exposes Microsoft OneDrive to the Wisej.NET file dialogs.**
+**Access to native device features, such as the camera, NFC and push notifications, for Wisej.NET applications running in a mobile shell.**
 
 <a href="https://docs.wisej.com/extensions/"><img alt="Documentation" src="https://img.shields.io/badge/Documentation-0B6BCB?style=for-the-badge"></a>
 
@@ -15,7 +15,7 @@
 
 ## Documentation
 
-**Microsoft OneDrive** doesn't have a page of its own in the documentation yet.
+**Mobile Integration** doesn't have a page of its own in the documentation yet.
 
 - 📘 **[Wisej.NET Extensions](https://docs.wisej.com/extensions/)**: the catalog of all the extensions, and how to install them.
 

@@ -1,14 +1,34 @@
-Charts
-====
+<div align="center">
 
-<img src="../Support/Images/Chart.png" height="252">
+<a href="https://wisej.com"><img src="https://wisej.com/wp-content/uploads/2022/05/wisej-dotnet-logotype-main-nav-203-05312022.png" alt="Wisej.NET" width="203"></a>
 
-Work in progress.
+# Charts
 
-The Charts extension component uses the Chart.js widget to render Simple HTML5 Charts using the canvas element.
+**An early, work-in-progress Chart.js 1.0 control that renders a fixed sample bar chart. Kept as a source example; use ChartJS for real charts.**
 
-Uses 3rd party JavaScript library [Chart.js](http://www.chartjs.org/)
+<a href="https://docs.wisej.com/extensions/extensions/charts/"><img alt="Documentation" src="https://img.shields.io/badge/Documentation-0B6BCB?style=for-the-badge"></a>
+<a href="https://docs.wisej.com/extensions/api/wisej.web.ext.charts/"><img alt="API Reference" src="https://img.shields.io/badge/API%20Reference-6E40C9?style=for-the-badge&logo=dotnet&logoColor=white"></a>
 
-License
--------
-<img src="http://iceteagroup.com/wp-content/uploads/2017/01/Square-64x64-trasp.png" height="20" align="top"> Copyright (C) ICE TEA GROUP LLC, All rights reserved.
+</div>
+
+> [!NOTE]
+> **Work in progress.** This extension is in the source code but isn't finished. It may be incomplete or change without notice.
+
+## Documentation
+
+Everything about **Charts** is in the Wisej.NET documentation, kept up to date with every release:
+
+- 📘 **[Concepts and usage](https://docs.wisej.com/extensions/extensions/charts/)**: what the extension does, how to set it up, and examples in C# and VB.NET.
+- 🔧 **[API reference](https://docs.wisej.com/extensions/api/wisej.web.ext.charts/)**: every class, property, method and event.
+
+## Installation
+
+This extension isn't published on NuGet. Add the project in this folder to your solution and reference it from your application.
+
+## Source code
+
+This folder contains the full source code of the extension. You can use it to see how it works, build a modified copy, or start your own extension. If you fix or improve it in a way that could help others, please open an issue or a pull request.
+
+## License
+
+Copyright © Ice Tea Group LLC. All rights reserved.
