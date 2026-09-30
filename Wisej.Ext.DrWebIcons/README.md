@@ -2,22 +2,19 @@
 
 <a href="https://wisej.com"><img src="https://wisej.com/wp-content/uploads/2022/05/wisej-dotnet-logotype-main-nav-203-05312022.png" alt="Wisej.NET" width="203"></a>
 
-# Microsoft OneDrive
+# DrWebIcons
 
-**A file system provider that exposes Microsoft OneDrive to the Wisej.NET file dialogs.**
+**The DrWeb icon set as a Wisej.NET icon pack: the full set of SVG icons published by DrWeb in a single assembly.**
 
-<a href="https://docs.wisej.com/extensions/"><img alt="Documentation" src="https://img.shields.io/badge/Documentation-0B6BCB?style=for-the-badge"></a>
+<a href="https://docs.wisej.com/extensions/icon-packs/overview/"><img alt="Documentation" src="https://img.shields.io/badge/Documentation-0B6BCB?style=for-the-badge"></a>
 
 </div>
 
-> [!NOTE]
-> **Work in progress.** This extension is in the source code but isn't finished. It may be incomplete or change without notice.
-
 ## Documentation
 
-**Microsoft OneDrive** doesn't have a page of its own in the documentation yet.
+**DrWebIcons** doesn't have a page of its own in the documentation yet.
 
-- 📘 **[Wisej.NET Extensions](https://docs.wisej.com/extensions/)**: the catalog of all the extensions, and how to install them.
+- 📘 **[Wisej.NET Extensions](https://docs.wisej.com/extensions/icon-packs/overview/)**: the related documentation.
 
 ## Installation
 

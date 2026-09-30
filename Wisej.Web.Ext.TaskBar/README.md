@@ -2,11 +2,11 @@
 
 <a href="https://wisej.com"><img src="https://wisej.com/wp-content/uploads/2022/05/wisej-dotnet-logotype-main-nav-203-05312022.png" alt="Wisej.NET" width="203"></a>
 
-# DataGridView Summary Row
+# TaskBar
 
-**Legacy extension that added subtotal and summary rows to the DataGridView. The feature has been built into the DataGridView since Wisej 2.5.**
+**Legacy extension that provided a standalone taskbar for minimized floating windows outside a Desktop. Not part of Wisej.NET 4.x.**
 
-<a href="https://docs.wisej.com/extensions/extensions/datagridviewsummaryrow/"><img alt="Documentation" src="https://img.shields.io/badge/Documentation-0B6BCB?style=for-the-badge"></a>
+<a href="https://docs.wisej.com/extensions/extensions/taskbar/"><img alt="Documentation" src="https://img.shields.io/badge/Documentation-0B6BCB?style=for-the-badge"></a>
 
 </div>
 
@@ -15,9 +15,9 @@
 
 ## Documentation
 
-Everything about **DataGridView Summary Row** is in the Wisej.NET documentation, kept up to date with every release:
+Everything about **TaskBar** is in the Wisej.NET documentation, kept up to date with every release:
 
-- 📘 **[Concepts and usage](https://docs.wisej.com/extensions/extensions/datagridviewsummaryrow/)**: what the extension does, how to set it up, and examples in C# and VB.NET.
+- 📘 **[Concepts and usage](https://docs.wisej.com/extensions/extensions/taskbar/)**: what the extension does, how to set it up, and examples in C# and VB.NET.
 
 ## Installation
 
