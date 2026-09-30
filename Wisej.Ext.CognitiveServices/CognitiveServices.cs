@@ -141,7 +141,7 @@ namespace Wisej.Ext.CognitiveServices
 
 		/// <summary>
 		/// Request Parameters that control the Cognitive Services.
-		/// e.g. visualFeatures=Categories,Description,Color,Faces&language=en&details=Celebrities
+		/// e.g. visualFeatures=Categories,Description,Color,Faces&amp;language=en&amp;details=Celebrities
 		/// </summary>
 		[DefaultValue("")]
 		[Description("Request Parameters that control the Cognitive Services.")]

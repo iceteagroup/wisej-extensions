@@ -29,6 +29,7 @@ namespace Wisej.Web.Ext.Bubbles
 	/// <param name="e">A <see cref="T:Wisej.Web.Ext.Bubbles.BubbleEventArgs" /> that contains the event data. </param>
 	public delegate void BubbleEventHandler(object sender, BubbleEventArgs e);
 
+    /// <summary>
     /// Represents the event data for the <see cref="E:Wisej.Web.Ext.Bubbles.BubbleNotification.Click"/> event,
     /// providing information about the click action on a bubble notification.
     /// </summary>

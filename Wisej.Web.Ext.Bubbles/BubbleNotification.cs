@@ -481,7 +481,6 @@ namespace Wisej.Web.Ext.Bubbles
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> that contains the event data.</param>
-        /// <example>
         private void Control_Created(object sender, EventArgs e)
 		{
 			// handle the delayed registration of this extender for a control
