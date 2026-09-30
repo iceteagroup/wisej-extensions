@@ -179,7 +179,8 @@ namespace Wisej.Web.Ext.ChatControl
 				Content = this.Content,
 				UserData = this.UserData,
 				Timestamp = this.Timestamp,
-				ContentType = this.ContentType
+				ContentType = this.ContentType,
+				BubbleVisible = this.BubbleVisible
 			};
 
 			// request a new control (duplicate) for the message. Defaults to AutoSizeLabel.
