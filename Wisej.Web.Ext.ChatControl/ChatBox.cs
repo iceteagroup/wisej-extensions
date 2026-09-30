@@ -456,16 +456,6 @@ namespace Wisej.Web.Ext.ChatControl
 			set => this.textBoxMessage.BackColor = value;
 		}
 
-		private bool ShouldSerializeInputBackColor()
-		{
-			return this.InputBackColor != Color.FromName("@toolbar");
-		}
-
-		private void ResetInputBackColor()
-		{
-			this.InputBackColor = Color.FromName("@toolbar");
-		}
-
 		/// <summary>
 		/// Returns the collection of tools displayed in the message input box of the <see cref="ChatBox"/>.
 		/// </summary>
