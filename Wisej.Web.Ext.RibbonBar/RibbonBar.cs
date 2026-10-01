@@ -1086,12 +1086,24 @@ namespace Wisej.Web.Ext.RibbonBar
 					if (tabRect.Contains(mouseLoc))
 					{
 						this.SelectedPage = this.Pages[i];
+						SelectRibbonBar();
 						return true;
 					}
 				}
 			}
 
 			return false;
+		}
+
+		// Selects the ribbon bar itself, like clicking a tab of any tab control selects the control.
+		private void SelectRibbonBar()
+		{
+			// drop a pending item selection or OnDesignComponentSelectionChanged
+			// would replace the ribbon bar with the item selected before.
+			this.UserData.DesignItem = null;
+
+			if (this.Site?.GetService(typeof(ISelectionService)) is ISelectionService selectionService)
+				selectionService.SetSelectedComponents(new[] { this });
 		}
 
 		// Selects the RibbonBarGroup or RibbonBarItem at the coordinates specified in lParam.
