@@ -17,6 +17,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Drawing;
 
 namespace Wisej.Web.Ext.ChatControl
@@ -157,7 +158,13 @@ if (!this.__autoSizeImages) {
 
         #endregion
 
+        // maximum size to send to the client, taken from the constraints
+        // received by GetPreferredSize(). 0 = unconstrained.
         private Size _maxSize;
+
+        // size measured by the client, reported by the "resize" event.
+        // Size.Empty until the client has measured the label.
+        private Size _clientSize;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="AutoSizeLabel"/> with <see cref="Label.AllowHtml"/> enabled.
@@ -178,12 +185,13 @@ if (!this.__autoSizeImages) {
 		/// stores <paramref name="proposedSize"/> as the maximum size used on the client.
 		/// </summary>
 		/// <param name="proposedSize">The custom-sized area for the label. A <see cref="Size.Width"/> or
-		/// <see cref="Size.Height"/> greater than 0 is sent to the client as the maximum width or height;
-		/// a value of 0 means unconstrained.</param>
+		/// <see cref="Size.Height"/> greater than 1 is sent to the client as the maximum width or height;
+		/// a value of 0 or 1 means unconstrained, as in <see cref="Control.GetPreferredSize"/>.</param>
 		/// <returns>A <see cref="Size"/> representing the preferred width and height of the label.</returns>
 		/// <remarks>
-		/// The label's final size is determined by the browser; the returned value is the server-side
-		/// estimate computed by the base <see cref="Label"/> implementation.
+		/// The label's final size is determined by the browser. Once the client has reported it, the
+		/// measured size is returned; before that the returned value is the server-side estimate
+		/// computed by the base <see cref="Label"/> implementation, which cannot measure HTML content.
 		/// </remarks>
 		/// <example>
 		/// <code><![CDATA[
@@ -194,9 +202,61 @@ if (!this.__autoSizeImages) {
 		/// </example>
 		public override Size GetPreferredSize(Size proposedSize)
 		{
-			this._maxSize = proposedSize;
+			// the layout engines pass 0 or 1 for an unconstrained dimension
+			// (see Control.GetPreferredSize). Don't send 1 to the client as
+			// maxWidth/maxHeight, it collapses the label to 1 pixel.
+			this._maxSize = new Size(
+				proposedSize.Width > 1 ? proposedSize.Width : 0,
+				proposedSize.Height > 1 ? proposedSize.Height : 0);
+
+			return GetMeasuredSize(proposedSize);
+		}
+
+		/// <summary>
+		/// Returns the size measured on the client, when available.
+		/// </summary>
+		/// <remarks>
+		/// Read by <see cref="Label"/> with an empty proposed size when the label sizes itself (AutoSize
+		/// in a container using the default layout). It doesn't change the constraints sent to the client.
+		/// </remarks>
+		public override Size PreferredSize
+		{
+			get { return GetMeasuredSize(Size.Empty); }
+		}
+
+		// Returns the size measured on the client, or the size measured
+		// on the server when the client hasn't reported a size yet. The server
+		// can only measure plain text; it doesn't know about the HTML content
+		// (images, paragraphs, wrapping) rendered by this label.
+		private Size GetMeasuredSize(Size proposedSize)
+		{
+			if (!this._clientSize.IsEmpty)
+				return this._clientSize;
 
 			return base.GetPreferredSize(proposedSize);
+		}
+
+		/// <summary>
+		/// Processes the event from the client.
+		/// </summary>
+		/// <param name="e">Event arguments.</param>
+		protected override void OnWebEvent(Core.WisejEventArgs e)
+		{
+			// keep the size measured by the client: it's the preferred size of the label
+			// and it must survive Label.SetBoundsCore(), which otherwise replaces the
+			// size reported by the client with the size measured on the server.
+			if (e.Type == "resize")
+			{
+				dynamic size = e.Parameters.Size;
+				if (size != null)
+				{
+					this._clientSize = new Size(
+						Convert.ToInt32(size.width),
+						Convert.ToInt32(size.height));
+				}
+			}
+
+			base.OnWebEvent(e);
 		}
 
         /// <summary>
