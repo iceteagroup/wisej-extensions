@@ -51,6 +51,12 @@ namespace Wisej.Web.Ext.ChatControl
 		/// <summary>
 		/// Gets or sets the unique identifier of the user.
 		/// </summary>
+		/// <remarks>
+		/// The identifier is used to compare users. Don't change it while the user is stored in a hash-based
+		/// collection (for example a <see cref="System.Collections.Generic.HashSet{T}"/> or as a
+		/// <see cref="System.Collections.Generic.Dictionary{TKey, TValue}"/> key): its hash code would change
+		/// and the collection would no longer find it.
+		/// </remarks>
 		public string Id { get; set; }
 
 		/// <summary>
@@ -76,10 +82,10 @@ namespace Wisej.Web.Ext.ChatControl
 		public override bool Equals(object obj) => obj is User other && Id == other.Id;
 
 		/// <summary>
-		/// Serves as the default hash function.
+		/// Returns a hash code for the current user, based on its <see cref="Id"/>.
 		/// </summary>
-		/// <returns>A hash code for the current object.</returns>
-		public override int GetHashCode() => Id.GetHashCode();
+		/// <returns>A hash code for the current object, or <c>0</c> when <see cref="Id"/> is <c>null</c>.</returns>
+		public override int GetHashCode() => Id?.GetHashCode() ?? 0;
 
 		/// <summary>
 		/// Determines whether two specified <see cref="User"/> objects have the same value.
