@@ -78,7 +78,7 @@ namespace Wisej.Web.Ext.RibbonBar
 	[ApiCategory("RibbonBar")]
 	[ToolboxBitmap(typeof(RibbonBar))]
 	[Description("The RibbonBar organizes the features of an application into a series of tabs.")]
-	public class RibbonBar : Control, IWisejControl, IWisejDesignTarget
+	public class RibbonBar : Control, IWisejControl, IWisejDesignTarget, IWisejDesignHitTest
 	{
 		// autosize height
 		private int _requestedHeight;
@@ -1241,6 +1241,22 @@ namespace Wisej.Web.Ext.RibbonBar
 			return SelectClickedTab(location) || SelectClickedItem(location);
 		}
 
+		// Returns true when the pointer is over a page tab, group or item.
+		bool IWisejDesignHitTest.HitTest(Point location)
+		{
+			Rectangle[] tabRects = this.UserData.DesignTabRects;
+			if (tabRects != null)
+			{
+				foreach (var tabRect in tabRects)
+				{
+					if (tabRect.Contains(location))
+						return true;
+				}
+			}
+
+			return FindDesignChildComponent(location) != null;
+		}
+
 		// Represents the child item that is selected in the designer.
 		private IWisejComponent DesignItem
 		{
@@ -1270,12 +1286,24 @@ namespace Wisej.Web.Ext.RibbonBar
 					if (tabRect.Contains(mouseLoc))
 					{
 						this.SelectedPage = this.Pages[i];
+						SelectRibbonBar();
 						return true;
 					}
 				}
 			}
 
 			return false;
+		}
+
+		// Selects the ribbon bar itself, like clicking a tab of any tab control selects the control.
+		private void SelectRibbonBar()
+		{
+			// drop a pending item selection or OnDesignComponentSelectionChanged
+			// would replace the ribbon bar with the item selected before.
+			this.UserData.DesignItem = null;
+
+			if (this.Site?.GetService(typeof(ISelectionService)) is ISelectionService selectionService)
+				selectionService.SetSelectedComponents(new[] { this });
 		}
 
 		// Selects the RibbonBarGroup or RibbonBarItem at the coordinates specified in lParam.
