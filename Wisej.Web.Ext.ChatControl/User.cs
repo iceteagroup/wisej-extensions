@@ -82,7 +82,11 @@ namespace Wisej.Web.Ext.ChatControl
 		/// <value>The user's identifier; the default is <c>null</c>.</value>
 		/// <remarks>
 		/// The identifier is used for equality (<see cref="Equals(object)"/>, <c>==</c>, <c>!=</c>), to align messages
-		/// and to select the default bubble color. Always assign a value: <see cref="GetHashCode"/> throws when it is <c>null</c>.
+		/// and to select the default bubble color.
+		/// Don't change the identifier while the user is stored in a hash-based collection
+		/// (for example a <see cref="System.Collections.Generic.HashSet{T}"/> or as a
+		/// <see cref="System.Collections.Generic.Dictionary{TKey, TValue}"/> key): its hash code would change
+		/// and the collection would no longer find it.
 		/// </remarks>
 		/// <example>
 		/// <code><![CDATA[
@@ -150,15 +154,17 @@ namespace Wisej.Web.Ext.ChatControl
 		/// <summary>
 		/// Returns a hash code for the current user, based on its <see cref="Id"/>.
 		/// </summary>
-		/// <returns>A hash code for the current object.</returns>
-		/// <exception cref="System.NullReferenceException"><see cref="Id"/> is <c>null</c>.</exception>
+		/// <returns>A hash code for the current object, or <c>0</c> when <see cref="Id"/> is <c>null</c>.</returns>
+		/// <remarks>
+		/// Don't change <see cref="Id"/> while the user is stored in a hash-based collection.
+		/// </remarks>
 		/// <example>
 		/// <code><![CDATA[
 		/// var users = new Dictionary<User, int>();
 		/// users[new User("1", "Alice")] = 3;
 		/// ]]></code>
 		/// </example>
-		public override int GetHashCode() => Id.GetHashCode();
+		public override int GetHashCode() => Id?.GetHashCode() ?? 0;
 
 		/// <summary>
 		/// Determines whether two specified <see cref="User"/> objects have the same value (the same <see cref="Id"/>).
