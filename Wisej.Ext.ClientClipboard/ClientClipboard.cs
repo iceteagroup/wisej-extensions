@@ -383,7 +383,6 @@ namespace Wisej.Ext.ClientClipboard
         /// <returns>An <see cref="Image"/> object created from the specified Base64 string.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="base64"/> is null or empty.</exception>
         /// <exception cref="FormatException">Thrown when <paramref name="base64"/> is not a valid Base64 string.</exception>
-        /// <example>
         private static Image ImageFromBase64(string base64)
 		{
 			// data:image/gif;base64,R0lGODlhCQAJAIABAAAAAAAAACH5BAEAAAEALAAAAAAJAAkAAAILjI+py+0NojxyhgIAOw==

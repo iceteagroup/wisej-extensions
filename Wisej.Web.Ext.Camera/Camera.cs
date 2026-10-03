@@ -680,6 +680,7 @@ namespace Wisej.Web.Ext.Camera
 
         /// <summary>
         /// Initiates the recording of audio and video using the specified parameters.
+        /// </summary>
         /// <param name="format">The MIME type for the video encoding format. For more information on MIME types, see <see href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types"/>.</param>
 		/// <param name="bitsPerSecond">The bitrate for both audio and video in bits per second. This determines the quality of the recording. For additional details, refer to <see href="https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder"/>.</param>
 		/// <param name="updateInterval">The interval at which updates are sent, in seconds. A value of zero indicates that the video will be uploaded only upon calling <see cref="StopRecording"/>.</param>
@@ -980,6 +981,7 @@ namespace Wisej.Web.Ext.Camera
 
         #region IWisejHandler
 
+        /// <summary>
         /// Gets or sets a value indicating whether to compress the output from the camera.
         /// When this property is set to <c>true</c>, the camera will produce compressed output,
         /// which can reduce the amount of data transmitted, but may also affect image quality.
