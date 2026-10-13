@@ -261,7 +261,7 @@ CoolClock.prototype = {
 		this.gmtOffset = (options.gmtOffset != null && options.gmtOffset != '') ? parseFloat(options.gmtOffset) : null;
 		this.showDigital = typeof options.showDigital == "boolean" ? options.showDigital : false;
 		this.logClock = typeof options.logClock == "boolean" ? options.logClock : false;
-		this.logClockRev = typeof options.logClock == "boolean" ? options.logClockRev : false;
+		this.logClockRev = typeof options.logClockRev == "boolean" ? options.logClockRev : false;
 
 		// Use the delays sent by the server (TickDelay / LongTickDelay), falling back to the defaults.
 		this.tickDelay = this.showSecondHand
