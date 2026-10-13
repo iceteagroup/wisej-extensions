@@ -46,6 +46,7 @@ namespace Wisej.Web.Ext.CoolClock
 		Tumb,
 		Stone,
 		Disc,
-		Watermelon
+		Watermelon,
+		ChunkySwissOnBlack
 	}
 }

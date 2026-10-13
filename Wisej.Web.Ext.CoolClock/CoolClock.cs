@@ -17,6 +17,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -109,6 +110,7 @@ namespace Wisej.Web.Ext.CoolClock
 		/// When <see cref="ShowSecondHand"/> is <c>false</c>, <see cref="LongTickDelay"/> is used instead.
 		/// The default is 1000 (one second).
 		/// </remarks>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than or equal to 0.</exception>
 		/// <example>
 		/// Setting the redraw intervals for both modes:
 		/// <code><![CDATA[
@@ -122,6 +124,8 @@ namespace Wisej.Web.Ext.CoolClock
 			get { return this._tickDelay; }
 			set
 			{
+				if (value <= 0)
+					throw new ArgumentOutOfRangeException(nameof(TickDelay), value, "TickDelay must be greater than 0.");
 
 				if (this._tickDelay != value)
 				{
@@ -139,15 +143,18 @@ namespace Wisej.Web.Ext.CoolClock
 		/// When <see cref="ShowSecondHand"/> is <c>true</c>, <see cref="TickDelay"/> is used instead.
 		/// The default is 15000 (15 seconds).
 		/// </remarks>
+		/// <exception cref="ArgumentOutOfRangeException">The value is less than or equal to 0.</exception>
 		[DefaultValue(15000)]
 		public int LongTickDelay
 		{
 			get { return this._longTickDelay; }
 			set
 			{
+				if (value <= 0)
+					throw new ArgumentOutOfRangeException(nameof(LongTickDelay), value, "LongTickDelay must be greater than 0.");
+
 				if (this._longTickDelay != value)
 				{
-
 					this._longTickDelay = value;
 					Update();
 				}
