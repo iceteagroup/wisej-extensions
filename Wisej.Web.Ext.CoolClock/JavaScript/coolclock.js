@@ -263,7 +263,10 @@ CoolClock.prototype = {
 		this.logClock = typeof options.logClock == "boolean" ? options.logClock : false;
 		this.logClockRev = typeof options.logClock == "boolean" ? options.logClockRev : false;
 
-		this.tickDelay = CoolClock.config[this.showSecondHand ? "tickDelay" : "longTickDelay"];
+		// Use the delays sent by the server (TickDelay / LongTickDelay), falling back to the defaults.
+		this.tickDelay = this.showSecondHand
+			? (options.tickDelay > 0 ? options.tickDelay : CoolClock.config.tickDelay)
+			: (options.longTickDelay > 0 ? options.longTickDelay : CoolClock.config.longTickDelay);
 
 		// Get the canvas element
 		this.canvas = document.getElementById(this.canvasId);
