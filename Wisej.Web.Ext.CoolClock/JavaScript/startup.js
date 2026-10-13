@@ -16,6 +16,11 @@ this.init = function (options) {
 
 	this.setSelectable(false);
 
+	// stop the previous clock (if any) before re-creating it on the same canvas id,
+	// otherwise its timer keeps running and redraws the new clock.
+	if (this.coolClock)
+		this.coolClock.stop();
+
 	var id = this.getId() + "_canvas";
 
 	options.canvasId = id;

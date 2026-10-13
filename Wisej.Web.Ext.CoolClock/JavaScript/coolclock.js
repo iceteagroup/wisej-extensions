@@ -450,9 +450,22 @@ CoolClock.prototype = {
 		}
 	},
 
-	// Set timeout to trigger a tick in the future
+	// Set timeout to trigger a tick in the future.
+	// Keep the handle so stop() can cancel it, and call this instance directly
+	// (a string timeout looked the clock up by canvas id, so after the clock was
+	// re-created on the same canvas the old timer kept running and redrew the new clock).
 	nextTick: function () {
-		setTimeout("CoolClock.config.clockTracker['" + this.canvasId + "'].tick()", this.tickDelay);
+		var me = this;
+		this.timer = setTimeout(function () { me.tick(); }, this.tickDelay);
+	},
+
+	// Stop this clock: cancel the pending tick and ignore any that are already queued.
+	stop: function () {
+		this.stopped = true;
+		if (this.timer) {
+			clearTimeout(this.timer);
+			this.timer = null;
+		}
 	},
 
 	// Check the canvas element hasn't been removed
@@ -462,7 +475,8 @@ CoolClock.prototype = {
 
 	// Main tick handler. Refresh the clock then setup the next tick
 	tick: function () {
-		if (this.stillHere()) {
+		this.timer = null;
+		if (!this.stopped && this.stillHere()) {
 			this.refreshDisplay();
 			this.nextTick();
 		}
