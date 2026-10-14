@@ -228,8 +228,8 @@ CoolClock.config = {
 
 		// By Yoo Nhe
 		Watermelon: {
-			outerBorder: { lineWidth: 100, radius: 1.7, color: "#d93d04", alpha: 5 },
-			smallIndicator: { lineWidth: 2, startAt: 50, endAt: 70, color: "#d93d04", alpha: 5 },
+			outerBorder: { lineWidth: 100, radius: 1.7, color: "#d93d04", alpha: 1 },
+			smallIndicator: { lineWidth: 2, startAt: 50, endAt: 70, color: "#d93d04", alpha: 1 },
 			largeIndicator: { lineWidth: 2, startAt: 45, endAt: 94, color: "#a9bf04", alpha: 1 },
 			hourHand: { lineWidth: 5, startAt: -20, endAt: 80, color: "#8c0d17", alpha: 1 },
 			minuteHand: { lineWidth: 2, startAt: -20, endAt: 80, color: "#7c8c03", alpha: .9 },
@@ -332,9 +332,11 @@ CoolClock.prototype = {
 	drawTextAt: function (theText, x, y) {
 		this.ctx.save();
 		this.ctx.font = '15px sans-serif';
-		var tSize = this.ctx.measureText(theText);
-		if (!tSize.height) tSize.height = 15; // no height in firefox.. :(
-		this.ctx.fillText(theText, x - tSize.width / 2, y - tSize.height / 2);
+		// center the text on (x, y): the previous code subtracted half the text
+		// height from the alphabetic baseline, which drew the text above y.
+		this.ctx.textAlign = 'center';
+		this.ctx.textBaseline = 'middle';
+		this.ctx.fillText(theText, x, y);
 		this.ctx.restore();
 	},
 
