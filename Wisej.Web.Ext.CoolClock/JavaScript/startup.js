@@ -26,10 +26,9 @@ this.init = function (options) {
 	options.canvasId = id;
 
 	// create the canvas dom child.
-	this.container.innerHTML = "<canvas id=\"" + id + "\"/>";
-
-	// center the inner canvas.
-	this.container.style.textAlign = "center";
+	// display:block removes the line-box gap an inline canvas leaves below itself,
+	// and margin:0 auto centers it horizontally.
+	this.container.innerHTML = "<canvas id=\"" + id + "\" style=\"display:block;margin:0 auto\"></canvas>";
 
 	this.coolClock = this.widget = new CoolClock(options);
 }
