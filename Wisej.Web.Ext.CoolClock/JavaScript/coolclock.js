@@ -228,8 +228,8 @@ CoolClock.config = {
 
 		// By Yoo Nhe
 		Watermelon: {
-			outerBorder: { lineWidth: 100, radius: 1.7, color: "#d93d04", alpha: 5 },
-			smallIndicator: { lineWidth: 2, startAt: 50, endAt: 70, color: "#d93d04", alpha: 5 },
+			outerBorder: { lineWidth: 100, radius: 1.7, color: "#d93d04", alpha: 1 },
+			smallIndicator: { lineWidth: 2, startAt: 50, endAt: 70, color: "#d93d04", alpha: 1 },
 			largeIndicator: { lineWidth: 2, startAt: 45, endAt: 94, color: "#a9bf04", alpha: 1 },
 			hourHand: { lineWidth: 5, startAt: -20, endAt: 80, color: "#8c0d17", alpha: 1 },
 			minuteHand: { lineWidth: 2, startAt: -20, endAt: 80, color: "#7c8c03", alpha: .9 },
@@ -261,9 +261,12 @@ CoolClock.prototype = {
 		this.gmtOffset = (options.gmtOffset != null && options.gmtOffset != '') ? parseFloat(options.gmtOffset) : null;
 		this.showDigital = typeof options.showDigital == "boolean" ? options.showDigital : false;
 		this.logClock = typeof options.logClock == "boolean" ? options.logClock : false;
-		this.logClockRev = typeof options.logClock == "boolean" ? options.logClockRev : false;
+		this.logClockRev = typeof options.logClockRev == "boolean" ? options.logClockRev : false;
 
-		this.tickDelay = CoolClock.config[this.showSecondHand ? "tickDelay" : "longTickDelay"];
+		// Use the delays sent by the server (TickDelay / LongTickDelay), falling back to the defaults.
+		this.tickDelay = this.showSecondHand
+			? (options.tickDelay > 0 ? options.tickDelay : CoolClock.config.tickDelay)
+			: (options.longTickDelay > 0 ? options.longTickDelay : CoolClock.config.longTickDelay);
 
 		// Get the canvas element
 		this.canvas = document.getElementById(this.canvasId);
@@ -329,9 +332,11 @@ CoolClock.prototype = {
 	drawTextAt: function (theText, x, y) {
 		this.ctx.save();
 		this.ctx.font = '15px sans-serif';
-		var tSize = this.ctx.measureText(theText);
-		if (!tSize.height) tSize.height = 15; // no height in firefox.. :(
-		this.ctx.fillText(theText, x - tSize.width / 2, y - tSize.height / 2);
+		// center the text on (x, y): the previous code subtracted half the text
+		// height from the alphabetic baseline, which drew the text above y.
+		this.ctx.textAlign = 'center';
+		this.ctx.textBaseline = 'middle';
+		this.ctx.fillText(theText, x, y);
 		this.ctx.restore();
 	},
 
@@ -447,9 +452,22 @@ CoolClock.prototype = {
 		}
 	},
 
-	// Set timeout to trigger a tick in the future
+	// Set timeout to trigger a tick in the future.
+	// Keep the handle so stop() can cancel it, and call this instance directly
+	// (a string timeout looked the clock up by canvas id, so after the clock was
+	// re-created on the same canvas the old timer kept running and redrew the new clock).
 	nextTick: function () {
-		setTimeout("CoolClock.config.clockTracker['" + this.canvasId + "'].tick()", this.tickDelay);
+		var me = this;
+		this.timer = setTimeout(function () { me.tick(); }, this.tickDelay);
+	},
+
+	// Stop this clock: cancel the pending tick and ignore any that are already queued.
+	stop: function () {
+		this.stopped = true;
+		if (this.timer) {
+			clearTimeout(this.timer);
+			this.timer = null;
+		}
 	},
 
 	// Check the canvas element hasn't been removed
@@ -459,7 +477,8 @@ CoolClock.prototype = {
 
 	// Main tick handler. Refresh the clock then setup the next tick
 	tick: function () {
-		if (this.stillHere()) {
+		this.timer = null;
+		if (!this.stopped && this.stillHere()) {
 			this.refreshDisplay();
 			this.nextTick();
 		}

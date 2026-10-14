@@ -17,6 +17,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -92,6 +93,8 @@ namespace Wisej.Web.Ext.CoolClock
 			get { return this._tickDelay; }
 			set
 			{
+				if (value <= 0)
+					throw new ArgumentOutOfRangeException(nameof(TickDelay), value, "TickDelay must be greater than 0.");
 
 				if (this._tickDelay != value)
 				{
@@ -111,9 +114,11 @@ namespace Wisej.Web.Ext.CoolClock
 			get { return this._longTickDelay; }
 			set
 			{
+				if (value <= 0)
+					throw new ArgumentOutOfRangeException(nameof(LongTickDelay), value, "LongTickDelay must be greater than 0.");
+
 				if (this._longTickDelay != value)
 				{
-
 					this._longTickDelay = value;
 					Update();
 				}
