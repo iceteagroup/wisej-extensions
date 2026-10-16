@@ -6,7 +6,7 @@
     <AssemblyOriginatorKeyFile>extension.snk</AssemblyOriginatorKeyFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
-    <FileVersion>3.5.41.1</FileVersion>
+    <FileVersion>3.5.41</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="CountUp.bmp" />
