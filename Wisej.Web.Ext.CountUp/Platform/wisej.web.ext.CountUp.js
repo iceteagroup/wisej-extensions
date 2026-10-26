@@ -155,8 +155,32 @@ qx.Class.define("wisej.web.ext.CountUp", {
 		 */
 		_applyOption: function (value, old, name) {
 
-			if (this.__countUp != null)
-				this.__countUp.options[name] = value;
+			var countUp = this.__countUp;
+			if (countUp == null)
+				return;
+
+			switch (name) {
+
+				case "numerals":
+					// formatNumber() expects an array.
+					countUp.options.numerals = value || [];
+					break;
+
+				case "separator":
+				case "useGrouping":
+					// an empty separator turns grouping off, as the CountUp constructor does.
+					countUp.options.separator = this.getSeparator();
+					countUp.options.useGrouping = this.getUseGrouping() && this.getSeparator() !== "";
+					break;
+
+				default:
+					countUp.options[name] = value;
+					break;
+			}
+
+			// redraw the displayed number with the new options. A running
+			// animation also picks them up on its next frame.
+			countUp.printValue(countUp.frameVal);
 		},
 
 	},
