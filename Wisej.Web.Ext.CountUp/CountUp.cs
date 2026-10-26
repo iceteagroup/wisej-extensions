@@ -109,6 +109,9 @@ namespace Wisej.Web.Ext.CountUp
 		/// <summary>
 		/// Returns or sets the duration of the animation in milliseconds.
 		/// </summary>
+		/// <remarks>
+		/// The default is 2500. A change applies to the next animation started by setting <see cref="Value"/>.
+		/// </remarks>
 		[DefaultValue(2500)]
 		[DesignerActionList]
 		[SRCategory("CatBehavior")]

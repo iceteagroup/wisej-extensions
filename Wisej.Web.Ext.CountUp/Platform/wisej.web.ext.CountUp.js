@@ -105,10 +105,7 @@ qx.Class.define("wisej.web.ext.CountUp", {
 			var value = this.getValue();
 			var duration = this.getDuration() / 1000;
 			this.__countUp = new CountUp(dom, 0, value, 0, duration, options);
-
-			// when in design mode, update the widget immediately, we can't animate the designer.
-			if (wisej.web.DesignMode)
-				this.__countUp.duration = 1;
+			this.__countUp.duration = this.__getAnimationDuration();
 
 			this.__countUp.start(this.__onCountTerminatedCallback.bind(this));
 		},
@@ -125,17 +122,36 @@ qx.Class.define("wisej.web.ext.CountUp", {
 		 */
 		_applyValue: function (value, old) {
 
-			if (this.__countUp != null)
+			if (this.__countUp != null) {
+
+				// each new animation uses the current duration.
+				this.__countUp.duration = this.__getAnimationDuration();
 				this.__countUp.update(value);
+			}
 		},
 
 		/**
 		 * Applies the duration property.
+		 *
+		 * The new duration applies to the next animation, not the running one.
 		 */
 		_applyDuration: function (value, old, name) {
 
-			if (this.__countUp != null)
-				this.__countUp.duration = value;
+			// an animation that hasn't drawn its first frame yet (startTime is set on the
+			// first frame) can still take the new duration. This covers Value and Duration
+			// changing in the same server response, when value is applied first.
+			var countUp = this.__countUp;
+			if (countUp != null && !countUp.startTime)
+				countUp.duration = this.__getAnimationDuration();
+		},
+
+		/**
+		 * Returns the animation duration in milliseconds.
+		 */
+		__getAnimationDuration: function () {
+
+			// when in design mode, update the widget immediately, we can't animate the designer.
+			return wisej.web.DesignMode ? 1 : this.getDuration();
 		},
 
 		/**
