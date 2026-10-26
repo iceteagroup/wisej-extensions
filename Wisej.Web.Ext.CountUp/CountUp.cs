@@ -107,6 +107,7 @@ namespace Wisej.Web.Ext.CountUp
 		/// <summary>
 		/// Returns or sets a numeric value to count to.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is <see cref="float.NaN"/> or infinity.</exception>
 		/// <remarks>
 		/// <para>
 		/// Changing the value starts a new animation on the client from the currently displayed number
@@ -138,6 +139,11 @@ namespace Wisej.Web.Ext.CountUp
 			}
 			set
 			{
+				// the counter can't display NaN or infinity, and NaN != NaN would
+				// make every assignment of NaN look like a change.
+				if (float.IsNaN(value) || float.IsInfinity(value))
+					throw new ArgumentOutOfRangeException(nameof(value), value, "Value must be a finite number.");
+
 				if (this._value != value)
 				{
 					this._value = value;
