@@ -64,7 +64,7 @@ qx.Class.define("wisej.web.ext.CountUp", {
 		/**
 		 * Align property.
 		 */
-		align: { init: "left", check: ["left", "center", "right"], apply: "_applyOption" }
+		align: { init: "left", check: ["left", "center", "right"], apply: "_applyAlign" }
 	},
 
 	construct: function () {
@@ -136,6 +136,18 @@ qx.Class.define("wisej.web.ext.CountUp", {
 
 			if (this.__countUp != null)
 				this.__countUp.duration = value;
+		},
+
+		/**
+		 * Applies the align property.
+		 */
+		_applyAlign: function (value, old) {
+
+			// CountUp.js has no align option: align the content element directly.
+			// Before the element exists, __createCountUpElement applies it.
+			var dom = this.getContentElement().getDomElement();
+			if (dom)
+				dom.align = value;
 		},
 
 		/**
