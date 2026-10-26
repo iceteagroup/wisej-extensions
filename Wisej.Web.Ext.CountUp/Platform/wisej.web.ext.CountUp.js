@@ -96,6 +96,7 @@ qx.Class.define("wisej.web.ext.CountUp", {
 				useGrouping: this.getUseGrouping(),
 				separator: this.getSeparator(),
 				decimal: this.getDecimal(),
+				numerals: this.getNumerals(),
 				align: this.getAlign()
 			};
 
