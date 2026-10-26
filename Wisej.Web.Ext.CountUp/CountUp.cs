@@ -20,6 +20,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;
@@ -239,6 +240,10 @@ namespace Wisej.Web.Ext.CountUp
 		/// <remarks>
 		/// The array must be empty (the default, uses the standard digits) or contain exactly 10 strings,
 		/// where the element at index <c>n</c> replaces the digit <c>n</c>. Setting null resets it to an empty array.
+		/// <para>
+		/// The control keeps its own copy of the array, and the getter returns a copy: to change a numeral,
+		/// edit the array and assign it again.
+		/// </para>
 		/// </remarks>
 		/// <example>
 		/// Displaying the value using Eastern Arabic numerals:
@@ -250,20 +255,23 @@ namespace Wisej.Web.Ext.CountUp
 		[Description("Array of custom numerals for the digits from 0 to 9.")]
 		public string[] Numerals
 		{
-			get { return this._numerals; }
+			// return a copy, so editing the returned array can't change the stored one.
+			get { return (string[])this._numerals.Clone(); }
 			set
 			{
 				if (value == null)
 					value = new string[0];
 
-				if (this._numerals != value)
-				{
-					if (value.Length > 0 && value.Length != 10)
-						throw new ArgumentException("Must specify 0 or 10 numerals.", "value");
-					if (Array.IndexOf(value, null) > -1)
-						throw new ArgumentException("Numerals can't contain null elements.", "value");
+				if (value.Length > 0 && value.Length != 10)
+					throw new ArgumentException("Must specify 0 or 10 numerals.", "value");
+				if (Array.IndexOf(value, null) > -1)
+					throw new ArgumentException("Numerals can't contain null elements.", "value");
 
-					this._numerals = value;
+				// compare the contents, not the references, and store a copy so a caller
+				// editing its array and assigning it again is seen as a change.
+				if (!this._numerals.SequenceEqual(value))
+				{
+					this._numerals = (string[])value.Clone();
 					Update();
 				}
 			}
@@ -389,7 +397,7 @@ namespace Wisej.Web.Ext.CountUp
 			config.value = this.Value;
 			config.align = this.TextAlign;
 			config.duration = this.Duration;
-			config.numerals = this.Numerals;
+			config.numerals = this._numerals;
 			config.useEasing = this.UseEasing;
 			config.useGrouping = this.UseGrouping;
 
