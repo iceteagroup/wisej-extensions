@@ -232,13 +232,23 @@ var CountUp = function (target, startVal, endVal, decimals, duration, options) {
             return;
         }
         self.error = '';
-        if (newEndVal === self.frameVal) return;
+        // always stop the running animation first, otherwise it
+        // keeps counting to the old endVal.
         cancelAnimationFrame(self.rAF);
         self.paused = false;
         delete self.startTime;
         self.startVal = self.frameVal;
         self.endVal = newEndVal;
         self.countDown = (self.startVal > self.endVal);
+        if (newEndVal === self.frameVal) {
+            // already showing the new value: end the count on the next frame
+            // and call the callback, as a finished animation does.
+            self.rAF = requestAnimationFrame(function () {
+                self.printValue(self.frameVal);
+                if (self.callback) self.callback();
+            });
+            return;
+        }
         self.rAF = requestAnimationFrame(self.count);
     };
 
