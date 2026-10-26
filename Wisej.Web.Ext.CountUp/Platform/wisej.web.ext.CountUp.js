@@ -185,4 +185,16 @@ qx.Class.define("wisej.web.ext.CountUp", {
 
 	},
 
+	destruct: function () {
+
+		// stop the animation, otherwise it keeps updating the removed element
+		// and calls back into this widget after it's disposed.
+		var countUp = this.__countUp;
+		if (countUp != null) {
+			cancelAnimationFrame(countUp.rAF);
+			countUp.callback = null;
+			this.__countUp = null;
+		}
+	}
+
 });
