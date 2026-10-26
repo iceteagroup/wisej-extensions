@@ -147,7 +147,9 @@ var CountUp = function (target, startVal, endVal, decimals, duration, options) {
             this.d.textContent = result;
         }
         else {
-            this.d.innerHTML = result;
+            // set the text, not innerHTML: custom numerals are plain strings
+            // and must not be parsed as HTML.
+            this.d.textContent = result;
         }
     };
 

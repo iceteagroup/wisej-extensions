@@ -235,7 +235,7 @@ namespace Wisej.Web.Ext.CountUp
 		/// <summary>
 		/// Returns or sets an array of custom numerals used to display the digits from 0 to 9.
 		/// </summary>
-		/// <exception cref="ArgumentException">The array doesn't contain 0 or 10 elements.</exception>
+		/// <exception cref="ArgumentException">The array doesn't contain 0 or 10 elements, or one of the elements is null.</exception>
 		/// <remarks>
 		/// The array must be empty (the default, uses the standard digits) or contain exactly 10 strings,
 		/// where the element at index <c>n</c> replaces the digit <c>n</c>. Setting null resets it to an empty array.
@@ -260,6 +260,8 @@ namespace Wisej.Web.Ext.CountUp
 				{
 					if (value.Length > 0 && value.Length != 10)
 						throw new ArgumentException("Must specify 0 or 10 numerals.", "value");
+					if (Array.IndexOf(value, null) > -1)
+						throw new ArgumentException("Numerals can't contain null elements.", "value");
 
 					this._numerals = value;
 					Update();
