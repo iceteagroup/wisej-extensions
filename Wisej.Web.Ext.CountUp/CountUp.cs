@@ -125,7 +125,7 @@ namespace Wisej.Web.Ext.CountUp
 		/// ]]></code>
 		/// </example>
 		[Bindable(true)]
-		[DefaultValue(0)]
+		[DefaultValue(0f)]
 		[DesignerActionList]
 		[SRCategory("CatBehavior")]
 		[SRDescription(" Returns or sets a numeric value to count to.")]
