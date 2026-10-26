@@ -76,8 +76,9 @@ namespace Wisej.Web.Ext.CountUp
 		/// </summary>
 		public event EventHandler CountTerminated
 		{
-			add { AddHandler(nameof(CountTerminated), value); }
-			remove { RemoveHandler(nameof(CountTerminated), value); }
+			// lazy event: the client sends "countTerminated" only while there is a handler.
+			add { AddHandler(nameof(CountTerminated), value, true); }
+			remove { RemoveHandler(nameof(CountTerminated), value, true); }
 		}
 
 		/// <summary>
@@ -347,7 +348,9 @@ namespace Wisej.Web.Ext.CountUp
 			config.separator = numberFormat.NumberGroupSeparator;
 			config.@decimal = numberFormat.NumberDecimalSeparator;
 
-			config.wiredEvents.Add("countTerminated");
+			// avoid a server round trip at the end of every animation when nothing handles it.
+			if (base.Events[nameof(CountTerminated)] != null)
+				config.wiredEvents.Add("countTerminated");
 		}
 
 		#endregion
