@@ -70,8 +70,12 @@ var CountUp = function (target, startVal, endVal, decimals, duration, options) {
     }
 
     function formatNumber(num) {
-        num = num.toFixed(self.decimals);
+        // format the absolute value and add the sign at the end, otherwise
+        // the grouping loop counts the minus sign as a digit ("-,123").
+        var neg = (num < 0);
+        num = Math.abs(num).toFixed(self.decimals);
         num += '';
+        if (Number(num) === 0) neg = false; // don't show "-0" for values that round to zero
         var x, x1, x2, x3, i, l;
         x = num.split('.');
         x1 = x[0];
@@ -95,7 +99,7 @@ var CountUp = function (target, startVal, endVal, decimals, duration, options) {
                 return self.options.numerals[+w];
             })
         }
-        return self.options.prefix + x1 + x2 + self.options.suffix;
+        return (neg ? '-' : '') + self.options.prefix + x1 + x2 + self.options.suffix;
     }
     // Robert Penner's easeOutExpo
     function easeOutExpo(t, b, c, d) {
@@ -143,7 +147,9 @@ var CountUp = function (target, startVal, endVal, decimals, duration, options) {
             this.d.textContent = result;
         }
         else {
-            this.d.innerHTML = result;
+            // set the text, not innerHTML: custom numerals are plain strings
+            // and must not be parsed as HTML.
+            this.d.textContent = result;
         }
     };
 
@@ -228,13 +234,23 @@ var CountUp = function (target, startVal, endVal, decimals, duration, options) {
             return;
         }
         self.error = '';
-        if (newEndVal === self.frameVal) return;
+        // always stop the running animation first, otherwise it
+        // keeps counting to the old endVal.
         cancelAnimationFrame(self.rAF);
         self.paused = false;
         delete self.startTime;
         self.startVal = self.frameVal;
         self.endVal = newEndVal;
         self.countDown = (self.startVal > self.endVal);
+        if (newEndVal === self.frameVal) {
+            // already showing the new value: end the count on the next frame
+            // and call the callback, as a finished animation does.
+            self.rAF = requestAnimationFrame(function () {
+                self.printValue(self.frameVal);
+                if (self.callback) self.callback();
+            });
+            return;
+        }
         self.rAF = requestAnimationFrame(self.count);
     };
 

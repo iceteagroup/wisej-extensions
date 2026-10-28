@@ -20,6 +20,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using Wisej.Base;
 using Wisej.Core;
 using Wisej.Design;
@@ -76,8 +77,9 @@ namespace Wisej.Web.Ext.CountUp
 		/// </summary>
 		public event EventHandler CountTerminated
 		{
-			add { AddHandler(nameof(CountTerminated), value); }
-			remove { RemoveHandler(nameof(CountTerminated), value); }
+			// lazy event: the client sends "countTerminated" only while there is a handler.
+			add { AddHandler(nameof(CountTerminated), value, true); }
+			remove { RemoveHandler(nameof(CountTerminated), value, true); }
 		}
 
 		/// <summary>
@@ -106,6 +108,7 @@ namespace Wisej.Web.Ext.CountUp
 		/// <summary>
 		/// Returns or sets a numeric value to count to.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">The value is <see cref="float.NaN"/> or infinity.</exception>
 		/// <remarks>
 		/// <para>
 		/// Changing the value starts a new animation on the client from the currently displayed number
@@ -125,10 +128,10 @@ namespace Wisej.Web.Ext.CountUp
 		/// ]]></code>
 		/// </example>
 		[Bindable(true)]
-		[DefaultValue(0)]
+		[DefaultValue(0f)]
 		[DesignerActionList]
 		[SRCategory("CatBehavior")]
-		[SRDescription(" Returns or sets a numeric value to count to.")]
+		[SRDescription("Returns or sets a numeric value to count to.")]
 		public float Value
 		{
 			get
@@ -137,6 +140,11 @@ namespace Wisej.Web.Ext.CountUp
 			}
 			set
 			{
+				// the counter can't display NaN or infinity, and NaN != NaN would
+				// make every assignment of NaN look like a change.
+				if (float.IsNaN(value) || float.IsInfinity(value))
+					throw new ArgumentOutOfRangeException(nameof(value), value, "Value must be a finite number.");
+
 				if (this._value != value)
 				{
 					this._value = value;
@@ -228,10 +236,14 @@ namespace Wisej.Web.Ext.CountUp
 		/// <summary>
 		/// Returns or sets an array of custom numerals used to display the digits from 0 to 9.
 		/// </summary>
-		/// <exception cref="ArgumentException">The array doesn't contain 0 or 10 elements.</exception>
+		/// <exception cref="ArgumentException">The array doesn't contain 0 or 10 elements, or one of the elements is null.</exception>
 		/// <remarks>
 		/// The array must be empty (the default, uses the standard digits) or contain exactly 10 strings,
 		/// where the element at index <c>n</c> replaces the digit <c>n</c>. Setting null resets it to an empty array.
+		/// <para>
+		/// The control keeps its own copy of the array, and the getter returns a copy: to change a numeral,
+		/// edit the array and assign it again.
+		/// </para>
 		/// </remarks>
 		/// <example>
 		/// Displaying the value using Eastern Arabic numerals:
@@ -240,21 +252,26 @@ namespace Wisej.Web.Ext.CountUp
 		/// ]]></code>
 		/// </example>
 		[SRCategory("CatAppearance")]
-		[Description("Array of custom numerals for the digits from 0 to 9.")]
+		[SRDescription("Array of custom numerals for the digits from 0 to 9.")]
 		public string[] Numerals
 		{
-			get { return this._numerals; }
+			// return a copy, so editing the returned array can't change the stored one.
+			get { return (string[])this._numerals.Clone(); }
 			set
 			{
 				if (value == null)
 					value = new string[0];
 
-				if (this._numerals != value)
-				{
-					if (value.Length > 0 && value.Length != 10)
-						throw new ArgumentException("Must specify 0 or 10 numerals.", "value");
+				if (value.Length > 0 && value.Length != 10)
+					throw new ArgumentException("Must specify 0 or 10 numerals.", "value");
+				if (Array.IndexOf(value, null) > -1)
+					throw new ArgumentException("Numerals can't contain null elements.", "value");
 
-					this._numerals = value;
+				// compare the contents, not the references, and store a copy so a caller
+				// editing its array and assigning it again is seen as a change.
+				if (!this._numerals.SequenceEqual(value))
+				{
+					this._numerals = (string[])value.Clone();
 					Update();
 				}
 			}
@@ -299,6 +316,47 @@ namespace Wisej.Web.Ext.CountUp
 
 		#endregion
 
+		#region Culture
+
+		/// <summary>
+		/// Starts listening to <see cref="Application.CultureChanged"/> when the control is created.
+		/// </summary>
+		protected override void OnCreateControl()
+		{
+			base.OnCreateControl();
+
+			// the group and decimal separators come from Application.CurrentCulture:
+			// update the client when it changes.
+			if (!this._cultureChangedWired && !this.DesignMode)
+			{
+				Application.CultureChanged += this.Application_CultureChanged;
+				this._cultureChangedWired = true;
+			}
+		}
+		private bool _cultureChangedWired;
+
+		private void Application_CultureChanged(object sender, EventArgs e)
+		{
+			Update();
+		}
+
+		/// <summary>
+		/// Disposes the control and stops listening to <see cref="Application.CultureChanged"/>.
+		/// </summary>
+		/// <param name="disposing">true when this method is called by the application rather than a finalizer.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && this._cultureChangedWired)
+			{
+				Application.CultureChanged -= this.Application_CultureChanged;
+				this._cultureChangedWired = false;
+			}
+
+			base.Dispose(disposing);
+		}
+
+		#endregion
+
 		#region Wisej Implementation
 
 		/// <summary>
@@ -339,7 +397,7 @@ namespace Wisej.Web.Ext.CountUp
 			config.value = this.Value;
 			config.align = this.TextAlign;
 			config.duration = this.Duration;
-			config.numerals = this.Numerals;
+			config.numerals = this._numerals;
 			config.useEasing = this.UseEasing;
 			config.useGrouping = this.UseGrouping;
 
@@ -347,7 +405,9 @@ namespace Wisej.Web.Ext.CountUp
 			config.separator = numberFormat.NumberGroupSeparator;
 			config.@decimal = numberFormat.NumberDecimalSeparator;
 
-			config.wiredEvents.Add("countTerminated");
+			// avoid a server round trip at the end of every animation when nothing handles it.
+			if (base.Events[nameof(CountTerminated)] != null)
+				config.wiredEvents.Add("countTerminated");
 		}
 
 		#endregion
