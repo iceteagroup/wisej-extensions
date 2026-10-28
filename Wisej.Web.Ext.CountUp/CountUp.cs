@@ -247,6 +247,47 @@ namespace Wisej.Web.Ext.CountUp
 
 		#endregion
 
+		#region Culture
+
+		/// <summary>
+		/// Starts listening to <see cref="Application.CultureChanged"/> when the control is created.
+		/// </summary>
+		protected override void OnCreateControl()
+		{
+			base.OnCreateControl();
+
+			// the group and decimal separators come from Application.CurrentCulture:
+			// update the client when it changes.
+			if (!this._cultureChangedWired && !this.DesignMode)
+			{
+				Application.CultureChanged += this.Application_CultureChanged;
+				this._cultureChangedWired = true;
+			}
+		}
+		private bool _cultureChangedWired;
+
+		private void Application_CultureChanged(object sender, EventArgs e)
+		{
+			Update();
+		}
+
+		/// <summary>
+		/// Disposes the control and stops listening to <see cref="Application.CultureChanged"/>.
+		/// </summary>
+		/// <param name="disposing">true when this method is called by the application rather than a finalizer.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && this._cultureChangedWired)
+			{
+				Application.CultureChanged -= this.Application_CultureChanged;
+				this._cultureChangedWired = false;
+			}
+
+			base.Dispose(disposing);
+		}
+
+		#endregion
+
 		#region Wisej Implementation
 
 		/// <summary>
