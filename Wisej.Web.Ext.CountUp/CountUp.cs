@@ -184,6 +184,7 @@ namespace Wisej.Web.Ext.CountUp
 		/// <summary>
 		/// Array of custom numerals for the digits from 0 to 9.
 		/// </summary>
+		/// <exception cref="ArgumentException">The array doesn't contain 0 or 10 elements, or one of the elements is null.</exception>
 		[SRCategory("CatAppearance")]
 		[Description("Array of custom numerals for the digits from 0 to 9.")]
 		public string[] Numerals
@@ -198,6 +199,8 @@ namespace Wisej.Web.Ext.CountUp
 				{
 					if (value.Length > 0 && value.Length != 10)
 						throw new ArgumentException("Must specify 0 or 10 numerals.", "value");
+					if (Array.IndexOf(value, null) > -1)
+						throw new ArgumentException("Numerals can't contain null elements.", "value");
 
 					this._numerals = value;
 					Update();
