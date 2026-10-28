@@ -89,7 +89,7 @@ namespace Wisej.Web.Ext.CountUp
 		[DefaultValue(0f)]
 		[DesignerActionList]
 		[SRCategory("CatBehavior")]
-		[SRDescription(" Returns or sets a numeric value to count to.")]
+		[SRDescription("Returns or sets a numeric value to count to.")]
 		public float Value
 		{
 			get
@@ -191,7 +191,7 @@ namespace Wisej.Web.Ext.CountUp
 		/// edit the array and assign it again.
 		/// </remarks>
 		[SRCategory("CatAppearance")]
-		[Description("Array of custom numerals for the digits from 0 to 9.")]
+		[SRDescription("Array of custom numerals for the digits from 0 to 9.")]
 		public string[] Numerals
 		{
 			// return a copy, so editing the returned array can't change the stored one.
