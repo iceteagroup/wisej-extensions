@@ -1,5 +1,6 @@
 ﻿<Project>
-  <PropertyGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
+  <!-- Imported after the project file: keep a project's own GenerateResourceUsePreserializedResources setting. -->
+  <PropertyGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework' and '$(GenerateResourceUsePreserializedResources)' == ''">
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
